@@ -6,14 +6,14 @@
 %def_enable webready
 %def_disable ssh
 %def_enable tests
-%ifarch armh aarch64
+%ifarch %ix86 armh
 %def_disable check
 %else
 %def_disable check
 %endif
 
 Name: exiv2
-Version: 0.28.8
+Version: 0.28.9
 Release: alt1%beta
 
 Summary: Command line tool to access EXIF data in image files
@@ -68,14 +68,14 @@ exiv2 library.
 %build
 %add_optflags -Wno-deprecated-declarations %(getconf LFS_CFLAGS)
 %cmake \
-	-DEXIV2_ENABLE_NLS:BOOL=ON \
-	-DEXIV2_BUILD_SAMPLES:BOOL=OFF \
-	-DEXIV2_ENABLE_BMFF:BOOL=ON \
-	%{?_enable_video:-DEXIV2_ENABLE_VIDEO:BOOL=ON} \
-	%{?_enable_curl:-DEXIV2_ENABLE_CURL:BOOL=ON} \
-	%{?_enable_webready:-DEXIV2_ENABLE_WEBREADY:BOOL=ON} \
-	%{?_enable_ssh:-DEXIV2_ENABLE_SSH:BOOL=ON} \
-	%{?_enable_tests:-DEXIV2_BUILD_UNIT_TESTS:BOOL=ON}
+    -DEXIV2_ENABLE_NLS:BOOL=ON \
+    -DEXIV2_BUILD_SAMPLES:BOOL=OFF \
+    -DEXIV2_ENABLE_BMFF:BOOL=ON \
+    %{?_enable_video:-DEXIV2_ENABLE_VIDEO:BOOL=ON} \
+    %{?_enable_curl:-DEXIV2_ENABLE_CURL:BOOL=ON} \
+    %{?_enable_webready:-DEXIV2_ENABLE_WEBREADY:BOOL=ON} \
+    %{?_enable_ssh:-DEXIV2_ENABLE_SSH:BOOL=ON} \
+    %{?_enable_tests:-DEXIV2_BUILD_UNIT_TESTS:BOOL=ON}
 %nil
 %cmake_build
 
@@ -102,6 +102,9 @@ exiv2 library.
 
 
 %changelog
+* Mon Aug 31 2026 Yuri N. Sedunov <aris@altlinux.org> 0.28.9-alt1
+- 0.28.9 (fixed CVE-2026-49275, CVE-2026-68546, CVE-2026-68547)
+
 * Sun Mar 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.28.8-alt1
 - 0.28.8 (fixed CVE-2026-25884, CVE-2026-27596, CVE-2026-27631)
 
