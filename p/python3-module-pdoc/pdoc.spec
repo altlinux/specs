@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 16.0.0
-Release: alt1
+Release: alt2
 
 Summary: API Documentation for Python Projects
 License: MIT-0
@@ -72,5 +72,8 @@ and do it well.
 %_bindir/%pypi_name
 
 %changelog
+* Tue Aug 25 2026 Andrey Kuzma <kuzmaav@altlinux.org> 16.0.0-alt2
+- Update test snapshots for Pygments-2.21.0.
+
 * Tue Jul 07 2026 Andrey Kuzma <kuzmaav@altlinux.org> 16.0.0-alt1
 - Initial build for Sisyphus.
