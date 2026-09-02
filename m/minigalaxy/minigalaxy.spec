@@ -3,7 +3,7 @@
 
 Name: minigalaxy
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: A simple GOG client for Linux
 License: GPL-3.0-only
@@ -12,7 +12,7 @@ Group: Games/Other
 Url: https://wijsman.de/minigalaxy
 Vcs: https://github.com/sharkwouter/minigalaxy
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
@@ -60,6 +60,9 @@ Install Windows games using Wine
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Wed Sep 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt2
+- re-builed with rpm-build-gir (ALT #60364)
+
 * Fri Jul 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.2-alt1
 - Initial build for ALT Linux (ALT #58329).
 
