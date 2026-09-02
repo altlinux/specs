@@ -6,7 +6,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 4.15
-Release: alt9.%_db_date
+Release: alt10.%_db_date
 License: copyleft-next-0.3.0
 Group: Networking/Other
 # wireless-regdb git://git.kernel.org/pub/scm/linux/kernel/git/sforshee/wireless-regdb.git
@@ -62,6 +62,8 @@ Header files to make use of libreg for accessing regulatory info.
 Summary: Central Regulatory Database
 Group: System/Kernel and hardware
 BuildArch: noarch
+
+Provides: %_db
 
 %description -n firmware-%_db
 This repository contains the regulatory database file for use with Central
@@ -134,6 +136,9 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Wed Aug 19 2026 Egor Ignatov <egori@altlinux.org> 4.15-alt10.2026.05.30
+- Add wireless-regdb provides for firmware-wireless-regdb
+
 * Sun Aug 02 2026 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt9.2026.05.30
 - wireless-regdb: update to 2026-05-30.
 
