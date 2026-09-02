@@ -1,13 +1,14 @@
 Name: aarch64-none-elf-binutils
-Version: 2.46.1
+Version: 2.47
 Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
 License: GPLv3+
 Group: Development/Other
-Url: http://sourceware.org/binutils/
+URL: http://sourceware.org/binutils/
+VCS: git://sourceware.org/git/binutils-gdb
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: flex texinfo perl-podlators zlib-devel
 
@@ -66,6 +67,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Wed Sep 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.47-alt1
+- 2.47 released
+
 * Wed Jun 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.46.1-alt1
 - 2.46.1 released
 
