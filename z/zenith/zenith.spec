@@ -1,5 +1,5 @@
 Name: zenith
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 
 Summary: In terminal graphical metrics for your *nix system
@@ -64,6 +64,9 @@ install -Dm 0644 assets/%name.desktop %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Sep 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.1-alt1
+- 0.15.0 -> 0.15.1
+
 * Sat May 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.0-alt1
 - 0.14.3 -> 0.15.0
 
