@@ -1,5 +1,5 @@
 Name: yazi
-Version: 26.5.6
+Version: 26.9.1
 Release: alt1
 
 Summary: Blazing fast terminal file manager written in Rust, based on async I/O
@@ -52,6 +52,11 @@ cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."git+https://github.com/yazi-rs/ratatui.git?branch=fix_buffer_diff_wide_cells"]
+git = "https://github.com/yazi-rs/ratatui.git"
+branch = "fix_buffer_diff_wide_cells"
+replace-with = "vendored-sources"
+
 [source.vendored-sources]
 directory = "vendor"
 
@@ -99,6 +104,9 @@ install -D yazi-cli/completions/_ya -t %buildroot%_datadir/zsh/site-functions/
 %_datadir/zsh
 
 %changelog
+* Tue Sep 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 26.9.1-alt1
+- New version 26.9.1.
+
 * Mon May 11 2026 Anton Kurachenko <srebrov@altlinux.org> 26.5.6-alt1
 - New version 26.5.6.
 
