@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_background
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 Summary: Run SQL queries in background workers with autonomous transactions
 License: PostgreSQL
@@ -42,6 +42,9 @@ and pg_background_outcome_v2().
 %doc LICENSE README.md CLAUDE.md docs
 
 %changelog
+* Wed Sep 02 2026 Alexei Takaseev <taf@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
