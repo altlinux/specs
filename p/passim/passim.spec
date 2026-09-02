@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: passim
-Version: 0.1.9
+Version: 0.1.12
 Release: alt1
 
 Summary: Local caching server
@@ -12,6 +12,7 @@ Group: System/Servers
 Url: https://github.com/hughsie/passim
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 Requires: lib%name%abiversion = %EVR
 
@@ -46,10 +47,12 @@ Files for development with %name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson \
-	-Dintrospection=enabled
+	-Dintrospection=enabled \
+	-Dinstalled_tests=false
 %meson_build
 
 %install
@@ -69,7 +72,7 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_libdir/girepository-1.0/Passim-1.0.typelib
 %_libexecdir/passimd
 %_localstatedir/passim
-%_iconsdir/hicolor/128x128/apps/org.freedesktop.Passim.png
+%_iconsdir/hicolor/256x256/apps/org.freedesktop.Passim.png
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.Passim.svg
 %_datadir/dbus-1/interfaces/org.freedesktop.Passim.xml
 %_datadir/dbus-1/system-services/org.freedesktop.Passim.service
@@ -91,6 +94,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.freedeskt
 %_pkgconfigdir/passim.pc
 
 %changelog
+* Wed Sep 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.1.12-alt1
+- updated from 0.1.9 to 0.1.12
+
 * Wed Apr 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.1.9-alt1
 - New version.
 - Fix FTBFS: use meson_test macro instead of __meson_test (closes: 53786).
