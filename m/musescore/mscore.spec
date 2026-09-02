@@ -2,8 +2,10 @@
 # TODO(iv@):
 # - check if we can enable more importexport modules
 # - unbundle fonts (they are now shipped as Qt resources)
-# - see what other libraries we can unbundle (liblouis? pugixml? utfcpp?)
+# - see what other libraries we can unbundle (liblouis? fdk-aac?)
 # - check what other ways of calling home (in addition to updates) should be disabled
+# - upstream adding missing include files
+# - revert ad8fb103a93e1687a9f23be44278600c4625166a after MuseScore 5
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -14,11 +16,11 @@
 %define optflags_lto %nil
 
 %define rname mscore
-%define mversion 4.6
+%define mversion 4.7
 
 Name: musescore
-Version: %mversion.5
-Release: alt1
+Version: %mversion.4
+Release: alt2
 
 Summary: Music notation and composition software
 
@@ -36,7 +38,7 @@ Patch:  %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xdg
 
-BuildRequires: cmake gcc-c++
+BuildRequires: cmake ninja-build gcc-c++
 
 # Qt6:
 BuildRequires: qt6-tools-devel
@@ -78,6 +80,7 @@ BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(portaudio-2.0)
 BuildRequires: pkgconfig(portaudiocpp)
+BuildRequires: pkgconfig(pugixml)
 BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(tinyxml2)
 BuildRequires: pkgconfig(vorbis)
@@ -85,6 +88,7 @@ BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(vorbisfile)
 
 BuildRequires: liblame-devel
+BuildRequires: libutf8cpp-devel
 
 # Docs:
 # BuildRequires: doxygen ghostscript-utils graphviz latex2html
@@ -119,12 +123,11 @@ Music notation and composition software
 export LANG="C.UTF-8"
 export PATH="%_qt6_bindir:$PATH"
 
-%cmake \
+%cmake -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DMUSESCORE_BUILD_CONFIGURATION=app \
     -DMUSE_APP_BUILD_MODE=release \
     -DMUSE_MODULE_DIAGNOSTICS_CRASHPAD_CLIENT:BOOL=OFF \
-    -DMUE_BUILD_UPDATE_MODULE:BOOL=OFF \
     -DMUSE_ENABLE_UNIT_TESTS:BOOL=OFF \
     -DMUE_BUILD_BRAILLE_TESTS:BOOL=OFF \
     -DMUE_BUILD_ENGRAVING_TESTS:BOOL=OFF \
@@ -133,20 +136,24 @@ export PATH="%_qt6_bindir:$PATH"
     -DMUE_BUILD_PLAYBACK_TESTS:BOOL=OFF \
     -DMUE_BUILD_PROJECT_TESTS:BOOL=OFF \
     -DMUE_BUILD_CONVERTER_TESTS:BOOL=OFF \
+    -DMUE_BUILD_IMPEXP_MNX_MODULE:BOOL=OFF \
     -DMUSE_COMPILE_USE_PCH:BOOL=OFF \
     -DMUE_COMPILE_USE_SYSTEM_FLAC:BOOL=ON \
     -DMUE_COMPILE_USE_SYSTEM_FREETYPE:BOOL=ON \
     -DMUE_COMPILE_USE_SYSTEM_HARFBUZZ:BOOL=ON \
     -DMUE_COMPILE_USE_SYSTEM_OPUS:BOOL=ON \
     -DMUE_COMPILE_USE_SYSTEM_OPUSENC:BOOL=ON \
-    -DMUE_COMPILE_USE_SYSTEM_TINYXML:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_MNXDOM:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_PUGIXML:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_LAME:BOOL=ON \
+    -DMUE_COMPILE_USE_SYSTEM_UTF8CPP:BOOL=ON \
     -DMUE_DOWNLOAD_SOUNDFONT:BOOL=OFF \
     -DMUSE_MODULE_GLOBAL_LOGGER_DEBUGLEVEL:BOOL=OFF \
     -DMUSE_COMPILE_STRING_DEBUG_HACK:BOOL=OFF \
     -DMUSE_MODULE_NETWORK_WEBSOCKET:BOOL=ON \
     -DMUSE_MODULE_UPDATE:BOOL=OFF \
     -DMUSE_MODULE_AUDIO_JACK:BOOL=OFF \
-    -DMUSE_PIPEWIRE_AUDIO_DRIVER:BOOL=ON \
+    -DMUSE_MODULE_AUDIO_PIPEWIRE:BOOL=ON \
     -Wno-dev
 
 %cmake_build
@@ -171,6 +178,19 @@ rm -rvf %buildroot%_includedir %buildroot%_libdir
 %_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Thu Sep 03 2026 Ivan A. Melnikov <iv@altlinux.org> 4.7.4-alt2
+- Apply patch from https://github.com/musescore/MuseScore/pull/34204
+  to fix broken New Score and Preferences dialogs.
+
+* Thu Sep 03 2026 Ivan A. Melnikov <iv@altlinux.org> 4.7.4-alt1
+- 4.7.4
+
+* Tue Jun 23 2026 Ivan A. Melnikov <iv@altlinux.org> 4.7.3-alt1
+- 4.7.3
+
+* Wed May 27 2026 Ivan A. Melnikov <iv@altlinux.org> 4.7.2-alt1
+- 4.7.2
+
 * Sun Dec 21 2025 Ivan A. Melnikov <iv@altlinux.org> 4.6.5-alt1
 - 4.6.5
 
