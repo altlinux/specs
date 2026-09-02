@@ -31,8 +31,8 @@
 %endif
 
 Name: curl
-Version: 8.21.0
-Release: alt2
+Version: 8.22.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -232,6 +232,19 @@ popd
 %endif
  
 %changelog
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 8.22.0-alt1
+- 8.21.0 -> 8.22.0
+- Fixes:
+  * CVE-2026-82209: domain-scoped PSL domain cookie
+  * CVE-2026-82208: wolfSSL CA-cache hit overrides callback
+  * CVE-2026-80255: secure cookie attribute bypass with tab
+  * CVE-2026-80231: native CA store conn reuse
+  * CVE-2026-80230: OpenSSL pinning bypass
+  * CVE-2026-80229: OpenSSL provider use-after-free
+  * CVE-2026-19931: Negotiate ambient user conn reuse
+  * CVE-2026-18924: HTTP/2 server push UAF
+  * CVE-2026-13608: OpenLDAP SASL authentication bypass
+
 * Tue Aug 25 2026 Anton Farygin <rider@altlinux.org> 8.21.0-alt2
 - removed test1701 broken by the nghttp2 update (upstream commit e89d5a1202)
 
