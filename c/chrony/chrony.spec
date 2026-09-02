@@ -1,8 +1,8 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 4.8
-Release: alt2
+Version: 4.9
+Release: alt1
 
 Summary: Chrony clock synchronization program
 License: GPLv2
@@ -160,6 +160,9 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 %_man8dir/*
 
 %changelog
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 4.9-alt1
+- 4.8 -> 4.9
+
 * Thu Aug 13 2026 Anton Farygin <rider@altlinux.com> 4.8-alt2
 - default chrony.conf: restore the vendor zone prefix lost after
   the upstream example switched to a single pool directive, use
