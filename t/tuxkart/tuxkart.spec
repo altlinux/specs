@@ -1,15 +1,14 @@
 Name: tuxkart
 Version: 0.4.0
-Release: alt4
+Release: alt5
 
 Summary: Tuxedo T Penguin stars in Tuxkart
 License: GPL
 Group: Games/Arcade
 
-Url: http://tuxkart.sourceforge.net/
+Url: https://tuxkart.sourceforge.net
 Source: http://tuxkart.sourceforge.net/dist/%name-%version.tar.gz
 Patch1: tuxkart-portability.patch
-Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 
 # Automatically added by buildreq on Mon Oct 06 2003 (-bi)
@@ -39,6 +38,7 @@ Version=1.0
 Type=Application
 Name=Tuxkart
 Comment=Karting with tux
+Comment[ru]=Гонки на картинге с Tux
 Exec=%name
 # TODO!!!
 #Icon=%name
@@ -55,6 +55,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 0.4.0-alt5
+- added russian translation for menu comment (Closes: #33775)
+
 * Wed Mar 06 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.4.0-alt4
 - NMU: build for all architectures
 
