@@ -3,13 +3,14 @@
 %set_verify_elf_method strict
 
 Name: libseccomp
-Version: 2.6.0
-Release: alt2
+Version: 2.6.1
+Release: alt1
+
 Summary: An interface to the Linux Kernel's seccomp(2) filter
 License: LGPL-2.1-only
 Group: System/Libraries
-Url: https://github.com/seccomp/libseccomp
 
+Url: https://github.com/seccomp/libseccomp
 Source: %name-%version.tar
 
 BuildRequires: gperf
@@ -74,8 +75,10 @@ export  LIBSECCOMP_TSTCFG_JOBS=0 \
 %_man1dir/*
 %_man3dir/*
 
-
 %changelog
+* Wed Sep 02 2026 Michael Shigorin <mike@altlinux.org> 2.6.1-alt1
+- 2.6.1
+
 * Wed May 21 2025 Vitaly Chikunov <vt@altlinux.org> 2.6.0-alt2
 - Bugfix update to v2.6.0-6-g38c524f (2024-12-08).
 - spec: Do not install raw and obsolete tools.
