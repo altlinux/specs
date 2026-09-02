@@ -1,6 +1,6 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: snx-rs
-Version: 6.2.1
+Version: 6.2.4
 Release: alt1
 
 Summary: Open source VPN client for Checkpoint security gateways
@@ -36,6 +36,13 @@ Open source Linux client for Checkpoint VPN tunnels.
 
 This project contains a Rust source code of the unofficial Linux client for Checkpoint VPN.
 Based on the reverse engineered protocol from the vendor application.
+
+%package gui
+Summary: Graphical user interface for snx-rs
+Group: Graphical desktop/Other
+
+%description gui
+Graphical user interface with a tray icon for the snx-rs VPN client.
 
 %prep
 %setup -a 1
@@ -74,11 +81,17 @@ install -D -m 0644 package/snx-rs-gui.desktop %buildroot%_desktopdir/snx-rs-gui.
 %doc README.md
 %_bindir/snx-rs
 %_bindir/snxctl
-%_bindir/snx-rs-gui
-%_desktopdir/snx-rs-gui.desktop
 %_unitdir/snx-rs.service
 
+%files gui
+%_bindir/snx-rs-gui
+%_desktopdir/snx-rs-gui.desktop
+
 %changelog
+* Tue Sep 01 2026 Vitaly Lipatov <lav@altlinux.ru> 6.2.4-alt1
+- new version 6.2.4 (ALT bug 60317)
+- split GUI into a separate subpackage
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 6.2.1-alt1
 - new version 6.2.1
 
