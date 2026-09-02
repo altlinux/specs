@@ -1,6 +1,6 @@
 %define llvm_version 18.1
 %define optflags_lto %nil
-%define sover 112
+%define sover 113
 
 %def_without bootstrap
 
@@ -11,7 +11,7 @@
 %endif
 
 Name: ldc
-Version: 1.42.0
+Version: 1.43.0
 Release: alt1
 Summary: The LLVM-based D Compiler
 License: BSD-3-Clause and BSL-1.0 and Apache-2.0
@@ -195,6 +195,9 @@ ctest --test-dir %_cmake__builddir --output-on-failure \
 %_includedir/importc.h
 
 %changelog
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 1.43.0-alt1
+- 1.42.0 -> 1.43.0
+
 * Mon Mar 02 2026 Anton Farygin <rider@altlinux.org> 1.42.0-alt1
 - 1.41.0 -> 1.42.0
 
