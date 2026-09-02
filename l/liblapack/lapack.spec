@@ -10,7 +10,7 @@
 Name:          lib%nomen
 Epoch:         2
 Version:       3.12.1
-Release:       alt2
+Release:       alt3
 Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra
 License:       BSD
 Group:         System/Libraries
@@ -18,12 +18,13 @@ Url:           https://github.com/Reference-LAPACK/lapack
 Vcs:           https://github.com/reference-lapack/lapack.git
 
 Source:        %name-%version.tar
+Patch:         1.patch
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
 BuildRequires: gcc-fortran
-BuildRequires: libopenblas-devel
+BuildRequires: pkgconfig(openblas)
 %{?_with_xblas:BuildRequires: libxblas-devel}
-%{!?_with_bootstrap:BuildRequires: libsuperlu-devel}
+%{!?_with_bootstrap:BuildRequires: pkgconfig(superlu)}
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %add_optflags %optflags_shared
@@ -46,8 +47,9 @@ Group:         Development/Other
 
 Requires:      cmake
 Requires:      gcc-fortran
-Requires:      libopenblas-devel
+Requires:      pkgconfig(openblas)
 %{?_with_xblas:Requires: libxblas-devel}
+%{!?_with_bootstrap:Requires: pkgconfig(superlu)}
 Conflicts:     lib%{nomen}3-devel
 
 %description   devel
@@ -86,8 +88,9 @@ Group:         Development/Documentation
 
 Requires:      cmake
 Requires:      gcc-fortran
-Requires:      libopenblas-devel
+Requires:      pkgconfig(openblas)
 %{?_with_xblas:Requires: libxblas-devel}
+%{!?_with_bootstrap:Requires: pkgconfig(superlu)}
 Conflicts:     libblas-devel
 
 %description   -n lib%bnomen-lapack-devel
@@ -124,6 +127,12 @@ real and complex matrices in both single and double precision.
 Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group:         Development/Documentation
 
+Requires:      cmake
+Requires:      gcc-fortran
+Requires:      pkgconfig(openblas)
+%{?_with_xblas:Requires: libxblas-devel}
+%{!?_with_bootstrap:Requires: pkgconfig(superlu)}
+
 %description   -n lib%enomen-devel
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
 linear algebra. LAPACK provides routines for solving systems of
@@ -157,6 +166,12 @@ real and complex matrices in both single and double precision.
 %package       -n lib%cnomen-devel
 Summary:       BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group:         Development/Documentation
+
+Requires:      cmake
+Requires:      gcc-fortran
+Requires:      pkgconfig(openblas)
+%{?_with_xblas:Requires: libxblas-devel}
+%{!?_with_bootstrap:Requires: pkgconfig(superlu)}
 
 %description   -n lib%cnomen-devel
 LAPACK (Linear Algebra PACKage) is a standard library for numerical
@@ -238,6 +253,9 @@ real and complex matrices in both single and double precision.
 
 
 %changelog
+* Wed Sep 02 2026 Pavel Skrylev <majioa@altlinux.org> 2:3.12.1-alt3
+- ! fixed gear rules, and deps for packages
+
 * Wed Jul 22 2026 Ivan A. Melnikov <iv@altlinux.org> 2:3.12.1-alt2
 - NMU: Bump epoch to complete loongarch64 bootstrap
 
