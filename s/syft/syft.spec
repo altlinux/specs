@@ -4,7 +4,7 @@
 %def_with check
 
 Name: syft
-Version: 1.49.0
+Version: 1.51.0
 Release: alt1
 
 Summary: A CLI tool and Go library for generating an SBOM from container images and filesystems
@@ -80,5 +80,8 @@ go test $(go list ./... | grep -vxFf %SOURCE2)
 %_bindir/%name
 
 %changelog
+* Tue Aug 18 2026 Andrey Kuzma <kuzmaav@altlinux.org> 1.51.0-alt1
+- Updated to 1.51.0.
+
 * Wed Jul 22 2026 Andrey Kuzma <kuzmaav@altlinux.org> 1.49.0-alt1
 - Initial build for ALT Sisyphus.
