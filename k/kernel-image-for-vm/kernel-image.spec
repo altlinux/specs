@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.48
+%define kernel_sublevel 	.49
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -637,6 +637,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 6.18.49-alt1
+- 6.18.48 -> 6.18.49
+- enabled ENA_ETHERNET module (Closes: #60315)
+
 * Fri Aug 28 2026 Anton Farygin <rider@altlinux.org> 6.18.48-alt1
 - 6.18.47 -> 6.18.48
 
