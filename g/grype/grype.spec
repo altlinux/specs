@@ -4,7 +4,7 @@
 %def_with check
 
 Name: grype
-Version: 0.116.0
+Version: 0.117.0
 Release: alt1
 
 Summary: A vulnerability scanner for container images and filesystems
@@ -87,5 +87,8 @@ go test $(go list ./... | grep -vxFf %SOURCE2)
 %_bindir/%name
 
 %changelog
+* Tue Aug 18 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.117.0-alt1
+- Updated to 0.117.0.
+
 * Wed Jul 22 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.116.0-alt1
 - Initial build for ALT Sisyphus.
