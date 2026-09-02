@@ -1,7 +1,7 @@
 %define pg_ver 15
 
 Name: postgresql%pg_ver-pg_checksums
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 Summary: pg_checksums_ext can verify, activate or deactivate checksums
@@ -41,6 +41,9 @@ online, contrary to PostgreSQL's `pg_checksums`
 %_bindir/*
 
 %changelog
+* Wed Sep 02 2026 Alexei Takaseev <taf@altlinux.org> 1.4-alt1
+- 1.4
+
 * Tue Sep 09 2025 Alexei Takaseev <taf@altlinux.org> 1.3-alt1
 - 1.3
 
