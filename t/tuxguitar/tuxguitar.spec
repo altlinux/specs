@@ -1,6 +1,6 @@
 Name: tuxguitar
-Version: 2.0.1
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: A multitrack guitar tablature editor and player
 License: LGPL-2.0+
@@ -73,7 +73,7 @@ cp -r desktop/build-scripts/tuxguitar-linux-swt/target/tuxguitar-%version-linux-
 
 # desktop files
 install -dm 755 %buildroot/%_datadir/applications
-sed 's/Icon=tuxguitar/Icon=\/usr\/share\/icons\/hicolor\/96x96\/apps\/tuxguitar.png/g' %buildroot/%_datadir/%name-%version/share/applications/tuxguitar.desktop > %buildroot/%_datadir/applications/tuxguitar.desktop
+sed 's/Icon=tuxguitar/Icon=\/usr\/share\/icons\/hicolor\/96x96\/apps\/tuxguitar.png/g' %buildroot/%_datadir/%name-%version/share/applications/TuxGuitar.desktop > %buildroot/%_datadir/applications/tuxguitar.desktop
 
 # icon
 install -dm 755 %buildroot/%_iconsdir/hicolor/96x96/apps/
@@ -102,7 +102,7 @@ if st and st.type == "directory" then
 end
 
 %files
-%doc AUTHORS LICENSE README.md
+%doc AUTHORS docs/LICENSE README.md
 %_libdir/tuxguitar-%version
 %_datadir/tuxguitar-%version
 %_iconsdir/hicolor/*/*/*
@@ -111,6 +111,9 @@ end
 %_bindir/tuxguitar
 
 %changelog
+* Wed Sep 02 2026 Andrey Kovalev <ded@altlinux.org> 2.1.0-alt1
+- update to 2.1.0
+
 * Tue Aug 25 2026 Evgeniy Serov <scala@altlinux.org> 2.0.1-alt3
 - NMU: switched the build to XMvn
 
