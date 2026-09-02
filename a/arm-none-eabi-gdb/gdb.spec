@@ -1,13 +1,14 @@
 Name: arm-none-eabi-gdb
-Version: 16.3
+Version: 17.2
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
 Group: Development/Debuggers
-Url: https://www.sourceware.org/gdb/
+URL: https://www.sourceware.org/gdb/
+VCS: git://sourceware.org/git/binutils-gdb
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ flex makeinfo
 BuildRequires: libtinfo-devel libreadline-devel libgmp-devel libexpat-devel liblzma-devel libmpfr-devel zlib-devel
@@ -59,6 +60,9 @@ mkdir -p %buildroot%_libexecdir/%target/share/gdb/auto-load
 %_libexecdir/%target/share/gdb/auto-load
 
 %changelog
+* Wed Sep 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 17.2-alt1
+- 17.2 released
+
 * Wed May 21 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 16.3-alt1
 - 16.3 released
 

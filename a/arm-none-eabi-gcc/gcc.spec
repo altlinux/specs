@@ -1,11 +1,12 @@
 Name: arm-none-eabi-gcc
-Version: 16.1.0
+Version: 16.2.0
 Release: alt1
 
 Summary: GNU Compiler Collection
 License: GPLv3+
 Group: Development/C
-Url: https://gcc.gnu.org/
+URL: https://gcc.gnu.org/
+VCS: git://gcc.gnu.org/git/gcc.git
 
 Requires: arm-none-eabi-newlib
 
@@ -137,6 +138,9 @@ find  %buildroot%_libexecdir/ -type f -name \*.la -delete
 %_libexecdir/gcc/%target/*/cc1plus
 
 %changelog
+* Wed Sep 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.2.0-alt1
+- 16.2.0 released
+
 * Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.1.0-alt1
 - 16.1.0 released
 
