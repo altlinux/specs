@@ -1,8 +1,8 @@
 %define rname keepsecret
 
 Name: %rname
-Version: 1.1.0
-Release: alt2
+Version: 26.08.0
+Release: alt1
 %K6init
 
 Summary: Password manager GUI for KDE Plasma
@@ -11,6 +11,7 @@ License: GPL-2.0
 Url: https://invent.kde.org/utilities/keepsecret
 
 Requires: kf6-kirigami kf6-kirigami-addons
+Requires: qml6(org.kde.kirigami.actioncollection)
 
 Source: %rname-%version.tar
 
@@ -23,6 +24,7 @@ BuildRequires: qt6-virtualkeyboard
 BuildRequires: libsecret-devel
 BuildRequires: kf6-kconfig-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-ki18n-devel
 BuildRequires: kf6-kirigami kf6-kirigami-devel kf6-kitemmodels-devel
+BuildRequires: kf6-kirigami-app-components-devel
 
 %description
 KeepSecret is a Password manager GUI intended to be a client for
@@ -48,6 +50,9 @@ It can be used with KWallet, but also other systems such as oo7, Gnome-keyring o
 %_datadir/qlogging-categories6/*keepsecret*
 
 %changelog
+* Thu Sep 03 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.0-alt1
+- new version
+
 * Fri Jun 05 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt2
 - add russian translation
 
