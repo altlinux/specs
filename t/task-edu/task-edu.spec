@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -144,6 +144,7 @@ Requires: thunderbird
 %ifarch x86_64 aarch64
 Requires: freeplane
 %endif
+Requires: alterator-net-iptables
 %description lite
 %{summary}.
 
@@ -656,6 +657,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Thu Sep 03 2026 Ivan Khanas <xeno@altlinux.org> 1.8.4-alt1
+- lite: add alterator-net-iptables.
+
 * Tue Jul 07 2026 Arseniy Kostevich <faux@altlinux.org> 1.8.3-alt1
 - lite: Add freeplane.
 
