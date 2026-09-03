@@ -1,12 +1,8 @@
-%ifarch %e2k
-%def_disable doc
-%else
 %def_enable doc
-%endif
 
 Name:     bup
-Version:  0.33.10
-Release:  alt2
+Version:  0.34
+Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
 # all of the code is licensed as GNU Lesser General Public License v2, except:
@@ -24,7 +20,6 @@ Source1:  bup-web.service
 Patch1:   bup-disable-test_from_path_error.patch
 Patch2:   bup-python.patch
 Patch3:   bup-fix_uint32.patch
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -33,6 +28,7 @@ BuildRequires: python3-module-fuse
 BuildRequires: python3-module-pyxattr
 BuildRequires: python3-module-libacl
 BuildRequires: python3-module-tornado
+BuildRequires: libacl-devel
 %if_enabled doc
 BuildRequires: pandoc
 %endif
@@ -90,17 +86,8 @@ sed -i 's,-Werror,,;s,-O2,-O%_optlevel,' Makefile*
 %endif
 
 %build
-pushd config
 # NB: homemade one, do not try %%configure
-./configure \
-       --prefix=%_prefix \
-       --execdir=%_bindir \
-       --sbindir=%_sbindir \
-       --confdir=%_sysconfdir \
-       --libdir=%_libdir \
-       --libexecdir=%_libexecdir \
-       --mandir=%_mandir
-popd
+./configure
 %make_build PREFIX=%_prefix PYTHON=%__python3
 
 %install
@@ -120,7 +107,7 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 %preun_service bup-web
 
 %files
-%doc README README.md DESIGN
+%doc README.md DESIGN.md HACKING.md
 %if_enabled doc
 %doc %_defaultdocdir/%name/
 %endif
@@ -141,6 +128,9 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 %endif
 
 %changelog
+* Thu Sep 03 2026 Andrey Cherepanov <cas@altlinux.org> 0.34-alt1
+- New version.
+
 * Sat Feb 28 2026 Michael Shigorin <mike@altlinux.org> 0.33.10-alt2
 - E2K: skip docs (no pandoc yet).
 - bup-config(5) packaged.
