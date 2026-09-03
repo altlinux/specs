@@ -3,8 +3,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20220930
-Release: alt6
+Version: 20260529
+Release: alt1
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -130,8 +130,6 @@ pushd testcases/open_posix_testsuite
 popd
 banner rt
 pushd testcases/realtime
-  %autoreconf
-  %configure --prefix=/usr/lib/realtime_testsuite
   %make_build
 popd
 
@@ -155,12 +153,16 @@ EOF
 chmod a+rx %buildroot%_bindir/runltp
 
 %check
+banner check
 PATH=%buildroot/usr/lib/ltp/testcases/bin:$PATH
 uname01
 uname02
 uname04
 
 %pre testsuite-checkinstall
+# runltp was removed from LTP use kirk instead
+# https://github.com/linux-test-project/kirk
+# https://kirk.readthedocs.io/
 set -exo pipefail
 # 'LD_PRELOAD=libfakeroot.so' hangs some binaries (including 'bash' and excluding
 # 'id' for example) in vm-run, and it's set under rooter.
@@ -181,9 +183,6 @@ fi
 %doc COPYING README.*
 /usr/lib/ltp
 %_bindir/runltp
-%_bindir/execltp
-%_man1dir/*.1.*
-%_man3dir/*.3.*
 
 %files open-posix-testsuite
 %doc testcases/open_posix_testsuite/{AUTHORS,README,COPYING,NEWS,QUICK-START}
@@ -196,9 +195,12 @@ fi
 %doc testcases/realtime/{00_Descriptions.txt,README,doc}
 /usr/lib/realtime_testsuite
 
-%files testsuite-checkinstall
+#%%files testsuite-checkinstall
 
 %changelog
+* Thu Sep 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 20260529-alt1
+- NMU: update to 20260529 to fix FTBFS with gcc15.
+
 * Mon Apr 27 2026 Vitaly Chikunov <vt@altlinux.org> 20220930-alt6
 - {,f}setxattr02: Adapt test for kernel 7.1.0+ socket xattr support.
 
