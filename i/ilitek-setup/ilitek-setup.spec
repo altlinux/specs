@@ -1,5 +1,5 @@
 Name: ilitek-setup
-Version: 0.1
+Version: 0.2
 Release: alt1
 Summary: Set Phosh for Baikal M-based stand
 License: GPL-2.0-or-later
@@ -37,5 +37,8 @@ install -m 0644 20-%name.preset %buildroot%_presetdir/
 %_presetdir/20-%name.preset
 
 %changelog
+* Tue Sep  1 2026 Artyom Bystrov <arbars@altlinux.org> 0.2-alt1
+- Fix some mistypes
+
 * Mon Aug 31 2026 Artyom Bystrov <arbars@altlinux.org> 0.1-alt1
 - Initial commit for Sisyphus
