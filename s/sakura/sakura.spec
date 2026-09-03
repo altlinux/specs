@@ -1,22 +1,18 @@
-Name:    sakura
+Name: sakura
 Version: 3.8.9
-Release: alt1
+Release: alt2
 
 Summary: Simple but powerful libvte based terminal emulator for X11
-License: GPLv2 
-Group:   Terminals
-Url:     https://github.com/dabisu/sakura
-
-Packager: Ulysses Apokin <ulysses@altlinux.org>
+License: GPL-2.0-or-later
+Group: Terminals
+URL: https://github.com/dabisu/sakura
+VCS: https://github.com/dabisu/sakura
 
 Source: %name-%version.tar
-Patch0: 0001-Removed-image-installation-from-cmake.patch
-Patch1: 0002-New-palette-added-monochrome.patch
+Patch: %name-%version-%release.patch
 
-Provides: xvt
-Provides: x-terminal-emulator
-
-BuildRequires(pre): cmake gcc-c++
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
 BuildRequires: libvte3-devel libgtk+3-devel libpcre2-devel pkgconfig
 BuildRequires: libffi-devel perl-podlators
 
@@ -24,7 +20,10 @@ BuildRequires: libffi-devel perl-podlators
 BuildRequires: desktop-file-utils
 
 # For to convert SVG to PNG
-BuildRequires: ImageMagick
+BuildRequires: ImageMagick-tools
+
+Provides: xvt
+Provides: x-terminal-emulator
 
 %description
 Sakura is a terminal emulator and it's only dependencies are GTK and VTE.
@@ -33,8 +32,7 @@ change configuration options via a contextual menu. No more no less.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%autopatch -p1
 mv terminal-tango.svg %name-terminal-emulator.svg
 magick -background none %name-terminal-emulator.svg -strip %name-terminal-emulator.png
 
@@ -59,9 +57,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README.* LICENSE AUTHORS
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name-terminal-emulator.*
-%_man1dir/%name.1.xz
+%_man1dir/%name.1.*
 
 %changelog
+* Thu Sep 03 2026 Ulysses Apokin <ulysses@altlinux.org> 3.8.9-alt2
+- fix build-time dependencies
+
 * Fri Apr 04 2025 Ulysses Apokin <ulysses@altlinux.org> 3.8.9-alt1
 - new version
 
