@@ -4,7 +4,7 @@
 %define libkquickimageeditor libkquickimageeditor%sover
 
 Name: kde6-%rname
-Version: 0.6.2
+Version: 0.7.0.1
 Release: alt1
 %K6init altplace
 
@@ -18,7 +18,8 @@ Requires: kf6-kirigami
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
+BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-shadertools-devel
+BuildRequires: highway1.3-devel
 BuildRequires: kf6-kconfig-devel
 
 %description
@@ -55,6 +56,9 @@ Obsoletes: %name < %EVR
 %build
 %K6build \
     -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
+%ifarch %ix86
+    -DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS -msse2"
+%endif
     #
 
 %install
@@ -74,6 +78,9 @@ Obsoletes: %name < %EVR
 %_K6archdata/mkspecs/modules/*KQuickImageEditor*.pri
 
 %changelog
+* Thu Sep 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.7.0.1-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 0.6.2-alt1
 - new version
 
