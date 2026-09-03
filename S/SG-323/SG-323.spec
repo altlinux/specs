@@ -1,5 +1,5 @@
 Name:    SG-323
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 %define common_summary Emulation of the Ursa Major Stargate 323 digital reverb
@@ -33,6 +33,7 @@ BuildRequires: pkgconfig(lv2)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xrender)
@@ -98,6 +99,9 @@ cp -a "VST3/SG-323.vst3" %buildroot%_libdir/vst3
 
 
 %changelog
+* Thu Sep 03 2026 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Thu Feb 26 2026 Ivan A. Melnikov <iv@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
