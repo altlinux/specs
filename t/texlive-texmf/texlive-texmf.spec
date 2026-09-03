@@ -95,7 +95,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt0_13
+Release:	alt0_14
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -113,6 +113,8 @@ Source9:	collection.basic
 Source10:	fonts.extra
 Source11:	fonts.asian
 Source12:	fonts.sources
+# http://lists.altlinux.org/pipermail/community/2009-November/658977.html
+Source13:	rumakeindex.utf-8
 
 BuildArch:	noarch
 # for pathfix.py
@@ -851,6 +853,7 @@ python3 %{SOURCE45} -pni "%{__python3} " \
 	texmf-dist/scripts/de-macro/de-macro \
 
 %patch33 -p0
+cp %SOURCE13 texmf-dist/scripts/texlive-extra/rumakeindex.sh
 
 
 #-----------------------------------------------------------------------
@@ -1065,6 +1068,9 @@ EOF
 
 
 %changelog
+* Tue Sep 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_14
+- NMU: new rumakeindex (Closes: #29829)
+
 * Tue Dec 24 2024 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_13
 - NMU: replace egrep by grep -E
 
