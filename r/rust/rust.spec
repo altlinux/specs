@@ -11,7 +11,7 @@
 # it's better to use major.minor for versioned files.
 %define v_major 1
 %define v_minor 98
-%define v_patch 0
+%define v_patch 1
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
 
@@ -601,6 +601,10 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Thu Sep 03 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.98.1-alt1
+- New version (1.98.1).
+- rustc: fix miscompilation in generating vtables
+
 * Fri Aug 21 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.98.0-alt1
 - New version (1.98.0).
 
