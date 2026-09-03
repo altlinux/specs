@@ -2,10 +2,14 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
+# Disable vendor for this package since there is no dependencies
+# You can also change vendor dir by redefining %_zig_vendor_dir
+%global _zig_system_integration %nil
+
 Name: example-zig
 Summary: Example of packaging Zig program
 Version: 6
-Release: alt1
+Release: alt2
 License: GPL-2.0-only
 Group: Development/Other
 Url: https://ziglearn.org/
@@ -43,6 +47,9 @@ example_zig
 %_bindir/example_zig
 
 %changelog
+* Thu Sep 03 2026 Ilya Sorochan <k0tran@altlinux.org> 6-alt2
+- Disable vendor enforcement provided by rpm-macros-zig.
+
 * Tue Sep 01 2026 Ilya Sorochan <k0tran@altlinux.org> 6-alt1
 - Update for zig-0.16.0.
 
