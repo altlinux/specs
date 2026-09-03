@@ -1,11 +1,12 @@
 Name: rsgain
-Version: 3.7
+Version: 3.8
 Release: alt1
 
 Summary: ReplayGain 2.0 utility
 License: BSD-2-Clause
 Group: Sound
-Url: https://github.com/complexlogic/rsgain
+URL: https://github.com/complexlogic/rsgain
+VCS: https://github.com/complexlogic/rsgain
 
 Source: %name-%version.tar
 
@@ -40,6 +41,9 @@ install -pm0644 -D docs/rsgain.1 %buildroot%_man1dir/rsgain.1
 %_man1dir/rsgain.1*
 
 %changelog
+* Thu Sep 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.8-alt1
+- 3.8 released
+
 * Wed Mar 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.7-alt1
 - 3.7 released
 
