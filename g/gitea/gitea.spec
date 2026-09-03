@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.27.2
+Version: 1.27.3
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -70,7 +70,12 @@ export LDFLAGS="-X %import_path/modules/setting.CustomConf=%_sysconfdir/%name/ap
                 -X %import_path/modules/setting.CustomPath=%_localstatedir/%name/custom \
                 -X %import_path/modules/setting.AppWorkPath=%_localstatedir/%name"
 
-TAGS="bindata timetzdata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version %make all
+# glibc < 2.34 (p10) hides RTLD_NEXT in <dlfcn.h> behind __USE_GNU, and
+# msteinert/pam builds with -std=c99, so cgo fails to resolve C.RTLD_NEXT.
+# Passing CGO_CFLAGS on the make command line overrides the "?=" default
+# in Gitea's Makefile; keep "go env CGO_CFLAGS" so -O2 -g are not lost.
+TAGS="bindata timetzdata sqlite sqlite_unlock_notify pam" GITEA_VERSION=%version \
+%make CGO_CFLAGS="$(go env CGO_CFLAGS) -D_GNU_SOURCE" all
 
 %install
 mkdir -p %buildroot%_localstatedir/%name
@@ -123,6 +128,14 @@ useradd -r -g %name -c 'Gitea daemon' \
 %_datadir/zsh/site-functions/_gitea
 
 %changelog
+* Thu Sep 03 2026 Alexey Shabalin <shaba@altlinux.org> 1.27.3-alt1
+- 1.27.3 (Fixes: CVE-2026-60010, CVE-2026-60018, CVE-2026-60021,
+  CVE-2026-62925, CVE-2026-63021, CVE-2026-63792, CVE-2026-66849,
+  CVE-2026-66853, CVE-2026-66874, CVE-2026-66877, CVE-2026-67577,
+  CVE-2026-68957, CVE-2026-68964, CVE-2026-78433).
+- Pass -D_GNU_SOURCE via CGO_CFLAGS so msteinert/pam (C.RTLD_NEXT) builds
+  on glibc < 2.34 (upstream PR #35 not merged yet).
+
 * Thu Aug 27 2026 Alexey Shabalin <shaba@altlinux.org> 1.27.2-alt1
 - sqlite driver switched to modernc (new upstream default).
 - 1.27.2 (Fixes: CVE-2026-60008, CVE-2026-73278, CVE-2026-73535,
