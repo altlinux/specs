@@ -1,19 +1,21 @@
-%global import_path github.com/piraeusdatastore/piraeus-operator/v2
 %global _unpackaged_files_terminate_build 1
+%global import_path github.com/piraeusdatastore/piraeus-operator/v2
 
 Name:    piraeus-operator
 Version: 2.10.3
-Release: alt1
+Release: alt2
 
 Summary: The Piraeus Operator manages LINSTOR clusters in Kubernetes
 License: Apache-2.0
 Group:   Other
 URL:     https://piraeus.io
+Vcs:     https://github.com/piraeusdatastore/piraeus-operator
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: vendor.tar
 
-BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24
+BuildRequires(pre): rpm-build-golang
+BuildRequires: golang >= 1.24
 BuildRequires: /proc
 
 %description
@@ -25,38 +27,41 @@ performance local storage using the same volume APIs that app developers
 have become accustomed to.
 
 %prep
-%setup
+%setup -a 1
 
 %build
-export BUILDDIR="$PWD/.gopath"
+export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
-LDFLAGS="-X %import_path/pkg/vars.Version=%version"
+export GOFLAGS="-trimpath"
+export LDFLAGS="-X %import_path/pkg/vars.Version=%version -buildid="
 
 %golang_prepare
+%golang_build ./cmd ./cmd/gencert
 
-cd .gopath/src/%import_path
-
-go build \
-  -ldflags "$LDFLAGS" \
-  -o manager ./cmd
-
-go build \
-  -ldflags "$LDFLAGS" \
-  -o gencert ./cmd/gencert
+_BBDIR="$BUILDDIR"/bin
+mv "$_BBDIR"/cmd      "$_BBDIR"/%name
+mv "$_BBDIR"/gencert  "$_BBDIR"/piraeus-gencert 
 
 %install
-export BUILDDIR="$PWD/.gopath"
+export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
-mkdir -p %buildroot%_bindir
-install -D -m755 $BUILDDIR/src/%import_path/manager %buildroot%_bindir
-install -D -m755 $BUILDDIR/src/%import_path/gencert %buildroot%_bindir
+%golang_install
+
+%check
+# skip envtest
+%gotest -v $(go list ./... | grep -Ev '^%import_path/(internal/(controller|webhook/v1)|pkg/k8sgc)$')
 
 %files
-%doc *.md
-%_bindir/*
+%doc LICENSE README.md
+%_bindir/%name
+%_bindir/piraeus-gencert
 
 %changelog
+* Thu Sep 03 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 2.10.3-alt2
+- Refactor spec file.
+- Use another binaries naming.
+- Enable tests.
+
 * Mon Dec 15 2025 Aleksandr Gamzin <gamzin@altlinux.org> 2.10.3-alt1
 - Initial build for sisyphus.
