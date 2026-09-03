@@ -1,6 +1,6 @@
 Name:    rsnapshot
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: local and remote filesystem snapshot utility
 
@@ -152,6 +152,9 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Thu Sep 03 2026 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt2
+- Bump release.
+
 * Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 1.5.1-alt1
 - New version
   * rotate only if there will be a new <interval>.0 folder
