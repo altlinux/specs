@@ -6,7 +6,7 @@
 %endif
 
 Name:		coccinelle
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary:	Match and transform C code using semantic patches
 Group:		Development/C
@@ -169,6 +169,9 @@ cd %_docdir/%name-demos-%version
 %files checkinstall
 
 %changelog
+* Thu Sep 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.3-alt1
+- Update to 1.3.3 (2026-09-02).
+
 * Mon Aug 31 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.3.2-alt1
 - Update to 1.3.2 (2026-08-18).
 
