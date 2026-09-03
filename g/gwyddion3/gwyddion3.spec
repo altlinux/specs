@@ -4,7 +4,7 @@
 ExcludeArch: i586
 
 Name: gwyddion3
-Version: 3.11
+Version: 3.12
 Release: alt1
 
 Summary: An SPM data visualization and analysis tool
@@ -15,7 +15,8 @@ License: GPLv2+
 Url: http://gwyddion.net/
 
 Source: %name-%version.tar.gz
-
+Patch0: fix_lib_list.patch
+Patch1: fix_po_files.patch
 
 BuildRequires(pre): libGConf-devel
 BuildRequires: gcc-c++
@@ -116,7 +117,6 @@ This package contains the API docmentation.
 %setup
 %autopatch
 
-
 %build
 %autoreconf
 %configure \
@@ -126,9 +126,9 @@ This package contains the API docmentation.
 #	--enable-library-bloat 
 	
 # fix build errors. Unstable?
-sed -i 's|#include "preview.h"|#include "../preview.h"|' modules/synth/*.c
+# sed -i 's|#include "preview.h"|#include "../preview.h"|' modules/synth/*.c
 # __hack__ to fix l18n file names not to conflict with gwyddion2
-sed -i 's|PACKAGE = gwyddion|PACKAGE = gwyddion3|' po/Makefile
+# sed -i 's|PACKAGE = gwyddion|PACKAGE = gwyddion3|' po/Makefile
 
 
 %make_build
@@ -235,6 +235,9 @@ find %buildroot -name \*.la -print0 | xargs -0 rm -f
 
 
 %changelog
+* Thu Sep 03 2026 Alexei Mezin <alexvm@altlinux.org> 3.12-alt1
+- New version
+
 * Tue Jun 30 2026 Alexei Mezin <alexvm@altlinux.org> 3.11-alt1
 - Initial build of officialy UNSTABLE version
 
