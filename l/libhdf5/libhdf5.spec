@@ -6,7 +6,7 @@
 
 Name: lib%oname
 Version: 2.2.0
-Release: alt2
+Release: alt3
 
 Summary: Hierarchical Data Format 5 library
 License: BSD
@@ -16,6 +16,7 @@ Url: http://www.hdfgroup.org/HDF5/
 VCS: https://github.com/HDFGroup/hdf5.git
 Source: %name-%version.tar
 Patch0: %name-alt-disable-rpath.patch
+Patch1: %name-alt-settings-link-libs.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
@@ -86,6 +87,7 @@ This package contains tools for work with HDF5.
 # ALT: h5cc/h5c++ add -Wl,-rpath,%_libdir by default; RPATH to the standard
 # libdir is forbidden by verify-elf and breaks packages linking via h5cc.
 %patch0 -p1
+%patch1 -p1
 
 %ifarch %e2k
 # too many unsupported warning options
@@ -144,6 +146,9 @@ rm -rf %buildroot%_libdir/cmake/Modules/Findlibaec.cmake
 %_libdir/libhdf5.settings
 
 %changelog
+* Thu Sep 03 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt3
+- libhdf5.settings: join Extra libraries with spaces instead of ";" (closes: 60389)
+
 * Sat Aug 22 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt2
 - libhdf5-devel: require hdf5-tools (cmake imported targets)
 
