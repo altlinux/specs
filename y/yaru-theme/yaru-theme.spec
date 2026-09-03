@@ -4,7 +4,7 @@
 %def_enable xfwm4
 
 Name: yaru-theme
-Version: 26.10.1
+Version: 26.10.2
 Release: alt1
 
 Summary: Ubuntu Yaru theme suite
@@ -91,7 +91,6 @@ This package contains the style for Folder Color Switcher.
 %setup
 %autopatch -p1
 
-%build
 # Replace Ubuntu logo (https://github.com/ubuntu/yaru/pull/3931)
 dir="icons/Yaru"
 grid="actions/view-app-grid.png"
@@ -108,10 +107,12 @@ logo="$dir/places/start-here-symbolic.svg"
 [ -e "$logo" ] && rm -f "$logo"
 [ -e "$dir/$grid" ] && ln -s "../$grid" "$logo"
 
-%meson %{?_disable_sessions:-Dsessions=false} \
-       %{?_enable_cinnamonshell:-Dcinnamon-shell=true} \
-       %{?_enable_unity:-Dubuntu-unity=true} \
-       %{?_enable_xfwm4:-Dxfwm4=true}
+%build
+%meson \
+    %{?_disable_sessions:-Dsessions=false} \
+    %{?_enable_cinnamonshell:-Dcinnamon-shell=true} \
+    %{?_enable_unity:-Dubuntu-unity=true} \
+    %{?_enable_xfwm4:-Dxfwm4=true}
 %meson_build
 
 %install
@@ -157,6 +158,9 @@ popd
 %_datadir/folder-color-switcher/colors.d/Yaru.json
 
 %changelog
+* Wed Sep 02 2026 Alexander Kovalev <alexvk@altlinux.org> 26.10.2-alt1
+- New version 26.10.2.
+
 * Thu Jun 11 2026 Alexander Kovalev <alexvk@altlinux.org> 26.10.1-alt1
 - New version 26.10.1.
 - Fix mixed Cinnamon style appearance.
