@@ -1,5 +1,6 @@
-%define pypi_name torch
-%def_without check
+%define _unpackaged_files_terminate_build 1
+
+%def_with check
 
 %def_with system_onnx
 %def_with gloo
@@ -9,10 +10,8 @@
 
 %define optflags_lto %nil
 
-%define rname python3-module-%pypi_name
-
-Name:    %rname-cpu
-Version: 2.10.0
+Name:    python3-module-torch-cpu
+Version: 2.12.0
 Release: alt1
 
 Summary: Tensors and dynamic neural networks in Python with strong acceleration support (CPU-only)
@@ -21,24 +20,37 @@ Group:   Development/ML
 URL:     https://pytorch.org/
 VCS:     https://github.com/pytorch/pytorch.git
 
-Source0: %name-%version.tar
+Source0: python3-module-torch-cpu-%version.tar
 Source1: third_party.tar
+Source2: _install_paths.py.in
 
-Patch0: 0001-Disabled-submodule-search.patch 
-Patch1: 0002-Fixed-system-libs-cmake.patch 
+Patch0: 0001-Disabled-submodule-search.patch
+Patch1: 0002-Fixed-system-libs-cmake.patch
 Patch2: 0003-Use-system-valgrind-instead-of-bundled.patch
+Patch3: 0004-Used-system-devel-paths.patch
 
 ExclusiveArch: x86_64 aarch64
 # Disable python3 autoprovides to avoid duplicate Provides between CPU/CUDA variants.
 AutoProv: nopython3
 
-%filter_from_requires /python3(torch.distributed.run)/d
-%add_findreq_skiplist %python3_sitelibdir/torch/*
-%add_findreq_skiplist %python3_sitelibdir/functorch/*
-%add_findreq_skiplist %python3_sitelibdir/torchgen/*
-%add_findreq_skiplist %_libdir/libc10.so
-%add_findreq_skiplist %_libdir/libshm.so
-%add_findreq_skiplist %_libdir/libtorch*.so
+# Remove self requires for torch
+%filter_from_requires /python3(torch.*)/d
+%filter_from_requires /^libtorch.*\.so/d
+%filter_from_requires /^libc10.*\.so/d
+%filter_from_requires /^libshm\.so/d
+
+# Remove CUDA packages requires for CPU package
+%filter_from_requires /python3(cutlass.*)/d
+%filter_from_requires /python3(cuda.bindings.driver)/d
+
+# Ignoring packages that unnecessary to work
+%filter_from_requires /python3(coremltools.*)/d
+%filter_from_requires /python3(expecttest)/d
+%filter_from_requires /python3(onnxscript.*)/d
+%filter_from_requires /python3(optree.*)/d
+%filter_from_requires /python3(pytorch_lightning)/d
+%filter_from_requires /python3(tensorboard.*)/d
+%filter_from_requires /python3(libfb.py.log)/d
 
 BuildRequires(pre): cmake rpm-build-python3
 BuildRequires: gcc-c++
@@ -51,6 +63,7 @@ BuildRequires: libmpfr-devel
 BuildRequires: libgmp-devel
 BuildRequires: libfftw3-devel
 BuildRequires: eigen3
+BuildRequires: liblapack-devel
 BuildRequires: libsleef-devel
 BuildRequires: FP16-devel
 BuildRequires: fxdiv-devel
@@ -62,7 +75,7 @@ BuildRequires: moodycamel-concurrentqueue-devel
 %if_with mpi
 BuildRequires: openmpi-devel
 %endif
-# BuildRequires: pybind11-devel
+BuildRequires: pybind11-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-protobuf
@@ -74,98 +87,59 @@ BuildRequires: python3-module-requests
 BuildRequires: python3-module-six
 BuildRequires: python3-module-jinja2
 
-Provides: 	%rname = %EVR
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-sympy
+BuildRequires: python3-module-expecttest
+BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-filelock
+BuildRequires: python3-module-networkx
+BuildRequires: python3-module-psutil
+%endif
+
 Provides: 	pytorch
-Obsoletes: 	%rname
+Obsoletes: 	python3-module-torch < %EVR
 
-Requires: 	lib%pypi_name-cpu = %EVR
-
-Requires:      python3-base
-Requires:      python3-module-sympy
-Requires:      python3-module-filelock
-Requires:      python3-module-fsspec
-Requires:      python3-module-protobuf
-Requires:      python3-module-hypothesis
-Requires:      python3-module-mpmath
-Requires:      python3-module-networkx-core
-Requires:      python3-module-numpy
-Requires:      python3-module-onnx
-Requires:      python3-module-setuptools
-Requires:      python3-module-urllib3
-Requires:      python3-module-yaml
-Requires:      python3-module-typing_extensions
-
-# Ignoring packages that unnecessary to work
-
-# coremltools
-%add_python3_req_skip coremltools coremltools.converters.mil.input_types coremltools.converters.mil.mil coremltools.models.neural_network
-
-# expecttest
-%add_python3_req_skip expecttest
-
-# onnxscript
-%add_python3_req_skip onnxscript onnxscript.evaluator onnxscript.function_libs.torch_lib onnxscript.function_libs.torch_lib.ops onnxscript.ir onnxscript.onnx_opset
-
-# optree
-%add_python3_req_skip optree
-
-# pytorch_lightning
-%add_python3_req_skip pytorch_lightning
-
-# tensorboard
-%add_python3_req_skip tensorboard tensorboard.compat tensorboard.compat.proto tensorboard.compat.proto.attr_value_pb2 tensorboard.compat.proto.config_pb2 tensorboard.compat.proto.event_pb2 tensorboard.compat.proto.graph_pb2 tensorboard.compat.proto.node_def_pb2 tensorboard.compat.proto.step_stats_pb2 tensorboard.compat.proto.summary_pb2 tensorboard.compat.proto.tensor_pb2 tensorboard.compat.proto.tensor_shape_pb2 tensorboard.compat.proto.versions_pb2 tensorboard.plugins.custom_scalar tensorboard.plugins.pr_curve.plugin_data_pb2 tensorboard.plugins.projector.projector_config_pb2 tensorboard.plugins.text.plugin_data_pb2 tensorboard.summary.writer.event_file_writer tensorboard.summary.writer.record_writer
-
-# torch
-%add_python3_req_skip torch._C._autograd torch._C._distributed_c10d torch._C._distributed_rpc torch._C._dynamo.eval_frame torch._C._dynamo.guards torch._C._functorch torch._C._jit_tree_views torch._C._lazy torch._C._lazy_ts_backend torch._C._monitor torch._C._onnx torch._C._profiler tools.flight_recorder.fr_trace torch._C._dynamo torch._C._export torch.distributed.flight_recorder.fr_trace
-
-# torchgen
-%add_python3_req_skip torchgen torchgen.model torchgen.utils
-
-# libfb.py.log
-%add_python3_req_skip libfb.py.log
+Requires: 	libtorch-cpu = %EVR
 
 %description
 %summary.
 
 PyTorch is an optimized tensor library for deep learning using GPUs and CPUs.
-This package contains a CPU-only version built for x86_64.
+This package contains a CPU-only version built for x86_64 and aarch64.
 
-%package 	devel
-Summary: 	Headers for C/C++, cmake build description and libraries needed for development
+%package 	-n libtorch-cpu-devel
+Summary: 	Headers, CMake config and link libraries for C++ libtorch (CPU)
 Group: 		Development/ML
-Requires: 	%name = %EVR
+Requires: 	libtorch-cpu = %EVR
 # Disable python3 autoprovides to avoid duplicate Provides between CPU/CUDA variants.
 AutoProv: 	nopython3
-Provides: 	%rname-devel = %EVR
-Obsoletes: 	%rname-devel
+Obsoletes: 	python3-module-torch-devel < %EVR
+Obsoletes: 	python3-module-torch-cpu-devel < %EVR
 
-%description 	devel
-Although the Python interface is more polished and the primary focus of
-development, PyTorch also has a C++ frontend. This package contains the header
-to access the C/C++ interface.
+%description 	-n libtorch-cpu-devel
+Development files (headers and CMake package configuration) for building
+C++ programs and extensions against the CPU build of libtorch.
 
-%package 	-n lib%pypi_name-cpu
-Summary: 	%name shared libraries for CPU
+%package 	-n libtorch-cpu
+Summary: 	python3-module-torch-cpu shared libraries for CPU
 Group: 		System/Libraries
 # Disable python3 autoprovides to avoid duplicate Provides between CPU/CUDA variants.
 AutoProv: 	nopython3, nolib
-Requires: 	gcc-c++
-Requires:      	libsleef-devel
-Requires:	libcpuinfo-devel
-Requires:	libprotobuf-devel
-Requires: 	libabseil-cpp-devel
-Requires:  	libonnx-devel
-Requires: 	libgomp-devel
-Provides: 	lib%pypi_name = %EVR
-Obsoletes: 	lib%pypi_name
+Obsoletes: 	libtorch < %EVR
 
-%description 	-n lib%pypi_name-cpu
+%description 	-n libtorch-cpu
 CPU PyTorch libraries for system use. Other packages can
-link to use %name from C++ or Python extensions.
+link to use python3-module-torch-cpu from C++ or Python extensions.
 
 %prep
 %setup -a1
-%autopatch -p2
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
+%patch3 -p1
+
+install -pm0644 %SOURCE2 torch/_install_paths.py.in
 
 #Use system fmt
 #Include fmt before ATen to fix build
@@ -191,7 +165,7 @@ sed -i -e 's@${PROJECT_SOURCE_DIR}/third_party/concurrentqueue@/usr/include/conc
 %build
 %add_optflags -Wno-error=maybe-uninitialized
 %add_optflags -Wno-error=array-parameter
-%add_optflags -I%_builddir/%name-%version/third_party
+%add_optflags -I%_builddir/python3-module-torch-cpu-%version/third_party
 %add_optflags -I%_includedir/valgrind
 
 export BUILD_CUSTOM_PROTOBUF=OFF
@@ -223,10 +197,7 @@ export USE_OPENMP=ON
 export USE_PYTORCH_QNNPACK=OFF
 export USE_SYSTEM_SLEEF=ON
 export USE_SYSTEM_EIGEN_INSTALL=ON
-# Do not use system pybind11: current repo pybind11 (3.0.2) breaks Torch 2.9.x build
-# (pybind11 typing/tuple return-type deduction errors). Use the vendored/pinned pybind11
-# shipped with Torch for compatibility and reproducible builds.
-export USE_SYSTEM_PYBIND11=OFF
+export USE_SYSTEM_PYBIND11=ON
 export USE_SYSTEM_LIBS=OFF
 export USE_SYSTEM_NCCL=OFF
 export USE_XNNPACK=OFF
@@ -264,6 +235,8 @@ export NPROCS
 export MAX_JOBS=$NPROCS
 export CMAKE_BUILD_PARALLEL_LEVEL=$NPROCS
 %endif
+export TORCH_SYSTEM_INCLUDE_DIR=%_includedir
+export TORCH_SYSTEM_CMAKE_PREFIX_PATH=%_datadir/cmake
 
 %pyproject_build
 
@@ -271,44 +244,122 @@ export CMAKE_BUILD_PARALLEL_LEVEL=$NPROCS
 %pyproject_install
 
 # Place .so libraries in /usr/lib64 to make them discoverable by system packages
-# (such as python3-module-torchvision), and create symlinks back in torch/lib
-# so the Python module continues to function normally.
+# (such as python3-module-torchvision).
 LIBS="libc10.so libtorch_cpu.so \
-	libshm.so libtorch_global_deps.so libtorch.so"
+	libshm.so libtorch.so"
 
 for f in $LIBS; do
     install -Dm755 %buildroot%python3_sitelibdir/torch/lib/$f %buildroot%_libdir/
     rm -f %buildroot%python3_sitelibdir/torch/lib/$f
-    ln -s /usr/lib64/$f %buildroot%python3_sitelibdir/torch/lib/$f
 done
+
+# Expose C++ headers and CMake configs at system paths.
+
+install -d %buildroot%_includedir %buildroot%_datadir/cmake
+
+pushd %buildroot%python3_sitelibdir/torch
+
+# Move all C++ headers to the system include directory.
+%ifarch aarch64
+# Do not ship headers of the bundled private mimalloc dependency.
+rm -rf include/mimalloc-*
+%endif
+mv include/* %buildroot%_includedir/
+rmdir include
+
+# Move CMake package files to the system CMake directory.
+for d in share/cmake/*; do
+    mv "$d" %buildroot%_datadir/cmake/
+done
+rmdir share/cmake
+rmdir share
+
+popd
+
+# PyTorch generates CMake targets for its wheel layout (torch/lib).
+# Adjust them after relocating libraries and CMake files to system paths.
+find %buildroot%_datadir/cmake/Caffe2 \
+    -type f -name 'Caffe2Targets-*.cmake' \
+    -exec sed -i \
+        's#${_IMPORT_PREFIX}/lib/#${_IMPORT_PREFIX}/%{_lib}/#g' {} +
+
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+export PYTHONPATH=%buildroot%python3_sitelibdir
+export CPLUS_INCLUDE_PATH=%buildroot%_includedir:%buildroot%_includedir/torch/csrc/api/include
+export LIBRARY_PATH=%buildroot%_libdir
+
+testdir="$PWD/test"
+cd %buildroot%python3_sitelibdir
+
+# Fail fast if the extension does not load.
+%__python3 -c 'import torch; print(torch.__version__)'
+
+pytest_opts="-ra -q -p no:cacheprovider --disable-warnings"
+
+# Representative CPU test subset. GPU/XPU/distributed suites are not run.
+#
+# test_qengine is excluded because this build intentionally disables
+# FBGEMM and QNNPACK.
+#
+# test_scalar_tensor_dim_compiled_mode_cpu is excluded because it exercises
+# TorchInductor, which is outside this CPU package test subset.
+#
+# test_print is run separately below because other tests modify global
+# torch print options and make it order-dependent.
+%__python3 -m pytest $pytest_opts \
+    -k 'not test_qengine and not test_scalar_tensor_dim_compiled_mode_cpu and not test_print' \
+    "$testdir/test_type_promotion.py" \
+    "$testdir/test_tensor_creation_ops.py" \
+    "$testdir/test_indexing.py" \
+    "$testdir/test_view_ops.py" \
+    "$testdir/test_shape_ops.py" \
+    "$testdir/test_reductions.py" \
+    "$testdir/test_sort_and_select.py" \
+    "$testdir/test_autograd.py" \
+    "$testdir/test_nn.py" \
+    "$testdir/test_torch.py"
+
+# Run in a fresh Python process to avoid print-option state leakage.
+%__python3 -m pytest $pytest_opts \
+    "$testdir/test_torch.py::TestTorch::test_print"
 
 %files
 %doc *.md LICENSE
 %_bindir/torchrun
 %_bindir/torchfrtrace
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/torch/
 %python3_sitelibdir/functorch
 %python3_sitelibdir/torchgen
-%exclude %python3_sitelibdir/%pypi_name/share
-%exclude %python3_sitelibdir/%pypi_name/include
-%exclude %python3_sitelibdir/%pypi_name/_inductor/codegen
-%exclude %python3_sitelibdir/%pypi_name/utils/benchmark/utils/
-%exclude %python3_sitelibdir/torchgen/packaged/ATen/templates
-%exclude %python3_sitelibdir/torchgen/packaged/autograd/templates
 %python3_sitelibdir/*.dist-info
 
-%files 		devel
-%python3_sitelibdir/%pypi_name/share
-%python3_sitelibdir/%pypi_name/include
-%python3_sitelibdir/%pypi_name/_inductor/codegen
-%python3_sitelibdir/%pypi_name/utils/benchmark/utils/
-%python3_sitelibdir/torchgen/packaged/ATen/templates
-%python3_sitelibdir/torchgen/packaged/autograd/templates
+%files 	 	-n libtorch-cpu-devel
+%_includedir/ATen
+%_includedir/c10
+%_includedir/caffe2
+%_includedir/torch
+%_includedir/tensorpipe
+%_includedir/libshm.h
+%_datadir/cmake/Torch
+%_datadir/cmake/Caffe2
+%_datadir/cmake/ATen
+%_datadir/cmake/Tensorpipe
 
-%files 		-n lib%pypi_name-cpu
+%files 		-n libtorch-cpu
 %_libdir/*.so*
 
 %changelog
+* Mon Aug 31 2026 Nikita Shmatko <nash@altlinux.org> 2.12.0-alt1
+- Updated to 2.12.0.
+- Switched to system pybind11.
+- Moved C++ headers to include dir and Cmake files to datadir/cmake.
+- Renamed subpackage devel to libtorch-cpu-devel.
+- Switched to filtered autogenerated requires.
+- Converted the package to an upstream Git-based gear layout.
+- Fixed CMake target paths for relocated libraries.
+- Turned on tests.
+- Used system paths for development files.
+
 * Mon Feb 23 2026 Nikita Shmatko <nash@altlinux.org> 2.10.0-alt1
 - Updated to 2.10.0 version.
 - Used bundled pybind11 insted of system.

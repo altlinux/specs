@@ -2,7 +2,7 @@
 
 Name: rpm-macros-ml
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: RPM macros to package software that depends on ML frameworks
 License: GPL-3.0-only
@@ -21,5 +21,8 @@ install -pD -m644 %SOURCE0 %buildroot/%_rpmmacrosdir/ml
 %_rpmmacrosdir/ml
 
 %changelog
+* Thu Sep 03 2026 Nikita Shmatko <nash@altlinux.org> 1.0-alt2
+- Removed obsolete torchdir macro.
+
 * Thu Feb 26 2026 Nikita Shmatko <nash@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus.
