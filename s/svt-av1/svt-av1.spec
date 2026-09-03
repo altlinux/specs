@@ -1,7 +1,7 @@
 %define abiversion 4
 Name: svt-av1
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: Scalable Video Technology for AV1 Encoder
 
@@ -12,7 +12,7 @@ Summary: Scalable Video Technology for AV1 Encoder
 # Source/Lib/Common/Codec/vector.*: MIT
 # Source/Lib/Common/ASM_SSE2/x86inc.asm: ISC
 # Source/App/DecApp/EbMD5Utility.*: PublicDomain
-License: BSD-3-Clause and MIT and ISC and Public Domain
+License: BSD-3-Clause and MIT and ISC and ALT-Public-Domain
 Group: Video
 Url: https://gitlab.com/AOMediaCodec/SVT-AV1
 
@@ -41,8 +41,6 @@ encoding / transcoding video applications.
 %package -n lib%name%abiversion
 Group: Video
 Summary: SVT-AV1 libraries
-Obsoletes: libsvt-av1 < 4.0.1
-
 %description -n lib%name%abiversion
 The Scalable Video Technology for AV1 Encoder (SVT-AV1 Encoder) is an
 AV1-compliant encoder library core. The SVT-AV1 development is a
@@ -130,6 +128,10 @@ help2man -N --help-option=-help --no-discard-stderr --version-string=%version %b
 %doc Docs
 
 %changelog
+* Wed Sep 02 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt2
+- Remove obsolete conflict with the legacy libsvt-av1 package (ALT bug 60184).
+- Fix the Public Domain license identifier.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
 - new version 4.2.0
 
