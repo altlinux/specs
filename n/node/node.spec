@@ -16,7 +16,7 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.9.7
+%define npm_version 10.9.8
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -32,7 +32,7 @@
 %define c_ares_version 1.34.6
 
 # check deps/llhttp/include/llhttp.h
-%define llhttp_version 9.3.0
+%define llhttp_version 9.4.3
 # to use internal llhttp
 %def_without systemhttpparser
 
@@ -49,7 +49,7 @@
 %def_with systemuv
 
 # check deps/nghttp2/lib/includes/nghttp2/nghttp2ver.h
-%define libnghttp2_version 1.64.0
+%define libnghttp2_version 1.69.0
 %def_with systemnghttp2
 
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
@@ -83,7 +83,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -519,6 +519,23 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Wed Sep 02 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.2-alt1
+- new version 22.23.2
+- sync npm package version with bundled 10.9.8
+- update bundled llhttp to 9.4.3 and undici to 6.28.0
+- require nghttp2 >= 1.69.0
+- 22.23.2 (2026-07-29, security release) fixed CVEs:
+ + CVE-2026-56846: retain HTTP/2 header memory in session accounting (High)
+ + CVE-2026-56848: defer HTTP/2 RST_STREAM while in scope (High)
+ + CVE-2026-58043: avoid granting radix split permission nodes (High)
+ + CVE-2026-56850: distinguish PFX object-array agent keys (Medium)
+ + CVE-2026-58040: bind HTTPS identity checks to session reuse (Medium)
+ + CVE-2026-58042: handle large DNS resolveAny address replies (Medium)
+ + CVE-2026-58045: throw on out-of-bounds zlib write buffers (Medium)
+ + CVE-2026-56847: enforce fs write permission for trace events (Low)
+ + CVE-2026-58039: check final report output path permissions (Low)
+ + CVE-2026-58044: reject HTTP requests exceeding max header count (Low)
+
 * Sun Jul 19 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.1-alt1
 - new version 22.23.1 (with rpmrb script)
 - 22.22.3 (2026-05-13): maintenance release, no CVE
@@ -1160,4 +1177,3 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 
 * Tue Jun 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.8-alt1
 - initial
-
