@@ -1,6 +1,6 @@
 Name:     telemt-panel
-Version:  0.6.0
-Release:  alt2
+Version:  0.6.2
+Release:  alt1
 
 Summary:  Control web panel for TeleMT proxy
 License:  MIT
@@ -60,6 +60,9 @@ install -D -m 0644 docs/CONFIG.md -t %buildroot/%_docdir/%name
 
 
 %changelog
+* Thu Sep 03 2026 Alexei Mezin <alexvm@altlinux.org> 0.6.2-alt1
+- New version
+
 * Tue Jun 16 2026 Alexei Mezin <alexvm@altlinux.org> 0.6.0-alt2
 - Build only for x86_64 due to npm vendoring problems
 
