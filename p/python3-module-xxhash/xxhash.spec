@@ -7,7 +7,7 @@
 # %%python3_set_limited_api is not supported yet
 
 Name: python3-module-%pypi_name
-Version: 3.8.0
+Version: 4.0.1
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
@@ -51,19 +51,21 @@ export XXHASH_LINK_SO=1
 %pyproject_install
 
 %check
-# skip benchmark tests
-rm tests/test_benchmark.py
-%pyproject_run -- bash -s <<-'ENDUNITTEST'
-set -eu
-cd tests
-python -m unittest -v
-ENDUNITTEST
+# skip benchmark and type stub tests
+rm tests/test_benchmark.py tests/test_stubs_pyright.py
+# simulate editable install via symlink
+rm -r %mod_name
+ln -s "$(%pyproject_run -- python -P -c 'from pathlib import Path; import %mod_name; print(Path(%mod_name.__file__).parent)')"
+%pyproject_run_unittest -v
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 03 2026 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
+- 3.8.0 -> 4.0.1
+
 * Mon Jun 29 2026 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
 - 3.7.0 -> 3.8.0
 
