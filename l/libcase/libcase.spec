@@ -1,5 +1,5 @@
 # If you want to suggest changes, please send PR on
-# https://altlinux.space/rirusha/libcase to altlinux branch 
+# https://altlinux.space/rirusha/libcase to altlinux branch
 
 %define _unpackaged_files_terminate_build 1
 
@@ -8,7 +8,7 @@
 
 Name: libcase
 Version: %soversion.2
-Release: alt3
+Release: alt4
 
 Summary: Library with various useful widgets for your application
 License: GPL-3.0-or-later
@@ -17,6 +17,7 @@ URL: https://altlinux.space/rirusha/libcase
 VCS: https://altlinux.space/rirusha/libcase.git
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-vala
@@ -70,6 +71,7 @@ Requires: %name%soversion-gir = %EVR
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -99,6 +101,9 @@ Requires: %name%soversion-gir = %EVR
 %_girdir/%girname-%soversion.gir
 
 %changelog
+* Thu Sep 03 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt4
+- Added patch.
+
 * Wed Aug 19 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt3
 - Dropped demo.
 - Don't use Gtk.Svg.
