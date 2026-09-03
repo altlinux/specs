@@ -3,7 +3,7 @@
 Name: pve-firewall
 Summary: Proxmox VE Firewall
 Version: 6.0.5
-Release: alt3
+Release: alt4
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -15,7 +15,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 # from debian/control
 #Conflicts: ulogd
 
-Requires: ebtables ipset iptables iptables-ipv6 iproute2 
+Requires: ebtables ipset iptables iptables-ipv6 iptables-nft iproute2
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator pve-network
@@ -73,6 +73,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Thu Sep 03 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt4
+- Use nftables-compatible ebtables tools (Closes: 60373)
+
 * Sun Aug 30 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt3
 - Include ipset bucketsize in generated rules (Closes: 60162)
 
@@ -132,4 +135,3 @@ __EOF__
 * Wed Mar 09 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.5-alt1
 - 4.2-5
 - build as separate package
-
