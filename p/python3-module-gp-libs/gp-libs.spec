@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.17
+Version: 0.0.19
 Release: alt1
 
 Summary: Incubator for pytest and sphinx helpers for git-pull python projects 
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-gp-sphinx
 BuildRequires: python3-module-sphinx-tests
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -68,6 +69,9 @@ ENDTESTS
 %python3_sitelibdir/__pycache__/pytest_doctest_docutils.*
 
 %changelog
+* Thu Sep 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.19-alt1
+- Updated to 0.0.19.
+
 * Tue Dec 16 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.17-alt1
 - Updated to 0.0.17.
 
