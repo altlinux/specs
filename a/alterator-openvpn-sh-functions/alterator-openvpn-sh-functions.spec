@@ -1,5 +1,5 @@
 Name: alterator-openvpn-sh-functions    
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Openvpn helper functions
@@ -21,6 +21,11 @@ install -Dpm 644 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Sep 02 2026 Mikhail Efremov <sem@altlinux.org> 1.1-alt1
+- Sort openvpn lists output (closes: #50237).
+- list_*(): Add optional argument for default label name.
+- cleanup: remove redundant whitespaces.
+
 * Mon Mar 02 2020 Slava Aseev <ptrnine@altlinux.org> 1.0-alt1
 - Initial build for ALT
 

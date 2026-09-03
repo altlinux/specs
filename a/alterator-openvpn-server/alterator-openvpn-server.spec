@@ -1,9 +1,9 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openvpn-server
-Version: 0.8.9
+Version: 0.8.10
 Release: alt1
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
 Summary: Alterator module for openvpn server configuration
 Packager: Mikhail Efremov <sem@altlinux.org>
@@ -18,10 +18,9 @@ Requires: alterator-l10n >= 2.7-alt12
 Requires: openvpn >= 2.1
 Requires: etcnet
 Requires: openresolv 
-Requires: alterator-openvpn-sh-functions
+Requires: alterator-openvpn-sh-functions >= 1.1-alt1
 
 BuildPreReq: alterator >= 4.7-alt3
-BuildPreReq: rpm-build-licenses
 
 BuildArch: noarch
 
@@ -43,6 +42,11 @@ Alterator module for openvpn server configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Sep 03 2026 Mikhail Efremov <sem@altlinux.org> 0.8.10-alt1
+- backend: Use grep -E instead of egrep.
+- Don't use rpm-build-licenses.
+- Use localized default label name.
+
 * Tue May 05 2026 Alexey Volkov <qualimock@altlinux.org> 0.8.9-alt1
 NMU:
   + add data-ciphers support with multi-select UI
