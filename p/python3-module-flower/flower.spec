@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-flower
-Version: 2.0.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Real-time monitor and web admin for Celery
 License: BSD-3-Clause
-Group: Other
-Url: https://github.com/mher/flower
+Group: Development/Python3
+URL: https://flower.readthedocs.io
+VCS: https://github.com/mher/flower
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
@@ -34,6 +36,9 @@ information about the status of Celery workers and tasks.
 %python3_sitelibdir/%{pyproject_distinfo flower}
 
 %changelog
+* Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.1.0-alt1
+- Updated to version 2.1.0.
+
 * Thu Feb 22 2024 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.1-alt2
 - Fixed license.
 
