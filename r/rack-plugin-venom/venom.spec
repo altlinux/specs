@@ -1,11 +1,12 @@
 Name: rack-plugin-venom
-Version: 2.15.0
+Version: 2.16.2
 Release: alt1
 
 Summary: Venom modules for VCV Rack
 License: GPLv3
 Group: Sound
-Url: https://github.com/DaveBenham/VenomModules
+URL: https://github.com/DaveBenham/VenomModules
+VCS: https://github.com/DaveBenham/VenomModules
 
 ExclusiveArch: aarch64 x86_64
 
@@ -31,6 +32,9 @@ make install RACK_DIR=%_datadir/rack/sdk \
 %_libdir/rack/*
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.16.2-alt1
+- 2.16.2 released
+
 * Mon Apr 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.15.0-alt1
 - 2.15.0 released
 
