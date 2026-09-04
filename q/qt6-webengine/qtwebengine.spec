@@ -24,9 +24,16 @@
 %def_enable system_ffmpeg
 %endif
 
+%define re2_ver %{get_version libre2-devel}
+%IF_ver_gteq %re2_ver 20251105
+%def_enable system_re2
+%else
+%def_disable system_re2
+%endif
+
 Name: qt6-webengine
 Version: 6.11.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -55,6 +62,7 @@ Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt6 qt6-tools
 BuildRequires(pre): libavformat-devel
+BuildRequires(pre): libre2-devel
 BuildRequires: /proc
 BuildRequires: cmake libstdc++-devel-static
 BuildRequires: libxkbcommon-devel libxkbfile-devel
@@ -72,7 +80,7 @@ BuildRequires: libXdamage-devel
 BuildRequires: libcups-devel
 BuildRequires: gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpulseaudio-devel pipewire-libs-devel
-BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libre2-devel libsnappy-devel libsrtp2-devel
+BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libsnappy-devel libsrtp2-devel
 BuildRequires: libpng-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libxslt-devel libva-devel libvdpau-devel
 BuildRequires: libhunspell-devel
@@ -219,9 +227,11 @@ Obsoletes: %name < %EVR
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
 sed -i -e '/toolprefix = /d' -e 's/\${toolprefix}//g' \
   src/3rdparty/chromium/build/toolchain/linux/BUILD.gn
+%if_enabled system_re2
 # http://bugzilla.redhat.com/1337585
 # can't just delete, but we'll overwrite with system headers to be on the safe side
 cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/src/re2/
+%endif
 # add compile flags
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/build/config/compiler/BUILD.gn
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/third_party/*/BUILD.gn
@@ -310,6 +320,7 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
 %if_enabled system_icu
     -DFEATURE_webengine_system_icu:BOOL=ON \
 %endif
+    -DFEATURE_webengine_system_re2:BOOL=%{?_enable_system_re2:ON}%{!?_enable_system_re2:OFF} \
     -DFEATURE_webengine_system_libevent:BOOL=ON \
     -DFEATURE_webengine_system_libopenjpeg2:BOOL=ON \
     -DFEATURE_qtpdf_build:BOOL=ON \
@@ -423,6 +434,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- using bundled libre2 with old system libre2
+
 * Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
 - new version
 
