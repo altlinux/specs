@@ -4,7 +4,7 @@
 %define app_id io.github.elfmz.far2l
 
 Name: far2l
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Summary: Linux port of FAR v2
@@ -38,6 +38,7 @@ BuildRequires: libxml2-devel
 BuildRequires: desktop-file-utils
 BuildRequires: python3(markdown)
 BuildRequires: libgnutls-devel
+BuildRequires: pkgconfig(libusb-1.0)
 
 # skip optional requires from /usr/share/far2l scripts
 %filter_from_requires /^sudo/d
@@ -102,6 +103,7 @@ desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far
 %_desktopdir/far2l-tty.desktop
 %_desktopdir/far2ledit-tty.desktop
 %_desktopdir/far2ledit.desktop
+%_desktopdir/far2lma.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/far2l.svg
 %_iconsdir/far2ledit.svg
@@ -112,6 +114,9 @@ desktop-file-edit --set-key=OnlyShowIn --set-value="" %buildroot%_desktopdir/far
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Fri Sep 04 2026 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt1
+- New version 2.9.0.
+
 * Mon Mar 23 2026 Anton Midyukov <antohami@altlinux.org> 2.8.0-alt1
 - New version 2.8.0.
 
