@@ -4,22 +4,24 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 2.3.1
+Version: 3.0.0
 Release: alt1
 Summary: Python library providing function decorators for configurable backoff and retry
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/python-backoff
+URL: https://pypi.org/project/python-backoff
 VCS: https://github.com/python-backoff/backoff
 
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3(hatchling)
 
 %if_with check
+BuildRequires: python3(dirty_equals)
 BuildRequires: python3(requests)
 BuildRequires: python3(responses)
 BuildRequires: python3(pytest)
@@ -52,6 +54,9 @@ dynamically polling resources for externally generated content.
 %doc LICENSE
 
 %changelog
+* Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.0-alt1
+- Updated to version 3.0.0.
+
 * Fri Apr 17 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2.3.1-alt1
 - Updated to version 2.3.1.
 - Switched upstream to maintained fork.
