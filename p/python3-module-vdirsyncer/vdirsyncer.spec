@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define nameS vdirsyncer
 
 Name: python3-module-vdirsyncer
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 
 Summary: Synchronize calendars and contacts
@@ -43,6 +44,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %doc *.rst LICENSE
 
 %changelog
+* Sat Sep 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.21.0-alt1
+- 0.20.0 -> 0.21.0
+
 * Sat Sep 13 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.20.0-alt1
 - Initial build for ALT Linux.
 
