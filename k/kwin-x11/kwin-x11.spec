@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -38,8 +38,7 @@ Source: %rname-%version.tar
 Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
-Patch4: alt-def-numlock.patch
-Patch5: alt-xdg-current-desktop.patch
+Patch4: alt-xdg-current-desktop.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: rpm-build-python3
@@ -131,7 +130,6 @@ KF6 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 for f in src/kcms/compositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
@@ -185,6 +183,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- return numlock state to kde defaults
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
