@@ -1,5 +1,5 @@
 Name:    GPU-Viewer
-Version: 3.35
+Version: 4.00
 Release: alt1
 
 Summary: A front-end to glxinfo, vulkaninfo, clinfo and es2_info - Linux
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++ meson rpm-build-python3
+Requires: icon-theme-hicolor
 Requires: typelib(Adw)
 Requires: lsb-release
 Requires: clinfo
@@ -20,6 +21,7 @@ BuildArch: noarch
 
 %add_python3_req_skip Common Filenames OpenCL OpenGLViewer VdpauViewer
 %add_python3_req_skip VulkanVideoViewer aboutPage const vulkan_viewer
+%add_python3_req_skip FrameBuffer SummaryViewer
 
 %description
 This project aims to capture all the important details of glxinfo, vulkaninfo
@@ -47,6 +49,9 @@ clinfo works the GPU-viewer will also work.
 %_iconsdir/hicolor/*/apps/io.github.arunsivaramanneo.GPUViewer.png
 
 %changelog
+* Fri Sep 04 2026 Sergey Palcheh <minergenon@altlinux.org> 4.00-alt1
+- new version 4.00
+
 * Wed Jun 17 2026 Sergey Palcheh <minergenon@altlinux.org> 3.35-alt1
 - new version (3.35)
 - removed obsolete fix-opencl-unboundlocalerror.patch (OpenCL.py rewritten in 3.35)
