@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: %release_tag.0%commit_num%commit_id
-Release: alt6
+Release: alt7
 
 Summary: Modular toolkit for Data Processing
 
@@ -30,6 +30,8 @@ Patch1: mdp-debian-numpy-2.0.patch
 # Fix tests with python3.13
 Patch2: 343d7d11ad69de262d9bfe3b8099cee36ff06682.patch
 Patch3: mdp-fix-for-new-numpy.patch
+
+Patch4: modify_setup_new_version.patch
 
 BuildArch: noarch
 
@@ -94,6 +96,7 @@ This package contains documentation for MDP.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 install -p -m644 %SOURCE1 .
 
@@ -128,6 +131,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Fri Sep 04 2026 Anton Vyatkin <toni@altlinux.org> 3.6.0.15.g64f14eee-alt7
+- Fixed FTBFS.
+
 * Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 3.6.0.15.g64f14eee-alt6
 - Fixed FTBFS.
 
