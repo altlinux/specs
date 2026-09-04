@@ -1,6 +1,6 @@
 Name: greetd-tuigreet
 Version: 0.11.1
-Release: alt1
+Release: alt2
 
 Summary: Graphical console greeter for greetd
 License: GPLv3
@@ -11,6 +11,8 @@ VCS: https://github.com/tuigreet/tuigreet.git
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+
+Patch0: tuigreet-alt-crate-utmp-raw-loongarch64.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: /proc
@@ -34,6 +36,10 @@ replace-with = "vendored-sources"
 [source.vendored-sources]
 directory = "vendor"
 EOF
+
+%patch0 -p1
+sed -i -e 's/"files":{[^}]*}/"files":{}/' \
+     ./vendor/utmp-raw/.cargo-checksum.json
 
 %build
 %rust_build
@@ -65,6 +71,9 @@ mkdir -p %buildroot%_cachedir/tuigreet
 %config(noreplace) %_sysconfdir/greetd/greeters/tuigreet.toml
 
 %changelog
+* Fri Sep 04 2026 Ilya Sorochan <k0tran@altlinux.org> 0.11.1-alt2
+- Add patch enabling loongarch64 support for utmp-raw crate.
+
 * Mon Aug 31 2026 Ilya Sorochan <k0tran@altlinux.org> 0.11.1-alt1
 - Update version.
 - Update URL and VCS tags.
