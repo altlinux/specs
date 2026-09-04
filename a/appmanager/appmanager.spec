@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: appmanager
-Version: 3.7.3
+Version: 3.8.0
 Release: alt1
 
 Summary: MacOS style AppImage installer and management application
@@ -63,6 +63,9 @@ sed -i "s|Categories=.*|Categories=GNOME;GTK;Settings;PackageManager;|" data/app
 %_datadir/metainfo/com.github.AppManager.metainfo.xml
 
 %changelog
+* Fri Sep 04 2026 Nikolay Strelkov <snk@altlinux.org> 3.8.0-alt1
+- New version 3.8.0.
+
 * Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.7.3-alt1
 - New version 3.7.3.
 
