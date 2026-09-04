@@ -2,15 +2,16 @@
 %def_with check
 
 Name: python3-module-bitstruct
-Version: 8.22.1
+Version: 8.23.0
 Release: alt1
 Summary: Python bit pack/unpack package
 License: MIT
 Group: Development/Python3
-Url: https://github.com/eerimoq/bitstruct
+URL: https://github.com/eerimoq/bitstruct
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
@@ -39,6 +40,9 @@ but working on bits instead of primitive data types (char, int, ...).
 %python3_sitelibdir/%{pyproject_distinfo bitstruct}
 
 %changelog
+* Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 8.23.0-alt1
+- Updated to version 8.23.0.
+
 * Sun Mar 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 8.22.1-alt1
 - Updated to version 8.22.1.
 
