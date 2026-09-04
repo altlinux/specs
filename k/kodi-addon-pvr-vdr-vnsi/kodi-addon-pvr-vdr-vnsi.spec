@@ -1,16 +1,19 @@
 Name: kodi-addon-pvr-vdr-vnsi
-Version: 21.1.3
+Version: 22.3.1
 Release: alt1
 
 Summary: PVR VDR addon for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/kodi-pvr/pvr.vdr.vnsi
+URL: https://github.com/kodi-pvr/pvr.vdr.vnsi
+VCS: https://github.com/kodi-pvr/pvr.vdr.vnsi
+
+ExcludeArch: i586
 
 Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++ kodi-devel
-BuildRequires: libGL-devel libGLES-devel
+BuildRequires: libGL-devel
 
 %description
 %summary
@@ -30,6 +33,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.vdr.vnsi
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.3.1-alt1
+- 22.3.1 released
+
 * Mon Jan 20 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.1.3-alt1
 - 21.1.3 released
 

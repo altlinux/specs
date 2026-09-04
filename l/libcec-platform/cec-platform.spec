@@ -1,11 +1,12 @@
 Name: libcec-platform
-Version: 2.1.0.1
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: Platform support library used by libCEC and binary add-ons for Kodi
 License: GPLv2+
 Group: Development/C++
-Url: https://github.com/Pulse-Eight/platform
+URL: https://libcec.pulse-eight.com/
+VCS: https://github.com/pulse-eight/platform
 
 Source: %name-%version.tar
 BuildRequires: cmake gcc-c++
@@ -37,6 +38,9 @@ make
 %_pkgconfigdir/p8-platform.pc
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.2.0-alt1
+- 2.2.0 released
+
 * Wed Apr 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.0.1-alt3
 - fixed FTBFS with cmake4
 

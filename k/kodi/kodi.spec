@@ -1,50 +1,47 @@
 Name: kodi
-Version: 21.3
-Release: alt5
+Version: 22.0
+Release: alt0.5
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
 Group: Video
-Url: https://kodi.tv/
+URL: https://kodi.tv/
+VCS: https://github.com/xbmc/xbmc
 
+Autoreq: yes,noshell
 Requires: kodi-data = %version-%release
 Provides: kodi-bin = %version-%release
 Obsoletes: kodi-bin
 
-Source0: %name-%version-%release.tar
-Source1: groovy.tar
+ExcludeArch: i586
 
-%ifarch i586
-BuildRequires: java-17-devel
-%else
 %ifarch %e2k
-BuildRequires: java-devel
+%define javareq java-devel
 %else
-BuildRequires: java-21-devel
+%define javareq java-17-devel
 %endif
-%endif
+
+Source0: %name-%version.tar
+Source1: apache-groovy-binary-4.0.30.zip
+Source2: commons-lang3-3.20.0-bin.tar.gz
+Source3: commons-text-1.15.0-bin.tar.gz
 
 BuildRequires: cmake gcc-c++
-BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel liblzo2-devel
-BuildRequires: libunistring-devel libidn2-devel libEGL-devel
-BuildRequires: /proc swig
-BuildRequires: pkgconfig(RapidJSON)
+BuildRequires: /proc swig %javareq
+BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bluez)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dvdnav)
 BuildRequires: pkgconfig(dvdread)
-BuildRequires: pkgconfig(enca)
-BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(egl) libEGL-devel
+BuildRequires: pkgconfig(exiv2)
 BuildRequires: pkgconfig(fmt)
-BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(fstrcmp)
 BuildRequires: pkgconfig(gbm)
-BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(glesv2)
-BuildRequires: pkgconfig(glu)
-BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(gtest)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(lcms2)
@@ -56,6 +53,7 @@ BuildRequires: pkgconfig(libavutil)
 BuildRequires: pkgconfig(libbluray)
 BuildRequires: pkgconfig(libcap)
 BuildRequires: pkgconfig(libcdio)
+BuildRequires: pkgconfig(libcdio++)
 BuildRequires: pkgconfig(libcec)
 BuildRequires: pkgconfig(libcrypto)
 BuildRequires: pkgconfig(libcurl) >= 8.16
@@ -68,20 +66,18 @@ BuildRequires: pkgconfig(libjpeg)
 BuildRequires: pkgconfig(liblircclient0)
 BuildRequires: pkgconfig(libmicrohttpd)
 BuildRequires: pkgconfig(libnfs)
-BuildRequires: pkgconfig(libpcre)
-BuildRequires: pkgconfig(libpcrecpp)
+BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: pkgconfig(libplist-2.0)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpostproc)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libswscale)
-BuildRequires: pkgconfig(libtasn1)
 BuildRequires: pkgconfig(libudfread)
 BuildRequires: pkgconfig(libva)
-BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(lzo2)
 BuildRequires: pkgconfig(libxslt)
-BuildRequires: pkgconfig(nettle)
-BuildRequires: pkgconfig(p11-kit-1)
+BuildRequires: pkgconfig(nlohmann_json)
 BuildRequires: pkgconfig(python3)
 BuildRequires: pkgconfig(spdlog)
 BuildRequires: pkgconfig(sqlite3)
@@ -90,7 +86,6 @@ BuildRequires: pkgconfig(tinyxml)
 BuildRequires: pkgconfig(tinyxml2)
 BuildRequires: pkgconfig(udev)
 BuildRequires: pkgconfig(uuid)
-BuildRequires: pkgconfig(vdpau)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-client++)
 BuildRequires: pkgconfig(xau)
@@ -100,7 +95,6 @@ BuildRequires: pkgconfig(xdmcp)
 BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(xxf86vm)
 BuildRequires: pkgconfig(zlib)
 
 %package data
@@ -109,16 +103,13 @@ Group: Video
 BuildArch: noarch
 Requires: python3(sqlite3)
 AutoReqProv: yes,nopython, nopython3
+Conflicts: kodi < %version-%release
+Provides: kodi-x11 = %version-%release
+Obsoletes: kodi-x11
 
 %package devel
 Summary: Kodi development part
 Group: Development/C++
-Requires: kodi = %version-%release
-
-%package x11
-Summary: Kodi X11-specific part
-Group: Video
-Requires: kodi-bin = %version-%release
 
 %description
 Kodi is an media-player and entertainment hub for all your digital media.
@@ -131,86 +122,56 @@ This package contains all architecture-independent data requried for Kodi.
 Kodi is an media-player and entertainment hub for all your digital media.
 This package contains development part of Kodi.
 
-%description x11
-Kodi is an media-player and entertainment hub for all your digital media.
-This package contains X11-specific part of Kodi.
-
 %define __nprocs 8
 %define docdir %_defaultdocdir/%name
-%ifarch armh aarch64
-%define platdefs -DAPP_RENDER_SYSTEM=gles
-%else
-%define platdefs -DAPP_RENDER_SYSTEM=gl
-%endif
 
 %prep
 %setup
-tar xf %SOURCE1 -C %_sourcedir
-%ifarch %e2k
-sed -i "/make_map/s/std::string_view/const char*/g" \
-	xbmc/windowing/gbm/WinSystemGbm.cpp \
-	xbmc/cores/AudioEngine/Sinks/AESinkStarfish.cpp \
-	xbmc/cores/VideoSettings.h xbmc/utils/ColorUtils.h \
-	xbmc/cores/VideoPlayer/VideoRenderers/VideoShaders/ShaderFormats.h \
-	xbmc/rendering/{gl/RenderSystemGL.h,gles/RenderSystemGLES.h}
-sed -i "s/private:/public:/" \
-	xbmc/cores/AudioEngine/Sinks/pipewire/Pipewire.h
-sed -i "s/HTML_BASIC_COLORS.find(value/&.c_str()/" \
-	xbmc/cores/VideoPlayer/DVDSubtitles/DVDSubtitleTagSami.cpp
-sed -i 's/m_points{/m_points={/' \
-	xbmc/platform/linux/input/LibInputTouch.h
-sed -E -i 's/(m_specialImageLoaders)\{/\1={/' \
-	xbmc/imagefiles/SpecialImageLoaderFactory.h
-%endif
 
 %build
 %cmake  -DTARBALL_DIR=%_sourcedir \
         -DGIT_VERSION=%release \
+        -DENABLE_INTERNAL_CROSSGUID=OFF \
+        -DENABLE_INTERNAL_LIBDVD=OFF \
+        -DENABLE_DVDCSS=OFF \
+        -DVERBOSE_FIND=ON \
         -DCORE_PLATFORM_NAME="x11 wayland gbm" \
-        %platdefs
+        -DAPP_RENDER_SYSTEM=gl
 %cmake_build
 
 %install
 %cmakeinstall_std
-sed -i -e '/Exec=kodi/ s,=,=%_bindir/,' %buildroot%_datadir/xsessions/kodi.desktop
-install -pm0644 -D kodi.wmsession %buildroot%_sysconfdir/X11/wmsession.d/20KODI
 mkdir %buildroot%_libdir/kodi/addons
 
 %files
-%docdir
-
 %_bindir/kodi
 %_bindir/kodi-standalone
 
-%dir %_libdir/kodi
-%_libdir/kodi/addons
-%_libdir/kodi/system
-%_libdir/kodi/kodi.bin
-%_libdir/kodi/kodi-xrandr
-
-%_desktopdir/kodi.desktop
-%_iconsdir/hicolor/*/apps/kodi.*
-%_datadir/metainfo/*.xml
+%_libdir/kodi
+%exclude %_libdir/kodi/cmake
 
 %files data
-%dir %_datadir/kodi
-%_datadir/kodi/addons
-%_datadir/kodi/media
-%_datadir/kodi/system
-%_datadir/kodi/userdata
-%_datadir/kodi/privacy-policy.txt
+%docdir
+
+%_datadir/kodi
+%exclude %_datadir/kodi/cmake
+
+%_datadir/metainfo/*.xml
 %_datadir/wayland-sessions/kodi-gbm.desktop
+%_datadir/xsessions/kodi.desktop
+%_iconsdir/hicolor/*/apps/kodi.*
+%_desktopdir/kodi.desktop
 
 %files devel
+%_bindir/kodi-TexturePacker
 %_includedir/kodi
 %_datadir/kodi/cmake
 %_libdir/kodi/cmake
 
-%files x11
-%config(noreplace) %_sysconfdir/X11/wmsession.d/20KODI
-%_datadir/xsessions/kodi.desktop
-
 %changelog
+* Thu Sep 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0-alt0.5
+- 22.0b2
+
 * Wed May 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3-alt5
 - fixed build with recent libgif
 

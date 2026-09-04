@@ -1,6 +1,7 @@
 Name: libcrossguid
-Version: 20150803
-Release: alt1.1
+Version: 0.2.2
+Release: alt1
+Epoch: 1
 
 Summary: C++ GUID library
 License: MIT
@@ -9,16 +10,16 @@ Url: https://github.com/graeme-hill/crossguid/
 
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libuuid-devel
+BuildRequires: cmake gcc-c++ libuuid-devel
+
+%package devel
+Summary: C++ GUID library
+Group: Development/C++
 
 %description
 CrossGuid is a minimal, cross platform, C++ GUID library. It uses the best
 native GUID/UUID generator on the given platform and had a generic class
 for parsing, stringifying, and comparing IDs.
-
-%package devel
-Summary: C++ GUID library
-Group: Development/C++
 
 %description devel
 CrossGuid is a minimal, cross platform, C++ GUID library. It uses the best
@@ -30,23 +31,28 @@ This package contains development part of %name
 %setup
 
 %build
-c++ -shared %optflags %optflags_shared -std=c++11 -Wl,-soname,libcrossguid.so.0 \
-	-DGUID_LIBUUID -I/usr/include/uuid  guid.cpp -o libcrossguid.so.0.0.0 -luuid
+%cmake
+%cmake_build
 
 %install
-install -pm0644 -D guid.h %buildroot%_includedir/guid.h
-install -pm0644 -D libcrossguid.so.0.0.0 %buildroot%_libdir/libcrossguid.so.0.0.0
-ln -s libcrossguid.so.0.0.0 %buildroot%_libdir/libcrossguid.so
+%cmake_install
+
+%define _customdocdir %_docdir/crossguid
 
 %files
-%doc README.md
+%_docdir/crossguid
 %_libdir/*.so.*
 
 %files devel
+%_includedir/crossguid
 %_libdir/*.so
-%_includedir/guid.h
+%_libdir/cmake/crossguid
+%_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jan 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.2.2-alt1
+- v0.2.2-52-gca1bf4b
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 20150803-alt1.1
 - NMU: added URL
 

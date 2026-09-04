@@ -1,11 +1,14 @@
 Name: kodi-addon-pvr-iptvsimple
-Version: 21.11.0
+Version: 22.6.4
 Release: alt1
 
 Summary: IPTVSimple addon for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/kodi-pvr/pvr.iptvsimple/
+URL: https://github.com/kodi-pvr/pvr.iptvsimple
+VCS: https://github.com/kodi-pvr/pvr.iptvsimple
+
+ExcludeArch: i586
 
 Source: %name-%version.tar
 
@@ -30,6 +33,9 @@ BuildRequires: libpugixml-devel liblzma-devel zlib-devel
 %_datadir/kodi/addons/pvr.iptvsimple
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.6.4-alt1
+- 22.6.4 released
+
 * Mon Jul 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.11.0-alt1
 - 21.11.0 released
 

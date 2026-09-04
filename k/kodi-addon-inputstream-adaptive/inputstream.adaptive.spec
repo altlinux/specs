@@ -1,16 +1,20 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 21.5.18
+Version: 22.3.21
 Release: alt1
 
 Summary: Adaptive stream addon for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/xbmc/inputstream.adaptive
+URL: https://github.com/xbmc/inputstream.adaptive
+VCS: https://github.com/xbmc/inputstream.adaptive
+
+ExcludeArch: i586
 
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ kodi-devel rapidjson-devel
-BuildRequires: libexpat-devel libgtest-devel libap4-devel-static libpugixml-devel
+BuildRequires: cmake gcc-c++ kodi-devel
+BuildRequires: libexpat-devel libgtest-devel libap4-devel-static
+BuildRequires: libpugixml-devel nlohmann-json-devel
 
 %description
 %summary
@@ -30,6 +34,12 @@ BuildRequires: libexpat-devel libgtest-devel libap4-devel-static libpugixml-deve
 %_datadir/kodi/addons/*
 
 %changelog
+* Thu Sep 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.3.21-alt1
+- 22.3.21 released
+
+* Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.3.8-alt1
+- 22.3.8 released
+
 * Wed Dec 03 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.5.18-alt1
 - 21.5.18 released
 

@@ -1,11 +1,12 @@
 Name: libcec
-Version: 7.1.1
+Version: 8.1.7
 Release: alt1
 
 Summary: CEC support shared library
 License: GPLv2
 Group: System/Libraries
-Url: http://libcec.pulse-eight.com/
+URL: https://libcec.pulse-eight.com/
+VCS: https://github.com/pulse-eight/libcec
 
 Source0: %name-%version-%release.tar
 
@@ -52,7 +53,7 @@ sed -ri '/DESTINATION/ s,lib/python,%_lib/python,' src/libcec/cmake/CheckPlatfor
 sed -ri '/set_target_properties.+\sPROPERTIES\sVERSION/d' src/cec*-client/CMakeLists.txt
 
 %build
-%cmake -DHAVE_LINUX_API=1
+%cmake -DDISABLE_STATIC=1 -DHAVE_LINUX_API=1
 %cmake_build
 
 %install
@@ -64,6 +65,7 @@ sed -ri '/set_target_properties.+\sPROPERTIES\sVERSION/d' src/cec*-client/CMakeL
 %files devel
 %_libdir/lib*.so
 %_includedir/libcec
+%_libdir/cmake/libcec
 %_pkgconfigdir/libcec.pc
 
 %files utils
@@ -77,6 +79,9 @@ sed -ri '/set_target_properties.+\sPROPERTIES\sVERSION/d' src/cec*-client/CMakeL
 %python3_sitelibdir/cec.py
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 8.1.7-alt1
+- 8.1.7 released
+
 * Tue Jun 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 7.1.1-alt1
 - 7.1.1 released
 

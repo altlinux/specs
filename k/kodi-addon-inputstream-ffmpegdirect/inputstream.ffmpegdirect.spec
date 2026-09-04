@@ -1,11 +1,14 @@
 Name: kodi-addon-inputstream-ffmpegdirect
-Version: 21.3.8
-Release: alt2
+Version: 22.2.7
+Release: alt1
 
 Summary: FFmpeg stream addon for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/xbmc/inputstream.ffmpegdirect/
+URL: https://github.com/xbmc/inputstream.ffmpegdirect
+VCS: https://github.com/xbmc/inputstream.ffmpegdirect
+
+ExcludeArch: i586
 
 AutoReqProv: yes, nopython
 
@@ -34,6 +37,15 @@ BuildRequires: libpostproc-devel bzlib-devel zlib-devel
 %_datadir/kodi/addons/*
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.2.7-alt1
+- 22.2.7 released
+
+* Thu Sep 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.2.6-alt1
+- 22.2.6 released
+
+* Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.2.4-alt1
+- 22.2.4 released
+
 * Mon Jan 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 21.3.8-alt2
 - rebuilt with ffmpeg 8.x
 

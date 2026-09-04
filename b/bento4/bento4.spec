@@ -1,11 +1,13 @@
 Name: bento4
 Version: 1.6.0.641
-Release: alt2
+Release: alt4
 
 Summary: C++ class library and tools designed to read and write ISO-MP4 files
 License: GPLv2
 Group: Development/C++
 Url: https://www.bento4.com/
+
+ExcludeArch: i586
 
 Source: %name-%version-%release.tar
 
@@ -48,6 +50,12 @@ This package contains bento4 static library.
 %_libdir/libap4.a
 
 %changelog
+* Thu Sep 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0.641-alt4
+- v1.6.0-641-137-ga4a4172
+
+* Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0.641-alt3
+- v1.6.0-641-21-g4b0f069
+
 * Thu Aug 29 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0.641-alt2
 - v1.6.0-641-20-gf5eed3d
 
