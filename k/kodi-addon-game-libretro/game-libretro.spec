@@ -1,11 +1,14 @@
 Name: kodi-addon-game-libretro
-Version: 21.0.8
-Release: alt2
+Version: 22.7.0
+Release: alt1
 
 Summary: Libretro wrapper for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/kodi-game/game.libretro
+URL: https://github.com/kodi-game/game.libretro
+VCS: https://github.com/kodi-game/game.libretro
+
+ExcludeArch: i586
 
 Source0: %name-%version.tar
 Source1: libretro-common.tar.gz
@@ -37,6 +40,9 @@ BuildRequires: cmake gcc-c++ kodi-devel tinyxml-devel
 %_datadir/kodi/addons/game.libretro
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.7.0-alt1
+- 22.7.0 released
+
 * Wed Apr 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 21.0.8-alt2
 - fixed FTBFS with cmake4
 
