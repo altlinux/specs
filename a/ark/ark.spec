@@ -3,11 +3,11 @@
 %define sover 26
 %define libkerfuffle libkerfuffle%sover
 
-%def_disable libzip
+%def_enable libzip
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Archiving/Compression
@@ -66,7 +66,9 @@ Obsoletes: libkerfuffle23 < %EVR
 %prep
 %setup -n %rname-%version
 
-%if_disabled libzip
+%if_enabled libzip
+sed -i '/X-KDE-Priority/s|X-KDE-Priority.*|X-KDE-Priority\": 170,|' plugins/libzipplugin/kerfuffle_libzip.json.cmake
+%else
 sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %endif
 
@@ -108,6 +110,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 
 %changelog
+* Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- enable libzip but priority lower then 7z
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
