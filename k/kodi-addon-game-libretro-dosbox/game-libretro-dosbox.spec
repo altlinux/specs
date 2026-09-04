@@ -1,11 +1,14 @@
 Name: kodi-addon-game-libretro-dosbox
-Version: 0.74.0.31
+Version: 0.74.0.35
 Release: alt1
 
 Summary: Libretro dosbox for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/kodi-game/game.libretro.dosbox
+URL: https://github.com/kodi-game/game.libretro.dosbox
+VCS: https://github.com/kodi-game/game.libretro.dosbox
+
+ExcludeArch: i586
 
 Requires: libretro-computers-dosbox
 Autoreq: yes, nosymlinks
@@ -34,6 +37,9 @@ ln -svf ../../../../lib/libretro/dosbox_libretro.so \
 %_datadir/kodi/addons/game.libretro.dosbox
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.74.0.35-alt1
+- 0.74.0.35 released
+
 * Tue Mar 25 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.74.0.31-alt1
 - 0.74.0.31 released
 
