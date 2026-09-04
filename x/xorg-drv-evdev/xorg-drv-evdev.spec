@@ -1,8 +1,6 @@
-%define _xconfdir %_sysconfdir/X11/xorg.conf.d
-
 Name: xorg-drv-evdev
 Version: 2.11.0
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: Generic Linux input driver
 License: MIT/X11
@@ -47,11 +45,7 @@ Generic Linux input driver development package
 %install
 %make DESTDIR=%buildroot install
 
-mkdir -p %buildroot%_xconfdir
-install -m644 *.conf %buildroot%_xconfdir/
-
 %files
-%config(noreplace) %_xconfdir/*.conf
 %_x11modulesdir/input/*.so
 %_xorgsysconfigdir/*.conf
 %_man4dir/*
@@ -61,6 +55,9 @@ install -m644 *.conf %buildroot%_xconfdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 04 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.0-alt2
+- removed 95-input-keyboard.conf (closes: #60344)
+
 * Tue Oct 15 2024 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.0-alt1
 - 2.11.0
 
