@@ -1,6 +1,6 @@
 Name: startup-mediacheck
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: The system startup scripts for mediacheck (warning!)
 License: GPL
@@ -11,6 +11,7 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 Requires: console-vt-tools isomd5sum
+Requires: startup
 
 %description
 This package contains scripts to check live/installation media.
@@ -32,6 +33,9 @@ install -pm755 rc.sysinit.mediacheck %buildroot%_sysconfdir/rc.d/
 %_sysconfdir/rc.d/rc.sysinit.mediacheck
 
 %changelog
+* Fri Sep 04 2026 Anton Midyukov <antohami@altlinux.org> 0.2.4-alt2
+- Add dependecies on startup (Closes: 40553).
+
 * Wed Dec 16 2020 Anton Midyukov <antohami@altlinux.org> 0.2.4-alt1
 - Port on POSIX shell
 - Fix log level
