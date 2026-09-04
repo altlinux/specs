@@ -1,11 +1,12 @@
 Name: kodi-addon-peripheral-joystick
-Version: 22.0.6
+Version: 22.0.11
 Release: alt1
 
 Summary: Joystick support for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/xbmc/peripheral.joystick
+URL: https://github.com/xbmc/peripheral.joystick
+VCS: https://github.com/xbmc/peripheral.joystick
 
 ExcludeArch: i586
 
@@ -31,6 +32,9 @@ BuildRequires: cmake gcc-c++ kodi-devel libtinyxml2-devel libudev-devel
 %_datadir/kodi/addons/peripheral.joystick
 
 %changelog
+* Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0.11-alt1
+- 22.0.11 released
+
 * Thu Apr 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0.6-alt1
 - 22.0.6 released
 
