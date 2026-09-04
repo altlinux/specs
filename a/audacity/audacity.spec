@@ -16,8 +16,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.7.8
-Release: alt1
+Version: 3.7.9
+Release: alt2
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -109,9 +109,9 @@ BuildRequires: rpm-build >= 4.0.4-alt133
 %else
 %define soname_suffix %nil
 %endif
-Requires: libavformat.so.62%soname_suffix
-Requires: libavcodec.so.62%soname_suffix
-Requires: libavutil.so.60%soname_suffix
+Requires: libavformat.so.63%soname_suffix
+Requires: libavcodec.so.63%soname_suffix
+Requires: libavutil.so.61%soname_suffix
 
 
 # Since suil 0.10.24-alt1, toolkit-specific modules are packaged
@@ -268,6 +268,12 @@ objdump -x -j .dynamic %buildroot/%_libdir/audacity/modules/mod-mp3.so | grep -F
 %_datadir/%name/help
 
 %changelog
+* Fri Sep 04 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.9-alt2
+- Update ffmpeg dependencies to 9.0
+
+* Thu Sep 03 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.9-alt1
+- 3.7.9
+
 * Tue Jun 23 2026 Ivan A. Melnikov <iv@altlinux.org> 3.7.8-alt1
 - 3.7.8
 
