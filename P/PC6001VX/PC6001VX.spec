@@ -1,5 +1,5 @@
 Name:     PC6001VX
-Version:  4.3.0
+Version:  4.4.0
 Release:  alt1
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
@@ -43,21 +43,25 @@ and program will start.
 %setup
 #%%patch1 -p1
 #%%patch2 -p1
+export LC_ALL=en_US.UTF-8
 
 cp %SOURCE3 %SOURCE4 src/Qt/translation/
 
+#Temporary build with ffmpeg libs 9.0.1
+sed -i 's/( 61, 13, 100 )/( 9, 0, 0 )/g' src/movie.cpp
+
 %build
 
-qmake-qt6 PC6001VX.pro
-%make_build
+%cmake
+%cmake_build
 
 %install
-install -d %buildroot%_bindir
-install -d %buildroot%_datadir/%name/compatible_rom/basic60-v076
-install -d %buildroot%_datadir/%name/compatible_rom/basic66-v042
-install -d %buildroot%_man6dir/ru/man6
 
-install -pDm755 %name %buildroot%_bindir
+install -d %buildroot%_bindir
+install -d %buildroot%_datadir/%name/compatible_rom/basic60-v082
+install -d %buildroot%_datadir/%name/compatible_rom/basic66-v053
+install -d %buildroot%_man6dir/ru/man6
+install -pDm755 %_cmake__builddir/%name %buildroot%_bindir
 
 mkdir -p %buildroot%_desktopdir
 cat << EOF > %buildroot%_desktopdir/%name.desktop
@@ -77,9 +81,9 @@ do
 install -D -m 0644 data/PC-6001_${N}.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
-cp -r compatible_rom/basic66-v052/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v042
-cp -r compatible_rom/basic66-v052/VOICEROM* %buildroot%_datadir/%name/compatible_rom/basic66-v042
-cp -r compatible_rom/basic60-v081/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v076
+cp -r compatible_rom/basic66-v053/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v053
+cp -r compatible_rom/basic66-v053/VOICEROM* %buildroot%_datadir/%name/compatible_rom/basic66-v053
+cp -r compatible_rom/basic60-v082/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v082
 cp -r fonts %buildroot%_datadir/%name/
 
 install -D -m 0644 %SOURCE1 %buildroot%_man6dir/%name.6
@@ -94,6 +98,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Fri Sep 04 2026 Artyom Bystrov <arbars@altlinux.org> 4.4.0-alt1
+- New version 4.4.0.
+
 * Fri Dec 26 2025 Artyom Bystrov <arbars@altlinux.org> 4.3.0-alt1
 - New version 4.3.0.
 
