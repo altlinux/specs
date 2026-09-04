@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: serial-studio
-Version: 4.0.3
+Version: 4.1.0
 Release: alt1
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
@@ -29,6 +29,7 @@ BuildRequires: pkgconfig(Qt6Bluetooth)
 BuildRequires: pkgconfig(Qt6SerialPort)
 BuildRequires: pkgconfig(Qt6Core5Compat)
 BuildRequires: pkgconfig(Qt6WebEngineQuick)
+BuildRequires: pkgconfig(Qt6WebSockets)
 
 Requires: libqt6-core5compat
 Requires: libqt6-qmlcore
@@ -82,6 +83,9 @@ sed -i "s|set(SS_MIMALLOC_PLATFORM TRUE)|set(SS_MIMALLOC_PLATFORM FALSE) # HACK|
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Fri Sep 04 2026 Nikolay Strelkov <snk@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Wed Jul 15 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.3-alt1
 - New version 4.0.3.
 
