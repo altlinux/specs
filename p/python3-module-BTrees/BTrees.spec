@@ -3,11 +3,15 @@
 %define mod_name %pypi_name
 
 %define dynamic_mods %(echo `cat %SOURCE2 2>/dev/null || echo unknown`)
+# limited api is not supported
+# %%python3_set_limited_api
+# some C extensions suddenly support abi3
+%none_python3_modules_rename
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 6.4
+Version: 6.5
 Release: alt1
 Summary: Scalable persistent object containers
 License: ZPL-2.1
@@ -79,6 +83,9 @@ rm %buildroot%python3_sitelibdir/%pypi_name/*.{h,c}
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Thu Sep 03 2026 Stanislav Levin <slev@altlinux.org> 6.5-alt1
+- 6.4 -> 6.5
+
 * Thu May 14 2026 Stanislav Levin <slev@altlinux.org> 6.4-alt1
 - 6.3 -> 6.4.
 
