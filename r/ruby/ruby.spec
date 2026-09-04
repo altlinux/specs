@@ -1,22 +1,22 @@
 %define        _unpackaged_files_terminate_build 1
-%define        ruby_version_core 3.3
-%define        ruby_version %{ruby_version_core}.0
+%define        ruby_api_version 3.3
+%define        ruby_core_version %{ruby_api_version}.0
 %define        lname lib%name
 %define        ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
-%define        _version %{ruby_version_core}.12
+%define        ruby_version %{ruby_api_version}.12
 %define        __ruby env GEM_HOME=%_libexecdir/%name/gemie RUBYLIB=./:./lib ./miniruby -rerb -rrbconfig
 %def_disable   html
 
 Name:          ruby
-Version:       %_version
-Release:       alt2
+Version:       %ruby_version
+Release:       alt3
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
 Url:           http://www.%name-lang.org/
 Vcs:           https://github.com/ruby/ruby.git
 
-Source0:       %name-%_version.tar
+Source0:       %name-%ruby_version.tar
 Source1:       %name.sh.erb
 Source2:       ruby.macros.erb
 Source3:       ruby.env
@@ -68,7 +68,7 @@ This package contains interpreter of object-oriented scripting language Ruby.
 Summary:       Ruby shared libraries
 Group:         System/Libraries
 Provides:      ruby(enumerator)
-Provides:      ruby(%ruby_version)
+Provides:      ruby(%ruby_api_version)
 
 %description   -n %lname
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -116,6 +116,7 @@ purposes.
 %package       -n %name-stdlibs
 Summary:       Standard Ruby libraries
 Group:         Development/Ruby
+
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      %lname = %EVR
 Requires:      ruby = %EVR
@@ -309,7 +310,7 @@ mkdir -p \
    %buildroot%_docdir/%name
 
 cp COPYING LEGAL NEWS* README.md README.EXT *.ja %buildroot%_docdir/%name/
-ln -s %name-%{ruby_version_core}.pc %buildroot%_pkgconfigdir/%name.pc
+ln -s %name-%{ruby_api_version}.pc %buildroot%_pkgconfigdir/%name.pc
 # install ruby macros
 install -D -p -m 0644 %SOURCE3 %buildroot%_rpmmacrosdir/ruby.env
 %__ruby -e 'File.open("%buildroot%_sysconfdir/bashrc.d/%name.sh", "w") { |f| f.puts ERB.new(IO.read("%SOURCE1")).result }'
@@ -370,6 +371,10 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Thu Sep 03 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt3
+- * added %%ruby_erb_eval macros
+- ! fixed version in spec
+
 * Wed Jul 29 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt2
 - * changed default doc to enabled in macros
 
