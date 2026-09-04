@@ -1,6 +1,6 @@
 Name:     PC6001VX
 Version:  4.4.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
 License:  LGPL-2.1
@@ -46,9 +46,6 @@ and program will start.
 export LC_ALL=en_US.UTF-8
 
 cp %SOURCE3 %SOURCE4 src/Qt/translation/
-
-#Temporary build with ffmpeg libs 9.0.1
-sed -i 's/( 61, 13, 100 )/( 9, 0, 0 )/g' src/movie.cpp
 
 %build
 
@@ -98,6 +95,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Sat Sep  5 2026 Artyom Bystrov <arbars@altlinux.org> 4.4.0-alt2
+- Removed unneded fix.
+
 * Fri Sep 04 2026 Artyom Bystrov <arbars@altlinux.org> 4.4.0-alt1
 - New version 4.4.0.
 
