@@ -1,12 +1,12 @@
 %def_with check
 
 Name: gping
-Version: 1.20.4
+Version: 1.21.0
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
 Group: Networking/Other
-Url: https://crates.io/crates/gping
+URL: https://crates.io/crates/gping
 VCS: https://github.com/orf/gping
 
 Source: %name-%version.tar
@@ -23,7 +23,7 @@ BuildRequires: iputils
 %summary.
 
 %prep
-%setup -a 1
+%setup -a1
 %rust_prep
 
 %build
@@ -44,6 +44,9 @@ BuildRequires: iputils
 %doc LICENSE
 
 %changelog
+* Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.21.0-alt1
+- Updated to version 1.21.0.
+
 * Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.20.4-alt1
 - Updated to version 1.20.4.
 
