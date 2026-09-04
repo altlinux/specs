@@ -1,6 +1,6 @@
 Name: calculix-ccx
 Version: 2.23
-Release: alt2
+Release: alt3
 
 Summary: A Free Software Three-Dimensional Structural Finite Element Program
 License: GPL-2.0-or-later
@@ -38,7 +38,7 @@ code-aster and for the free-cfd codes dolfyn, duns, ISAAC and OpenFOAM.
 %make_build -C ccx_*/src -f Makefile_MT \
 	CC="gcc -std=c99" \
 	FC=gfortran \
-	CFLAGS="-g -Wall -Wno-return-mismatch -Wno-implicit -O2 -fopenmp -DARCH=Linux -DSPOOLES -DARPACK -DMATRIXSTORAGE -DUSE_MT=1" \
+	CFLAGS="-g -Wall -I%_includedir/spooles -Wno-return-mismatch -Wno-implicit -O2 -fopenmp -DARCH=Linux -DSPOOLES -DARPACK -DMATRIXSTORAGE -DUSE_MT=1" \
 	FFLAGS="-g -Wall -O2 -fopenmp -cpp -fallow-argument-mismatch" \
 	LIBS="%_libdir/spoolesMT.a %_libdir/spooles.a -larpack -llapack -lopenblas -lpthread -lm"
 
@@ -49,6 +49,9 @@ install -Dpm 0755 ccx_*/src/ccx_*_MT %buildroot%_bindir/ccx
 %_bindir/ccx
 
 %changelog
+* Fri Sep 04 2026 Ulysses Apokin <ulysses@altlinux.org> 2.23-alt3
+- Fix build with with libspooles-devel-static >= 2.2-alt13.
+
 * Thu Jul 16 2026 Ivan A. Melnikov <iv@altlinux.org> 2.23-alt2
 - NMU: Build with liblapack-devel instead of obsolete
   liblapack3-devel.
