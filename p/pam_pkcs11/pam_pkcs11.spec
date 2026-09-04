@@ -8,7 +8,7 @@
 %endif
 
 Name: pam_pkcs11
-Version: 0.6.13.1
+Version: 0.6.14
 Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
@@ -173,6 +173,10 @@ rm %buildroot%_libdir/*/*.la
 %_libdir/%name/ldap_mapper.so
 
 %changelog
+* Fri Sep 04 2026 Paul Wolneykien <manowar@altlinux.org> 0.6.14-alt1
+- New version 0.6.14.
+- Fixed SIGSEGV on login timeout and other conversation errors.
+
 * Wed Mar 26 2025 Paul Wolneykien <manowar@altlinux.org> 0.6.13.1-alt1
 - Added "kde-smartcard" to the list of screen savers.
 - Fixed some spelling errors.
