@@ -23,7 +23,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%mod_name
-Version: 10.2.1
+Version: 10.2.3
 Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
@@ -100,6 +100,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 03 2026 Stanislav Levin <slev@altlinux.org> 10.2.3-alt1
+- 10.2.1 -> 10.2.3
+
 * Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 10.2.1-alt1
 - 10.2.0 -> 10.2.1
 

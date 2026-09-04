@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.3.4
 Release: alt1
 Summary: the blessed package to manage your versions by vcs metadata
 License: MIT
@@ -57,6 +57,9 @@ cd vcs-versioning
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 03 2026 Stanislav Levin <slev@altlinux.org> 2.3.4-alt1
+- 2.3.1 -> 2.3.4
+
 * Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
 - 2.2.3 -> 2.3.1
 
