@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        152.0.7977.75
+Version:        152.0.7977.82
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -731,6 +731,22 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Sat Sep 05 2026 Andrew A. Vasilyev <andy@altlinux.org> 152.0.7977.82-alt1
+- New version (152.0.7977.82).
+- Fixes:
+  + CVE-2026-85046: Type confusion in V8
+  + CVE-2026-85052: Out of bounds read in CrashReporting
+  + CVE-2026-85043: Incomplete cleanup in Network
+  + CVE-2026-85048: Use after free in Compositing
+  + CVE-2026-85045: Race condition in V8
+  + CVE-2026-85050: Out of bounds write in WebGL
+  + CVE-2026-85053: Improper resource exposure in CacheStorage
+  + CVE-2026-85042: Use after free in DevTools
+  + CVE-2026-85049: Use after free in Skia
+  + CVE-2026-85051: Type confusion in Compositing
+  + CVE-2026-85047: Improper input validation in Transactions Platform
+  + CVE-2026-85044: Use of released resource in Mobile
+
 * Wed Sep 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 152.0.7977.75-alt1
 - New version (152.0.7977.75).
 - Fixes:
