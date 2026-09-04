@@ -3,18 +3,19 @@
 %define pypi_name_snake qdrant_client
 
 Name: python3-module-%pypi_name
-Version: 1.18.0
+Version: 1.19.0
 Release: alt1
 
 Summary: Client library for the Qdrant vector search engine
 License: Apache-2.0
 Group: Development/Python3
 
-Url: https://github.com/qdrant/qdrant-client
-Vcs: https://github.com/qdrant/qdrant-client
+URL: https://pypi.org/project/qdrant-client
+VCS: https://github.com/qdrant/qdrant-client
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(poetry.core)
 
@@ -41,10 +42,12 @@ methods for frequently required operations, e.g. initial collection uploading.
 %files
 %python3_sitelibdir_noarch/%pypi_name_snake
 %python3_sitelibdir_noarch/%pypi_name_snake-%version.dist-info
-%exclude %python3_sitelibdir_noarch/%pypi_name_snake/local/tests
 %doc README.md
 
 %changelog
+* Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.19.0-alt1
+- Updated to version 1.19.0.
+
 * Wed May 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.18.0-alt1
 - Updated to version 1.18.0.
 
