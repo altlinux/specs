@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2026.2.26
+Version: 2026.9.3
 Release: alt1
 Summary: List of packages in the stdlib
 License: MIT
@@ -25,7 +25,8 @@ BuildRequires(pre): rpm-build-pyproject
 # not packaged in sisyphus
 %add_pyproject_deps_check_filter attribution
 %add_pyproject_deps_check_filter fissix
-%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -40,6 +41,9 @@ those for most useful Python versions.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -58,6 +62,9 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 2026.9.3-alt1
+- 2026.2.26 -> 2026.9.3
+
 * Fri Feb 27 2026 Stanislav Levin <slev@altlinux.org> 2026.2.26-alt1
 - 2025.10.28 -> 2026.2.26.
 
