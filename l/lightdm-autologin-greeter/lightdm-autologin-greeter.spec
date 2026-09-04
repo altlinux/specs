@@ -1,6 +1,6 @@
 Name: lightdm-autologin-greeter
 Version: 1.0
-Release: alt3
+Release: alt4
 Summary: Autologin greeter using LightDM
 License: MIT
 URL: https://github.com/spanezz/lightdm-autologin-greeter
@@ -16,7 +16,6 @@ Requires: liblightdm-gobject
 
 # LightDM is required for this to be useful
 Requires: dm-tool lightdm lightdm-gir
-Requires: /usr/share/design/current
 
 # All LightDM greeters provide this
 Provides: lightdm-greeter
@@ -76,6 +75,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/lightdm/lightdm.conf.d/60-%name.conf
 
 %changelog
+* Fri Sep 04 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt4
+- Remove unneeded dependencies on /usr/share/design/current.
+
 * Thu Mar 23 2023 Anton Midyukov <antohami@altlinux.org> 1.0-alt3
 - initial build to Sisyphus
 - cleanup spec
