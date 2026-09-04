@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -40,10 +40,9 @@ Source: %rname-%version.tar
 Patch1: alt-def-window-buttons.patch
 Patch2: alt-def-layout-switch.patch
 Patch3: alt-def-tiling-layout.patch
-Patch4: alt-def-numlock.patch
-Patch5: alt-drop-drm-master-when-opening-a-gpu-file.patch
-Patch6: alt-gcc13.patch
-Patch7: alt-abort-with-nvidia-driver-older-500.patch
+Patch4: alt-drop-drm-master-when-opening-a-gpu-file.patch
+Patch5: alt-gcc13.patch
+Patch6: alt-abort-with-nvidia-driver-older-500.patch
 
 BuildRequires(pre): rpm-build-kf6 libwayland-client-devel
 BuildRequires: rpm-build-python3
@@ -211,6 +210,9 @@ popd
 %_K6lib/libkcmkwincommon.so.*
 
 %changelog
+* Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- return numlock state to kde defaults
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
