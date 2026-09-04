@@ -1,6 +1,6 @@
 Name:    skim
 Version: 5.6.6
-Release: alt1
+Release: alt2
 
 Summary: Fuzzy Finder in rust
 License: MIT
@@ -15,8 +15,9 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires(pre): rpm-build-vim
 BuildRequires: /proc
 
-# Due to frizbee
-ExclusiveArch: x86_64 aarch64
+# Due to frizbee, though there is scalar implementation fallback:
+# https://github.com/saghen/frizbee/pull/76
+ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
 %description
 Half of our life is spent on navigation: files, lines, commands...
@@ -85,6 +86,9 @@ SK=%buildroot%_bindir/sk
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Thu Sep 03 2026 Ilya Sorochan <k0tran@altlinux.org> 5.6.6-alt2
+- NMU: allow loongarch64 and riscv64 builds (closes: 60246)
+
 * Mon Aug 24 2026 Mikhail Gordeev <obirvalger@altlinux.org> 5.6.6-alt1
 - new version 5.6.6
 
