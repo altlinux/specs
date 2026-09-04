@@ -2,7 +2,7 @@
 %global import_path code.gitea.io/tea
 
 Name: gitea-tea
-Version: 0.14.0
+Version: 0.15.1
 Release: alt1
 Summary: command line tool to interact with Gitea
 
@@ -61,6 +61,9 @@ mkdir -p %buildroot%_datadir/{bash-completion/completions,fish/vendor_completion
 %_datadir/zsh/site-functions/_tea
 
 %changelog
+* Fri Sep 04 2026 Alexey Shabalin <shaba@altlinux.org> 0.15.1-alt1
+- updated from 0.14.0 to 0.15.1
+
 * Fri May 08 2026 Alexey Shabalin <shaba@altlinux.org> 0.14.0-alt1
 - updated from 0.12.0 to 0.14.0
 
