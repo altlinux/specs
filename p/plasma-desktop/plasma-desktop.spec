@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 6.7.4
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -52,7 +52,7 @@ Patch7: alt-singleclick.patch
 #
 Patch9: alt-dont-indicate-audio-on-taskbar.patch
 Patch10: alt-def-session.patch
-Patch11: alt-def-key-numlock.patch
+#
 Patch12: alt-def-layout-indicator.patch
 Patch13: alt-def-taskman.patch
 Patch14: alt-def-desktop-icons.patch
@@ -174,7 +174,7 @@ SDDM breeze theme
 #
 #%patch9 -p1
 %patch10 -p1
-%patch11 -p1
+#
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
@@ -279,6 +279,9 @@ done
 %_K6lib/libkglobalaccelmodel.so.%sover
 
 %changelog
+* Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- return numlock state to kde defaults
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
