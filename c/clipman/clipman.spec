@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: clipman
-Version: 1.6.5
+Version: 1.7.0
 Release: alt1
 
 Summary: Simple clipboard manager for Wayland
@@ -39,5 +39,8 @@ install -Dpm755 %name %buildroot%_bindir/%name
 %_bindir/clipman
 
 %changelog
+* Fri Sep 04 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt1
+- New version 1.7.0.
+
 * Mon Dec 29 2025 Nikolay Strelkov <snk@altlinux.org> 1.6.5-alt1
 - Initial build for Sisyphus
