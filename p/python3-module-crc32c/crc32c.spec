@@ -5,9 +5,11 @@
 %def_with check
 
 # %%python3_set_limited_api is not supported yet
+# some C extensions *unintentionally* support abi3
+%none_python3_modules_rename
 
 Name: python3-module-%pypi_name
-Version: 2.8
+Version: 2.9
 Release: alt1
 Summary: Exposes the Intel SSE4.2 CRC32C instruction
 License: LGPLv2.1
@@ -47,7 +49,6 @@ instruction set of Intel CPUs.
 %pyproject_run -- python -u run-tests.py
 
 %files
-%doc README.*
 %_bindir/crc32c
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -56,6 +57,9 @@ instruction set of Intel CPUs.
 %exclude %python3_sitelibdir/%mod_name/ext/*.c
 
 %changelog
+* Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 2.9-alt1
+- 2.8 -> 2.9
+
 * Fri Dec 12 2025 Stanislav Levin <slev@altlinux.org> 2.8-alt1
 - 2.7.1 -> 2.8.
 
