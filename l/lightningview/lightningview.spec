@@ -2,7 +2,7 @@
 %def_with check
 
 Name: lightningview
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 Summary: A lightning-fast cross-platform image viewer
 License: GPL-2.0
@@ -85,6 +85,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %doc README.md
 
 %changelog
+* Sat Sep 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.1-alt1
+- Updated to version 3.0.1.
+
 * Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.0-alt1
 - Updated to version 3.0.0.
 - Build only for Wayland support.
