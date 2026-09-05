@@ -1,11 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-# Broken due to mockito.
-# Link: https://bugzilla.altlinux.org/56779
-%def_without check
+%def_with check
 
 Name: mnemonicsetter
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: Automatically assigns mnemonics to menu items and toolbar elements
 License: Apache-2.0
@@ -21,10 +19,10 @@ BuildRequires(pre): rpm-macros-gradle
 BuildRequires: xgradle
 BuildRequires: rpm-build-java
 BuildRequires: /proc
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 %if_with check
 BuildRequires: hamcrest
-BuildRequires: mockito
+BuildRequires: junit
 %endif
 
 %description
@@ -44,11 +42,15 @@ and toolbar elements (Java Swing).
 %gradle_install
 
 %check
-%gradle_check
+%gradle_check --offline
 
 %files -f .mfiles
 
 %changelog
+* Sun Sep 06 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.6-alt2
+- Fix FTBFS with Gradle 9: build with JDK 17, target Java 8.
+- Enable the test suite; it never actually needed mockito.
+
 * Sun Nov 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.6-alt1
 - New version after being removed from sisyphus.
 - Build from the upstream git repo.
