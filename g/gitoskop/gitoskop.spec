@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -93,6 +93,25 @@ cargo test --release --locked --offline
 %_datadir/%name/web
 
 %changelog
+* Sat Sep 05 2026 Anton Farygin <rider@altlinux.org> 1.6.0-alt1
+- 1.5.0 -> 1.6.0
+- webui: light theme with a topbar toggle, follows the OS by default
+- webui: diff folding per file and fold-all to a diffstat, big patches open
+  folded; commit page lists its parents, tree and log links on the commit
+- webui: refs on a commit shown as pills after the breadcrumb, the ref is a
+  crumb in tree/blob/log views; branches newest-first, release tag at the tip
+- webui: spec outline as a sticky column, Source/Patch lines link to what gear
+  extracts; gear rules highlighting with paths linked into the tree
+- submodules: gitlink diffs as a Subproject commit line, gitlink blob is a
+  page linked to the upstream commit
+- log: expand-all with full commit bodies, q filter matches the whole message
+- config: alias roots (one label served as another root's subtree), ui_title
+- raw serves text inline as text/plain, binaries as download
+- gitweb compat: <dir>/?p=<repo>, p= fallback to the parent dir, old ?o=age
+  bookmarks land in the UI
+- fixed: roots tree scroll/focus on expand, flicker on cold load, git clone of
+  the UI url got an empty repo, version omits commit on tarball builds (Closes: #60379)
+
 * Sat Aug 29 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
 - 1.4.1 -> 1.5.0
 
