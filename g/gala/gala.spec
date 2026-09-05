@@ -4,7 +4,7 @@
 %def_with check
 
 Name: gala
-Version: 8.5.1
+Version: 8.6.1
 Release: alt1
 
 Summary: Pantheon Window Manager
@@ -23,20 +23,20 @@ BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(atk-bridge-2.0)
-BuildRequires: pkgconfig(libcanberra)
-BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(gee-0.8)
 BuildRequires: pkgconfig(granite-7)
-BuildRequires: pkgconfig(gnome-desktop-3.0)
+BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: libmutter-devel
 BuildRequires: pkgconfig(granite)
 BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: vapi(libcanberra)
 BuildRequires: vapi(granite)
 BuildRequires: /usr/bin/valadoc
+BuildRequires: pkgconfig(ibus-1.0)
+BuildRequires: pkgconfig(json-glib-1.0)
 
 %if_with check
 BuildRequires: xkeyboard-config
@@ -153,6 +153,9 @@ rm -rfv %buildroot/dconf/user
 %_vapidir/xfixes-4.0.vapi
 
 %changelog
+* Sat Sep 05 2026 Nikolay Strelkov <snk@altlinux.org> 8.6.1-alt1
+- New version 8.6.1.
+
 * Thu May 14 2026 Nikolay Strelkov <snk@altlinux.org> 8.5.1-alt1
 - New version 8.5.1.
 - Enabled %%check.
