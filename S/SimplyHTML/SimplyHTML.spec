@@ -3,7 +3,7 @@
 
 Name: SimplyHTML
 Version: 0.19.2
-Release: alt1
+Release: alt2
 
 Summary: SimplyHTML is an application for text processing
 License: GPL-2.0-or-later
@@ -18,7 +18,7 @@ BuildRequires(pre): rpm-macros-gradle
 BuildRequires: xgradle
 BuildRequires: rpm-build-java
 BuildRequires: /proc
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 BuildRequires: javahelp2
 BuildRequires: apache-commons-lang
 BuildRequires: mnemonicsetter
@@ -36,7 +36,7 @@ textual information and styles.
 %setup
 
 %build
-%gradle_publish
+%gradle_publish --offline
 
 %install
 %gradle_register
@@ -44,11 +44,16 @@ textual information and styles.
 %gradle_install
 
 %check
-%gradle_check
+%gradle_check --offline
 
 %files -f .mfiles
 
 %changelog
+* Sun Sep 06 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.19.2-alt2
+- Fix FTBFS with Gradle 9:
+  + Build with JDK 17, target Java 8.
+  + Build offline, since 9.3 an unreachable repository is a hard error.
+
 * Sun Nov 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 0.19.2-alt1
 - New version after being removed from sisyphus.
 - Build from the upstream git repo.
