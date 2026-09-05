@@ -2,15 +2,15 @@
 
 %define version_hi 2
 %define version_mid 8
-%define version_lo 1
+%define version_lo 2
 
 # git log v%version_hi.%version_mid.%version_lo -1 --format=%cd --date=local
-%define Sun Aug 30 22:24:57 2026
+%define git_date Fri Sep 4 18:25:34 2026
 # git rev-parse v%version_hi.%version_mid.%version_lo
-%define git_hash d073d75010090186b58eb38bfc78dfc2f3acd8c7
+%define git_hash fd9d310ccbb6b8b62c976da8886a3c8fd3a10ff3
 
 Name: pcsx2
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -25,6 +25,11 @@ ExclusiveArch: x86_64
 
 # https://github.com/PCSX2/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+# https://github.com/PCSX2/pcsx2/commit/122d0424e74ea7d39649d06bcd13388062628cdc
+# GSCapture: Switch the use of pix_fmts/sample_fmts with avcodec_get_supported_config()
+# (fix build with FFmpeg >= 8, where AVCodec.pix_fmts/sample_fmts are no longer public)
+Patch0: pcsx2-ffmpeg9.patch
 
 BuildRequires: alt-os-release
 BuildRequires: bzlib-devel
@@ -79,6 +84,7 @@ There is still lot of on going work to improve compatibility & speed.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -127,6 +133,10 @@ echo "#define GIT_TAG \"v$(echo %version)\"
 %_iconsdir/hicolor/*/apps/PCSX2.png
 
 %changelog
+* Sat Sep 05 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.2-alt1
+- New version 2.8.2.
+- Fix build with FFmpeg 9 (avcodec_get_supported_config instead of removed AVCodec fields).
+
 * Mon Aug 31 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.1-alt1
 - New version 2.8.1.
 
