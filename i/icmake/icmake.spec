@@ -2,7 +2,7 @@
 %global _libexecdir %prefix/libexec
 
 Name: icmake
-Version: 13.05.01
+Version: 13.06.01
 Release: alt1
 Summary: A make utility using a C-like syntax
 License: GPLv3
@@ -76,6 +76,9 @@ popd
 %_docdir/%name-%version
 
 %changelog
+* Fri Sep 04 2026 Anton Farygin <rider@altlinux.org> 13.06.01-alt1
+- 13.05.01 -> 13.06.01
+
 * Sat Dec 06 2025 Anton Farygin <rider@altlinux.com> 13.05.01-alt1
 - 13.03.00 -> 13.05.01
 
