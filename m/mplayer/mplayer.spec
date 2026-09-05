@@ -310,7 +310,7 @@
 Name: %lname
 Version: 1.5
 # upstream not provide git tags
-Release: alt3.%gitrev
+Release: alt4.%gitrev
 
 Summary: Media player
 Summary(uk_UA.UTF-8): Медіаплейер
@@ -357,7 +357,7 @@ Patch22: 0022-fix-python-syntax.patch
 Patch23: 0023-loongarch64-riscv64-support.patch
 Patch24: 0024-mp_image.c-add-the-header-missing-now.patch
 Patch25: 0025-fifo.patch
-Patch26: 0026-fix-ffmpeg8.patch
+Patch26: 0026-ffmpeg-9.patch
 Patch27: 0027-fix-vdpau.patch
 Patch28: 0028-fix-dvd-crash.patch
 Patch29: 0029-format-string-literal.patch
@@ -1162,6 +1162,9 @@ rm -r %buildroot/%_docdir/%name-%version/tech
 
 
 %changelog
+* Sat Sep 05 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.5-alt4.g567631e
+- Fix FTBFS with ffmpeg 9.
+
 * Wed Jan 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.5-alt3.g567631e
 - Fix FTBFS with ffmpeg 8.
 - Switch to Python3.
