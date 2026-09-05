@@ -41,11 +41,11 @@ BuildRequires: jpackage-default
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt6
+Release:	alt7
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
-Url:		https://javahelp.java.net/
-Source0:	https://javahelp.dev.java.net/files/documents/5985/59373/%{name}-src-%{version}.zip
+Url:		https://github.com/javaee/javahelp
+Source0:	%{name}-src-%{version}.zip
 Source1:	%{name}-jhindexer.sh
 Source2:	%{name}-jhsearch.sh
 BuildArch:	noarch
@@ -97,14 +97,14 @@ ln -s %{_javadir}/tomcat-servlet-4.0-api.jar javahelp_nbproject/lib/servlet-api.
 %build
 
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f javahelp_nbproject/build.xml \
- -Djavac.source=1.6 -Djavac.target=1.6 \
+ -Djavac.source=1.8 -Djavac.target=1.8 \
  -Djdic-jar-present=true -Djdic-zip-present=true \
  -Dservlet-jar-present=true -Dtomcat-zip-present=true \
  -Djavadoc.additionalparam="-Xdoclint:none" \
  release javadoc
 
 %install
-# see https://svn.java.net/svn/javahelp~svn/trunk/jhMaster/jhall.pom
+# see https://github.com/javaee/javahelp/blob/master/jhMaster/jhall.pom
 %mvn_artifact javax.help:javahelp:%{version} javahelp_nbproject/dist/lib/jhall.jar
 %mvn_install -J javahelp_nbproject/dist/lib/javadoc
 
@@ -130,6 +130,10 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Sep 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 0:2.0.05-alt7
+- Fix FTBFS with javac 17: raise javac source/target level to 8.
+- Fix dead java.net URLs.
+
 * Sun Nov 09 2025 Ajrat Makhmutov <rauty@altlinux.org> 0:2.0.05-alt6
 - Stop renaming the jar file.
 
