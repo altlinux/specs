@@ -2,12 +2,12 @@
 %def_with check
 
 Name: openfreebuds
-Version: 0.17.3
+Version: 0.18.0
 Release: alt1
 Summary: Open source app for HUAWEI FreeBuds
 License: GPL-3.0
 Group: Sound
-Url: https://mmk.pw/openfreebuds
+URL: https://mmk.pw/openfreebuds
 VCS: https://github.com/melianmiko/OpenFreebuds
 
 Source: %name-%version.tar
@@ -15,7 +15,8 @@ Patch1: alt-fix-desktop-comment.patch
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-pdm
 BuildRequires: python3-module-pdm-backend
 BuildRequires: python3-module-PyQt6-devel
@@ -84,6 +85,7 @@ install -m 0644 openfreebuds_qt/assets/pw.mmk.OpenFreebuds.png %buildroot%_pixma
 %python3_sitelibdir/openfreebuds_backend
 %python3_sitelibdir/%{pyproject_distinfo openfreebuds}
 %exclude %python3_sitelibdir/openfreebuds_backend/windows
+%exclude %python3_sitelibdir/openfreebuds_backend/darwin
 
 %files cmd
 %_bindir/openfreebuds_cmd
@@ -97,6 +99,9 @@ install -m 0644 openfreebuds_qt/assets/pw.mmk.OpenFreebuds.png %buildroot%_pixma
 %exclude %python3_sitelibdir/openfreebuds_qt/designer/*.ui
 
 %changelog
+* Sat Sep 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.18.0-alt1
+- Updated to version 0.18.0.
+
 * Sun Mar 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.3-alt1
 - Updated to version 0.17.3.
 
