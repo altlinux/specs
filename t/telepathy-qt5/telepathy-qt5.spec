@@ -11,9 +11,9 @@
 
 Name: telepathy-qt5
 Version: 0.9.8
-Release: alt3
+Release: alt3.1
 
-Summary: Telepathy framework - Qt5 connection manager library 
+Summary: Telepathy framework - Qt5 connection manager library
 License: GPLv2
 Group: System/Libraries
 
@@ -28,7 +28,7 @@ BuildRequires: cmake doxygen gcc-c++ git-core graphviz
 BuildRequires: libxml2-devel glib2-devel libdbus-devel libdbus-glib-devel
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: %farstream_dev
-BuildRequires: python-module-dbus python-module-distribute
+BuildRequires: python3-module-dbus python-module-distribute
 BuildRequires: kde-common-devel
 
 %description
@@ -64,7 +64,7 @@ Requires: %name-common = %version-%release
 %name library.
 
 %package -n lib%name
-Summary: Telepathy framework - Qt5 connection manager library 
+Summary: Telepathy framework - Qt5 connection manager library
 Group: System/Libraries
 Requires: %lib_main %lib_farstream %lib_service
 %description -n lib%name
@@ -140,6 +140,9 @@ make -C BUILD install DESTDIR=%buildroot
 #%_libdir/lib*.a
 
 %changelog
+* Sat Sep 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.8-alt3.1
+- NMU: fix FTBFS.
+
 * Wed Jun 30 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.8-alt3
 - fix build requires
 
