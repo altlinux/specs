@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tgpt
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 
 Summary: AI Chatbots in terminal for free
@@ -39,6 +39,9 @@ install -Dm 0755 build/tgpt-linux-%go_hostarch %buildroot%_bindir/tgpt
 %doc README.md LICENSE
 
 %changelog
+* Sat Sep 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.14.0-alt1
+- Updated to version 2.14.0.
+
 * Sun Aug 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.13.0-alt1
 - Updated to version 2.13.0.
 
