@@ -2,12 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wayfire-config-manager
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: Wayfire Config Manager
 License: MIT
 Group: Graphical desktop/Other
-Url: https://github.com/WayfireWM/wcm
+URL: https://github.com/WayfireWM/wcm
+VCS: https://github.com/WayfireWM/wcm
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -20,10 +21,11 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(gtkmm-3.0)
 BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(wayfire)
+BuildRequires: pkgconfig(wayfire) >= 0.11.0
 BuildRequires: pkgconfig(wayland-protocols)
-BuildRequires: pkgconfig(wf-config) >= 0.10.0
-BuildRequires: pkgconfig(wf-shell) >= 0.10.0
+BuildRequires: pkgconfig(wf-config) >= 0.11.0
+#BuildRequires: pkgconfig(wf-shell) >= 0.11.0
+BuildRequires: pkgconfig(fmt)
 
 Requires: hicolor-icon-theme
 
@@ -41,17 +43,21 @@ Requires: hicolor-icon-theme
 %install
 %meson_install
 
+%find_lang wcm
+
 %check
 desktop-file-validate %buildroot%_desktopdir/*.desktop
 
-%files
+%files -f wcm.lang
 %doc LICENSE
 %_bindir/wcm
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.svg
-%_datadir/wcm/
 
 %changelog
+* Sat Sep 05 2026 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+
 * Fri Aug 29 2025 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 

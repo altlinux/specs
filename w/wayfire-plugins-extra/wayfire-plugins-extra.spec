@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wayfire-plugins-extra
-Version: 0.10.0
+Version: 0.11.2
 Release: alt1
 
 Summary: Additional plugins for Wayfire
@@ -41,16 +41,19 @@ BuildRequires: boost-polygon-devel
 %install
 %meson_install
 
+%find_lang --all-name %name
+
 %check
 %meson_test
 
-%files
+%files -f %{name}.lang
 %doc LICENSE README.md
 %_libdir/wayfire/libannotate.so
 %_libdir/wayfire/libautorotate-iio.so
 %_libdir/wayfire/libbench.so
 %_libdir/wayfire/libcrosshair.so
 %_libdir/wayfire/libextra-animations.so
+%_libdir/wayfire/libfisheye.so
 %_libdir/wayfire/libfocus-change.so
 %_libdir/wayfire/libfocus-steal-prevent.so
 %_libdir/wayfire/libfollow-focus.so
@@ -74,6 +77,7 @@ BuildRequires: boost-polygon-devel
 %_datadir/wayfire/metadata/bench.xml
 %_datadir/wayfire/metadata/crosshair.xml
 %_datadir/wayfire/metadata/extra-animations.xml
+%_datadir/wayfire/metadata/fisheye.xml
 %_datadir/wayfire/metadata/focus-change.xml
 %_datadir/wayfire/metadata/focus-steal-prevent.xml
 %_datadir/wayfire/metadata/follow-focus.xml
@@ -91,7 +95,12 @@ BuildRequires: boost-polygon-devel
 %_datadir/wayfire/metadata/water.xml
 %_datadir/wayfire/metadata/window-zoom.xml
 %_datadir/wayfire/metadata/workspace-names.xml
+%exclude %_datadir/locale/LC_MESSAGES/wf-plugin-fisheye.mo
 
 %changelog
+* Sat Sep 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.11.2-alt1
+- New version 0.11.2.
+
 * Mon Dec 29 2025 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
 - Initial build for Sisyphus
+

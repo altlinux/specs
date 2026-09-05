@@ -1,14 +1,17 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define sover 1
+
 %def_with test
 
 Name: libwf-config
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 Summary: Library for managing configuration files, written for wayfire
 License: MIT
-Url: https://github.com/WayfireWM/wf-config
+URL: https://github.com/WayfireWM/wf-config
+VCS: https://github.com/WayfireWM/wf-config.git
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
@@ -60,8 +63,8 @@ Development files for %name.
 
 %files
 %doc LICENSE
-%_libdir/%name.so.0*
-%_libdir/%name.so.1*
+%_libdir/%name.so.%sover
+%_libdir/%name.so.%version
 
 %files devel
 %_includedir/wayfire/
@@ -69,6 +72,9 @@ Development files for %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Sep 05 2026 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+
 * Thu Aug 28 2025 Anton Midyukov <antohami@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 

@@ -1,11 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-
-%set_verify_elf_method relaxed
+%define sover 0
 
 Name: wayfire
 Summary: A modular and extensible wayland compositor
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 License: MIT
 URL: https://wayfire.org
@@ -17,6 +16,8 @@ Source: %name-%version.tar
 Source1: wf-utils.tar
 # Source2-url: https://github.com/WayfireWM/wf-touch
 Source2: wf-touch.tar
+# Source3-url: https://github.com/WayfireWM/wf-json
+Source3: wf-json.tar
 
 Patch: %name-%version-%release.patch
 
@@ -24,7 +25,8 @@ BuildRequires: cmake
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: inotify-tools-devel
 BuildRequires: libevdev-devel
-BuildRequires: meson >= 0.63.0
+BuildRequires: meson >= 0.64.0
+BuildRequires: rpm-build-python3
 
 BuildRequires: doctest-devel
 BuildRequires: libglm-devel
@@ -40,14 +42,16 @@ BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
-BuildRequires: pkgconfig(wayland-protocols) >= 1.12
+BuildRequires: pkgconfig(wayland-protocols) >= 1.37
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wf-config) >= 0.10.0
-BuildRequires: pkgconfig(wlroots-0.19)
+BuildRequires: pkgconfig(wf-config) >= 0.11.0
+BuildRequires: pkgconfig(wlroots-0.20)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xcb-ewmh)
 BuildRequires: pkgconfig(yyjson)
 BuildRequires: vulkan-headers
+
+Requires: libwf-utils%sover = %EVR
 
 # Recommends:
 #Requires: wayfire-config-manager
@@ -58,10 +62,19 @@ Wayfire is a 3D Wayland compositor, inspired by Compiz and based on wlroots.
 It aims to create a customizable, extendable and lightweight environment
 without sacrificing its appearance.
 
+%package -n libwf-utils%sover
+Summary: Wayfire utils libraries
+Group: System/Libraries
+
+Conflicts: wayfire < 0.11.0
+
+%description -n libwf-utils%sover
+Wayfire utils libraries.
+
 %package devel
 Summary: Development files for %name
 Group: Development/Other
-Requires: %name = %EVR
+Requires: libwf-utils%sover = %EVR
 
 %description devel
 Development files for %name.
@@ -70,6 +83,7 @@ Development files for %name.
 %setup
 tar -xvf %SOURCE1 -C subprojects/
 tar -xvf %SOURCE2 -C subprojects/
+tar -xvf %SOURCE3 -C subprojects/
 %patch -p1
 
 %build
@@ -88,13 +102,16 @@ rm -v %buildroot%_libdir/*.a
 %doc LICENSE
 %doc README.md %name.ini
 %_bindir/%name
+%_bindir/%name-plugin
 %_datadir/%name/
 %_datadir/wayland-sessions/*.desktop
 %_datadir/xdg-desktop-portal/wayfire-portals.conf
 %_libdir/%name/
-%_libdir/lib%name-blur-base.so
-%_libdir/libwf-utils.so.0*
-%_man1dir/*.1*
+%_man1dir/*.1.*
+
+%files -n libwf-utils%sover
+%_libdir/libwf-utils.so.%sover
+%_libdir/libwf-utils.so.%sover.*
 
 %files devel
 %_includedir/%name/
@@ -102,6 +119,11 @@ rm -v %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Sep 05 2026 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+- Separate package libwf-utils0.
+- Replace libwayfire-blur-base.so to subdirectory wayfire.
+
 * Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt1
 - New version 0.10.1.
 
