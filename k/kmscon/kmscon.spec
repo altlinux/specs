@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 10.0.2
+Version: 10.0.3
 Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
@@ -76,6 +76,9 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example \
 %_man5dir/%name.conf.5*
 
 %changelog
+* Sat Sep 05 2026 Anton Midyukov <antohami@altlinux.org> 10.0.3-alt1
+- New version 10.0.3.
+
 * Fri Aug 21 2026 Anton Midyukov <antohami@altlinux.org> 10.0.2-alt1
 - New version 10.0.2.
 
