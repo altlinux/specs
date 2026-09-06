@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: btrfs-assistant
-Version: 2.2
+Version: 2.3.1
 Summary: GUI management tool to make managing a Btrfs filesystem easier
-Release: alt3
+Release: alt1
 License: GPL-3.0
 Group: Archiving/Backup
 URL: https://gitlab.com/btrfs-assistant/btrfs-assistant
@@ -53,12 +53,13 @@ sed -i '/target_compile_options/s/-Werror/-Wno-error/g' src/CMakeLists.txt
 
 %install
 %cmakeinstall_std
+%find_lang --without-mo --with-qt btrfsassistant
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainfo.xml
 
-%files
+%files -f btrfsassistant.lang
 %_bindir/%name
 %_bindir/%name-bin
 %_bindir/%name-launcher
@@ -67,8 +68,13 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 %_datadir/metainfo/%name.metainfo.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/polkit-1/actions/org.%name.pkexec.policy
+%_datadir/%name
 
 %changelog
+* Sun Sep 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.3.1-alt1
+- Updated to version 2.3.1.
+- Build with Russian translation.
+
 * Thu Feb 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.2-alt3
 - Fixed build with qt 6.10.
 
