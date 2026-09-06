@@ -1,6 +1,6 @@
 %define abiversion 7
 Name: libwmf
-Version: 0.2.15
+Version: 0.2.16
 Release: alt1
 
 Summary: A library to convert wmf files
@@ -102,6 +102,9 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 %_includedir/%name
 
 %changelog
+* Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 0.2.16-alt1
+- 0.2.15 -> 0.2.16
+
 * Mon Apr 06 2026 Anton Farygin <rider@altlinux.org> 0.2.15-alt1
 - 0.2.14 -> 0.2.15
 
