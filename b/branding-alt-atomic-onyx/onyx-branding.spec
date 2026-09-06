@@ -15,7 +15,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20260830
+Version: 20260906
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -163,6 +163,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sun Sep 06 2026 Vladimir Romanov <rirusha@altlinux.org> 20260906-alt1
+- Dropped `user.with-root` context var at ready-set config.
+
 * Sun Aug 30 2026 Vladimir Romanov <rirusha@altlinux.org> 20260830-alt1
 - Updated URLs.
 - Added additional `ID_LIKE`.
