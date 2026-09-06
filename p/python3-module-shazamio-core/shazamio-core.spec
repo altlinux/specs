@@ -2,7 +2,7 @@
 %define nameD shazamio_core
  
 Name:    python3-module-shazamio-core
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: shazamio-core
@@ -43,9 +43,12 @@ EOF
 %files
 %doc *.md LICENSE
 %python3_sitelibdir/%nameD/
-%python3_sitelibdir/%{pyproject_distinfo %nameD}
+%python3_sitelibdir/%{nameD}-*
 
 %changelog
+* Sun Sep 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt1
+- 1.2.0 -> 1.2.1
+
 * Sun Aug 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.0-alt1
 - 1.1.2 -> 1.2.0
 
