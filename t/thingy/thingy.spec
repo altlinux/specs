@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thingy
-Version: 1.2.4
-Release: alt2
+Version: 1.2.6
+Release: alt1
 
 Summary: Document Manager
 License: GPL-3.0-or-later
@@ -54,6 +54,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/thingy/*
 
 %changelog
+* Sun Sep 06 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.6-alt1
+- New version 1.2.6.
+
 * Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.4-alt2
 - Switch to xapp-symbolic-icons (XSI).
 
