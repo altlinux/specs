@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define features locale.ru
 
 Name: forgejo-cli
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 Url: https://codeberg.org/forgejo-contrib/forgejo-cli
 Vcs: https://codeberg.org/forgejo-contrib/forgejo-cli.git
@@ -12,6 +13,8 @@ Group: Development/Other
 Source0: %name-%version.tar
 Source1: vendor.tar
 Patch: %name-%version-%release.patch
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust libssl-devel
@@ -25,7 +28,7 @@ BuildRequires: rpm-build-rust libssl-devel
 %rust_prep
 
 %build
-%rust_build
+%rust_build --features "%features"
 
 %install
 %rust_install -- fj
@@ -41,6 +44,9 @@ BuildRequires: rpm-build-rust libssl-devel
 %_datadir/fish/vendor_completions.d/fj.fish
 
 %changelog
+* Sun Jul 19 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+
 * Sun Apr 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 
