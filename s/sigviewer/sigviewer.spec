@@ -1,22 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sigviewer
-Version: 0.6.4
-Release: alt5.git.f62f8d9
+Version: 0.7.2
+Release: alt1
 Summary: SigViewer is a viewing application for biosignals
 Group: Sciences/Medicine
 License: GPL-3.0+
 Url: https://github.com/cbrnr/sigviewer
-
-# https://github.com/cbrnr/sigviewer.git
+VCS: https://github.com/cbrnr/sigviewer.git
 Source: %name-%version.tar
 
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-qt5
-BuildRequires: gcc-c++ qt5-base-devel
-BuildRequires: qt5-tools-devel
-BuildRequires: biosig-devel libxdf-devel
+BuildRequires(pre): rpm-macros-qt6 rpm-macros-cmake
+BuildRequires: cmake ctest gcc-c++
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel
+BuildRequires: biosig-devel libxdf-devel zlib-devel
 
 %description
 SigViewer is a viewing application for biosignals such as EEG or MEG time series.
@@ -28,34 +27,15 @@ and display event information (such as annotations or artifact selections).
 %patch1 -p1
 
 %build
-%qmake_qt5 \
-	CONFIG+=nostrip \
-	%nil
-
-%make_build
-
-# compile translations
-if stat src/translations/*.ts 2>/dev/null 1>&2 ; then
-	for i in src/translations/*.ts ; do
-		lrelease-qt5 $i -qm ${i%%.ts}.qm
-	done
-fi
+%cmake
+%cmake_build
 
 %install
-install -Dpm755 bin/release/%name %buildroot%_bindir/%name
-install -Dpm644 %{name}.svg %buildroot%_pixmapsdir/%{name}.svg
-install -Dpm644 deploy/debian/%{name}128.png %buildroot%_pixmapsdir/%{name}128.png
-install -Dpm644 deploy/debian/%{name}.desktop %buildroot%_desktopdir/%{name}.desktop
-
-# install translations
-if stat src/translations/*.qm 2>/dev/null 1>&2 ; then
-	install -d %buildroot%_qt5_translationdir
-	for i in src/translations/*.qm ; do
-		install -Dpm644 $i %buildroot%_qt5_translationdir/$(basename "$i")
-	done
-fi
-
+%cmakeinstall_std
 %find_lang --with-qt %name
+
+%check
+QT_QPA_PLATFORM=offscreen ctest --test-dir %_cmake__builddir --output-on-failure
 
 %files -f %name.lang
 %doc LICENSE
@@ -66,6 +46,13 @@ fi
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Sep 03 2026 Anton Farygin <rider@altlinux.org> 0.7.2-alt1
+- 0.6.4 -> 0.7.2
+- Switched to CMake build system and Qt6.
+- Build against system libbiosig and libxdf instead of bundled ones.
+- Power Spectrum/Mean: show one warning for events too close to the start
+  of the file instead of a modal box per event and channel (closes: 40696).
+
 * Tue Sep 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.6.4-alt5.git.f62f8d9
 - Fixed typo in translation.
 
