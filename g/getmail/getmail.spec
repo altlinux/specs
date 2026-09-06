@@ -1,68 +1,59 @@
 Name:       getmail
-Version:    5.14
+Version:    6.20.01
 Release:    alt1
 
-Summary:    POP3 mail retriever with reliable Maildir delivery
-License:    GPL
+Summary:    Mail retriever with Maildir/mbox delivery
+License:    GPL-2.0 AND Apache-2.0
 Group:      Networking/Mail
-Url:        http://pyropus.ca/software/getmail
+Url:        https://getmail6.org
+Vcs:        https://github.com/getmail6/getmail6.git
 
 BuildArch:  noarch
 
-Source:     %name-%version.tar.gz
-Patch0:     port-on-python3.patch
+Source:     %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+BuildRequires: python3-module-setuptools
 
-Summary(ru_RU.KOI8-R): Выкачивание почты по POP3 с надежной доставкой в Maildir
-Summary(uk_UA.KOI8-U): Витягування пошти за POP3 ╕з над╕йним постачанням до Maildir
+Provides: getmail6 = %EVR
 
+Summary(ru_RU.UTF-8): п÷п╬п╩я┐я┤п╣п╫п╦п╣ п©п╬я┤я┌я▀ п©п╬ POP3/IMAP я│ п╢п╬я│я┌п╟п╡п╨п╬п╧ п╡ Maildir
 
 %description
-getmail is intended as a simple replacement for fetchmail for those people
-who do not need its various and sundry configuration options, complexities,
-and bugs.  It retrieves mail from one or more POP3 servers for one or more
-email accounts, and reliably delivers into a Maildir specified on a
-per-account basis.  It can also deliver into mbox files, although this
-should not be attempted over NFS.  getmail is written entirely in python.
+getmail6 is a flexible, extensible mail retrieval system with support
+for POP3, IMAP4, SSL variants of both, maildirs, mboxrd files, external
+MDAs, arbitrary message filtering, single-user and domain mailboxes.
 
-%description -l ru_RU.KOI8-R
-getmail предназначен быть простой заменой fetchmail для тех, кому не нужны
-разнообразные опции, сложности и ошибки.  Способен забирать почту с одного или
-нескольких POP3-серверов и надежно доставлять в Maildir; возможна доставка в
-mbox, но не поверх NFS.  Написан на Python.
+It is a Python 3 fork of getmail 5.14, intended as a simple replacement
+for fetchmail.
 
-%description -l uk_UA.KOI8-U
-getmail ма╓ бути простою зам╕ною fetchmail для тих, кому не потр╕бн╕
-р╕зноман╕тн╕ опц╕╖, складнощ╕ та помилки.  Здатен забирати пошту з одного чи
-к╕лькох POP3-сервер╕в й над╕йно поставляти до Maildir; можливе й використання
-mbox, але не по NFS.  Написаний на Python.
+%description -l ru_RU.UTF-8
+getmail6 Б─■ пЁп╦п╠п╨п╟я▐ я│п╦я│я┌п╣п╪п╟ п©п╬п╩я┐я┤п╣п╫п╦я▐ п©п╬я┤я┌я▀ я│ п©п╬п╢п╢п╣я─п╤п╨п╬п╧ POP3, IMAP4,
+п╦я┘ SSL-п╡п╟я─п╦п╟п╫я┌п╬п╡, Maildir, mbox, п╡п╫п╣я┬п╫п╦я┘ MDA п╦ я└п╦п╩я▄я┌я─п╟я├п╦п╦ я│п╬п╬п╠я┴п╣п╫п╦п╧.
 
-%prep -q
+п╜я┌п╬ я└п╬я─п╨ getmail 5.14 п╢п╩я▐ Python 3, п©я─п╬я│я┌п╟я▐ п╥п╟п╪п╣п╫п╟ fetchmail.
+
+%prep
 %setup
-%patch0 -p2
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
 
 %install
 %python3_install --optimize=2
-
-pushd docs
-mv CHANGELOG THANKS COPYING BUGS TODO ../
-popd
+# setup.py dumps docs under %%_datadir/doc/getmail; ship them via %%doc
+rm -rf %buildroot%_datadir/doc
 
 %files
-%doc COPYING docs/
-%doc %_man1dir/*
+%doc README docs/COPYING docs/CHANGELOG docs/THANKS docs/BUGS docs/HACKING docs/getmailrc-examples
 %_bindir/*
+%_man1dir/*
 %python3_sitelibdir/*
 
-
 %changelog
+* Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 6.20.01-alt1
+- 6.20.01 (switch to getmail6, Python 3 fork of getmail 5.14) (Closes: #48791)
+
 * Tue Jan 28 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.14-alt1
 - Version updated to 5.14
 - porting on python3.
