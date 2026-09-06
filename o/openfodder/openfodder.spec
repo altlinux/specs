@@ -2,13 +2,14 @@
 
 Name: openfodder
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: An open source version of the Cannon Fodder engine, for modern operating systems
 Group: Games/Strategy
 License: GPLv3
 Url: http://openfodder.com/
 
 Source: %name-%version.tar
+patch0: 0001-Change-data-path.patch
 BuildPreReq: rpm-macros-cmake
 BuildRequires: gcc-c++
 BuildRequires: cmake
@@ -28,6 +29,8 @@ Requires: %name = %version
 
 %prep
 %setup -n %name-%version
+
+%patch0 -p1
 
 %build
 
@@ -52,6 +55,9 @@ install -D -m0755 FreeDesktop/openfodder.png %buildroot%_iconsdir/hicolor/128x12
 %_datadir/%oname
 
 %changelog
+* Sun Sep  6 2026 Artyom Bystrov <arbars@altlinux.org> 2.0.0-alt2
+- Add patch for changing path to game data
+
 * Mon Mar 30 2026 Artyom Bystrov <arbars@altlinux.org> 2.0.0-alt1
 - update to new version
 - remove start script
