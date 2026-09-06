@@ -16,7 +16,7 @@
 %endif
 
 Name: ImageMagick
-Version: 7.1.2.30
+Version: 7.1.2.31
 Release: alt1
 
 Summary: An X application for displaying and manipulating images
@@ -263,6 +263,9 @@ mv %buildroot%_docdir/%name-%mversion %buildroot%_docdir/%name-%dversion
 %endif
 
 %changelog
+* Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 7.1.2.31-alt1
+- 7.1.2.30 -> 7.1.2.31
+
 * Sun Aug 30 2026 Anton Farygin <rider@altlinux.org> 7.1.2.30-alt1
 - 7.1.2.29 -> 7.1.2.30
 - display: do not exit on File->Next/Former when there is no other file
