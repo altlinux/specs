@@ -1,6 +1,6 @@
 Name: lha
 Version: 1.14i
-Release: alt5
+Release: alt6
 Epoch: 2
 
 %define addver -ac20211125p5
@@ -15,7 +15,6 @@ Url: https://github.com/jca02266/lha/
 Source: %fullname.tar.gz
 Patch: %name-1.14i-gcc14.patch
 
-Packager: Stanislav Ievlev <inger@altlinux.ru>
 
 %description
 LhA is an archiving and compression utility for LHarc format archive.
@@ -34,7 +33,9 @@ be read on the Amiga or DOS.
 %define _optlevel 3
 %add_optflags %optflags_notraceback -std=gnu17
 %autoreconf
-%configure
+%configure \
+  --enable-multibyte-filename=utf8\
+  --with-additional-suffixes=lha
 %make_build OPTIMIZE="%optflags"
 
 %install
@@ -44,6 +45,9 @@ install -pDm755 src/%name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sun Sep 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 2:1.14i-alt6
+- add UTF8 filename support (Closes: #27453)
+
 * Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 2:1.14i-alt5
 - fix FTBFS with gcc15
 
