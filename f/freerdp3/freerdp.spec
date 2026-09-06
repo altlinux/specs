@@ -12,7 +12,7 @@
 
 Name: freerdp%sover
 Version: 3.30.0
-Release: alt2
+Release: alt3
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -119,6 +119,7 @@ Summary: Remote Desktop Protocol client
 Group: Networking/Remote access
 Requires: lib%name = %EVR
 Conflicts: xfreerdp
+Conflicts: libfreerdp
 
 %description -n xfreerdp%sover
 xfreerdp is a client for Remote Desktop Protocol (RDP), used in a number of
@@ -564,6 +565,9 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sun Sep 06 2026 Andrey Cherepanov <cas@altlinux.org> 3.30.0-alt3
+- Conflicted with libfreerdp on man page wlog.7 (ALT #60409).
+
 * Wed Aug 05 2026 Andrey Cherepanov <cas@altlinux.org> 3.30.0-alt2
 - Built with all channels and support for Opus and Cairo.
 
