@@ -2,7 +2,7 @@
 
 Name: nemo-extensions
 Version: 6.6.0
-Release: alt1
+Release: alt2
 Summary: Extensions for Nemo
 
 License: GPL-2.0-or-later and LGPL-2.0-only
@@ -267,6 +267,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-image-converter/
 
 %changelog
+* Sun Sep 06 2026 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt2
+- nemo-share.c: replace sambashares group with usershares (Closes: 46860).
+
 * Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
 - New version 6.6.0.
 
