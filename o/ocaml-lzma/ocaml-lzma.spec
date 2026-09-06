@@ -1,6 +1,6 @@
 ExcludeArch: %ix86
 Name: ocaml-lzma
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: OCaml bindings to liblzma for multithreaded XZ compression and decompression
 Group: Development/ML
@@ -49,6 +49,10 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 1.2.0-alt1
+- Alone: explicit LZMA1 options (preset_options, compress_with) to reproduce
+  rpm-build payloads byte-for-byte
+
 * Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 1.1.0-alt1
 - added Lzma.Alone: legacy LZMA-alone (.lzma) format support
 
