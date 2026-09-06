@@ -1,15 +1,20 @@
+# If you want to suggest changes, please send PR on
+# https://altlinux.space/alt-atomic/bootupd-alt.git
+
 %define _unpackaged_files_terminate_build 1
 %define service_name bootloader-update
 
 Name: bootupd
-Version: 0.2.32
-Release: alt3
+Version: 0.3.1
+Release: alt1
 
 Summary: Bootloader updater
 License: Apache-2.0 AND BSD-3-Clause AND MIT AND (Apache-2.0 OR BSL-1.0) AND (Apache-2.0 OR MIT) AND (Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT) AND (Unlicense OR MIT)
 Group: System/Base
 URL: https://github.com/coreos/bootupd
 VCS: https://github.com/coreos/bootupd.git
+
+ExcludeArch: %ix86
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -56,6 +61,9 @@ does not update /boot/efi (and also doesn't update the BIOS MBR).
 %doc README.md
 
 %changelog
+* Sat Sep 05 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3.1-alt1
+- New version: 0.3.1.
+
 * Wed Jun 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.32-alt3
 - Add refreshing GRUB configs and modules on update, not just install.
 
