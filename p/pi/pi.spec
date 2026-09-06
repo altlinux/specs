@@ -2,7 +2,7 @@
 
 Name: pi
 Epoch:1 
-Version: 0.84.4
+Version: 0.85.1
 Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
@@ -21,7 +21,7 @@ Patch1: pi-0.84.3-alt-disable-update-check.patch
 # The esbuild bundle is only for npm distribution; we ship the unbundled
 # dist + node_modules. Vendored esbuild is linux-x64 only and breaks the
 # noarch rebuild on other arches.
-Patch2: pi-0.84.3-alt-no-esbuild-bundle.patch
+Patch2: pi-0.85.1-alt-no-esbuild-bundle.patch
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ BuildRequires: /proc
 Requires: node >= 22.19
 Requires: ripgrep
 Requires: fd
+# chord (experimental plugin bundling) shells out to esbuild; the vendored
+# @esbuild/linux-x64 binary is x86_64-only, so use the system one instead.
+Requires: esbuild
 
 # Vendored node_modules: do not generate Requires on bundled modules.
 # nodejs.req would emit npm(@types/node) from hoisted protobufjs.
@@ -74,6 +77,8 @@ chmod 0755 %buildroot%nodejs_sitelib/%name/dist/cli.js
 
 # Drop native addons so the noarch package does not ship arch-specific ELF.
 # photon-node still works via photon_rs_bg.wasm; clipboard is optional.
+# @esbuild/* ship arch-specific binaries; replaced by the system esbuild.
+rm -rf %buildroot%nodejs_sitelib/%name/node_modules/@esbuild
 find %buildroot%nodejs_sitelib/%name -type f -name '*.node' -delete
 find %buildroot%nodejs_sitelib/%name -depth -type d \( \
 	-name '*-darwin-*' -o -name '*-win32-*' -o -name '*-windows-*' \
@@ -83,6 +88,7 @@ find %buildroot%nodejs_sitelib/%name -depth -type d \( \
 install -d %buildroot%_bindir
 cat > %buildroot%_bindir/pi <<EOF
 #!/bin/sh
+export ESBUILD_BINARY_PATH=/usr/bin/esbuild
 exec /usr/bin/node %nodejs_sitelib/%name/dist/cli.js "\$@"
 EOF
 chmod 0755 %buildroot%_bindir/pi
@@ -96,6 +102,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 1:0.85.1-alt1
+- 0.84.4 -> 0.85.1
+
 * Tue Sep 01 2026 Anton Farygin <rider@altlinux.org> 1:0.84.4-alt1
 - 0.84.3 -> 0.84.4
 
