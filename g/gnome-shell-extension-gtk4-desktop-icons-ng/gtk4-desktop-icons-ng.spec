@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-gtk4-desktop-icons-ng
-Version: 100.24
-Release: alt2
+Version: 100.28
+Release: alt1
 Summary: Extension for the GNOME Shell that renders icons on the desktop
 
 License: GPL-3.0-or-later
@@ -77,6 +77,9 @@ rm -r %buildroot%_datadir/locale/zh-Hant
 %doc DEBUGGING.md FEATURES.md HISTORY.md ISSUES.md README.md
 
 %changelog
+* Sun Sep 06 2026 Anton Midyukov <antohami@altlinux.org> 100.28-alt1
+- New version 100.28.
+
 * Fri Jul 24 2026 Anton Midyukov <antohami@altlinux.org> 100.24-alt2
 - Remove override for systemd user units (Closes: 59949).
 
