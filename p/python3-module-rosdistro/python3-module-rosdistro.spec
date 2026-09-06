@@ -1,7 +1,7 @@
 %define  modulename rosdistro
 
 Name:    python3-module-%modulename
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Tools to work with catkinized rosdistro files
@@ -9,22 +9,18 @@ License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://github.com/ros-infrastructure/rosdistro
 
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
-Patch:   remove-distutils-for-python-3.12.patch
 
 %description
 %summary
 
 %prep
 %setup -n %modulename-%version
-%patch -p1
 
 %build
 %python3_build
@@ -39,6 +35,9 @@ Patch:   remove-distutils-for-python-3.12.patch
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 04 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+
 * Sat Oct 19 2024 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt1
 - New version.
 
