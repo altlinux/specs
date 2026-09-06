@@ -5,7 +5,7 @@
 
 Name: libpfm
 Version: 4.13.0
-Release: alt1
+Release: alt2
 Summary: Library to encode performance events for use by perf tool
 License: MIT
 Group: System/Libraries
@@ -69,6 +69,9 @@ tests/validate -A
 %_man3dir/*pfm*.3*
 
 %changelog
+* Sun Sep 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.13.0-alt2
+- NMU: fix FTBFS with gcc 15.
+
 * Wed Mar 29 2023 Vitaly Chikunov <vt@altlinux.org> 4.13.0-alt1
 - Update to v4.13.0 (2023-03-28).
 
