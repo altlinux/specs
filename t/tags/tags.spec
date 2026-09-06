@@ -3,7 +3,7 @@
 %define appname io.github.phastmike.tags
 
 Name: tags
-Version: 2.3
+Version: 2.5
 Release: alt1
 
 Summary: A simple text tagger
@@ -58,6 +58,9 @@ sed -i "s|Categories=.*|Categories=GTK;Utility;TextTools;FileTools;|" data/io.gi
 %_iconsdir/hicolor/symbolic/apps/%{appname}-symbolic.svg
 
 %changelog
+* Sun Sep 06 2026 Nikolay Strelkov <snk@altlinux.org> 2.5-alt1
+- New version 2.5.
+
 * Tue Jul 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.3-alt1
 - New version 2.3.
 
