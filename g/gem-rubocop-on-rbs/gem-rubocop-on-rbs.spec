@@ -5,7 +5,7 @@
 %define        gemname rubocop-on-rbs
 
 Name:          gem-rubocop-on-rbs
-Version:       1.8.0
+Version:       2.0.0
 Release:       alt1
 Summary:       RuboCop extension for RBS file
 License:       MIT
@@ -16,22 +16,21 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(activesupport) >= 0
 BuildRequires: gem(lint_roller) >= 1.1
 BuildRequires: gem(prism) >= 0
 BuildRequires: gem(rake) >= 0
-BuildRequires: gem(rbs) >= 3.5
+BuildRequires: gem(rbs) >= 4.0
 BuildRequires: gem(rbs-inline) >= 0
 BuildRequires: gem(repl_type_completor) >= 0
 BuildRequires: gem(rspec) >= 0
 BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(steep) >= 0
 BuildRequires: gem(yard) >= 0
 BuildRequires: gem(zlib) >= 0
 BuildConflicts: gem(lint_roller) >= 2
-BuildConflicts: gem(rbs) >= 4
+BuildConflicts: gem(rbs) >= 5
 BuildConflicts: gem(rubocop) >= 2
 %endif
 
@@ -39,16 +38,14 @@ BuildConflicts: gem(rubocop) >= 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 Requires:      ruby >= 3.2.0
-Requires:      gem(activesupport) >= 0
 Requires:      gem(lint_roller) >= 1.1
-Requires:      gem(rbs) >= 3.5
-Requires:      gem(rbs-inline) >= 0
+Requires:      gem(rbs) >= 4.0
 Requires:      gem(rubocop) >= 1.15.0
 Requires:      gem(zlib) >= 0
 Conflicts:     gem(lint_roller) >= 2
-Conflicts:     gem(rbs) >= 4
+Conflicts:     gem(rbs) >= 5
 Conflicts:     gem(rubocop) >= 2
-Provides:      gem(rubocop-on-rbs) = 1.8.0
+Provides:      gem(rubocop-on-rbs) = 2.0.0
 
 %description
 RuboCop extension for RBS file.
@@ -56,14 +53,14 @@ RuboCop extension for RBS file.
 
 %if_enabled    doc
 %package       -n gem-rubocop-on-rbs-doc
-Version:       1.8.0
+Version:       2.0.0
 Release:       alt1
 Summary:       RuboCop extension for RBS file documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop-on-rbs
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubocop-on-rbs) = 1.8.0
+Requires:      gem(rubocop-on-rbs) = 2.0.0
 
 %description   -n gem-rubocop-on-rbs-doc
 RuboCop extension for RBS file documentation files.
@@ -75,29 +72,14 @@ RuboCop extension for RBS file documentation files.
 
 %if_enabled    devel
 %package       -n gem-rubocop-on-rbs-devel
-Version:       1.8.0
+Version:       2.0.0
 Release:       alt1
 Summary:       RuboCop extension for RBS file development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop-on-rbs
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubocop-on-rbs) = 1.8.0
-Requires:      gem(activesupport) >= 0
-Requires:      gem(lint_roller) >= 1.1
-Requires:      gem(prism) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rbs) >= 3.5
-Requires:      gem(rbs-inline) >= 0
-Requires:      gem(repl_type_completor) >= 0
-Requires:      gem(rspec) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(steep) >= 0
-Requires:      gem(yard) >= 0
-Requires:      gem(zlib) >= 0
-Conflicts:     gem(lint_roller) >= 2
-Conflicts:     gem(rbs) >= 4
-Conflicts:     gem(rubocop) >= 2
+Requires:      gem(rubocop-on-rbs) = 2.0.0
 
 %description   -n gem-rubocop-on-rbs-devel
 RuboCop extension for RBS file development package.
@@ -137,6 +119,9 @@ RuboCop extension for RBS file development package.
 
 
 %changelog
+* Sat Sep 05 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
+- ^ 1.8.0 -> 2.0.0
+
 * Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 1.8.0-alt1
 - ^ 0.7.0 -> 1.8.0
 

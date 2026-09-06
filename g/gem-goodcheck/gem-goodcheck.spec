@@ -6,7 +6,7 @@
 
 Name:          gem-goodcheck
 Version:       3.1.0.30
-Release:       alt1
+Release:       alt1.1
 Summary:       Regexp based customizable linter
 License:       MIT
 Group:         Development/Ruby
@@ -15,10 +15,8 @@ Vcs:           https://github.com/sider/goodcheck.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Autoreq:       yes,noruby
-Autoprov:      yes,noruby
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) >= 1.16
 BuildRequires: gem(marcel) >= 1.0
@@ -28,7 +26,6 @@ BuildRequires: gem(rainbow) >= 3.0
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(simplecov) >= 0.17
 BuildRequires: gem(strong_json) >= 1.1
-BuildConflicts: gem(marcel) >= 2.0
 BuildConflicts: gem(psych) >= 6
 BuildConflicts: gem(rainbow) >= 4
 BuildConflicts: gem(strong_json) >= 2.2
@@ -38,12 +35,12 @@ BuildConflicts: gem(strong_json) >= 2.2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency psych >= 5.2.3,psych < 6
+%ruby_use_gem_dependency marcel >= 1.0
 Requires:      ruby >= 2.5.0
 Requires:      gem(marcel) >= 1.0
 Requires:      gem(psych) >= 3.1
 Requires:      gem(rainbow) >= 3.0
 Requires:      gem(strong_json) >= 1.1
-Conflicts:     gem(marcel) >= 2.0
 Conflicts:     gem(psych) >= 6
 Conflicts:     gem(rainbow) >= 4
 Conflicts:     gem(strong_json) >= 2.2
@@ -58,7 +55,7 @@ YAML file.
 
 %package       -n goodcheck
 Version:       3.1.0.30
-Release:       alt1
+Release:       alt1.1
 Summary:       Regexp based customizable linter executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета goodcheck
 Group:         Other
@@ -79,7 +76,7 @@ YAML file.
 %if_enabled    doc
 %package       -n gem-goodcheck-doc
 Version:       3.1.0.30
-Release:       alt1
+Release:       alt1.1
 Summary:       Regexp based customizable linter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета goodcheck
 Group:         Development/Documentation
@@ -101,7 +98,7 @@ YAML file.
 %if_enabled    devel
 %package       -n gem-goodcheck-devel
 Version:       3.1.0.30
-Release:       alt1
+Release:       alt1.1
 Summary:       Regexp based customizable linter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета goodcheck
 Group:         Development/Ruby
@@ -158,6 +155,9 @@ YAML file.
 
 
 %changelog
+* Sat Sep 05 2026 Pavel Skrylev <majioa@altlinux.org> 3.1.0.30-alt1.1
+- ! fixed dep to marcel gem
+
 * Sun Feb 16 2025 Pavel Skrylev <majioa@altlinux.org> 3.1.0.30-alt1
 - ^ 3.1.0 -> 3.1.0p30
 

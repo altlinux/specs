@@ -5,7 +5,7 @@
 %define        gemname rbs-inline
 
 Name:          gem-rbs-inline
-Version:       0.12.0
+Version:       0.14.0
 Release:       alt1
 Summary:       Inline RBS type declaration
 License:       MIT
@@ -16,56 +16,43 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(minitest) >= 5.17.0
+BuildRequires: gem(minitest) >= 5.25
 BuildRequires: gem(prism) >= 0.29
 BuildRequires: gem(rake) >= 13.1.0
-BuildRequires: gem(rbs) >= 3.8.0
-BuildRequires: gem(steep) >= 1.9.0
+BuildRequires: gem(rbs) >= 4.0
+BuildRequires: gem(steep) >= 2.0.0
 BuildRequires: gem(strscan) >= 0
-BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(steep) >= 2
+BuildConflicts: gem(rbs) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency steep >= 1.10.0,steep < 2
 %ruby_use_gem_dependency rake >= 13.1.0,rake < 14
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency minitest >= 6.0
+%ruby_use_gem_dependency steep >= 2.0
 Requires:      ruby >= 3.1.0
-Requires:      gem(minitest) >= 5.17.0
 Requires:      gem(prism) >= 0.29
-Requires:      gem(rake) >= 13.1.0
-Requires:      gem(rbs) >= 3.8.0
-Requires:      gem(steep) >= 1.9.0
-Requires:      gem(strscan) >= 0
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(steep) >= 2
-Provides:      gem(rbs-inline) = 0.12.0
+Requires:      gem(rbs) >= 4.0
+Conflicts:     gem(rbs) >= 5
+Provides:      gem(rbs-inline) = 0.14.0
 
 %description
 Inline RBS type declaration.
 
 
 %package       -n rbs-inline
-Version:       0.12.0
+Version:       0.14.0
 Release:       alt1
 Summary:       Inline RBS type declaration executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rbs-inline
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rbs-inline) = 0.12.0
-Requires:      gem(minitest) >= 5.17.0
-Requires:      gem(rake) >= 13.1.0
-Requires:      gem(steep) >= 1.9.0
-Requires:      gem(strscan) >= 0
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(steep) >= 2
+Requires:      gem(rbs-inline) = 0.14.0
 
 %description   -n rbs-inline
 Inline RBS type declaration executable(s).
@@ -76,14 +63,14 @@ Inline RBS type declaration executable(s).
 
 %if_enabled    doc
 %package       -n gem-rbs-inline-doc
-Version:       0.12.0
+Version:       0.14.0
 Release:       alt1
 Summary:       Inline RBS type declaration documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rbs-inline
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rbs-inline) = 0.12.0
+Requires:      gem(rbs-inline) = 0.14.0
 
 %description   -n gem-rbs-inline-doc
 Inline RBS type declaration documentation files.
@@ -95,14 +82,23 @@ Inline RBS type declaration documentation files.
 
 %if_enabled    devel
 %package       -n gem-rbs-inline-devel
-Version:       0.12.0
+Version:       0.14.0
 Release:       alt1
 Summary:       Inline RBS type declaration development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rbs-inline
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rbs-inline) = 0.12.0
+Requires:      gem(rbs-inline) = 0.14.0
+Requires:      gem(minitest) >= 5.25
+Requires:      gem(prism) >= 0.29
+Requires:      gem(rake) >= 13.1.0
+Requires:      gem(rbs) >= 4.0
+Requires:      gem(steep) >= 2.0.0
+Requires:      gem(strscan) >= 0
+Conflicts:     gem(minitest) >= 7
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rbs) >= 5
 
 %description   -n gem-rbs-inline-devel
 Inline RBS type declaration development package.
@@ -146,6 +142,9 @@ Inline RBS type declaration development package.
 
 
 %changelog
+* Wed Aug 26 2026 Pavel Skrylev <majioa@altlinux.org> 0.14.0-alt1
+- ^ 0.12.0 -> 0.14.0
+
 * Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 0.12.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
