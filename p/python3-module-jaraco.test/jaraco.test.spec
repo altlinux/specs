@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.6.0
+Version: 5.7.0
 Release: alt1
 Summary: Testing support by jaraco
 License: MIT
@@ -27,8 +27,6 @@ Requires: python3-test
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
 BuildRequires(pre): rpm-build-pyproject
-# requires internet
-%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %if_with check
@@ -57,11 +55,13 @@ BuildRequires: python3-test
 %pyproject_run_pytest -vra -oconsider_namespace_packages=True
 
 %files
-%doc README.rst
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 5.7.0-alt1
+- 5.6.0 -> 5.7.0
+
 * Thu Dec 25 2025 Stanislav Levin <slev@altlinux.org> 5.6.0-alt1
 - 5.5.1 -> 5.6.0.
 
