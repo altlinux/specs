@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.8
+Version: 0.10.9
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: autoconf-common
-BuildRequires: alterator-entry >= 0.4.10
+BuildRequires: alterator-entry >= 0.4.15
 BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
@@ -180,6 +180,9 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.9-alt1
+- components: Add provides metadata for Alterator entries.
+
 * Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.8-alt1
 - editions: Drop license reference from edition_education.
 

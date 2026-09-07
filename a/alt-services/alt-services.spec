@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-services
-Version: 0.1.17
+Version: 0.1.19
 Release: alt1
 Provides: alterator-application-services
 Obsoletes: alterator-application-services
@@ -33,6 +33,7 @@ Requires: alterator-interface-diag >= 0.1.4
 Requires: alterator-manager >= 0.1.25
 Requires: alterator-module-executor >= 0.1.14
 Requires: alterator-entry >= 0.4.5
+Requires: alt-components >= 0.6.16
 
 %description
 GUI utility for alterator service management.
@@ -67,6 +68,13 @@ install -v -p -m 644 -D alterator/alt-services.backend %buildroot%_datadir/alter
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.19-alt1
+- Added search for available services (thx Oleg Chagaev).
+
+* Fri Jun 26 2026 Andrey Alekseev <parovoz@altlinux.org> 0.1.18-alt1
+- Fixed 'hidden_in_actions' not taken into account for 'status'
+- Fixed model-view related minor bugs
+
 * Wed Apr 15 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.17-alt1
 - Added (thx Andrey Alekseev):
   + support for password roles

@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.14
+Version: 0.4.15
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -75,6 +75,10 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.15-alt1
+- Add provides support to components.
+- Source: rename vendorID to vendor_id (thx Andrey Alekseev).
+
 * Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.14-alt1
 - Add (thx Dmitriy Terekhin):
   + edition and component markers to generated package lists;

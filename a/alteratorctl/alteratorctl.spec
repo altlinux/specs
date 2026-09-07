@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -19,11 +19,13 @@ Requires: alterator-manager >= 0.1.32
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-backend-packages >= 0.2.19
 Requires: alterator-backend-component >= 0.3.6
+Requires: alterator-backend-browsing >= 0.1.0
 Requires: alterator-interface-edition >= 0.4.2
 Requires: alterator-interface-diag >= 0.1.5
 Requires: alterator-backend-systeminfo >= 0.4.3
 Requires: alterator-interface-service >= 0.2.1-alt2
-Requires: alterator-backend-source >= 0.1.2-alt1
+Requires: alterator-backend-source >= 0.1.5-alt1
+Requires: alt-components-base >= 0.10.9
 Requires: libtomlc99 polkit libjson-glib
 
 Source0: %name-%version.tar
@@ -57,6 +59,26 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Mon Aug 31 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.1-alt1
+- Added:
+  + Browsing components for services, diag, editions and sources modules
+    (thx Pavel Khromov);
+  + Grouping the mirror list by domains in the sources module (thx Pavel Khromov);
+  + Filter components by the arches key in the list and calculate
+    affected-components (thx Pavel Khromov);
+  + Added public key export and key expiration reporting to sources check-sign (thx Oleg Chagaev);
+  + Unified multiarch handling for source enable and disable operations (thx Oleg Chagaev);
+  + Added Provides conflict validation before enabling software sources (thx Oleg Chagaev);
+- Fixed:
+  + Allow restoring undeployed services (thx Evgenii Sozonov);
+  + Systeminfo help text (thx Pavel Khromov);
+  + Wrong commands message in components module (thx Pavel Khromov).
+- Changed:
+  + Improved help text for sources list and entries commands (thx Oleg Chagaev);
+  + Improved source signing configuration reporting (thx Oleg Chagaev);
+  + Refactored mirror URI formatting and improved grouped mirror display (thx Oleg Chagaev);
+  + Rename vendorID to vendor_id in source module (thx Andrey Alekseev).
+
 * Mon Jun 22 2026 Pavel Khromov <hromovpi@altlinux.org> 0.4.0-alt1
 - Added:
   + Module for working with sources.
