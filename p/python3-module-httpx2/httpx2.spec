@@ -18,7 +18,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Summary: A next generation HTTP client for Python
 License: BSD-3-Clause
@@ -98,6 +98,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 07 2026 Stanislav Levin <slev@altlinux.org> 2.12.0-alt2
+- NMU: fixed FTBFS (click 8.5.0).
+
 * Tue Sep 01 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.12.0-alt1
 - Updated to 2.12.0.
 
