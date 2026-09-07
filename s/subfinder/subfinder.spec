@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: subfinder
-Version: 2.14.0
+Version: 2.16.0
 Release: alt1
 
 Summary: Fast passive subdomain enumeration tool
@@ -43,6 +43,9 @@ install -Dm0755 %name %buildroot%_bindir/%name
 
 
 %changelog
+* Tue Sep 01 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 2.16.0-alt1
+- v2.16.0
+
 * Thu Jul 23 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 2.14.0-alt1
 - Initial build for Sisyphus.
 
