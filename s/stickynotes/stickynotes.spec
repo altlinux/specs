@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stickynotes
-Version: 1.1
-Release: alt3
+Version: 1.2
+Release: alt1
 
 Summary: Program that simulates the Sticky Notes for the MATE Desktop
 License: GPL-2.0
@@ -55,6 +55,9 @@ sed -i "s/-Wno-deprecated-declarations/-Wno-deprecated-declarations -std=gnu17/"
 %_datadir/glib-2.0/schemas/*.gschema.xml
 
 %changelog
+* Mon Sep 07 2026 Nikolay Strelkov <snk@altlinux.org> 1.2-alt1
+- New version 1.2.
+
 * Thu Apr 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.1-alt3
 - Fixed FTBFS caused by gcc15.
 
