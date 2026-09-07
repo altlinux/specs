@@ -1,5 +1,5 @@
 Name: emacs-libvterm
-Version: 0.0.20251119
+Version: 0.0.20260720
 Release: alt1
 
 Summary: Libvterm-based terminal emulator for Emacs
@@ -42,6 +42,9 @@ install -pm0644 vterm.elc vterm.el.gz %buildroot%modulepath/
 %modulepath/vterm-module.so
 
 %changelog
+* Mon Sep 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20260720-alt1
+- updated from git rev.7092111
+
 * Tue Jan 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20251119-alt1
 - updated from git rev.a01a289
 
