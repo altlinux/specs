@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: meteo
-Version: 0.9.9.3
-Release: alt2
+Version: 1.0.0
+Release: alt1
 
 Summary: A forecast application using OpenWeatherMap API
 License: GPL-3.0
@@ -15,11 +17,12 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-vala
 BuildRequires: meson
 BuildRequires: vala
-BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: cmake
+BuildRequires: pkgconfig(gee-0.8)
+BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(webkit2gtk-4.0)
-BuildRequires: pkgconfig(ayatana-appindicator3-0.1)
-BuildRequires: libayatana-appindicator3-vala
+BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(libadwaita-1)
 
 %description
 Know the forecast of the next hours & days.
@@ -51,6 +54,9 @@ sed -i 's|^Categories=.*|Categories=Science;Maps;|' data/com.gitlab.bitseater.me
 
 %find_lang %name --all-name
 
+%check
+%meson_test
+
 %files -f %{name}.lang
 %doc AUTHORS CHANGELOG CONTRIBUTING.md COPYING CREDITS.md README.md data/screens
 %_bindir/*
@@ -58,9 +64,12 @@ sed -i 's|^Categories=.*|Categories=Science;Maps;|' data/com.gitlab.bitseater.me
 %_man1dir/*
 %_datadir/glib-2.0/schemas/*.xml
 %_iconsdir/hicolor/*/*/*
-%_datadir/metainfo/*%{name}.appdata.xml
+%_datadir/metainfo/*%{name}.metainfo.xml
 
 %changelog
+* Mon Sep 07 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.0-alt1
+- New version 1.0.0.
+
 * Fri Jun 27 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.9.3-alt2
 - Applied repocop fix for freedesktop-desktop
 
