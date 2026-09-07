@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          compile-command-annotations
-Version:       1.2.1
-Release:       alt1_10jpp11
+Version:       1.2.3
+Release:       alt1
 Summary:       Hotspot compile command annotations
-License:       ASL 2.0
+License:       Apache-2.0
 URL:           https://github.com/nicoulaj/compile-command-annotations
 Source0:       https://github.com/nicoulaj/compile-command-annotations/archive/%{version}.tar.gz
 
@@ -71,6 +71,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference COPYING
 
 %changelog
+* Thu Sep 03 2026 Anton Meleshnikov <alton@altlinux.org> 1.2.3-alt1
+- new version
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_10jpp11
 - new version
 
