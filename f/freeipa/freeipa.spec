@@ -60,7 +60,7 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.13.3
+Version: 4.13.4
 Release: alt1
 
 Summary: The Identity, Policy and Audit system
@@ -1226,6 +1226,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Sep 07 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt1
+- 4.13.3 -> 4.13.4 (fixes: CVE-2026-79678, CVE-2026-76578).
+
 * Thu Aug 20 2026 Stanislav Levin <slev@altlinux.org> 4.13.3-alt1
 - 4.13.2 -> 4.13.3 (fixes: CVE-2026-19550, CVE-2026-73196, CVE-2026-73197,
   CVE-2026-73198, CVE-2026-11861, CVE-2026-13097).
