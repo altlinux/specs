@@ -1,6 +1,6 @@
 Name:    skim
-Version: 5.6.6
-Release: alt2
+Version: 5.6.7
+Release: alt1
 
 Summary: Fuzzy Finder in rust
 License: MIT
@@ -86,6 +86,9 @@ SK=%buildroot%_bindir/sk
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Mon Sep 07 2026 Mikhail Gordeev <obirvalger@altlinux.org> 5.6.7-alt1
+- new version 5.6.7
+
 * Thu Sep 03 2026 Ilya Sorochan <k0tran@altlinux.org> 5.6.6-alt2
 - NMU: allow loongarch64 and riscv64 builds (closes: 60246)
 
