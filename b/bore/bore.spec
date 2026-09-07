@@ -2,7 +2,7 @@
 
 Name: bore
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: bore is a simple CLI tool for making tunnels to localhost
 License: MIT
@@ -45,5 +45,8 @@ EOF
 %_bindir/bore
 
 %changelog
+* Thu Sep 03 2026 Pavel Petrykin <silverducks@altlinux.org> 0.6.0-alt2
+- Store vendored dependencies uncompressed for transparency.
+
 * Fri Jul 24 2026 Pavel Petrykin <silverducks@altlinux.org> 0.6.0-alt1
 - Initial build for Alt Linux.
