@@ -1,45 +1,41 @@
-%global __global_ldflags -Wl,-z,relro
+%define _unpackaged_files_terminate_build 1
 
 Name: spatialite-tools
-Version: 5.0.1
+Version: 5.1.0a
 Release: alt1
+
 Summary: A set of useful CLI tools for SpatiaLite
-
-Group: Development/Other
-License: GPLv3+
-Source0: http://www.gaia-gis.it/gaia-sins/%name-%version.tar.gz
-# Add missing -lxml2
-Patch0:         spatialite-tools_lxml2.patch
-
+License: GPL-3.0-or-later
+Group: Databases
 Url: https://www.gaia-gis.it/fossil/spatialite-tools
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+VCS: https://www.gaia-gis.it/fossil/spatialite-tools
 
-BuildRequires: libexpat-devel
+Source: https://www.gaia-gis.it/gaia-sins/spatialite-tools-sources/%name-%version.tar.gz
+Patch0: spatialite-tools-5.1.0a-alt-libxml2.patch
+Patch1: spatialite-tools-5.1.0a-alt-libm.patch
+
 BuildRequires: freexl-devel
+BuildRequires: libexpat-devel
 BuildRequires: libgeos-devel
-BuildRequires: libspatialite-devel
+BuildRequires: libminizip-devel
 BuildRequires: libproj-devel
 BuildRequires: libreadline-devel
-BuildRequires: readosm-devel
+BuildRequires: librttopo-devel
+BuildRequires: libspatialite-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
-BuildRequires: zlib-devel librttopo-devel libminizip-devel
+BuildRequires: readosm-devel
+BuildRequires: zlib-devel
 
 %description
 Spatialite-Tools is a set of useful CLI tools for SpatiaLite.
 
 %prep
 %setup
-%patch0 -p1
-
-# Remove unused Makefiles
-rm -f Makefile-static*
+%autopatch -p1
+%autoreconf
 
 %build
-%ifarch %ix86 armh %e2k
-export LDFLAGS="%{__global_ldflags} -lm"
-%endif
-
 %configure
 %make_build
 
@@ -51,6 +47,15 @@ export LDFLAGS="%{__global_ldflags} -lm"
 %_bindir/*
 
 %changelog
+* Sun Sep 06 2026 Ajrat Makhmutov <rauty@altlinux.org> 5.1.0a-alt1
+- New version, which requires libspatialite 5.1 or newer.
+- Fix FTBFS: look up floor() in configure, so that -lm reaches the link
+  line on every architecture, instead of pushing it through LDFLAGS on
+  three of them.
+- Stop overriding the ldflags the distribution sets with a hand-written
+  -Wl,-z,relro.
+- Spec cleanup.
+
 * Sat Dec 26 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.1-alt1
 - 5.0.1
 

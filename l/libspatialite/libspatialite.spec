@@ -1,90 +1,120 @@
-#global _geocallback "--disable-geocallbacks"
-
-%global _lwgeom "--disable-lwgeom"
-%global _geocallback "--enable-geocallbacks"
-%global _geosadvanced "--disable-geosadvanced"
-%global _no_checks 1
-%global _topo --enable-rttopo
-%global _gcp --enable-gcp
-%global _no_checks 1
-
-
-
+%define _unpackaged_files_terminate_build 1
+%define soversion 8
 Name: libspatialite
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
-Summary: Enables SQLite to support spatial data
-Group: System/Libraries
-License: MPLv1.1 or GPLv2+ or LGPLv2+
-Packager: Ilya Mashkin <oddity@altlinux.ru>
-Url: https://www.gaia-gis.it/fossil/libspatialite
-Source0: http://www.gaia-gis.it/gaia-sins/%name-sources/%name-%version.tar.gz
-Patch0:		libspatialite_pkgconfig.patch
 
-BuildRequires: libproj-devel gcc-c++ gcc
+Summary: Spatial extension turning SQLite into a Spatial DBMS
+# Upstream is tri-licensed MPL-1.1/GPL-2.0-or-later/LGPL-2.1-or-later, but the
+# rttopo and gcp modules enabled below are GPL-2.0-or-later only, which the
+# whole build then inherits.
+License: GPL-2.0-or-later
+Group: System/Libraries
+Url: https://www.gaia-gis.it/fossil/libspatialite
+VCS: https://www.gaia-gis.it/fossil/libspatialite
+
+Source: http://www.gaia-gis.it/gaia-sins/%name-sources/%name-%version.tar.gz
+Patch0: libspatialite-5.1.0-alt-pkgconfig.patch
+Patch1: libspatialite-5.1.0-debian-libxml2-nanohttp.patch
+
+BuildRequires: gcc-c++
 BuildRequires: freexl-devel
-BuildRequires: libsqlite3-devel
 BuildRequires: libgeos-devel
+BuildRequires: libminizip-devel
+BuildRequires: libproj-devel
+BuildRequires: librttopo-devel
+BuildRequires: libsqlite3-devel
 BuildRequires: libxml2-devel
-BuildRequires: zlib-devel libminizip-devel librttopo-devel
+BuildRequires: zlib-devel
 
 %description
-SpatiaLite is a a library extending the basic SQLite core
-in order to get a full fledged Spatial DBMS, really simple
-and lightweight, but mostly OGC-SFS compliant.
+SpatiaLite extends the SQLite core into a full fledged Spatial DBMS,
+lightweight and mostly OGC-SFS compliant.
+
+%package -n %name%soversion
+Summary: %summary
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n %name%soversion
+SpatiaLite extends the SQLite core into a full fledged Spatial DBMS,
+lightweight and mostly OGC-SFS compliant.
+
+%package module%soversion
+Summary: SpatiaLite loadable extension for SQLite
+Group: System/Libraries
+
+%description module%soversion
+mod_spatialite, the SpatiaLite extension in the form SQLite loads at runtime
+through load_extension(). Needed by everything that reaches SpatiaLite over a
+plain SQLite connection instead of linking the library: the sqlite3 shell,
+GDAL, QGIS, GeoDjango.
 
 %package devel
-Summary: Development libraries and headers for SpatiaLite
-Group: System/Libraries
-Requires: %name%{?_isa} = %version-%release
-Requires: pkgconfig
+Summary: Development files for SpatiaLite
+Group: Development/C
+Requires: %name%soversion = %EVR
+Requires: %name-module%soversion = %EVR
 
 %description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
+Headers and link-time files for building applications against SpatiaLite.
 
 %prep
 %setup
-%patch0 -p1
-autoconf
+%autopatch -p1
+%autoreconf
 
 %build
-#add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %configure \
     --disable-static \
-    %{?_lwgeom}   \
-    %{?_libxml2}   \
-    %{?_geos}   \
-    %{?_geocallback}   \
-    %{?_geosadvanced} \
-    %{?_topo} \
-    %{?_gcp}
+    --disable-geosadvanced \
+    --enable-rttopo \
+    --enable-gcp
 
-    
-    
 %make_build
 
 %install
 %makeinstall_std
-
-# Delete undesired libtool archives
 rm -f %buildroot%_libdir/*.la
+# autoheader templates, installed by upstream along with the real headers
+rm -f %buildroot%_includedir/spatialite/*.h.in
 
+%files -n %name%soversion
+%doc AUTHORS COPYING
+%_libdir/libspatialite.so.%soversion
+%_libdir/libspatialite.so.%soversion.*
 
-%files
-%doc COPYING AUTHORS
-%_libdir/%name.so.*
-%_libdir/mod_spatialite.so.*
+%files module%soversion
+%doc AUTHORS COPYING
+%_libdir/mod_spatialite.so.%soversion
+%_libdir/mod_spatialite.so.%soversion.*
 
 %files devel
 %doc examples/*.c
 %_includedir/spatialite.h
 %_includedir/spatialite
-%_libdir/%name.so
+%_libdir/libspatialite.so
 %_libdir/mod_spatialite.so
-%_libdir/pkgconfig/spatialite.pc
+%_pkgconfigdir/spatialite.pc
 
 %changelog
+* Sun Sep 06 2026 Ajrat Makhmutov <rauty@altlinux.org> 5.1.0-alt1
+- New version.
+- Fix FTBFS with libxml2 built without HTTP support: libxml2 disables
+  nanoHTTP by default since 2.14 and drops it in 2.15 (patch from
+  Debian, proposed upstream).
+- Rename the library package to libspatialite8, following the soname
+  bump; it provides and obsoletes the old libspatialite name.
+- Move mod_spatialite into the new libspatialite-module8 package. It
+  shares no code at runtime with the library, so neither pulls the
+  other in; libspatialite-devel keeps both unversioned symlinks and
+  requires both packages.
+- Change the license to GPL-2.0-or-later: --enable-rttopo and
+  --enable-gcp bring in GPL-only code, which overrides the upstream
+  MPL/GPL/LGPL tri-license for the binaries we ship.
+- Spec cleanup.
+
 * Sat Dec 25 2021 Ilya Mashkin <oddity@altlinux.ru> 5.0.1-alt1
 - 5.0.1
 
