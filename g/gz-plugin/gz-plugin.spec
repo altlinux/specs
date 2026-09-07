@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define soversion 4
 
-Name:    gz-plugin
+Name: gz-plugin
 Version: 4.0.0
-Release: alt2
+Release: alt3
 
 Summary: Cross-platform C++ library for dynamically loading plugins
 License: Apache-2.0
-Group:   Development/C++
+Group: Development/C++
 Url: https://gazebosim.org/libs/plugin/
 Vcs: https://github.com/gazebosim/gz-plugin
 
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 
 Conflicts: libgz-plugin
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
@@ -35,31 +35,34 @@ Summary: Library of gz-plugin
 Group: System/Libraries
 
 %description -n libgz-plugin%soversion
-%summary
+This package contains library libgz-plugin of gz-plugin.
 
 %package -n libgz-plugin-loader%soversion
 Summary: Library of gz-plugin
 Group: System/Libraries
 
 %description -n libgz-plugin-loader%soversion
-%summary
+This package contains library libgz-plugin-loader of gz-plugin.
 
 %package -n libgz-plugin-devel
 Summary: Development files for gz-plugin
 Group: Development/C++
 
 %description -n libgz-plugin-devel
-%summary
+This package contains development files of gz-plugin.
 
 %prep
 %setup
 
 %build
-%cmake -GNinja -Wno-dev
-%ninja_build -C "%_cmake__builddir"
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    #
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
 %ctest --parallel 1
@@ -81,17 +84,20 @@ Group: Development/C++
 
 %files -n libgz-plugin-devel
 %_includedir/gz/plugin4
-%_libdir/cmake/gz-plugin
-%_libdir/cmake/gz-plugin-all
-%_libdir/cmake/gz-plugin-loader
-%_libdir/cmake/gz-plugin-register
-%_libdir/pkgconfig/gz-plugin.pc
-%_libdir/pkgconfig/gz-plugin-loader.pc
-%_libdir/pkgconfig/gz-plugin-register.pc
+%_cmakedir/gz-plugin
+%_cmakedir/gz-plugin-all
+%_cmakedir/gz-plugin-loader
+%_cmakedir/gz-plugin-register
+%_pkgconfigdir/gz-plugin.pc
+%_pkgconfigdir/gz-plugin-loader.pc
+%_pkgconfigdir/gz-plugin-register.pc
 %_libdir/libgz-plugin.so
 %_libdir/libgz-plugin-loader.so
 
 %changelog
+* Thu Jul 30 2026 Pavel Petrykin <silverducks@altlinux.org> 4.0.0-alt3
+- Update subpackage descriptions.
+
 * Tue Dec 23 2025 Pavel Petrykin <silverducks@altlinux.org> 4.0.0-alt2
 - Fix FTBFS: race condition in tests.
 

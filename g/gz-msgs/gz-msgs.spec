@@ -2,7 +2,7 @@
 %define soversion 12
 
 Name: gz-msgs
-Version: 12.0.0
+Version: 12.0.2
 Release: alt1
 
 Summary: Messages for Gazebo robot simulation
@@ -13,9 +13,7 @@ Vcs: https://github.com/gazebosim/gz-msgs
 
 Source: %name-%version.tar
 
-Conflicts: libgz-msgs
-
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -24,10 +22,9 @@ BuildRequires: libprotobuf-devel
 BuildRequires: libtinyxml2-devel
 BuildRequires: libgz-math-devel
 BuildRequires: protobuf-compiler
+BuildRequires: python3-module-protobuf
 BuildRequires: ctest
-
-%add_python3_path %_libdir/python/gz/msgs*
-%filter_from_requires /python3(gz.msgs)/d
+BuildRequires: python3-module-pytest
 
 %description
 Gazebo Messages: Protobuf messages and functions for robot applications.
@@ -37,29 +34,39 @@ Summary: Library of gz-msgs
 Group: System/Libraries
 
 %description -n libgz-msgs%soversion
-%summary
+This package contains library libgz-msgs of gz-msgs.
 
 %package -n libgz-msgs-devel
 Summary: Development files for gz-msgs
 Group: Development/C++
 
 %description -n libgz-msgs-devel
-%summary
+This package contains development files of gz-msgs.
+
+%package -n python3-module-gz-msgs
+Summary: Python bindings for gz-msgs
+Group: Development/Python3
+
+%description -n python3-module-gz-msgs
+This package contains python bindings for gz-msgs.
 
 %prep
 %setup
 ln -s /usr/include/google proto/google
 
 %build
-%cmake -GNinja -Wno-dev
-%ninja_build -C "%_cmake__builddir"
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    -DUSE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION=ON \
+    #
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
-%ctest \
-    --exclude-regex ".*\.py"
+%ctest
 
 %files
 %doc AUTHORS README.md
@@ -71,7 +78,6 @@ ln -s /usr/include/google proto/google
 %_datadir/gz/msgs%soversion.yaml
 %_datadir/gz/gz-msgs/protos
 %_datadir/gz/protos/gz-msgs%soversion.gz_desc
-%_libdir/python/gz/msgs
 %_prefix/libexec/gz/msgs/gz-msgs
 
 %files -n libgz-msgs%soversion
@@ -80,12 +86,19 @@ ln -s /usr/include/google proto/google
 
 %files -n libgz-msgs-devel
 %_includedir/gz/msgs%soversion
-%_libdir/cmake/gz-msgs
-%_libdir/cmake/gz-msgs-all
-%_libdir/pkgconfig/gz-msgs.pc
+%_cmakedir/gz-msgs
+%_cmakedir/gz-msgs-all
+%_pkgconfigdir/gz-msgs.pc
 %_libdir/libgz-msgs.so
 
+%files -n python3-module-gz-msgs
+%_prefix/lib/python3/site-packages/gz/msgs
+
 %changelog
+* Thu Aug 20 2026 Pavel Petrykin <silverducks@altlinux.org> 12.0.2-alt1
+- New version.
+- Enable python bindings.
+
 * Mon Dec 22 2025 Pavel Petrykin <silverducks@altlinux.org> 12.0.0-alt1
 - New version.
 

@@ -2,23 +2,28 @@
 %define soversion 9
 
 Name: gz-physics
-Version: 9.1.0
+Version: 9.4.0
 Release: alt1
 
-Summary: Abstract physics interface designed to support simulation and rapid development of robot applications
+Summary: Abstract physics interface for simulation of robot applications
 License: Apache-2.0
 Group: Development/C++
 Vcs: https://github.com/gazebosim/gz-physics
-Url: https://gazebosim.org/api/physics/6/introduction.html
+Url: https://gazebosim.org/libs/physics/
 
 Source: %name-%version.tar
-
 Patch: gz-physics-9.1.0-alt-fix-bullet-featherstone-error-with-double-precision.patch
 
+%if "%__ubt_branch_id" == "M110P"
+# aarch64 can be reenabled once gcc15 passes to P11.
+ExcludeArch: %ix86 armh aarch64
+%else
 ExcludeArch: %ix86 armh
+%endif
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
 BuildRequires: libsdformat-devel >= 12.0.0
@@ -41,28 +46,29 @@ BuildRequires: libpoly2tri-devel
 BuildRequires: ctest
 
 %description
-%summary
+Abstract physics interface designed to support simulation and rapid development
+of robot applications.
 
 %package -n libgz-physics%soversion
 Summary: Library of gz-physics
 Group: System/Libraries
 
 %description -n libgz-physics%soversion
-%summary
+This package contains library libgz-physics of gz-physics.
 
 %package -n libgz-physics-tpelib%soversion
 Summary: Library of gz-physics
 Group: System/Libraries
 
 %description -n libgz-physics-tpelib%soversion
-%summary
+This package contains library libgz-physics-tpelib of gz-physics.
 
 %package -n libgz-physics-devel
 Summary: Development files for gz-physics
 Group: Development/C++
 
 %description -n libgz-physics-devel
-%summary
+This package contains development files of gz-physics.
 
 %prep
 %setup
@@ -111,13 +117,16 @@ Group: Development/C++
 %_libdir/libgz-physics.so
 %_libdir/libgz-physics-tpelib.so
 %_libdir/cmake/gz-physics*
-%_libdir/pkgconfig/gz-physics*.pc
+%_pkgconfigdir/gz-physics*.pc
 
 %changelog
+* Thu Jul 30 2026 Pavel Petrykin <silverducks@altlinux.org> 9.4.0-alt1
+- New version.
+
 * Tue Feb 17 2026 Pavel Petrykin <silverducks@altlinux.org> 9.1.0-alt1
 - New version.
 
-* Tue Dec 24 2025 Pavel Petrykin <silverducks@altlinux.org> 9.0.0-alt1
+* Wed Dec 24 2025 Pavel Petrykin <silverducks@altlinux.org> 9.0.0-alt1
 - New version.
 
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1

@@ -2,23 +2,33 @@
 %define soversion 10
 
 Name: gz-sim
-Version: 10.1.1
-Release: alt2
+Version: 10.5.0
+Release: alt1
 
-Summary: Open source robotics simulator. The latest version of Gazebo.
+Summary: Open source robotics simulator
 License: Apache-2.0
 Group: Other
-Vcs: https://github.com/gazebosim/gz-sim
 Url: https://gazebosim.org/libs/sim/
-
-Source: %name-%version.tar
-
-Patch0: gz-sim-10.0.0-altlinux-Qt6.9.2-compat.patch
+Vcs: https://github.com/gazebosim/gz-sim
 
 # Same as for ogre-next
 ExclusiveArch: x86_64 %e2k
 
-Conflicts: libgz-sim
+Source: %name-%version.tar
+Patch0: gz-sim-10.0.0-altlinux-Qt6.9.2-compat.patch
+Patch1: %name-%version-alt.patch
+
+Requires: gz-common
+Requires: gz-fuel-tools
+Requires: gz-gui
+Requires: gz-msgs
+Requires: gz-physics
+Requires: gz-plugin
+Requires: gz-rendering
+Requires: gz-transport
+Requires: sdformat
+Requires: gz-tools
+Requires: qt6-5compat
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -27,7 +37,6 @@ BuildRequires: python3-dev
 BuildRequires: libprotobuf-devel
 BuildRequires: libfreeimage-devel
 BuildRequires: libogre-next-devel
-BuildRequires: libgperftools-devel
 BuildRequires: libtinyxml2-devel
 BuildRequires: tbb-devel
 BuildRequires: libswscale-devel
@@ -38,16 +47,10 @@ BuildRequires: libavcodec-devel
 BuildRequires: libavutil-devel
 BuildRequires: libgts-devel
 BuildRequires: libbullet3-devel
-BuildRequires: libusb-devel
-BuildRequires: libopenal-devel
-BuildRequires: libhdf5-devel
 BuildRequires: libcurl-devel
 BuildRequires: libswresample-devel
 BuildRequires: libpcre2-devel
 BuildRequires: protobuf-compiler
-BuildRequires: tinyxml-devel
-BuildRequires: libtar-devel
-
 BuildRequires: gz-cmake
 BuildRequires: libsdformat-devel
 BuildRequires: gz-msgs
@@ -62,44 +65,34 @@ BuildRequires: gz-gui
 BuildRequires: libgz-gui-devel
 BuildRequires: libgz-physics-devel
 BuildRequires: gz-tools-devel
-BuildRequires: libsimbody-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-declarative-devel
 BuildRequires: boost-asio-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-program_options-devel
-BuildRequires: libgdal-devel
 BuildRequires: libuuid-devel
 BuildRequires: pybind11-devel
 BuildRequires: libyaml-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: ronn
 BuildRequires: xsltproc
-BuildRequires: libgraphviz-devel
 %ifnarch %e2k
 BuildRequires: libdart-devel
 %endif
 BuildRequires: libfmt-devel
-
 BuildRequires: ctest
 BuildRequires: gz-common
 BuildRequires: xvfb-run
 BuildRequires: qt6-5compat-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libzip-devel
-
-Requires: gz-common
-Requires: gz-fuel-tools
-Requires: gz-gui
-Requires: gz-msgs
-Requires: gz-physics
-Requires: gz-plugin
-Requires: gz-rendering
-Requires: gz-transport
-Requires: sdformat
-Requires: gz-tools
-Requires: qt6-5compat
+BuildRequires: libwebsockets-devel
+BuildRequires: python3-module-gz-math
+BuildRequires: python3-module-gz-msgs
+BuildRequires: python3-module-gz-transport
+BuildRequires: python3-module-sdformat
+BuildRequires: /proc
 
 %description
 Gazebo simulates multiple robots in a 3D environment
@@ -236,7 +229,8 @@ Summary: Library of gz-sim-drive-to-pose-controller-system
 Group: System/Libraries
 
 %description -n libgz-sim-drive-to-pose-controller-system%soversion
-This package contains library libgz-sim-drive-to-pose-controller-system of gz-sim.
+This package contains library libgz-sim-drive-to-pose-controller-system of
+gz-sim.
 
 %package -n libgz-sim-entity-semantics-system%soversion
 Summary: Library of gz-sim-entity-semantics-system
@@ -334,7 +328,8 @@ Summary: Library of gz-sim-joint-position-controller-system
 Group: System/Libraries
 
 %description -n libgz-sim-joint-position-controller-system%soversion
-This package contains library libgz-sim-joint-position-controller-system of gz-sim.
+This package contains library libgz-sim-joint-position-controller-system of
+gz-sim.
 
 %package -n libgz-sim-joint-state-publisher-system%soversion
 Summary: Library of gz-sim-joint-state-publisher-system
@@ -348,7 +343,8 @@ Summary: Library of gz-sim-joint-trajectory-controller-system
 Group: System/Libraries
 
 %description -n libgz-sim-joint-trajectory-controller-system%soversion
-This package contains library libgz-sim-joint-trajectory-controller-system of gz-sim.
+This package contains library libgz-sim-joint-trajectory-controller-system of
+gz-sim.
 
 %package -n libgz-sim-kinetic-energy-monitor-system%soversion
 Summary: Library of gz-sim-kinetic-energy-monitor-system
@@ -383,7 +379,8 @@ Summary: Library of gz-sim-lighter_than_air_dynamics-system
 Group: System/Libraries
 
 %description -n libgz-sim-lighter_than_air_dynamics-system%soversion
-This package contains library libgz-sim-lighter_than_air_dynamics-system of gz-sim.
+This package contains library libgz-sim-lighter_than_air_dynamics-system of
+gz-sim.
 
 %package -n libgz-sim-linearbatteryplugin-system%soversion
 Summary: Library of gz-sim-linearbatteryplugin-system
@@ -418,7 +415,8 @@ Summary: Library of gz-sim-logicalaudiosensorplugin-system
 Group: System/Libraries
 
 %description -n libgz-sim-logicalaudiosensorplugin-system%soversion
-This package contains library libgz-sim-logicalaudiosensorplugin-system of gz-sim.
+This package contains library libgz-sim-logicalaudiosensorplugin-system of
+gz-sim.
 
 %package -n libgz-sim-magnetometer-system%soversion
 Summary: Library of gz-sim-magnetometer-system
@@ -453,7 +451,8 @@ Summary: Library of gz-sim-multicopter-motor-model-system
 Group: System/Libraries
 
 %description -n libgz-sim-multicopter-motor-model-system%soversion
-This package contains library libgz-sim-multicopter-motor-model-system of gz-sim.
+This package contains library libgz-sim-multicopter-motor-model-system of
+gz-sim.
 
 %package -n libgz-sim-navsat-system%soversion
 Summary: Library of gz-sim-navsat-system
@@ -558,7 +557,8 @@ Summary: Library of gz-sim-spacecraft-thruster-model-system
 Group: System/Libraries
 
 %description -n libgz-sim-spacecraft-thruster-model-system%soversion
-This package contains library libgz-sim-spacecraft-thruster-model-system of gz-sim.
+This package contains library libgz-sim-spacecraft-thruster-model-system
+of gz-sim.
 
 %package -n libgz-sim-thermal-sensor-system%soversion
 Summary: Library of gz-sim-thermal-sensor-system
@@ -649,45 +649,51 @@ Summary: Development files for gz-sim
 Group: Development/C++
 
 %description -n libgz-sim-devel
-This package contains development files system
+This package contains development files system.
+
+%package -n python3-module-gz-sim
+Summary: Python bindings for gz-sim
+Group: Development/Python3
+
+%description -n python3-module-gz-sim
+This package contains python bindings for gz-sim.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-%cmake -GNinja -Wno-dev \
-       -DQWT_WIN_INCLUDE_DIR=%_includedir/qt6
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    -DQWT_WIN_INCLUDE_DIR=%_includedir/qt6 \
+    -DFORCE_GRAPHIC_TESTS_COMPILATION=ON \
+    -DUSE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION=ON \
+    #
 %cmake_build
 
 %install
 %cmake_install
-install -Dpm0644 "%_cmake__builddir"/gz-sim%soversion.desktop %buildroot%_desktopdir/gz-sim%soversion.desktop
-install -Dpm0644 "%_cmake__builddir"/gz-logo%soversion.svg %buildroot%_pixmapsdir/gz-logo%soversion.svg
+install -Dpm0644 "%_cmake__builddir"/gz-sim%soversion.desktop \
+  %buildroot%_desktopdir/gz-sim%soversion.desktop
+install -Dpm0644 "%_cmake__builddir"/gz-logo%soversion.svg \
+  %buildroot%_pixmapsdir/gz-logo%soversion.svg
 
 %check
-export GZ_SIM_SERVER_CONFIG_PATH="%buildroot%_datadir/gz/gz-sim/server.config"
-export GZ_SIM_SYSTEM_PLUGIN_PATH="%buildroot%_libdir"
-
-export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
 XVFB_PID=$!
 export DISPLAY=:99
+trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; \
+    wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+export LD_LIBRARY_PATH="%buildroot%_libdir:$LD_LIBRARY_PATH"
+export GZ_SIM_SERVER_CONFIG_PATH="%buildroot%_datadir/gz/gz-sim/server.config"
+export GZ_SIM_SYSTEM_PLUGIN_PATH="%buildroot%_libdir/gz-sim-%soversion/plugins"
+export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 export GZ_RENDERING_PLUGIN_PATH="%buildroot%_libdir"
 export GZ_RENDERING_DATA_PATH="%buildroot%_datadir/gz/gz-rendering"
+export PYTHONPATH="%buildroot%python3_sitelibdir:$PYTHONPATH"
 
-# We don't build python module, so all tests with python are not working
-excludes_python=(
-  "actor_TEST"
-  "joint_TEST"
-  "light_TEST"
-  "link_TEST"
-  "model_TEST"
-  "sensor_TEST"
-  "testFixture_TEST"
-  "world_TEST"
-  "INTEGRATION_python_system_loader"
-)
 # These tests try to download from the internet.
 # Build environment doesn't have a connection, so they are excluded.
 excludes_download=(
@@ -697,11 +703,16 @@ excludes_download=(
   "INTEGRATION_follow_actor_system"
   "INTEGRATION_model_photo_shoot_default_joints"
   "INTEGRATION_model_photo_shoot_random_joints"
+  "INTEGRATION_model_photo_shoot_reset"
   "INTEGRATION_save_world"
   "INTEGRATION_spacecraft"
   "INTEGRATION_sdf_include"
   "INTEGRATION_examples_build"
   "UNIT_Util_TEST"
+  "INTEGRATION_dvl_system"
+  "INTEGRATION_dvl_system_bottom_tracking"
+  "INTEGRATION_dvl_system_water_mass_tracking"
+  "INTEGRATION_shader_param_system"
 )
 # See https://github.com/gazebosim/gz-sim/issues/3306
 excludes_other=(
@@ -710,29 +721,29 @@ excludes_other=(
   "INTEGRATION_material"
   "INTEGRATION_thruster"
 )
-# This test is known to be problematic; See:
-# https://github.com/gazebosim/gz-sim/pull/1771
-# https://github.com/gazebosim/gz-sim/issues/1886
-# https://github.com/gazebosim/gz-sim/pull/1897
-# https://github.com/gazebosim/gz-sim/pull/1902
-#
 # INTEGRATION_lookup_wheel_slip_system relies on bit-exact DART/bullet
 # heightmap physics; fails on Sisyphus builders due to FP non-determinism
 # (vehicle rotates in the opposite direction than the test expects).
+# See also: https://github.com/gazebosim/gz-sim/issues/3634
+#
+# INTEGRATION_acoustic_comms - see:
+# https://github.com/gazebosim/gz-sim/issues/3881
 excludes_flaky=(
-  "UNIT_Gui_clean_exit_TEST"
   "INTEGRATION_lookup_wheel_slip_system"
+  "INTEGRATION_acoustic_comms"
 )
-excludes_python_regex=$(IFS='|'; echo "${excludes_python[*]}")
 excludes_download_regex=$(IFS='|'; echo "${excludes_download[*]}")
 excludes_other_regex=$(IFS='|'; echo "${excludes_other[*]}")
 excludes_flaky_regex=$(IFS='|'; echo "${excludes_flaky[*]}")
 
 %ctest \
   --parallel 1 \
-  -E "$excludes_python_regex|$excludes_download_regex|$excludes_other_regex|$excludes_flaky_regex" \
+  -E "$excludes_download_regex|$excludes_other_regex|$excludes_flaky_regex" \
   #
-trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+trap - EXIT
+kill -TERM "$XVFB_PID" 2>/dev/null || true
+wait "$XVFB_PID" 2>/dev/null || true
 
 %files
 %doc AUTHORS README.md
@@ -742,7 +753,6 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_libexecdir/ruby/gz/cmdsim%soversion.rb
 %_libexecdir/ruby/gz/cmdmodel%soversion.rb
 %_libdir/gz-sim-%soversion/plugins
-%_libdir/python/gz
 %_datadir/gz/gz2.completion.d/sim%soversion.bash_completion.sh
 %_datadir/gz/gz2.completion.d/model%soversion.bash_completion.sh
 %_datadir/gz/sim%soversion.yaml
@@ -1063,7 +1073,18 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_cmakedir/gz-sim*
 %_pkgconfigdir/gz-sim*.pc
 
+%files -n python3-module-gz-sim
+%python3_sitelibdir/gz
+%python3_sitelibdir/gz/common.cpython-*.so
+%python3_sitelibdir/gz/sim.cpython-*.so
+
 %changelog
+* Fri Aug 07 2026 Pavel Petrykin <silverducks@altlinux.org> 10.5.0-alt1
+- New version.
+- Make SetPose UI not editable for planes (Closes: 57553).
+- Fix previews in quick start dialog.
+- Build and package python module.
+
 * Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 10.1.1-alt2
 - Exclude flaky INTEGRATION_lookup_wheel_slip_system test from %%check
   (FP non-determinism in DART/bullet heightmap physics).

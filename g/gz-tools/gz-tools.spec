@@ -3,7 +3,7 @@
 
 Name: gz-tools
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Entrypoint to Gazebo's command line interface
 License: Apache-2.0
@@ -18,10 +18,10 @@ BuildRequires: gcc-c++
 BuildRequires: gz-cmake >= 3.0.0
 
 %description
-Gazebo Tools provide the gz command line tool that accepts multiple
-subcommands. Each subcommand is implemented in a plugin that belongs to a
-specific Gazebo project. For example, all the commands that start with gz topic
-... are implemented by the Gazebo Transport library.
+Gazebo Tools provide the gz command line tool that accepts multiple subcommands.
+Each subcommand is implemented in a plugin that belongs to a specific Gazebo
+project. For example, all the commands that start with `gz topic ...` are
+implemented by the Gazebo Transport library.
 
 %package -n libgz-tools%soversion-backward%soversion
 Summary: Library files for libgz-tools%soversion-backward
@@ -63,6 +63,9 @@ Development files for building against gz-tools.
 %_libdir/libgz-tools%soversion-backward.so
 
 %changelog
+* Wed Jul 29 2026 Pavel Petrykin <silverducks@altlinux.org> 2.0.3-alt2
+- Clean up package description.
+
 * Tue Dec 23 2025 Pavel Petrykin <silverducks@altlinux.org> 2.0.3-alt1
 - New version.
 

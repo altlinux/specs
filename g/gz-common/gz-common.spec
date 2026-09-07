@@ -1,18 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define soversion 7
 
-Name:    gz-common 
-Version: 7.0.0
+Name: gz-common
+Version: 7.3.0
 Release: alt1
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
-Group:   Development/C++
+Group: Development/C++
 Url: https://gazebosim.org/libs/common/
 Vcs: https://github.com/gazebosim/gz-common
 
 Source: %name-%version.tar
-
 Patch1: gz-common-7.0.0-alt-fix-path-conflict-when-tests-parallelized.patch
 
 # XXX: gz_remotery_vis calls `xdg-open` if available tries
@@ -41,7 +40,6 @@ BuildRequires: libgts-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libfreeimage-devel
 BuildRequires: libstdc++-devel-static
-#TODO: error build
 BuildRequires: libgdal-devel
 BuildRequires: libassimp-devel
 BuildRequires: libminizip-devel
@@ -55,80 +53,81 @@ representation, and the core library of Gazebo Common contains functionality
 that spans Base64 encoding/decoding to thread pools.
 
 %package -n libgz-common%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common of gz-common
 Group: System/Libraries
 
 %description -n libgz-common%soversion
-This package contains libgz-common, part of gz-common
+This package contains libgz-common, part of gz-common.
 
 %package -n libgz-common-av%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-av of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-av%soversion
-This package contains libgz-common-av, part of gz-common
+This package contains libgz-common-av, part of gz-common.
 
 %package -n libgz-common-events%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-events of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-events%soversion
-This package contains libgz-common-events, part of gz-common
+This package contains libgz-common-events, part of gz-common.
 
 %package -n libgz-common-geospatial%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-geospatial of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-geospatial%soversion
-This package contains libgz-common-geospatial, part of gz-common
+This package contains libgz-common-geospatial, part of gz-common.
 
 %package -n libgz-common-graphics%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-graphics of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-graphics%soversion
-This package contains libgz-common-graphics, part of gz-common
+This package contains libgz-common-graphics, part of gz-common.
 
 %package -n libgz-common-io%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-io of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-io%soversion
-This package contains libgz-common-io, part of gz-common
+This package contains libgz-common-io, part of gz-common.
 
 %package -n libgz-common-profiler%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-profiler of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-profiler%soversion
-This package contains libgz-common-profiler, part of gz-common
+This package contains libgz-common-profiler, part of gz-common.
 
 %package -n libgz-common-testing%soversion
-Summary: Library of gz-common
+Summary: Library libgz-common-testing of gz-common
 Group: System/Libraries
 
 %description -n libgz-common-testing%soversion
-This package contains libgz-common-testing, part of gz-common
+This package contains libgz-common-testing, part of gz-common.
 
 %package -n libgz-common-devel
 Summary: Development files for gz-common
 Group: Development/C++
 
 %description -n libgz-common-devel
-%summary
+This package contains development files of gz-common.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-%cmake -GNinja -Wno-dev
-#cmake_build
-%ninja_build -C "%_cmake__builddir"
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    #
+%cmake_build
 
 %install
-#cmake_install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
 %ctest
@@ -173,26 +172,29 @@ Group: Development/C++
 %files -n libgz-common-devel
 %_includedir/gz/common%soversion
 %_libdir/libgz-common*.so
-%_libdir/cmake/gz-common
-%_libdir/cmake/gz-common-all
-%_libdir/cmake/gz-common-av
-%_libdir/cmake/gz-common-events
-%_libdir/cmake/gz-common-geospatial
-%_libdir/cmake/gz-common-graphics
-%_libdir/cmake/gz-common-io
-%_libdir/cmake/gz-common-profiler
-%_libdir/cmake/gz-common-testing
-%_libdir/pkgconfig/gz-common.pc
-%_libdir/pkgconfig/gz-common-av.pc
-%_libdir/pkgconfig/gz-common-events.pc
-%_libdir/pkgconfig/gz-common-geospatial.pc
-%_libdir/pkgconfig/gz-common-graphics.pc
-%_libdir/pkgconfig/gz-common-io.pc
-%_libdir/pkgconfig/gz-common-profiler.pc
-%_libdir/pkgconfig/gz-common-testing.pc
+%_cmakedir/gz-common
+%_cmakedir/gz-common-all
+%_cmakedir/gz-common-av
+%_cmakedir/gz-common-events
+%_cmakedir/gz-common-geospatial
+%_cmakedir/gz-common-graphics
+%_cmakedir/gz-common-io
+%_cmakedir/gz-common-profiler
+%_cmakedir/gz-common-testing
+%_pkgconfigdir/gz-common.pc
+%_pkgconfigdir/gz-common-av.pc
+%_pkgconfigdir/gz-common-events.pc
+%_pkgconfigdir/gz-common-geospatial.pc
+%_pkgconfigdir/gz-common-graphics.pc
+%_pkgconfigdir/gz-common-io.pc
+%_pkgconfigdir/gz-common-profiler.pc
+%_pkgconfigdir/gz-common-testing.pc
 
 %changelog
-* Tue Dec 23  2025 Pavel Petrykin <silverducks@altlinux.org> 7.0.0-alt1
+* Mon Aug 10 2026 Pavel Petrykin <silverducks@altlinux.org> 7.3.0-alt1
+- New version.
+
+* Tue Dec 23 2025 Pavel Petrykin <silverducks@altlinux.org> 7.0.0-alt1
 - New version.
 
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1

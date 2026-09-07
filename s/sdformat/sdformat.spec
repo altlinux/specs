@@ -1,20 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define soversion 16
-%def_without python
+%def_with python
 
-Name:    sdformat
-Version: 16.0.0
+Name: sdformat
+Version: 16.1.0
 Release: alt1
 
 Summary: Simulation Description Format (SDFormat) parser and description files
 License: Apache-2.0
-Group:   Development/C++
+Group: Development/C++
 Url: https://gazebosim.org/libs/sdformat/
 Vcs: https://github.com/gazebosim/sdformat
 
 Source: %name-%version.tar
-
-Conflicts: libsdformat
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -30,6 +28,8 @@ BuildRequires: python3-module-psutil
 %if_with python
 BuildRequires: python3-devel
 BuildRequires: pybind11-devel
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-gz-math
 %endif
 BuildRequires: gem-rexml
 BuildRequires: ctest
@@ -49,31 +49,45 @@ Summary: Library of sdformat
 Group: System/Libraries
 
 %description -n libsdformat%soversion
-%summary
+This package contains library libsdformat of sdformat.
 
 %package -n libsdformat-devel
 Summary: Development files for sdformat
 Group: Development/C++
 
 %description -n libsdformat-devel
-%summary
+This package contains development files of sdformat.
+
+%if_with python
+%package -n python3-module-sdformat
+Summary: Python bindings for sdformat
+Group: Development/Python3
+
+%description -n python3-module-sdformat
+This package provides Python bindings for sdformat.
+%endif
 
 %prep
 %setup
+# We don't use vendored gtest.
 rm -rf tests/gtest_vendor
 
 %build
-%cmake -GNinja -Wno-dev \
-       -DBUILD_TESTING=ON
-%ninja_build -C "%_cmake__builddir"
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    -DBUILD_TESTING=ON \
+%if_with python
+    -DUSE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION=ON \
+%endif
+    #
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
-%ctest \
-  --exclude-regex 'element_memory_leak|_TEST\.py'
-  #
+%ctest
 
 %files
 %_datadir/sdformat
@@ -90,12 +104,21 @@ rm -rf tests/gtest_vendor
 %files -n libsdformat-devel
 %_includedir/gz/sdformat%soversion
 %_libdir/libsdformat.so
-%_libdir/cmake/sdformat
-%_libdir/cmake/sdformat-all
-%_libdir/pkgconfig/sdformat.pc
+%_cmakedir/sdformat
+%_cmakedir/sdformat-all
+%_pkgconfigdir/sdformat.pc
+
+%if_with python
+%files -n python3-module-sdformat
+%python3_sitelibdir/sdformat.cpython-*.so
+%endif
 
 %changelog
-* Wed Dec 22 2025 Pavel Petrykin <silverducks@altlinux.org> 16.0.0-alt1
+* Mon Aug 10 2026 Pavel Petrykin <silverducks@altlinux.org> 16.1.0-alt1
+- New version.
+- Enable python bindings.
+
+* Mon Dec 22 2025 Pavel Petrykin <silverducks@altlinux.org> 16.0.0-alt1
 - New version.
 
 * Mon Nov 11 2024 Andrey Cherepanov <cas@altlinux.org> 15.0.0-alt1

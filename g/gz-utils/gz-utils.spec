@@ -3,7 +3,7 @@
 
 Name: gz-utils
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Classes and functions for robot applications
 License: Apache-2.0
@@ -30,31 +30,31 @@ Summary: Library of gz-utils
 Group: System/Libraries
 
 %description -n libgz-utils%soversion
-This package contains primary shared library of gz-utils
+This package contains primary shared library of gz-utils.
 
 %package -n libgz-utils-log%soversion
 Summary: Shared library gz-utils-log of gz-utils
 Group: System/Libraries
 
 %description -n libgz-utils-log%soversion
-This package contains shared library gz-utils-log of gz-utils
+This package contains shared library gz-utils-log of gz-utils.
 
 %package -n libgz-utils-devel
 Summary: Development files for gz-utils
 Group: Development/C++
 
 %description -n libgz-utils-devel
-This package contains development files for gz-utils
+This package contains development files for gz-utils.
 
 %prep
 %setup
 
 %build
 %cmake -GNinja -Wno-dev
-%ninja_build -C "%_cmake__builddir"
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
 %ctest
@@ -69,14 +69,17 @@ This package contains development files for gz-utils
 %_libdir/libgz-utils-log.so.%version
 
 %files -n libgz-utils-devel
-%_includedir/gz/
-%_libdir/cmake/gz-utils*
-%_libdir/pkgconfig/gz-utils.pc
-%_libdir/pkgconfig/gz-utils-cli.pc
-%_libdir/pkgconfig/gz-utils-log.pc
+%_includedir/gz/utils%soversion
+%_cmakedir/gz-utils*
+%_pkgconfigdir/gz-utils.pc
+%_pkgconfigdir/gz-utils-cli.pc
+%_pkgconfigdir/gz-utils-log.pc
 %_libdir/libgz-utils*.so
 
 %changelog
+* Mon Aug 10 2026 Pavel Petrykin <silverducks@altlinux.org> 4.0.0-alt2
+- Add missing points in package description.
+
 * Fri Dec 19 2025 Pavel Petrykin <silverducks@altlinux.org> 4.0.0-alt1
 - New version.
 

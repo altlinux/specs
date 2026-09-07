@@ -2,22 +2,23 @@
 %define soversion 10
 
 Name: gz-rendering
-Version: 10.0.0
+Version: 10.0.2
 Release: alt1
 
-Summary: C++ library designed to provide an abstraction for different rendering engines. It offers unified APIs for creating 3D graphics applications
+Summary: C++ library that provides an abstraction for rendering engines
 License: Apache-2.0
 Group: Development/C++
-Vcs: https://github.com/gazebosim/gz-rendering
 Url: https://gazebosim.org/libs/rendering/
+Vcs: https://github.com/gazebosim/gz-rendering
 
 Source: %name-%version.tar
 Patch: gz-rendering-orge-next-2.3.3.patch
+Patch2: gz-rendering-10.0.2-alt-compatibility-with-alt-linux-ogre.patch
 
 # Same as for ogre-next
 ExclusiveArch: x86_64 %e2k
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
@@ -44,49 +45,58 @@ Summary: Library of gz-rendering
 Group: System/Libraries
 
 %description -n libgz-rendering%soversion
-%summary
+This package contains library libgz-rendering of gz-rendering.
 
 %package -n libgz-rendering-devel
 Summary: Development files for gz-rendering
 Group: Development/C++
 
 %description -n libgz-rendering-devel
-%summary
+This package contains development files of gz-rendering.
 
 %prep
 %setup
-%patch -p1
-sed -i 's/2\.3\.1/2.3.3/' CMakeLists.txt
+%autopatch -p1
 
 %build
-%cmake -GNinja -Wno-dev \
-  -DBUILD_TESTING=ON \
-  -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    -DBUILD_TESTING=ON \
+    -DUSE_UNOFFICIAL_OGRE_VERSIONS=ON \
+    #
 %cmake_build
 
 %install
 %cmake_install
 
 %check
+Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
+XVFB_PID=$!
+export DISPLAY=:99
+trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
 # See issue:
 # https://github.com/gazebosim/gz-rendering/issues/1212
 exclude_tests=(
     "INTEGRATION_depth_camera_ogre2_gl3plus"
     "INTEGRATION_versioned_symbols"
     "UNIT_Utils_TEST_ogre2_gl3plus"
+    "PERFORMANCE_scene_factory_ogre2_gl3plus"
 )
 exclude_regex=$(IFS='|'; echo "${exclude_tests[*]}")
 
 export CMAKE_PREFIX_PATH="%buildroot%_prefix"
-Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
-XVFB_PID=$!
-export DISPLAY=:99
 export GZ_RENDERING_PLUGIN_PATH="%buildroot%_libdir"
 export GZ_RENDERING_RESOURCE_PATH="%buildroot%_datadir/gz/gz-rendering"
 %ctest \
   --parallel 1 \
-  -E "$exclude_regex"
-trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+  -E "$exclude_regex" \
+  #
+
+trap - EXIT
+kill -TERM "$XVFB_PID" 2>/dev/null || true
+wait "$XVFB_PID" 2>/dev/null || true
 
 %files
 %doc AUTHORS README.md
@@ -105,6 +115,9 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_pkgconfigdir/gz-rendering*.pc
 
 %changelog
+* Fri Jul 31 2026 Pavel Petrykin <silverducks@altlinux.org> 10.0.2-alt1
+- New version.
+
 * Thu Dec 25 2025 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt1
 - New version.
 

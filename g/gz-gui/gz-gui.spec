@@ -1,18 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %define soversion 10
 
-Name:    gz-gui
+Name: gz-gui
 Version: 10.0.0
-Release: alt2
+Release: alt3
 
-Summary: Builds on top of Qt to provide widgets which are useful when developing robotics applications, such as a 3D view, plots, dashboard, etc, and can be used together in a convenient unified interface
+Summary: Builds on top of Qt to provide widgets for robotics applications
 License: Apache-2.0
-Group:   Development/C++
+Group: Development/C++
+Url: https://gazebosim.org/libs/gui/
+Vcs: https://github.com/gazebosim/gz-gui
 
-Url:      https://github.com/gazebosim/gz-gui
-Source:   %name-%version.tar
-Packager: Andrey Cherepanov <cas@altlinux.org>
-
+Source: %name-%version.tar
 Patch1: gz-gui-publisher-plugin-test-fix.patch
 
 # Same as for ogre-next via libgz-rendering-devel
@@ -20,7 +19,7 @@ ExclusiveArch: x86_64 %e2k
 
 Conflicts: libgz-gui
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
@@ -35,7 +34,6 @@ BuildRequires: qt6-base-devel
 BuildRequires: qt6-declarative-devel
 BuildRequires: libqt6-quickcontrols2
 BuildRequires: libstdc++-devel-static
-
 BuildRequires: ctest
 BuildRequires: xvfb-run
 BuildRequires: qt6-5compat-devel
@@ -51,35 +49,42 @@ Group: System/Libraries
 Requires: libqt6-quickcontrols2
 
 %description -n libgz-gui%soversion
-%summary
+This package contains library libgz-gui of gz-gui.
 
 %package -n libgz-gui-devel
 Summary: Development files for gz-gui
 Group: Development/C++
 
 %description -n libgz-gui-devel
-%summary
+This package contains development files of gz-gui.
 
 %prep
 %setup
 %autopatch -p1
 
 %build
-%cmake -GNinja -Wno-dev
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    #
 %cmake_build
 
 %install
 %cmake_install
 
 %check
-export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
 XVFB_PID=$!
 export DISPLAY=:99
+trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
 
+export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 # Some tests fail if parallelization is enabled.
 %ctest --parallel 1
-trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+trap - EXIT
+kill -TERM "$XVFB_PID" 2>/dev/null || true
+wait "$XVFB_PID" 2>/dev/null || true
 
 %files
 %doc AUTHORS README.md
@@ -100,6 +105,9 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_pkgconfigdir/gz-gui.pc
 
 %changelog
+* Tue Aug 11 2026 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt3
+- Update package descriptions.
+
 * Tue Jan 20 2026 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt2
 - Minor logging fix.
 

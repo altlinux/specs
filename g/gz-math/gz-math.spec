@@ -2,7 +2,7 @@
 %define soversion 9
 
 Name: gz-math
-Version: 9.0.0
+Version: 9.2.0
 Release: alt1
 
 Summary: General purpose math library for robot applications
@@ -13,8 +13,9 @@ Vcs: https://github.com/gazebosim/gz-math
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
 BuildRequires: libgz-utils-devel >= 2.0.0
@@ -40,31 +41,35 @@ Summary: Library of gz-math
 Group: System/Libraries
 
 %description -n libgz-math%soversion
-%summary
+This package contains library libgz-math of gz-math.
 
 %package -n libgz-math-devel
 Summary: Development files for gz-math
 Group: Development/C++
 
 %description -n libgz-math-devel
-%summary
+This package contains development files of gz-math.
 
 %package -n python3-module-gz-math
 Summary: Python bindings for gz-math
 Group: Development/Python3
 
 %description -n python3-module-gz-math
-%summary
+This package contains python bindings for gz-math.
 
 %prep
 %setup
 
 %build
-%cmake -GNinja -Wno-dev
-%ninja_build -C "%_cmake__builddir"
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    -DUSE_SYSTEM_PATHS_FOR_PYTHON_INSTALLATION=ON \
+    #
+%cmake_build
 
 %install
-%ninja_install -C "%_cmake__builddir"
+%cmake_install
 
 %check
 %ctest
@@ -76,17 +81,21 @@ Group: Development/Python3
 
 %files -n libgz-math-devel
 %_includedir/gz/math%soversion
-%_libdir/cmake/gz-math
-%_libdir/cmake/gz-math-all
-%_libdir/cmake/gz-math-eigen3
-%_libdir/pkgconfig/gz-math.pc
-%_libdir/pkgconfig/gz-math-eigen3.pc
+%_cmakedir/gz-math
+%_cmakedir/gz-math-all
+%_cmakedir/gz-math-eigen3
+%_pkgconfigdir/gz-math.pc
+%_pkgconfigdir/gz-math-eigen3.pc
 %_libdir/libgz-math.so
 
 %files -n python3-module-gz-math
-%_libdir/python/gz
+%python3_sitelibdir/gz
 
 %changelog
+* Mon Aug 10 2026 Pavel Petrykin <silverducks@altlinux.org> 9.2.0-alt1
+- New version.
+- Enable python bindings.
+
 * Thu Nov 13 2025 Pavel Petrykin <silverducks@altlinux.org> 9.0.0-alt1
 - New version.
 

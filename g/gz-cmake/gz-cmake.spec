@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gz-cmake
-Version: 5.0.0
+Version: 5.1.1
 Release: alt1
 
 Summary: A set of CMake modules that are used by the C++-based Gazebo projects
@@ -36,15 +36,17 @@ up a modern cmake build system using good practices.
 
 %install
 %cmake_install
-subst 's|^#!.*$|#!%__python3|' `find %buildroot%_datadir/gz/gz-cmake* -name \*.py`
 
 %files
 %doc README.md
 %_datadir/cmake/gz-cmake
-%_libdir/pkgconfig/gz-cmake.pc
+%_pkgconfigdir/gz-cmake.pc
 %_datadir/gz/gz-cmake
 
 %changelog
+* Wed Jul 29 2026 Pavel Petrykin <silverducks@altlinux.org> 5.1.1-alt1
+- New version.
+
 * Fri Dec 19 2025 Pavel Petrykin <silverducks@altlinux.org> 5.0.0-alt1
 - New version.
 

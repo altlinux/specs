@@ -2,21 +2,21 @@
 %define soversion 10
 
 Name: gz-sensors
-Version: 10.0.0
+Version: 10.0.2
 Release: alt1
 
-Summary: Provides numerous sensor models designed to generate realistic data from simulation environments
+Summary: Provides sensor models designed to generate data from simulations
 License: Apache-2.0
 Group: Development/C++
-Vcs: https://github.com/gazebosim/gz-sensors
 Url: https://gazebosim.org/libs/sensors/
+Vcs: https://github.com/gazebosim/gz-sensors
 
 Source: %name-%version.tar
 
 # Same as for ogre-next via libgz-rendering-devel
 ExclusiveArch: x86_64 %e2k
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: gz-cmake
@@ -26,7 +26,6 @@ BuildRequires: libgz-msgs-devel >= 8.0.0
 BuildRequires: libgz-transport-devel >= 11.0.0
 BuildRequires: libgz-common-devel
 BuildRequires: libgz-rendering-devel >= 6.0.0
-
 BuildRequires: ctest
 BuildRequires: xvfb-run
 
@@ -41,167 +40,175 @@ Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors%soversion
-This package contains library libgz-sensors of gz-sensors
+This package contains library libgz-sensors of gz-sensors.
 
 %package -n libgz-sensors-air_pressure%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-air_pressure%soversion
-This package contains library libgz-sensors-air_pressure of gz-sensors
+This package contains library libgz-sensors-air_pressure of gz-sensors.
 
 %package -n libgz-sensors-air_speed%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-air_speed%soversion
-This package contains library libgz-sensors-air_speed of gz-sensors
+This package contains library libgz-sensors-air_speed of gz-sensors.
 
 %package -n libgz-sensors-altimeter%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-altimeter%soversion
-This package contains library libgz-sensors-altimeter of gz-sensors
+This package contains library libgz-sensors-altimeter of gz-sensors.
 
 %package -n libgz-sensors-boundingbox_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-boundingbox_camera%soversion
-This package contains library libgz-sensors-boundingbox_camera of gz-sensors
+This package contains library libgz-sensors-boundingbox_camera of gz-sensors.
 
 %package -n libgz-sensors-camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-camera%soversion
-This package contains library libgz-sensors-camera of gz-sensors
+This package contains library libgz-sensors-camera of gz-sensors.
 
 %package -n libgz-sensors-depth_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-depth_camera%soversion
-This package contains library libgz-sensors-depth_camera of gz-sensors
+This package contains library libgz-sensors-depth_camera of gz-sensors.
 
 %package -n libgz-sensors-dvl%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-dvl%soversion
-This package contains library libgz-sensors-dvl of gz-sensors
+This package contains library libgz-sensors-dvl of gz-sensors.
 
 %package -n libgz-sensors-force_torque%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-force_torque%soversion
-This package contains library libgz-sensors-force_torque of gz-sensors
+This package contains library libgz-sensors-force_torque of gz-sensors.
 
 %package -n libgz-sensors-gpu_lidar%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-gpu_lidar%soversion
-This package contains library libgz-sensors-gpu_lidar of gz-sensors
+This package contains library libgz-sensors-gpu_lidar of gz-sensors.
 
 %package -n libgz-sensors-imu%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-imu%soversion
-This package contains library libgz-sensors-imu of gz-sensors
+This package contains library libgz-sensors-imu of gz-sensors.
 
 %package -n libgz-sensors-lidar%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-lidar%soversion
-This package contains library libgz-sensors-lidar of gz-sensors
+This package contains library libgz-sensors-lidar of gz-sensors.
 
 %package -n libgz-sensors-logical_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-logical_camera%soversion
-This package contains library libgz-sensors-logical_camera of gz-sensors
+This package contains library libgz-sensors-logical_camera of gz-sensors.
 
 %package -n libgz-sensors-magnetometer%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-magnetometer%soversion
-This package contains library libgz-sensors-magnetometer of gz-sensors
+This package contains library libgz-sensors-magnetometer of gz-sensors.
 
 %package -n libgz-sensors-navsat%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-navsat%soversion
-This package contains library libgz-sensors-navsat of gz-sensors
+This package contains library libgz-sensors-navsat of gz-sensors.
 
 %package -n libgz-sensors-rendering%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-rendering%soversion
-This package contains library libgz-sensors-rendering of gz-sensors
+This package contains library libgz-sensors-rendering of gz-sensors.
 
 %package -n libgz-sensors-rgbd_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-rgbd_camera%soversion
-This package contains library libgz-sensors-rgbd_camera of gz-sensors
+This package contains library libgz-sensors-rgbd_camera of gz-sensors.
 
 %package -n libgz-sensors-segmentation_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-segmentation_camera%soversion
-This package contains library libgz-sensors-segmentation_camera of gz-sensors
+This package contains library libgz-sensors-segmentation_camera of gz-sensors.
 
 %package -n libgz-sensors-thermal_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-thermal_camera%soversion
-This package contains library libgz-sensors-thermal_camera of gz-sensors
+This package contains library libgz-sensors-thermal_camera of gz-sensors.
 
 %package -n libgz-sensors-wide_angle_camera%soversion
 Summary: Library of gz-sensors
 Group: System/Libraries
 
 %description -n libgz-sensors-wide_angle_camera%soversion
-This package contains library libgz-sensors-wide_angle_camera of gz-sensors
+This package contains library libgz-sensors-wide_angle_camera of gz-sensors.
 
 %package -n libgz-sensors-devel
 Summary: Development files for gz-sensors
 Group: Development/C++
 
 %description -n libgz-sensors-devel
-%summary
+This package contains development files for gz-sensors.
 
 %prep
 %setup
 
 %build
-%cmake -GNinja -Wno-dev
+%cmake \
+    -GNinja \
+    -Wno-dev \
+    #
 %cmake_build
 
 %install
 %cmake_install
 
 %check
-export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 Xvfb :99 -screen 0 1920x1080x24 2>/dev/null &
 XVFB_PID=$!
 export DISPLAY=:99
+trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+export CMAKE_PREFIX_PATH="%buildroot%_prefix"
 export GZ_RENDERING_PLUGIN_PATH="%buildroot%_libdir"
 export GZ_RENDERING_DATA_PATH="%buildroot%_datadir/gz/gz-rendering"
 %ctest --parallel 1
-trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null || true' EXIT
+
+trap - EXIT
+kill -TERM "$XVFB_PID" 2>/dev/null || true
+wait "$XVFB_PID" 2>/dev/null || true
 
 %files -n libgz-sensors%soversion
 %doc AUTHORS README.md
@@ -291,6 +298,9 @@ trap 'kill -TERM "$XVFB_PID" 2>/dev/null || true; wait "$XVFB_PID" 2>/dev/null |
 %_pkgconfigdir/gz-sensors*.pc
 
 %changelog
+* Fri Jul 31 2026 Pavel Petrykin <silverducks@altlinux.org> 10.0.2-alt1
+- New version.
+
 * Thu Dec 25 2025 Pavel Petrykin <silverducks@altlinux.org> 10.0.0-alt1
 - New version.
 
