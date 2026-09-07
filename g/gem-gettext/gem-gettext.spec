@@ -1,46 +1,52 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname gettext
 
 Name:          gem-gettext
-Version:       3.4.3
+Version:       3.5.2
 Release:       alt1
 Summary:       Native Language Support Library for Ruby
 License:       Ruby or LGPL-3.0+
 Group:         Development/Ruby
 Url:           https://ruby-gettext.github.io/
 Vcs:           https://github.com/ruby-gettext/locale.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-%if_with check
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+%if_enabled check
+BuildRequires: gem(erubi) >= 0
 BuildRequires: gem(kramdown) >= 0
+BuildRequires: gem(locale) >= 2.0.5
+BuildRequires: gem(prime) >= 0
 BuildRequires: gem(racc) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(red-datasets) >= 0
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(test-unit-rr) >= 0
-BuildRequires: gem(yard) >= 0
-BuildRequires: gem(erubi) >= 0
-BuildRequires: gem(locale) >= 2.0.5
-BuildRequires: gem(prime) >= 0
 BuildRequires: gem(text) >= 1.3.0
+BuildRequires: gem(yard) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names gettext,gettext-gemtools
+Requires:      rmsg = %EVR
+Requires:      ruby >= 2.5.0
 Requires:      gem(erubi) >= 0
 Requires:      gem(locale) >= 2.0.5
 Requires:      gem(prime) >= 0
+Requires:      gem(racc) >= 0
 Requires:      gem(text) >= 1.3.0
 Obsoletes:     gem-gettext-cgi < %EVR
 Obsoletes:     gem-gettext-erb < %EVR
 Obsoletes:     ruby-gettext < %EVR
-Provides:      gem-gettext-cgi = %EVR
-Provides:      gem-gettext-erb = %EVR
+Provides:      gem-gettext-cgi = 3.3.5-alt1
+Provides:      gem-gettext-erb = 3.3.5-alt1
 Provides:      ruby-gettext = %EVR
-Provides:      gem(gettext) = 3.4.3
-
+Provides:      gem(gettext) = 3.5.2
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools which modeled
@@ -60,16 +66,14 @@ libs/apps to handle major locale ID standards.
 
 
 %package       -n rmsg
-Version:       3.4.3
+Version:       3.5.2
 Release:       alt1
 Summary:       Native Language Support Library for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gettext
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(gettext) = 3.4.3
-Obsoletes:     gettext-gemtools < %EVR
-Provides:      gettext-gemtools = %EVR
+Requires:      gem(gettext) = 3.5.2
 
 %description   -n rmsg
 Native Language Support Library for Ruby executable(s).
@@ -93,15 +97,16 @@ libs/apps to handle major locale ID standards.
 Исполнямка для самоцвета gettext.
 
 
+%if_enabled    doc
 %package       -n gem-gettext-doc
-Version:       3.4.3
+Version:       3.5.2
 Release:       alt1
 Summary:       Native Language Support Library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gettext
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gettext) = 3.4.3
+Requires:      gem(gettext) = 3.5.2
 
 %description   -n gem-gettext-doc
 Native Language Support Library for Ruby documentation files.
@@ -123,19 +128,20 @@ libs/apps to handle major locale ID standards.
 
 %description   -n gem-gettext-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета gettext.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-gettext-devel
-Version:       3.4.3
+Version:       3.5.2
 Release:       alt1
 Summary:       Native Language Support Library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gettext
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gettext) = 3.4.3
+Requires:      gem(gettext) = 3.5.2
 Requires:      gem(kramdown) >= 0
-Requires:      gem(racc) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(red-datasets) >= 0
 Requires:      gem(test-unit) >= 0
@@ -162,6 +168,7 @@ libs/apps to handle major locale ID standards.
 
 %description   -n gem-gettext-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета gettext.
+%endif
 
 
 %prep
@@ -189,17 +196,21 @@ libs/apps to handle major locale ID standards.
 %_bindir/rmsgmerge
 %_bindir/rxgettext
 
+%if_enabled    doc
 %files         -n gem-gettext-doc
 %doc README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-gettext-devel
 %doc README.md
+%endif
 
 
 %changelog
-* Fri Apr 14 2023 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
-- ^ 3.3.5 -> 3.4.3
+* Mon Sep 07 2026 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1
+- ^ 3.3.5 -> 3.5.2
 
 * Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 3.3.5-alt1
 - ^ 3.2.9 -> 3.3.5
