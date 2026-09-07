@@ -1,10 +1,10 @@
-%define dotnetver 9.0
+%define dotnetver 10.0
 %define _appdir %_libexecdir/%name
 
 %def_with prebuild
 
 Name:    naps2
-Version: 8.2.1
+Version: 8.3.2
 Release: alt1
 
 Summary: Scan documents to PDF and more, as simply as possible
@@ -75,6 +75,9 @@ ln -sf %_appdir/%name %buildroot%_bindir/%name
 %_appdir
 
 %changelog
+* Mon Sep 07 2026 Nikolay Burykin <bne@altlinux.org> 8.3.2-alt1
+- 8.3.2
+
 * Sat Feb 21 2026 Nikolay Burykin <bne@altlinux.org> 8.2.1-alt1
 - 8.2.1
 
