@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       modeler
@@ -9,7 +9,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             apache-%{short_name}
 Version:          2.0.1
-Release:          alt1_28jpp11
+Release:          alt2
 Summary:          Model MBeans utility classes
 License:          ASL 2.0
 URL:              http://commons.apache.org/%{base_name}/
@@ -75,6 +75,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Sep 02 2026 Anton Meleshnikov <alton@altlinux.org> 1:2.0.1-alt2
+- FTBFS fix
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2.0.1-alt1_28jpp11
 - update
 

@@ -1,13 +1,13 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 %define fedora 33
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xmltool
 Version:        3.3
-Release:        alt4_28jpp11
+Release:        alt5
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 License:        ASL 2.0
@@ -76,6 +76,9 @@ sed -i 's/\r//' LICENSE.txt
 %doc LICENSE.txt
 
 %changelog
+* Wed Sep 02 2026 Anton Meleshnikov <alton@altlinux.org> 0:3.3-alt5
+- FTBFS fix
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.3-alt4_28jpp11
 - update
 

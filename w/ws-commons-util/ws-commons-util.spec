@@ -1,12 +1,12 @@
 Epoch: 1
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ws-commons-util
 Version:        1.0.2
-Release:        alt1_14jpp11
+Release:        alt2
 Summary:        Common utilities from the Apache Web Services Project
 
 License:        ASL 2.0
@@ -81,6 +81,9 @@ BuildArch: noarch
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Wed Sep 02 2026 Anton Meleshnikov <alton@altlinux.org> 1:1.0.2-alt2
+- FTBFS fix
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0.2-alt1_14jpp11
 - update
 

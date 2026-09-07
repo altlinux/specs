@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname metro-xmlstreambuffer
 
 Name:           xmlstreambuffer
 Version:        2.1.0
-Release:        alt1
+Release:        alt2
 Summary:        Stream Based Representation for XML Infoset
 License:        BSD-3-Clause
 URL:            https://github.com/eclipse-ee4j/metro-xmlstreambuffer
@@ -57,6 +57,9 @@ popd
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Wed Sep 02 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.0-alt2
+- FTBFS fix
+
 * Mon Jan 26 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.0-alt1
 - new version
 

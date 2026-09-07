@@ -3,7 +3,7 @@ Group: Development/Other
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name       lang
@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           apache-%{short_name}
 Version:        2.6
-Release:        alt5_32jpp11
+Release:        alt6
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 
@@ -88,6 +88,9 @@ mv src/main/java/org/apache/commons/lang/Entities.java.utf-8 \
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Sep 02 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.6-alt6
+- fixed build
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt5_32jpp11
 - fixed build
 
