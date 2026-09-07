@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: eqonomize
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 
 Summary: personal accounting software for the small household economy
@@ -61,6 +61,7 @@ qmake-qt6 \
 %_iconsdir/hicolor/*/*/*
 %_man1dir/eqonomize.1.*
 %_datadir/mime/packages/eqonomize.xml
+%_datadir/metainfo/io.github.eqonomize.eqonomize.metainfo.xml
 
 %files doc
 %doc budget.eqz eqz_file_format
@@ -70,6 +71,9 @@ qmake-qt6 \
 %_datadir/doc/eqonomize/html/C/*
 
 %changelog
+* Mon Sep 07 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.13-alt1
+- New version 1.5.13.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.12-alt1
 - New version 1.5.12.
 
