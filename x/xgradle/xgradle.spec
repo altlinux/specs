@@ -2,7 +2,7 @@
 %def_with check
 
 Name: xgradle
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Gradle plugin for system dependency resolution and offline builds
@@ -107,6 +107,7 @@ chmod +x commit.sh
 %gradle_publish -DgitCommitId=$(./commit.sh) \
   -Prelease \
   -Djava11 \
+  --offline \
   #
 
 %install
@@ -148,7 +149,7 @@ install -Dm 644 rpm-macros/xgradle-fjava \
   -t %buildroot/%_rpmmacrosdir
 
 %check
-%gradle_check
+%gradle_check --offline
 
 %files
 
@@ -173,6 +174,9 @@ install -Dm 644 rpm-macros/xgradle-fjava \
 %_rpmmacrosdir/xgradle-fjava
 
 %changelog
+* Mon Sep 07 2026 Ivan Khanas <xeno@altlinux.org> 0.2.2-alt1
+- Add --offline flag to macros.
+
 * Fri Apr 17 2026 Arseniy Kostevich <faux@altlinux.org> 0.2.1-alt1
 - New version.
 
