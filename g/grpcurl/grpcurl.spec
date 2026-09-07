@@ -1,7 +1,7 @@
 %global import_path github.com/fullstorydev/grpcurl
 Name:     grpcurl
-Version:  1.9.3
-Release:  alt2
+Version:  1.9.4
+Release:  alt1
 
 Summary:  Like cURL, but for gRPC: Command-line tool for interacting with gRPC servers
 License:  MIT
@@ -12,8 +12,6 @@ Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
 
-Patch1:   grpcurl-1.9.3-test.patch
-
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
 
@@ -22,7 +20,6 @@ BuildRequires: golang
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -48,6 +45,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Thu Sep 03 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.9.4-alt1
+- new version 1.9.4
+
 * Mon Sep 29 2025 Mikhail Gordeev <obirvalger@altlinux.org> 1.9.3-alt2
 - fix rebuild
 
