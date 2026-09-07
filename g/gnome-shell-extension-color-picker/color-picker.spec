@@ -5,7 +5,7 @@
 %define xdg_name org.gnome.shell.extensions.%_name
 
 Name: gnome-shell-extension-%_name
-Version: 50.2
+Version: 51.0
 Release: alt1
 Summary: Simple color picker for GNOME Shell
 License: GPL-3.0-or-later
@@ -46,6 +46,9 @@ sed -i 's/47.beta/%version.beta/g' meson.build
 %doc README.md
 
 %changelog
+* Sun Sep 06 2026 Anton Midyukov <antohami@altlinux.org> 51.0-alt1
+- New version 51.0.
+
 * Sat Aug 01 2026 Anton Midyukov <antohami@altlinux.org> 50.2-alt1
 - New version 50.2.
 
