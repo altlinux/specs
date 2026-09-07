@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.59
-Release: alt1.gebeb3ac61
+Version: 1.4.1.106
+Release: alt1.ga4b3599ec
 Summary: A music player and library organiser
 
 Group: Sound
@@ -11,8 +11,7 @@ License: GPL-3.0-or-later AND GPL-2.0-or-later AND BSL-1.0 AND LGPL-2.0-or-later
 Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
-Patch1: 01-fix-cmake.patch
-Patch2: 02-fix-version.patch
+Patch1: 01-fix-version.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
@@ -57,6 +56,7 @@ BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(projectM-4)
 BuildRequires: liborc-devel
 # Check:
 BuildRequires: %_bindir/appstream-util desktop-file-utils
@@ -65,6 +65,7 @@ BuildRequires: %_bindir/appstream-util desktop-file-utils
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
 Requires: icon-theme-hicolor
+Requires: projectm-presets
 
 %description
 Clementine is a modern music player and library organiser.
@@ -92,7 +93,7 @@ Features include:
 
 %prep
 %setup
-%autopatch -p2
+%autopatch -p1
 %ifarch %e2k
 %add_optflags -Winvalid-offsetof
 sed -i "s|== Separator|== QChar(Separator)|" \
@@ -111,8 +112,8 @@ if [ ! -d .git ]; then
 fi
 
 %build
-%cmake -DBUNDLE_PROJECTM_PRESETS=ON \
-       -DFORCE_GIT_REVISION=%version.%release \
+%cmake -DUSE_SYSTEM_PROJECTM:BOOL=ON \
+       -DFORCE_GIT_REVISION:STRING=%version.%release \
        -DBUILD_WERROR:BOOL=OFF \
        -DCMAKE_BUILD_TYPE:STRING=Release \
        -DCMAKE_CXX_STANDARD:INT=17 \
@@ -135,13 +136,15 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 %_bindir/clementine-tagreader
 %_desktopdir/org.clementine_player.Clementine.desktop
 %_datadir/kservices5/*.protocol
-%_datadir/clementine
 %_datadir/metainfo/org.clementine_player.Clementine.appdata.xml
 %_datadir/icons/hicolor/*/apps/*.png
 %_datadir/icons/hicolor/*/apps/*.svg
 
 
 %changelog
+* Mon Sep 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.106-alt1.ga4b3599ec
+- Update upstream source to 1.4.1.106-ga4b3599ec
+
 * Sun Dec 14 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.59-alt1.gebeb3ac61
 - Update upstream source to 1.4.1-59-gebeb3ac61
 
