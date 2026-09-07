@@ -8,7 +8,7 @@
 
 Name: krita-gmic
 Version: 3.6.4.1
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: GREYC's Magic Image Converter for Krita
@@ -20,6 +20,7 @@ ExcludeArch: %ix86 %arm
 #Requires: gmic
 
 Source: gmic-%version.tar
+Patch1: krita-gmic-CVE-2026-42144.patch
 
 BuildRequires: libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
 BuildRequires: libavformat-devel libfftw3-devel libjpeg-devel libopencv-devel libpng-devel
@@ -38,6 +39,7 @@ multi-spectral image datasets.
 
 %prep
 %setup -n gmic-%version
+%patch1 -p2
 
 sed -i 's|NAMES Qt6 Qt5|NAMES Qt5|' gmic-qt/CMakeLists.txt
 
@@ -63,6 +65,9 @@ popd
 %doc gmic-qt/README*
 
 %changelog
+* Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 3.6.4.1-alt2
+- add fix (fixes: CVE-2026-42144)
+
 * Wed Apr 29 2026 Sergey V Turchin <zerg@altlinux.org> 3.6.4.1-alt1
 - new version
 
