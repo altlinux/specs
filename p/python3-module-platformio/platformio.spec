@@ -1,5 +1,5 @@
 Name: python3-module-platformio
-Version: 6.1.19
+Version: 6.2.0
 Release: alt1
 
 Summary: PlatformIO Core
@@ -41,6 +41,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Mon Sep 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 6.2.0-alt1
+- 6.2.0 released
+
 * Thu Feb 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 6.1.19-alt1
 - 6.1.19 released
 
