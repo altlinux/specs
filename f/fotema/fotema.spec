@@ -12,7 +12,7 @@
 
 Name: fotema
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: A photo gallery for GNOME
 License: GPL-3.0-or-later
@@ -31,7 +31,7 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 Patch: fotema-1.19.0-alt-loongarch64-size_t-ort-crate.patch
-Patch1: cargo-lock-bump-ffmpeg-next.patch
+Patch1: ffmpeg9-alt-fixes.patch
 
 %define gtk_ver 4.0
 %define adwaita_ver 1.5
@@ -88,6 +88,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 #	./vendor/ort/.cargo-checksum.json
 
 %build
+export CFLAGS="-O0 -g"
 %meson
 %__meson_build
 
@@ -108,6 +109,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* THUMBNAILS*
 
 %changelog
+* Mon Sep 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.2-alt3
+- fixed FTBFS: builded with ffmpeg 9
+
 * Wed Sep 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.2-alt2
 - builded with onnxruntime from repo
 - fixed FTBFS
