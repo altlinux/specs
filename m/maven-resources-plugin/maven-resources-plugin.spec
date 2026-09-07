@@ -15,10 +15,10 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-resources-plugin
-Version:        3.2.0
-Release:        alt1_4jpp11
+Version:        3.3.1
+Release:        alt1
 Summary:        Maven Resources Plugin
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://maven.apache.org/plugins/maven-resources-plugin
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
@@ -35,15 +35,15 @@ BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
 BuildRequires:  mvn(org.apache.maven.shared:maven-filtering)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.apache.maven:maven-settings)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.eclipse.aether:aether-api)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
 %endif
 Source44: import.info
@@ -61,10 +61,10 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q
+%setup
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -76,6 +76,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Aug 31 2026 Anton Meleshnikov <alton@altlinux.org> 3.3.1-alt1
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_4jpp11
 - update
 
