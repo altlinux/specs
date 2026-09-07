@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Summary: Very fast web-browser
@@ -29,7 +29,7 @@ ExcludeArch: %not_qt6_qtwebengine_arches
 
 Provides: webclient x-www-browser
 Requires(post,preun): alternatives >= 0.2
-Requires: qt6-imageformats qt6-svg qt6-translations
+Requires: qt6-imageformats qt6-svg qt6-translations qt6-wayland
 
 %if "%name" == "%rname"
 %else
@@ -107,6 +107,9 @@ __EOF__
 
 
 %changelog
+* Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- fix requries (closes: 52755)
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
