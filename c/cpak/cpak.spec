@@ -3,7 +3,7 @@
 %global import_path github.com/Containerpak/cpak
 
 Name: cpak
-Version: 2.12.9
+Version: 2.13.2
 Release: alt1
 
 Summary: Fast, decentralized, portable, powerful and low-memory footprint package format for Linux
@@ -52,6 +52,16 @@ install -Dpm755 cpak-installer %buildroot%_bindir/cpak-installer
 install -Dpm755 cpak-sign %buildroot%_bindir/cpak-sign
 install -Dpm755 cpak-storaged %buildroot%_bindir/cpak-storaged
 
+# create and install completions
+mkdir -p %buildroot%_datadir/bash-completion/completions/
+./%name completion bash > %buildroot%_datadir/bash-completion/completions/%name
+
+mkdir -p %buildroot%_datadir/fish/vendor_completions.d/
+./%name completion fish > %buildroot%_datadir/fish/vendor_completions.d/%{name}.fish
+
+mkdir -p %buildroot%_datadir/zsh/site-functions/
+./%name completion zsh > %buildroot%_datadir/zsh/site-functions/_%{name}
+
 %post
 echo "NOTE: %name package requires system configuration, see %_datadir/doc/cpak-%{version}/README.md and"
 echo "      https://www.altlinux.org/Podman only about rootless operation, subuid/subgid and fuse-overlayfs."
@@ -63,8 +73,14 @@ echo "      Run 'cpak system setup' and 'cpak doctor' to apply and check the con
 %_bindir/cpak-installer
 %_bindir/cpak-sign
 %_bindir/cpak-storaged
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/%{name}.fish
+%_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Mon Sep 07 2026 Nikolay Strelkov <snk@altlinux.org> 2.13.2-alt1
+- New version 2.13.2.
+
 * Sun Sep 06 2026 Nikolay Strelkov <snk@altlinux.org> 2.12.9-alt1
 - New version 2.12.9.
 - Package cpak-installer.
