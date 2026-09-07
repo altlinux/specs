@@ -95,7 +95,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt0_14
+Release:	alt0_15
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -183,6 +183,9 @@ Summary:	TeX Live essential package
 Group:		Publishing
 Requires:	texlive >= %{tl_version}
 Requires(post):	texlive >= %{tl_version}
+Requires:	perl-File-HomeDir
+Requires:	perl-Unicode-LineBreak
+Requires:	perl-YAML-Tiny
 Provides: ht = %{tl_version}
 Provides: pdfjam = %{tl_version}
 Provides: tex4ht = %{tl_version}
@@ -1068,6 +1071,9 @@ EOF
 
 
 %changelog
+* Mon Sep 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_15
+- NMU: add missing run deps to texlive-collection-basic (Closes: #51541)
+
 * Tue Sep 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_14
 - NMU: new rumakeindex (Closes: #29829)
 
