@@ -1,8 +1,8 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.1.33
-Release: alt9
+Version: 0.2.0
+Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
 License: GPL-2
@@ -90,6 +90,12 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Mon Sep 07 2026 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
+- Add the ability to use hierarchical object paths (vladp@).
+- Fix a segfault when using the "remote" module with hierarchical object
+  paths.
+- Add svace workflow (shishkovna@).
+
 * Tue Jun 30 2026 Ivan Savin <svn17@altlinux.org> 0.1.33-alt9
 - Update docs/modules/remote(-ru).md.
 

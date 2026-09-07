@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,9 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Sep 07 2026 Ivan Savin <svn17@altlinux.org> 0.6.0-alt1
+- Add the ability to use hierarchical object paths.
+
 * Tue Jun 30 2026 Ivan Savin <svn17@altlinux.org> 0.5.0-alt1
 - The return value of the "GetConnections" method has been changed.
 - Remove unnecessary parameter "remote_address" in function
