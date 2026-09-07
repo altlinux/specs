@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.3.1
+Version: 4.4.0
 Release: alt1
 Summary: Modules providing forward compatibility across Python versions
 License: MIT
@@ -18,6 +18,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -46,12 +47,14 @@ borrowed before they are available in the standard library.
 %pyproject_run_pytest -vra
 
 %files
-%doc README.*
 %dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%ns_name/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 4.4.0-alt1
+- 4.3.1 -> 4.4.0
+
 * Mon Jun 02 2025 Stanislav Levin <slev@altlinux.org> 4.3.1-alt1
 - 4.2.2 -> 4.3.1.
 
