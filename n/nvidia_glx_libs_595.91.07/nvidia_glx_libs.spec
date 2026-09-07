@@ -21,7 +21,7 @@
 %define nv_version 595
 %define nv_release 91
 %define nv_minor   07
-%define pkg_rel alt1
+%define pkg_rel alt3
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -179,6 +179,8 @@ Requires: nvidia_glx_common
 %description -n nvidia-powerd
 Daemon that manages the Dynamic Boost feature on compatible NVIDIA GPUs.
 
+
+
 %prep
 %setup -T -c -n %tbname-%version%dirsuffix
 rm -rf %_builddir/%tbname-%version%dirsuffix
@@ -198,20 +200,11 @@ popd
 %build
 %install
 mkdir -p %buildroot/%_libdir/
-# install fake libraries
-ln -s libnvidianull.so %buildroot/%_libdir/libnvidia-ml.so
 # install libraries
 install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
 ln -s libcuda.so.%version %buildroot/%_libdir/libcuda.so
-#install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
-#install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
-#install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
 %ifarch %ix86
 ln -s libnvidianull.so %buildroot/%_libdir/libnvcuvid.so
-%endif
-#install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
-%ifarch x86_64
-#install -m 0644 %subd/libnvidia-sandboxutils.so.%version %buildroot/%_libdir/
 %endif
 # all 64-bit
 %if "%_lib" != "lib"
@@ -235,29 +228,17 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 
 %files -n ocl-nvidia
 %files -n libnvidia-ptxjitcompiler
-#%_libdir/libnvidia-ptxjitcompiler.so.%version
-#%_libdir/libnvidia-ptxjitcompiler.so.%nvidia_sover
 %files -n libcuda
 %_libdir/libcuda.so
 %_libdir/libcuda.so.%nvidia_sover
 %_libdir/libcuda.so.%version
 %files -n libnvidia-ml
-%_libdir/libnvidia-ml.so
-#%_libdir/libnvidia-ml.so.%version
-#%_libdir/libnvidia-ml.so.%nvidia_sover
 %files -n libnvcuvid
 %ifarch %ix86
 %_libdir/libnvcuvid.so
 %endif
-#%_libdir/libnvcuvid.so.%nvidia_sover
-#%_libdir/libnvcuvid.so.%version
-#%files -n libnvidia-encode
-#%_libdir/libnvidia-encode.so.%nvidia_sover
-#%_libdir/libnvidia-encode.so.%version
 %ifarch x86_64
 %files -n libnvidia-sandboxutils
-#%_libdir/libnvidia-sandboxutils.so.%nvidia_sover
-#%_libdir/libnvidia-sandboxutils.so.%version
 %endif
 %if "%_lib" != "lib"
 %files -n libnvoptix
@@ -274,6 +255,12 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt3
+- cleanup libnvidia-ml package (closes: 59499)
+
+* Thu Aug 20 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt2
+- cleanup
+
 * Wed Aug 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt1
 - new version
 
