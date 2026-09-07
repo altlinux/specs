@@ -15,16 +15,17 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           testng
-Version:        7.4.0
-Release:        alt1_3jpp11
+Version:        7.8.0
+Release:        alt1
 Summary:        Java-based testing framework
-License:        ASL 2.0
-URL:            http://testng.org/
+License:        Apache-2.0
+URL:            https://testng.org/
 
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 
 # Allows building with maven instead of gradle
+#https://repo1.maven.org/maven2/org/testng/testng/%{version}/testng-%{version}.pom
 Source1:        pom.xml
 
 # Remove bundled binaries to make sure we don't ship anything forbidden
@@ -41,7 +42,7 @@ BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  mvn(com.beust:jcommander)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
-BuildRequires:  mvn(com.google.inject:guice::no_aop:)
+BuildRequires:  mvn(com.google.inject:guice)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -68,27 +69,28 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 
-sed 's/@VERSION@/%{version}/' %{SOURCE1} > pom.xml
+cp %{SOURCE1} pom.xml
+
+# Contains differently licensed sources
+rm -r testng-test-osgi
+find . -mindepth 2 -name 'src' -type d -exec cp -r -t . {} +
 
 # remove any bundled libs, but not test resources
-find ! -path "*/test/*" -name *.jar -print -delete
-find -name *.class -delete
+find ! -path '*/test/*' -name '*.jar' -print -delete
+find -name '*.class' -delete
 
-# these are unnecessary
-%pom_remove_plugin :maven-gpg-plugin
-%pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-javadoc-plugin
+%pom_xpath_inject "pom:dependencies" "
+<dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>3.0.1</version>
+      <scope>provided</scope>
+</dependency>"
 
+%pom_remove_dep org.webjars:jquery
 %pom_remove_dep org.yaml:snakeyaml
 rm src/main/java/org/testng/internal/Yaml*.java
 rm src/main/java/org/testng/Converter.java
-
-%pom_remove_dep :bsh
-
-%pom_xpath_inject "pom:dependency[pom:artifactId='guice']" "<classifier>no_aop</classifier>"
-
-sed -i -e 's/DEV-SNAPSHOT/%{version}/' src/main/java/org/testng/internal/Version.java
-
 cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 
 %mvn_file : %{name}
@@ -96,7 +98,7 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %mvn_alias : :::jdk15:
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.release=11
 
 %install
 %mvn_install
@@ -109,6 +111,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu May 28 2026 Anton Meleshnikov <alton@altlinux.org> 0:7.8.0-alt1
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:7.4.0-alt1_3jpp11
 - new version
 
