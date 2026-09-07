@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.8
-Release: alt2
+Version: 1.9.9
+Release: alt1
 Summary: Format click help output nicely with rich
 License: MIT
 Group: Development/Python3
@@ -23,7 +23,8 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
 %add_pyproject_deps_check_filter rich-codex
-%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -35,6 +36,9 @@ formatted with rich, with minimal customisation required.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -55,6 +59,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 07 2026 Stanislav Levin <slev@altlinux.org> 1.9.9-alt1
+- 1.9.8 -> 1.9.9
+
 * Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 1.9.8-alt2
 - Fixed FTBFS (typer 0.26).
 
