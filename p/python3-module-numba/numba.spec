@@ -1,26 +1,22 @@
 %define  oname numba
 
-# check runs 3 hours on x86_64
-# FAIL: test_nonsense_gdb_binary (numba.tests.test_cli.TestGDBCLIInfoBrokenGdbs.test_nonsense_gdb_binary)
-# FAIL: tests_numba_types (numba.tests.test_moved_modules.TestMovedModule.tests_numba_types)
-# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtype.test_record_arg_transform)
-# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtypeWithDispatcher.test_record_arg_transform)
-# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtypeWithStructArrays.test_record_arg_transform)
-# FAIL: test_record_arg_transform (numba.tests.test_record_dtype.TestRecordDtypeWithStructArraysAndDispatcher.test_record_arg_transform)
-# FAIL: test_has_no_error (numba.tests.test_sysinfo.TestSysInfo.test_has_no_error)
-# Ran 10356 tests in 11587.148s
-# FAILED (failures=7, skipped=643, expected failures=20)
-%def_without check
+%def_with check
+# numba officially supports 64bit platforms
+# https://github.com/numba/numba/blob/main/docs/source/user/installing.rst
+%ifnarch %ix86
+%def_with full_check
+%endif
 
 Name:    python3-module-%oname
-Version: 0.64.0
-Release: alt0.rc1
+Version: 0.67.0
+Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
-License: BSD
+License: BSD-2-Clause
 Group:   Development/Python3
 URL:     https://pypi.org/project/numba
+VCS:     https://github.com/numba/numba
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -32,13 +28,21 @@ BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-llvmlite
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-ipython
+BuildRequires: python3-module-pip
 %endif
 
 Source:  %name-%version.tar
+# https://github.com/numba/numba/issues/8282
+# https://github.com/numba/numba/issues/9680
+# https://github.com/numba/numba/pull/10495
+# https://github.com/numba/numba/commit/e028c6ab4379727489699c323761f4dd64a26843.patch
+Patch: e028c6ab4379727489699c323761f4dd64a26843.patch
 
 # This should stop endless updating of numpy
 # that causes multiple errors in other packages
-Requires: python3-module-numpy = 2.4.2
+# https://numba.readthedocs.io/en/stable/user/installing.html#version-support-information
+Requires: python3-module-numpy < 2.6
 
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pycc_distutils_usecase/
 
@@ -60,11 +64,13 @@ C callbacks.
 
 %prep
 %setup
+%patch -p1
+
 # workaround for versioneer
 rm versioneer.py
 grep -qsF ' export-subst' .gitattributes || exit 1
 vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
-echo 'def get_versions():return {"version": "%version"}' > "$vers_f"
+echo 'def get_versions():return {"version": "%version", "full-revisionid": None}' > "$vers_f"
 echo 'def get_cmdclass(): return {}' > versioneer.py
 echo 'def get_version(): return "%version"' >> versioneer.py
 
@@ -93,10 +99,13 @@ rm -rv %buildroot%python3_sitelibdir/%oname/misc/help/inspector.py
 
 %check
 mkdir emtpytestdir
-pushd emtpytestdir
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 -m numba.runtests -v
-popd
+%if_with full_check
+# run full test suite
+%pyproject_run -- sh -exc 'cd emtpytestdir; python3 -m numba.runtests -m'
+%else
+# use specific suite as a smoke test
+%pyproject_run -- sh -exc 'cd emtpytestdir; python3 -m numba.runtests -m  %_smp_build_ncpus numba.tests.test_usecases'
+%endif
 
 %files
 %doc CHANGE_LOG *.rst
@@ -105,6 +114,11 @@ popd
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Sep 02 2026 Grigory Ustinov <grenka@altlinux.org> 0.67.0-alt1
+- Updated to 0.67.0 (thx to rider@) (Closes: #60289).
+- Fixed and partially enabled testing (thx to iv@).
+- Enabled full check.
+
 * Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 0.64.0-alt0.rc1
 - Build new version.
 
