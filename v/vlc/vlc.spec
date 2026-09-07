@@ -1,6 +1,6 @@
 Name: vlc
 Version: 3.0.23
-Release: alt3
+Release: alt4
 
 Summary: VLC media player
 License: GPLv2
@@ -24,7 +24,7 @@ BuildRequires: libstdc++-devel libtheora-devel libtiff-devel libtinfo-devel
 BuildRequires: libvcd-devel libvorbis-devel libxml2-devel
 BuildRequires: libpulseaudio-devel libx264-devel vim-devel
 BuildRequires: jackit-devel liblame-devel zlib-devel libavahi-devel dbus
-BuildRequires: libtag-devel libfluidsynth-devel libdbus-devel
+BuildRequires: taglib-devel libfluidsynth-devel libdbus-devel
 BuildRequires: libzvbi-devel libfribidi-devel
 BuildRequires: libass-devel libbluray-devel libpcre-devel libopus-devel
 BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
@@ -1294,6 +1294,13 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 3.0.23-alt4
+- build with taglib-devel (ALT #54494)
+- qt: fix playlist extension in the GTK save dialog (ALT #54187)
+- qt: fix black video after toggling always-on-top (ALT #54690)
+- http: detect ICY servers by Icy-Br (ALT #54723)
+- qt: fix frozen preview when converting from a capture device (ALT #39942)
+
 * Mon Apr 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.23-alt3
 - rebuilt with pupnp-1.18
 
