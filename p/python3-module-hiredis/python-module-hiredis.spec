@@ -3,11 +3,13 @@
 %define mod_name %pypi_name
 
 # %%python3_set_limited_api is not supported yet
+# some C extensions *unintentionally* support abi3
+%none_python3_modules_rename
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 Summary: Python wrapper for hiredis
@@ -61,6 +63,9 @@ rm -r ./vendor/hiredis/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.4.0 -> 3.4.1
+
 * Mon Jun 08 2026 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.1 -> 3.4.0.
 
