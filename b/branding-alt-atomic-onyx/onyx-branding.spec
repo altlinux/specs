@@ -15,7 +15,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20260906
+Version: 20260907
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -33,7 +33,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-branding
 BuildRequires(pre): rpm-macros-ready-set
 BuildRequires: meson
-BuildRequires: pkgconfig(libready-set-0.13)
+BuildRequires: pkgconfig(libready-set-0.14)
 
 %description
 %summary.
@@ -105,8 +105,8 @@ Summary: This package contains ready-set config
 Group: Other
 
 Requires: ready-set-gdm
-Requires: ready-set-plugin-welcome
 Requires: ready-set-plugin-language
+Requires: ready-set-plugin-license-agreement
 Requires: ready-set-plugin-keyboard
 Requires: ready-set-plugin-network
 Requires: ready-set-plugin-privacy
@@ -163,6 +163,10 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Mon Sep 07 2026 Vladimir Romanov <rirusha@altlinux.org> 20260907-alt1
+- Updated for ready-set 0.14.
+- Added `license-agreement` plugin to ready-set config.
+
 * Sun Sep 06 2026 Vladimir Romanov <rirusha@altlinux.org> 20260906-alt1
 - Dropped `user.with-root` context var at ready-set config.
 

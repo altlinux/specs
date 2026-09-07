@@ -1,5 +1,5 @@
 # If you want to suggest changes, please send PR on
-# https://altlinux.space/alt-gnome/ReadySet to altlinux branch 
+# https://altlinux.space/alt-gnome/ReadySet to altlinux branch
 
 %define _unpackaged_files_terminate_build 1
 
@@ -10,8 +10,8 @@
 %define ser_name %name-service
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
-%define soversion 0.13
-%define minor_version 3
+%define soversion 0.14
+%define minor_version 0
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -172,6 +172,7 @@ Summary: %name network plugin
 Group: Other
 
 Requires: %name = %EVR
+Requires: gnome-control-center-data
 
 %description plugin-network
 %summary.
@@ -234,15 +235,6 @@ Group: Other
 Requires: %name-plugin-user-common = %EVR
 
 %description plugin-user-pwquality
-%summary.
-
-%package plugin-welcome
-Summary: %name welcome plugin
-Group: Other
-
-Requires: %name = %EVR
-
-%description plugin-welcome
 %summary.
 
 %package plugin-privacy
@@ -327,13 +319,23 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_userunitdir/%name-existing-user.service
 %_libexecdir/%app_id
 %_sysconfdir/%name
-%_datadir/%name
+%dir %_datadir/%name
+%dir %_datadir/%name/initial-setup-post-hooks
+%dir %_datadir/%name/initial-setup-post-hooks/system
+%dir %_datadir/%name/initial-setup-post-hooks/user
+%dir %_datadir/%name/initial-setup-pre-hooks
+%dir %_datadir/%name/initial-setup-pre-hooks/system
+%dir %_datadir/%name/initial-setup-pre-hooks/user
+%dir %_datadir/%name/installer-post-hooks
+%dir %_datadir/%name/installer-post-hooks/system
+%dir %_datadir/%name/installer-pre-hooks
+%dir %_datadir/%name/installer-pre-hooks/system
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
 %dir %_libdir/%name/plugins/steps
 %dir %_libdir/%name/plugins/installers
 %dir %_libdir/%name/plugins/service
-%_sharedstatedir/%name
+%ghost %_sharedstatedir/%name
 %_sysconfdir/dbus-1/system.d/%app_id.conf
 %_datadir/polkit-1/actions/%app_id.policy
 %_datadir/dbus-1/system-services/%app_id.service
@@ -349,7 +351,7 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_desktopdir/%gis_name.desktop
 %_datadir/dconf/profile/%gis_name
 %_datadir/%gis_name
-%_sharedstatedir/%gis_name
+%ghost %_sharedstatedir/%gis_name
 %_datadir/gnome-session/sessions/%gis_name.session
 %_datadir/gnome-shell/modes/initial-setup.json
 %_userunitdir/%gis_name.service
@@ -415,12 +417,11 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %files plugin-license-agreement
 %_libdir/%name/plugins/steps/license-agreement.plugin
 %_libdir/%name/plugins/steps/liblicense-agreement.so
+%_datadir/glib-2.0/schemas/%app_id.LicenseAgreement.gschema.xml
 %doc plugins/license-agreement/README.*.md
 
 %files plugin-user-common
 %_datadir/polkit-1/rules.d/%app_id.Plugin.User.rules
-%_libdir/%name/plugins/service/libuser-root.so
-%_libdir/%name/plugins/service/user-root.plugin
 %doc plugins/user/README.*.md
 
 %files plugin-user-passwdqc
@@ -431,18 +432,13 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_libdir/%name/plugins/steps/user-pwquality.plugin
 %_libdir/%name/plugins/steps/libuser-pwquality.so
 
-%files plugin-welcome
-%_libdir/%name/plugins/steps/welcome.plugin
-%_libdir/%name/plugins/steps/libwelcome.so
-%doc plugins/welcome/README.*.md
-
 %files plugin-privacy
 %_libdir/%name/plugins/steps/privacy.plugin
 %_libdir/%name/plugins/steps/libprivacy.so
 %doc plugins/privacy/README.*.md
 
 %files plugin-date-and-time
-%_datadir/%name/date-and-time/default-timezones.json
+%_datadir/%name/date-and-time
 %_libdir/%name/plugins/steps/date-and-time.plugin
 %_libdir/%name/plugins/steps/libdate-and-time.so
 %_datadir/polkit-1/rules.d/%app_id.Plugin.DateAndTime.rules
@@ -469,6 +465,30 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Sep 07 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.0-alt1
+- New version: 0.14.0.
+- Added variable locking mechanism to `Context` (vars with `setting=true` can
+  only be assigned from config/CLI).
+- Replaced `init_once()` with `init_context` (for variable change callbacks)
+  and `init` (called after initial values are set).
+- Added new plugin interfaces: `ApplyAfter`, `ExistingUser`, `HasStringRepr`,
+  `HasWidgetRepr`, and `Welcome`.
+- Removed standalone `welcome` plugin (moved to app core). Added built-in
+  `SummaryPage` for installer mode.
+- Added `nothing-to-do` subcommand (prints 0 to stderr if nothing to do, 1
+  otherwise).
+- Network: integrated `connection-editor` (GTK4/Adwaita port), added dialog
+  for managing Ethernet adapters/connections, improved widget appearance.
+- User: removed privileged D-Bus service `user-root`; password hashing is
+  now done directly in the plugin.
+- License Agreement: added license hash verification in `gsettings` (prompts
+  to accept new terms if text changes in `existing-user` mode), added
+  `installer` context var.
+- Removed `detailed` CLI option, refactored sidebar and step
+  indicators logic (now shows only in installer).
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.14.0
+
 * Sun Aug 23 2026 Vladimir Romanov <rirusha@altlinux.org> 0.13.3-alt1
 - New version: 0.13.3.
 - Fixed broken context names for steps.*.enabled vars.
