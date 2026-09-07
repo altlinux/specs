@@ -16,7 +16,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -187,6 +187,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Mon Sep 07 2026 Yuri N. Sedunov <aris@altlinux.org> 50.3-alt1
+- 50.3
+
 * Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
 - 50.2
 

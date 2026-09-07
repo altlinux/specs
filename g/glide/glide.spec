@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: glide
-Version: %ver_major.7
+Version: %ver_major.9
 Release: alt1
 
 Summary: Media player based on GStreamer and GTK
@@ -62,12 +62,12 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %install
 %meson_install
-%find_lang %rdn_name
+%find_lang --output=%name.lang %name %rdn_name
 
 %check
 %__meson_test
 
-%files -f %rdn_name.lang
+%files -f %name.lang
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
@@ -75,6 +75,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* TODO
 
 %changelog
+* Sun Sep 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.9-alt1
+- 0.6.9
+
 * Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt1
 - 0.6.7
 

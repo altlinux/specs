@@ -2,14 +2,14 @@
 
 %define _name jogger
 %define __name Jogger
-%define ver_major 1.3
+%define ver_major 1.4
 %define rdn_name xyz.slothlife.%__name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An app for Gnome Mobile to Track running and other workouts
@@ -28,7 +28,7 @@ Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.76
 %define gtk_ver 4.14
-%define adwaita_ver 1.5
+%define adwaita_ver 1.9
 
 Requires: dconf geoclue2 espeak-ng
 
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Mon Sep 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Wed Dec 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
