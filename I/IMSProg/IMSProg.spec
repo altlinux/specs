@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: IMSProg
-Version: 1.8.6
+Version: 1.9.1
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -21,6 +21,7 @@ BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: libudev-devel
+BuildRequires: libftdi1-devel
 
 %description
 IMSProg - Linux IMSProg - I2C, SPI and MicroWire EEPROM/Flash chip programmer
@@ -88,6 +89,9 @@ rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_editor.metainfo.xml
 %_man1dir/*.1.*
 
 %changelog
+* Mon Sep 07 2026 Valery Zabrovsky <brow@altlinux.org> 1.9.1-alt1
+- New version 1.9.1.
+
 * Wed Jul 29 2026 Valery Zabrovsky <brow@altlinux.org> 1.8.6-alt1
 - New version 1.8.6.
 - Spec: add VCS tag.
