@@ -3,7 +3,7 @@
 %define xdg_short org.altlinux.panelmode
 
 Name: alt-panelmoded
-Version: 0.7.8
+Version: 0.7.9
 Release: alt1
 
 Summary: Used for panelmode on Alt operating systems with GNOME
@@ -54,6 +54,9 @@ with GNOME desktop enviroment.
 %_datadir/glib-2.0/schemas/45_%xdg_short.gschema.override
 
 %changelog
+* Tue Sep 08 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.9-alt1
+- New version 0.7.9 (closes: #58804).
+
 * Thu May 21 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.7.8-alt1
 - New version 0.7.8 (closes: #58940, #58943).
 
