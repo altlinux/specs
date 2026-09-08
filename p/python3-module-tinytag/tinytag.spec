@@ -2,7 +2,7 @@
 %define pypi_name tinytag
 
 Name: python3-module-%pypi_name
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Python library for reading audio file metadata
@@ -37,6 +37,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.2-alt1
+- 2.3.1 -> 2.3.2
+
 * Mon Aug 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.1-alt1
 - 2.3.0 -> 2.3.1
 
