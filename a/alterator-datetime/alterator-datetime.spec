@@ -1,7 +1,7 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.9.4
+Version: 4.9.5
 Release: alt1
 
 Summary: alterator module for date/time setup
@@ -78,6 +78,9 @@ lrelease-qt6 alterator-framework/ts/datetime_ru.ts
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Tue Sep 08 2026 Ivan Khanas <xeno@altlinux.org> 4.9.5-alt1
+- datetime-functions: use Europe/Simferopol for Europe/Zaporozhye
+
 * Tue Jun 30 2026 Andrey Limachko <liannnix@altlinux.org> 4.9.4-alt1
 - add alterator-framework UI support (thx Oleg Chagaev)
 
