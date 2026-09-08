@@ -4,7 +4,7 @@
 
 Name: rio
 Version: 0.5.27
-Release: alt1
+Release: alt2
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
 Group: Terminals
@@ -13,6 +13,9 @@ VCS: https://github.com/raphamorim/rio
 
 Source: %name-%version.tar
 Source1: vendor.tar
+
+# https://github.com/raphamorim/rio/pull/1679
+Patch: rio-0.5.27-primary-selection.patch
 
 ExcludeArch: %ix86
 
@@ -35,6 +38,7 @@ and both the Wayland and X11 display protocols.
 
 %prep
 %setup -a1
+%patch -p1
 # Upstream config has no trailing newline, while %%rust_prep appends to it.
 sed -i -e '$a\' .cargo/config.toml
 %rust_prep
@@ -94,6 +98,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Tue Sep 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.27-alt2
+- Added upstream patch to support middle-click paste from primary selection.
+
 * Tue Sep 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.27-alt1
 - Updated to version 0.5.27.
 
