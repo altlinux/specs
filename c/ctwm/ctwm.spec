@@ -5,7 +5,7 @@ Summary(ru): Основанный на twm оконный менеджер дл�
 Name: ctwm
 Version: 4.1.0
 Epoch: 1
-Release: alt4
+Release: alt5
 
 Source: %name-%version.tar.xz
 Url: http://www.ctwm.org/index.html
@@ -87,7 +87,7 @@ install -d %buildroot%_datadir/xsessions
 install %SOURCE4 %buildroot%_datadir/xsessions/
 install %SOURCE5 %buildroot%_datadir/xsessions/
 install -D %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
-install -D %SOURCE1 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
+install -D %SOURCE2 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
 install -D system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
 install -D %SOURCE1 %buildroot/%_bindir/startctwm
 install -D %SOURCE6 %buildroot%prefix/libexec/%name-session-target
@@ -121,6 +121,9 @@ install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 %endif
 
 %changelog
+* Tue Sep 08 2026 Fr. Br. George <george@altlinux.ru> 1:4.1.0-alt5
+- Fix wmsession misinstallation
+
 * Mon Jun 22 2026 Fr. Br. George <george@altlinux.org> 1:4.1.0-alt4
 - Fix systemd support, part two
 
