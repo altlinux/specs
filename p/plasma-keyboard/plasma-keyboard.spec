@@ -1,7 +1,7 @@
 
 Name: plasma-keyboard
 Version: 6.7.4
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -12,6 +12,7 @@ Url: https://invent.kde.org/plasma/plasma-keyboard
 Requires: qt6-wayland qt6-virtualkeyboard
 
 Source: %name-%version.tar
+Patch1: alt-def-locales.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake extra-cmake-modules
@@ -26,6 +27,7 @@ The plasma-keyboard is a virtual keyboard based on Qt Virtual Keyboard designed 
 
 %prep
 %setup -n %name-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -45,6 +47,9 @@ make -C BUILD DESTDIR=%buildroot install
 %_datadir/metainfo/*keyboard*.xml
 
 %changelog
+* Tue Sep 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
+- add EN layout for non-EN locales
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
