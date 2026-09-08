@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cgal
-Version: 6.2
+Version: 6.2.1
 Release: alt1
 
 Summary: Easy access to efficient and reliable geometric algorithms
-License: LGPLv3+ and GPLv3+ and Boost
+License: LGPL-3.0-or-later AND GPL-3.0-or-later AND BSL-1.0
 Group: Sciences/Mathematics
 
 Url: https://www.cgal.org/
@@ -51,7 +51,7 @@ The goal of the CGAL Open Source Project is to provide easy access to
 efficient and reliable geometric algorithms in the form of a C++
 library.
 
-This Package contains developemnt files of CGAL.
+This Package contains development files of CGAL.
 
 %package devel-doc
 Summary: Documentation for CGAL
@@ -63,7 +63,7 @@ The goal of the CGAL Open Source Project is to provide easy access to
 efficient and reliable geometric algorithms in the form of a C++
 library.
 
-Thid package contains development documentation for CGAL.
+This package contains development documentation for CGAL.
 
 %prep
 %setup -a1
@@ -103,6 +103,10 @@ rm -rfv %buildroot%_libdir/cmake/CGAL/Help
 %doc %_docdir/%{name}*
 
 %changelog
+* Mon Sep 07 2026 Anton Farygin <rider@altlinux.org> 6.2.1-alt1
+- 6.2 -> 6.2.1
+- License: use SPDX identifiers (Boost -> BSL-1.0)
+
 * Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 6.2-alt1
 - 6.1.1 -> 6.2
 
