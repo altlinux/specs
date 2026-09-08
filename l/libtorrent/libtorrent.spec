@@ -4,11 +4,11 @@
 %set_verify_elf_method strict
 %endif
 
-%define soname 48
+%define soname 50
 
 Name: libtorrent
 Epoch: 3
-Version: 0.16.18
+Version: 0.16.22
 Release: alt1
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -19,8 +19,7 @@ Url: https://github.com/rakshasa/libtorrent
 Vcs: https://github.com/rakshasa/libtorrent.git
 Source: %name-%version.tar
 
-Patch0: %name-alt-skip-tests.patch
-Patch1: %name-utils-add-missing-inc.patch
+Patch: %name-alt-skip-tests.patch
 
 BuildRequires: gcc-c++ cppunit-devel zlib-devel libcurl-devel libssl-devel
 
@@ -90,6 +89,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_pkgconfigdir/*
 
 %changelog
+* Tue Sep 08 2026 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.22-alt1
+- 0.16.22.
+
 * Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 3:0.16.18-alt1
 - 0.16.18.
 - verify-elf: disable strict on %%ix86.
