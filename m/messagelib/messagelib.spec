@@ -17,7 +17,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -27,6 +27,7 @@ License: LGPL-2.1-or-later
 
 Source: %rname-%version.tar
 Patch1: alt-gpgme17.patch
+Patch2: alt-date-col-width.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
@@ -126,6 +127,7 @@ Requires: %name-common >= %EVR
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
+%patch2 -p1
 
 %if_disabled qtwebengine
 sed -i 's|WebEngineWidgets||' CMakeLists.txt
@@ -207,6 +209,9 @@ mkdir -p %buildroot/%_K6plug/pim6
 
 
 %changelog
+* Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- fix messagelist date column width
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
