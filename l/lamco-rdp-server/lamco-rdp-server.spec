@@ -1,5 +1,5 @@
 Name: lamco-rdp-server
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 Summary: Wayland RDP server for Linux desktop sharing with GUI
 
@@ -104,7 +104,10 @@ install -Dm755 target/release/%name-gui %buildroot%_bindir/%name-gui
 install -dm755 %buildroot%_sysconfdir/%name
 
 # Systemd user service
-install -Dm644 packaging/systemd/%name.service %buildroot%_userunitdir/%name.service
+install -Dm644 packaging/systemd/app-io.lamco.rdp-server.service %buildroot%_userunitdir/%name.service
+
+# Systemd service (system wide)
+install -Dm644 packaging/systemd/lamco-rdp-server-system.service %buildroot%_unitdir/lamco-rdp-server-system.service
 
 # Desktop file (validated by desktop-file-install)
 desktop-file-install \
@@ -134,11 +137,15 @@ done
 %_bindir/%name-gui
 %dir %_sysconfdir/%name
 %_userunitdir/%name.service
+%_unitdir/lamco-rdp-server-system.service
 %_desktopdir/io.lamco.rdp-server.desktop
 %_datadir/metainfo/io.lamco.rdp-server.metainfo.xml
 %_iconsdir/hicolor/scalable/apps/io.lamco.rdp-server.svg
 %_iconsdir/hicolor/*/apps/io.lamco.rdp-server.png
 
 %changelog
+* Tue Sep 08 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.5-alt1
+- New version.
+
 * Mon Jul 27 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
 - Initial build for Sisyphus.
