@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.26
+%define kernel_sublevel	.49
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -460,6 +460,30 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Sep 04 2026 Maxim Slipenko <maks1ms@altlinux.org> 6.18.49-alt1
+- v6.18.49 (2026-09-02).
+- config-aarch64: enable PCF8523 RTC support.
+- config: enable CONFIG_NFT_SOCKET.
+- config: enable CONFIG_IOMMUFD and CONFIG_VFIO_DEVICE_CDEV.
+- config: enable CONFIG_IFB as a module.
+- config: add support for AMD XGBE driver.
+- config: enable NF_TABLES_ARP option.
+- config: enable USB hiddev for apcupsd support.
+- config: enable PPP and INFINIBAND_BNXT_RE.
+- config: enable more options for CRI-U checkpoint/restore.
+- config: enable CONFIG_UHID and CONFIG_INPUT_JOYDEV as modules.
+- config-x86_64: enable CHECKPOINT_RESTORE.
+- config: disable CONFIG_RT_GROUP_SCHED.
+
+* Tue Jun 30 2026 Alexander Stepchenko <geochip@altlinux.org> 6.18.37-alt1
+- v6.18.37 (2026-06-27).
+- Applied patches adding support for enabling automatic lockdown in UEFI Secure
+  Boot mode (thx egori@).
+- config: enable LOCK_DOWN_IN_EFI_SECURE_BOOT=y.
+- config-aarch64: enable CONFIG_ARM64_ERRATUM_4193714=y.
+- config-aarch64: enable CONFIG_BCM2712_MIP=y.
+- config: disable PAGE_TABLE_CHECK_ENFORCED.
+
 * Mon May 04 2026 Alexander Stepchenko <geochip@altlinux.org> 6.18.26-alt1
 - v6.18.26 (2026-04-30).
 - config-x86_64: enable CONFIG_USB_UHCI_HCD
