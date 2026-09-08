@@ -2,8 +2,8 @@
 %define exID hideaccessibilitymenu@boni.scot
 
 Name: gnome-shell-extension-hide-accessibility-menu
-Version: 51.1
-Release: alt2
+Version: 51.2
+Release: alt1
 
 Summary: Hide accessibility menu GNOME extension
 License: GPL-3.0-or-later and GPL-2.0-or-later
@@ -16,7 +16,6 @@ BuildArch: noarch
 Obsoletes: gnome-shell-extension-noa11y <= 7.0-alt3
 
 Source: %name-%version.tar
-Patch: 14026f47c7901f4ba8349898b7a81d9d2dbc0055.patch
 
 Requires: gnome-shell >= 47.0
 
@@ -25,7 +24,6 @@ Hide the accessibility menu icon on panel when running an accessibility option.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %install
@@ -37,6 +35,9 @@ cp -a *.js *.json %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Tue Sep 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 51.2-alt1
+- 51.1 -> 51.2
+
 * Thu Sep 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 51.1-alt2
 - fixed: extension launch
 
