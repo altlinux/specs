@@ -6,7 +6,7 @@
 
 Name: opendoas
 Version: 6.8.2
-Release: alt3
+Release: alt4
 Summary: Portable fork of the OpenBSDs doas command
 
 # ISC: main program
@@ -122,6 +122,9 @@ fi
 %_man5dir/doas.conf.5*
 
 %changelog
+* Tue Sep 08 2026 Alexey Volkov <qualimock@altlinux.org> 6.8.2-alt4
+- use rule's setenv PATH for command lookup (closes: #52598)
+
 * Tue Jul 22 2025 Alexey Volkov <qualimock@altlinux.org> 6.8.2-alt3
 - fix doaswheel control facility patterns
 
