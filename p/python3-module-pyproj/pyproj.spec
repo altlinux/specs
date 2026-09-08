@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.7.2
-Release: alt2
+Version: 3.8.0
+Release: alt1
 Summary: Python interface to PROJ
 License: MIT
 Group: Development/Python3
@@ -14,7 +14,6 @@ Url: https://pypi.python.org/pypi/pyproj/
 VCS: https://github.com/pyproj4/pyproj
 
 Source: %name-%version.tar
-Patch: pyproj-3.7.2-update-test-proj-9.7.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -38,7 +37,6 @@ transformations library)
 
 %prep
 %setup
-%patch -p1
 
 sed -i '/"freethreading_compatible": True,/d' setup.py
 
@@ -71,6 +69,9 @@ py.test-3 -m "not network"
 
 
 %changelog
+* Tue Sep 08 2026 Anton Vyatkin <toni@altlinux.org> 3.8.0-alt1
+- New version 3.8.0.
+
 * Sun Jul 05 2026 Anton Vyatkin <toni@altlinux.org> 3.7.2-alt2
 - Fix FTBFS.
 
