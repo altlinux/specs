@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsch-agent-proxy
 Version:        0.0.8
-Release:        alt1_15jpp11
+Release:        alt2
 Summary:        Proxy to ssh-agent and Pageant in Java
 License:        BSD
 URL:            http://www.jcraft.com/jsch-agent-proxy/
@@ -117,7 +117,7 @@ This package provides %{summary}.
 %pom_disable_module jsch-agent-proxy-sshj
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=8 -Dsource=1.8 -DdetectJavaApiLink=false
+%mvn_build -s -- -DdetectJavaApiLink=false
 
 %install
 %mvn_install
@@ -138,6 +138,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 0.0.8-alt2
+- FTBFS fix
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.0.8-alt1_15jpp11
 - fc34 update
 

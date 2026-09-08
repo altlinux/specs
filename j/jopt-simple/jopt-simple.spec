@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jopt-simple
 Version:        5.0.4
-Release:        alt1_10jpp11
+Release:        alt2
 Summary:        A Java command line parser
 License:        MIT
 URL:            http://jopt-simple.github.io/jopt-simple
@@ -49,7 +49,7 @@ This package contains the API documentation for %{name}.
 
 %build
 # Unit testing is disabled due to a missing dependency in Fedora of continuous-testing-toolkit
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -61,6 +61,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 0:5.0.4-alt2
+- FTBFS fix
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:5.0.4-alt1_10jpp11
 - fc34 update
 

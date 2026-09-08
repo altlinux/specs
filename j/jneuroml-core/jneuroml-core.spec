@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global pretty_name NeuroML2
@@ -25,7 +25,7 @@ doi:10.3389/fninf.2014.00079
 
 Name:           jneuroml-core
 Version:        1.6.1
-Release:        alt1_4jpp11
+Release:        alt2
 Summary:        The NeuroML 2 Schema and ComponentType definitions in LEMS
 
 License:        LGPLv3
@@ -62,7 +62,7 @@ rm -fv LEMSexamples/test/.test*
 
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -78,6 +78,9 @@ rm -fv LEMSexamples/test/.test*
 
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.6.1-alt2
+- FTBFS fix
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 1.6.1-alt1_4jpp11
 - new version
 

@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           json_simple
 Version:        1.1.1
-Release:        alt2_23jpp11
+Release:        alt3
 Summary:        Simple Java toolkit for JSON
 License:        ASL 2.0
 URL:            http://code.google.com/p/json-simple/
@@ -59,7 +59,7 @@ find . -type f -exec sed -i 's/\r//' {} \;
 %mvn_file : %{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build
 
 %install
 %mvn_install
@@ -72,6 +72,9 @@ find . -type f -exec sed -i 's/\r//' {} \;
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.1.1-alt3
+- FTBFS fix
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt2_23jpp11
 - update
 
