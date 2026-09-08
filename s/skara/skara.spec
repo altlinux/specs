@@ -4,7 +4,7 @@
 
 Name:    skara
 Version: 20260810
-Release: alt4.%githash
+Release: alt5.%githash
 
 Summary: The goal of this Project is to investigate alternative SCM and code review options for the JDK source code
 License: GPL-2.0
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Source1: enable-skara-fore-current-user
 
 Patch0: %name-publish-modules.patch
+Patch1: %name-execoperations.patch
 
 ExclusiveArch: %java_arches
 
@@ -32,6 +33,7 @@ BuildRequires: xgradle
 BuildRequires: git
 BuildRequires: mockito-junit-jupiter
 BuildRequires: junit
+BuildRequires: junit5
 BuildRequires: apiguardian
 BuildRequires: opentest4j
 BuildRequires: univocity-parsers
@@ -53,9 +55,13 @@ interacting with Git source code hosting providers from the command-line/
 %prep
 %setup
 %autopatch -p1
+for m in $(grep -oP '^include\s+\K.*' settings.gradle | grep -oP "'\K[^']+"); do
+    [ -d "$m" ] || mkdir -p "$m"
+done
 
 %build
-%gradle_publish offline
+# 'offline' is a Skara image task; --offline disables remote dependency lookup.
+%gradle_publish --offline offline
 
 %install
 %gradle_register --exclude-artifacts=test
@@ -87,6 +93,9 @@ install -m 755 %SOURCE1 %buildroot%_bindir/enable-skara-fore-current-user
 %_man1dir/*
 
 %changelog
+* Tue Sep 08 2026 Timofei Fedotov <sovtouch@altlinux.org> 20260810-alt5.4b951a3c
+- Fix FTBFS
+
 * Fri Aug 14 2026 Artem Semenov <savoptik@altlinux.org> 20260810-alt4.4b951a3c
 - Added conflicts to git-publish
 
