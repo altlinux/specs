@@ -3,7 +3,7 @@
 %def_without check
 
 Name: tauno-monitor
-Version: 0.2.20
+Version: 0.2.24
 Release: alt1
 
 Summary: Simple serial port monitor
@@ -21,6 +21,7 @@ BuildRequires: /usr/bin/gtk-update-icon-cache
 BuildRequires: rpm-build-python3
 
 Requires: python3(serial)
+Requires: python3(gi)
 
 BuildArch: noarch
 
@@ -73,6 +74,9 @@ chmod a+x %buildroot%_bindir/tauno-monitor
 %_datadir/tauno-monitor/*
 
 %changelog
+* Tue Sep 08 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.24-alt1
+- New version 0.2.24.
+
 * Fri Feb 13 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.20-alt1
 - New version 0.2.20.
 
