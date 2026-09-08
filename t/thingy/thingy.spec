@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thingy
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 
 Summary: Document Manager
@@ -16,6 +16,7 @@ BuildRequires: python3-module-wheel
 
 Requires: typelib(XApp)
 Requires: xapp-symbolic-icons
+Requires: libgnome-desktop3-gir
 
 BuildArch: noarch
 
@@ -54,6 +55,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/thingy/*
 
 %changelog
+* Tue Sep 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.7-alt1
+- New version 1.2.7.
+
 * Sun Sep 06 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.6-alt1
 - New version 1.2.6.
 
