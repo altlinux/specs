@@ -2,7 +2,7 @@
 
 Name: distro-licenses
 Version: 1.4.6
-Release: alt1
+Release: alt2
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Tue Sep 08 2026 Dmitry Terekhin <jqt4@altlinux.org> 1.4.6-alt2
+- fix: correct an error in the ALT Domain license text (closes: #60464)
+
 * Fri Aug 28 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt1
 - Add static license ALT Domain IPA 11.2 License.
 
