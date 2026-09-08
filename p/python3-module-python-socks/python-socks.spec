@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-python-socks
-Version: 3.0.0
+Version: 3.1.1
 Release: alt1
 
 Summary: Core proxy client (SOCKS4, SOCKS5, HTTP) functionality for Python
@@ -57,6 +57,9 @@ directly. It is used internally by aiohttp-socks and httpx-socks packages.
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Wed Sep 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.1.1-alt1
+- 3.0.0 -> 3.1.1
+
 * Wed Aug 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.0.0-alt1
 - 2.8.2 -> 3.0.0
 
