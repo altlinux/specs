@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.19
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -405,6 +405,12 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Tue Sep 08 2026 Anton Farygin <rider@altlinux.org> 2.4.19-alt2
+- Web UI: hide cups-filters driverless PPDs for socket/lpd device URIs,
+  such queues cannot print (Closes: #60382)
+- Allow the everywhere driver and show driverless PPDs for beh-wrapped
+  IPP device URIs (Closes: #60380)
+
 * Tue Apr 28 2026 Anton Farygin <rider@altlinux.org> 2.4.19-alt1
 - 2.4.18 -> 2.4.19
 
