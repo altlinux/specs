@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 10.0.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -201,6 +201,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Tue Sep 08 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.6-alt2
+- Do not use EDITOR variable (Closes: 60400).
+
 * Sat Aug 29 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.6-alt1
 - New version 10.0.6.
 
