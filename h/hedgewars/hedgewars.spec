@@ -5,7 +5,7 @@
 
 Name:       hedgewars
 Version:    1.0.3
-Release:    alt2.1
+Release:    alt3
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -24,6 +24,7 @@ Source11:   hedgewars-server.cabal
 }
 
 Patch:      fix_non_inline_ShiftWorld.patch
+Patch1:     ffmpeg-9.patch
 
 %{?_with_server:
 Patch10:    hedgewars-1.0.2-mtl_2.3.patch
@@ -106,6 +107,7 @@ This package contains all the data files for %name.
 %setup
 
 %patch -p2
+%patch1 -p1
 
 %{?_with_server:
 %setup -D -T -a 10
@@ -171,6 +173,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Tue Sep 08 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt3
+- Fixed FTBFS with ffmpeg9.
+
 * Tue Mar 31 2026 Leonid Znamenok <respublica@altlinux.org> 1.0.3-alt2.1
 - Fixed FTBFS with ghc-1:9.6.7-alt2.
 
