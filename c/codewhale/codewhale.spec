@@ -6,8 +6,8 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: codewhale
-Version: 0.9.9
-Release: alt2
+Version: 0.9.12
+Release: alt1
 
 Summary: Agentic coding terminal
 License: MIT
@@ -44,6 +44,10 @@ turn to the right DeepSeek model and thinking level.
 install -vpD %SOURCE2 .cargo/config.toml
 
 %build
+export RUSTFLAGS='-Clink-args=-z,relro -Clink-args=-z,-now'
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_DEBUG=1
+export CARGO_PROFILE_RELEASE_STRIP=none
 cargo build %_smp_mflags --release --offline
 
 %install
@@ -68,6 +72,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Tue Sep 08 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.12-alt1
+- Updated to 0.9.12.
+
 * Wed Aug 19 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.9-alt2
 - Built from release v0.9.9.
 
