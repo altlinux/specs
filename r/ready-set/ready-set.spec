@@ -11,7 +11,7 @@
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
 %define soversion 0.14
-%define minor_version 0
+%define minor_version 1
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -465,6 +465,10 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Sep 08 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.1-alt1
+- New version: 0.14.1.
+- Fixed non existed User0 ad initial-setup stage.
+
 * Mon Sep 07 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.0-alt1
 - New version: 0.14.0.
 - Added variable locking mechanism to `Context` (vars with `setting=true` can
