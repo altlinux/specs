@@ -3,7 +3,7 @@
 
 Name: valot
 Version: 0.9.3
-Release: alt1
+Release: alt2
 
 Summary: A modern time tracking application built with GTK4 and Adwaita.
 License: MIT
@@ -16,9 +16,11 @@ Source: %name-%version.tar
 Requires: libgjs
 Requires: typelib(Adw) = 1
 Requires: typelib(Gda) = 6.0
+Requires: typelib(WebKit)
 Requires: libgda6-providers
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: libgjs-devel
 BuildRequires: meson gtk-doc
 BuildRequires: libgjs-devel
 BuildRequires: blueprint-compiler
@@ -52,6 +54,9 @@ It offers a modern interface that follows GNOME Human Interface Guidelines.
 %doc README*
 
 %changelog
+* Fri Aug 21 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.9.3-alt2
+- Fix missing dependency (Fixes: #59693).
+
 * Wed Jun 24 2026 Pavel Mitrofanov <cobalt@altlinux.org> 0.9.3-alt1
 - Update to newest version.
 
