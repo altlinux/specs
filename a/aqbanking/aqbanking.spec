@@ -1,17 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:     aqbanking
-Version:  6.4.1
+Version:  6.9.2
 Release:  alt1
 
 Summary:  A library for online banking functions and financial data import/export
-License:  GPLv2+
+License:  GPL-2.0+
 Group:    System/Libraries
-
-URL:      https://www.aquamaniac.de/rdm/projects/aqbanking
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+URL:      https://github.com/aqbanking/aqbanking
 
 Source:   %name-%version.tar
-Patch1:   %name-build-typedefs.patch
+Patch0:   %name-tm2-includes.patch
 
 BuildRequires: astyle
 BuildRequires: doxygen
@@ -28,6 +27,15 @@ BuildRequires: zlib-devel
 #BuildRequires:	libOpenSP-devel
 #BuildRequires:	libssl-devel
 #BuildRequires:	libpcsclite-devel
+
+Provides: libaqhbci = %EVR
+Provides: libaqebics = %EVR
+Provides: libaqpaypal = %EVR
+Provides: %name-ofx = %EVR
+Obsoletes: libaqhbci < %EVR
+Obsoletes: libaqebics < %EVR
+Obsoletes: libaqpaypal < %EVR
+Obsoletes: %name-ofx < %EVR
 
 %description
 The intention of AqBanking is to provide a middle layer between the
@@ -73,31 +81,6 @@ Group:	  System/Libraries
 %description -n libaqbanking
 This package contains the shared libraries for aqbanking.
 
-%package -n libaqhbci
-Summary:  The HBCI backend for the Aqbanking library
-Group:	  System/Libraries
-
-%description -n libaqhbci
-This is the backend for the Aqbanking library which implements a client
-for the German HBCI (Home Banking Computer Interface) protocol.
-
-%package -n libaqebics
-Summary:  The EBICS backend for the Aqbanking library
-Group:	  System/Libraries
-
-%description -n libaqebics
-This is the backend for the Aqbanking library which implements a client
-for the EBICS (Electronic Banking Internet Communication Standard)
-protocol.
-
-%package -n libaqpaypal
-Summary:  The PayPal backend for the Aqbanking library
-Group:	  System/Libraries
-
-%description -n libaqpaypal
-This is the backend for the Aqbanking library which implements a client
-for the PayPal.
-
 %package doc
 Summary: AqBanking4 Handbook
 Group: Development/Documentation 
@@ -108,7 +91,7 @@ AqBanking4 Handbook (PDF)
 
 %prep
 %setup -q
-%patch1 -p1
+%autopatch -p1
 
 %build
 make -f Makefile.cvs
@@ -119,11 +102,8 @@ make -f Makefile.cvs
 	--enable-gwenhywfar \
 	--enable-release \
 	--with-docpath=%_docdir \
-	--enable-full-doc \
-	--enable-tutorials
-
-# hack for semi SMP build
-%make_build typefiles all || make
+	--enable-gui-tests=no
+%make_build typefiles && %make_build
 
 %install
 %make_install install DESTDIR=%buildroot
@@ -142,6 +122,7 @@ rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 %_bindir/aqhbci-tool4
 %_bindir/aqebics-tool
 %_bindir/aqpaypal-tool
+%_bindir/aqofxconnect-tool             
 %dir %_libdir/%name
 %dir %_datadir/%name/bankinfo
 %_datadir/%name/bankinfo/*
@@ -181,6 +162,22 @@ rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 %dir %_libdir/%name/plugins/*/providers
 ### The aqnone files
 %_libdir/%name/plugins/*/providers/aqnone.xml
+### The aqhbci files
+%_libdir/%name/plugins/*/providers/aqhbci.xml
+%_datadir/%name/backends/aqhbci
+### The aqebics files
+%_libdir/%name/plugins/*/providers/aqebics.xml
+%_datadir/%name/backends/aqebics/
+### The aqpaypal files
+%_libdir/%name/plugins/*/providers/aqpaypal.xml
+%_datadir/%name/backends/aqpaypal/
+### The aqgivve files
+%_libdir/%name/plugins/*/providers/aqgivve.xml
+%_datadir/%name/backends/aqgivve/dialogs/*.dlg
+### The ofx files
+%_libdir/%name/plugins/*/providers/aqofxconnect.xml
+%_libdir/%name/plugins/*/imexporters/ofx.*
+%_datadir/%name/imexporters/ofx
 ### Typemaker2
 %_datadir/%name/%name/typemaker2
 %_datadir/%name/typemaker2
@@ -193,32 +190,23 @@ rm -f %buildroot%_docdir/aqebics/aqebics-tool/README
 %_pkgconfigdir/aqbanking.pc
 %_libdir/cmake/aqbanking-*/aqbanking-config*.cmake
 
-%files ofx
-%_libdir/%name/plugins/*/providers/aqofxconnect.xml
-%_libdir/%name/plugins/*/imexporters/ofx.*
-%_datadir/%name/imexporters/ofx
-
 %files -n libaqbanking
 %_libdir/libaqbanking.so.*
-
-%files -n libaqhbci
-### The aqhbci files
-%_libdir/%name/plugins/*/providers/aqhbci.xml
-%_datadir/%name/backends/aqhbci
-
-%files -n libaqebics
-### The aqebics files
-%_libdir/%name/plugins/*/providers/aqebics.xml
-%_datadir/%name/backends/aqebics/
-
-%files -n libaqpaypal
-%_libdir/%name/plugins/*/providers/aqpaypal.xml
-%_datadir/%name/backends/aqpaypal/
 
 %files doc
 %_docdir/%name/
 
 %changelog
+* Tue Sep 08 2026 Andrey Cherepanov <cas@altlinux.org> 6.9.2-alt1
+- New version.
+- Packaged all plugins to main package aqbanking.
+
+* Mon Mar 10 2025 Andrey Cherepanov <cas@altlinux.org> 6.6.0-alt1
+- New version.
+
+* Fri Jun 16 2023 Andrey Cherepanov <cas@altlinux.org> 6.5.4-alt1
+- New version.
+
 * Mon Jan 03 2022 Andrey Cherepanov <cas@altlinux.org> 6.4.1-alt1
 - New version.
 
