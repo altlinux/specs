@@ -5,33 +5,30 @@
 %define        gemname ruby-debug-ide
 
 Name:          gem-ruby-debug-ide
-Version:       0.7.3.2
-Release:       alt0.1
+Version:       0.7.5
+Release:       alt1
 Summary:       IDE interface for ruby-debug
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/ruby-debug/ruby-debug-ide
 Vcs:           https://github.com/ruby-debug/ruby-debug-ide.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
-BuildRequires: gem(rake) >= 0.8.1
-BuildRequires: gem(debase) >= 0.2.2
 BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(debase) >= 0.2.9
+BuildRequires: gem(rake) >= 0.8.1
 BuildRequires: gem(test-unit) >= 0
 BuildConflicts: gem(debase) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_alias_names ruby-debug-ide,gem-ruby-debug-ide
-Requires:      gem(ruby-debug-base19x) >= 0.11.32
+Requires:      ruby >= 1.8.2
 Requires:      gem(rake) >= 0.8.1
-Provides:      gem(ruby-debug-ide) = 0.7.3.2
-
-%ruby_use_gem_version ruby-debug-ide:0.7.3.2
+Provides:      gem(ruby-debug-ide) = 0.7.5
 
 %description
 An interface which glues ruby-debug to IDEs like Eclipse (RDT), NetBeans and
@@ -39,14 +36,14 @@ RubyMine.
 
 
 %package       -n ruby-debug-ide
-Version:       0.7.3.2
-Release:       alt0.1
+Version:       0.7.5
+Release:       alt1
 Summary:       IDE interface for ruby-debug executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ruby-debug-ide
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(ruby-debug-ide) = 0.7.3.2
+Requires:      gem(ruby-debug-ide) = 0.7.5
 
 %description   -n ruby-debug-ide
 IDE interface for ruby-debug executable(s).
@@ -60,14 +57,14 @@ RubyMine.
 
 %if_enabled    doc
 %package       -n gem-ruby-debug-ide-doc
-Version:       0.7.3.2
-Release:       alt0.1
+Version:       0.7.5
+Release:       alt1
 Summary:       IDE interface for ruby-debug documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-debug-ide
-Group:         Development/Ruby
+Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ruby-debug-ide) = 0.7.3.2
+Requires:      gem(ruby-debug-ide) = 0.7.5
 
 %description   -n gem-ruby-debug-ide-doc
 IDE interface for ruby-debug documentation files.
@@ -82,18 +79,18 @@ RubyMine.
 
 %if_enabled    devel
 %package       -n gem-ruby-debug-ide-devel
-Version:       0.7.3.2
-Release:       alt0.1
+Version:       0.7.5
+Release:       alt1
 Summary:       IDE interface for ruby-debug development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-debug-ide
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ruby-debug-ide) = 0.7.3.2
-Requires:      gem(debase) >= 0.2.2
+Requires:      gem(ruby-debug-ide) = 0.7.5
 Requires:      gem(bundler) >= 0
+Requires:      gem(debase) >= 0.2.9
+Requires:      gem(rake) >= 0.8.1
 Requires:      gem(test-unit) >= 0
-Conflicts:     gem(debase) >= 1
 
 %description   -n gem-ruby-debug-ide-devel
 IDE interface for ruby-debug development package.
@@ -108,7 +105,6 @@ RubyMine.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -143,6 +139,9 @@ RubyMine.
 
 
 %changelog
+* Tue Sep 08 2026 Pavel Skrylev <majioa@altlinux.org> 0.7.5-alt1
+- ^ 0.7.3.2 -> 0.7.5
+
 * Mon Aug 12 2024 Pavel Skrylev <majioa@altlinux.org> 0.7.3.2-alt0.1
 - ^ 0.7.3 -> 0.7.3p2
 
