@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define githash f3e7384
 
 %def_with check
 
 Name: jetcheck
-Version: 0.2.1
-Release: alt1.%githash
+Version: 0.3.0
+Release: alt1
 
 Summary: Property-based testing framework for Java
 License: Apache-2.0
@@ -65,5 +64,8 @@ done
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Sep 08 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Tue Aug 11 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.2.1-alt1.f3e7384
 - Initial build for ALT Sisyphus.
