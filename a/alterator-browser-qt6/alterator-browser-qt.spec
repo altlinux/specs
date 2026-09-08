@@ -11,7 +11,7 @@
 
 Name: %bin_name
 Version: 3.7.9
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Sep 08 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.9-alt2
+- fix program version (closes: 45990)
+
 * Mon Aug 31 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.9-alt1
 - update all translations (closes: 41002)
 
