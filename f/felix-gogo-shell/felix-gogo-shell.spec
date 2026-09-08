@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,9 +15,9 @@ BuildRequires: jpackage-11-compat
 
 Name:           felix-gogo-shell
 Version:        1.1.4
-Release:        alt1_1jpp11
+Release:        alt2
 Summary:        Apache Felix Gogo command line shell for OSGi
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://felix.apache.org/documentation/subprojects/apache-felix-gogo.html
 BuildArch:      noarch
 
@@ -72,6 +72,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.1.4-alt2
+- FTBFS fix
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.4-alt1_1jpp11
 - new version
 

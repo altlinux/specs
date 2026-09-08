@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global registry geronimo-osgi-registry
@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             geronimo-osgi-support
 Version:          1.0
-Release:          alt2_28jpp11
+Release:          alt3
 Summary:          OSGI spec bundle support
 License:          ASL 2.0 and W3C
 URL:              http://geronimo.apache.org/
@@ -78,6 +78,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.0-alt3
+- fixed build
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_28jpp11
 - fixed build
 

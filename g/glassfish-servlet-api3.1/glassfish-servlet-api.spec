@@ -1,14 +1,14 @@
 %define oldname glassfish-servlet-api
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global artifactId javax.servlet-api
 
 Name:           glassfish-servlet-api3.1
 Version:        3.1.0
-Release:        alt4_18jpp11
+Release:        alt5
 Summary:        Java Servlet API
 License:        (CDDL or GPLv2 with exceptions) and ASL 2.0
 URL:            http://servlet-spec.java.net
@@ -55,7 +55,7 @@ cp -p src/main/resources/META-INF/README .
 #mvn_alias : org.eclipse.jetty.orbit:javax.servlet
 %mvn_compat_version javax.servlet:servlet-api  %{version}
 %mvn_compat_version :  %{version}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -69,6 +69,9 @@ cp -p src/main/resources/META-INF/README .
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 3.1.0-alt5
+- FTBFS fix
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt4_18jpp11
 - compat build
 

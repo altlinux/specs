@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           geronimo-parent-poms
 Version:        1.6
-Release:        alt3_33jpp11
+Release:        alt4
 Summary:        Parent POM files for geronimo-specs
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -47,7 +47,7 @@ sed -i -e 's/>1\.5</>1.8</' pom.xml
 </plugin></plugins></pluginManagement>"
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build
 
 %install
 %mvn_install
@@ -56,6 +56,9 @@ sed -i -e 's/>1\.5</>1.8</' pom.xml
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.6-alt4
+- FTBFS fix
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.6-alt3_33jpp11
 - update
 
