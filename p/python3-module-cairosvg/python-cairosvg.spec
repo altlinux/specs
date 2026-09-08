@@ -4,7 +4,7 @@
 %def_with check
 
 Name:               python3-module-cairosvg
-Version:            2.9.0
+Version:            2.9.1
 Release:            alt1
 Summary:            A Simple SVG Converter for Cairo
 
@@ -63,6 +63,9 @@ rm -rf %buildroot%python3_sitelibdir/%modname/__pycache__/test_api.*
 %python3_sitelibdir/%{pyproject_distinfo cairosvg}/
 
 %changelog
+* Tue Sep 08 2026 Anton Vyatkin <toni@altlinux.org> 2.9.1-alt1
+- New version 2.9.1.
+
 * Sat Mar 14 2026 Anton Vyatkin <toni@altlinux.org> 2.9.0-alt1
 - New version 2.9.0.
 
