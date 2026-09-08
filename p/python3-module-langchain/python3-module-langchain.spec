@@ -1,10 +1,22 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name langchain
+
+%define add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1' \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
 
 BuildRequires(pre): rpm-build-pyproject
 Source99: %pyproject_deps_config_name
 
 Name: python3-module-langchain
-Version: 1.3.17
+Version: 1.4.0
 Release: alt1
 Summary: Building applications with LLMs through composability
 License: MIT
@@ -23,6 +35,11 @@ AutoReq: yes, nopython3
 %python3_sitelibdir/langchain/
 %python3_sitelibdir/langchain-%version.dist-info/
 
+%add_python_extra mcp
+%add_python_extra anthropic
+%add_python_extra deepseek
+%add_python_extra openai
+
 %description
 LangChain is the easiest way to start building agents and applications powered
 by LLMs. With under 10 lines of code, you can connect to OpenAI, Anthropic,
@@ -32,7 +49,7 @@ into your agents and applications.
 
 
 %package -n python3-module-langchain-core
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 Summary: Building applications with LLMs through composability
 License: MIT
@@ -104,7 +121,7 @@ AutoReq: yes, nopython3
 
 
 %package -n python3-module-langchain-anthropic
-Version: 1.6.1
+Version: 1.7.1
 Release: alt1
 Summary: Integration package connecting Claude (Anthropic) APIs and LangChain
 License: MIT
@@ -178,6 +195,11 @@ for target in $(ls -d *) ; do
 done
 
 %changelog
+* Tue Sep 08 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- Updated langchain to 1.4.0.
+- Updated langchain-core to 1.6.1.
+- Updated langchain-anthropic to 1.7.1.
+
 * Mon Aug 31 2026 Anton Zhukharev <ancieg@altlinux.org> 1.3.17-alt1
 - Updated langchain to 1.3.17.
 - Updated langchain-anthropic to 1.6.1.
