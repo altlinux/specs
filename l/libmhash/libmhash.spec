@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 Name: libmhash
 Version: 0.9.9.9
-Release: alt1.qa1
+Release: alt2
 
 Summary: Thread-safe hash library
 License: LGPL
@@ -43,6 +43,7 @@ Static libraries for %name.
 %__subst 's@-lltdl@@' aclocal.m4
 
 %build
+%add_optflags -std=gnu17
 %configure --enable-static
 %make_build
 
@@ -64,6 +65,9 @@ Static libraries for %name.
 %_libdir/*.a
 
 %changelog
+* Tue Sep 08 2026 Aleksandr Dovydenkov <asd@altlinux.org> 0.9.9.9-alt2
+- fixed FTBFS
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 0.9.9.9-alt1.qa1
 - NMU: fixed build with LTO
 
@@ -71,7 +75,7 @@ Static libraries for %name.
 - 0.9.9.9
 
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.8.18-alt1.1.qa2
-- rebuild using girar-nmu to require/provide setversion 
+- rebuild using girar-nmu to require/provide setversion
   by request of mithraen@
 
 * Thu Nov 12 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.18-alt1.1.qa1
