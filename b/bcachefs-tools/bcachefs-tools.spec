@@ -1,5 +1,5 @@
 Name: bcachefs-tools
-Version: 1.39.4
+Version: 1.39.5
 Release: alt1
 
 Summary: Userspace tools and docs for bcachefs
@@ -64,6 +64,9 @@ rm -rf %buildroot%_usrsrc/bcachefs-%version
 %_man8dir/bcachefs.8*
 
 %changelog
+* Tue Sep 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.39.5-alt1
+- 1.39.5 reeleased
+
 * Mon Aug 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.39.4-alt1
 - 1.39.4 released
 
