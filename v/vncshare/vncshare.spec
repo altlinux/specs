@@ -1,5 +1,5 @@
 Name:           vncshare
-Version:        0.10
+Version:        0.11
 Release:        alt1
 Summary:        VNC shared screens infrastructure
 Group:          Networking/Remote access
@@ -50,6 +50,9 @@ done
 %_libexecdir/*
 
 %changelog
+* Tue Sep 08 2026 Fr. Br. George <george@altlinux.ru> 0.11-alt1
+- Fix updated vncviwer compatibility
+
 * Wed Oct 22 2025 Fr. Br. George <george@altlinux.org> 0.10-alt1
 - Remove /etc/sysconfig/i18n dependency
 
