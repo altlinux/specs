@@ -2,11 +2,12 @@
 %def_enable gtk_doc
 %def_disable static
 %def_disable orc
+# meson.build: format(library_current - library_age, ...)
 %define soname 42
 
 Name: vips
-Version: 8.18.3
-Release: alt2
+Version: 8.18.6
+Release: alt1
 
 Summary: Large image processing library
 
@@ -224,6 +225,9 @@ rm -v %buildroot%_docdir/vips-cpp/html/*.map
 # - package python bindings
 
 %changelog
+* Tue Sep 08 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.6-alt1
+- 8.18.6.
+
 * Fri Jun 12 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.3-alt2
 - libvips: add missing obsoletes.
 
