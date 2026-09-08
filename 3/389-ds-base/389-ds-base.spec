@@ -17,8 +17,8 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 3.1.4
-Release: alt4
+Version: 3.1.5
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -428,6 +428,11 @@ fi
 %endif
 
 %changelog
+* Tue Sep 08 2026 Stanislav Levin <slev@altlinux.org> 3.1.5-alt1
+- 3.1.4 -> 3.1.5 (fixes: CVE-2026-9064, CVE-2026-11770,
+  CVE-2026-18355, CVE-2026-18453, CVE-2026-18922, CVE-2026-19843,
+  CVE-2026-76560, CVE-2026-15722)
+
 * Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 3.1.4-alt4
 - Backported upstream fixes for Python 3.14:
   + https://github.com/389ds/389-ds-base/issues/7184
