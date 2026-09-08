@@ -3,7 +3,7 @@
 Name: pi
 Epoch:1 
 Version: 0.85.1
-Release: alt1
+Release: alt2
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
 License: MIT
@@ -35,9 +35,10 @@ BuildRequires: /proc
 Requires: node >= 22.19
 Requires: ripgrep
 Requires: fd
-# chord (experimental plugin bundling) shells out to esbuild; the vendored
-# @esbuild/linux-x64 binary is x86_64-only, so use the system one instead.
-Requires: esbuild
+# chord (experimental plugin bundling) shells out to esbuild, but the shipped
+# dist excludes src/experimental (tsconfig.build.json), so nothing reaches it.
+# If upstream ships the experimental server again: Requires: esbuild and
+# export ESBUILD_BINARY_PATH=/usr/bin/esbuild in the wrapper.
 
 # Vendored node_modules: do not generate Requires on bundled modules.
 # nodejs.req would emit npm(@types/node) from hoisted protobufjs.
@@ -88,7 +89,6 @@ find %buildroot%nodejs_sitelib/%name -depth -type d \( \
 install -d %buildroot%_bindir
 cat > %buildroot%_bindir/pi <<EOF
 #!/bin/sh
-export ESBUILD_BINARY_PATH=/usr/bin/esbuild
 exec /usr/bin/node %nodejs_sitelib/%name/dist/cli.js "\$@"
 EOF
 chmod 0755 %buildroot%_bindir/pi
@@ -102,6 +102,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Tue Sep 08 2026 Anton Farygin <rider@altlinux.org> 1:0.85.1-alt2
+- Dropped Requires: esbuild, the shipped build never runs it (closes: 60461).
+
 * Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 1:0.85.1-alt1
 - 0.84.4 -> 0.85.1
 
