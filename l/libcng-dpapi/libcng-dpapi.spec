@@ -1,7 +1,16 @@
+%ifdef _priority_distbranch
+%define altbranch %_priority_distbranch
+%else
+%define altbranch %(rpm --eval %%_priority_distbranch)
+%endif
+%if "%altbranch" == "%nil"
+%define altbranch sisyphus
+%endif
+
 %define _unpackaged_files_terminate_build 1
 
 Name: libcng-dpapi
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1
 
 Summary: Client library for CNG-DPAPI
@@ -12,7 +21,12 @@ Url: https://github.com/august-alt/libcng-dpapi
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules gcc-c++
 BuildRequires: libkrb5-devel samba-devel samba-common-libs libgkdi-devel
-BuildRequires: libssl-devel libldap-devel libsasl2-devel
+%if "%altbranch" == "c10f2"
+BuildRequires: libssl3-devel
+%else
+BuildRequires: libssl-devel
+%endif
+BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: doxygen
 
 Source0: %name-%version.tar
@@ -52,6 +66,10 @@ develop programs which make use of %name
 %_libdir/cng-dpapi/CNGDpApiConfig.cmake
 
 %changelog
+* Tue Sep 08 2026 Vladimir Rubanov <august@altlinux.org> 0.0.5-alt1
+- Adapt to ALT SP 10.2.2 (c10f2): build against OpenSSL 3.
+- Fix build with older gcc (avoid initializing variable-length arrays).
+
 * Mon Sep 8 2025 Vladimir Rubanov <august@altlinux.org> 0.0.4-alt1
 - 0.0.4-alt1
 - Resolve various issues with the library.
