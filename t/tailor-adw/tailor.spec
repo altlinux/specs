@@ -4,7 +4,7 @@
 %def_with check
 
 Name: tailor-adw
-Version: 0.1.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Create bootable drives
@@ -52,7 +52,7 @@ install -pD -m0644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas/
 %find_lang --with-gnome tailor
 
 %check
-%__meson_test
+%meson_test
 
 %files -f tailor.lang
 %doc README.md
@@ -64,5 +64,8 @@ install -pD -m0644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas/
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Sep 08 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+
 * Mon Aug 31 2026 Alexey Volkov <qualimock@altlinux.org> 0.1.1-alt1
 - initial build for ALT
