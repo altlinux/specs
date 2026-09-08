@@ -2,7 +2,7 @@
 
 Name:    epsonscan2
 Version: 6.7.82.0
-Release: alt3
+Release: alt4
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -38,9 +38,9 @@ driver to interface with software built around the SANE standard.
 
 %prep
 %setup -n %name-%version-1
-%patch1 -p2
-%patch2 -p2
+%autopatch -p2
 subst 's|${EPSON_INSTALL_ROOT}/lib/udev|%_udevdir|' CMakeLists.txt
+sed -i -e '/BOOST_NO_CXX11_RVALUE_REFERENCES/d' `grep -rl BOOST_NO_CXX11_RVALUE_REFERENCES .`
 
 %build
 %add_optflags -Wno-unused-function -Wno-unused-variable -Wno-template-body
@@ -66,6 +66,9 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Tue Sep 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.7.82.0-alt4
+- NMU: fix FTBFS with new boost.
+
 * Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 6.7.82.0-alt3
 - FTBFS: built with -Wno-template-body.
 
