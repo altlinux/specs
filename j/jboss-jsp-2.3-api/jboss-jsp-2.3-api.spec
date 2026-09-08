@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 
 Name:             jboss-jsp-2.3-api
 Version:          1.0.3
-Release:          alt1_2jpp11
+Release:          alt2
 Summary:          JavaServer Pages 2.3 API (JSP)
 License:          (CDDL or GPLv2 with exceptions) or ASL 2.0
 
@@ -46,7 +46,7 @@ This package contains the API documentation for %{name}.
 cp %{SOURCE1} .
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build
 
 %install
 %mvn_install
@@ -59,6 +59,9 @@ cp %{SOURCE1} .
 %doc --no-dereference LICENSE LICENSE-2.0.txt
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.0.3-alt2
+- FTBFS fix
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_2jpp11
 - new version
 

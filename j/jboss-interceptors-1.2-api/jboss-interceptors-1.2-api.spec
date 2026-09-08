@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 
 Name:          jboss-interceptors-1.2-api
 Version:       1.0.1
-Release:       alt1_2jpp11
+Release:       alt2
 Summary:       Java EE Interceptors 1.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-interceptors-api_spec
@@ -46,7 +46,7 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 
 %build
 
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build
 
 %install
 %mvn_install
@@ -59,6 +59,9 @@ sed -i "s,59,51,;s,Temple Place,Franklin Street,;s,Suite 330,Fifth Floor,;s,0211
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Sep 07 2026 Anton Meleshnikov <alton@altlinux.org> 1.0.1-alt2
+- FTBFS fix
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt1_2jpp11
 - new version
 
