@@ -20,7 +20,7 @@
 %endif
 
 Name: zed
-Version: 1.18.0
+Version: 1.18.1
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -82,6 +82,12 @@ install -vp  %SOURCE3 ./update-metadata-releases.py
 
 unzip -o %webrtc_source -d %webrtc_basedir
 
+# Cargo metadata may reject vendored packages with a feature-gated
+# `default-run` target. `default-run` is irrelevant for license generation.
+find vendor -mindepth 2 -maxdepth 2 -name Cargo.toml \
+    -exec grep -l '^[[:space:]]*default-run[[:space:]]*=' {} + |
+    xargs -r sed -i '/^[[:space:]]*default-run[[:space:]]*=/d'
+
 %build
 export RELEASE_VERSION="%version"
 export ZED_UPDATE_EXPLANATION="Please update zed using apt-get."
@@ -97,7 +103,12 @@ export ALLOW_MISSING_LICENSES=1
 ./script/generate-licenses
 
 export LK_CUSTOM_WEBRTC="%webrtc_dir"
-cargo build --release %{?_smp_mflags} --offline --package zed --package cli
+
+export RUSTFLAGS='-Clink-args=-z,relro -Clink-args=-z,-now'
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_DEBUG=0
+export CARGO_PROFILE_RELEASE_STRIP=debuginfo
+cargo build --release %{?_smp_mflags} --offline --all-features --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
@@ -128,6 +139,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Tue Sep 08 2026 Anton Zhukharev <ancieg@altlinux.org> 1.18.1-alt1
+- Updated to 1.18.1.
+
 * Thu Sep 03 2026 Anton Zhukharev <ancieg@altlinux.org> 1.18.0-alt1
 - Updated to 1.18.0.
 
