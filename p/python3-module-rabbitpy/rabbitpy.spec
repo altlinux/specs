@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.1
-Release: alt3
+Version: 3.0.2
+Release: alt1
 
 Summary: A pure python, thread-safe, minimalistic and pythonic RabbitMQ client library
 License: BSD-3-Clause
@@ -18,13 +18,10 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-pamqp
+BuildRequires: python3-module-hatchling
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-mock
+BuildRequires: python3-module-pamqp
+BuildRequires: python3-module-python-dotenv
 %endif
 
 %description
@@ -34,37 +31,8 @@ rabbitpy aims to provide a simple and easy to use API for interfacing
 with RabbitMQ, minimizing the programming overhead often found in other
 libraries.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-A pure python, thread-safe, minimalistic and pythonic BSD Licensed
-AMQP/RabbitMQ library that supports Python 2.6+ and Python 3.2+.
-rabbitpy aims to provide a simple and easy to use API for interfacing
-with RabbitMQ, minimizing the programming overhead often found in other
-libraries.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-A pure python, thread-safe, minimalistic and pythonic BSD Licensed
-AMQP/RabbitMQ library that supports Python 2.6+ and Python 3.2+.
-rabbitpy aims to provide a simple and easy to use API for interfacing
-with RabbitMQ, minimizing the programming overhead often found in other
-libraries.
-
-This package contains documentation for %oname.
-
 %prep
 %setup
-
-sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
 %pyproject_build
@@ -72,28 +40,18 @@ sed -i 's|sphinx-build|&-3|' docs/Makefile
 %install
 %pyproject_install
 
-%make -C docs pickle
-%make -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
-
 %check
-%pyproject_run_pytest -v
+%pyproject_run_pytest -v --ignore tests/test_integration.py
 
 %files
-%doc *.rst examples
+%doc README.*
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%dir %python3_sitelibdir/%oname
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/_build/html/*
 
 %changelog
+* Wed Sep 09 2026 Anton Vyatkin <toni@altlinux.org> 3.0.2-alt1
+- New version 3.0.2.
+
 * Fri Aug 04 2023 Michael Shigorin <mike@altlinux.org> 2.0.1-alt3
 - Fix build --without check
 
