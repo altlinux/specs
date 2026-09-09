@@ -1,5 +1,5 @@
 Name: radicle
-Version: 1.10.2
+Version: 1.10.3
 Release: alt1
 
 Summary: Radicle Heartwood Protocol & Stack
@@ -74,6 +74,9 @@ done
 %_localstatedir/radicle
 
 %changelog
+* Wed Sep 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.3-alt1
+- 1.10.3 released
+
 * Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.2-alt1
 - 1.10.2 released
 
