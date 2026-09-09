@@ -3,7 +3,7 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.40
+Version: 7.0.41
 Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
@@ -210,8 +210,22 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Wed Sep 09 2026 Alexei Takaseev <taf@altlinux.org> 7.0.41-alt1
+- 7.0.41 (Fixes: CVE-2026-82052, CVE-2026-82053, CVE-2026-82054, CVE-2026-82056,
+                 CVE-2026-82058, CVE-2026-82059, CVE-2026-82060, CVE-2026-82063,
+                 CVE-2026-82064, CVE-2026-82065, CVE-2026-82066, CVE-2026-82067,
+                 CVE-2026-82068, CVE-2026-82070, CVE-2026-82074, CVE-2026-82075,
+                 CVE-2026-82076)
+
 * Tue Aug 18 2026 Alexei Takaseev <taf@altlinux.org> 7.0.40-alt1
-- 7.0.40
+- 7.0.40 (Fixes: CVE-2026-13055, CVE-2026-13059, CVE-2026-13060, CVE-2026-13061,
+                 CVE-2026-13062, CVE-2026-13065, CVE-2026-13066, CVE-2026-13068,
+                 CVE-2026-13069, CVE-2026-13070, CVE-2026-13071, CVE-2026-13072,
+                 CVE-2026-13074, CVE-2026-13077, CVE-2026-13078, CVE-2026-18688,
+                 CVE-2026-18690, CVE-2026-18691, CVE-2026-18693, CVE-2026-18694,
+                 CVE-2026-18695, CVE-2026-18696, CVE-2026-18697, CVE-2026-18698,
+                 CVE-2026-18699, CVE-2026-18700, CVE-2026-18701, CVE-2026-18702,
+                 CVE-2026-18705, CVE-2026-18708, CVE-2026-18709, CVE-2026-18712)
 
 * Wed Jul 29 2026 Alexei Takaseev <taf@altlinux.org> 7.0.39-alt1
 - 7.0.39
