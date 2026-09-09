@@ -3,7 +3,7 @@
 
 Name: apache-poi
 Version: 5.4.1
-Release: alt2
+Release: alt3
 Summary: The Java API for Microsoft Documents
 License: Apache-2.0 and MIT
 Group: Development/Java
@@ -18,6 +18,8 @@ Source1: gradle-cache.tar
 Patch0: apache-poi-alt-java-version.patch
 # Remove version from pom filenames
 Patch1: apache-poi-alt-remove-version-from-pom-filename.patch
+# Build with Gradle 9.7.1
+Patch2: apache-poi-gradle-9.7.1.patch
 
 BuildArch: noarch
 
@@ -68,6 +70,8 @@ tar xf %SOURCE1 -C ~
 %endif
 %patch0 -p1
 %patch1 -p2
+%patch2 -p2
+subst 's|project.archivesBaseName|project.name|g' build.gradle */build.gradle
 
 %build
 %global gradle_target srcDistTar generatePomFileForPOIPublication
@@ -102,6 +106,9 @@ cp maven-metadata/*.xml %buildroot%_datadir/maven-metadata
 %_datadir/maven-metadata/*.xml
 
 %changelog
+* Wed Sep 09 2026 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt3
+- FTBFS: built with Gradle 9.7.1.
+
 * Mon Jan 12 2026 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt2
 - Packaged xmvn metainfo files.
 
