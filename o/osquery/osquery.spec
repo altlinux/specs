@@ -1,10 +1,9 @@
 %define _unpackaged_files_terminate_build 1                                                    
-%global llvm_version 18.1
 %global gcc_version 13
 
 Name:    osquery
 Version: 5.23.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
@@ -42,10 +41,10 @@ BuildRequires: libstdc++-devel
 BuildRequires: git-core
 BuildRequires: python3-base
 BuildRequires: ccache
-BuildRequires: clang%{llvm_version}
-BuildRequires: clang%{llvm_version}-devel
-BuildRequires: llvm%{llvm_version}-devel
-BuildRequires: lld%{llvm_version}-devel
+BuildRequires: clang
+BuildRequires: clang-devel
+BuildRequires: llvm-devel
+BuildRequires: lld-devel
 BuildRequires: clang-tools
 BuildRequires: liblz4-devel
 BuildRequires: libzstd-devel
@@ -102,6 +101,8 @@ subst '
       s/thirdparty_sqlite/sqlite3/;
       s/thirdparty_zlib/z/;
       s/thirdparty_googletest_headers/gtest/' `grep -l thirdparty_ $(find . -name CMakeLists.txt)`
+# Remove linking with library boost_system, deprecated since Boost 1.91.0
+subst '/boost_system/d' $(find . -name CMakeLists.txt)
 # Fix broken linking
 subst 's/-stdlib=libc++//' cmake/flags.cmake
 
@@ -152,6 +153,11 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Wed Sep 09 2026 Andrey Cherepanov <cas@altlinux.org> 1:5.23.0-alt2
+- Built with generic llvm (ALT #56825).
+- FTBFS: removed linking with library boost_system, deprecated since
+  Boost 1.91.0.
+
 * Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 1:5.23.0-alt1
 - New version.
 
