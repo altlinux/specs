@@ -1,7 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+%define oname space.shad.minivi
 
 Name: minivi
-Version: 0.17.3
+Version: 0.17.4
 Release: alt1
 
 Summary: A small application for viewing images
@@ -45,10 +46,14 @@ make install
 %files
 %doc README.md
 %_bindir/%{name}*
-%_iconsdir/hicolor/*/apps/%name.png
-%_datadir/applications/%name.desktop
+%_iconsdir/hicolor/*/apps/%oname.png
+%_datadir/applications/%oname.desktop
+%_datadir/metainfo/%oname.metainfo.xml
 
 %changelog
+* Thu Sep 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17.4-alt1
+- 0.17.3 -> 0.17.4
+
 * Tue Aug 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17.3-alt1
 - 0.17.2 -> 0.17.3
 
