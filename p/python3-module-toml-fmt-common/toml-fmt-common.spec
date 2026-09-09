@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.3.5
-Release: alt3
+Release: alt4.git7c729de
 Summary: Common logic to the TOML formatter
 License: MIT
 Group: Development/Python3
@@ -56,6 +56,9 @@ to only be used by that project).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 09 2026 Stanislav Levin <slev@altlinux.org> 1.3.5-alt4.git7c729de
+- Synced to upstream (7c729de).
+
 * Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 1.3.5-alt3
 - Backported fixes:
   + https://github.com/tox-dev/toml-fmt/issues/446
