@@ -15,9 +15,9 @@
 Name: basilisk-ru
 
 Version: 2026.06.12
-Release: alt1
+Release: alt1.1
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Summary: Russian (RU) Language Pack for Basilisk
 License: MPL-2.0
@@ -100,6 +100,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 #%search_dir
 
 %changelog
+* Wed Sep 09 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2026.06.12-alt1.1
+- Add aarch64
+
 * Tue Sep 08 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2026.06.12-alt1
 - Version 2026.06.12
 
