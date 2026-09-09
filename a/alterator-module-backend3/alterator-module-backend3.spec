@@ -1,6 +1,6 @@
 Name: alterator-module-backend3
 Version: 0.2.3
-Release: alt2
+Release: alt3
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
@@ -33,6 +33,11 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Sep 09 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt3
+- Migrate to new runners in .forgejo/workflows/clang-format.yml and
+  .forgejo/workflows/secrets-check.yaml.
+- Add svace workflow (shishkovna@).
+
 * Fri Apr 10 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt2
 - Update secret scan action to use alterator fork (the-nexi@).
 

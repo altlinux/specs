@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,11 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Sep 08 2026 Ivan Savin <svn17@altlinux.org> 0.6.1-alt1
+- Migrate to new runners in .forgejo/workflows/clang-format.yml and
+  .forgejo/workflows/secrets-check.yaml.
+- Fix code formatting.
+
 * Mon Sep 07 2026 Ivan Savin <svn17@altlinux.org> 0.6.0-alt1
 - Add the ability to use hierarchical object paths.
 

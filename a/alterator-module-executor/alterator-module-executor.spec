@@ -1,6 +1,6 @@
 Name: alterator-module-executor
 Version: 0.1.34
-Release: alt1
+Release: alt2
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -37,6 +37,11 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Sep 09 2026 Ivan Savin <svn17@altlinux.org> 0.1.34-alt2
+- Migrate to new runners in .forgejo/workflows/clang-format.yml and
+  .forgejo/workflows/secrets-check.yaml.
+- Add svace workflow (shishkovna@).
+
 * Tue Apr 21 2026 Ivan Savin <svn17@altlinux.org> 0.1.34-alt1
 - Fix forced process termination and its child processes. Before this fix,
   when the spawned process was forcefully terminated, its child processes were

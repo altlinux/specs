@@ -1,6 +1,6 @@
 Name: remote-polkit-agent
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: polkit agent for use on a remote machine via ssh.
 License: %lgpl21plus
@@ -29,6 +29,9 @@ Polkit agent for use on a remote machine via ssh using stdin and stdout.
 %_bindir/remote-polkit-agent
 
 %changelog
+* Wed Sep 09 2026 Ivan Savin <svn17@altlinux.org> 0.3.0-alt2
+- Migrate to new runners in .forgejo/workflows/secrets-check.yaml.
+
 * Fri Jun 19 2026 Ivan Savin <svn17@altlinux.org> 0.3.0-alt1
 - Add the ability for the user to re-enter the password if the password is
   entered incorrectly.

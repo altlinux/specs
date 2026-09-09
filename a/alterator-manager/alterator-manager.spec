@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -90,6 +90,11 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Tue Sep 08 2026 Ivan Savin <svn17@altlinux.org> 0.2.1-alt1
+- Migrate to new runners in .forgejo/workflows/clang-format.yml and
+  .forgejo/workflows/secrets-check.yaml (alxvmr@).
+- Fix code formatting.
+
 * Mon Sep 07 2026 Ivan Savin <svn17@altlinux.org> 0.2.0-alt1
 - Add the ability to use hierarchical object paths (vladp@).
 - Fix a segfault when using the "remote" module with hierarchical object
