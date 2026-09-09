@@ -1,6 +1,6 @@
 Name: tvtime
 Version: 1.0.11
-Release: alt3
+Release: alt4
 
 Summary: A high quality TV viewer
 License: GPLv2+ and LGPLv2+
@@ -18,6 +18,7 @@ Patch1: tvtime-1.0.11-fix-for-glibc2.30.patch
 Patch2: tvtime-1.0.11-tvtime-notermio.patch
 Patch3: tvtime-1.0.8-alt-confdir.patch
 Patch4: tvtime-1.0.2-alt-drop-freefont.patch
+Patch5: tvtime-1.0.11-fix-input-delay.patch
 
 # Automatically added by buildreq on Fri Oct 30 2015
 # optimized out: libICE-devel libX11-devel libXext-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-scrnsaverproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel xz zlib-devel
@@ -62,6 +63,9 @@ ln -sf ../fonts/ttf/liberation/LiberationSans-Bold.ttf \
 %_mandir/*/man?/*.*
 
 %changelog
+* Wed Sep 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.11-alt4
+- NMU: fix input of multinumber channel (Closes: #32014)
+
 * Wed Jun 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.11-alt3
 - NMU: fix FTBFS with new glibc
 
