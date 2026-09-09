@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    garage
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 
 Summary: S3-compatible object store for small self-hosted geo-distributed deployments
@@ -56,5 +56,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc *.md doc
 
 %changelog
+* Wed Sep 09 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Thu Jun 11 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus
