@@ -7,6 +7,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 #     `This package is an abomination.  It should not exist.'
 #					ldv@ at 2020-04-09
     
+%def_without docs
 
 %filter_from_requires /^.bin.sh5$/d
 %filter_from_requires /^.bin.bsh$/d
@@ -95,7 +96,7 @@ BuildRequires: perl(Test/More.pm) perl(Text/Unidecode.pm) perl(Tk.pm) perl(Tk/Ad
 
 Name:		texlive-texmf
 Version:	%relYear
-Release:	alt0_15
+Release:	alt0_16
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -270,6 +271,7 @@ should be sufficient for most users of TeX or TeX-related programs.
 
 %files		-n texlive-collection-basic -f %{SOURCE9}
 %{texmfbindir}/*
+%{_datadir}/tlpkg
 %{_datadir}/X11/app-defaults/XDvi*
 %{_infodir}/*
 %{_mandir}/man1/*
@@ -747,7 +749,7 @@ production system. It provides a comprehensive TeX system. It includes
 all the major TeX-related programs, macro packages, and fonts that are
 free software, including support for many languages around the world.
 
-%if 0
+%if_with docs
 %files		-n texlive-doc
 #texmfdistdir/doc/*
 %if %{enable_asymptote}
@@ -1065,12 +1067,22 @@ cat > %buildroot%_rpmlibdir/texlive-collection-basic-files.req.list <<EOF
 %{texmfdistdir}	texlive-collection-basic
 EOF
 
-
+sed -i -e 's/egrep/grep -E/' %buildroot%{texmfdistdir}/scripts/texlive-extra/texconfig.sh
+pushd %buildroot
+ln -sf %{texmfdistdir}/tlpkg usr/share/tlpkg
+popd
+%if_without docs
+rm -rf %buildroot%{texmfdistdir}/doc
+%endif
 
 #-----------------------------------------------------------------------
 
 
 %changelog
+* Wed Sep 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_16
+- NMU: replace egrep by grep -E (Closes: #55671)
+- NMU: add symlink to make tlmgr and tlmgrgui happy (Closes: #57425)
+
 * Mon Sep 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_15
 - NMU: add missing run deps to texlive-collection-basic (Closes: #51541)
 
