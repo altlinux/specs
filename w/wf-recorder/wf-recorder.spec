@@ -1,12 +1,15 @@
 Name:           wf-recorder
 Version:        0.6.0
-Release:        alt1
+Release:        alt2
 Summary:        Utility program for screen recording of wlroots-based compositors
 License:        MIT
 Group:          Video
 URL:            https://github.com/ammen99/wf-recorder
 Source0:        %{name}-%{version}.tar
 Source2:        wf_record.sh
+# https://gitlab.archlinux.org/archlinux/packaging/packages/wf-recorder/-/blob/d85efa2704043e629f2c47002fea6f98b02ee497/ffmpeg-9.patch
+Patch0:         ffmpeg-9.patch
+
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  meson >= 0.54.0
@@ -29,6 +32,7 @@ Utility program for screen recording of wlroots-based compositors
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %meson
@@ -83,6 +87,9 @@ EOF
 
 
 %changelog
+* Wed Sep  9 2026 Artyom Bystrov <arbars@altlinux.org> 0.6.0-alt2
+- Fix build with ffmpeg9
+
 * Wed Feb 25 2026 Artyom Bystrov <arbars@altlinux.org> 0.6.0-alt1
 - Update to new version (Closes: #57974)
 - Add completions for Fish
