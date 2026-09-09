@@ -1,6 +1,6 @@
 Name: pdfsam
 Version: 2.2.4e
-Release: alt1
+Release: alt2
 
 Summary: PDF Split And Merge
 
@@ -19,7 +19,8 @@ BuildRequires: unzip
 BuildRequires: jpackage-utils
 BuildRequires: dos2unix
 BuildRequires: java-1.8.0-openjdk-devel
-#Requires: jre-openjdk >= 1.7.0
+# AWT/Swing needs a full JRE; /usr/bin/java also comes from headless JREs.
+Requires: jre
 # Requires:	jpackage-utils
 
 %description
@@ -94,6 +95,9 @@ EOF
 %_pixmapsdir/pdfsam*.svg
 
 %changelog
+* Wed Sep 09 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.4e-alt2
+- Require a full JRE for the graphical interface (ALT bug 56168).
+
 * Wed Jul 27 2016 Vitaly Lipatov <lav@altlinux.ru> 2.2.4e-alt1
 - new version (2.2.4e) with rpmgs script
 
@@ -103,5 +107,4 @@ EOF
 * Fri Jul 25 2014 Denis Silakov <denis.silakov@rosalab.ru> 2.2.2e-3
 + Revision: 0c0fd58
 - MassBuild#464: Increase release tag
-
 
