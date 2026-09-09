@@ -11,7 +11,7 @@
 %define ser_libname %libname-service
 %define ser_girname %{girname}Service
 %define soversion 0.14
-%define minor_version 1
+%define minor_version 2
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -465,6 +465,10 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Thu Sep 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.2-alt1
+- New version: 0.14.2.
+- Fixed `first-run` unsetting in phrog.
+
 * Tue Sep 08 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.1-alt1
 - New version: 0.14.1.
 - Fixed non existed User0 ad initial-setup stage.
