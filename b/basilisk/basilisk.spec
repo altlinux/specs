@@ -10,7 +10,7 @@ Version:  %vendor_version
 Epoch:  1
 
 #Release: alt1_%git_commit.1
-Release: alt1
+Release: alt2
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -290,7 +290,8 @@ set -x
 
 # Add alternatives
 mkdir -p ./%_altdir
-printf '%_bindir/xbrowser\t%_bindir/%name\t98\n' >./%_altdir/%name
+printf '%_bindir/xbrowser\t%_bindir/%name\t170\n' >./%_altdir/%name
+printf '%_bindir/x-www-browser\t%_bindir/%bname\t170\n' >> ./%_altdir/%bname
 
 # Add real RPATH
 (set -x
@@ -342,6 +343,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Wed Sep 09 2026 Hihin Ruslan <ruslandh@altlinux.ru> 1:2026.06.12-alt2
+- Add provides x-www-browser (via alternative)
+
 * Sat Jul 04 2026 Hihin Ruslan <ruslandh@altlinux.ru> 1:2026.06.12-alt1
 - Update to v2026.06.12
 
