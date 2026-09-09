@@ -2,7 +2,7 @@
 %def_with check
 
 Name: agf
-Version: 0.15.0
+Version: 0.15.1
 Release: alt1
 Summary: Find, search, and resume AI coding-agent sessions
 License: MIT
@@ -45,5 +45,8 @@ sed -i '/importlib\.metadata\.version("wcwidth")/d' \
 %_bindir/%name
 
 %changelog
+* Wed Sep 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.1-alt1
+- Updated to version 0.15.1.
+
 * Sun Sep 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.0-alt1
 - Initial build for ALT.
