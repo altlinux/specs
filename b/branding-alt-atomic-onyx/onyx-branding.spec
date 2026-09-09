@@ -15,7 +15,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20260907
+Version: 20260909
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -163,6 +163,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Wed Sep 09 2026 Vladimir Romanov <rirusha@altlinux.org> 20260909-alt1
+- Dropped language step.
+
 * Mon Sep 07 2026 Vladimir Romanov <rirusha@altlinux.org> 20260907-alt1
 - Updated for ready-set 0.14.
 - Added `license-agreement` plugin to ready-set config.
