@@ -4,8 +4,8 @@
 %def_with check
 
 Name: date
-Version: 3.0.4
-Release: alt2
+Version: 3.0.5
+Release: alt1
 
 Summary: A date and time library based on the C++11/14/17 <chrono> header
 License: BSD-2-Clause and BSL-1.0
@@ -95,6 +95,9 @@ information as well.
 %_libdir/libdate-tz.so.*
 
 %changelog
+* Thu Sep 03 2026 Artem Krasovskiy <aibure@altlinux.org> 3.0.5-alt1
+- updated from 3.0.4 to 3.0.5
+
 * Thu Apr 02 2026 Anton Zhukharev <ancieg@altlinux.org> 3.0.4-alt2
 - Propagated HAS_STRING_VIEW=1 to library consumers (ALT#58483).
 
