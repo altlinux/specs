@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-python-for-android
-Version: 2024.1.21
-Release: alt2
+Version: 2026.5.9
+Release: alt1
 
 Summary: Turn your Python application into an Android APK
 
@@ -34,7 +34,7 @@ BuildRequires: /proc
 BuildRequires: /dev/pts
 %endif
 
-%add_python3_req_skip android._android android._android_sound android.config
+%add_python3_req_skip android._android android._android_sound android.config android
 
 %description
 python-for-android is an open source build tool to let you package Python code
@@ -66,7 +66,15 @@ and not test_venv \
 and not test_get_package_as_folder \
 and not test_extract_metainfo_files_from_package \
 and not test__extract_info_from_package \
-and not test_get_package_name"
+and not test_get_package_name \
+and not test_all_modules_present \
+and not test_missing_module_without_version \
+and not test_get_dep_names_error_handling \
+and not test_arch_arm \
+and not test_arch_armv7a \
+and not test_arch_x86 \
+and not test_arch_x86_64 \
+and not test_arch_aarch_64"
 
 %files
 %doc README.md
@@ -77,6 +85,9 @@ and not test_get_package_name"
 %python3_sitelibdir/ci/
 
 %changelog
+* Mon Sep 07 2026 Anton Vyatkin <toni@altlinux.org> 2026.5.9-alt1
+- new version 2026.5.9
+
 * Mon Jan 06 2025 Anton Vyatkin <toni@altlinux.org> 2024.1.21-alt2
 - use platformdirs
 

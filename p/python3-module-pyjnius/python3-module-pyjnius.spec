@@ -1,10 +1,10 @@
 %define oname pyjnius
 
-%def_without check
+%def_with check
 
 Name: python3-module-pyjnius
-Version: 1.6.1
-Release: alt5
+Version: 1.7.0
+Release: alt1
 
 Summary: A Python module to access Java classes as Python classes using JNI
 
@@ -14,7 +14,6 @@ Url: https://pypi.org/project/pyjnius
 Vcs: https://github.com/kivy/pyjnius
 
 Source: %name-%version.tar
-Patch0: 0001-fixes-for-Cython-3.1-support-753.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -32,7 +31,6 @@ using the Java Native Interface (JNI).
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 # gcc 14.2.1
@@ -64,6 +62,9 @@ py.test-3 -v
 %python3_sitelibdir/__pycache__/jnius_config.*
 
 %changelog
+* Mon Sep 07 2026 Anton Vyatkin <toni@altlinux.org> 1.7.0-alt1
+- New version 1.7.0.
+
 * Wed Sep 24 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.1-alt5
 - fixed FTBFS with cython>3.1
 
