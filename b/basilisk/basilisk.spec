@@ -10,7 +10,7 @@ Version:  %vendor_version
 Epoch:  1
 
 #Release: alt1_%git_commit.1
-Release: alt2
+Release: alt3
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -18,7 +18,7 @@ Group: Networking/WWW
 Url: https://basilisk-browser.org/
 Vcs: https://repo.palemoon.org/Basilisk-Dev/Basilisk.git
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 Source:  %name-%version.tar
@@ -55,6 +55,8 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildPreReq: python-modules-json python-modules-wsgiref python3-dev 
 
 BuildPreReq: chrpath nasm
+
+# BuildPreReq: moreutils 
 BuildPreReq: autoconf_%_autoconf_version
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libpixman-devel
@@ -78,6 +80,12 @@ BuildPreReq: libXcomposite-devel libXdamage-devel
 
 %ifarch x86_64 %ix86
 BuildRequires: libcpuid-devel
+%endif
+
+%ifarch %ix86
+BuildRequires: libaom-devel libaom-tools
+#BuildRequires: libyuv-devel libyuv-tools 
+BuildRequires: libbabl-devel
 %endif
 
 #BuildRequires: gcc%%{_gcc_version}-c++
@@ -110,39 +118,47 @@ These helper macros provide possibility to rebuild
 
 %prep
 %setup -n %name-%version -c
-cp -f %SOURCE4 .mozconfig
+#cp -f %SOURCE4 .mozconfig2
 
-
-echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
-echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
-
-echo "ac_add_options --disable-elf-hack" >> .mozconfig
-echo "ac_add_options --enable-alsa --enable-pulseaudio" >> .mozconfig
-echo "ac_add_options --enable-raw --enable-ffmpeg" >> .mozconfig
-
-# echo "ac_add_options --enable-system-hunspell" >> .mozconfig
-
-echo "ac_add_options --with-pthreads" >> .mozconfig
-
-echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
-echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
+%ifarch %ix86
+cp -f mozconfigs/linux/i686/gtk3_unofficial_branding_gcc.mozconfig .mozconfig
+%endif
 
 %ifarch x86_64
- echo "_BUILD_64=1" >> .mozconfig
- echo "ac_add_options --with-arch=x86-64" >> .mozconfig
- echo 'ac_add_options --enable-optimize="-O3 -march=x86-64 -w -msse2 -mfpmath=sse"' >> .mozconfig
+cp -f mozconfigs/linux/x86_64/gtk3_unofficial_branding_gcc.mozconfig .mozconfig
 %endif
 
 %ifarch aarch64
-echo "_BUILD_64=1" >> .mozconfig
-echo 'ac_add_options --enable-optimize="-O3 -w -flto=auto"' >> .mozconfig
-#echo "ac_add_options --with-arch=aarch64" >> .mozconfig
+cp -f mozconfigs/linux/aarch64/gtk3_unofficial_branding_gcc.mozconfig .mozconfig
 %endif
 
+echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
+echo "mk_add_options MOZ_MAKE_FLAGS=%_smp_mflags" >> .mozconfig
+ 
+echo "ac_add_options --disable-elf-hack" >> .mozconfig
+
+# echo "ac_add_options --enable-alsa --enable-pulseaudio" >> .mozconfig
+# echo "ac_add_options --enable-raw --enable-ffmpeg" >> .mozconfig
+# 
+# echo "ac_add_options --with-pthreads" >> .mozconfig
+# 
+# echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
+# echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
+# 
+#%%ifarch x86_64
+# echo "ac_add_options --with-arch=x86-64" >> .mozconfig
+# echo 'ac_add_options --enable-optimize="-O3 -march=x86-64 -w -msse2 -mfpmath=sse"' >> .mozconfig
+#%%endif
+# 
+#ifarch aarch64
+#echo 'ac_add_options --enable-optimize="-O3 -w -flto=auto"' >> .mozconfig
+#%%endif
+# 
+
 %ifarch %ix86
- echo 'ac_add_options --enable-optimize="-O2 -march=i586 -w -msse2 -mfpmath=sse"'  >> .mozconfig
- echo "ac_add_options --with-arch=i586"  >> .mozconfig
- echo "_BUILD_64=" | cat - .mozconfig | sponge .mozconfig
+#%%__subst  's\enable-av1\disable-av1\g' .mozconfig
+#%%__subst  's\i686\i586\g' .mozconfig
+echo "ac_add_options --enable-libaom" >> .mozconfig
 %endif
 
 
@@ -291,7 +307,7 @@ set -x
 # Add alternatives
 mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%name\t170\n' >./%_altdir/%name
-printf '%_bindir/x-www-browser\t%_bindir/%bname\t170\n' >> ./%_altdir/%bname
+printf '%_bindir/x-www-browser\t%_bindir/%name\t170\n' >> ./%_altdir/%name
 
 # Add real RPATH
 (set -x
@@ -343,6 +359,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Wed Sep 09 2026 Hihin Ruslan <ruslandh@altlinux.ru> 1:2026.06.12-alt3
+- Add mozilaconfs/linux in souurce
+
 * Wed Sep 09 2026 Hihin Ruslan <ruslandh@altlinux.ru> 1:2026.06.12-alt2
 - Add provides x-www-browser (via alternative)
 
@@ -378,6 +397,3 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 
 * Thu Nov 23 2023 Hihin Ruslan <ruslandh@altlinux.ru> 52.9.0-alt1
 - Init Build
-
-
-
