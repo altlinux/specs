@@ -3,10 +3,8 @@
 
 %define _localstatedir /var
 
-%def_with monitor
-
 Name: thermald
-Version: 2.5.10
+Version: 2.5.12
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -22,7 +20,7 @@ Source1: thermald.init
 Source2: %name-monitor.svg
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: pkgconfig(gio-2.0)
@@ -51,29 +49,9 @@ thermald представляет собой службу, которая упр
 существующую инфраструктуру ядра Linux, и его возможности могут быть легко
 расширены.
 
-%if_with monitor
-%package monitor
-Summary: Application for monitoring %name
-License: GPL-3.0-or-later
-Group: Monitoring
-BuildRequires: qt5-base-devel
-BuildRequires: qcustomplot-qt5-devel
-Requires: %name = %EVR
-
-%description monitor
-This package contains an Application to monitor %name for system
-developers who want to enable application developers and their
-customers with the responsive and flexible thermal management,
-supporting optimal performance in desktop, clam-shell, mobile and
-embedded devices.
-%endif
-
 %prep
 %setup
 %autopatch -p1
-
-sed -i 's/LIBS += -lQCustomPlot/LIBS += -lqcustomplot-qt5/' \
-  tools/thermal_monitor/ThermalMonitor.pro
 
 %build
 ./autogen.sh
@@ -81,17 +59,6 @@ sed -i 's/LIBS += -lQCustomPlot/LIBS += -lqcustomplot-qt5/' \
     --disable-option-checking \
     --disable-silent-rules
 %make_build
-
-%if_with monitor
-# Build the monitor-app.
-pushd tools/thermal_monitor
-mkdir -p %_target_platform
-pushd %_target_platform
-%qmake_qt5 ..
-%make_build
-popd
-popd
-%endif
 
 %install
 %makeinstall_std
@@ -112,43 +79,17 @@ EOF
 install -Dpm 0644 alt_addons/%name.conf \
     %buildroot%_tmpfilesdir/%name.conf
 
+# Install sysusers.conf
+cat >thermald.sysusers.conf <<EOF
+g power -
+EOF
+
+install -m0644 -D thermald.sysusers.conf \
+	%buildroot%_sysusersdir/thermald.conf
+
 # Install config
 install -Dpm 0644 data/thermal-conf.xml \
     %buildroot%_sysconfdir/%name/thermal-conf.xml
-
-%if_with monitor
-# Create desktop-file for the monitor-app
-cat << EOF > alt_addons/%name-monitor.desktop
-[Desktop Entry]
-Name=%name Monitor
-Comment=Application for monitoring %name
-Icon=%name-monitor
-Categories=System;Settings;
-Exec=%_bindir/ThermalMonitor
-Type=Application
-StartupNotify=true
-Terminal=false
-EOF
-
-# Install the monitor-app
-install -Dpm 0755 tools/thermal_monitor/%_target_platform/ThermalMonitor \
-    %buildroot%_bindir/ThermalMonitor
-install -Dpm 0644 alt_addons/%name-monitor.desktop \
-    %buildroot%_desktopdir/%name-monitor.desktop
-install -Dpm 0644 %SOURCE2 \
-    %buildroot%_iconsdir/hicolor/scalable/apps/%name-monitor.svg
-
-# Create ReadMe.txt for the monitor-app
-cat << EOF > alt_addons/ReadMe
-Running the thermald-monitor-app
---------------------------------
-
-To communicate with thermald via dbus, the user has to be member
-of the "power" group. So make sure to add your user id to this
-group before using the thermald-monitor-app.
-EOF
-
-%endif
 
 %pre
 %_bindir/getent group power >/dev/null || %_sbindir/groupadd -r power
@@ -164,6 +105,7 @@ exit 0
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/thermal-conf.xml
 %config(noreplace) %_sysconfdir/%name/thermal-cpu-cdev-order.xml
+%config(noreplace) %_sysconfdir/%name/thermald-features.xml
 %doc README.txt thermal_daemon_usage.txt COPYING
 %_tmpfilesdir/%name.conf
 %_sbindir/%name
@@ -171,19 +113,22 @@ exit 0
 %_datadir/dbus-1/system-services/org.freedesktop.%name.service
 %_datadir/dbus-1/system.d/org.freedesktop.%name.conf
 %_unitdir/%name.service
+%_sysusersdir/thermald.conf
 %_initdir/%name
-%_man5dir/*
-%_man8dir/*
-
-%if_with monitor
-%files monitor
-%doc alt_addons/ReadMe
-%_bindir/ThermalMonitor
-%_desktopdir/%name-monitor.desktop
-%_iconsdir/hicolor/scalable/apps/%name-monitor.svg
-%endif
+%_man5dir/*.5.*
+%_man8dir/*.8.*
 
 %changelog
+* Thu Sep 10 2026 Anton Midyukov <antohami@altlinux.org> 2.5.12-alt1
+- New version 2.5.12.
+- Add upstream fixes:
+  + Allow desktop platform with ignore-cpuid-check
+  + Remove fatal error for non mobile platform
+  + thermald: platform: intel: Re-add Wildcat Lake support
+- Add sysusers config.
+- Build on aarch64 too.
+- Remove subpackage thermald-monitor (remove in upstream).
+
 * Tue Nov 11 2025 Anton Midyukov <antohami@altlinux.org> 2.5.10-alt1
 - New version 2.5.10.
 
