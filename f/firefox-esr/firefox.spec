@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.14.0
+Version: 140.15.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -473,6 +473,21 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Sep 09 2026 Pavel Vasenkov <pav@altlinux.org> 140.15.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-75874 Sandbox escape in the Remote Settings Client component
+  + CVE-2026-16365 Privilege escalation in the DOM: Workers component
+  + CVE-2026-84119 Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-84120 Use-after-free in the Audio/Video component
+  + CVE-2026-84121 Sandbox escape due to use-after-free in the DOM: Security component
+  + CVE-2026-84122 Use-after-free in the Audio/Video component
+  + CVE-2026-84124 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-16371 Privilege escalation in the DOM: Navigation component
+  + CVE-2026-84131 Privilege escalation due to invalid pointer in the Graphics component
+  + CVE-2026-84143 Internally found bugs fixed in Firefox 155, Firefox ESR 153.2 and Firefox ESR 140.15
+  + CVE-2026-84145 Internally found bugs fixed in Firefox 155, Firefox ESR 153.2, Firefox ESR 140.15 and Firefox ESR 115.40
+
 * Wed Aug 26 2026 Pavel Vasenkov <pav@altlinux.org> 140.14.0-alt1
 - New ESR version.
 - Security fixes:
