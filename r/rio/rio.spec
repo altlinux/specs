@@ -4,7 +4,7 @@
 
 Name: rio
 Version: 0.5.27
-Release: alt2
+Release: alt3
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
 Group: Terminals
@@ -68,11 +68,11 @@ scdoc < extra/man/rio-bindings.5.scd > %bin_name-bindings.5
 %install
 install -Dm0755 target/release/rio %buildroot%_bindir/%bin_name
 install -Dm0644 misc/rio.desktop \
-    %buildroot%_desktopdir/com.rioterm.Rio.desktop
+    %buildroot%_desktopdir/rio.desktop
 sed -i \
     -e 's/^TryExec=rio$/TryExec=%bin_name/' \
     -e 's/^Exec=rio$/Exec=%bin_name/' \
-    %buildroot%_desktopdir/com.rioterm.Rio.desktop
+    %buildroot%_desktopdir/rio.desktop
 install -Dm0644 misc/com.rioterm.Rio.metainfo.xml \
     %buildroot%_datadir/metainfo/com.rioterm.Rio.metainfo.xml
 install -Dm0644 misc/logo-2024.svg \
@@ -89,7 +89,7 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 
 %files
 %_bindir/%bin_name
-%_desktopdir/com.rioterm.Rio.desktop
+%_desktopdir/rio.desktop
 %_datadir/metainfo/com.rioterm.Rio.metainfo.xml
 %_iconsdir/hicolor/scalable/apps/rio.svg
 %_datadir/terminfo/*/*
@@ -98,6 +98,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Thu Sep 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.27-alt3
+- Match the desktop file ID to Rio's Wayland app ID.
+
 * Tue Sep 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.27-alt2
 - Added upstream patch to support middle-click paste from primary selection.
 
