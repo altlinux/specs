@@ -13,7 +13,7 @@
 %endif
 
 Name:           lib%oname
-Version: 3.1.16.0
+Version: 3.1.17.0
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -249,6 +249,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Thu Sep 10 2026 Anton Farygin <rider@altlinux.org> 3.1.17.0-alt1
+- 3.1.16.0 -> 3.1.17.0
+
 * Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 3.1.16.0-alt1
 - 3.1.15.0 -> 3.1.16.0
 
