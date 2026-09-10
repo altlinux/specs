@@ -11,8 +11,8 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.30.0
-Release: alt3
+Version: 3.31.1
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -565,6 +565,16 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Thu Sep 10 2026 Andrey Cherepanov <cas@altlinux.org> 3.31.1-alt1
+- New version (fixes: GHSA-c5gr-hmqp-pwj4, GHSA-h5w2-q35j-443h,
+  GHSA-m85m-3qxv-63h5, GHSA-r9pv-ffph-6gg6, GHSA-ffjr-p229-hpch,
+  GHSA-4464-r7qj-pgrx, GHSA-2vf2-grvj-6g8x, GHSA-hg4r-vv53-vwf8,
+  GHSA-57h7-vw2f-2f9x, GHSA-v649-94v2-p72q, GHSA-j5mq-3349-gwmm,
+  GHSA-23pf-q83q-x45r, GHSA-pj8w-fh79-f438, GHSA-vccg-35r5-8jrf,
+  GHSA-w9qg-g24r-77f6, GHSA-f5p6-88mh-59vg, GHSA-hw7p-5h2r-83gq,
+  GHSA-r7jx-j9h7-j4xj, GHSA-6mpx-c8rj-whj5, GHSA-x7v6-xfx3-52j6,
+  GHSA-9jcm-x588-gh26, GHSA-q65v-4w7q-hx3r).
+
 * Sun Sep 06 2026 Andrey Cherepanov <cas@altlinux.org> 3.30.0-alt3
 - Conflicted with libfreerdp on man page wlog.7 (ALT #60409).
 
