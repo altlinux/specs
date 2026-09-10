@@ -1,8 +1,8 @@
 Name: kernel-image-6.12
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.108
+%define kernel_sublevel	.109
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -131,6 +131,7 @@ BuildRequires: ccache
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: iproute2
 BuildRequires: ltp >= 20210524-alt2
+BuildRequires: kirk
 BuildRequires: rpm-build-vm-run >= 1.30
 BuildRequires: rtcheck
 }}
@@ -503,12 +504,31 @@ timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=
 %else
 	'uname -a'
 %endif
+
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
-	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
-	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
-	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
-	exit 1
+if kvm-ok; then
+	# cleanup from the possible revious run
+	rm -rvf kirk-reports
+	mkdir kirk-reports
+	timeout 1999 vm-run --klog --append='altha=1 oops=panic panic_on_warn=1' \
+		kirk -w %_smp_build_ncpus -f kernel-alt-vm \
+		-S /usr/lib/ltp/skiplist-alt-vm -o kirk-reports/report.json
+
+	# kirk exits with 0 exit code even if some tests fail. We need to examine
+	# it's report to validate that everything is ok.
+	[ -s kirk-reports/report.json ] || exit 1
+
+	pushd kirk-reports
+	/usr/lib/kirk/json2logs --resfile report.json \
+		--sumfile kirk-sum.log --failfile kirk-fail.log --runfile kirk-run.log
+	if grep -qiFw fail kirk-sum.log; then
+		cat kirk-fail.log
+		cat kirk-sum.log
+		exit 3
+	else
+		cat kirk-sum.log
+	fi
+	popd
 fi
 
 %post checkinstall
@@ -593,6 +613,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Sep 09 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.109-alt2
+- spec: Use kirk to run LTP tests.
+
+* Mon Sep 07 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.109-alt1
+- v6.12.109 (2026-09-07).
+
 * Wed Sep 02 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.108-alt1
 - v6.12.108 (2026-09-02).
 
