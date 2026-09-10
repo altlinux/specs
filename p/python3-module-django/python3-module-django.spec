@@ -1,4 +1,4 @@
-%define branch 6.0
+%define branch 6.1
 %define origname Django
 %define oname django
 
@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.8
+Version: %branch.1
 Release: alt1
 Source0: %origname-%version.tar
 Patch0: fix-flaky-double-squash-test.patch
@@ -186,6 +186,10 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Wed Sep 09 2026 Alexander Burmatov <thatman@altlinux.org> 6.1.1-alt1
+- New version 6.1.1.
+- Some bugfixes.
+
 * Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 6.0.8-alt1
 - New version 6.0.8.
 - Fixes for the following security vulnerabilities:

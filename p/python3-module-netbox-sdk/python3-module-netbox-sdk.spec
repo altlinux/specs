@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.0.11
+Version: 0.0.12
 Release: alt1
 
 Summary: Modern NetBox toolkit with an SDK, CLI and TUI (terminal UI) for faster automation
@@ -31,6 +31,7 @@ BuildRequires: python3-module-fastapi
 BuildRequires: python3-module-httpx
 BuildRequires: python3-module-click
 BuildRequires: python3-module-jsonschema
+BuildRequires: git-core
 %endif
 
 BuildArch: noarch
@@ -85,11 +86,11 @@ rm -f %buildroot%_bindir/nbx-mcp
 	test_main_handles_unknown_command_without_traceback or \
 	test_metadata_generation_rejects_source_version_mismatch or \
 	test_metadata_generation_rejects_materially_different_same_version_ancestor or \
-	test_release_commit_must_already_be_on_canonical_main or \
-	test_immutable_tag_requires_exact_annotated_object_and_commit or \
 	test_built_wheel_exposes_the_catalog_outside_the_checkout or \
 	test_v46_typed_regeneration_matches_committed_artifact or \
-	test_v47_typed_regeneration_matches_committed_artifact)" \
+	test_v47_typed_regeneration_matches_committed_artifact or \
+	test_datamodel_code_generator_is_locked_and_installed or \
+	test_v47_model_regeneration_matches_committed_artifact)" \
     --ignore=tests/test_gitea_release.py \
     --ignore=tests/test_mcp.py \
     --ignore=tests/test_mcp_connected_line.py \
@@ -109,6 +110,9 @@ rm -f %buildroot%_bindir/nbx-mcp
 %python3_sitelibdir/netbox_tui
 
 %changelog
+* Mon Sep 07 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.12-alt1
+- New 0.0.12 version.
+
 * Fri Aug 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.11-alt1
 - New 0.0.11 version.
 

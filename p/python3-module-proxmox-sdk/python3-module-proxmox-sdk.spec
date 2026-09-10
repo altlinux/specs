@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.0.13
+Version: 0.0.14.post3
 Release: alt1
 
 Summary: Proxmox Async SDK
@@ -68,6 +68,9 @@ and in-memory CRUD operations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 10 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.14.post3-alt1
+- New 0.0.14.post3 version.
+
 * Wed Aug 12 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.13-alt1
 - New 0.0.13 version.
 
