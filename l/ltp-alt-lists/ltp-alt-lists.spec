@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 20
+Version: 21
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -32,7 +32,6 @@ mkdir -p %buildroot/usr/lib/ltp/runtest
 	syscalls \
 	syscalls-ipc \
 	crypto \
-	connectors \
 	containers \
 	fs_readonly \
 	ima \
@@ -51,6 +50,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Tue Sep 08 2026 Ivan A. Melnikov <iv@altlinux.org> 21-alt1
+- Updates for ltp 20260529-alt1
+
 * Sun Aug 10 2025 Vitaly Chikunov <vt@altlinux.org> 20-alt1
 - Skip epoll_ctl04 for (v6.17-rc1).
 

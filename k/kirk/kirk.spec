@@ -3,8 +3,8 @@
 %define py_name libkirk
 
 Name: kirk
-Version: 4.1.0
-Release: alt1
+Version: 4.2.0
+Release: alt2
 
 Summary: Devicetree Schema Tools
 License: BSD-2-Clause
@@ -61,17 +61,27 @@ readable.
 %install
 %pyproject_install
 
+%__install -Dm755 utils/json2html.py %buildroot%_libexecdir/%name/json2html
+%__install -Dm755 utils/json2logs.py %buildroot%_libexecdir/%name/json2logs
+
 %check
 %pyproject_run_pytest
 
 %files
 %_bindir/*
+%_libexecdir/%name
 
 %files -n python3-module-%py_name
 %python3_sitelibdir_noarch/%{py_name}*
 %python3_sitelibdir_noarch/%{name}*
 
 %changelog
+* Tue Sep 08 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt2
+- package utils to %_libexecdir/%name.
+
+* Tue Sep 08 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Mon Sep 07 2026 Ivan A. Melnikov <iv@altlinux.org> 4.1.0-alt1
 - build for Sisyphus
 - fix test_com tests on slower machines
