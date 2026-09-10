@@ -1,8 +1,8 @@
 %define _metadir %_datadir/metainfo
 
 Name: glaxnimate
-Version: 0.5.5
-Release: alt4
+Version: 0.6.0
+Release: alt1
 
 Summary: A simple vector graphics animation program
 License: BSD-2-Clause and CC-BY-SA-4.0 and CC0-1.0 and GPL-3.0-or-later and Unicode-TOU
@@ -12,9 +12,10 @@ Url: https://glaxnimate.mattbas.org/
 Source: https://gitlab.com/mattbas/glaxnimate.git/%version/glaxnimate-%version.tar.bz2
 Patch: glaxnimate-0.5.1-qt6.patch
 Patch1: glaxnimate-0.5.5-fix-python-wheel-platform.patch
+Patch2: glaxnimate-0.6.0-remove_git_check.patch
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: libarchive-devel
 BuildRequires: libavcodec-devel
 BuildRequires: libavformat-devel
@@ -28,7 +29,8 @@ BuildRequires: zlib-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-svg-devel 
 BuildRequires: qt6-tools-devel
-BuildRequires: cmake rpm-macros-cmake
+BuildRequires: cmake extra-cmake-modules
+BuildRequires: kf6-kcoreaddons-devel kf6-kwidgetsaddons-devel kf6-ki18n-devel kf6-kconfig-devel qt6-declarative-devel kf6-kxmlgui-devel kf6-kcolorscheme-devel kf6-kcrash-devel kf6-karchive-devel kf6-kiconthemes-devel kf6-kcompletion-devel
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 Requires: icon-theme-breeze qt6-svg
@@ -48,8 +50,9 @@ Allows to create and modify vector animations. With support for Lottie, SVG, and
 
 %prep
 %setup
-%patch0 -p1
+#patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %ifarch %e2k
 sed -i 's/ch\.unicode()/(ushort)&/' src/core/io/svg/path_parser.hpp
@@ -58,9 +61,11 @@ sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
 %endif
 
 %build
-%cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON 
+%cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+   -DBUILD_WITH_QT6=ON \
+   -DPython3_EXECUTABLE=%{__python3}
+
 %cmake_build
-%make_build translations -C %_cmake__builddir
 
 # python3 binding
 %make_build glaxnimate_python -C %_cmake__builddir 
@@ -77,17 +82,21 @@ pushd %_cmake__builddir/bin/python
 %pyproject_install
 popd
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %_bindir/glaxnimate
-%_desktopdir/org.mattbas.Glaxnimate.desktop
+%_desktopdir/org.kde.glaxnimate.desktop
 %dir %_datadir/glaxnimate
 %dir %_datadir/glaxnimate/glaxnimate
 %_datadir/glaxnimate/glaxnimate/*
-%_iconsdir/hicolor/*/apps/org.mattbas.Glaxnimate.png
+%_iconsdir/hicolor/*/apps/glaxnimate.png
 %_iconsdir/hicolor/512x512/apps/glaxnimate.png
-%_iconsdir/hicolor/scalable/apps/org.mattbas.Glaxnimate.svg
+%_iconsdir/hicolor/512x512/apps/org.kde.glaxnimate.png
 %_iconsdir/hicolor/scalable/apps/glaxnimate.svg
-%_metadir/org.mattbas.Glaxnimate.metainfo.xml
+%_iconsdir/hicolor/scalable/apps/org.kde.glaxnimate.svg
+%_metadir/org.kde.glaxnimate.metainfo.xml
+%_datadir/config.kcfg/glaxnimate_settings.kcfg
 %doc *.md
 
 %files -n python3-module-%name
@@ -95,6 +104,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo glaxnimate}
 
 %changelog
+* Wed Sep  9 2026 Artyom Bystrov <arbars@altlinux.org> 0.6.0-alt1
+- Update to new version
+
 * Wed Dec 03 2025 Ivan Mazhukin <vanomj@altlinux.org> 0.5.5-alt4
 - add subpackage for python3 binding
 - add patch to fix python3 binary wheel installation path
