@@ -32,7 +32,7 @@ data acquisition, monitoring, and a lot more.
 %global soversion 2
 
 Name: indi
-Version: 2.2.3.1
+Version: 2.2.4.2
 Release: alt1
 
 Summary: Instrument Neutral Distributed Interface
@@ -42,8 +42,7 @@ Url: https://indilib.org
 Vcs: https://github.com/indilib/indi.git
 
 Source: %name-%version.tar
-Patch0: fix-indi2-ALT-SharedLibsPolicy-CMakeLists.txt.patch
-Patch1: fix-indi2-ALT-vtable_undefined_symbol-CMakeLists.txt.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): rpm-build-cmake
 BuildRequires: cmake
@@ -133,7 +132,7 @@ Conflicts: libindi-devel < 1.8.9-alt1
 
 %prep
 %setup
-%autopatch
+%autopatch -p1
 
 %build
 %add_optflags %optflags_shared
@@ -194,6 +193,9 @@ popd
 %_libdir/lib%{name}AlignmentClient.a
 
 %changelog
+* Thu Sep 10 2026 Ulysses Apokin <ulysses@altlinux.org> 2.2.4.2-alt1
+- New version.
+
 * Mon Jun 15 2026 Ulysses Apokin <ulysses@altlinux.org> 2.2.3.1-alt1
 - New version.
 
