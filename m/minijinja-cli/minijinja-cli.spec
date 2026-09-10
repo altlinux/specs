@@ -1,5 +1,5 @@
 Name:    minijinja-cli
-Version: 2.23.0
+Version: 2.24.0
 Release: alt1
 
 Summary: Command-line utility for the MiniJinja template engine
@@ -58,6 +58,9 @@ cd minijinja-cli
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Wed Sep 09 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.24.0-alt1
+- new version 2.24.0
+
 * Fri Aug 07 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.23.0-alt1
 - new version 2.23.0
 
