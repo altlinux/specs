@@ -1,16 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alizams
-Version: 1.10.0
-Release: alt2
+Version: 1.10.3
+Release: alt1
 
 Summary: DICOM Viewer
 License: GPL-3.0
 Group: Sciences/Medicine
 VCS: https://github.com/AlizaMedicalImaging/AlizaMS
-Url: https://www.aliza-dicom-viewer.com/
+Url: https://www.aliza-dicom-viewer.com
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -23,6 +25,7 @@ BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(cups)
 BuildRequires: pkgconfig(bullet)
 BuildRequires: pkgconfig(fmt)
+BuildRequires: pkgconfig(charls)
 BuildRequires: libitk-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-svg-devel
@@ -51,6 +54,7 @@ The list of features includes:
 
 %prep
 %setup
+%patch -p1
 sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/usr/share/applications/alizams.desktop
 
 %build
@@ -84,6 +88,9 @@ sed -i "s|^Categories=.*|Categories=Science;MedicalSoftware;|" package/archive/u
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Sep 10 2026 Nikolay Strelkov <snk@altlinux.org> 1.10.3-alt1
+- New version 1.10.3.
+
 * Sat Jun 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.10.0-alt2
 - Fixed FTBFS.
 
