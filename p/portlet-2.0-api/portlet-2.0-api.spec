@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global api_version 2.0
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt3_24jpp11
+Release:       alt4
 Summary:       Java Portlet Specification V2.0
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -74,6 +74,9 @@ sed -i "s|javax.servlet.http;version=2.4,*|javax.servlet.http;version=3.0,*|" po
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 1.0-alt4
+- fixed build with new maven
+
 * Tue Apr 18 2023 Igor Vlasenko <viy@altlinux.org> 1.0-alt3_24jpp11
 - update
 

@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global core org.abego.treelayout
 
 Name:          treelayout
 Version:       1.0.3
-Release:       alt1_13jpp11
+Release:       alt2
 Summary:       Efficient and customizable Tree Layout Algorithm in Java
 License:       BSD
 URL:           http://treelayout.sourceforge.net/
@@ -79,6 +79,9 @@ fi
 %doc --no-dereference %{core}/src/LICENSE.TXT
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 1.0.3-alt2
+- FTBFS fix
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_13jpp11
 - new version
 
