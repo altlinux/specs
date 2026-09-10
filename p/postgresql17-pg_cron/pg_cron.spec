@@ -2,8 +2,8 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_cron
-Version: 1.6.7
-Release: alt2
+Version: 1.6.8
+Release: alt1
 
 Summary: The pg_cron is a simple cron-based job scheduler for PostgreSQL
 License: PostgreSQL
@@ -42,6 +42,9 @@ the database.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Sep 10 2026 Alexei Takaseev <taf@altlinux.org> 1.6.8-alt1
+- 1.6.8
+
 * Mon Mar 16 2026 Alexei Takaseev <taf@altlinux.org> 1.6.7-alt2
 - Use LLVM if it used in PostgreSQL
 
