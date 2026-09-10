@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2022.02.02
-Release: alt2
+Version: 2025.01.06
+Release: alt1
 
 Summary: Python wrapper for libtriangle
 
@@ -50,6 +50,9 @@ py.test-3 -v tests
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 10 2026 Anton Vyatkin <toni@altlinux.org> 2025.01.06-alt1
+- New version 2025.01.06.
+
 * Thu May 04 2023 Grigory Ustinov <grenka@altlinux.org> 2022.02.02-alt2
 - Fixed build with python3.11.
 
