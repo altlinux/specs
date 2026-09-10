@@ -13,7 +13,7 @@
 
 Name: knot
 Version: 3.5.3
-Release: alt2
+Release: alt3
 Summary: High-performance authoritative DNS server
 Group: System/Servers
 License: GPL-3.0-or-later
@@ -47,10 +47,6 @@ Knot DNS is a high-performance authoritative DNS server implementation.
 Summary: Development files for the Knot DNS libraries
 Group: Development/C
 
-Requires: libdnssec%libdnssec_sover = %EVR
-Requires: libknot%libknot_sover = %EVR
-Requires: libzscanner%libzscanner_sover = %EVR
-
 %description devel
 Knot DNS is a high-performance authoritative DNS server implementation.
 
@@ -66,8 +62,6 @@ The package contains DNS client utilities shipped with the Knot DNS server.
 %package -n libdnssec%libdnssec_sover
 Summary: Knot DNS DNSSEC library
 Group: System/Libraries
-
-Provides: libdnssec = %EVR
 Obsoletes: libdnssec < %EVR
 
 %description -n libdnssec%libdnssec_sover
@@ -76,8 +70,6 @@ Knot DNS DNSSEC library
 %package -n libknot%libknot_sover
 Summary: Knot DNS library
 Group: System/Libraries
-
-Provides: libknot = %EVR
 Obsoletes: libknot < %EVR
 
 # Knot DNS 3.2+ isn't compatible with earlier knot-resolver
@@ -89,8 +81,6 @@ Knot DNS library
 %package -n libzscanner%libzscanner_sover
 Summary: Knot DNS Zone Parsing library
 Group: System/Libraries
-
-Provides: libzscanner = %EVR
 Obsoletes: libzscanner < %EVR
 
 %description -n libzscanner%libzscanner_sover
@@ -161,7 +151,7 @@ install -d -m 0770 -D %buildroot%_sharedstatedir/%name/keys
 find %buildroot -type f -name "*.la" -delete -print
 
 %check
-V=1 %make check ||:
+V=1 %make check
 
 %pre
 %_sbindir/groupadd -r -f %name
@@ -227,6 +217,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Wed Sep 02 2026 Aleksandr Gamzin <gamzin@altlinux.org> 3.5.3-alt3
+- Fix shared libraries packaging according to Shared Libs Policy.
+
 * Thu May 21 2026 Aleksandr Gamzin <gamzin@altlinux.org> 3.5.3-alt2
 - Switch shared libraries to ABI-versioned packages (Shared Libs Policy).
 
