@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.34.1
+Version: 1.35.1
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -21,7 +21,7 @@ ExclusiveArch: %{java_arches}
 
 BuildRequires(pre): /proc rpm-build-java jpackage-utils
 BuildRequires: java-21-openjdk-headless java-21-openjdk-devel
-BuildRequires: python3
+BuildRequires: python3 rpm-build-python3
 BuildRequires: unzip
 BuildRequires: gradle
 
@@ -55,6 +55,7 @@ cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Satellite %buildroo
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-config %buildroot%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-database %buildroot/%LS_PREFIX/bin
 cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/controller.postinst.sh
+install -m755 %_builddir/%NAME_VERS/scripts/linstor-controller-ha-setup.py %buildroot/%LS_PREFIX/bin/linstor-controller-ha-setup
 mkdir -p %buildroot%_unitdir
 sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-21-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
 cp -r %_builddir/%NAME_VERS/scripts/linstor-controller.service %buildroot%_unitdir
@@ -108,6 +109,9 @@ Linstor controller manages linstor satellites and persistant data storage.
 %dir %LS_PREFIX
 %dir %LS_PREFIX/lib
 %LS_PREFIX/lib/controller-%version.jar
+# H2 1.x jar, outside the classpath, only used by "linstor-database migrate-h2"
+%dir %LS_PREFIX/lib/migration
+%LS_PREFIX/lib/migration/h2-*.jar
 %exclude %LS_PREFIX/lib/server-%version.jar
 %exclude %LS_PREFIX/lib/jclcrypto-%version.jar
 
@@ -115,6 +119,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %LS_PREFIX/bin/Controller
 %LS_PREFIX/bin/linstor-config
 %LS_PREFIX/bin/linstor-database
+%LS_PREFIX/bin/linstor-controller-ha-setup
 %LS_PREFIX/bin/controller.postinst.sh
 %_unitdir/linstor-controller.service
 %FIREWALLD_SERVICES/linstor-controller.xml
@@ -167,6 +172,9 @@ and creates drbd resource files.
 %preun_systemd linstor-satellite
 
 %changelog
+* Thu Sep 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.35.1-alt1
+- 1.35.1
+
 * Thu Jul 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.34.1-alt1
 - 1.34.1
 
