@@ -2,7 +2,7 @@
 
 Name: mysql-workbench-community
 Version: 8.0.47
-Release: alt4
+Release: alt5
 
 Summary: A MySQL visual database modeling tool
 
@@ -25,6 +25,7 @@ Patch3: %name-8.0.33-alt-arm-fix.patch
 Patch4: %name-8.0.40-alt-fix-gcc14-build.patch
 Patch5: %name-8.0.43-swig-4.3.patch
 Patch6: %name-8.0.47-alt-boost-1.91.patch
+Patch7: %name-8.0.47-alt-python-int.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -181,6 +182,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 %patch4 -p2
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -266,6 +268,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Sep 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt5
+- NMU: fix dashboard with Python 3.14 (Closes: #41654).
+
 * Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt4
 - NMU: fix FTBFS with new boost.
 
