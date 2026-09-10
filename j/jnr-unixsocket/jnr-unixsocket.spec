@@ -1,11 +1,11 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-unixsocket
 Version:        0.21
-Release:        alt1_8jpp11
+Release:        alt2
 Summary:        Unix sockets for Java
 License:        ASL 2.0
 URL:            https://github.com/jnr/%{name}/
@@ -77,6 +77,9 @@ rm -r src/main/java/jnr/enxio
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 0.21-alt2
+- FTBFS fix
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.21-alt1_8jpp11
 - fc34 update
 

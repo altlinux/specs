@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          disruptor
 Version:       3.4.4
-Release:       alt1_3jpp11
+Release:       alt2
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
 URL:           https://lmax-exchange.github.io/disruptor/
@@ -72,7 +72,7 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build
 
 %install
 %mvn_install
@@ -85,6 +85,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc --no-dereference LICENCE.txt
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 3.4.4-alt2
+- FTBFS fix
+
 * Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 3.4.4-alt1_3jpp11
 - new version
 

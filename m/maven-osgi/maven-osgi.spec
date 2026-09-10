@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-osgi
 Version:        0.2.0
-Release:        alt1_19jpp11
+Release:        alt2
 # Maven-shared defines maven-osgi version as 0.3.0
 Epoch:          1
 Summary:        Library for Maven-OSGi integration
@@ -69,6 +69,9 @@ sed -i 's/import aQute\.lib\.osgi/import aQute.bnd.osgi/g' src/main/java/org/apa
 
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 1:0.2.0-alt2
+- FTBFS fix
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2.0-alt1_19jpp11
 - update
 

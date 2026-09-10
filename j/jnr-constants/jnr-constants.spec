@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-constants
 Version:        0.9.12
-Release:        alt1_8jpp11
+Release:        alt2
 Summary:        Java Native Runtime constants 
 License:        ASL 2.0
 URL:            https://github.com/jnr/%{name}/
@@ -55,6 +55,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 0.9.12-alt2
+- FTBFS fix
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_8jpp11
 - fc34 update
 

@@ -2,7 +2,7 @@
 
 Name: jakarta-json
 Version: 2.1.3
-Release: alt2
+Release: alt3
 
 Summary: Jakarta JSON Processing API
 License: EPL-2.0
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: rpm-build-java
 BuildRequires: maven-local
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-plugin-build-helper
 BuildRequires: spec-version-maven-plugin
@@ -133,6 +133,9 @@ rm -rf "${legacy_buildroot}"
 %files impl -f .mfiles-impl
 
 %changelog
+* Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.3-alt3
+- FTBFS fix.
+
 * Tue Mar 31 2026 Ivan Khanas <xeno@altlinux.org> 2.1.3-alt2
 - Fix jakarta.json-api provides.
 
