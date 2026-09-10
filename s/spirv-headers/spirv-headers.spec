@@ -1,8 +1,8 @@
-%define git ad9184e
+%define git 29981f6
 
 Name: spirv-headers
 Version: 1.5.5
-Release: alt23.g%{git}
+Release: alt26.g%{git}
 Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
@@ -46,6 +46,15 @@ includes:
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 10 2026 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt26.g29981f6
+- Updated to GIT 29981f6 (for sdk 1.4.357.0).
+
+* Thu Jul 30 2026 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt25.g948a3b0
+- Updated to GIT 948a3b0 (as required by llvm-spirv).
+
+* Thu May 21 2026 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt24.gb8a3296
+- Updated to GIT b8a3296 (as required by llvm-spirv).
+
 * Thu May 21 2026 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt23.gad9184e
 - Updated to GIT ad9184e (for sdk-1.4.350.0).
 
