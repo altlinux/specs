@@ -1,6 +1,6 @@
 %global import_path github.com/oras-project/oras
 Name:    oras
-Version: 1.3.3
+Version: 1.3.4
 Release: alt1
 
 Summary: OCI registry client - managing content like artifacts, images, packages
@@ -43,6 +43,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Thu Sep 10 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.4-alt1
+- new version 1.3.4
+
 * Sat Aug 08 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.3.3-alt1
 - new version 1.3.3
 
