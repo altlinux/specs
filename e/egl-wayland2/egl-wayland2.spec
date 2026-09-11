@@ -3,7 +3,7 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland2_%sover
 
 Name: egl-wayland2
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Group: System/Libraries
@@ -62,5 +62,8 @@ Wayland EGL External Platform library development package
 #%_datadir/wayland-eglstream/
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
+- new version
+
 * Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 1.0.1-alt1
 - initial build
