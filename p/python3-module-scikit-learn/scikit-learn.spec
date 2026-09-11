@@ -1,11 +1,11 @@
 %define oname scikit-learn
 
 # CPU time limit exceeded
-# 1.9.0 passes check on local machine
+# 1.9.1 passes check on local machine
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: A set of python modules for machine learning and data mining
@@ -89,6 +89,9 @@ popd
 %python3_sitelibdir/sklearn/utils/__pycache__/_testing.*
 
 %changelog
+* Fri Sep 11 2026 Anton Vyatkin <toni@altlinux.org> 1.9.1-alt1
+- New version 1.9.1.
+
 * Wed Jun 03 2026 Anton Vyatkin <toni@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 
