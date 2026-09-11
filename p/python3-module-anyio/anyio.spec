@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-anyio
-Version: 4.14.2
+Version: 4.15.1
 Release: alt1
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
@@ -66,7 +66,10 @@ It will blend in with native libraries of your chosen backend.
 # tests/test_socket.py:
 # Ignore this file since configured DNS and internet are required by most of
 # the tests. Another tests are bad itself and can fail accidentally.
-%pyproject_run_pytest -Wignore -m "not network" --ignore="tests/test_sockets.py"
+# tests/test_lazyimport.py::test_sourceless_install runs "pip install" and
+# requires network access.
+%pyproject_run_pytest -Wignore -m "not network" --ignore="tests/test_sockets.py" \
+    --deselect tests/test_lazyimport.py::test_sourceless_install
 
 %files
 %doc README.rst
@@ -74,6 +77,9 @@ It will blend in with native libraries of your chosen backend.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.15.1-alt1
+- Updated to 4.15.1.
+
 * Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.14.2-alt1
 - Updated to 4.14.2.
 

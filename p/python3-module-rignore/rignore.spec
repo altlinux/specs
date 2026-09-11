@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-rignore
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Python bindings for the Rust ignore crate
@@ -40,6 +40,7 @@ Python.
 
 %prep
 %setup -a4
+%autopatch -p1
 %SOURCE2 --in %SOURCE3 --out .cargo/config.toml --root "%buildroot%prefix"
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -62,6 +63,9 @@ Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.1-alt1
+- Updated to 0.8.1.
+
 * Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.0-alt1
 - Updated to 0.8.0.
 

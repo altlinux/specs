@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-fastar
-Version: 0.11.0
-Release: alt3
+Version: 0.12.0
+Release: alt1
 
 Summary: High-level bindings for the Rust tar crate
 License: MIT
@@ -66,6 +66,9 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.0-alt1
+- Updated to 0.12.0.
+
 * Wed Jul 29 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.11.0-alt3
 - Reworked the previous change: instead of manually filtering out the
   backports-zstd dependency, apply the upstream change of the pyproject.toml.

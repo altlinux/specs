@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.1
-Release: alt1.2
+Version: 2.0.1
+Release: alt1
 
 Summary: Cron string converter for Python
 License: MIT
@@ -56,6 +56,9 @@ by roccivic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.1-alt1
+- Updated to 2.0.1.
+
 * Mon Mar 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.3.1-alt1.2
 - Reverted the changes that weren't approved.
 

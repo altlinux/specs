@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.1.0
-Release: alt1.5.g47fdb25
+Version: 0.2.1
+Release: alt1
 
 Summary: Detect how a Python package was installed and get the correct upgrade command
 License: 0BSD
@@ -57,5 +57,8 @@ command.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Fri Jun 26 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.1.0-alt1.5.g47fdb25
 - Initial build for ALT Sisyphus.

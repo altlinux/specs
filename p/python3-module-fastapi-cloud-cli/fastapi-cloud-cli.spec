@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.24.0
+Version: 0.26.0
 Release: alt1
 
 Summary: Deploy and manage FastAPI Cloud apps from the command line
@@ -49,13 +49,12 @@ BuildRequires: git
 %pyproject_install
 
 %check
-# Increase terminal line size, because
-# test_create_token_human_output_does_not_print_token_value does not pass
-# at narrow terminals: with no tty in the build environment Rich uses the
-# default width of 80 and wraps the printed path inside the file name,
-# failing the substring assertion.
-export COLUMNS=135
-%pyproject_run_pytest
+# tests/utils.py SnapshotCliRunner pins COLUMNS=80 for every invocation,
+# so the default temp root (/usr/src/tmp/pytest-of-builder/...) is too long:
+# Rich wraps the printed file name mid-word and
+# test_create_token_human_output_does_not_print_token_value fails.
+# Keep the temp root short so the paths fit into 80 columns.
+%pyproject_run_pytest --basetemp=/tmp/pytest
 
 %files
 %doc README.md LICENSE
@@ -63,5 +62,8 @@ export COLUMNS=135
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.26.0-alt1
+- Updated to 0.26.0.
+
 * Thu Sep 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.24.0-alt1
 - Initial build for ALT Sisyphus.
