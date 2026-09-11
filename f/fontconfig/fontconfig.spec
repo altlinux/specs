@@ -9,7 +9,7 @@
 %define sover 1
 %define libfontconfig libfontconfig%sover
 
-%ifver_lteq %ubt_id M120
+%ifver_gteq %ubt_id M120
 %def_enable new_options
 %else
 %def_disable new_options
@@ -17,7 +17,7 @@
 
 Name: fontconfig
 Version: 2.18.3
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -216,6 +216,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 2.18.3-alt2
+- fix to enable new hinting and sub-pixel-rendering only for modern branches
+
 * Tue Aug 25 2026 Sergey V Turchin <zerg@altlinux.org> 2.18.3-alt1
 - new version
 - enable new hinting and sub-pixel-rendering only for modern branches
