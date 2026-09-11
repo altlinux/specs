@@ -81,7 +81,7 @@
 
 
 Name: gpupdate
-Version: 0.16.2
+Version: 0.16.3
 Release: alt1
 
 Summary: GPT applier
@@ -290,6 +290,20 @@ fi
 %doc README.md PLUGIN_DEVELOPMENT_GUIDE.md PLUGIN_DEVELOPMENT_GUIDE_RU.md EXAMPLES.md
 
 %changelog
+* Tue Sep 08 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.3-alt1
+- Fixed:
+  gpupdate.service: order after oddjobd.service at boot (closes: #56687)
+- Both appliers aggregate via action->verdict dict instead of
+  appending to per-verdict lists: one action = one verdict, the
+  entry merged last wins (matches GPO merge order)
+- polkit_applier_user reads machine-scoped polkit actions from the
+  machine dconf database and excludes them from user-scoped rule
+  files: machine policy takes precedence over user policy
+- Machine-defined Deny_All suppresses the user-scoped Deny_All file
+- Unknown verdict values are skipped instead of raising KeyError
+- New debug code D334 for machine DB read failure (fallback: no
+  exclusion, user rules unaffected)
+
 * Mon Aug 10 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.2-alt1
 - Added:
   ApplierResult status system with per-item success/failure/skip tracking (I37-I40)
