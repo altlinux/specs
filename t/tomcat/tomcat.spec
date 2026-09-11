@@ -50,7 +50,7 @@ BuildRequires: java-17-devel
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 117
+%global micro_version 121
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -571,6 +571,17 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Wed Sep 09 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.121-alt1
+- new version
+- security fixes:
+  + CVE-2026-65182: Security constraint bypass
+  + CVE-2026-65927: Off-by-one error
+  + CVE-2026-66422: Improper Authorization
+  + CVE-2026-68525: Authentication bypass
+  + CVE-2026-68569: Authentication bypass
+  + CVE-2026-68763: Denial of service
+  + CVE-2026-73180: Insufficient session expiration
+
 * Tue Apr 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.117-alt1
 - new version
 - security fixes:
