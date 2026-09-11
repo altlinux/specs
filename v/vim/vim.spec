@@ -50,7 +50,7 @@
 
 Name: vim
 %define branch 9.2
-Version: %branch.0752
+Version: %branch.1067
 Release: alt1
 Epoch: 4
 
@@ -1080,6 +1080,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Sep 11 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.1067-alt1
+- Updated to v9.2.1067 (fixes CVE-2026-73078, CVE-2026-73077, CVE-2026-73076,
+  CVE-2026-73072).
+
 * Tue Jun 30 2026 Alexander Danilov <admsasha@altlinux.org> 4:9.2.0752-alt1
 - Updated to v9.2.0752 (fixes CVE-2026-55693, CVE-2026-55892, CVE-2026-55895,
   CVE-2026-57451, CVE-2026-57452, CVE-2026-57453, CVE-2026-57454, CVE-2026-57455,
