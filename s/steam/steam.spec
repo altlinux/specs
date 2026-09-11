@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.87
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -34,6 +34,7 @@ Requires: libnm
 Requires: libnsl1
 Requires: libnss
 Requires: lsof
+Requires: %name-devices = %EVR
 Requires: sysctl-conf-userns
 Requires: xorg-xwayland
 Requires: xz
@@ -44,6 +45,15 @@ Requires: xz
 Steam is a software distribution service with an online store, automated
 installation, automatic updates, achievements, SteamCloud synchronized
 savegame and screenshot functionality, and many social features.
+
+%package devices
+Summary: List of devices Steam and SteamVR will want read/write permissions on, to help downstream distributions create udev rules/etc
+License: MIT
+Group: System/Configuration/Hardware
+BuildArch: noarch
+
+%description devices
+List of devices Steam and SteamVR will want read/write permissions on, to help downstream distributions create udev rules/etc
 
 %prep
 %setup -n %name-launcher
@@ -71,11 +81,17 @@ savegame and screenshot functionality, and many social features.
 %_datadir/metainfo/com.valvesoftware.Steam.metainfo.xml
 %_man6dir/%{name}*
 %_pixmapsdir/%{name}*.png
-%config %_udevrulesdir/60-%name-input.rules
-%config %_udevrulesdir/60-%name-vr.rules
 %config %_datadir/polkit-1/rules.d/%name-nm.rules
 
+%files devices
+%doc subprojects/%name-devices/LICENSE
+%config %_udevrulesdir/60-%name-input.rules
+%config %_udevrulesdir/60-%name-vr.rules
+
 %changelog 
+* Fri Sep 11 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt2
+- Move rules files in separate package (ALT #60493)
+
 * Fri Jul 17 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt1
 - Version 1.0.0.87
 
