@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: neatvi
-Version: 19
+Version: 20
 Release: alt1
 
 Summary: Small vi/ex editor for editing UTF-8 text
@@ -36,5 +36,8 @@ install -Dpm755 stag %buildroot%_bindir/stag
 %_bindir/stag
 
 %changelog
+* Tue Sep 08 2026 Mikhail Nogin <joycap@altlinux.org> 20-alt1
+- Updated to version 20.
+
 * Wed Aug 05 2026 Mikhail Nogin <joycap@altlinux.org> 19-alt1
 - Initial built for Sisyphus.
