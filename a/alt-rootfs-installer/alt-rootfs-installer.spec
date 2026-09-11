@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,10 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Fri Sep 11 2026 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt1
+- log: fix error message in create_disklabel() (thanks Egor Shestakov).
+- API: add parsable tar extraction progress in percents (thanks Egor Shestakov).
+
 * Sun Aug 23 2026 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
 - log: major refactoring (thanks Egor Shestakov).
 - Add --batch-mode option (thanks Egor Shestakov).
