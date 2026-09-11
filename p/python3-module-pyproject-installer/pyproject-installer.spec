@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 Summary: Builder and installer of Python project
 License: MIT
@@ -47,12 +47,14 @@ This tool is intended to build wheel from Python source tree and install it.
 %pyproject_installer run -- pytest -vra tests/unit
 
 %files
-%doc README.md
 %_bindir/pyproject-installer
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 10 2026 Stanislav Levin <slev@altlinux.org> 0.6.1-alt1
+- 0.6.0 -> 0.6.1
+
 * Fri Jul 10 2026 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.6 -> 0.6.0
 
