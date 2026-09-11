@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    forgejo-mcp
-Version: 2.34.1
+Version: 3.0.1
 Release: alt1
 
-%global import_path codeberg.org/goern/forgejo-mcp/v%(echo %{version} | cut -d. -f1)
+%global import_path git.b4mad.industries/agentic-forges/forgejo-mcp/v%(echo %{version} | cut -d. -f1)
 
 Summary: This Model Context Protocol (MCP) server provides tools and resources for interacting with the Forgejo (specifically Codeberg.org) REST API
 License: MIT
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Thu Sep 10 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.0.1-alt1
+- New version 3.0.1.
+
 * Sun Sep 06 2026 Maxim Slipenko <maks1ms@altlinux.org> 2.34.1-alt1
 - New version 2.34.1.
 
