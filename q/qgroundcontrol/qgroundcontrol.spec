@@ -2,7 +2,7 @@
 
 Name: qgroundcontrol
 Version: 5.0.8
-Release: alt6
+Release: alt7
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -76,6 +76,9 @@ mission planning, making it the go-to solution for any MAVLink-enabled drone.
 # disable QML plugins deploy
 sed -i '/install(SCRIPT ${deploy_script})/d' cmake/Install.cmake
 
+# disable Qt maximum version restriction
+sed -i '/QGC_QT_MAXIMUM_VERSION/d' CMakeLists.txt
+
 # Copy prebuilt parameters where QGC expects them to be.
 cp -r %_datadir/ParameterRepository/* src/FirmwarePlugin/APM/ArduPilot-Parameter-Repository/
 
@@ -127,6 +130,9 @@ export PATH="%{_qt6_bindir}:$PATH"
 %exclude %_builddir/%name-%version/%_cmake__builddir/AppRun
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 5.0.8-alt7
+- NMU: disable Qt version restriction
+
 * Wed May 13 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.0.8-alt6
 - e2k build fix (use clang)
 - use proper cmake macros (enables parallel build)
