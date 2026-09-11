@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: verilator
-Version: 5.048
+Version: 5.052
 Release: alt1
 Summary: A fast and free Verilog HDL simulator
 
@@ -74,6 +74,9 @@ mv %buildroot%_datadir/%name/examples %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Fri Sep 11 2026 Egor Ignatov <egori@altlinux.org> 5.052-alt1
+- New version 5.052.
+
 * Tue May 12 2026 Andrey Kovalev <ded@altlinux.org> 5.048-alt1
 - new version 5.048
 
