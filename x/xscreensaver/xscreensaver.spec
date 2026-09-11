@@ -13,8 +13,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xscreensaver
-Version: 6.15
-Release: alt2
+Version: 6.16
+Release: alt1
 
 Summary: A screen saver and locker for the X window system
 
@@ -386,6 +386,9 @@ cat xscreensaver-hacks-gl >>xscreensaver-modules-gl
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
 %changelog
+* Fri Sep 11 2026 Mikhail Efremov <sem@altlinux.org> 6.16-alt1
+- Updated to 6.16.
+
 * Fri Jun 26 2026 Mikhail Efremov <sem@altlinux.org> 6.15-alt2
 - Fixed build with gettext >= 1.0.
 - Check that ad/xscreensaver.{top,bottom} file really generated.
