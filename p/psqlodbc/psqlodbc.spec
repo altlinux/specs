@@ -1,5 +1,5 @@
 Name: psqlodbc
-Version: 18.00.0002
+Version: 18.00.0003
 Release: alt1
 
 Summary: The official PostgreSQL ODBC Driver
@@ -39,6 +39,9 @@ The official PostgreSQL ODBC Driver
 %doc docs/*
 
 %changelog
+* Fri Sep 11 2026 Alexei Takaseev <taf@altlinux.org> 18.00.0003-alt1
+- 18.00.0003
+
 * Thu Jul 09 2026 Alexei Takaseev <taf@altlinux.org> 18.00.0002-alt1
 - 18.00.0000
 - Change Source: and URL:
