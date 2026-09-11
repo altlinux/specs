@@ -1,6 +1,6 @@
 %global import_path github.com/tianon/gosu
 Name:     gosu
-Version:  1.17
+Version:  1.19
 Release:  alt1
 
 Summary:  Simple Go-based setuid+setgid+setgroups+exec
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Fri Sep 11 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.19-alt1
+- new version 1.19
+
 * Fri Apr 19 2024 Mikhail Gordeev <obirvalger@altlinux.org> 1.17-alt1
 - new version 1.17
 
