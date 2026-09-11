@@ -2,7 +2,7 @@
 
 Name: zip
 Version: 3.0
-Release: alt5
+Release: alt6
 
 Epoch: 30000000
 
@@ -37,8 +37,7 @@ Patch16: fedora-zip-3.0-man-strip-extra.patch
 Patch17: fedora-zip-gnu89-build.patch
 Patch18: fedora-zipnote.patch
 Patch19: debian-buffer-overflow-cve-2018-13410.patch
-
-Packager: Michael Shigorin <mike@altlinux.org>
+Patch20: alt-zip-3.0-setlocale-utf8.patch
 
 Summary(ru_RU.KOI8-R): Утилита сжатия и упаковки файлов, совместимая с PKZIP/WinZIP
 Summary(uk_UA.KOI8-U): Утил╕та стиснення та арх╕вування файл╕в, що сум╕сна з PKZIP/WinZIP
@@ -87,6 +86,7 @@ subst \
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %ifarch %ix86
 sed -i 's/-o zip$E/-no-pie &/' unix/Makefile
@@ -111,6 +111,9 @@ make -f unix/Makefile prefix=$RPM_BUILD_ROOT%{_prefix} \
 %_man1dir/*
 
 %changelog
+* Thu Sep 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 30000000:3.0-alt6
+- Try C.UTF-8 locale if setting of en_US.UTF-8 fails (Closes: #34751).
+
 * Tue Sep 30 2025 Alexander Danilov <admsasha@altlinux.org> 30000000:3.0-alt5
 - Applied debian patch (fixed CVE-2018-13410).
 
