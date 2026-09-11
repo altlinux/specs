@@ -20,7 +20,7 @@
 %define beta %nil
 
 Name: strongswan
-Version: 6.0.7
+Version: 6.1.0
 Release: alt1
 
 Summary: strongSwan IPsec implementation
@@ -346,6 +346,21 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Fri Sep 11 2026 Ilya Mashkin <oddity@altlinux.ru> 6.1.0-alt1
+- 6.1.0
+- Fixes:
+ + CVE-2026-78123 - Fixed a vulnerability in the openssl plugin related to the processing of PKCS#7 containers that can result in a crash.
+ + CVE-2026-78124 - Fixed a vulnerability in the openssl plugin related to the enumeration of certificates in PKCS#7 containers that can result in memory leaks
+ + CVE-2026-78126 - Fixed a vulnerability in the eap-aka plugin related to processing an unexpected AKA-Synchronization-Failure that can result in a crash
+ + CVE-2026-78127 - Fixed a vulnerability in libcharon related to the logging of IKE messages that can result in a denial of service via memory exhaustion.
+ + CVE-2026-78129 - Fixed a vulnerability in libstrongswan related to the processing of encrypted PKCS#7 containers that can result in a denial of service.
+ + CVE-2026-78130 - Fixed a vulnerability in the x509 plugin related to the verification of X.509 attribute certificates that can lead to a denial of service.
+ + CVE-2026-78131 - Fixed a vulnerability in the x509 plugin related to the parsing of identities in X.509 attribute certificates that can lead to a denial of service via memory exhaustion.
+ + CVE-2026-78132 - Fixed a vulnerability in the x509 plugin related to the parsing of the ietfAttrSyntax ASN.1 type in X.509 attribute certificates that can lead to a denial of service.
+ + CVE-2026-78133 - Fixed a vulnerability in libcharon related to the handling of IKEv2 rekeying collisions that can result in a use-after-free and potentially remote code execution.
+ + CVE-2026-78134 - Fixed a vulnerability in the eap-peap and eap-ttls plugins related to the propagation of authentication details from inner EAP methods that can result in incorrect identity binding and potential authorization bypass.
+ + CVE-2026-78135 - Fixed a vulnerability in libcharon related to the handling of CREATE_CHILD_SA requests on unestablished IKE SAs that can result in the creation of a usable Child SA before authentication completes.
+
 * Wed Jun 10 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.7-alt1
 - 6.0.7
 - Fixed a vulnerability in libstrongswan related to the cloning of certain identities that can result in an double-free and potentially remote code execution.  (Fixes: CVE-2026-47895)
