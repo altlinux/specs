@@ -6,9 +6,13 @@
 %define llvm_ver 21
 %define llvm_pkgver %llvm_ver.1
 
+# Disable vendor for zig-checkinstall since there is no dependencies
+# You can also change vendor dir by redefining %_zig_vendor_dir
+%global _zig_system_integration %nil
+
 Name:    zig
 Version: 0.16.0
-Release: alt1
+Release: alt2
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 
 # ./LICENSE - MIT
@@ -117,6 +121,9 @@ rm -rf -- "$t" "$HOME/.cache/zig"
 %files checkinstall
 
 %changelog
+* Fri Sep 11 2026 Ilya Sorochan <k0tran@altlinux.org> 0.16.0-alt2
+- Disable vendor enforcement provided by rpm-macros-zig.
+
 * Tue Sep 01 2026 Ilya Sorochan <k0tran@altlinux.org> 0.16.0-alt1
 - Update to 0.16.0 (2026-04-13), (ALT#60236).
 - Switch to LLVM 21.
