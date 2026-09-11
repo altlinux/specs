@@ -17,7 +17,7 @@ Source99: %pyproject_deps_config_name
 
 Name: python3-module-langchain
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Building applications with LLMs through composability
 License: MIT
 Group: Development/Python3
@@ -30,10 +30,7 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- langchain_metadata
 %pyproject_builddeps -- langchain_pep518
 %pyproject_builddeps -- langchain_pep517
-
-%files -n python3-module-langchain
-%python3_sitelibdir/langchain/
-%python3_sitelibdir/langchain-%version.dist-info/
+%files -n python3-module-langchain -f langchain.files
 
 %add_python_extra mcp
 %add_python_extra anthropic
@@ -50,7 +47,7 @@ into your agents and applications.
 
 %package -n python3-module-langchain-core
 Version: 1.6.1
-Release: alt1
+Release: alt2
 Summary: Building applications with LLMs through composability
 License: MIT
 Group: Development/Python3
@@ -63,10 +60,7 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- langchain_core_metadata
 %pyproject_builddeps -- langchain_core_pep518
 %pyproject_builddeps -- langchain_core_pep517
-
-%files -n python3-module-langchain-core
-%python3_sitelibdir/langchain_core/
-%python3_sitelibdir/langchain_core-%version.dist-info/
+%files -n python3-module-langchain-core -f langchain_core.files
 
 %description -n python3-module-langchain-core
 %summary.
@@ -74,7 +68,7 @@ AutoReq: yes, nopython3
 
 %package -n python3-module-langchain-openai
 Version: 1.6.0
-Release: alt1
+Release: alt2
 Summary: An integration package connecting OpenAI and LangChain
 License: MIT
 Group: Development/Python3
@@ -87,10 +81,7 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- langchain_openai_metadata
 %pyproject_builddeps -- langchain_openai_pep518
 %pyproject_builddeps -- langchain_openai_pep517
-
-%files -n python3-module-langchain-openai
-%python3_sitelibdir/langchain_openai/
-%python3_sitelibdir/langchain_openai-%version.dist-info/
+%files -n python3-module-langchain-openai -f langchain_openai.files
 
 %description -n python3-module-langchain-openai
 %summary.
@@ -98,7 +89,7 @@ AutoReq: yes, nopython3
 
 %package -n python3-module-langchain-deepseek
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: An integration package connecting DeepSeek and LangChain
 License: MIT
 Group: Development/Python3
@@ -111,10 +102,7 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- langchain_deepseek_metadata
 %pyproject_builddeps -- langchain_deepseek_pep518
 %pyproject_builddeps -- langchain_deepseek_pep517
-
-%files -n python3-module-langchain-deepseek
-%python3_sitelibdir/langchain_deepseek/
-%python3_sitelibdir/langchain_deepseek-%version.dist-info/
+%files -n python3-module-langchain-deepseek -f langchain_deepseek.files
 
 %description -n python3-module-langchain-deepseek
 %summary.
@@ -122,7 +110,7 @@ AutoReq: yes, nopython3
 
 %package -n python3-module-langchain-anthropic
 Version: 1.7.1
-Release: alt1
+Release: alt2
 Summary: Integration package connecting Claude (Anthropic) APIs and LangChain
 License: MIT
 Group: Development/Python3
@@ -135,10 +123,7 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- langchain_anthropic_metadata
 %pyproject_builddeps -- langchain_anthropic_pep518
 %pyproject_builddeps -- langchain_anthropic_pep517
-
-%files -n python3-module-langchain-anthropic
-%python3_sitelibdir/langchain_anthropic/
-%python3_sitelibdir/langchain_anthropic-%version.dist-info/
+%files -n python3-module-langchain-anthropic -f langchain_anthropic.files
 
 %description -n python3-module-langchain-anthropic
 %summary.
@@ -146,7 +131,7 @@ AutoReq: yes, nopython3
 
 %package -n python3-module-langchain-text-splitters
 Version: 1.1.2
-Release: alt1
+Release: alt2
 Summary: LangChain text splitting utilities
 License: MIT
 Group: Development/Python3
@@ -159,10 +144,7 @@ AutoReq: yes, nopython3
 %pyproject_runtimedeps -- langchain_text_splitters_metadata
 %pyproject_builddeps -- langchain_text_splitters_pep518
 %pyproject_builddeps -- langchain_text_splitters_pep517
-
-%files -n python3-module-langchain-text-splitters
-%python3_sitelibdir/langchain_text_splitters/
-%python3_sitelibdir/langchain_text_splitters-%version.dist-info/
+%files -n python3-module-langchain-text-splitters -f langchain_text_splitters.files
 
 %description -n python3-module-langchain-text-splitters
 %summary.
@@ -188,13 +170,17 @@ for target in $(ls -d *) ; do
 done
 
 %install
+builddir=$PWD
 for target in $(ls -d *) ; do
     pushd $target
-        %pyproject_install
+        %pyproject_install --rpm-filelist $builddir/$target.files
     popd
 done
 
 %changelog
+* Fri Sep 11 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt2
+- Used --rpm-filelist to generate filelists for %%files.
+
 * Tue Sep 08 2026 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated langchain to 1.4.0.
 - Updated langchain-core to 1.6.1.
