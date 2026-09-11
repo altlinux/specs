@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.49
+%define kernel_sublevel 	.50
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -135,6 +135,7 @@ BuildRequires: ccache
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: iproute2
 BuildRequires: ltp >= 20210524-alt2
+BuildRequires: kirk
 BuildRequires: rpm-build-vm-run >= 1.30
 BuildRequires: rtcheck
 }}
@@ -292,7 +293,7 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
 
-%ifarch %ix86 armh
+%ifarch %ix86
 sed -Ei '/-flags/s/-j\S*//' scripts/Makefile.btf
 %endif
 
@@ -524,12 +525,29 @@ timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=
 	'uname -a'
 %endif
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
-	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
-	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
-	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
-	exit 1
-fi
+# ltp-alt-lists lags behind ltp, see .gear/ltp-runtest.py.
+python3 .gear/ltp-runtest.py > kernel-alt-vm
+# On top of the ltp-alt-lists skiplist:
+# zram01 fills 3 devices with one 1K dd per write; spawning dd 75k times over
+# the 9p root takes about an hour.
+# lsm_list_modules02 does not know our LSM_ID_ALTHA (201) and TBROKs on it.
+{ cat /usr/lib/ltp/skiplist-alt-vm; echo zram01; echo lsm_list_modules02; } > skiplist-alt-vm
+%ifarch %ix86
+# mmap22: MAP_DROPPABLE is 64-bit only and the test TBROKs on EOPNOTSUPP.
+echo mmap22 >> skiplist-alt-vm
+%endif
+# LTP looks for modules in /lib/modules/$(uname -r) and ignores MODPROBE_OPTIONS
+# that vm-run sets, so bind the %%buildroot modules there.  uevent02/03 open
+# /dev/net/tun and /dev/uinput, which exist only once their modules are loaded
+# (no udev in the VM), so load them up front.  Tests without .needs_tmpdir
+# create files in the testcases dir, which is not writable over 9p: overlay it.
+rm -f ltp.json
+timeout 3600 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
+	--modules='tun uinput evdev mousedev' --overlay=tmpfs:/usr/lib/ltp/testcases/bin \
+	"mount --bind %buildroot/lib/modules /lib/modules;
+	 kirk -f $PWD/kernel-alt-vm -S $PWD/skiplist-alt-vm -o ltp.json"
+# kirk exits 0 on TFAIL; no report if vm-run skipped the run for lack of KVM.
+[ ! -e ltp.json ] || python3 .gear/ltp-report.py ltp.json
 
 %if "%sub_flavour" == "vm"
 %post
@@ -637,6 +655,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Sep 08 2026 Anton Farygin <rider@altlinux.org> 6.18.50-alt1
+- 6.18.49 -> 6.18.50
+- spec: run LTP via kirk (runltp removed from ltp 20260529)
+- spec: resolve kernel-alt-vm test list against ltp's own runtest files,
+  expose buildroot modules to LTP inside the VM, fail only on TFAIL/TBROK
+- spec: writable LTP testcases dir in the VM; skip lsm_list_modules02 (LSM_ID_ALTHA)
+  and mmap22 on 32-bit
+
 * Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 6.18.49-alt1
 - 6.18.48 -> 6.18.49
 - enabled ENA_ETHERNET module (Closes: #60315)
