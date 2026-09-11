@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-%define upstream_name surge
-%global import_path github.com/surge-downloader/surge
+%define import_path github.com/SurgeDM/Surge
 
 Name: surge-downloader
-Version: 0.8.7
+Version: 0.12.1
 Release: alt1
+
 Summary: Blazing fast TUI download manager built in Go for power users
 License: MIT
 Group: Networking/File transfer
-Url: https://github.com/surge-downloader/Surge
-Vcs: https://github.com/surge-downloader/Surge
+Url: https://github.com/SurgeDM/Surge
+Vcs: https://github.com/SurgeDM/Surge.git
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-golang
@@ -28,26 +28,37 @@ Headless Server and a CLI tool for automation.
 %build
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
+
 %golang_prepare
-cd $BUILDDIR/src/$IMPORT_PATH
-%golang_build .
+
+cd "$BUILDDIR/src/$IMPORT_PATH"
+mkdir -p "$BUILDDIR/bin"
+
+CGO_ENABLED=0 go build \
+    -mod=vendor \
+    -ldflags "-X %import_path/cmd.Version=%version" \
+    -o "$BUILDDIR/bin/surge" \
+    .
 
 %install
 export BUILDDIR="$PWD/.gopath"
 export IGNORE_SOURCES=1
 
-# lowercasing binary name
-mv $BUILDDIR/bin/Surge $BUILDDIR/bin/surge
 %golang_install
+
+%check
+./.gopath/bin/surge --version | grep -F "%version"
 
 %files
 %doc LICENSE README.md
-%_bindir/%upstream_name
+%_bindir/surge
 
 %changelog
+* Fri Sep 11 2026 Vladislav Glinkin <smasher@altlinux.org> 0.12.1-alt1
+- New version 0.12.1.
+
 * Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 0.8.7-alt1
-- New version
+- New version 0.8.7.
 
 * Fri Mar 27 2026 Vladislav Glinkin <smasher@altlinux.org> 0.7.5-alt1
 - Initial build for ALT
-
