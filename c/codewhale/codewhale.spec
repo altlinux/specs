@@ -7,9 +7,9 @@
 
 Name: codewhale
 Version: 0.9.12
-Release: alt1
+Release: alt2
 
-Summary: Agentic coding terminal
+Summary: Open-source coding agent for your terminal
 License: MIT
 Group: Development/Tools
 Url: https://codewhale.net/en
@@ -25,18 +25,14 @@ Source1: %name-%version-vendor.tar
 Source2: config.toml
 Patch0: %name-%version-alt.patch
 
-# Was 'deepseek-tui' in the past and rebranded without incompatibility
-Provides: deepseek-tui
-Obsoletes: deepseek-tui
-
 BuildRequires: rust-cargo
 BuildRequires: libdbus-devel
 
 %description
-DeepSeek-first agentic terminal for open source and open-weight coding
-models. It runs from the codewhale command, streams reasoning blocks,
-edits local workspaces with approval gates, and can auto-route each
-turn to the right DeepSeek model and thinking level.
+Codewhale is an open-source agent that reads your project, edits files, runs
+commands, and checks its work using a hosted or local model you choose. Start
+with one task in your terminal. For a larger job, give parts of the work to
+agents with different models and roles.
 
 %prep
 %setup -a1
@@ -45,10 +41,19 @@ install -vpD %SOURCE2 .cargo/config.toml
 
 %build
 export RUSTFLAGS='-Clink-args=-z,relro -Clink-args=-z,-now'
-export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_DEBUG=1
+export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
+export CARGO_PROFILE_RELEASE_INCREMENTAL=false
+export CARGO_PROFILE_RELEASE_LTO=fat
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
 export CARGO_PROFILE_RELEASE_STRIP=none
-cargo build %_smp_mflags --release --offline
+cargo build \
+    %_smp_mflags \
+    --release \
+    --offline \
+    --all-features
 
 %install
 install -vpD -m0755 target/release/codewhale -t %buildroot%_bindir
@@ -65,13 +70,18 @@ mkdir -p %buildroot%zsh_completionsdir
     > %buildroot%zsh_completionsdir/_codewhale
 
 %files
-%doc CHANGELOG.md LICENSE README.md
 %_bindir/codewhale
 %bash_completionsdir/codewhale
 %fish_completionsdir/codewhale.fish
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Sat Sep 12 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.12-alt2
+- Updated description
+- Stopped packaging docs.
+- Removed old providement and obsoletion.
+- Optimized and shrinked main executable.
+
 * Tue Sep 08 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.12-alt1
 - Updated to 0.9.12.
 
