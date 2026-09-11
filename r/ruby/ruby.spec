@@ -9,7 +9,7 @@
 
 Name:          ruby
 Version:       %ruby_version
-Release:       alt3
+Release:       alt4
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -260,7 +260,7 @@ DESTDIR=%buildroot INSTALL=/bin/install rvm reinstall . \
    --disable-jit-support \
 %endif
    --enable-rubygems \
-   --enable-use-system-dirs \
+   --disable-use-system-dirs \
    --enable-single-instantiating \
    --enable-install-rdoc \
    --disable-rpath \
@@ -371,6 +371,9 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Sat Sep 12 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt4
+- ! ri dir folder for gems (closes ALT #60502)
+
 * Thu Sep 03 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt3
 - * added %%ruby_erb_eval macros
 - ! fixed version in spec
