@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt1
+Release: alt2
 URL: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
@@ -298,6 +298,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 11 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt2
+- os-release: add VERSION to PRETTY_NAME.
+
 * Mon Aug 24 2026 Anton Midyukov <antohami@altlinux.org> 11.0-alt1
 - Add LKNV to Product Name.
 - Disable ALPHA status.

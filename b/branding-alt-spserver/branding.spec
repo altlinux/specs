@@ -24,7 +24,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.14
+Release: alt0.16
 Epoch: 1
 Url: https://altsp.su
 
@@ -42,9 +42,9 @@ Group: Graphics
 Summary: System/Base
 License: GPL-2.0-or-later
 
-%define distro_name SP Server
+%define distro_name SP %LKNV Server
 %define Brand_ru Альт 
-%define distro_name_ru СП Сервер
+%define distro_name_ru СП %LKNV Сервер
 
 %description
 Distro-specific packages with design and texts for %Brand %distro_name.
@@ -215,7 +215,7 @@ cp /usr/share/distro-licenses/ALT_SP_License/license.{all,ru}.html.in notes/
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND='%Brand' BRAND_RU='%Brand_ru' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' LKNV='%LKNV' BRANCH='%altbranch' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND='%Brand' BRAND_RU='%Brand_ru' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -292,6 +292,17 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 11 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.16
+- os-release: add VERSION to PRETTY_NAME.
+
+* Mon Aug 24 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.15
+- indexhtml: replacement Telegram Channel with MAX Channel.
+- Add LKNV to Product Name.
+- release-notes: replace release with version.
+- indexhtml: remove link to forum.altlinux.org.
+- Add version to /etc/altlinux-release.
+- os-release: add @BRAND@ to BUILD_ID.
+
 * Wed May 20 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.14
 - os-release: add VARIANT_ID, update BUILD_ID (add LKNV).
 - indexhtml: add LKNV VERSION to title.
