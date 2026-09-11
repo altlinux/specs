@@ -4,7 +4,7 @@
 
 Name:    python3-module-%mod_name
 Version: 0.0.2
-Release: alt2
+Release: alt3
 
 Summary: Wrapper around DPAPI-CNG Library
 License: GPLv2
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: libcng-dpapi
 
 Requires: libcng-dpapi
 
@@ -53,6 +54,9 @@ PFX user-protected passwords and LAPS encrypted credentials.
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Tue Sep 11 2026 august-alt <august@altlinux.org> 0.0.2-alt3
+- Add libcng-dpapi to BuildRequires.
+
 * Tue Sep 08 2026 august-alt <august@altlinux.org> 0.0.2-alt2
 - Adapt to ALT SP 10.2.2 (c10f2): make packaging compatible
   with setuptools 57.
