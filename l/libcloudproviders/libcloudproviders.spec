@@ -6,12 +6,11 @@
 %define api_ver 0.3
 
 %def_enable doc
-# broken docs
-%def_disable check
+%def_enable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library for integration of cloud storage providers
@@ -137,6 +136,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Fri Sep 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Tue Jan 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 

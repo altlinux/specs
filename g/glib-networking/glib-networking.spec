@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.80
+%define ver_major 2.90
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Networking support for GIO
@@ -121,6 +121,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Fri Sep 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.90.0-alt1
+- 2.90.0 (fixed CVE-2025-60018, CVE-2026-2574, CVE-2026-10028)
+
 * Thu Jan 09 2025 Yuri N. Sedunov <aris@altlinux.org> 2.80.1-alt1
 - 2.80.1
 
