@@ -3,7 +3,7 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.88
+%define ver_major 2.90
 %define api_ver 2.0
 %define gir_api_ver 3.0
 %define meson_ver 1.4.0
@@ -42,7 +42,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -501,6 +501,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Sep 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.90.0-alt1
+- 2.90.0 (fixed CVE-2026-16118)
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 2.88.3-alt1
 - 2.88.3 (fixed CVE-2026-15588)
 

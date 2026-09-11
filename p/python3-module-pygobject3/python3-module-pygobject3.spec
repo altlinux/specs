@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name pygobject
-%define ver_major 3.56
+%define ver_major 3.58
 %define api_ver 3.0
 %define gtk_api_ver 3.0
 
@@ -14,8 +14,8 @@
 %def_enable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Python3 bindings for GObject
 Group: Development/Python3
@@ -176,6 +176,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Fri Aug 28 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
+- 3.58.0
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 3.56.3-alt1.1
 - fixed %%files
 
