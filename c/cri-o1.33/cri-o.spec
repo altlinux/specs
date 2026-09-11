@@ -10,13 +10,13 @@
 
 %define _libexecdir /usr/libexec
 
-# git rev-parse v1.33.12^{commit}
-%define git_commit f61007b555baf09c789a73d3f4d95cafc1138fec
+# git rev-parse v1.33.13^{commit}
+%define git_commit 88fba2dcb1093621c70184699881bfb36f906c40
 
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          33
-%define cri_o_patch          12
+%define cri_o_patch          13
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -29,6 +29,10 @@ VCS: https://github.com/cri-o/cri-o
 ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
+Patch1: alt/0001-CVE-2026-15809.patch
+Patch2: alt/0002-CVE-2026-34986.patch
+Patch3: alt/0003-CVE-2026-62146.patch
+Patch4: alt/0004-CVE-2026-17113.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
@@ -64,6 +68,10 @@ Provides: cri-runtime
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 sed -i 's/\/local//' contrib/systemd/crio.service
 sed -i 's/\/local//' contrib/systemd/crio-wipe.service
@@ -143,6 +151,14 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Aug 10 2026 Alexander Stepchenko <geochip@altlinux.org> 1.33.13-alt1
+- 1.33.12 -> 1.33.13.
+- Fixes:
+  + CVE-2026-15809: Github.com/cri-o/cri-o: fix bypass for cve-2022-4318 - /etc/passwd injection via home env
+  + CVE-2026-34986: Go JOSE affect by a panic in JWE decryption
+  + CVE-2026-62146: CRI-O sandbox state poisoning after restart can expose crio.sock
+  + CVE-2026-17113: Cri-o: cri-o: unvalidated image env var causes daemon crash
+
 * Fri May 22 2026 Alexander Stepchenko <geochip@altlinux.org> 1.33.12-alt1
 - 1.33.11 -> 1.33.12.
 - Fixes:
@@ -159,6 +175,8 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 
 * Thu Dec 11 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.7-alt1
 - 1.33.6 -> 1.33.7.
+- Fixes:
+  + CVE-2025-58183: Unbounded allocation when parsing GNU sparse map in archive/tar
 
 * Thu Nov 13 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.6-alt1
 - 1.33.4 -> 1.33.6.

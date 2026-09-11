@@ -10,13 +10,13 @@
 
 %define _libexecdir /usr/libexec
 
-# git rev-parse v1.34.7^{commit}
-%define git_commit 9ef5c1ec08a36c69ff0e64d1ac876b847a5a22b5
+# git rev-parse v1.34.13^{commit}
+%define git_commit 32b28aa48ace522f65d203940f8d35fd2d250ea4
 
 %define prog_name            cri-o
 %define cri_o_major          1
 %define cri_o_minor          34
-%define cri_o_patch          8
+%define cri_o_patch          13
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
@@ -143,6 +143,19 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Tue Sep 08 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.13-alt1
+- 1.34.11 -> 1.34.13.
+- Fixes:
+  + CVE-2026-15809: Github.com/cri-o/cri-o: fix bypass for cve-2022-4318 - /etc/passwd injection via home env
+  + CVE-2026-17113: Cri-o: cri-o: unvalidated image env var causes daemon crash
+  + CVE-2026-62146: CRI-O sandbox state poisoning after restart can expose crio.sock
+
+* Mon Aug 10 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.11-alt1
+- 1.34.8 -> 1.34.11.
+- Fixes:
+  + CVE-2026-29181: OpenTelemetry-Go multi-value `baggage` header extraction causes excessive allocations (remote dos amplification)
+  + CVE-2026-34986: Go JOSE affect by a panic in JWE decryption
+
 * Fri May 22 2026 Alexander Stepchenko <geochip@altlinux.org> 1.34.8-alt1
 - 1.34.7 -> 1.34.8.
 - Fixes:
@@ -162,6 +175,8 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 
 * Thu Dec 11 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.7-alt1
 - 1.33.6 -> 1.33.7.
+- Fixes:
+  + CVE-2025-58183: Unbounded allocation when parsing GNU sparse map in archive/tar
 
 * Thu Nov 13 2025 Alexander Stepchenko <geochip@altlinux.org> 1.33.6-alt1
 - 1.33.4 -> 1.33.6.
