@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path k8s.io/helm
 Name:     helm
-Version:  4.2.3
+Version:  4.3.0
 Release:  alt1
 
 Summary:  The Kubernetes Package Manager
@@ -28,10 +28,8 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export LDFLAGS="\
-    -X k8s.io/helm/pkg/version.Version=%version \
-    -X k8s.io/helm/pkg/version.BuildMetadata= \
-    -X k8s.io/helm/pkg/version.GitCommit=2e55dbe1fdb5fdb96b75ff144a339489417b146b \
-    -X k8s.io/helm/pkg/version.GitTreeState=clean \
+    -X helm.sh/helm/v4/internal/version.version=%version \
+    -X helm.sh/helm/v4/internal/version.gitTreeState=clean \
     $LDFLAGS \
 "
 
@@ -59,6 +57,9 @@ install -Dm 644 helm-bash-completion %buildroot/%_sysconfdir/bash_completion.d/%
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Thu Sep 10 2026 Mikhail Gordeev <obirvalger@altlinux.org> 4.3.0-alt1
+- new version 4.3.0
+
 * Mon Aug 10 2026 Mikhail Gordeev <obirvalger@altlinux.org> 4.2.3-alt1
 - new version 4.2.3
 
