@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.52.0
+Version: 0.53.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -110,6 +110,29 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sun Sep 13 2026 Anton Farygin <rider@altlinux.org> 0.53.0-alt1
+- added unlocking the tag signing key before the first 'flow' step so
+  pinentry shows up while the terminal is still watched
+- added 'agent mcp install --token' storing an Authorization Bearer header
+- added stopping 'build' and the 'up' build stage up front inside a devenv
+  without the hasher feature, pointing at gear-rpm -ba --commit
+- added a read-only bind mount of the bundled Agent Skill directory in devenv
+- added the [devenv] feature 'installer' option (native or npm) for the
+  claude and GLM-claude-code features
+- added --outbound-interface / -I to 'devenv'
+- fixed 'up --continue' skipping merge-up.d hooks after a conflicted merge
+  concluded by hand
+- fixed 'gen version-up' producing a pattern that matched nothing for a tag
+  with both a prefix and a suffix
+- fixed devenv (podman) rebuilding the image when outbound_interface changed
+- fixed a possible hang when aborting the remaining parallel builds
+- fixed 'task manage' dropping a dependency whose task was removed instead
+  of listing it for removal
+- fixed 'task test-rebuild' generating the merged repo and wiping
+  RPMS.hasher for a run with no dependent packages; it now exits right
+  after the RDB query, saving an empty completed stats snapshot
+- fixed 'task test-rebuild' checking --local-rpms only at the RPM stage
+
 * Tue Sep 01 2026 Anton Farygin <rider@altlinux.org> 0.52.0-alt1
 - added baking the last resolved BuildRequires set into the devenv podman
   image, so a recreated container installs only the delta
