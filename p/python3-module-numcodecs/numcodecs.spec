@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.16.5
-Release: alt1
+Release: alt2
 Summary: Buffer compression and transformation codecs for use
 License: MIT
 Group: Development/Python3
@@ -17,7 +17,6 @@ Patch0: %name-%version-alt.patch
 Patch1: 0001-Unbundle-blosc.patch
 Patch2: 0002-Unbundle-zstd.patch
 Patch3: 0003-Unbundle-lz4.patch
-BuildRequires: git
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools-scm
 BuildRequires: python3-module-setuptools
@@ -67,16 +66,9 @@ This package contains tests for %pypi_name.
 %prep
 %setup
 %autopatch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
@@ -96,6 +88,10 @@ fi
 %python3_sitelibdir/%mod_name/tests/
 
 %changelog
+* Sat Sep 12 2026 Anton Farygin <rider@altlinux.org> 0.16.5-alt2
+- Dropped fake git repo for setuptools-scm; use SETUPTOOLS_SCM_PRETEND_VERSION.
+- Skipped test_pyzstd when pyzstd fails to import (broken pyzstd on Python 3.14).
+
 * Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.16.5-alt1
 - Automatically updated to 0.16.5.
 
