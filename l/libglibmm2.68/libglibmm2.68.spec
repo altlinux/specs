@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define rname glibmm
-%define ver_major 2.88
+%define ver_major 2.89
 %define ver_base 2.68
 %define api_ver %ver_base
 
@@ -16,7 +16,7 @@ Release: alt1
 Summary: C++ wrapper for GLib
 License: LGPL-2.1 and GPL-2.0
 Group: System/Libraries
-Url: https://gtkmm.sourceforge.net/
+Url: https://gtkmm.gnome.org
 
 %if_enabled snapshot
 Source: %rname-%version.tar
@@ -24,7 +24,7 @@ Source: %rname-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%ver_major/%rname-%version.tar.xz
 %endif
 
-%define glib_ver 2.88.0
+%define glib_ver 2.89.3
 %define sigc_ver 3.0.0
 
 %add_perl_lib_path %_libdir/glibmm-%api_ver/proc/pm
@@ -49,7 +49,7 @@ linked with glibmm.
 %package devel
 Summary: Headers and development files of glibmm
 Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 A C++ interface for glib library.
@@ -109,6 +109,9 @@ sed -i  '/giomm_tls_client/d' tests/meson.build
 %endif
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.89.1-alt1
+- 2.89.1
+
 * Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.88.1-alt1
 - 2.88.1
 
