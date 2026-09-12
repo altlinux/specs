@@ -19,9 +19,9 @@
 %endif
 
 %define nv_version 595
-%define nv_release 91
-%define nv_minor   07
-%define pkg_rel alt3
+%define nv_release 99
+%define nv_minor   02
+%define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -255,6 +255,9 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 595.99.02-alt1
+- new version
+
 * Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt3
 - cleanup libnvidia-ml package (closes: 59499)
 
