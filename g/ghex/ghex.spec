@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: ghex
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -134,6 +134,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 50.4-alt1
+- 50.4
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.3-alt1
 - 50.3
 
