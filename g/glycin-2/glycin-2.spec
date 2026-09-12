@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name glycin
-%define ver_major 2.1
+%define ver_major 2.2
 %define beta %nil
 %define namespace Gly
 %define api_ver_major 2
@@ -11,10 +11,10 @@
 %def_enable thumbnailer
 
 %def_disable bootstrap
-%def_disable check
+%def_enable check
 
 Name: %_name-%api_ver_major
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -36,7 +36,6 @@ Source1: %_name-%version%beta-cargo.tar
 %define rsvg_ver 2.52.0
 %define heif_ver 1.17.0
 %define jxl_ver 0.11.1
-%define lcms_ver 2.14
 %define seccomp_ver 2.5.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-vala
@@ -47,7 +46,6 @@ BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver
 BuildRequires: pkgconfig(libheif) >= %heif_ver
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libjxl) >= %jxl_ver
-BuildRequires: pkgconfig(lcms2) >= %lcms_ver
 BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
 BuildRequires: gobject-introspection-devel gir(Gtk) = 4.0
 BuildRequires: vala-tools
@@ -148,7 +146,8 @@ tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
 %meson \
-    %{subst_enable_meson_bool thumbnailer %_name-thumbnailer}
+    %{subst_enable_meson_bool thumbnailer %_name-thumbnailer} \
+    -Dtest_disable_sandbox=true
 %nil
 %meson_build
 
@@ -208,6 +207,9 @@ tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 %_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Fri Jun 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1
 - 2.1.5
 

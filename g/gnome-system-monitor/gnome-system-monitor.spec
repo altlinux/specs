@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.SystemMonitor
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %def_enable systemd
 %def_enable check
@@ -87,6 +87,9 @@ Gnome-system-monitor is a simple process and system monitor.
 
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

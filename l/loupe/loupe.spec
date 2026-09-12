@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Loupe
 
@@ -32,10 +32,9 @@ Source1: %name-%version-cargo.tar
 %define gtk_ver 4.16
 %define adwaita_ver 1.7
 %define gweather_ver 4.0.0
-%define lcms2_ver 2.12.0
 %define seccomp_ver 2.5.0
 %define glycin_api_ver 2
-%define glycin_ver 2.1
+%define glycin_ver 2.2
 
 Provides: gnome-image-viewer = %EVR
 Requires: glycin-%glycin_api_ver-loaders >= %glycin_ver
@@ -48,7 +47,6 @@ BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(gweather4) >= %gweather_ver
-BuildRequires: pkgconfig(lcms2) >= %lcms2_ver
 BuildRequires: librsvg-devel libxml2-devel
 BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
@@ -85,6 +83,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
