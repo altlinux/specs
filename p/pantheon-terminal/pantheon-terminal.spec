@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 8.0
+%define ver_major 8.1
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
@@ -87,6 +87,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 8.1.0-alt1
+- 8.1.0
+
 * Sat Apr 18 2026 Yuri N. Sedunov <aris@altlinux.org> 8.0.0-alt1
 - 8.0.0 (ported to GTK4)
 
