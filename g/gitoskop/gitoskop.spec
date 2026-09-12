@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -93,6 +93,21 @@ cargo test --release --locked --offline
 %_datadir/%name/web
 
 %changelog
+* Sat Sep 12 2026 Anton Farygin <rider@altlinux.org> 1.7.0-alt1
+- 1.6.0 -> 1.7.0
+- security: bounded concurrent archive downloads and blames, cut trickle readers
+- security: bounded the memory a burst of MCP tool calls could allocate
+- recipe: a build recipe tree named its source commits (verb and MCP tool)
+- mcp: added tree, refs, find and recipe tools
+- mcp: git_show/git_diff took a path, blame took lines, answers became terser
+- api: added find verb, grep ?path=, a...b diffs from the merge base
+- webui: spec changelog linked bugs and CVE/BDU/GHSA ids, with hover cards
+- webui: commit ids in a message became links, spec pill in the repo header
+- webui: fenced code in markdown got highlighted
+- fixed: a ref naming both a branch and a tag picked the branch
+- fixed: grep page and overview card followed the rev picker
+- fixed: a front proxy's error page answered with its own status
+
 * Sat Sep 05 2026 Anton Farygin <rider@altlinux.org> 1.6.0-alt1
 - 1.5.0 -> 1.6.0
 - webui: light theme with a topbar toggle, follows the OS by default
