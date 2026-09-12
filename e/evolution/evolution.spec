@@ -2,8 +2,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.60
-%define ver_base 3.60
+%define ver_major 3.62
+%define ver_base 3.62
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -18,7 +18,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -171,7 +171,7 @@ This package contains documentation needed to develop Evolution plugins.
 %package tests
 Summary: Tests for the Evolution
 Group: Development/Other
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %name = %version-%release
 
 %description tests
@@ -277,6 +277,9 @@ ln -s %name-%ver_major %buildroot%_bindir/%name
 
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 3.62.0-alt1
+- 3.62.0
+
 * Fri May 22 2026 Yuri N. Sedunov <aris@altlinux.org> 3.60.2-alt1
 - 3.60.2
 
