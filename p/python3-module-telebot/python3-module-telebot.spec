@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 4.36.0
+Version: 4.36.1
 Release: alt1
 
 Summary: Python Telegram bot api
@@ -52,6 +52,9 @@ A simple, but extensible Python implementation for the Telegram Bot API.
 %python3_sitelibdir/%{pyproject_distinfo pytelegrambotapi}
 
 %changelog
+* Sat Sep 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.36.1-alt1
+- Updated to version 4.36.1.
+
 * Thu Jul 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.36.0-alt1
 - Updated to version 4.36.0.
 
