@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: gf
-Version: 0
+Version: 0.0.20260616
 Release: alt1
 
 Summary: A GDB frontend for Linux
@@ -39,5 +39,8 @@ install -pD -m644 extensions_v5/gf_profiling.c %buildroot%_includedir/gf/gf_prof
 %_includedir/gf/
 
 %changelog
+* Sun Sep 13 2026 Alexander Stepchenko <geochip@altlinux.org> 0.0.20260616-alt1
+- Updated to upstream commit 1c04ed9.
+
 * Wed Aug 28 2024 Alexander Stepchenko <geochip@altlinux.org> 0-alt1
 - Initial build for ALT.
