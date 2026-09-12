@@ -11,7 +11,7 @@
 %def_enable installed_tests
 
 Name: flatpak-builder
-Version: 1.4.10
+Version: 1.4.11
 Release: alt1
 Epoch:1
 
@@ -120,6 +120,9 @@ the functionality of the installed Flatpak-builder.
 %_datadir/installed-tests/%name
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.11-alt1
+- 1.4.11 (fixed CVE-2026-86320)
+
 * Fri Jun 19 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.4.10-alt1
 - 1.4.10
 
