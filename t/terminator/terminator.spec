@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: terminator
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.6
+Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
@@ -78,6 +78,9 @@ xvfb-run py.test-3
 %doc README* CHANGELOG*
 
 %changelog
+* Fri Sep 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.6-alt1
+- 2.1.6
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.1.5-alt1.1
 - explicitly required python3-module-pygobject3
 
