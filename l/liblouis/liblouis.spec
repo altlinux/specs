@@ -3,7 +3,7 @@
 %define sover 20
 
 Name: liblouis
-Version: 3.38.0
+Version: 3.39.0
 Release: alt1
 Summary: Braille translation and back-translation library
 
@@ -210,6 +210,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %doc doc/%name.pdf README AUTHORS NEWS ChangeLog TODO COPYING.LESSER
 
 %changelog
+* Sat Sep 12 2026 Artem Semenov <savoptik@altlinux.org> 3.39.0-alt1
+- New version 3.39.0.
+
 * Thu Jun 25 2026 Artem Semenov <savoptik@altlinux.org> 3.38.0-alt1
 - Updated to new version 3.38.0
 
