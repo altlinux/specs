@@ -4,7 +4,7 @@
 %def_without check
 
 Name: symbolical
-Version: 0.6.5.1
+Version: 0.6.8.0
 Release: alt1
 
 Summary: Math document application
@@ -31,6 +31,7 @@ Requires: python3(dbus)
 %filter_from_requires /python3(gui.MainWindow)/d
 %filter_from_requires /python3(model.Document)/d
 %filter_from_requires /python3(controller)/d
+%filter_from_requires /python3(controller.DBusService)/d
 
 BuildArch: noarch
 
@@ -76,6 +77,9 @@ sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %bu
 %exclude %_datadir/licenses/symbolical
 
 %changelog
+* Sat Sep 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.8.0-alt1
+- New version 0.6.8.0.
+
 * Fri Aug 21 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.5.1-alt1
 - New version 0.6.5.1.
 
