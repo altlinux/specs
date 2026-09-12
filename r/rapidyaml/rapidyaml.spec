@@ -1,5 +1,5 @@
 Name: rapidyaml
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 
 Summary: A library to parse and emit YAML
@@ -10,9 +10,7 @@ Url: https://github.com/biojppm/%name
 Vcs: https://github.com/biojppm/%name
 Packager: Nazarov Denis <nenderus@altlinux.org> 
 
-Source: https://github.com/biojppm/%name/releases/download/v%version/%name-%version-src.tgz
-
-Patch3500: rapidyaml-loongarch64.patch
+Source: https://github.com/biojppm/%name/archive/v%version/%name-%version.tar.gz
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -25,6 +23,8 @@ ryml is a C++ library to parse and emit YAML.
 %package -n libryml
 Summary: A library to parse and emit YAML
 Group: System/Libraries
+Provides: libc4core = %EVR
+Obsoletes: libc4core < %EVR
 
 %description -n libryml
 ryml is a C++ library to parse and emit YAML.
@@ -32,13 +32,6 @@ ryml is a C++ library to parse and emit YAML.
 ryml parses both read-only and in-situ source buffers; the resulting
 data nodes hold only views to sub-ranges of the source buffer. No
 string copies or duplications are done.
-
-%package -n libc4core
-Summary: Utility library of %name
-Group: System/Libraries
-
-%description -n libc4core
-ryml is a C++ library to parse and emit YAML.
 
 %package -n libryml-devel
 Summary: Header files for rapidyaml, a library to parse and emit YAML
@@ -50,8 +43,7 @@ ryml is a C++ library to parse and emit YAML.
 This package contains development headers and examples.
 
 %prep
-%setup -n %name-%version-src
-%patch3500 -p1
+%setup
 
 %build
 %cmake \
@@ -67,18 +59,17 @@ This package contains development headers and examples.
 %files -n libryml
 %_libdir/libryml.so.*
 
-%files -n libc4core
-%_libdir/libc4core.so.*
-
 %files -n libryml-devel
 %doc README.md
 %_includedir/*
-%_libdir/cmake/c4core
+%_datadir/ryml
 %_libdir/cmake/ryml
-%_libdir/libc4core.so
 %_libdir/libryml.so
 
 %changelog 
+* Sat Sep 12 2026 Nazarov Denis <nenderus@altlinux.org> 0.16.0-alt1
+- Version 0.16.0
+
 * Sun Jun 14 2026 Nazarov Denis <nenderus@altlinux.org> 0.15.2-alt1
 - Version 0.15.2
 
