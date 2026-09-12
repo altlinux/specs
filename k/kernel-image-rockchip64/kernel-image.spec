@@ -4,7 +4,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.50
+%define kernel_sublevel	.51
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -217,20 +217,22 @@ Patch0174: rk3588-1052-board-nanopc-t6-fix-usb3-a.patch
 Patch0175: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
 Patch0176: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
 Patch0177: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
-Patch0178: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
-Patch0179: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
-Patch0180: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
-Patch0181: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
-Patch0182: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
-Patch0183: rk3588-1212-arm64-dts-Automatic-fan-speed-and-USB-3.0-Type-A-por.patch
-Patch0184: rk3588-1213-arm64-dts-rk3588s-roc-pc-Enable-USB-type-C-port.patch
-Patch0185: rk3588-1230-can-rockchip-add-rk3588-can-support.patch
-Patch0186: rk35xx-montjoie-crypto-v2-rk35xx.patch
-Patch0187: temporary-workaround-dma-reset.patch
-Patch0188: wifi-4003-add-bcm43342-chip.patch
+Patch0178: rk3588-1102-arm64-dts-rockchip-opi5-compact-fix-bluetooth.patch
+Patch0179: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
+Patch0180: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
+Patch0181: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
+Patch0182: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
+Patch0183: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
+Patch0184: rk3588-1212-arm64-dts-Automatic-fan-speed-and-USB-3.0-Type-A-por.patch
+Patch0185: rk3588-1213-arm64-dts-rk3588s-roc-pc-Enable-USB-type-C-port.patch
+Patch0186: rk3588-1230-can-rockchip-add-rk3588-can-support.patch
+Patch0187: rk35xx-montjoie-crypto-v2-rk35xx.patch
+Patch0188: temporary-workaround-dma-reset.patch
+Patch0189: wifi-4003-add-bcm43342-chip.patch
 
 # ALT Patches
 Patch1000: 1000-drm_rockchip_dwhdmiqp-rockchip_attach_next_bridge_to_the_HDMI_bridge.patch
+Patch1001: 1001-config-Enable-802.11ax-Realtek-USB-NIC-s.patch
 Patch2000: 2000-OrangePI5-Enable-UART0-and-pps_gpio.patch
 
 ExclusiveArch: aarch64
@@ -283,6 +285,15 @@ BuildRequires: ccache
 %ifdef use_ccache
 BuildRequires: ccache
 %endif
+
+# for check
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: iproute2
+BuildRequires: ltp >= 20210524-alt2
+BuildRequires: kirk
+BuildRequires: rpm-build-vm-run >= 1.30
+BuildRequires: rtcheck
+}}
 
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
@@ -536,11 +547,29 @@ banner check
 timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
 	'uname -a'
 # Longer LTP tests only if there is KVM (which is present on all main arches).
-if ! timeout 999 vm-run --kvm=cond --klog --append='altha=1 oops=panic panic_on_warn=1' \
-	runltp -f kernel-alt-vm -S skiplist-alt-vm -o out; then
-	cat /usr/lib/ltp/output/LTP_RUN_ON-out.failed >&2
-	sed '/TINFO/i\\' /usr/lib/ltp/output/out | awk '/TFAIL/' RS= >&2
-	exit 1
+if kvm-ok; then
+	# cleanup from the possible revious run
+	rm -rvf kirk-reports
+	mkdir kirk-reports
+	timeout 1999 vm-run --klog --append='altha=1 oops=panic panic_on_warn=1' \
+		kirk -w %_smp_build_ncpus -f kernel-alt-vm \
+		-S /usr/lib/ltp/skiplist-alt-vm -o kirk-reports/report.json
+
+	# kirk exits with 0 exit code even if some tests fail. We need to examine
+	# it's report to validate that everything is ok.
+	[ -s kirk-reports/report.json ] || exit 1
+
+	pushd kirk-reports
+	/usr/lib/kirk/json2logs --resfile report.json \
+		--sumfile kirk-sum.log --failfile kirk-fail.log --runfile kirk-run.log
+	if grep -qiFw fail kirk-sum.log; then
+		cat kirk-fail.log
+		cat kirk-sum.log
+		exit 3
+	else
+		cat kirk-sum.log
+	fi
+	popd
 fi
 
 %files
@@ -573,6 +602,11 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Sep 12 2026 Alexei Takaseev <taf@altlinux.org> 6.18.51-alt1
+- v6.18.51 (2026-09-11).
+- spec: Use kirk to run LTP tests.
+- config: CONFIG_RTW89_USB=m CONFIG_RTW89_8851BU=m CONFIG_RTW89_8852BU=m
+
 * Tue Sep 08 2026 Alexei Takaseev <taf@altlinux.org> 6.18.50-alt1
 - v6.18.50 (2026-09-07).
 
