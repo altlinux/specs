@@ -1,18 +1,16 @@
 Name: canl-java
-Version: 2.8.3
-Release: alt3
+Version: 2.9.0
+Release: alt1
 Summary: EMI Common Authentication library - bindings for Java
-#		The main parts of the code are BSD
-#		Parts derived from glite security utils java are Apache 2.0
-#		Parts derived from bouncycastle are MIT
-#		Parts derived from Apache Commons IO are Apache 2.0
-#		See LICENSE.txt for details
+# The main parts of the code are BSD
+# Parts derived from glite security utils java are Apache 2.0
+# Parts derived from bouncycastle are MIT
+# Parts derived from Apache Commons IO are Apache 2.0
+# See LICENSE.txt for details
 License: BSD and Apache-2.0 and MIT
 Group: Development/Java
 URL: https://github.com/eu-emi/%{name}/
 Source0: https://github.com/eu-emi/%{name}/archive/canl-%{version}/canl-%{version}.tar.gz
-# Disable tests that require network connections
-Patch0:	%{name}-test.patch
 
 BuildArch:	noarch
 
@@ -25,28 +23,20 @@ BuildRequires: mvn(junit:junit) >= 4.8
 BuildRequires: mvn(org.assertj:assertj-core)
 BuildRequires: mvn(org.bouncycastle:bcpkix-jdk18on) >= 1.69
 BuildRequires: mvn(org.bouncycastle:bcprov-jdk18on) >= 1.69
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+
 Requires: mvn(org.bouncycastle:bcpkix-jdk18on) >= 1.69
 Requires: mvn(org.bouncycastle:bcprov-jdk18on) >= 1.69
 
 %description
 This is the Java part of the EMI caNl -- the Common Authentication Library.
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc documentation for EMI caNl.
+%javadoc_package
 
 %prep
 %setup -q -n %{name}-canl-%{version}
-%patch0 -p1
 
 %pom_change_dep org.hamcrest:hamcrest-all org.hamcrest:hamcrest
-
-# Remove maven-wagon-webdav-jackrabbit dependency
-%pom_xpath_remove pom:build/pom:extensions
 
 # GPG signing requires a GPG key
 %pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
@@ -58,11 +48,10 @@ Javadoc documentation for EMI caNl.
 # Do not create source jars
 %pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
 
-# Do not stage
-%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin
+%pom_remove_plugin org.sonatype.central:central-publishing-maven-plugin
 
 %build
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install
@@ -72,10 +61,10 @@ Javadoc documentation for EMI caNl.
 %doc API-Changes.txt README.md
 %doc --no-dereference LICENSE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
-
 %changelog
+* Thu Sep 10 2026 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
+- new version
+
 * Wed Jan 14 2026 Anton Meleshnikov <alton@altlinux.org> 2.8.3-alt3
 - fixed FTBFS with bouncycastle 1.80
 
