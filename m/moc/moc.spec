@@ -19,11 +19,11 @@
 
 Name: moc
 Version: 2.6.0
-Release: alt0.9
+Release: alt0.10
 
 Summary: Console player
 Group: Sound
-License: GPL
+License: GPLv2
 Url: http://moc.daper.net/
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -222,7 +222,7 @@ Hybrid Lossless Wavefile Compressor support.
 
 %build
 %add_optflags %optflags_warnings
-%autoreconf
+%autoreconf -I%_datadir/gettext/m4
 
 %configure \
 	--with-rcc \
@@ -333,6 +333,9 @@ EOF
 %endif
 
 %changelog
+* Sat Sep 12 2026 L.A. Kostis <lakostis@altlinux.ru> 2.6.0-alt0.10
+- Fix FTBFS with recent gettext/autotools.
+
 * Mon Feb 10 2025 Constantin Sunzow <protvin@altlinux.org> 2.6.0-alt0.9
 - Rebuild against libdb-5.3.
 
