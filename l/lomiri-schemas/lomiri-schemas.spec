@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lomiri-schemas
-Version: 0.1.11
+Version: 0.1.13
 Release: alt1
 
 Summary: Configuration schemas used by Lomiri
@@ -78,6 +78,9 @@ This package contains the development files for %name.
 %_datadir/dbus-1/interfaces/com.lomiri.touch.AccountsService.Sound.xml
 
 %changelog
+* Sat Sep 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.13-alt1
+- New version 0.1.13.
+
 * Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.11-alt1
 - New version 0.1.11.
 

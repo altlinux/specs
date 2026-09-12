@@ -9,8 +9,8 @@
 %set_verify_elf_skiplist %_libexecdir/lomiri/tests/*
 
 Name: lomiri
-Version: 0.6.1
-Release: alt2
+Version: 0.6.2
+Release: alt1
 
 Summary: Shell of the Lomiri Operating Environment
 License: GPL-3.0
@@ -264,6 +264,9 @@ rm -vrf %buildroot%_libexecdir/lomiri/tests/
 %_datadir/dbus-1/interfaces/com.lomiri.shell.AccountsService.xml
 
 %changelog
+* Sat Sep 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.2-alt1
+- New version 0.6.2.
+
 * Fri Aug 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.1-alt2
 * Updated systemd user target.
 
