@@ -1,6 +1,6 @@
 Name: mysqltuner
 Version: 2.9.2
-Release: alt1
+Release: alt2
 
 Summary: High Performance MySQL Tuning Script
 License: GPLv3+
@@ -10,6 +10,8 @@ Url: https://github.com/major/MySQLTuner-perl
 Source0: %name-%version.tar
 
 BuildArch: noarch
+
+Requires: perl(JSON.pm)
 
 BuildRequires: perl-podlators
 
@@ -32,18 +34,33 @@ that is on the level of what you would receive from a MySQL DBA.
 
 %install
 install -pD -m755 %name.pl %buildroot%_bindir/%name
+sed -i '1s|^#!/usr/bin/env perl|#!/usr/bin/perl|' %buildroot%_bindir/%name
 install -pD -m644 vulnerabilities.csv %buildroot%basedir/vulnerabilities.csv
-install -p -m644 basic_passwords.txt %buildroot%basedir/
-pod2man %name.pl > %name.1
+install -pD -m644 basic_passwords.txt %buildroot%basedir/basic_passwords.txt
+pod2man --name=%name --section=1 %name.pl > %name.1
 install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
+
+%check
+perl -c %name.pl
 
 %files
 %_bindir/%name
 %basedir
 %_man1dir/%name.1.*
-%doc *.md *.png
+%doc LICENSE *.md *.png
 
 %changelog
+* Sat Sep 12 2026 Anton Farygin <rider@altlinux.org> 2.9.2-alt2
+- Added Requires: perl-JSON so --json/--prettyjson work (closes: #60507)
+- Disabled --checkversion/--updateversion for packaged install (closes: #60509)
+- Named mountpoint (not usage percent) in disk-space recommendation
+- Skipped virtual filesystems by mount prefix only
+- Detected hypervisor flag when it was last on the CPU flags line
+- Kept --noprocess enabled instead of clearing it
+- Honoured --noprocess when measuring other process memory
+- Treated query_cache_type 0/OFF as disabled and ON as all requests
+- Packaged LICENSE, installed with /usr/bin/perl shebang
+
 * Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 2.9.2-alt1
 - 1.7.2 -> 2.9.2
 
