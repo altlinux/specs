@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 3.0
+%define ver_major 2026
 %define rdn_name org.gnome.App-list
 
 %def_enable check
 
 Name: gnome-app-list
-Version: %ver_major
+Version: %ver_major.08
 Release: alt1
 
 Summary: GNOME App List
@@ -17,7 +17,7 @@ Url: https://gitlab.gnome.org/GNOME/gnome-app-list
 Vcs: https://gitlab.gnome.org/GNOME/gnome-app-list.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -51,6 +51,9 @@ by the Software (https://gitlab.gnome.org/GNOME/gnome-software) app.
 %doc README* NEWS
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.08-alt1
+- 2026.08
+
 * Sat Mar 15 2025 Yuri N. Sedunov <aris@altlinux.org> 3.0-alt1
 - 3.0
 

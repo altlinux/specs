@@ -1,11 +1,11 @@
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
@@ -67,6 +67,7 @@ BuildRequires: pkgconfig(libgeoclue-2.0) >= %geoclue_ver
 BuildRequires: pkgconfig(geocode-glib-%geocode_api_ver)
 BuildRequires: pkgconfig(shumate-1.0) >= %shumate_ver pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(librsvg-2.0) pkgconfig(libportal)
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: gir(GeocodeGlib) = %geocode_api_ver gir(GWeather) = %gweather_api_ver
 BuildRequires: gir(Shumate) gir(Rest) = %rest_api_ver
 
@@ -94,12 +95,15 @@ Maps is a map application for GNOME.
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.metainfo.xml
-%doc README NEWS
+%doc README* NEWS
 
 %exclude %_libdir/%name/*.so
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri Aug 28 2026 Yuri N. Sedunov <aris@altlinux.org> 50.4-alt1
 - 50.4
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define plugins_ver 23
 %define _libexecdir %_prefix/libexec
@@ -41,7 +41,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -72,7 +72,7 @@ Patch10: %name-48.3-alt-white-list.patch
 %define flatpak_ver 1.9.1
 %define snapd_ver 1.6.2
 %define ostree_ver 2019.3
-%define xmlb_ver 0.3.4
+%define xmlb_ver 0.3.22
 %define malcontent_ver 0.11
 %define applist_ver 3.0
 
@@ -249,6 +249,9 @@ _EOF_
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri Jun 26 2026 Yuri N. Sedunov <aris@altlinux.org> 50.3-alt1
 - 50.3
 
