@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 45
+%define ver_major 46
 %define api_ver 2.8
 %def_enable external_plugin
 %def_enable mpris_plugin
@@ -19,7 +19,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -102,6 +102,7 @@ BuildRequires: vapi(gupnp-1.6) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) va
 BuildRequires: gir(GUPnP) = 1.6 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
 %{?_enable_gtk:BuildRequires: pkgconfig(gtk4) >= %gtk_ver}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
+BuildRequires: python3(yaml) /usr/bin/rst2man
 BuildRequires: pkgconfig(systemd)
 
 %description
@@ -215,6 +216,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 46.0-alt1
+- 46.0
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 45.2-alt1
 - 45.2
 

@@ -1,6 +1,7 @@
 %def_disable snapshot
 %define _name nice
 %define ver_major 0.1
+%define namespace Nice
 %define api_ver %ver_major
 %define gst_api_ver 1.0
 
@@ -14,7 +15,7 @@
 %def_disable check
 
 Name: libnice
-Version: %ver_major.23
+Version: %ver_major.24
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -177,10 +178,10 @@ This package provides tools from libnice package.
 %endif
 
 %files gir
-%_typelibdir/Nice-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Nice-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled gstreamer
 %files -n gst-plugins-nice%gst_api_ver
@@ -192,6 +193,9 @@ This package provides tools from libnice package.
 
 
 %changelog
+* Tue Sep 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.24-alt1
+- 0.1.24
+
 * Thu Nov 27 2025 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
 - 0.1.23
 

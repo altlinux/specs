@@ -1,13 +1,13 @@
-%def_enable snapshot
-%define ver_major 0.2
+%def_disable snapshot
+%define ver_major 0.3
 
 %def_disable bootstrap
 # wayland display required
 %def_disable check
 
 Name: wl-screenrec
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: High performance screen recorder for wlroots Wayland
 License: Apache-2.0
@@ -26,6 +26,8 @@ Source1: %name-%version-cargo.tar
 %ifnarch %ix86 armh
 Requires: slurp
 %endif
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: clang-devel
@@ -61,6 +63,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Sat May 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt2
 - updated to v0.2.0-34-g0925290 (fixed for ffmpeg-8.1)
 
