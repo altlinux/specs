@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: epiphany
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -39,7 +39,7 @@ Obsoletes: %name-extensions
 
 %add_findprov_lib_path %_libdir/%name
 
-%define glib_ver 2.74.0
+%define glib_ver 2.84.0
 %define webki_api_ver 6.0
 %define webkit_ver 2.43.4
 %define gtk4_ver 4.21
@@ -72,6 +72,7 @@ BuildRequires: libjson-glib-devel
 BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: libarchive-devel
 BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkitgtk-%webki_api_ver) >= %webkit_ver
+BuildRequires: pkgconfig(pwquality)
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_chek:BuildRequires: xvfb-run bubblewrap xdg-dbus-proxy}
 
@@ -154,6 +155,9 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0 (fixed CVE-2026-18487, CVE-2026-77679, CVE-2026-77682)
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 50.6-alt1
 - 50.6
 

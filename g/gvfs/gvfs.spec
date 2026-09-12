@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.60
+%define ver_major 1.62
 
 # obexftp support removed since 3.15.91
 %def_disable obexftp
@@ -32,8 +32,10 @@
 %def_enable devel_utils
 %def_disable check
 
+%define busy_processes_command lsof
+
 Name: gvfs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -80,6 +82,7 @@ Requires: dconf
 Requires: gsettings-desktop-schemas >= %gsds_ver
 %{?_enable_fuse:Requires: fuse-gvfs}
 %{?_enable_udisks2:Requires: udisks2}
+Requires: %busy_processes_command
 
 BuildRequires(pre): meson rpm-build-gnome rpm-build-python3
 %add_python3_path %_libexecdir/installed-tests/%name
@@ -328,7 +331,8 @@ The %name-tests package provides programms for testing GVFS.
     %{subst_enable_meson_bool systemd_login logind} \
     %{subst_enable_meson_bool man man} \
     %{subst_enable_meson_bool installed_tests installed_tests} \
-    %{subst_enable_meson_bool devel_utils devel_utils}
+    %{subst_enable_meson_bool devel_utils devel_utils} \
+    -Dbusy_processes_command=%busy_processes_command
 %nil
 %meson_build
 
@@ -563,6 +567,9 @@ setcap -q cap_net_bind_service=ep %_libexecdir/gvfsd-nfs ||:
 
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.62.0-alt1
+- 1.62.0 (fixed CVE-2026-88924)
+
 * Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.60.2-alt1
 - 1.60.2
 
