@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma6-integration
-Version: 6.7.4
+Version: 6.7.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -12,6 +12,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: %name-common >= %EVR
+Requires: libqt6-core = %_qt6_version
 
 Source: %rname-%version.tar
 Patch1: alt-def-font.patch
@@ -101,6 +102,9 @@ Obsoletes: plasma5-integration-common < 1:%version-%release
 %_K5plug/platformthemes/KDEPlasmaPlatformTheme5.so
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 

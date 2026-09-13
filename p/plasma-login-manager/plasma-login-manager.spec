@@ -2,8 +2,8 @@
 %define login_defs_cut %_sysconfdir/plasmalogin/login.defs
 
 Name: %rname
-Version: 6.7.4
-Release: alt4
+Version: 6.7.5
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: QML based login manager from KDE
@@ -180,6 +180,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmplasmalogin.policy
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Mon Aug 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt4
 - fix requires (closes: 60206)
 

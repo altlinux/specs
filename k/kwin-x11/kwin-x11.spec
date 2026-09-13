@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: %rname
-Version: 6.7.4
-Release: alt2
+Version: 6.7.5
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -183,6 +183,9 @@ done
 %_K6lib/libkcmkwincommon-x11.so.*
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
 - return numlock state to kde defaults
 

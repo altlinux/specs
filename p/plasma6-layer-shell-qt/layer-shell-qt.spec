@@ -4,7 +4,7 @@
 %define liblayershellqtinterface liblayershellqtinterface%sover
 
 Name: plasma6-%rname
-Version: 6.7.4
+Version: 6.7.5
 Release: alt1
 %K6init
 
@@ -44,6 +44,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common
+Requires: libqt6-core = %_qt6_version
 %description -n %liblayershellqtinterface
 %name library
 
@@ -77,6 +78,9 @@ Requires: %name-common
 %_K6lib/libLayerShellQtInterface.so.*
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 

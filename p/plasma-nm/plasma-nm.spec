@@ -8,7 +8,7 @@
 %endif
 
 Name: %rname
-Version: 6.7.4
+Version: 6.7.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -281,6 +281,9 @@ Obsoletes: plasma5-nm-connect-ssh < 1:%version-%release
 %_K6plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 

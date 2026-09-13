@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma6-%rname
-Version: 6.7.4
+Version: 6.7.5
 Release: alt1
 #Epoch: 1
 %K6init
@@ -114,6 +114,9 @@ KDE 5 visual style.
 %_libdir/cmake/Breeze/
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 

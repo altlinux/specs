@@ -1,7 +1,7 @@
 
 Name: plasma-keyboard
-Version: 6.7.4
-Release: alt2
+Version: 6.7.5
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -47,6 +47,9 @@ make -C BUILD DESTDIR=%buildroot install
 %_datadir/metainfo/*keyboard*.xml
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Sep 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
 - add EN layout for non-EN locales
 

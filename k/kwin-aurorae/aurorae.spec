@@ -1,7 +1,7 @@
 %define rname aurorae
 
 Name: kwin-%rname
-Version: 6.7.4
+Version: 6.7.5
 Release: alt1
 %K6init
 
@@ -75,6 +75,9 @@ sed -i 's|/usr/bin/bash|/bin/sh|' plasma-apply-aurorae.cmake
 %_libdir/cmake/Aurorae/
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 

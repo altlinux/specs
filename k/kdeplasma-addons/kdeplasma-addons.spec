@@ -15,8 +15,8 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.7.4
-Release: alt2
+Version: 6.7.5
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -232,6 +232,9 @@ touch touch-%_arch
 
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Fri Aug 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt2
 - add unwanted words filter for online dictionaries
 

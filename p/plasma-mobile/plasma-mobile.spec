@@ -10,7 +10,7 @@
 %endif
 
 Name: %rname
-Version: 6.7.4
+Version: 6.7.5
 Release: alt1
 %K6init
 
@@ -151,6 +151,9 @@ done
 #/usr/share/dbus-1/interfaces/org.kde.plasmashell.*.xml
 
 %changelog
+* Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
+- new version
+
 * Tue Aug 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.4-alt1
 - new version
 
