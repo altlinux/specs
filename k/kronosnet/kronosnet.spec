@@ -1,5 +1,5 @@
 
-%def_enable sctp
+%def_disable sctp
 %def_enable nss
 %def_enable openssl
 %def_enable libnozzle
@@ -13,14 +13,14 @@
 
 Name: kronosnet
 Summary: Multipoint-to-Multipoint VPN daemon
-Version: 1.33
+Version: 1.35
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: Networking/Other
 Url: https://kronosnet.org
 Vcs: https://github.com/kronosnet/kronosnet.git
 Source: %name-%version.tar
-Patch: %name-%version.patch
+#Patch: %name-%version.patch
 
 BuildRequires: libqb-devel libxml2-devel doxygen
 %{?_enable_sctp:BuildRequires: lksctp-tools liblksctp-devel}
@@ -199,7 +199,7 @@ This package contains all the libknet and libnozzle test suite
 
 %prep
 %setup
-%patch -p1
+# %patch -p1
 
 echo %version > .version
 cp .version .tarball-version
@@ -219,6 +219,7 @@ export CFLAGS_FOR_BUILD="%optflags"
 	%{?_enable_bzip2:--enable-compress-bzip2} \
 	%{?_enable_zstd:--enable-compress-zstd} \
 	%{?_enable_installtests:--enable-install-tests} \
+    --disable-wireshark-dissector \
 	%{subst_enable libnozzle}
 
 %make_build
@@ -313,6 +314,10 @@ rm -rf %buildroot/usr/share/doc/kronosnet
 %files -n libknet1-plugins-all
 
 %changelog
+* Sun Sep 13 2026 Alexey Shabalin <shaba@altlinux.org> 1.35-alt1
+- 1.35 (Fixes: CVE-2026-15811, CVE-2026-15812, CVE-2026-15813)
+- disabled deprecated SCTP support
+
 * Mon Feb 16 2026 Alexey Shabalin <shaba@altlinux.org> 1.33-alt1
 - updated from 1.32 to 1.33
 
