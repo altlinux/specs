@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt45
+Release: alt47
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -307,8 +307,8 @@ done;
 
 %make_build
 
-rpmquery -a --provides |fgrep '= set:' |sort >P
-rpmquery -a --requires |fgrep '= set:' |sort >R
+rpmquery -a --provides | grep -F '= set:' |sort >P
+rpmquery -a --requires | grep -F '= set:' |sort >R
 join -o 1.3,2.3 P R |shuf >setcmp-data
 time ./setcmp <setcmp-data >/dev/null
 rm lib/set.lo lib/librpm.la
@@ -470,6 +470,14 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_mandir/man8/rpmkeys.8*
 %_mandir/man8/rpmsign.8*
 
+%rpmhome/macros
+%rpmhome/rpmrc
+
+%if_enabled plugins
+%dir %_libdir/rpm-plugins
+%_libdir/rpm-plugins/selinux.so
+%endif
+
 %dir %_sysconfdir/rpm/macros.d
 %rpmhome/macros.d
 %rpmhome/rpmpopt*
@@ -511,13 +519,8 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_libdir/librpm.so.*
 %_libdir/librpmio.so.*
 %_libdir/librpmsign.so.*
-%_libdir/rpm-plugins/selinux.so
-%rpmhome/macros
-%rpmhome/rpmrc
 
 %if_enabled plugins
-%dir %_libdir/rpm-plugins
-
 %files plugin-syslog
 %_libdir/rpm-plugins/syslog.so
 
@@ -578,6 +581,15 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon Aug 31 2026 Arseny Maslennikov <arseny@altlinux.org> 4.13.0.1-alt47
+- Taught RPM to install sysusers entries present in packages.
+- Added more minor fixes.
+
+* Wed Aug 26 2026 Arseny Maslennikov <glebfm@altlinux.org> 4.13.0.1-alt46
+- glebfm@:
+  + Moved the macros and rpmrc files, the plugins directory and the selinux
+    plugin from librpm7 to rpm.
+
 * Fri May 15 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.13.0.1-alt45
 - Backported an upstream fix for progress printing during installation of RPMv6
   packages ((ALT#59173) (thx Pavlina Moravcova Varekova).
