@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mdcat
-Version: 2.15.0
+Version: 2.16.1
 Release: alt1
 Summary: cat for markdown
 License: MPL-2.0
@@ -82,6 +82,9 @@ install -Dm 0644 mdpick.fish %buildroot%_datadir/fish/vendor_completions.d/mdpic
 %_datadir/fish/vendor_completions.d/mdpick.fish
 
 %changelog
+* Sun Sep 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.16.1-alt1
+- Updated to version 2.16.1.
+
 * Wed Aug 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.15.0-alt1
 - Updated to version 2.15.0.
 - Packaged mdless and mdpick binaries.
