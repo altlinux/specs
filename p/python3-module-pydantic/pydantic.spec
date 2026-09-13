@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 %define pypi_name pydantic
+%define pydantic_core_ver %(jq -r '.sources.metadata.deps[] | select(startswith("pydantic-core==")) | sub("^pydantic-core=="; "")' %SOURCE1)
 
 Name: python3-module-%pypi_name
 Version: 2.13.5
-Release: alt1
+Release: alt2
 
 Summary: Data parsing and validation using Python type hints
 License: MIT
@@ -17,6 +18,10 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
 %pyproject_runtimedeps_metadata
+# pydantic verifies the exact pydantic-core version at import time; the
+# pin is taken from pyproject_deps.json and verified by the resync step.
+Requires: python3-module-pydantic-core = %pydantic_core_ver
+BuildRequires(pre): jq
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
@@ -76,6 +81,10 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Sep 13 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.13.5-alt2
+- Added exact version requirement on python3-module-pydantic-core to match
+  the upstream pin (Closes: #60514).
+
 * Thu Sep 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.13.5-alt1
 - Updated to 2.13.5.
 
