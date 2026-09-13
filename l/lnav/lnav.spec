@@ -1,5 +1,5 @@
 Name: lnav
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: The log file navigator
@@ -62,6 +62,9 @@ sed -i 's,var/log/syslog,&/messages,g' src/lnav.cc
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Sun Sep 13 2026 Anton Midyukov <antohami@altlinux.org> 0.14.1-alt1
+- New version 0.14.1.
+
 * Mon Aug 03 2026 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
 - New version 0.14.0.
 
