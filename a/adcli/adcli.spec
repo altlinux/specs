@@ -1,13 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%def_disable selinux
 
 Name: adcli
-Version: 0.9.2
+Version: 0.9.3.1
 
 Release: alt1
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
 
-Url: http://cgit.freedesktop.org/realmd/adcli
+Url: https://gitlab.freedesktop.org/realmd/adcli
+Vcs: https://gitlab.freedesktop.org/realmd/adcli.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
@@ -18,6 +21,9 @@ BuildRequires: /usr/bin/krb5-config
 BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: libxslt
 BuildRequires: xmlto
+# libnetapi for offline join
+BuildRequires: samba-devel
+%{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %description
 adcli is a library and tool for joining an Active Directory domain using
@@ -39,7 +45,7 @@ documentation.
 
 %build
 %autoreconf
-%configure --disable-static --disable-silent-rules --enable-strict
+%configure --disable-static --disable-silent-rules --enable-strict %{?_disable_selinux:--disable-selinux-support}
 %make_build
 
 
@@ -58,6 +64,9 @@ documentation.
 %doc %_datadir/doc/adcli
 
 %changelog
+* Sun Sep 13 2026 Alexey Shabalin <shaba@altlinux.org> 0.9.3.1-alt1
+- 0.9.3.1
+
 * Mon Oct 17 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.2-alt1
 - Add support LDAP add/mod operation to set/change password:
  + fix unable to join to active directory after KB5008380/CVE-2021-42287 with
