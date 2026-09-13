@@ -1,6 +1,6 @@
 %define libname ocp-indent
 Name: ocaml-%libname
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: A simple tool to indent OCaml programs
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -44,6 +44,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Sun Sep 13 2026 Anton Farygin <rider@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0
+
 * Sun Jan 25 2026 Anton Farygin <rider@altlinux.org> 1.9.0-alt1
 - 1.8.2 -> 1.9.0
 
