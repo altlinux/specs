@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: redis
-Version: 8.6.5
+Version: 8.6.6
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -210,6 +210,9 @@ useradd  -r -g %redis_group -c 'Redis daemon' \
 %_includedir/%{name}module.h
 
 %changelog
+* Sun Sep 13 2026 Anton Farygin <rider@altlinux.org> 8.6.6-alt1
+- 8.6.5 -> 8.6.6
+
 * Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 8.6.5-alt1
 - 8.6.4 -> 8.6.5 (Fixes: CVE-2026-66373)
 
