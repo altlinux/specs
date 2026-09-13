@@ -1,7 +1,7 @@
 %def_with check
 
 Name: broot
-Version: 1.59.0
+Version: 1.60.1
 Release: alt1
 Summary: A new way to see and navigate directory trees
 License: MIT
@@ -44,6 +44,9 @@ install -Dm 0644 man/page %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Sep 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.60.1-alt1
+- Updated to version 1.60.1.
+
 * Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.59.0-alt1
 - Updated to version 1.59.0.
 
