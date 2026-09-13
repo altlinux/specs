@@ -2,7 +2,7 @@
 
 Name: autokey
 Version: 0.96.0
-Release: alt2
+Release: alt3
 
 Summary: AutoKey, a desktop automation utility for Linux and X11
 License: GPL-3.0
@@ -34,6 +34,10 @@ Requires: typelib(Notify)
 %filter_from_requires /python3(distutils.spawn)/d
 # needed for autokey-shell
 Requires: python3(setuptools)
+
+# avoid Qt in this package
+%filter_from_requires /python3(PyQt5.QtGui)/d
+%filter_from_requires /python3(PyQt5.QtWidgets)/d
 
 %description common
 AutoKey is a desktop automation utility for Linux and X11. It allows the
@@ -136,6 +140,9 @@ This package contains the Qt frontend.
 %python3_sitelibdir/%name/qtui/*
 
 %changelog
+* Sun Sep 13 2026 Nikolay Strelkov <snk@altlinux.org> 0.96.0-alt3
+- Separate Gtk and Qt versions by filtering requires (closes: #60515).
+
 * Mon Mar 10 2025 Nikolay Strelkov <snk@altlinux.org> 0.96.0-alt2
 - bump release to override autoimports package
 
