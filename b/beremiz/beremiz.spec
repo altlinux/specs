@@ -3,7 +3,7 @@
 
 %def_with doc
 Name: beremiz
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Integrated development environment for machine automation
@@ -32,8 +32,13 @@ Requires: gcc-c++
 #Requires: beremiz-modbus-source
 #Requires: bacnet-stack-source
 #Requires: avahi-daemon
-# for build svghmi
+
+# for build SVGHMI
 Requires: inkscape
+
+# for build wxHMI
+%py3_requires wxglade
+
 %py3_requires service_identity
 # for wamp
 %py3_requires twisted.internet.wxsupport
@@ -182,6 +187,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 #exclude %_datadir/%name/etherlab
 
 %changelog
+* Sun Sep 13 2026 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Wed Jul 29 2026 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
 - New version 1.5.1.
 

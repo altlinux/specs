@@ -2,12 +2,12 @@
 
 Name: wxGlade
 Summary: A GUI builder for wxWindows/wxPython
-Version: 1.0.4
+Version: 1.1.1
 Release: alt1
 License: MIT
 Group: Development/Other
-Url: http://wxglade.sourceforge.net/
-Packager: Konstantin Artyushkin <akv@altlinux.org>
+URL: https://wxglade.sourceforge.net/
+VCS: https://github.com/wxGlade/wxGlade.git
 
 # Source-url: https://github.com/wxGlade/wxGlade/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
@@ -17,9 +17,11 @@ BuildRequires: ImageMagick-tools
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: rpm-build-python3
+
 BuildArch: noarch
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/wxglade/
+Provides: wxglade = %EVR
+Requires: python3-module-wxglade = %EVR
 
 %description
 wxGlade is a GUI designer written in Python with the popular GUI toolkit
@@ -35,14 +37,23 @@ the generated code does nothing apart from displaying the created widgets.
 If you are looking for a complete IDE, maybe Boa Constructor or PythonCard
 is the right tool.
 
+%package -n python3-module-wxglade
+Summary: python3 module wxGlade
+Group: Development/Python3
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/wxglade/
+
+%description -n python3-module-wxglade
+python3 module wxGlade.
+
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # create run script
 cat > %buildroot%_bindir/wxglade << EOF
@@ -80,31 +91,38 @@ rm %buildroot/%python3_sitelibdir/wxglade/msw.py
 %doc README.txt
 %doc %_docdir/wxglade/
 %_bindir/wxglade
-%python3_sitelibdir/wxglade
-%python3_sitelibdir/%name-%version-py%__python3_version.egg-info
 %_desktopdir/%name.desktop
 %_iconsdir/%name.png
 %_miconsdir/%name.png
 %_liconsdir/%name.png
 %_datadir/wxglade
 
+%files -n python3-module-wxglade
+%python3_sitelibdir/wxglade
+%python3_sitelibdir/wxglade-%version.dist-info
+
 %changelog
+* Sun Sep 13 2026 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+- Separate python3-module-wxglade subpackage.
+- Add provides wxglade.
+
 * Mon Jan 16 2023 Anton Midyukov <antohami@altlinux.org> 1.0.4-alt1
-- new version (1.0.4) with rpmgs script
+- New version 1.0.4.
 
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.2-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
 * Tue May 18 2021 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
-- new version (1.0.2) with rpmgs script
-- cleanup spec
+- New version 1.0.2.
+- Cleanup spec.
 
 * Sat May 02 2020 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt3
-- Fix shebang python2
+- Fix shebang python2.
 
 * Sun Aug 05 2018 Anton Midyukov <antohami@altlinux.org> 0.7.2-alt2
-- Cleanup no actual requires
-- fix desktop categories
+- Cleanup no actual requires.
+- Fix desktop categories.
 
 * Tue Jul 19 2016 Konstantin Artyushkin <akv@altlinux.org> 0.7.2-alt1
 - new version
