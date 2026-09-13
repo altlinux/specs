@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Imager
-Version: 1.034
-Release: alt2
+Version: 1.035
+Release: alt1
 
 Summary: Perl module for generating 24 bit Images
 Summary(ru_RU.UTF-8): Модуль Perl для создания 24-x битных изображений
@@ -72,6 +72,9 @@ IM_SUPPRESS_PROM=1 \
 %exclude /.perl.req
 
 %changelog
+* Sun Sep 13 2026 Anton Farygin <rider@altlinux.org> 1.035-alt1
+- 1.034 -> 1.035
+
 * Wed Aug 26 2026 Anton Farygin <rider@altlinux.org> 1.034-alt2
 - Fixes:
   * CVE-2026-73639: d973bd7e PNG: fix mishandling of a volatile
