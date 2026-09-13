@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tauno-serial-plotter
-Version: 1.20.4
-Release: alt2
+Version: 1.21.4
+Release: alt1
 
 Summary: Serial Plotter for Arduino and other embedded devices
 License: GPL-3.0-or-later
@@ -10,10 +10,13 @@ Group: Engineering
 URL: https://github.com/taunoe/tauno-serial-plotter
 
 BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
 
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 ExcludeArch: riscv64
 
@@ -36,46 +39,44 @@ negative number: "-10".
 
 %prep
 %setup
+mv -v src tauno_serial_plotter
+%patch -p1
 
 # correct desktop file
-sed -i "s|^Icon=.*|Icon=%_iconsdir/hicolor/scalable/apps/tauno-plotter.svg|" art.taunoerik.tauno-serial-plotter.desktop
+sed -i "s|^Icon=.*|Icon=tauno-serial-plotter|" art.taunoerik.tauno-serial-plotter.desktop
 sed -i "s|Categories=.*|Categories=Qt;Development;Debugger;Electronics;|" art.taunoerik.tauno-serial-plotter.desktop
 sed -i "s|tauno-serial-plotter.py|tauno-serial-plotter|" art.taunoerik.tauno-serial-plotter.desktop
 sed -i "s|Name=Tauno-serial-plotter|Name=Tauno Serial Plotter|" art.taunoerik.tauno-serial-plotter.desktop
 
-# fix icon paths
-sed -i "s|os.path.join(os.path.dirname(__file__), 'icons/|'%_iconsdir/hicolor/scalable/apps/tauno-plotter-|g" src/tauno-serial-plotter.py
-sed -i "s|tauno-plotter-tauno-plotter.svg|tauno-plotter.svg|" src/tauno-serial-plotter.py
-sed -i "s|svg')\$|svg'|g" src/tauno-serial-plotter.py
-
 %build
-# nothing to build here
+%pyproject_build
 
 %install
+%pyproject_install
 
-# install desktop file and icons
+# install icons
+cp -arv tauno_serial_plotter/icons %buildroot%python3_sitelibdir_noarch/tauno_serial_plotter
+
+# install desktop file, icon, etc.
 install -Dm644 art.taunoerik.tauno-serial-plotter.desktop %buildroot%_desktopdir/tauno_serial_plotter.desktop
-install -Dm644 src/icons/tauno-plotter.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter.svg
+install -Dm644 tauno_serial_plotter/icons/tauno-serial-plotter.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-serial-plotter.svg
 
-install -Dm644 src/icons/plus.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter-plus.svg
-install -Dm644 src/icons/minus.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter-minus.svg
-install -Dm644 src/icons/arrow_down.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter-arrow_down.svg
-install -Dm644 src/icons/help-about-symbolic.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter-help-about-symbolic.svg
-install -Dm644 src/icons/larger-brush-symbolic.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter-larger-brush-symbolic.svg
-install -Dm644 src/icons/ruler-end-horizontal-left-symbolic.svg %buildroot%_iconsdir/hicolor/scalable/apps/tauno-plotter-ruler-end-horizontal-left-symbolic.svg
-
-# install other files
 install -Dm644 art.taunoerik.tauno-serial-plotter.appdata.xml %buildroot%_datadir/appdata/art.taunoerik.tauno-serial-plotter.appdata.xml
-install -Dm755 src/tauno-serial-plotter.py %buildroot%_bindir/tauno-serial-plotter
 
 %files
 %doc README.md img Arduino_examples
 %_bindir/tauno-serial-plotter
+%dir %python3_sitelibdir_noarch/tauno_serial_plotter
+%python3_sitelibdir_noarch/tauno_serial_plotter/*
+%python3_sitelibdir_noarch/tauno_serial_plotter-%{version}.dist-info/
 %_desktopdir/tauno_serial_plotter.desktop
-%_iconsdir/hicolor/scalable/apps/tauno-plotter*.svg
+%_iconsdir/hicolor/scalable/apps/tauno-*.svg
 %_datadir/appdata/art.taunoerik.tauno-serial-plotter.appdata.xml
 
 %changelog
+* Sun Sep 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.21.4-alt1
+- New version 1.21.4.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.20.4-alt2
 - Exclude riscv64 arch as not buildable.
 
