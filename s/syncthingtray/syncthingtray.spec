@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: syncthingtray
-Version: 2.1.4
+Version: 2.1.5
 Release: alt1
 
 Summary: Desktop integration for Syncthing
@@ -137,6 +137,7 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 # devel files are excluded as done in Debian
 %exclude %_includedir/syncthingconnector/global.h
 %exclude %_includedir/syncthingconnector/qstringhash.h
+%exclude %_includedir/syncthingconnector/runtimecondition.h
 %exclude %_includedir/syncthingconnector/syncthingcompletion.h
 %exclude %_includedir/syncthingconnector/syncthingconfig.h
 %exclude %_includedir/syncthingconnector/syncthingconnection.h
@@ -253,6 +254,9 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %dir %_datadir/syncthingplasmoid/translations
 
 %changelog
+* Sun Sep 13 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.5-alt1
+- New version 2.1.5.
+
 * Sun Aug 16 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.4-alt1
 - New version 2.1.4.
 
