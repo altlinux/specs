@@ -6,7 +6,7 @@
 
 Name:          gem-concurrent-ruby
 Version:       1.3.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more
 License:       MIT
 Group:         Development/Ruby
@@ -61,7 +61,7 @@ which is better or why
 
 %package       -n gem-concurrent-ruby-edge
 Version:       0.7.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more
 Group:         Development/Ruby
 
@@ -82,7 +82,7 @@ Please see http://concurrent-ruby.com for more information.
 %if_enabled    doc
 %package       -n gem-concurrent-ruby-edge-doc
 Version:       0.7.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета concurrent-ruby-edge
 Group:         Development/Documentation
@@ -108,7 +108,7 @@ Please see http://concurrent-ruby.com for more information.
 %if_enabled    devel
 %package       -n gem-concurrent-ruby-edge-devel
 Version:       0.7.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета concurrent-ruby-edge
 Group:         Development/Ruby
@@ -138,7 +138,7 @@ Please see http://concurrent-ruby.com for more information.
 
 %package       -n gem-concurrent-ruby-ext
 Version:       1.3.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more
 Group:         Development/Ruby
 
@@ -156,7 +156,7 @@ see http://concurrent-ruby.com for more information.
 %if_enabled    doc
 %package       -n gem-concurrent-ruby-ext-doc
 Version:       1.3.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета concurrent-ruby-ext
 Group:         Development/Documentation
@@ -179,7 +179,7 @@ see http://concurrent-ruby.com for more information.
 %if_enabled    devel
 %package       -n gem-concurrent-ruby-ext-devel
 Version:       1.3.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета concurrent-ruby-ext
 Group:         Development/Ruby
@@ -207,7 +207,7 @@ see http://concurrent-ruby.com for more information.
 %if_enabled    doc
 %package       -n gem-concurrent-ruby-doc
 Version:       1.3.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета concurrent-ruby
 Group:         Development/Documentation
@@ -244,7 +244,7 @@ which is better or why
 %if_enabled    devel
 %package       -n gem-concurrent-ruby-devel
 Version:       1.3.8
-Release:       alt1
+Release:       alt1.1
 Summary:       Modern concurrency tools including agents, futures, promises, thread pools, supervisors, and more development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета concurrent-ruby
 Group:         Development/Ruby
@@ -291,6 +291,7 @@ which is better or why
 
 %install
 %ruby_install
+install -D -m644 %SOURCE1 %buildroot%ruby_gemlibdir/lib/concurrent-ruby/concurrent/concurrent_ruby.jar
 
 %check
 %ruby_test
@@ -299,6 +300,7 @@ which is better or why
 %doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md
 %ruby_gemspec
 %ruby_gemlibdir
+%ruby_gemlibdir/lib/%gemname/concurrent/concurrent_ruby.jar
 
 %files         -n gem-concurrent-ruby-edge
 %doc CHANGELOG.md LICENSE.txt README.md CODE_OF_CONDUCT.md
@@ -347,6 +349,9 @@ which is better or why
 
 
 %changelog
+* Mon Sep 07 2026 Pavel Skrylev <majioa@altlinux.org> 1.3.8-alt1.1
+- ! fixed of lost jar-module install script (closes ALT #60387)
+
 * Wed Aug 12 2026 Pavel Skrylev <majioa@altlinux.org> 1.3.8-alt1
 - ^ 1.3.5 -> 1.3.8
 

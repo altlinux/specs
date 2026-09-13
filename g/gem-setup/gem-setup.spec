@@ -2,7 +2,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.11
+Version:       5.999.12
 Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -76,13 +76,18 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Fri Sep 11 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.12-alt1
+- ^ 5.999.11 -> 5.999.12
+- + added feature to run rake tasks indirectly via command line,
+    marking the task name with @ char
+
 * Sun Aug 16 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.11-alt1
-- * 5.999.10 -> 5.999.11
+- ^ 5.999.10 -> 5.999.11
+- + log to show ignored path to installation
 - * match_ignore now matches for a flexive form of path tokens var along
     with nore string names to ignore or regard them
 - ! fixed ignore/ragard names/token parts to ggenerate proper regexp in config
 - ! fixed lost source acquirement for the compiler module
-- + log to show ignored path to installation
 
 * Thu Aug 13 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.10-alt1
 - ^ 5.999.9 -> 5.999.10

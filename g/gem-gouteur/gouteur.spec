@@ -5,14 +5,13 @@
 %define        gemname gouteur
 
 Name:          gem-gouteur
-Version:       1.1.0
+Version:       1.2.0
 Release:       alt1
 Summary:       See if your lib is still digestible
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/jaynetics/gouteur
 Vcs:           https://github.com/jaynetics/gouteur.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
@@ -32,16 +31,7 @@ BuildConflicts: gem(rubocop) >= 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      ruby >= 2.5.0
-Requires:      gem(debug) >= 0
-Requires:      gem(rake) >= 13.0
-Requires:      gem(relaxed-rubocop) >= 0
-Requires:      gem(rspec) >= 3.0
-Requires:      gem(rubocop) >= 1.7
-Requires:      gem(simplecov-cobertura) >= 0
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rubocop) >= 2
-Provides:      gem(gouteur) = 1.1.0
+Provides:      gem(gouteur) = 1.2.0
 
 %description
 Run tests of dependent gems against your changes.
@@ -110,14 +100,14 @@ Run tests of dependent gems against your changes.
 
 
 %package       -n gouteur
-Version:       1.1.0
+Version:       1.2.0
 Release:       alt1
 Summary:       See if your lib is still digestible executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gouteur
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(gouteur) = 1.1.0
+Requires:      gem(gouteur) = 1.2.0
 Requires:      gem(debug) >= 0
 Requires:      gem(rake) >= 13.0
 Requires:      gem(relaxed-rubocop) >= 0
@@ -139,14 +129,14 @@ Run tests of dependent gems against your changes.
 
 %if_enabled    doc
 %package       -n gem-gouteur-doc
-Version:       1.1.0
+Version:       1.2.0
 Release:       alt1
 Summary:       See if your lib is still digestible documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gouteur
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gouteur) = 1.1.0
+Requires:      gem(gouteur) = 1.2.0
 
 %description   -n gem-gouteur-doc
 See if your lib is still digestible documentation files.
@@ -160,14 +150,23 @@ Run tests of dependent gems against your changes.
 
 %if_enabled    devel
 %package       -n gem-gouteur-devel
-Version:       1.1.0
+Version:       1.2.0
 Release:       alt1
 Summary:       See if your lib is still digestible development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gouteur
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gouteur) = 1.1.0
+Requires:      gem(gouteur) = 1.2.0
+Requires:      gem(debug) >= 0
+Requires:      gem(rake) >= 13.0
+Requires:      gem(relaxed-rubocop) >= 0
+Requires:      gem(rspec) >= 3.0
+Requires:      gem(rubocop) >= 1.7
+Requires:      gem(simplecov-cobertura) >= 0
+Conflicts:     gem(rake) >= 14
+Conflicts:     gem(rspec) >= 4
+Conflicts:     gem(rubocop) >= 2
 
 %description   -n gem-gouteur-devel
 See if your lib is still digestible development package.
@@ -226,6 +225,9 @@ Run tests of dependent gems against your changes.
 
 
 %changelog
+* Fri Sep 04 2026 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
+- ^ 1.1.0 -> 1.2.0
+
 * Thu Oct 30 2025 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies

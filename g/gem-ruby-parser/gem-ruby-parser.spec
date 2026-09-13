@@ -5,7 +5,7 @@
 %define        gemname ruby_parser
 
 Name:          gem-ruby-parser
-Version:       3.21.1
+Version:       3.22.0
 Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby
 License:       MIT
@@ -16,31 +16,34 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 BuildRequires: unifdef
-BuildRequires: gem(rake) >= 10
-BuildRequires: gem(oedipus_lex) >= 2.6
-BuildRequires: gem(hoe) >= 0
-BuildConflicts: gem(rake) >= 15
-BuildConflicts: gem(oedipus_lex) >= 3
+BuildRequires: racc
+BuildRequires: gem(minitest) >= 0
 %if_enabled check
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(oedipus_lex) >= 2.6
+BuildRequires: gem(racc) >= 1.5
+BuildRequires: gem(rake) >= 10
 BuildRequires: gem(rdoc) >= 4.0
 BuildRequires: gem(sexp_processor) >= 4.16
-BuildRequires: gem(racc) >= 1.5
-BuildConflicts: gem(sexp_processor) >= 5
+BuildConflicts: gem(oedipus_lex) >= 3
 BuildConflicts: gem(racc) >= 2
+BuildConflicts: gem(rake) >= 15
+BuildConflicts: gem(sexp_processor) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names ruby_parser,ruby-parser
-Requires:      gem(sexp_processor) >= 4.16
+Requires:      ruby >= 3.2
 Requires:      gem(racc) >= 1.5
-Conflicts:     gem(sexp_processor) >= 5
+Requires:      gem(sexp_processor) >= 4.16
 Conflicts:     gem(racc) >= 2
-Provides:      gem(ruby_parser) = 3.21.1
+Conflicts:     gem(sexp_processor) >= 5
+Provides:      gem(ruby_parser) = 3.22.0
 
-%ruby_on_build_rake_tasks generate
+%ruby_on_build_rake_tasks @generate
 
 %description
 ruby_parser (RP) is a ruby parser written in pure ruby (utilizing racc-which
@@ -49,14 +52,14 @@ output: s-expressions using ruby's arrays and base types.
 
 
 %package       -n ruby-parser
-Version:       3.21.1
+Version:       3.22.0
 Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ruby_parser
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(ruby_parser) = 3.21.1
+Requires:      gem(ruby_parser) = 3.22.0
 
 %description   -n ruby-parser
 ruby_parser (RP) is a ruby parser written in pure ruby
@@ -72,14 +75,14 @@ output: s-expressions using ruby's arrays and base types.
 
 %if_enabled    doc
 %package       -n gem-ruby-parser-doc
-Version:       3.21.1
+Version:       3.22.0
 Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby_parser
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ruby_parser) = 3.21.1
+Requires:      gem(ruby_parser) = 3.22.0
 
 %description   -n gem-ruby-parser-doc
 ruby_parser (RP) is a ruby parser written in pure ruby documentation
@@ -96,20 +99,20 @@ output: s-expressions using ruby's arrays and base types.
 
 %if_enabled    devel
 %package       -n gem-ruby-parser-devel
-Version:       3.21.1
+Version:       3.22.0
 Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby_parser
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ruby_parser) = 3.21.1
-Requires:      gem(rdoc) >= 4.0
-Requires:      gem(rake) >= 10
-Requires:      gem(oedipus_lex) >= 2.6
+Requires:      gem(ruby_parser) = 3.22.0
 Requires:      gem(hoe) >= 0
-Conflicts:     gem(rake) >= 15
+Requires:      gem(oedipus_lex) >= 2.6
+Requires:      gem(rake) >= 10
+Requires:      gem(rdoc) >= 4.0
 Conflicts:     gem(oedipus_lex) >= 3
+Conflicts:     gem(rake) >= 15
 
 %description   -n gem-ruby-parser-devel
 ruby_parser (RP) is a ruby parser written in pure ruby development
@@ -137,28 +140,32 @@ output: s-expressions using ruby's arrays and base types.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n ruby-parser
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %_bindir/ruby_parse
 %_bindir/ruby_parse_extract_error
 
 %if_enabled    doc
 %files         -n gem-ruby-parser-doc
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-ruby-parser-devel
-%doc README.rdoc
+%doc History.rdoc README.rdoc
 %endif
 
 
 %changelog
+* Fri Sep 04 2026 Pavel Skrylev <majioa@altlinux.org> 3.22.0-alt1
+- ^ 3.21.1 -> 3.22.0
+- * restored compilation procedure (closes ALT #60394)
+
 * Tue Jul 30 2024 Pavel Skrylev <majioa@altlinux.org> 3.21.1-alt1
 - ^ 3.21.0 -> 3.21.1
 

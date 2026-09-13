@@ -1,6 +1,6 @@
 Name:          gapic-generator-ruby
 Version:       20230125
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions
 License:       Apache-2.0
 Group:         Other
@@ -9,7 +9,7 @@ Vcs:           https://github.com/googleapis/gapic-generator-ruby.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_with check
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(minitest) >= 5.16
@@ -66,6 +66,7 @@ Requires:      gem(gapic-generator-cloud) >= 0
 Requires:      gem(rake) >= 13.0
 Provides:      ruby-gapic-generator-ruby
 
+%ruby_regard_path_tokens templates,samples
 
 %description
 Create Ruby clients from a protocol buffer description of an API.
@@ -79,7 +80,7 @@ think, but there are currently no guarantees of stability or support.
 
 %package       -n gem-gapic-common
 Version:       0.16.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -105,7 +106,7 @@ Common code for GAPIC-generated API clients.
 
 %package       -n gem-gapic-common-doc
 Version:       0.16.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gapic-common
 Group:         Development/Documentation
@@ -125,7 +126,7 @@ Common code for GAPIC-generated API clients.
 
 %package       -n gem-gapic-common-devel
 Version:       0.16.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gapic-common
 Group:         Development/Ruby
@@ -162,7 +163,7 @@ Common code for GAPIC-generated API clients.
 
 %package       -n gem-gapic-generator
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -179,7 +180,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gapic-generator
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gapic-generator
 Group:         Other
@@ -199,7 +200,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-doc
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gapic-generator
 Group:         Development/Documentation
@@ -219,7 +220,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-devel
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gapic-generator
 Group:         Development/Ruby
@@ -252,7 +253,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-ads
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -270,7 +271,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n protoc-gen-ruby-ads
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gapic-generator-ads
 Group:         Other
@@ -290,7 +291,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-ads-doc
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gapic-generator-ads
 Group:         Development/Documentation
@@ -310,7 +311,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-ads-devel
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gapic-generator-ads
 Group:         Development/Ruby
@@ -336,7 +337,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-cloud
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -356,7 +357,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gapic-generator-cloud
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gapic-generator-cloud
 Group:         Other
@@ -376,7 +377,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-cloud-doc
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gapic-generator-cloud
 Group:         Development/Documentation
@@ -396,7 +397,7 @@ An API Client Generator for Ruby in Ruby!
 
 %package       -n gem-gapic-generator-cloud-devel
 Version:       0.20.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Generate Ruby gRPC client libraries from Protocol Buffer definitions development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gapic-generator-cloud
 Group:         Development/Ruby
@@ -497,6 +498,9 @@ An API Client Generator for Ruby in Ruby!
 
 
 %changelog
+* Fri Sep 11 2026 Pavel Skrylev <majioa@altlinux.org> 20230125-alt1.3
+- ! reenabled tokens templates,samples to restore lost files (closes ALT #60432)
+
 * Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 20230125-alt1.2
 - ! fixed dep to minitest gem
 

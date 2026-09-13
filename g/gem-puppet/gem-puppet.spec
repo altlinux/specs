@@ -5,8 +5,8 @@
 %define        gemname puppet
 
 Name:          gem-puppet
-Version:       8.10.0.39
-Release:       alt0.4
+Version:       8.11.0
+Release:       alt0.1
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -104,9 +104,9 @@ Conflicts:     gem(multi_json) >= 2
 Conflicts:     gem(puppet-resource_api) >= 3
 Conflicts:     gem(scanf) >= 2
 Conflicts:     gem(semantic_puppet) >= 2
-Provides:      gem(puppet) = 8.10.0.39
+Provides:      gem(puppet) = 8.11.0
 
-%ruby_use_gem_version puppet:8.10.0.39
+%ruby_use_gem_version puppet:8.11.0
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -116,8 +116,8 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n puppet
-Version:       8.10.0.39
-Release:       alt0.4
+Version:       8.11.0
+Release:       alt0.1
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
@@ -126,7 +126,7 @@ BuildArch:     noarch
 Requires:      shadow-change
 Requires:      gem-getoptlong
 Requires:      gem-racc
-Requires:      gem(puppet) = 8.10.0.39
+Requires:      gem(puppet) = 8.11.0
 Requires:      gem(puppet-resource_api) >= 1.5
 Requires:      gem(semantic_puppet) >= 1.0
 Conflicts:     gem(facter) >= 5
@@ -149,14 +149,14 @@ with obviously discrete elements like packages, services, and files.
 
 %if_enabled    doc
 %package       -n gem-puppet-doc
-Version:       8.10.0.39
-Release:       alt0.4
+Version:       8.11.0
+Release:       alt0.1
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 8.10.0.39
+Requires:      gem(puppet) = 8.11.0
 
 %description   -n gem-puppet-doc
 A network tool for managing many disparate systems documentation files.
@@ -173,14 +173,14 @@ with obviously discrete elements like packages, services, and files.
 
 %if_enabled    devel
 %package       -n gem-puppet-devel
-Version:       8.10.0.39
-Release:       alt0.4
+Version:       8.11.0
+Release:       alt0.1
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 8.10.0.39
+Requires:      gem(puppet) = 8.11.0
 Requires:      gem(concurrent-ruby) >= 1.0
 Requires:      gem(deep_merge) >= 1.0
 Requires:      gem(fast_gettext) >= 2.1
@@ -385,6 +385,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Fri Sep 04 2026 Pavel Skrylev <majioa@altlinux.org> 8.11.0-alt0.1
+- ^ 8.10.0p39 -> 8.11.0[pre] (closes ALT #60348)
+
 * Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 8.10.0.39-alt0.4
 - ! fixed dep to rspec-its gem
 

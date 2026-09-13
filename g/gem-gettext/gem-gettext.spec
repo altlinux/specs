@@ -5,8 +5,8 @@
 %define        gemname gettext
 
 Name:          gem-gettext
-Version:       3.5.2
-Release:       alt1
+Version:       3.5.3
+Release:       alt0.1
 Summary:       Native Language Support Library for Ruby
 License:       Ruby or LGPL-3.0+
 Group:         Development/Ruby
@@ -43,10 +43,10 @@ Requires:      gem(text) >= 1.3.0
 Obsoletes:     gem-gettext-cgi < %EVR
 Obsoletes:     gem-gettext-erb < %EVR
 Obsoletes:     ruby-gettext < %EVR
-Provides:      gem-gettext-cgi = 3.3.5-alt1
-Provides:      gem-gettext-erb = 3.3.5-alt1
+Provides:      gem-gettext-cgi = 3.3.5-alt0.1
+Provides:      gem-gettext-erb = 3.3.5-alt0.1
 Provides:      ruby-gettext = %EVR
-Provides:      gem(gettext) = 3.5.2
+Provides:      gem(gettext) = 3.5.3
 
 %description
 Ruby GetText Package is Native Language Support Library and Tools which modeled
@@ -66,14 +66,14 @@ libs/apps to handle major locale ID standards.
 
 
 %package       -n rmsg
-Version:       3.5.2
-Release:       alt1
+Version:       3.5.3
+Release:       alt0.1
 Summary:       Native Language Support Library for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета gettext
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(gettext) = 3.5.2
+Requires:      gem(gettext) = 3.5.3
 
 %description   -n rmsg
 Native Language Support Library for Ruby executable(s).
@@ -99,14 +99,14 @@ libs/apps to handle major locale ID standards.
 
 %if_enabled    doc
 %package       -n gem-gettext-doc
-Version:       3.5.2
-Release:       alt1
+Version:       3.5.3
+Release:       alt0.1
 Summary:       Native Language Support Library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gettext
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(gettext) = 3.5.2
+Requires:      gem(gettext) = 3.5.3
 
 %description   -n gem-gettext-doc
 Native Language Support Library for Ruby documentation files.
@@ -133,14 +133,14 @@ libs/apps to handle major locale ID standards.
 
 %if_enabled    devel
 %package       -n gem-gettext-devel
-Version:       3.5.2
-Release:       alt1
+Version:       3.5.3
+Release:       alt0.1
 Summary:       Native Language Support Library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gettext
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(gettext) = 3.5.2
+Requires:      gem(gettext) = 3.5.3
 Requires:      gem(kramdown) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(red-datasets) >= 0
@@ -209,8 +209,8 @@ libs/apps to handle major locale ID standards.
 
 
 %changelog
-* Mon Sep 07 2026 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1
-- ^ 3.3.5 -> 3.5.2
+* Mon Sep 07 2026 Pavel Skrylev <majioa@altlinux.org> 3.5.3-alt0.1
+- ^ 3.3.5 -> 3.5.3pre
 
 * Wed May 06 2020 Pavel Skrylev <majioa@altlinux.org> 3.3.5-alt1
 - ^ 3.2.9 -> 3.3.5
