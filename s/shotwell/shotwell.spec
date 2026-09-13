@@ -6,12 +6,12 @@
 %def_enable face_detection
 %def_enable check
 
-%define ver_major 0.32
+%define ver_major 33
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.17
+Version: %ver_major.0
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
@@ -22,13 +22,13 @@ Url: https://wiki.gnome.org/Apps/Shotwell
 Vcs: https://gitlab.gnome.org/GNOME/shotwell.git
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%version/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 Patch: %name-0.31.3-alt-no-dark-theme-by-default.patch
 
-%define gtk_ver 3.22
+%define gtk_ver 4.22
 %define gexiv_ver 0.16
 %define soup3_ver 3.0
 %define webkit_api_ver 4.1
@@ -40,7 +40,7 @@ Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
 BuildRequires: desktop-file-utils yelp-tools /usr/bin/appstreamcli
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel
@@ -51,9 +51,9 @@ BuildRequires: libwebp-devel libgphoto2-devel
 BuildRequires: libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libgomp-devel libavif-devel
 BuildRequires: libsqlite3-devel
-BuildRequires: libgee0.8-devel gcr-libs-devel gcr-libs-vala
+BuildRequires: libgee0.8-devel gcr4-libs-devel gcr4-libs-vala
 BuildRequires: libsecret-devel
-BuildRequires: libportal-devel libportal-gtk3-devel
+BuildRequires: libportal-devel libportal-gtk4-devel
 %{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
 %{?_enable_check:BuildRequires: python3 dbus}
 
@@ -79,7 +79,7 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 %if "%(rpmvercmp %vala_ver 0.54)" <= "0"
 %add_optflags -DEXPORT_DIALOG_DEFAULT_SCALE=1200
 %endif
-%meson -Dunity_support=false \
+%meson \
        -Dinstall_apport_hook=false \
        %{?_enable_face_detection:-Dface_detection=true}
 %nil
@@ -96,10 +96,8 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 %files -f %name.lang
 %_bindir/%name
 %dir %_libexecdir/%name
-%_libexecdir/%name/%name-authenticator
 %_libexecdir/%name/%name-video-thumbnailer
 %_libexecdir/%name/%name-settings-migrator
-%_libexecdir/%name/%name-video-metadata-handler
 %if_enabled face_detection
 %_libexecdir/%name/%name-facedetect
 %_datadir/dbus-1/services/%xdg_name.Faces1.service
@@ -118,12 +116,15 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_datadir/glib-2.0/schemas/*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %_man1dir/%name.1.*
 %doc AUTHORS COPYING NEWS README* THANKS
 
 
 %changelog
+* Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 33.0-alt1
+- 33.0 (ported to GTK4)
+
 * Wed Jun 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.32.17-alt1
 - 0.32.17
 

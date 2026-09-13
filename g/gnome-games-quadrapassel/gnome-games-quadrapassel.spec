@@ -3,12 +3,12 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name quadrapassel
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Fit falling blocks together
@@ -37,7 +37,6 @@ BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstreamcli
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: librsvg-devel
 BuildRequires: pkgconfig(sndfile) pkgconfig(openal)
 BuildRequires: libmanette-devel >= %manette_ver
 
@@ -64,12 +63,14 @@ which will disappear.
 %_datadir/sounds/%_name/
 %_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
 %_iconsdir/hicolor/symbolic/apps/%{xdg_name}*.svg
-%_man6dir/%_name.*
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 
 %changelog
+* Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
 - 50.2
 

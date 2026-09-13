@@ -20,7 +20,7 @@
 %define sover 0
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Classes and utilities for mobile devices
@@ -175,6 +175,9 @@ rm %buildroot%_libdir/%name.a
 
 
 %changelog
+* Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.3-alt1
+- 0.7.3
+
 * Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
 - 0.7.2
 

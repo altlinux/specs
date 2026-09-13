@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define api_ver 1
 %define namespace Dex
@@ -147,6 +147,9 @@ sed -i 's|pure: true|pure: false|' src/meson.build
 %endif
 
 %changelog
+* Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 

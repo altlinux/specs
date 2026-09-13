@@ -1,10 +1,10 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 
 Name: gnome-user-docs
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: General GNOME User Documentation
@@ -28,10 +28,8 @@ Provides: gnome-users-guide
 Obsoletes: gnome2-user-docs
 Provides: gnome2-user-docs
 
-%define yelp_ver 42.0
-
-BuildRequires: rpm-build-gnome rpm-build-licenses
-BuildRequires: yelp-tools >= %yelp_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools
 
 %description
 This package contains general GNOME user documentation which is not
@@ -41,18 +39,20 @@ directly associated with any particular GNOME application or package.
 %setup -n %name-%version%beta
 
 %build
-%{?_enable_snapshot:NOCONFIGURE=1 ./autogen.sh}
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --with-gnome --output=%name.lang gnome-help system-admin-guide
 
 %files -f %name.lang
 %doc README* NEWS
 
 %changelog
+* Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.4-alt1
 - 50.4
 
