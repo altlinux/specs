@@ -3,7 +3,7 @@
 %define pypi_name_kebab huggingface-hub
 
 Name: python3-module-%pypi_name_kebab
-Version: 0.30.2
+Version: 1.31.0
 Release: alt1
 
 Summary: The official Python client for the Huggingface Hub
@@ -33,11 +33,16 @@ huggingface.co hub
 %pyproject_install
 
 %files
+%_bindir/hf
 %_bindir/huggingface-cli
+%_bindir/tiny-agents
 %python3_sitelibdir_noarch/%pypi_name
 %python3_sitelibdir_noarch/%pypi_name-%version.dist-info
 %doc README.md
 
 %changelog
+* Sun Sep 13 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.31.0-alt1
+- NMU: updated to v1.31.0.
+
 * Mon Apr 14 2025 David Sultaniiazov <x1z53@altlinux.org> 0.30.2-alt1
 - Initial build
