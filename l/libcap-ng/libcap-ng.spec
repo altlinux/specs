@@ -2,7 +2,7 @@
 %def_disable bootstrap
 
 Name: libcap-ng
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: An alternate posix capabilities library
@@ -117,6 +117,9 @@ touch NEWS
 %endif
 
 %changelog
+* Sun Sep 13 2026 Anton Farygin <rider@altlinux.org> 0.9.6-alt1
+- 0.9.5 -> 0.9.6
+
 * Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 0.9.5-alt1
 - 0.9.3 -> 0.9.5
 
