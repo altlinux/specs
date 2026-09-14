@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-utils
-Version: 1.28.0
+Version: 1.28.3
 Release: alt1
 Epoch: 1
 Summary: MATE utility programs
@@ -186,6 +186,9 @@ rm -fr gsearchtool/help/pt
 %_desktopdir/mate-disk-image-mounter.desktop
 
 %changelog
+* Mon Sep 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.3-alt1
+- 1.28.3
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt1
 - 1.28.0
 
