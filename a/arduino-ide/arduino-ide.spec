@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define electron_version 42.4.0
-%define electron_abi 146
+%define electron_version 42.10.1
 %define arduino_cli_version 1.5.1
 
 Name: arduino-ide
 Version: 2.3.10
-Release: alt1
+Release: alt2
 
 Summary: IDE for Arduino boards and compatible microcontroller platforms.
 Group: Education
@@ -99,6 +98,11 @@ install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/51
 %_iconsdir/arduino-ide.png
 
 %changelog
+* Mon Sep 14 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt2
+- Use Russian as the default interface language.
+- Fix About dialog metadata with system Electron.
+- Update electron version to 42.10.1.
+
 * Wed Aug 19 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt1
 - Update Arduino IDE to version 2.3.10.
 

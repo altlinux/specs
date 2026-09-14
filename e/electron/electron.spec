@@ -13,8 +13,8 @@
 %define llvm_major   22
 
 Name: electron
-Version: 42.4.0
-Release: alt3
+Version: 42.10.1
+Release: alt1
 
 Summary: Build cross-platform desktop apps with JavaScript, HTML, and CSS
 License: MIT
@@ -421,6 +421,9 @@ xvfb-run -a $EBIN --no-sandbox smoke-app
 %_libdir/electron/
 
 %changelog
+* Fri Aug 28 2026 Grant Makyan <karonus@altlinux.org> 42.10.1-alt1
+- 42.4.0 -> 42.10.1.
+
 * Mon Jul 27 2026 Grant Makyan <karonus@altlinux.org> 42.4.0-alt3
 - Vendor unpacked Node.js dependencies.
 
