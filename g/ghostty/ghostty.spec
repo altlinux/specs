@@ -1,14 +1,12 @@
 Name: ghostty
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Fast, feature-rich and cross-platform terminal emulator
 License: MIT
 Group: Terminals
 URL: https://ghostty.org/
 VCS: https://github.com/ghostty-org/ghostty
-
-Requires: terminfo-ghostty = %EVR
 
 ExclusiveArch: aarch64 x86_64
 
@@ -45,6 +43,7 @@ Group: Development/C
 %package -n terminfo-ghostty
 Summary: Ghostty terminfo
 Group: Terminals
+Conflicts: terminfo-extra
 
 %define desc \
 Ghostty is a terminal emulator that differentiates itself by being fast,\
@@ -124,5 +123,9 @@ tar cf %SOURCE1 --exclude '*/rules' zig-pkg
 %_datadir/terminfo/x/xterm-ghostty
 
 %changelog
-* Tue Sep 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org >1.3.1-alt1
+* Mon Sep 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.1-alt2
+- v1.3.1-2556-g0c2a290d3
+- drop ghostty-terminfo req (closes: 60504)
+
+* Tue Sep 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.1-alt1
 - v1.3.1-2523-gb0c421fcd
