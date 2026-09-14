@@ -16,7 +16,7 @@
 %define nv_version 595
 %define nv_release 99
 %define nv_minor 02
-%define pkg_rel alt320
+%define pkg_rel alt321
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -362,6 +362,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 595.99.02-alt321
+- fix nvidia-clean-driver with new packaging scheme
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 595.99.02-alt320
 - new version
 
