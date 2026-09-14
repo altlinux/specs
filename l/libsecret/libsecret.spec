@@ -17,7 +17,7 @@
 %define crypto libgcrypt
 
 Name: libsecret
-Version: %ver_major.8
+Version: %ver_major.8.2
 Release: alt1
 
 Summary: A client library for the Secret Service DBus API
@@ -161,6 +161,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 0.21.8.2-alt1
+- 0.21.8.2
+
 * Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 0.21.8-alt1
 - 0.21.8
 
