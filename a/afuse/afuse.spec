@@ -1,13 +1,13 @@
 Name: afuse
 Version: 0.5.0
-Release: alt1
+Release: alt2
 Summary: Automounting file system implemented in user-space
 License: GPLv2
 Group: System/Kernel and hardware
-URL: https://github.com/pcarrier/%name
+URL: https://github.com/sithglan/afuse/tree/fuse3
 Source: %name-%version.tar
 
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 
 %description
 %name is an automounting file system implemented in user-space using FUSE.
@@ -38,6 +38,10 @@ complete a mount such as asking for a password.
 
 
 %changelog
+* Mon Sep 14 2026 Artyom Bystrov <arbars@altlinux.org> 0.5.0-alt2
+- Switch to libbfuse3
+- Switch to new upstream (previous > 3 years inactive)
+
 * Thu Aug  3 2023 Artyom Bystrov <arbars@altlinux.org> 0.5.0-alt1
 - Update to new version
 
