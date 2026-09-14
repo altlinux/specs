@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 7.2.16
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -189,6 +189,12 @@ BuildRequires: libvpx-devel
 BuildRequires: rpm-build-xdg rpm-macros-pam
 BuildRequires: /proc
 Requires(pre,postun): %name-common = %version-%release
+Requires(pre,postun): control >= 0.7.2-alt1
+# due to /bin/mountpoint in %%triggerin
+Requires(pre,postun): sysvinit-utils
+%if_with manual
+Requires: %name-doc = %version-%release
+%endif
 
 %description
 VirtualBox is a powerful PC virtualization solution allowing
@@ -319,11 +325,7 @@ Sources for VirtualBox kernel module for OSE Video DRM.
 %package common
 Summary: VirtualBox module support files
 Group: System/Configuration/Other
-# due to new_summary function and is_builtin_mode bugfix
-Requires(pre,postun): control >= 0.7.2-alt1
 Requires(pre,postun): shadow-utils
-# due to /bin/mountpoint
-Requires(pre,postun): sysvinit-utils
 # for automatic adding group vboxusers to system roles (users, powerusers, localadmins)
 Requires: libnss-role >= 0.5.1
 
@@ -766,12 +768,14 @@ install -m644 %SOURCE100 %buildroot%_defaultdocdir/%name-doc-%version/UserManual
 %endif
 %endif
 
-# install unit file
+# install unit file (kernel modules loading belongs to the main package)
+%ifarch x86_64
 install -pDm644 %SOURCE22 %buildroot%_unitdir/%name.service
 install -pDm644 %SOURCE23 %buildroot%_sysconfdir/modules-load.d/%name.conf
 %if_without vboxpci
 sed -i -n '/vboxcpi/!p' %buildroot%_unitdir/%name.service
 sed -i -n '/vboxcpi/!p' %buildroot%_sysconfdir/modules-load.d/%name.conf
+%endif
 %endif
 
 %if_with vnc
@@ -800,6 +804,13 @@ sed -i -n '/vboxcpi/!p' %buildroot%_sysconfdir/modules-load.d/%name.conf
 %preun
 %preun_service virtualbox
 
+%triggerin -- dev
+# If using static /dev, select the same status again to fix permissions
+mountpoint -q /dev || {
+	status="`/usr/sbin/control %name status`" || status=
+	[ -n "$status" ] && /usr/sbin/control %name "$status" ||:
+}
+
 %post doc
 sed -i 's|^#DocPath=|DocPath=|' %_desktopdir/%name.desktop
 XDG_DATA_DIRS="%_datadir" update-desktop-database -q ||:
@@ -809,22 +820,7 @@ sed -i 's|^DocPath=|#DocPath=|' %_desktopdir/%name.desktop
 XDG_DATA_DIRS="%_datadir" update-desktop-database -q ||:
 
 %pre common
-%pre_control %name
 /usr/sbin/groupadd -r -f vboxusers
-
-%post common
-%post_service %name
-%post_control -s vboxusers %name
-
-%preun common
-%preun_service %name
-
-%triggerin common -- dev
-# If using static /dev, select the same status again to fix permissions
-mountpoint -q /dev || {
-	status="`/usr/sbin/control %name status`" || status=
-	[ -n "$status" ] && /usr/sbin/control %name "$status" ||:
-}
 
 %pre guest-common
 /usr/sbin/groupadd -r -f vboxadd
@@ -875,6 +871,10 @@ mountpoint -q /dev || {
 %_iconsdir/hicolor/128x128/apps/*.png
 %_xdgmimedir/packages/*.xml
 %_desktopdir/*.desktop
+%_initdir/%name
+%_unitdir/%name.service
+%_controldir/%name
+%config %_sysconfdir/modules-load.d/%name.conf
 
 %files -n %modname
 %kernel_src/%modname-%version.tar.bz2
@@ -942,13 +942,9 @@ mountpoint -q /dev || {
 %endif
 
 %files common
-%_initdir/%name
-%_unitdir/%name.service
-%_controldir/%name
 %config %_udevrulesdir/90-%name.rules
 %dir %vboxdatadir
 %vboxdatadir/VBoxCreateUSBNode.sh
-%config %_sysconfdir/modules-load.d/%name.conf
 %config(noreplace) %_sysconfdir/role.d/virtualbox.role
 
 %if_with manual
@@ -970,6 +966,19 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Sep 07 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.16-alt2
+- Moved control facility from virtualbox-common to the main package (closes: 48283)
+- Load kernel modules only when virtualbox is installed:
+  moved modules-load config, init script and systemd unit
+  to the main package (closes: 42872)
+- Error dialogs for missing or mismatched kernel driver now suggest
+  installing kernel-modules-virtualbox or running update-kernel
+  instead of non-existent /sbin/vboxconfig (closes: 29112, closes: 33825)
+- Fixed regression: VBoxClient showed notify-send notification on every
+  session login on non-VM machines (closes: 60287)
+- Main package now requires virtualbox-doc so the in-app help
+  (UserManual qhelp) is always available
+
 * Wed Aug 19 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.16-alt1
 - Update to newest version 7.2.16
 - Removed standalone vboxwl helper (Wayland support is now built
