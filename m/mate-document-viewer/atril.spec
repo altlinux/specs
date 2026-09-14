@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-document-viewer
-Version: 1.28.6
+Version: 1.28.7
 Release: alt1
 Epoch: 1
 Summary: Document viewer
@@ -29,7 +29,7 @@ BuildRequires: libgxps-devel libgxps-gir-devel
 %endif
 
 %if_enabled epub
-BuildRequires: libwebkit2gtk4.1-devel
+BuildRequires: libwebkit2gtk4.1-devel libgepub-devel
 %endif
 
 %description
@@ -84,6 +84,13 @@ Group: Graphical desktop/MATE
 
 %description xps
 This package contains a backend to let atril display xps files.
+
+%package epub
+Summary: Atril backend for epub files
+Group: Graphical desktop/MATE
+
+%description epub
+This package contains a backend to let atril display epub files.
 
 %package caja
 Group: Graphical desktop/MATE
@@ -159,6 +166,10 @@ find %buildroot%_libdir -name \*.la -delete
 %exclude %_libdir/atril/3/backends/libxpsdocument.so*
 %exclude %_libdir/atril/3/backends/xpsdocument.atril-backend
 %endif
+%if_enabled xps
+%exclude %_libdir/atril/3/backends/libepubdocument.so*
+%exclude %_libdir/atril/3/backends/epubdocument.atril-backend
+%endif
 %exclude %_libdir/atril/3/backends/libpixbufdocument.so*
 %exclude %_libdir/atril/3/backends/pixbufdocument.atril-backend
 
@@ -174,6 +185,12 @@ find %buildroot%_libdir -name \*.la -delete
 %files xps
 %_libdir/atril/3/backends/libxpsdocument.so*
 %_libdir/atril/3/backends/xpsdocument.atril-backend
+%endif
+
+%if_enabled epub
+%files epub
+%_libdir/atril/3/backends/libepubdocument.so*
+%_libdir/atril/3/backends/epubdocument.atril-backend
 %endif
 
 %files pixbuf
@@ -196,6 +213,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.7-alt1
+- 1.26.7
+
 * Wed Jun 03 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.6-alt1
 - 1.28.6
 
