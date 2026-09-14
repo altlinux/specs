@@ -1,5 +1,5 @@
 Name:		odyssey
-Version:	1.5.1
+Version:	1.5.2
 Release:	alt1
 Summary:	Advanced multi-threaded PostgreSQL connection pooler and request router
 Group:		Databases
@@ -52,5 +52,8 @@ useradd  -r -g %name -s /sbin/nologin -c "Odyssey Server" -M -d /run/%name %name
 %_unitdir/*
 
 %changelog
+* Mon Sep 14 2026 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Wed Jul 15 2026 Alexei Takaseev <taf@altlinux.org> 1.5.1-alt1
 - Initial build.
