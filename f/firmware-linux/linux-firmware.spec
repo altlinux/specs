@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20260519
+Version: 20260910
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -74,7 +74,6 @@ firmware for Mellanox Spectrum switchdev
 
 %prep
 %setup
-awk /mellanox/ RS=^-{74} WHENCE > LICENSE.Mellanox
 
 %install
 DESTDIR=%buildroot FIRMWAREDIR=lib/firmware %make_build install-xz
@@ -87,7 +86,6 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 %check
 # Ensure that compression mode is correct.
 xz -l %buildroot/lib/firmware/i915/mtl_gsc_1.bin.xz | grep -w CRC32
-grep -c Mellanox LICENSE.Mellanox
 
 %pretrans -p <lua>
 paths = {
@@ -112,7 +110,7 @@ for _, path in ipairs(paths) do
 end
 
 %files
-%doc WHENCE LICEN?E.* Apache-2 GPL-2 GPL-3
+%doc WHENCE LICENSES/*
 /lib/firmware
 %exclude /lib/firmware/netronome
 %exclude /lib/firmware/liquidio
@@ -121,26 +119,30 @@ end
 %exclude /lib/firmware/mellanox
 
 %files netronome
-%doc LICENCE.Netronome
+%doc LICENSES/LICENCE.Netronome
 /lib/firmware/netronome
 
 %files liquidio
-%doc LICENCE.cavium_liquidio
+%doc LICENSES/LICENCE.cavium_liquidio
 /lib/firmware/liquidio
 
 %files qcom
-%doc LICENSE.qcom LICENSE.qcom_yamato qcom/NOTICE.txt LICENCE.linaro
+%doc LICENSES/LICENSE.qcom LICENSES/LICENSE.qcom_yamato
+%doc LICENSES/NOTICE.qcom LICENSES/LICENCE.linaro
 /lib/firmware/qcom
 
 %files mrvl
-%doc LICENCE.Marvell LICENCE.NXP
+%doc LICENSES/LICENCE.Marvell LICENSES/LICENCE.NXP
 /lib/firmware/mrvl
 
 %files mellanox
-%doc LICENSE.Mellanox
+%doc LICENSES/LICENSE.mellanox
 /lib/firmware/mellanox
 
 %changelog
+* Fri Sep 11 2026 Ivan A. Melnikov <iv@altlinux.org> 20260910-alt1
+- Update to 20260910 (2026-09-10).
+
 * Wed May 20 2026 Vitaly Chikunov <vt@altlinux.org> 20260519-alt1
 - Update to 20260519 (2026-05-19).
 
