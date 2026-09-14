@@ -6,7 +6,7 @@
 
 Name: openrgb
 Version: 1.0
-Release: alt1.rc2
+Release: alt2.rel
 
 %define org_name org.%name.OpenRGB
 
@@ -23,9 +23,9 @@ Patch: %name-alt-no-strip.patch
 
 BuildRequires(pre): rpm-macros-qt6 rpm-macros-systemd
 
-BuildRequires: libhidapi-devel libusb-devel
+BuildRequires: libhidapi-hotplug-devel libusb-devel
 BuildRequires: libmbedtls13-devel
-BuildRequires: qt6-tools qt6-base-devel
+BuildRequires: qt6-tools qt6-base-devel libstb-devel
 
 %description
 Open source RGB lighting control that doesn't depend on manufacturer software.
@@ -39,6 +39,9 @@ across many manufacturers.
 # just to be sure
 subst "s|/usr/lib/udev/rules.d|%_udevrulesdir|g" ResourceManager.cpp
 subst "s|/etc/systemd/system|%_unitdir|g" OpenRGB.pro
+# unbundle stb
+pushd dependencies/stb
+ln -svf %_includedir/stb/stb_image_write.h ./
 
 %build
 export QMAKE_CXXFLAGS_RELEASE='%optflags'
@@ -47,16 +50,27 @@ export QMAKE_CXXFLAGS_RELEASE='%optflags'
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
+mkdir -p %buildroot%_udevrulesdir && touch %buildroot%_udevrulesdir/60-%name.rules
+
+%post
+%name --generate-udev-rules %_udevrulesdir/60-%name.rules ||:
+%_bindir/udevadm control --reload-rules
+%_bindir/udevadm trigger
 
 %files
 %_unitdir/%name.service
-%_udevrulesdir/60-%name.rules
+%ghost %_udevrulesdir/60-%name.rules
+%_tmpfilesdir/%name.conf
 %_bindir/%name
 %_desktopdir/%org_name.desktop
 %_datadir/metainfo/%org_name.metainfo.xml
 %_iconsdir/hicolor/128x128/apps/%org_name.png
 
 %changelog
+* Sun Sep 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt2.rel
+- 1.0.
+- s/libhidapi/libhidapi-hotplug/.
+
 * Tue Sep 16 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt1.rc2
 - 1.0rc2.
 - qt5->qt6.
