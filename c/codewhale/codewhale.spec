@@ -6,8 +6,8 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: codewhale
-Version: 0.9.12
-Release: alt2
+Version: 0.9.13
+Release: alt1
 
 Summary: Open-source coding agent for your terminal
 License: MIT
@@ -76,6 +76,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Mon Sep 14 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.13-alt1
+- Updated to 0.9.13.
+
 * Sat Sep 12 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.12-alt2
 - Updated description
 - Stopped packaging docs.
