@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -145,6 +145,7 @@ Requires: thunderbird
 Requires: freeplane
 %endif
 Requires: alterator-net-iptables
+Requires: alterator-limits
 %description lite
 %{summary}.
 
@@ -657,6 +658,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Mon Sep 14 2026 Ivan Khanas <xeno@altlinux.org> 1.8.5-alt1
+- lite: add alterator-limits.
+
 * Thu Sep 03 2026 Ivan Khanas <xeno@altlinux.org> 1.8.4-alt1
 - lite: add alterator-net-iptables.
 
