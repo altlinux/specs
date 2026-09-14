@@ -2,7 +2,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: gpoa-plugin-udev
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: USB device control plugin for gpupdate via udev rules
@@ -17,6 +17,7 @@ BuildRequires: gettext-tools
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-jinja2
 BuildRequires: admx-lint
+BuildRequires: /proc
 
 Requires: udev
 Requires: gpoa-lib >= 0.16.1
@@ -74,6 +75,12 @@ done
 %_destdir
 
 %changelog
+* Mon Sep 14 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.4-alt1
+- build: require /proc for restoration tests
+- docs: clarify USB policy behavior in ADML
+- test: cover USB policy combinations and rule matching
+- fix: validate USB policies and restore device access
+
 * Mon Aug 17 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.3-alt1
 - build: bump to 0.0.3-alt1, ignore compiled .mo files
 - fix: atomic rules write and verified udev reload
