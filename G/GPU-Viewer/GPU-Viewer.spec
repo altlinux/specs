@@ -1,5 +1,5 @@
 Name:    GPU-Viewer
-Version: 4.00
+Version: 4.02
 Release: alt1
 
 Summary: A front-end to glxinfo, vulkaninfo, clinfo and es2_info - Linux
@@ -49,6 +49,9 @@ clinfo works the GPU-viewer will also work.
 %_iconsdir/hicolor/*/apps/io.github.arunsivaramanneo.GPUViewer.png
 
 %changelog
+* Mon Sep 14 2026 Sergey Palcheh <minergenon@altlinux.org> 4.02-alt1
+- new version 4.02
+
 * Fri Sep 04 2026 Sergey Palcheh <minergenon@altlinux.org> 4.00-alt1
 - new version 4.00
 
