@@ -8,8 +8,8 @@
 %define oldver 3.0
 
 Name: gimp
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: The GNU Image Manipulation Program
 License: %gpl3only
@@ -131,6 +131,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.6-alt1
+- 3.2.6
+
 * Mon Jul 06 2026 Michael Shigorin <mike@altlinux.org> 3.2.4-alt2
 - e2k build fix (ilyakurdyukov@)
 

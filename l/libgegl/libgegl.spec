@@ -6,8 +6,8 @@
 %define api_ver 0.4
 
 Name: lib%rname
-Version: %api_ver.70
-Release: alt2
+Version: %api_ver.72
+Release: alt1
 Summary: A graph based image processing framework
 License: %gpllgpl3plus
 Group: System/Libraries
@@ -23,7 +23,7 @@ BuildRequires: libpoly2tri-c-devel libraw-devel librsvg-devel libspiro-devel lib
 BuildRequires: libtiff-devel libv4l-devel libwebp-devel openexr-devel ruby vala-tools gobject-introspection-devel w3m
 BuildRequires: python-module-pygobject3-common-devel libpoppler-glib-devel libspiro-devel liblua-devel libSDL2-devel
 %ifarch %arm aarch64 %ix86 x86_64 ppc64le
-BuildRequires: libluajit-devel
+BuildRequires: libluajit-devel opencl-headers
 %endif
 
 %description
@@ -101,6 +101,9 @@ rm -f %buildroot%_libdir/%rname-%api_ver/*.la
 %_typelibdir/Gegl-%api_ver.typelib
 
 %changelog
+* Mon Sep 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 0.4.72-alt1
+- 0.4.72
+
 * Mon Apr 06 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.4.70-alt2
 - e2k build fix
 
