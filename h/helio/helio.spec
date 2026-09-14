@@ -1,5 +1,5 @@
 Name: helio
-Version: 3.17
+Version: 3.18
 Release: alt1
 
 Summary: Music sequencer for desktop and mobile platforms
@@ -50,6 +50,9 @@ cp -av Projects/Deployment/Linux/Debian/x64/usr/share %buildroot%_prefix
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Sep 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.18-alt1
+- 3.18 released
+
 * Tue Dec 09 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.17-alt1
 - 3.17 released
 
