@@ -1,5 +1,5 @@
 Name: mikmod
-Version: 3.2.9
+Version: 3.2.10
 Release: alt1
 
 Summary: A MOD music file player
@@ -64,6 +64,9 @@ lha, lzh, rar, zip).
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Sep 13 2026 Michael Shigorin <mike@altlinux.org> 3.2.10-alt1
+- new version (watch file uupdate)
+
 * Tue Dec 31 2024 Michael Shigorin <mike@altlinux.org> 3.2.9-alt1
 - new version (watch file uupdate)
 
