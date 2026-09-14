@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rtk
-Version: 0.45.0
+Version: 0.49.0
 Release: alt1
 
 Summary: CLI proxy that reduces LLM token consumption on common dev commands
@@ -36,18 +36,21 @@ install -Dm 644 %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Mon Sep 14 2026 Vladislav Glinkin <smasher@altlinux.org> 0.49.0-alt1
+- New version 0.49.0 (Closes: 60423).
+
 * Thu Aug 13 2026 Vladislav Glinkin <smasher@altlinux.org> 0.45.0-alt1
-- Updated from 0.44.1 to 0.45.0
+- New version 0.45.0.
 
 * Fri Jul 31 2026 Vladislav Glinkin <smasher@altlinux.org> 0.44.1-alt1
-- Updated from 0.42.1 to 0.44.1
+- New version 0.44.1.
 
 * Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 0.42.1-alt1
-- New version
+- New version 0.42.1.
 
 * Tue Mar 31 2026 Vladislav Glinkin <smasher@altlinux.org> 0.34.2-alt1
-- New version
+- New version 0.34.2.
 
 * Thu Mar 26 2026 Vladislav Glinkin <smasher@altlinux.org> 0.33.1-alt1
-- Initial build for ALT
+- Initial build for ALT.
 
