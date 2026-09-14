@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: DOI/arXiv to BibTeX command line utility
 License: GPL-3.0-or-later
@@ -15,6 +15,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
+
+Requires: python3-module-pylatexenc
 
 BuildArch: noarch
 
@@ -55,6 +57,9 @@ A GUI frontend is available: Check out QuickBib.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt2
+- Explicitly require python3-module-pylatexenc (thanks to apandada1).
+
 * Sat Sep 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt1
 - New version 1.7.0.
 
