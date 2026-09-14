@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-tqdm
-Version: 4.70.0
+Version: 4.70.1
 Release: alt1
 
 Summary: A fast, extensible progress bar for Python and CLI
@@ -50,7 +50,6 @@ sed -ie 's/timeout = 30/timeout = 60/' pyproject.toml
 %pyproject_install
 
 %check
-# https://github.com/tqdm/tqdm/issues/1537
 %pyproject_run_pytest -v
 
 %files
@@ -60,6 +59,9 @@ sed -ie 's/timeout = 30/timeout = 60/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Sep 14 2026 Anton Vyatkin <toni@altlinux.org> 4.70.1-alt1
+- new version 4.70.1
+
 * Wed Sep 02 2026 Anton Vyatkin <toni@altlinux.org> 4.70.0-alt1
 - new version 4.70.0
 
