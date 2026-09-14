@@ -1,6 +1,6 @@
 Name: alterator-module-executor
-Version: 0.1.34
-Release: alt2
+Version: 0.1.35
+Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
 License: GPL-2
@@ -37,6 +37,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Sep 14 2026 Ivan Savin <svn17@altlinux.org> 0.1.35-alt1
+- Prevent possible NULL dereference (shishkovna@).
+
 * Wed Sep 09 2026 Ivan Savin <svn17@altlinux.org> 0.1.34-alt2
 - Migrate to new runners in .forgejo/workflows/clang-format.yml and
   .forgejo/workflows/secrets-check.yaml.

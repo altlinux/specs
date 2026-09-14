@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,12 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Sep 14 2026 Ivan Savin <svn17@altlinux.org> 0.6.2-alt1
+- Add missing 'g_free' to prevent memory leak (shishkovna@).
+- Make 'register_subtree' return zero if handlers_data is NULL (shishkovna@).
+- Add missing 'return' to prevent double free (shishkovna@).
+- Remove redundant handlers_data_free call (shishkovna@).
+
 * Tue Sep 08 2026 Ivan Savin <svn17@altlinux.org> 0.6.1-alt1
 - Migrate to new runners in .forgejo/workflows/clang-format.yml and
   .forgejo/workflows/secrets-check.yaml.
