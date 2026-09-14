@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define sover 0
+%define githash 0060c87
 
 Name: sonic
 Version: 0.2.0.13+b1
-Release: alt2
+Release: alt3.%githash
 
 Summary: Simple utility to speed up or slow down speech
 License: Apache-2.0
@@ -12,6 +13,7 @@ Url: https://github.com/espeak-ng/sonic
 VCS: https://github.com/espeak-ng/sonic.git
 
 Source: %name-%version.tar
+Source1: sonic.1
 
 Patch0: sover-fix.patch
 
@@ -57,6 +59,8 @@ BuildArch: noarch
 %install
 %makeinstall_std
 
+install -D -m 644 %SOURCE1 %buildroot%_man1dir/%name.1
+
 rm %buildroot%_libdir/*.a
 
 %check
@@ -74,9 +78,13 @@ rm %buildroot%_libdir/*.a
 %_includedir/%name.h
 
 %files doc
-%doc README TODO doc
+%doc README TODO doc/%name.odt
+%_man1dir/%name.1.xz
 
 %changelog
+* Mon Sep 14 2026 Artem Semenov <savoptik@altlinux.org> 0.2.0.13+b1-alt3.0060c87
+- Packaged man pages.
+
 * Wed Feb 11 2026 Artem Semenov <savoptik@altlinux.org> 0.2.0.13+b1-alt2
 - Fixed SONAME of libsonic: now set to libsonic.so.0
 
