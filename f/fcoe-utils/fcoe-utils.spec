@@ -3,7 +3,7 @@
 
 Name: fcoe-utils
 Version: 1.0.34
-Release: alt3
+Release: alt4
 Summary: Fibre Channel over Ethernet utilities
 
 Group: Networking/Other
@@ -50,10 +50,10 @@ done
 
 %post
 %systemd_post fcoe.service fcoemon.socket
- 
+
 %preun
 %systemd_preun fcoe.service fcoemon.socket
- 
+
 %postun
 %systemd_postun_with_restart fcoe.service fcoemon.socket
 
@@ -69,6 +69,9 @@ done
 %_libexecdir/fcoe/
 
 %changelog
+* Mon Sep 14 2026 Alexey Shabalin <shaba@altlinux.org> 1.0.34-alt4
+- Fixed FTBFS (build upstream master 93e6e616).
+
 * Mon Jul 03 2023 Alexey Shabalin <shaba@altlinux.org> 1.0.34-alt3
 - Fixed FTBFS.
 
