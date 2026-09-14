@@ -2,7 +2,7 @@
 %{!?_userunitdir: %global _userunitdir /usr/lib/systemd/user}
 
 Name: prometheus-podman-exporter
-Version: 1.21.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Prometheus exporter for podman environment
@@ -52,6 +52,11 @@ install -Dm644 contrib/systemd/user/%name.service -t %buildroot%_userunitdir/
 %_userunitdir/%name.service
 
 %changelog
+* Mon Sep 14 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.0-alt1
+- New version 2.0.0 (Fixed: CVE-2026-39833, CVE-2026-46597,
+  CVE-2026-39831, CVE-2026-41178, CVE-2026-17106, CVE-2025-47914,
+  CVE-2026-41178).
+
 * Mon Jun 29 2026 Leontiy Volodin <lvol@altlinux.org> 1.21.2-alt1
 - New version 1.21.2 (Fixes: CVE-2026-39828, CVE-2026-39829,
   CVE-2026-39830, CVE-2026-39832, CVE-2026-39835).
