@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.19.1
+Version: 3.20.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -18,7 +18,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Thu Oct 12 2023
 # optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-py3dephell python3-module-setuptools sh5
-BuildRequires: python3-module-pyproject-installer python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-pyproject-installer python3-module-setuptools python3-module-wheel python3-module-uv-build
 
 Requires(pre): shadow-utils
 Requires: python3-module-argcomplete
@@ -88,11 +88,15 @@ mkdir -p %buildroot%_logrotatedir/
 mkdir -p %buildroot/var/lib/barman
 mkdir -p %buildroot/var/log/barman
 mkdir -p %buildroot%_sysconfdir/barman/conf.d
+mkdir -p %buildroot%_mandir/man1
+mkdir -p %buildroot%_mandir/man5
 install -pm 644 docs/barman.conf %buildroot%_sysconfdir/barman/barman.conf
 install -pm 644 docs/barman.d/* %buildroot%_sysconfdir/barman/conf.d
 install -pm 644 %SOURCE1 %buildroot%_sysconfdir/cron.d/barman
 install -pm 644 %SOURCE2 %buildroot%_logrotatedir/barman
 install -Dpm 644 scripts/barman.bash_completion %buildroot%_datadir/bash-completion/completions/barman
+install -Dpm 644 docs/_build/man/*.1 %buildroot%_man1dir
+install -Dpm 644 docs/_build/man/%name.5 %buildroot%_man5dir
 touch %buildroot/var/log/barman/barman.log
 
 %__subst 's|/etc/barman.d|/etc/barman/conf.d|g' %buildroot%_sysconfdir/barman/barman.conf
@@ -141,6 +145,9 @@ exit 0
 %python3_sitelibdir/%name/
 
 %changelog
+* Mon Sep 14 2026 Leontiy Volodin <lvol@altlinux.org> 3.20.0-alt1
+- New version 3.20.0.
+
 * Mon Jun 01 2026 Leontiy Volodin <lvol@altlinux.org> 3.19.1-alt1
 - New version 3.19.1.
 
