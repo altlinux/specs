@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.10.2
+Version: 0.11.0
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt1
+- disable systemd-networkd-wait-online
+
 * Thu Dec 11 2025 Sergey V Turchin <zerg@altlinux.org> 0.10.2-alt1
 - disable localsearch-3 service
 
