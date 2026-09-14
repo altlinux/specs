@@ -3,7 +3,7 @@
 
 %define _name localsearch
 %define old_name tracker-miners
-%define ver_major 3.11
+%define ver_major 3.12
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -12,13 +12,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: LocalSearch is the file search framework of the GNOME desktop
 License: GPL-2.0-or-later and LGPL-2.0-or-later
 Group: Databases
-Url: https://wiki.gnome.org/Projects/Tracker
+Url: https://gnome.pages.gitlab.gnome.org/localsearch/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
@@ -49,9 +49,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %def_enable libosinfo
 %def_enable playlist
 %def_enable network_manager
-#Has header "linux/landlock.h" : YES 
-#Checking if "landlock is enabled in kernel" runs: NO (1)
-#meson.build:210:4: ERROR: Problem encountered: Landlock was auto-enabled in build options, but is disabled in the kernel
 # https://bugzilla.altlinux.org/57436
 %def_enable landlock
 %def_enable man
@@ -81,7 +78,7 @@ BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver pkgconfig(gstreamer-audio-1.
 BuildRequires: pkgconfig(gstreamer-tag-1.0) >= %gst_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-build-systemd rpm-build-gir rpm-build-python3
-BuildRequires: meson
+BuildRequires: meson gcc-c++
 BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: tinysparql-devel >= %ver_major
 BuildRequires: libgio-devel >= %glib_ver
@@ -211,6 +208,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Sep 02 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.2-alt1
 - 3.11.2
 

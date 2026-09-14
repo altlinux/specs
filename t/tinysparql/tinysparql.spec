@@ -2,7 +2,7 @@
 
 %define _name tinysparql
 %define old_name tracker
-%define ver_major 3.11
+%define ver_major 3.12
 %define beta %nil
 %define namespace Tsparql
 %define old_namespace Tracker
@@ -24,13 +24,13 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Low-footprint RDF triple store with SPARQL 1.1 interface
 License: GPL-2.0-or-later and LGPL-2.0-or-later
 Group: Databases
-Url: http://wiki.gnome.org/Projects/Tracker
+Url: https://gnome.pages.gitlab.gnome.org/tinysparql/
 
 Vcs: https://gitlab.gnome.org/GNOME/tinysparql.git
 
@@ -258,6 +258,9 @@ GObject introspection devel data for the Tracker library.
 %endif
 
 %changelog
+* Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
+- 3.12.0
+
 * Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.1-alt1
 - 3.11.1
 
