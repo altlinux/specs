@@ -13,7 +13,7 @@
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
@@ -168,6 +168,9 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Mon Sep 14 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.2-alt1
+- New version 2.1.2.
+
 * Fri Aug 07 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.1-alt1
 - New version 2.1.1.
 
