@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    libdivide
-Version: 5.3.0
+Version: 5.4.0
 Release: alt1
 Summary: Header-only C/C++ library for optimizing integer division
 Group:   Development/C++
@@ -61,5 +61,8 @@ much faster.
 %_datadir/cmake/*
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 5.4.0-alt1
+- 5.4.0.
+
 * Wed Apr 01 2026 L.A. Kostis <lakostis@altlinux.ru> 5.3.0-alt1
 - Initial build for ALTLinux.
