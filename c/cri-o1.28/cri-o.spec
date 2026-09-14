@@ -17,7 +17,7 @@
 
 Name: %prog_name%cri_o_major.%cri_o_minor
 Version: %cri_o_major.%cri_o_minor.%cri_o_patch
-Release: alt2
+Release: alt3
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -27,13 +27,20 @@ ExclusiveArch: %go_arches
 
 Source: %name-%version.tar
 Patch1: .gear/cri-o-vendored-cilium-ebpf-loongarch64-support.patch
+Patch2: .gear/cri-o-1.28.11-alt-CVE-2024-8676.patch
+Patch3: .gear/cri-o-1.28.11-alt-CVE-2025-58183.patch
+Patch4: .gear/cri-o-1.28.11-alt-CVE-2026-15809.patch
+Patch6: .gear/cri-o-1.28.11-alt-CVE-2026-34986.patch
+Patch5: .gear/cri-o-1.28.11-alt-CVE-2026-62146.patch
+# runc 1.4 compatibility: pids_limit=0 means no processes, not unlimited.
+Patch7: .gear/cri-o-1.28.11-alt-pids-limit-default.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 
 Requires: containers-common
-Requires: runc
+Requires: runc >= 1.4.0
 Requires: cni-plugins
 Requires: conntrack-tools
 Requires: iproute2
@@ -62,6 +69,12 @@ Provides: cri-runtime
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 sed -i 's/\/local//' contrib/systemd/crio.service
 sed -i 's/\/local//' contrib/systemd/crio-wipe.service
@@ -138,6 +151,11 @@ install -p -m 644 contrib/cni/99-loopback.conflist %buildroot%_sysconfdir/cni/ne
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Mon Sep 14 2026 Alexander Stepchenko <geochip@altlinux.org> 1.28.11-alt3
+- Backport upstream security fixes (Fixes: CVE-2024-8676,
+  CVE-2025-58183, CVE-2026-15809, CVE-2026-34986, CVE-2026-62146).
+- Set the default pids_limit to -1 for compatibility with runc 1.4.
+
 * Thu May 08 2025 Alexander Stepchenko <geochip@altlinux.org> 1.28.11-alt2
 - Fix systemd service disabling before package deletion (Closes: #49768)
 
