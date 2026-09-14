@@ -3,7 +3,7 @@
 
 Name: rdf-urdna
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: This is an implementation of the Universal RDF Dataset Normalization Algorithm for Java 1.8
 License: Apache-2.0
@@ -14,12 +14,13 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Patch0: 0001-Adapt-to-gradle-8-alt-patch.patch
+Patch1: rdf-urdna-1.4-alt-fix-adapt-to-gradle9.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: xgradle
 BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 BuildRequires: apicatalog-titanium-json-ld
 %if_with check
 BuildRequires: junit
@@ -60,5 +61,8 @@ This package contains javadoc for %name.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Sep 11 2026 Anton Meleshnikov <alton@altlinux.org> 1.4-alt2
+- FTBFS fix.
+
 * Sun Nov 09 2025 Ivan Khanas <xeno@altlinux.org> 1.4-alt1
 - First build for ALT.
