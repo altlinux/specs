@@ -1,15 +1,15 @@
 %define soversion 2
-%define llvmversion 16
+%define llvmversion 17
 %define optflags_lto %nil
 
 %define vc_int_ver 0.25.0
-%define opencl_ver 16.0.9
-%define spirv_ver 16.0.22
+%define opencl_ver 17.0.10
+%define spirv_ver 17.0.27
 
 %set_verify_elf_method skip
 
 Name: intel-graphics-compiler
-Version: 2.30.1
+Version: 2.40.13
 Release: alt1
 Summary: Intel Graphics Compiler for OpenCL
 License: MIT
@@ -18,9 +18,13 @@ URL: https://github.com/intel/intel-graphics-compiler
 
 Source: %name-%version.tar
 
-Patch1: %name-2.11.2-alt-build.patch
+Patch1: %name-2.40.13-alt-build.patch
 # our -Wall triggers -Werror for everything
 Patch2: %name-alt-disable-werror.patch
+# See https://github.com/intel/intel-graphics-compiler/issues/303
+# lld still see llvm::Module::dump() call even with NDEBUG so disable dump()
+# calls completely (anyway ShaderDumpTranslationOnly function not supported on Linux)
+Patch3: %name-disable-dump.patch
 
 BuildRequires(pre): rpm-build-cmake ninja-build
 
@@ -142,6 +146,13 @@ popd
 %_libdir/pkgconfig/igc-opencl.pc
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 2.40.13-alt1
+- 2.40.13.
+- aarch64: disable for now.
+
+* Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 2.30.1-alt1.1
+- Enable aarch64.
+
 * Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 2.30.1-alt1
 - 2.30.1.
 - Pin required components versions.

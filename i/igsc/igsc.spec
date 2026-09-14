@@ -1,7 +1,7 @@
 %define soversion 1
 
 Name: igsc
-Version: 1.0.2
+Version: 1.3.2
 Release: alt1
 Summary: Graphics System Controller Firmware Update Library
 License: MIT
@@ -60,6 +60,9 @@ lib%name development libraries and headers.
 %_includedir/*.h
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.2-alt1
+- 1.3.2.
+
 * Tue Jan 27 2026 L.A. Kostis <lakostis@altlinux.ru> 1.0.2-alt1
 - 1.0.2.
 

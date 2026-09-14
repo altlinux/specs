@@ -1,9 +1,9 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define llvmversion 16
+%define llvmversion 17
 
 Name: libvc-intrinsics
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: Set of new intrinsics on top of core LLVM IR instructions that represent SIMD semantics of a program targeting GPU
 License: MIT
@@ -23,6 +23,8 @@ BuildRequires: llvm%llvmversion.0-polly
 BuildRequires: libpolly%llvmversion.0-devel
 BuildRequires: mlir%llvmversion.0-tools
 BuildRequires: libmlir%llvmversion.0-devel
+
+ExclusiveArch: x86_64
 
 %description
 VC Intrinsics project contains a set of new intrinsics on top of core LLVM IR instructions
@@ -64,6 +66,10 @@ Group: Development/C++
 %_libdir/libLLVMGenXIntrinsics.a
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 0.25.0-alt2
+- Build with llvm17.
+- Make it x86_64-only due llvm-spirv dependency.
+
 * Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 0.25.0-alt1
 - 0.25.0.
 

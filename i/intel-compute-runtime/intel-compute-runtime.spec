@@ -2,11 +2,12 @@
 # LTO will be checked during configuration
 %define optflags_lto %nil
 
-%define igc_version 2.30.1
-%define libze_version 1.28.0
+%define igc_version 2.40.13
+%define libze_version 1.32.0
+%define gmmlib_version 22.10.0
 
 Name: intel-compute-runtime
-Version: 26.09.37435.1
+Version: 26.31.39395.13
 Release: alt1
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
@@ -16,18 +17,22 @@ Url: https://github.com/intel/compute-runtime
 Source: %name-%version.tar
 
 Patch1: intel-compute-runtime-26.05.37020.3-alt-build.patch
+Patch2: intel-compute-runtime-alt-system-sse2neon.patch
 
 BuildRequires(pre): rpm-build-cmake ninja-build
 BuildRequires: gcc-c++ libstdc++-devel
 BuildRequires: libigdfcl-devel >= %igc_version
 BuildRequires: libigc-devel >= %igc_version
-BuildRequires: intel-gmmlib-devel
+BuildRequires: intel-gmmlib-devel >= %gmmlib_version
 BuildRequires: libva-devel
 BuildRequires: libdrm-devel
 BuildRequires: libglvnd-devel
 BuildRequires: ocl-icd-devel
 BuildRequires: opencl-headers
 BuildRequires: libze-devel >= %libze_version
+%ifarch aarch64
+BuildRequires: sse2neon-devel
+%endif
 
 ExclusiveArch: x86_64
 
@@ -95,7 +100,7 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 %cmake -G Ninja \
@@ -128,6 +133,14 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 26.31.39395.13-alt1
+- 26.31.39395.13.
+- aarch64: disable for now (stuck during build).
+
+* Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 26.09.37435.1-alt1.1
+- Enable aarch64.
+- aarch64: use system sse2neon.
+
 * Thu Mar 19 2026 L.A. Kostis <lakostis@altlinux.ru> 26.09.37435.1-alt1
 - Updated to upstream version 26.09.37435.1.
 

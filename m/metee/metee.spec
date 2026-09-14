@@ -1,7 +1,7 @@
 %define soversion 6
 
 Name: metee
-Version: 6.2.1
+Version: 6.2.5
 Release: alt1
 Summary: ME TEE Interface Library
 License: MIT
@@ -51,9 +51,12 @@ lib%name development libraries and headers.
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
-%_includedir/%name.h
+%_includedir/%{name}*.h
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.5-alt1
+- 6.2.5.
+
 * Tue Mar 17 2026 L.A. Kostis <lakostis@altlinux.ru> 6.2.1-alt1
 - 6.2.1.
 

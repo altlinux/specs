@@ -104,7 +104,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt6
+Release: alt7
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -158,6 +158,23 @@ Patch213: mlir-gcc15-build.patch
 Patch300: deb-openmp-riscv64.patch
 
 Patch400: llvm-17.0.6-fix-build-with-gcc14.patch
+
+# intel opencl patches
+Patch500: clang-D151339-add-cl_ext_image_raw10_raw12.patch
+Patch501: intel-clang-0001-Clang-Enable-BFloat16-for-SPIR-SPIR-V.patch
+Patch502: intel-clang-0002-OpenCL-Set-cl_khr_gl_msaa_sharing-minimum-version-to.patch
+Patch503: intel-clang-0003-Remove-wrong-check-of-__opencl_c_images-feature-macr.patch
+Patch504: intel-clang-0004-Fix-checking-mechanism-for-read_write-Image-type.patch.patch
+Patch505: intel-clang-0005-OpenCL-Diagnose-invalid-conversion-from-pointer-to-v.patch
+Patch506: intel-clang-0006-Remove-__IMAGE_SUPPORT__-macro-for-SPIR.patch
+Patch507: intel-clang-0007-OpenCL-Allow-undefining-header-only-macros.patch
+Patch508: intel-clang-0008-Enable-use-of-GNU-C-extension.patch
+Patch509: intel-clang-0009-OpenCL-Add-cl_khr_kernel_clock-builtins-91950.patch
+Patch510: intel-clang-0010-OpenCL-Warn-if-filter_mode-is-linear-in-read_image-i.patch
+Patch511: intel-clang-0011-Clang-OpenCL-Add-OpenCL-3.1-language-version-204043.patch
+Patch512: intel-clang-0012-OpenCL-Fix-extensions-checks-for-3.1-208370.patch
+Patch513: intel-clang-0013-Clang-OpenCL-Promote-a-few-extensions-to-OpenCL-3.1-.patch
+Patch514: intel-llvm-0003-LLVM-Verifier-Fix-buffer-overflow-when-verifying-gc.patch
 
 %if_with clang
 # https://bugs.altlinux.org/show_bug.cgi?id=34671
@@ -801,7 +818,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch201 -p2
 %patch202 -p2
 %patch203 -p2
-# gcc15 fixes
+# gcc15/glibc fixes
 %patch210 -p2
 %patch211 -p2
 %patch212 -p2
@@ -812,6 +829,25 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 
 # gcc14
 %patch400 -p1
+
+# intel opencl patches
+%ifarch x86_64
+%patch500 -p2
+%patch501 -p1
+%patch502 -p1
+%patch503 -p1
+%patch504 -p1
+%patch505 -p1
+%patch506 -p1
+%patch507 -p1
+%patch508 -p1
+%patch509 -p1
+%patch510 -p1
+%patch511 -p1
+%patch512 -p1
+%patch513 -p1
+%patch514 -p1
+%endif
 
 # LLVM 12 and onward deprecate Python 2:
 # https://releases.llvm.org/12.0.0/docs/ReleaseNotes.html
@@ -1512,6 +1548,9 @@ ninja -C %builddir check-all || :
 %llvm_datadir/cmake/Modules/*
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 17.0.6-alt7
+- x86_64: apply patches from intel opencl-clang v17.0.9.
+
 * Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 17.0.6-alt6
 - Backported upstream commit to fix build with glibc 2.42+.
 
