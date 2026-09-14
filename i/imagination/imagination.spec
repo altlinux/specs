@@ -2,7 +2,7 @@
 
 Name:     imagination
 Version:  3.6
-Release:  alt1
+Release:  alt2
 
 Summary:  Imagination is a lightweight and simple DVD slide show maker
 License:  GPLv2
@@ -16,6 +16,7 @@ Source1:  %name.watch
 Source2:  ru.po
 
 Patch1: Add-translation-support-to-some-files.patch
+Patch2: Fix-slide-copy-paste-on-Wayland.patch
 
 BuildRequires: libgtk+3-devel
 BuildRequires: intltool
@@ -38,6 +39,7 @@ and FreeBSD written in C language and built with the GTK+2 toolkit.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
 cp %SOURCE2 po/ru.po
 
 %build
@@ -61,6 +63,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/doc/%name
 
 %changelog
+* Mon Sep 14 2026 Ivan Khanas <xeno@altlinux.org> 3.6-alt2
+- Fix slide cut/copy/paste on Wayland.
+- Fix double free of subtitle and pattern of pasted slides.
+
 * Mon Jun 01 2020 Andrey Cherepanov <cas@altlinux.org> 3.6-alt1
 - new version 3.6
 
