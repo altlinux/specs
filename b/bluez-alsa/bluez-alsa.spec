@@ -10,13 +10,14 @@
 %def_disable debug
 # FIXME! needs running dbus-daemon
 %def_disable test
-%def_enable cli
+%def_enable ctl
 %def_enable midi
 %def_enable opus
+%def_enable asha
 
 Name: bluez-alsa
-Version: 4.3.1
-Release: alt1.1
+Version: 5.0.0
+Release: alt1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -33,9 +34,11 @@ Provides: alsa-plugins-bluealsa = %EVR, bluealsa = %EVR
 
 BuildRequires: systemd-devel libdbus-glib-devel, libbluez-devel, libalsa-devel, libsbc-devel libgio-devel python3-module-docutils
 # Packet loss concealment for HFP with mSBC codec
-BuildRequires: libspandsp3-devel
+BuildRequires: libspandsp-devel
 # Helper library for dumping incoming BT data
 BuildRequires: libsndfile-devel
+# Adaptive volume adjustment
+BuildRequires: libsamplerate-devel
 # bash-completion
 BuildRequires: bash-completion
 %{?_enable_aptx:BuildRequires: libfreeaptx-devel}
@@ -45,20 +48,19 @@ BuildRequires: bash-completion
 %{?_enable_mp3lame:BuildRequires: liblame-devel}
 %{?_enable_test:BuildRequires: libcheck-devel}
 %{?_enable_l3plus:BuildRequires: libl3plus-devel}
-%{?_enable_cli:BuildRequires: libreadline-devel}
+%{?_enable_ctl:BuildRequires: libreadline-devel}
 %{?_enable_opus:BuildRequires: libopus-devel}
 # for hcitop
 BuildRequires: libbsd-devel libncurses-devel
 
 %description
-This project is a rebirth of a direct integration between Bluez and ALSA.
-
-With this application (later named as BlueALSA), one can achieve the same goal
-as with PulseAudio, but with less dependencies and more bare-metal-like.
-BlueALSA registers all known Bluetooth audio profiles in Bluez, so in theory
-every Bluetooth device (with audio capabilities) can be connected. In order to
-access the audio stream, one has to connect to the ALSA PCM device called
-bluealsa. The device is based on the ALSA software PCM plugin.
+This project created and maintains a product called BlueALSA, with which one
+can achieve the same Bluetooth audio profile support as with PulseAudio, but
+with fewer dependencies and at a lower level in the software stack. BlueALSA
+registers all the classic Bluetooth audio profiles in BlueZ, and also the
+BLE-MIDI profile, but the other BLE audio profiles are not (yet) supported.
+So in theory every Bluetooth device (with classic audio capabilities)
+can be connected.
 
 %package -n bash-completion-%name
 Summary: Bash completion for %name
@@ -84,10 +86,6 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 %autopatch -p1
 
 %build
-
-# https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=281920
-%add_optflags -DHAVE_STDARG_H
-
 %autoreconf
 %configure \
 	%{subst_enable aac} \
@@ -97,14 +95,15 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 	%{subst_enable l3plus} \
 	%{subst_enable debug} \
 	%{subst_enable test} \
-	%{subst_enable cli} \
+	%{subst_enable ctl} \
 	%{subst_enable midi} \
 	%{?_enable_aptx:--with-libfreeaptx --enable-aptx --enable-aptx-hd} \
 	%{subst_enable opus} \
+	%{subst_enable asha} \
 	--with-alsaconfdir=%_datadir/alsa/alsa.conf.d \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-bash-completion \
-	--with-bluealsauser=%b_user \
+	--with-bluealsaduser=%b_user \
 	--with-bluealsaaplayuser=%b_user \
 	--enable-systemd \
 	--enable-upower \
@@ -131,12 +130,13 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 /usr/sbin/useradd -r -n -g audio -M -s /dev/null -c %b_user %b_user >/dev/null 2>&1 ||:
 
 %files
-%doc README.md NEWS LICENSE AUTHORS
+%doc README.md NEWS.md LICENSE AUTHORS.md TROUBLESHOOTING.md
 %_bindir/*
 %exclude %_bindir/hcitop
 %_libdir/alsa-lib/*.so
 %_datadir/alsa/alsa.conf.d/*.conf
 %_datadir/dbus-1/system.d/*.conf
+%_datadir/dbus-1/interfaces/org.bluealsa.xml
 %_unitdir/*.service
 %_man1dir/*
 %exclude %_man1dir/hcitop.1*
@@ -152,6 +152,9 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Sep 10 2026 L.A. Kostis <lakostis@altlinux.ru> 5:5.0.0-alt1
+- 5.0.0.
+
 * Sat May 02 2026 L.A. Kostis <lakostis@altlinux.ru> 5:4.3.1-alt1.1
 - fix FTBFS with new gcc15.
 
