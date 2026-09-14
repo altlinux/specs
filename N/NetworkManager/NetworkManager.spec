@@ -43,7 +43,7 @@
 
 Name: NetworkManager
 Version: 1.58.1
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
 Summary: Install NetworkManager daemon and plugins
@@ -662,6 +662,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 14 2026 Mikhail Efremov <sem@altlinux.org> 1.58.1-alt2
+- tests: Fixed build with glib2-2.90.
+
 * Mon Aug 24 2026 Mikhail Efremov <sem@altlinux.org> 1.58.1-alt1
 - Updated to 1.58.1.
 
