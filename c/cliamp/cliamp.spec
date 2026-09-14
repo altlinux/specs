@@ -2,7 +2,7 @@
 %define import_path github.com/bjarneo/cliamp
 
 Name: cliamp
-Version: 1.62.0
+Version: 2.1.0
 Release: alt1
 
 License: MIT
@@ -15,8 +15,6 @@ VCS: https://github.com/bjarneo/cliamp
 Source: %name-%version.tar
 Source1: vendor.tar
 
-Patch: cliamp-1.62.0-possibility_bash_autocompletion_commands.patch
-
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 BuildRequires: pkgconfig(alsa)
@@ -24,6 +22,7 @@ BuildRequires: pkgconfig(ogg)
 BuildRequires: pkgconfig(vorbis)
 BuildRequires: pkgconfig(vorbisenc)
 BuildRequires: pkgconfig(flac)
+BuildRequires: pkgconfig(libmpg123)
 Requires: yt-dlp
 Requires: ffmpeg
 
@@ -46,7 +45,6 @@ Dektop files for %name
 
 %prep
 %setup -a 1 -q
-%patch -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -95,5 +93,8 @@ export LDFLAGS="$LDFLAGS -X main.version=%version"
 %_iconsdir/hicolor/512x512/apps/%name.png
 
 %changelog
+* Tue Sep 08 2026 Sergey Savelev <medovi@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Wed Jul 29 2026 Sergey Savelev <medovi@altlinux.org> 1.62.0-alt1
 - Initial build for Sisyphus.
