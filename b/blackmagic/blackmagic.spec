@@ -1,14 +1,14 @@
 Name: blackmagic
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: In-application debugging tool for embedded microprocessors
 License: GPLv3
 Group: Development/Other
-Url: https://black-magic.org/
-VCS: https://github.com/blacksphere/blackmagic
+URL: https://black-magic.org/
+VCS: https://codeberg.org/blackmagic-debug/blackmagic
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
 
 BuildRequires: meson
 BuildRequires: pkgconfig(hidapi-libusb)
@@ -44,6 +44,9 @@ install -pm0644 -D driver/99-blackmagic.rules %buildroot%_udevrulesdir/60-blackm
 %_bindir/blackmagic
 
 %changelog
+* Mon Sep 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.1.0-alt1
+- 2.1.0 released
+
 * Tue Jul 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
 - 2.0.0 released
 
