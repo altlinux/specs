@@ -1,7 +1,7 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.15.2
+Version: 1.2.16
 Release: alt1
 Epoch: 1
 
@@ -104,6 +104,9 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 1:1.2.16-alt1
+- 1.2.15.2 -> 1.2.16
+
 * Sat Apr 11 2026 Anton Farygin <rider@altlinux.org> 1:1.2.15.2-alt1
 - 1.2.13 -> 1.2.15.2
 
