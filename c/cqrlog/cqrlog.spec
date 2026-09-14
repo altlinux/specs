@@ -1,5 +1,5 @@
 Name: cqrlog
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: An amateur radio contact logging program
 
@@ -11,7 +11,6 @@ VCS: https://github.com/ok2cqr/cqrlog
 Source0: %name-%version.tar
 
 Patch0: cqrlog-install.patch
-Patch1: cqrlog-mysqld-path.patch
 
 ExclusiveArch: %ix86 x86_64
 
@@ -65,6 +64,9 @@ rm -rf %buildroot%_datadir/%name/cqrlog-apparmor-fix
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sun Sep 13 2026 Andrey Cherepanov <cas@altlinux.org> 3.1.0-alt1
+- New version.
+
 * Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt1
 - New version.
 
