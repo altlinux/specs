@@ -2,7 +2,7 @@
 
 Name: javacc-gradle-plugin
 Version: 4.0.3
-Release: alt1
+Release: alt2
 
 Summary: JavaCC Compiler Plugin for Gradle
 Group: Development/Java
@@ -16,7 +16,7 @@ Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: /proc
-BuildRequires: java-11-openjdk-devel
+BuildRequires: jpackage-default
 BuildRequires: xgradle
 BuildRequires: javacc
 BuildRequires: hamcrest-core
@@ -58,5 +58,8 @@ find ~/.m2 -iname *javacc.gradle.plugin-%version.pom -exec \
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Sep 11 2026 Anton Meleshnikov <alton@altlinux.org> 4.0.3-alt2
+- FTBFS fix.
+
 * Mon Mar 23 2026 Arseniy Kostevich <faux@altlinux.org> 4.0.3-alt1
 - Initial build for ALT.

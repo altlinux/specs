@@ -2,7 +2,7 @@
 
 Name: flatlaf
 Version: 3.7.1
-Release: alt3
+Release: alt4
 
 Summary: Flat Look and Feel
 Group: Development/Java
@@ -16,7 +16,7 @@ Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: /proc
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 BuildRequires: gcc-c++
 BuildRequires: xgradle
 BuildRequires: libgtk+3-devel
@@ -101,9 +101,9 @@ sed -i '/linux-arm64/ d' flatlaf-core/build.gradle.kts
 %endif
 
 %build
-gradle :flatlaf-natives-linux:build-natives -Prelease -Dtoolchain=11 -Ddisable.xgradle=true --offline
-%gradle_build -Prelease -Dtoolchain=11
-%gradle_publish -Prelease -Dtoolchain=11
+gradle :flatlaf-natives-linux:build-natives -Prelease -Dtoolchain=17 -Ddisable.xgradle=true --offline
+%gradle_build -Prelease -Dtoolchain=17
+%gradle_publish -Prelease -Dtoolchain=17
 
 %install
 %gradle_register
@@ -127,6 +127,9 @@ gradle :flatlaf-natives-linux:build-natives -Prelease -Dtoolchain=11 -Ddisable.x
 %files intellij-themes -f .mfiles-flatlaf-intellij-themes
 
 %changelog
+* Thu Sep 10 2026 Anton Meleshnikov <alton@altlinux.org> 3.7.1-alt4
+- Fixed ftbfs: used java-17.
+
 * Mon Jul 06 2026 Arseniy Kostevich <faux@altlinux.org> 3.7.1-alt3
 - Fixed ftbfs: changed jpackage-default jpackage-11-compat.
 - Build only for %%java_arches.
