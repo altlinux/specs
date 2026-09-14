@@ -7,7 +7,7 @@
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt9
+Release: alt10
 Summary: Linux Native KVM Tool
 License: GPL-2.0
 Group: Emulators
@@ -70,6 +70,9 @@ grep -f uuid boot.log
 %_man1dir/lkvm.1*
 
 %changelog
+* Mon Sep 14 2026 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt10
+- Update to git commit f67bc0bd (2026-08-06).
+
 * Mon May 04 2026 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt9
 - Update to git commit eb915c76 (2026-03-19).
 
