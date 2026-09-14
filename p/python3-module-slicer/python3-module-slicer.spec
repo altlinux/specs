@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.8
-Release: alt4
+Release: alt5
 
 Summary: Unified slicing for all Python data structures
 License: MIT
@@ -17,7 +17,7 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pandas 
-BuildRequires: python3-module-torch
+BuildRequires: python3-module-torch-cpu
 %endif
 
 %remove_torch_deps
@@ -55,6 +55,9 @@ It supports many data types including:
 %python3_sitelibdir/%pypi_name-%version-*.egg-info
 
 %changelog
+* Fri Sep 04 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt5
+- Switched test dependency to python3-module-torch-cpu.
+
 * Tue Aug 11 2026 Nikita Shmatko <nash@altlinux.org> 0.0.8-alt4
 - Fixed compatibility with pandas 3.0.
 
