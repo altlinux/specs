@@ -15,8 +15,8 @@
 %add_findreq_skiplist %_libexecdir/lxc/lxc-net
 
 Name: lxc
-Version: 6.0.5
-Release: alt3
+Version: 6.0.6
+Release: alt1
 Summary: Linux Containers
 License: LGPL-2.1-or-later
 Group: System/Configuration/Other
@@ -286,6 +286,9 @@ groupadd -r -f vmusers ||:
 %_mandir/ja/*/pam_cgfs*
 
 %changelog
+* Mon Sep 14 2026 Alexey Shabalin <shaba@altlinux.org> 6.0.6-alt1
+- Build upstream stable-6.0 branch (5c5afa6e) (Fixed: CVE-2026-39402).
+
 * Fri Dec 05 2025 Alexey Shabalin <shaba@altlinux.org> 6.0.5-alt3
 - Realy avoid dependencies to nvidia-container-cli.
 
@@ -319,7 +322,7 @@ groupadd -r -f vmusers ||:
 - drop lxc-apparmor-load from systemd unit.
 
 * Fri May 03 2024 Nadezhda Fedorova <fedor@altlinux.org> 6.0.0-alt1
-- Updated to 6.0.0.
+- Updated to 6.0.0 (Fixe: CVE-2022-47952).
 
 * Wed Jan 31 2024 Alexey Shabalin <shaba@altlinux.org> 5.0.3-alt1
 - 5.0.3.
@@ -332,7 +335,7 @@ groupadd -r -f vmusers ||:
 - convert AppArmor and SELinux confile parsing from errors to warnings
 
 * Thu Mar 23 2023 Alexey Shabalin <shaba@altlinux.org> 5.0.2-alt1
-- Updated to 5.0.2.
+- Updated to 5.0.2 (Fixes: CVE-2022-47952).
 
 * Tue Feb 15 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.0.12-alt2
 - Actually built 4.0.12 (pointed by shaba@).
