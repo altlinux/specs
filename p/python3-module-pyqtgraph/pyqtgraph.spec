@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.14.0
-Release: alt1
+Release: alt2
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
@@ -19,6 +19,8 @@ VCS: https://github.com/pyqtgraph/pyqtgraph.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Patch0: fix-svg-path-parsing.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-devel
@@ -81,6 +83,9 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 11 2026 Evgeniy Serov <scala@altlinux.org> 0.14.0-alt2
+- Fixed FTBFS: patched SVG export.
+
 * Sat Feb 28 2026 Anton Midyukov <antohami@altlinux.org> 0.14.0-alt1
 - New version (0.14.0).
 
