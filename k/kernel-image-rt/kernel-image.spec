@@ -1,8 +1,8 @@
 Name: kernel-image-rt
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.109
+%define kernel_sublevel	.110
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 14 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.110-alt1
+- v6.12.110 (2026-09-14).
+
 * Wed Sep 09 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.109-alt2
 - spec: Use kirk to run LTP tests.
 
