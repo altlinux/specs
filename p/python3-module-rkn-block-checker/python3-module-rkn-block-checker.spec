@@ -1,7 +1,7 @@
 %define pypi_name rkn-block-checker
 
 Name:    python3-module-%pypi_name
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: RKN Block Checker
@@ -43,6 +43,9 @@ in an RKN/TSPU-blocked zone - and, more usefully, what kind of block it is
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.6.0-alt1
+- v0.6.0
+
 * Wed Aug 26 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.5.1-alt1
 - Initial build for ALT.
 
