@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-download-manager
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Lomiri Upload/Download Manager
@@ -37,6 +37,7 @@ BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(liblomiri-api)
 BuildRequires: pkgconfig(libapparmor)
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(libcap)
 BuildRequires: doxygen
 BuildRequires: /usr/bin/dot
 
@@ -181,6 +182,9 @@ sed -i "s|add_dependencies(\${TARGET} GMock)|# add_dependencies(\${TARGET} GMock
 %_docdir/%name/*
 
 %changelog
+* Mon Sep 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
+- New version 0.3.3.
+
 * Fri Jul 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.2-alt1
 - New version 0.3.2.
 
