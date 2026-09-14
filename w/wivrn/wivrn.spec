@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global commit1 1b526bb3a0ff326ecd05af4c2c541407f53c6d4b
+%global commit1 f037264d23e2472a444a157370647fcd601ed81b
 %global monado_version 25.1.0
 
 Name:    wivrn
-Version: 26.6.2
+Version: 26.9
 Release: alt1
 
 Summary: An OpenXR streaming application to a standalone headset
@@ -24,14 +24,17 @@ Patch4: 0005-d-steamvr_lh-prevent-crash-on-vive-pro2-WiVRn.patch
 Patch5: 0006-st-oxr-push-XrEventDataInteractionProfileChanged-whe.patch
 Patch6: 0007-don-t-verify-GL-stuff.patch
 Patch7: 0008-configure-u_git_tag-in-WiVRn.patch
-Patch8: 0009-fix-csv_logger-boost-pfr-version.patch
+Patch8: 0009-ipc-join-client-threads-before-teardown.patch
+Patch9: 0010-a-math-Add-m_relation_history_get_clamped.patch
+Patch10: 0011-d-steamvr_lh-Add-LH_MAX_EXTRAPOLATION_MS.patch
+Patch11: 0012-fix-csv_logger-boost-pfr-version.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build extra-cmake-modules git-core
 BuildRequires: libvulkan-devel glslc glslang-devel libssl-devel boost-devel
 BuildRequires: boost-locale-devel libgeocode-glib2.0-devel libavcodec-devel
 BuildRequires: libavutil-devel libswresample-devel libdrm-devel libx264-devel
-BuildRequires: libsystemd-devel libcap-devel pipewire-libs-devel libpulseaudio-devel
+BuildRequires: libsystemd-devel libcap-devel pipewire-libs-devel
 BuildRequires: libavahi-devel libdbus-devel eigen3-devel libpcre2-devel
 BuildRequires: nlohmann-json-devel cli11-devel libffi-devel libmount-devel
 BuildRequires: libnotify-devel libblkid-devel librsvg-devel libselinux-devel
@@ -48,14 +51,6 @@ BuildRequires: libusb-devel librealsense-devel libSDL2-devel libcjson-devel
 BuildRequires: libuvc-devel libXrandr-devel gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: gst-plugins1.0-devel liborc-devel libsurvive-devel libopenvr-devel
 BuildRequires: doxygen appstream spirv-tools
-
-# Optional build-time dependencies missing in Sisyphus.
-# CMake disables the corresponding drivers/features automatically.
-# - depthai    : Intel DepthAI cameras (DRIVER_DEPTHAI)
-# - LeapV2     : Leap Motion controller (legacy SDK)
-# - LeapSDK    : Leap Motion controller (current SDK)
-# - ONNXRuntime: hand tracking ML inference
-# - Percetto   : performance tracing
 
 ExclusiveArch: x86_64
 
@@ -87,7 +82,7 @@ and to assist in pairing the headset with the server.
 
 %prep
 %setup
-%patch8 -p1
+%patch11 -p1
 
 mkdir -p _deps/monado-src
 tar -xvf %SOURCE1 --strip-components 1 -C _deps/monado-src
@@ -100,6 +95,9 @@ pushd _deps/monado-src
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 popd
 
 %build
@@ -124,8 +122,6 @@ popd
 	-DWIVRN_FEATURE_STEAMVR_LIGHTHOUSE=ON \
 	-DWIVRN_USE_NVENC=ON \
 	-DWIVRN_USE_PIPEWIRE=ON \
-	-DWIVRN_USE_PULSEAUDIO=ON \
-	-DWIVRN_USE_SYSTEMD=ON \
 	-DWIVRN_USE_VAAPI=ON \
 	-DWIVRN_USE_X264=ON \
 	-DWIVRN_USE_VULKAN_ENCODE=ON \
@@ -142,6 +138,8 @@ popd
 %doc COPYING LICENSE* README*
 %_bindir/wivrnctl
 %_bindir/wivrn-server
+%_datadir/bash-completion/completions/wivrnctl
+%_datadir/zsh/site-functions/_wivrnctl
 %dir %_libdir/%name
 %_libdir/%name/libopenxr_wivrn.so
 %_libdir/%name/libmonado_wivrn.so
@@ -158,6 +156,9 @@ popd
 %_iconsdir/hicolor/scalable/apps/io.github.wivrn.wivrn.svg
 
 %changelog
+* Mon Sep 14 2026 Sergey Palcheh <minergenon@altlinux.org> 26.9-alt1
+- new version 26.9
+
 * Wed Jul 15 2026 Sergey Palcheh <minergenon@altlinux.org> 26.6.2-alt1
 - new version 26.6.2
 
