@@ -1,5 +1,5 @@
 Name: portainer
-Version: 2.39.6
+Version: 2.45.0
 Release: alt1
 
 Summary: A lightweight docker management UI
@@ -98,6 +98,18 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Mon Sep 14 2026 Leontiy Volodin <lvol@altlinux.org> 2.45.0-alt1
+- New LTS version 2.45.0 (Fixes: CVE-2026-44849, CVE-2026-39821,
+  CVE-2026-42505, CVE-2026-39822, CVE-2026-56862, CVE-2026-56860,
+  CVE-2026-56859, CVE-2026-56858, CVE-2026-56853, CVE-2026-46600,
+  CVE-2026-33818, CVE-2026-50163,  CVE-2026-71556, CVE-2026-71557,
+  CVE-2026-41178, CVE-2026-11856, CVE-2026-10536, CVE-2026-11564,
+  CVE-2026-12064, CVE-2026-11586, CVE-2026-11352, CVE-2026-9547,
+  CVE-2026-9546, CVE-2026-9545, CVE-2026-9080, CVE-2026-9079,
+  CVE-2026-8932, CVE-2026-8927, CVE-2026-8926, CVE-2026-8925,
+  CVE-2026-8924, CVE-2026-8458, CVE-2026-8286, CVE-2026-33630,
+  GHSA-259r-337f-4rfw).
+
 * Thu Aug 13 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.6-alt1
 - New LTS version 2.39.6 (Fixes: CVE-2026-42505, CVE-2026-39822,
   CVE-2026-71556, CVE-2026-71557, CVE-2026-50163, CVE-2026-41178,
