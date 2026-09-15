@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.33
+Version: 6.5.34
 Release: alt1
 Epoch: 1
 
@@ -30,7 +30,7 @@ BuildRequires(pre): gcc-c++
 BuildRequires(pre): desktop-file-utils rpm-macros-dqt6
 # Automatically added by buildreq on Thu Apr 24 2025
 # optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdqt6-concurrent libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers zlib-devel
-BuildRequires: dqt6-5compat-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel kf6-karchive-devel kf6-kcodecs-devel libarchive-devel libcups-devel libdtk6widget-devel libgio-devel libminizip-devel libmount-devel libzip-devel
+BuildRequires: dqt6-5compat-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel dkf6-karchive-devel dkf6-kcodecs-devel libarchive-devel libcups-devel libdtk6widget-devel libgio-devel libminizip-devel libmount-devel libzip-devel
 BuildRequires: vulkan-headers libdqt6-concurrent libwayland-client-devel
 
 %description
@@ -102,6 +102,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
 
 %changelog
+* Tue Sep 15 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.34-alt1
+- New version 6.5.34.
+- Built on separate dkf6 libraries.
+
 * Mon Aug 24 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.33-alt1
 - New version 6.5.33.
 
