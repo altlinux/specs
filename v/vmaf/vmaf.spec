@@ -6,7 +6,7 @@
 %define sover 3
 
 Name: vmaf
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Perceptual video quality assessment based on multi-method fusion
@@ -18,7 +18,8 @@ VCS: https://github.com/Netflix/vmaf
 # Source-url: %vcs/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch: vmaf-3.2.0-test-predict-double-cmp-fix.patch
+Patch1: vmaf-3.2.0-test-predict-double-cmp-fix.patch
+Patch2: vmaf-3.2.1-bump-version.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: gcc-c++
@@ -115,6 +116,9 @@ popd
 %_datadir/vmaf/models
 
 %changelog
+* Mon Sep 14 2026 Valery Zabrovsky <brow@altlinux.org> 3.2.1-alt1
+- New version 3.2.1.
+
 * Mon Jun 22 2026 Valery Zabrovsky <brow@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
