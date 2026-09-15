@@ -1,5 +1,5 @@
 Name: tree-sitter-cmake
-Version: 0.7.4
+Version: 0.7.5
 Release: alt1
 
 Summary: CMake parser for tree-sitter
@@ -30,6 +30,9 @@ cp -a queries %buildroot%_libdir/tree-sitter-cmake
 %_libdir/tree-sitter-cmake
 
 %changelog
+* Tue Sep 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.5-alt1
+- 0.7.5 released
+
 * Thu Jul 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.4-alt1
 - 0.7.4 released
 
