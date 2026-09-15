@@ -1,6 +1,6 @@
 Name: python3-module-charset-normalizer
 Version: 3.5.1
-Release: alt1
+Release: alt2
 
 Summary: The Real First Universal Charset Detector
 License: MIT
@@ -20,7 +20,7 @@ BuildRequires: python3-module-cython
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 
-%python3_set_limited_api 3.7
+%python3_set_limited_api 3.9
 
 %description
 %summary
@@ -48,6 +48,9 @@ export CHARSET_NORMALIZER_CYTHON_ABI3=1
 %pyproject_run_pytest -o addopts= tests
 
 %changelog
+* Tue Sep 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.1-alt2
+- fixed build with cython >= 3.3
+
 * Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.1-alt1
 - 3.5.1 released
 
