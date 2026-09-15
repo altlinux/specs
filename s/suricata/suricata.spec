@@ -9,7 +9,7 @@
 %endif
 
 Name: suricata
-Version: 8.0.6
+Version: 8.0.7
 Release: alt1
 
 Summary: Intrusion Detection System
@@ -148,6 +148,9 @@ useradd -r -g _suricata -c 'Suricata User' \
 %_datadir/%name
 
 %changelog
+* Tue Sep 15 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.7-alt1
+- 8.0.7
+
 * Tue Jul 07 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.6-alt1
 - 8.0.6
 
