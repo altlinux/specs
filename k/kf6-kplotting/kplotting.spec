@@ -1,7 +1,7 @@
 %define rname kplotting
 
 Name: kf6-%rname
-Version: 6.29.0
+Version: 6.30.0
 Release: alt1
 %K6init altplace
 
@@ -68,6 +68,9 @@ KF6 library
 
 
 %changelog
+* Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
+- new version
+
 * Sun Aug 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.29.0-alt1
 - new version
 

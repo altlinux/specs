@@ -1,7 +1,7 @@
 %define rname kcalendarcore
 
 Name: kf6-%rname
-Version: 6.29.0
+Version: 6.30.0
 Release: alt1
 %K6init altplace
 
@@ -62,10 +62,10 @@ KF6 library
 
 %install
 %K6install
-#find_lang %name --with-kde --all-name
+%find_lang %name --all-name
+%K6find_qtlang %name --all-name
 
-#files common -f %name.lang
-%files common
+%files common -f %name.lang
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories6/*.*categories
 
@@ -80,6 +80,9 @@ KF6 library
 %_K6qml/org/kde/calendarcore/
 
 %changelog
+* Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
+- new version
+
 * Sun Aug 30 2026 Sergey V Turchin <zerg@altlinux.org> 6.29.0-alt1
 - new version
 
