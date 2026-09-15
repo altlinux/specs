@@ -2,7 +2,7 @@
 %define binname jg
 
 Name: jsongrep
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: A path query language for JSON, YAML, TOML, and other serialization formats
@@ -40,9 +40,12 @@ install -Dm 755 "target/release/%binname" "%buildroot%_bindir/%binname"
 %_bindir/%binname
 
 %changelog
+* Tue Sep 15 2026 Vladislav Glinkin <smasher@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Fri Jun 05 2026 Vladislav Glinkin <smasher@altlinux.org> 0.9.0-alt1
-- New version
+- New version 0.9.0.
 
 * Wed Apr 01 2026 Vladislav Glinkin <smasher@altlinux.org> 0.8.1-alt1
-- Initial build for ALT
+- Initial build for ALT.
 
