@@ -2,8 +2,9 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rxcalc
-Version: 20251015
-Release: alt2
+Epoch: 1
+Version: 0.6.8
+Release: alt1.8ece6c48.1
 Summary: RxCalc is a calculator for the analysis of multi-stage receiver
 
 Group: Engineering
@@ -44,6 +45,9 @@ spur-free dynamic range, MDS, SNR, and others.
 %_bindir/%name
 
 %changelog
+* Tue Sep 15 2026 Polina Poidenko <polipoki@altlinux.org> 1:0.6.8-alt1.8ece6c48.1
+- Changed to correct version using the commit hash.
+
 * Mon Apr 27 2026 Anton Midyukov <antohami@altlinux.org> 20251015-alt2
 - NMU: CMakeLists.txt: fix for build with cmake < 4.0.
 
