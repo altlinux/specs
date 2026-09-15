@@ -12,7 +12,7 @@
 
 Name: scsitarget-utils
 Version: 1.0.97
-Release: alt1
+Release: alt2
 
 Summary: The SCSI target daemon and utility programs
 License: GPLv2
@@ -162,6 +162,9 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Tue Sep 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.97-alt2
+- update tgt.{service,init} to force stop target (Closes: #35491)
+
 * Thu Nov 20 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.0.97-alt1
 - 1.0.97
 
