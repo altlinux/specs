@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.51
+%define kernel_sublevel 	.52
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -124,6 +124,7 @@ BuildRequires: u-boot-tools
 %endif
 Provides: kernel-modules-ipset-%flavour = %version-%release
 Provides: kernel-modules-kvdo-%flavour = %version-%release
+Provides: kernel-for-vm = %EVR
 %if_enabled ccache
 BuildRequires: ccache
 %endif
@@ -655,6 +656,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Sep 15 2026 Anton Farygin <rider@altlinux.org> 6.18.52-alt1
+- 6.18.51 -> 6.18.52
+- spec: added kernel-for-vm provides (closes: #60522)
+- config: record the defaults oldconfig has been taking for ~500 options new
+  since the config was last regenerated (no more "(NEW)"/EOF noise)
+- config-for-vm: aarch64 was built without KVM: CONFIG_KVM=m is invalid on
+  arm64 (bool) and oldconfig silently reset it; take KVM from config-<arch>
+- config-for-vm: SATA_MOBILE_LPM_POLICY is an int, drop the "is not set" line
+
 * Sat Sep 12 2026 Anton Farygin <rider@altlinux.org> 6.18.51-alt1
 - 6.18.50 -> 6.18.51
 
