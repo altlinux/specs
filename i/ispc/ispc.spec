@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%define llvm_ver 21.1
+%define llvm_ver 22.1
 %def_with lld
 %if_with lld
 %set_verify_elf_method skip
@@ -10,7 +10,7 @@
 %endif
 
 Name: ispc
-Version: 1.30.0
+Version: 1.31.0
 Release: alt1
 Summary: Intel Implicit SPMD Program Compiler
 License: BSD-3-Clause
@@ -179,6 +179,12 @@ ispc --support-matrix
 %endif
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 1.31.0-alt1
+- 1.31.0.
+
+* Mon Mar 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.30.0-alt2
+- Rebuild w/ llvm22.1.
+
 * Fri Mar 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1.30.0-alt1
 - 1.30.0.
 

@@ -124,7 +124,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.1
+Release: alt0.2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -155,6 +155,9 @@ Patch109: llvm-add-lib-suffix-PR159758.patch
 
 Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
 Patch112: RH-0001-Workaround-a-bug-in-ORC-on-ppc64le.patch
+
+# ispc patches
+Patch200: ispc-llvm-22_1_split_vec_op_wasm.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
@@ -805,6 +808,9 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch112 -p1
 
 # upstream patches for loongarch
+
+# ispc patches
+%patch200 -p1
 
 # debian patches
 %patch300 -p1
@@ -1608,6 +1614,10 @@ ninja -C %builddir check-all || :
 %endif
 
 %changelog
+* Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.8-alt0.2
+- Added patch from ISPC:
+  + ispc-llvm-22_1_split_vec_op_wasm.patch
+
 * Tue Jun 30 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.8-alt0.1
 - 22.1.8.
 
