@@ -22,7 +22,7 @@
 %define rname kdevelop
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 Epoch: 3
 
 Summary: Cross-platform IDE for C, C++, Python, QML/JavaScript and PHP
@@ -30,8 +30,7 @@ License: GPL-2.0-or-later
 Group: Graphical desktop/KDE
 Url: https://invent.kde.org/kdevelop/kdevelop
 
-ExcludeArch: %ix86 riscv64
-
+ExcludeArch: %not_qt6_qtwebengine_arches
 AutoReq: yes, nopython
 
 Requires: kde6-runtime
@@ -49,7 +48,7 @@ Source: %rname-%version.tar
 Patch1: alt-bashrc.patch
 Patch2: alt-soname.patch
 
-BuildRequires(pre): rpm-build-kf6
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: cmake extra-cmake-modules
 BuildRequires: pkgconfig(Qt6) pkgconfig(Qt6Core5Compat) pkgconfig(Qt6Quick) pkgconfig(Qt6Help) qt6-webengine-devel
 BuildRequires: kf6-kconfig-devel
@@ -326,6 +325,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKDevCompileAnalyzerCommon.so.*
 
 %changelog
+* Tue Sep 15 2026 Sergey V Turchin <zerg@altlinux.org> 3:26.04.3-alt2
+- fix ExcludeArch
+
 * Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 3:26.04.3-alt1
 - new version
 
