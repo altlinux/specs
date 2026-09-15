@@ -1,5 +1,5 @@
 Name:     blastem
-Version:  0.6.2
+Version:  1.0.0
 Release:  alt1
 
 Summary:  open-source Sega Genesis/Mega Drive emulator developed primarily for Linux
@@ -11,11 +11,9 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
 Source1: run_blastem.sh
-Patch0: 0001-fix-wrong-header.patch
 
-BuildRequires: libSDL2-devel libpng-devel zlib-devel libGLEW-devel ImageMagick-tools
-
-ExclusiveArch: x86_64 %ix86
+Patch0: 0001-Fix-malloc-invalid-next-size-error.patch
+BuildRequires: libSDL2-devel libpng-devel zlib-devel libGLEW-devel ImageMagick-tools python3-dev
 
 %description
 BlastEm aims for cycle accuracy while also hitting lower system requirements than Exodus;
@@ -29,9 +27,6 @@ the tests in Nemesis' VDP FIFO Testing ROM.
 %prep
 %setup
 %patch0 -p1
-
-#GCC10 workaround
-perl -pi -e 's|(CFLAGS:=)(-std=gnu99.*)|\1-fcommon \2|g' Makefile
 
 %build
 make blastem
@@ -58,7 +53,7 @@ cat << EOF > %buildroot%_desktopdir/%name.desktop
 [Desktop Entry]
 Type=Application
 Name=BlastEm
-GenericName=picodrive
+GenericName=BlastEm
 Comment=%{summary}
 Exec=run_blastem
 Icon=%{name}.png
@@ -70,11 +65,18 @@ install -D -m 0644 icons/windows.ico %buildroot%_datadir/pixmaps/%name.png
 %files
 
 %doc README CHANGELOG COPYING
-%_bindir/*
+%_bindir/%name
+%_bindir/run_%name
+%_bindir/rom.db
 %_datadir/%name/*
 %_desktopdir/%name.desktop
-%_datadir/pixmaps/*
+%_datadir/pixmaps/%name.png
 
 %changelog
+* Tue Sep 15 2026 Artyom Bystrov <arbars@altlinux.org> 1.0.0-alt1
+- Update to new version
+- Delete ExclusiveArch
+- Fix malloc(): invalid next size error
+
 * Thu Dec 08 2022 Artyom Bystrov <arbars@altlinux.org> 0.6.2-alt1
 - Initial build for Sisyphus
