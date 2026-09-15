@@ -1,14 +1,14 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 1.10
-%define rdn_name net.nokyan.Resources
+%define ver_major 51
+%define rdn_name org.gnome.Resources
 
 %def_enable check
 %def_disable bootstrap
 
 Name: resources
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: System monitor
@@ -19,11 +19,12 @@ Url: https://apps.gnome.org/Resources
 Vcs: https://github.com/nokyan/resources.git
 
 %if_disabled snapshot
-Source: https://github.com/nokyan/resources/archive/v%version/%name-%version.tar.gz
+#Source: https://github.com/nokyan/resources/archive/v%version/%name-%version.tar.gz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-Source1: %name-%version-cargo.tar
+#Source1: %name-%version-cargo.tar
 
 ExcludeArch: ppc64le
 
@@ -35,7 +36,9 @@ Requires: dconf /usr/sbin/dmidecode polkit
 # nvml-wrapper requires libnvidia-ml.so (ALT #49236)
 # https://github.com/Cldfire/nvml-wrapper
 %ifarch %ix86 x86_64 aarch64
-Requires: %_libdir/libnvidia-ml.so
+# https://bugzilla.altlinux.org/49236
+# https://bugzilla.altlinux.org/59069
+#Requires: %_libdir/libnvidia-ml.so
 %endif
 
 BuildRequires(pre): rpm-macros-meson
@@ -52,18 +55,18 @@ network interfaces and block devices. It's also capable of listing and
 terminating running graphical applications as well as processes.
 
 %prep
-%setup -n %name-%version %{?_disable_bootstrap:-a1}
+%setup -n %name-%version #%{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 # hardcode dmidecode path
-sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
+sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/devices/memory.rs
 
 %build
 %meson \
-    -Dprofile=default
+    -Dprofile=release
 %nil
 %meson_build
 
@@ -90,6 +93,9 @@ sed -i 's|"\(dmidecode"\)|"/usr/sbin/\1|' src/utils/memory.rs
 
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sat Mar 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.2-alt1
 - 1.10.2
 
