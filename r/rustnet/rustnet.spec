@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           rustnet
-Version:        1.4.0
+Version:        1.6.0
 Release:        alt1
 
 Summary:        A cross-platform network monitoring terminal UI tool
@@ -23,6 +23,8 @@ BuildRequires:      pkgconfig(libelf)
 BuildRequires:      pkgconfig(zlib)
 BuildRequires:      pkgconfig(libpcap)
 BuildRequires:      clang
+
+ExcludeArch: %ix86
 
 %description
 A cross-platform network monitoring tool built with Rust.
@@ -64,6 +66,9 @@ sed -i \
 %doc README.md CHANGELOG.md
 
 %changelog
+* Tue Sep 15 2026 Sergey Savelev <medovi@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Thu Jun 25 2026 Sergey Savelev <medovi@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 
