@@ -9,7 +9,7 @@
 
 Name:          ruby
 Version:       %ruby_version
-Release:       alt4
+Release:       alt5
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -28,6 +28,7 @@ Patch3:        alt_support_multiple_gem_trees.patch
 Patch5:        alt_block_install_gems.patch
 Patch6:        ac.patch
 Patch7:        rearrange_loadpath.patch
+Patch8:        relax.patch
 %ifarch %e2k
 Patch2000:     %name-e2k.patch
 %endif
@@ -371,6 +372,9 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Tue Sep 15 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt5
+- ! relaxed some statements for ruby kernel
+
 * Sat Sep 12 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt4
 - ! ri dir folder for gems (closes ALT #60502)
 

@@ -1,8 +1,10 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
 %define        gemname fcgi
 
 Name:          gem-fcgi
-Version:       0.9.2.2
+Version:       0.9.2.3
 Release:       alt1
 Summary:       FastCGI for ruby
 License:       MIT
@@ -12,16 +14,13 @@ Vcs:           https://github.com/alphallc/ruby-fcgi-ng.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         ruby-3.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 BuildRequires: libfcgi-devel
-
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-fcgi < %EVR
 Provides:      ruby-fcgi = %EVR
-Provides:      gem(fcgi) = 0.9.2.2
-
+Provides:      gem(fcgi) = 0.9.2.3
 
 %description
 FastCGI is a language independent, scalable, open extension to CGI that provides
@@ -31,15 +30,16 @@ MoonWolf developed a library for FastCGI in
 http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 
 
+%if_enabled    doc
 %package       -n gem-fcgi-doc
-Version:       0.9.2.2
+Version:       0.9.2.3
 Release:       alt1
 Summary:       FastCGI for ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fcgi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(fcgi) = 0.9.2.2
+Requires:      gem(fcgi) = 0.9.2.3
 
 %description   -n gem-fcgi-doc
 FastCGI for ruby documentation files.
@@ -52,18 +52,20 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 
 %description   -n gem-fcgi-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета fcgi.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-fcgi-devel
-Version:       0.9.2.2
+Version:       0.9.2.3
 Release:       alt1
 Summary:       FastCGI for ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fcgi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(fcgi) = 0.9.2.2
 Requires:      libfcgi-devel
+Requires:      gem(fcgi) = 0.9.2.3
 
 %description   -n gem-fcgi-devel
 FastCGI for ruby development package.
@@ -76,11 +78,11 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 
 %description   -n gem-fcgi-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета fcgi.
+%endif
 
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -92,25 +94,32 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 %ruby_test
 
 %files
-%doc README.rdoc README.signals
+%doc LICENSE README.rdoc README.signals
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
+%if_enabled    doc
 %files         -n gem-fcgi-doc
-%doc README.rdoc README.signals
+%doc LICENSE README.rdoc README.signals
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-fcgi-devel
-%doc README.rdoc README.signals
+%doc LICENSE README.rdoc README.signals
+%endif
 
 
 %changelog
+* Tue Sep 15 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.2.3-alt1
+- ^ 0.9.2.2 -> 0.9.2.3
+
 * Mon Dec 04 2023 Pavel Skrylev <majioa@altlinux.org> 0.9.2.2-alt1
-- ^ 0.9.2.1[1] -> 0.9.2.2
+- ^ 0.9.2.1.1 -> 0.9.2.2
 
 * Mon Jul 04 2022 Pavel Skrylev <majioa@altlinux.org> 0.9.2.1.1-alt1
-- ^ 0.9.2.1 -> 0.9.2.1[1]
+- ^ 0.9.2.1 -> 0.9.2.1.1
 
 * Sun Apr 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.9.2.1-alt3.1
 - ! spec tags and syntax
