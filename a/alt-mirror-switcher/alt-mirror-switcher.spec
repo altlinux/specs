@@ -2,7 +2,7 @@
 %define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -89,6 +89,13 @@ fi
 %_bindir/ams
 
 %changelog
+* Tue Sep 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.0-alt1
+- gui: fixed minor issues
+- gui: fixed the active mirror name for a specific case
+- gui: fixed functional processing of the https protocol
+- added Deferred mirror from EterSoft
+- gui: added ToolTips
+
 * Sun Aug 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt1
 - gui: fixed: auto restore mirror from ams.conf
 
