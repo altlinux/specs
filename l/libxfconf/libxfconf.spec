@@ -11,7 +11,7 @@
 
 Name: lib%_name
 Version: 4.21.2
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical configuration system for Xfce
 Summary (ru_RU.UTF-8): Система конфигурации Xfce
@@ -162,6 +162,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Sep 15 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt2
+- Fixed parallel build race on generated marshal and gdbus headers.
+
 * Tue Mar 17 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
 - Updated to 4.21.2.
 
