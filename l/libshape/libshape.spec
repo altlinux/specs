@@ -7,7 +7,7 @@
 
 Name: libshape
 Version: 1.6.3
-Release: alt1
+Release: alt2
 Summary: The Shapefile C Library and Utilities
 
 License: LGPL-2.0-or-later OR MIT
@@ -30,7 +30,7 @@ attribute file (.dbf).
 %package utils
 Summary: The ShapeLib Utilities
 Group: Other
-Obsoletes: libshape < %EVR
+Conflicts: libshape < 1.6.3
 
 %description utils
 These utilities for demonstrate the capabilities of the Shapefile C Library.
@@ -38,7 +38,7 @@ These utilities for demonstrate the capabilities of the Shapefile C Library.
 %package -n libshp%sover
 Summary: The Shapefile C Library
 Group: System/Libraries
-Conflicts: libshape < %EVR
+Obsoletes: libshape < 1.6.3
 
 %description -n libshp%sover
 %summary.
@@ -81,6 +81,11 @@ for Shapefile C Library functions.
 %_libdir/libshp.so.%sover.*
 
 %changelog
+* Wed Aug 26 2026 Polina Poidenko <polipoki@altlinux.org> 1.6.3-alt2
+- Replaced "Conflicts: libshape" with "Obsoletes: libshape" to libshp4
+  to ensure the library replaces the old package during system upgrade
+  (may block the  upgrade or remove part of the system).
+
 * Tue May 12 2026 Polina Poidenko <polipoki@altlinux.org> 1.6.3-alt1
 - New version 1.6.3.
 - Separate subpackage libshp4 in accordance with Shared Libs Policy.
