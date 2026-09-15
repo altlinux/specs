@@ -1,5 +1,5 @@
 Name: jheaps
-Version: 0.14
+Version: 0.16
 Release: alt1
 
 Summary: Java library that provides various heap implementations
@@ -39,5 +39,8 @@ various heap implementations written in Java.
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Sep 14 2026 Anton Meleshnikov <alton@altlinux.org> 0.16-alt1
+- New version.
+
 * Fri Jun 26 2026 Anton Meleshnikov <alton@altlinux.org> 0.14-alt1
 - Initial build for Sisyphus.
