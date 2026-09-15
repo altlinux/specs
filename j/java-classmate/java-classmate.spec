@@ -2,7 +2,7 @@
 
 Name: java-classmate
 Version: 1.7.3
-Release: alt2
+Release: alt3
 
 Summary: Library for introspecting generic type information
 License: Apache-2.0
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: rpm-build-java
 BuildRequires: maven-local
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 BuildRequires: fasterxml-oss-parent
 BuildRequires: mvn(org.moditect:moditect-maven-plugin)
 
@@ -39,6 +39,9 @@ both classes ("types") and members (fields, methods and constructors).
 %files -f .mfiles
 
 %changelog
+* Mon Sep 14 2026 Anton Meleshnikov <alton@altlinux.org> 1.7.3-alt3
+- FTBFS fix.
+
 * Thu May 21 2026 Ilfat Aminov <aminov@altlinux.org> 1.7.3-alt2
 - fix moditect dependency
 
