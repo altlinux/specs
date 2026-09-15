@@ -1,7 +1,7 @@
 %define sover 1
 
 Name: imlib2
-Version: 1.12.6
+Version: 1.12.7
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -120,6 +120,9 @@ make check
 %endif
 
 %changelog
+* Tue Sep 15 2026 Leontiy Volodin <lvol@altlinux.org> 1.12.7-alt1
+- New version 1.12.7.
+
 * Mon Jan 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.12.6-alt1
 - New version 1.12.6.
 - Added AVIF support.
