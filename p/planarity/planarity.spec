@@ -2,7 +2,7 @@
 
 Name: planarity
 Summary: Implementations of several planarity-related graph algorithms
-Version: 5.0.0.0
+Version: 5.1.0.0
 Release: alt1
 License: BSD-3-Clause
 Group: Sciences/Mathematics
@@ -104,6 +104,9 @@ rm -rf %buildroot%_docdir
 %_pkgconfigdir/libplanarity.pc
 
 %changelog
+* Tue Sep 15 2026 Leontiy Volodin <lvol@altlinux.org> 5.1.0.0-alt1
+- New version 5.1.0.0.
+
 * Thu Jun 18 2026 Leontiy Volodin <lvol@altlinux.org> 5.0.0.0-alt1
 - New version 5.0.0.0.
 
