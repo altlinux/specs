@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.214
+Version: 4.0.4.215
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -454,6 +454,9 @@ fi
 %files checkinstall
 
 %changelog
+* Mon Sep 14 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 4.0.4.215-alt1
+- Added libgcc-devel to the list of generic devel deps.
+
 * Thu Aug 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.214-alt1
 - Added support and enabled SHA256 hash in file digests.
 - Changed rpm-build to store hashes for empty files in built packages.
