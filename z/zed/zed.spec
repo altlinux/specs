@@ -21,7 +21,7 @@
 
 Name: zed
 Version: 1.19.2
-Release: alt1
+Release: alt2
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and Apache-2.0
@@ -105,10 +105,15 @@ export ALLOW_MISSING_LICENSES=1
 export LK_CUSTOM_WEBRTC="%webrtc_dir"
 
 export RUSTFLAGS='-Clink-args=-z,relro -Clink-args=-z,-now'
-export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_DEBUG=0
+export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
+export CARGO_PROFILE_RELEASE_INCREMENTAL=false
+export CARGO_PROFILE_RELEASE_LTO=fat
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
 export CARGO_PROFILE_RELEASE_STRIP=debuginfo
-cargo build --release %{?_smp_mflags} --offline --all-features --package zed --package cli
+cargo build --release %{?_smp_mflags} --offline --verbose --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
@@ -139,6 +144,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Tue Sep 15 2026 Anton Zhukharev <ancieg@altlinux.org> 1.19.2-alt2
+- Enabled more build optimizations.
+
 * Thu Sep 10 2026 Anton Zhukharev <ancieg@altlinux.org> 1.19.2-alt1
 - Updated to 1.19.2.
 
