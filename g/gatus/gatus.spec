@@ -2,7 +2,7 @@
 
 Name: gatus
 Version: 5.36.0
-Release: alt1
+Release: alt2
 
 Summary: Automated developer-oriented status page
 License: Apache-2.0
@@ -14,6 +14,10 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: gatus.service
 Source3: config.yaml
+
+# We use supplementary group iputils from this package
+# for access to ICMP socket creation.
+Requires: iputils
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang golang >= 1.26.3
@@ -74,6 +78,10 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null \
 %attr(775, _%name, _%name) %dir %_localstatedir/%name
 
 %changelog
+* Tue Sep 15 2026 Alexander Stepchenko <geochip@altlinux.org> 5.36.0-alt2
+- Add SupplementaryGroups=iputils to systemd service to allow ICMP sockets
+  creation.
+
 * Mon Jul 13 2026 Alexander Stepchenko <geochip@altlinux.org> 5.36.0-alt1
 - 5.35.0 -> 5.36.0.
 
