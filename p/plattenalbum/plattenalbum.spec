@@ -2,7 +2,7 @@
 %define rdn_name de.wagnermartin.Plattenalbum
 
 Name: plattenalbum
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 Summary: Connect to your music
 License: GPL-3.0
@@ -48,6 +48,9 @@ managing playlists.
 
 
 %changelog
+* Tue Sep 15 2026 Andrey Kovalev <ded@altlinux.org> 2.7.0-alt1
+- Updated to upstream version 2.7.0.
+
 * Tue Aug 25 2026 Andrey Kovalev <ded@altlinux.org> 2.6.0-alt1
 - Updated to upstream version 2.6.0.
 
