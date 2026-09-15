@@ -2,7 +2,7 @@
 %def_with pulse
 
 Name: libmikmod
-Version: 3.3.13
+Version: 3.3.14
 Release: alt1
 
 Summary: A portable sound library for Unix
@@ -74,6 +74,9 @@ will use the %name library.
 # - consider --enable-simd (marked unstable as of 3.3.7)
 
 %changelog
+* Tue Sep 15 2026 Michael Shigorin <mike@altlinux.org> 3.3.14-alt1
+- 3.3.14
+
 * Wed Jul 30 2025 Michael Shigorin <mike@altlinux.org> 3.3.13-alt1
 - 3.3.13
 
