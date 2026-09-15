@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name adwaita-icon-theme
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 
 Name: icon-theme-adwaita
@@ -27,7 +27,7 @@ Provides: %_name = %version-%release
 Conflicts: gnome-theme-standard < 3.13.0
 
 #Requires: %name-legacy
-Requires: icon-naming-utils
+Requires: icon-naming-utils icon-theme-hicolor
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson icon-naming-utils gtk4-update-icon-cache %_bindir/gtk-encode-symbolic-svg
@@ -53,6 +53,9 @@ Adwaita icon theme for GTK.
 %doc AUTHORS NEWS COPYING
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

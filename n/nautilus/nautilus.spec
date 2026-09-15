@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 4.1
 %define ext_api_ver 4
@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.3.1
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -34,10 +34,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define glib_ver 2.84.0
+%define glib_ver 2.90.0
 %define desktop_ver 43
 %define pango_ver 1.28.3
-%define gtk4_ver 4.16
+%define gtk4_ver 4.22
 %define adwaita_ver 1.8
 %define libxml2_ver 2.7.8
 %define gexiv2_ver 0.16
@@ -216,6 +216,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0.1-alt1
+- 51.0.1
+
 * Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 50.3.1-alt1
 - 50.3.1
 

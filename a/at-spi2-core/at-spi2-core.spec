@@ -20,8 +20,8 @@
 %add_findreq_skiplist %python3_sitelibdir/gi/overrides/%namespace.py
 
 Name: %_name-core
-Version: %ver_major.5
-Release: alt2
+Version: %ver_major.6
+Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
@@ -270,6 +270,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.6-alt1
+- 2.60.6
+
 * Wed Jul 01 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.60.5-alt2
 - Filtered dependencies of gi override file to avoid a dependency on
   python3(gi.module).

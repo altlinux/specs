@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.22
+%define ver_major 4.24
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -41,7 +41,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -61,11 +61,11 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 # backported from main
 Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 
-%define meson_ver 1.5.0
-%define glib_ver 2.84
+%define meson_ver 1.8.0
+%define glib_ver 2.90
 %define gi_ver 1.84
 %define cairo_ver 1.18.2
-%define pango_ver 1.56.0
+%define pango_ver 1.58.0
 %define atk_ver 2.15.1
 %define pixbuf_ver 2.30.0
 %define fontconfig_ver 2.2.1-alt2
@@ -73,14 +73,14 @@ Patch10: gtk-4.12.3-alt-printdialog-papersize.patch
 %define colord_ver 0.1.9
 %define cups_ver 2.0
 %define wayland_ver 1.24
-%define wayland_protocols_ver 1.44
+%define wayland_protocols_ver 1.48
 %define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
 %define graphene_ver 1.10
 %define cloudproviders_ver 0.2.5
 %define vulkan_ver 1.3
 %define harfbuzz_ver 8.4.0
-%define gst_ver 1.24
+%define gst_ver 1.28
 %define accesskit_api_ver 0.15
 
 Requires: gtk4-update-icon-cache = %EVR
@@ -292,7 +292,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %{?_enable_broadway:%_bindir/gtk4-broadwayd}
 %_bindir/gtk4-query-settings
 %_bindir/gtk4-launch
-%_bindir/gtk4-encode-symbolic-svg
+#%_bindir/gtk4-encode-symbolic-svg
 %_libdir/libgtk-4.so.*
 %dir %_libdir/gtk-%api_ver/modules
 %dir %fulllibpath
@@ -305,7 +305,7 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %{?_enable_broadway:%_man1dir/gtk4-broadwayd.1.*}
 %_man1dir/gtk4-query-settings.1.*
 %_man1dir/gtk4-launch.*
-%_man1dir/gtk4-encode-symbolic-svg.1.*
+#%_man1dir/gtk4-encode-symbolic-svg.1.*
 %endif
 
 %_datadir/glib-2.0/schemas/%rdn_name.Settings.ColorChooser.gschema.xml
@@ -361,12 +361,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %files -n gtk4-demo
 %_desktopdir/org.gtk.Demo4.desktop
 %_desktopdir/%rdn_name.NodeEditor.desktop
-%_desktopdir/org.gtk.Shaper.desktop
+#%_desktopdir/org.gtk.Shaper.desktop
 %_desktopdir/org.gtk.WidgetFactory4.desktop
 %_desktopdir/org.gtk.PrintEditor4.desktop
 %_bindir/gtk4-demo
 %_bindir/gtk4-demo-application
-%_bindir/gtk4-icon-editor
+#%_bindir/gtk4-icon-editor
 %_bindir/gtk4-widget-factory
 %_bindir/gtk4-node-editor
 %_bindir/gtk4-print-editor
@@ -378,8 +378,8 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
 %_iconsdir/hicolor/*/*/%rdn_name.NodeEditor*.svg
-%_iconsdir/hicolor/scalable/apps/org.gtk.Shaper*.svg
-%_iconsdir/hicolor/symbolic/apps/org.gtk.Shaper-symbolic.svg
+#%_iconsdir/hicolor/scalable/apps/org.gtk.Shaper*.svg
+#%_iconsdir/hicolor/symbolic/apps/org.gtk.Shaper-symbolic.svg
 
 %_datadir/metainfo/org.gtk.Demo4.appdata.xml
 %_datadir/metainfo/org.gtk.PrintEditor4.appdata.xml
@@ -432,6 +432,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 4.24.0-alt1
+- 4.24.0
+
 * Fri Sep 11 2026 Yuri N. Sedunov <aris@altlinux.org> 4.22.5-alt1
 - 4.22.5
 

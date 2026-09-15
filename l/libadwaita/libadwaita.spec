@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define namespace Adw
 %define api_ver 1
@@ -8,12 +8,11 @@
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-# install: false
-%def_disable examples
+%def_enable examples
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -32,8 +31,8 @@ Source: %name-%version%beta.tar
 %endif
 
 %define meson_ver 0.63
-%define glib_ver 2.84.0
-%define gtk_ver 4.21.1
+%define glib_ver 2.90.0
+%define gtk_ver 4.24.0
 %define gi_ver 1.84
 
 BuildRequires(pre): rpm-macros-meson
@@ -41,7 +40,7 @@ BuildRequires: meson >= %meson_ver sassc
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: libfribidi-devel
-BuildRequires: libappstream-devel
+BuildRequires: pkgconfig(appstream)
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gi_ver gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
@@ -148,6 +147,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.10.0-alt1
+- 1.10.0
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1:1.9.3-alt1
 - 1.9.3
 

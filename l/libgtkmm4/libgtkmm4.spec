@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define rname gtkmm
-%define ver_major 4.22
+%define ver_major 4.24
 %define api_ver 4.0
 
 %def_disable demos
@@ -14,7 +14,7 @@ Release: alt1
 Summary: A C++ interface for GTK4 library
 License: GPL-2.0 and LGPL-2.1
 Group: System/Libraries
-Url: http://gtkmm.sourceforge.net/
+Url: https://gtkmm.gnome.org
 
 Vcs: https://gitlab.gnome.org/GNOME/gtkmm.git
 
@@ -26,9 +26,9 @@ Source: %rname-%version.tar
 
 Provides: %rname-%api_ver = %version
 
-%define gtk_ver 4.22.0
+%define gtk_ver 4.23.3
 %define glibmm_api_ver 2.68
-%define glibmm_ver 2.75.0
+%define glibmm_ver 2.89.0
 %define pangomm_api_ver 2.48
 %define pangomm_ver 2.50.0
 %define cairomm_api_ver 1.16
@@ -116,6 +116,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 4.24.0-alt1
+- 4.24.0
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 4.22.0-alt1
 - 4.22.0
 
