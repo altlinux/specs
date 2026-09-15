@@ -6,7 +6,7 @@
 
 Name: libnfs
 Version: 5.0.3
-Release: alt1
+Release: alt2
 
 Summary: NFS client library
 License: LGPLv2.1
@@ -55,6 +55,7 @@ This package provides utilities from LibNFS package.
 %setup %{?_disable_snapshot:-n %name-%name-%version}
 
 %build
+%add_optflags -Wno-error=discarded-qualifiers
 %autoreconf
 %configure --disable-static \
 	%{?_disable_utils:--disable-utils}
@@ -87,6 +88,9 @@ This package provides utilities from LibNFS package.
 %endif
 
 %changelog
+* Tue Sep 15 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.0.3-alt2
+- fix FTBFS
+
 * Sun Feb 11 2024 Yuri N. Sedunov <aris@altlinux.org> 5.0.3-alt1
 - 5.0.3
 
