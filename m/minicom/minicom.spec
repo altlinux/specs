@@ -5,7 +5,7 @@
 
 Name: minicom
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
@@ -14,8 +14,8 @@ Summary: A text-menu-driven modem control and terminal emulation program
 # files (minicom, ascii-xfr, runscript). They are probably not actually used,
 # but I wasn't able to exclude them from the build process completely yet.
 # The rest is simply GPLv2+.
-License: GPLv2+ and LGPLv2+ and Public Domain
-Url: http://alioth.debian.org/projects/minicom/
+License: GPL-2.0-or-later AND LGPL-2.0-or-later AND Unlicense
+URL: http://alioth.debian.org/projects/minicom/
 
 # Source-url: https://salsa.debian.org/minicom-team/minicom/-/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
@@ -84,25 +84,8 @@ install -p -m644 %SOURCE9 %name.FAQ.ru
 find extras doc -name 'Makefile*' -print0 |
 	xargs -r0 rm -f --
 
-# The icon (from Caldera)
-install -pD -m644 %SOURCE6 %buildroot%_liconsdir/%name.xpm
-
 # The script to start minicom in an X terminal
 #install -pD -m755 %SOURCE7 %buildroot%_libdir/%name/xstart
-
-# menu
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%name.desktop <<EOF
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=%name
-Comment=Terminal Emulator (for modem/other serial lines)
-Icon=%name
-Exec=%_bindir/minicom -s
-Terminal=true
-Categories=Network;Dialup;
-EOF
 
 %files -f %name.lang
 %attr(640,root,%my_group) %config(noreplace) %_sysconfdir/minirc.dfl
@@ -110,9 +93,6 @@ EOF
 %attr(755,root,root) %config %_sysconfdir/profile.d/%name.csh
 %_bindir/*
 %_mandir/man?/*
-
-%_desktopdir/%name.desktop
-%_liconsdir/*
 
 #dir %_libdir/%name
 #attr(755,root,root) %_libdir/%name/xstart
@@ -123,6 +103,10 @@ EOF
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Wed Sep 16 2026 Anton Midyukov <antohami@altlinux.org> 2.8-alt2
+- Remove minicom.desktop (Closes: 60561, 60562).
+- Convert License to SPDX format.
+
 * Mon Aug 14 2023 Anton Midyukov <antohami@altlinux.org> 2.8-alt1
 - new version 2.8
 
@@ -290,7 +274,7 @@ EOF
 * Mon Mar 27 2000 Daouda Lo <daouda@mandrakesoft.com> 1.82.1-2mdk
 - fix group
 
-* Fri Nov 12 1999 Camille Bègnis <camille@mandrakesoft.com>
+* Fri Nov 12 1999 Camille B\xe8gnis <camille@mandrakesoft.com>
 - restore setgid uucp to permit minicom to lock in /var/lock
 - add test for compilation on SMP architectures
 - add patch to install.sh to allow installation by non-root users
