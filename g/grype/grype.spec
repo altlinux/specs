@@ -4,7 +4,7 @@
 %def_with check
 
 Name: grype
-Version: 0.117.0
+Version: 0.118.0
 Release: alt1
 
 Summary: A vulnerability scanner for container images and filesystems
@@ -87,6 +87,9 @@ go test $(go list ./... | grep -vxFf %SOURCE2)
 %_bindir/%name
 
 %changelog
+* Tue Sep 08 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.118.0-alt1
+- Updated to 0.118.0.
+
 * Tue Aug 18 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.117.0-alt1
 - Updated to 0.117.0.
 
