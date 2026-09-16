@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: conftest
-Version: 0.69.0
+Version: 0.70.0
 Release: alt1
 
 Summary: Conftest validates config files against Rego policies
@@ -43,6 +43,9 @@ install -Dm0755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Sep 15 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.70.0-alt1
+- v0.70.0.
+
 * Tue Aug 11 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.69.0-alt1
 - v0.69.0.
 
