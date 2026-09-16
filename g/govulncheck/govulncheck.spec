@@ -2,7 +2,7 @@
 %define import_path golang.org/x/vuln/scan
 
 Name: govulncheck
-Version: 1.6.0
+Version: 1.8.0
 Release: alt1
 
 Summary: The database client and tools for the Go vulnerability database
@@ -51,6 +51,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Sep 14 2026 Artem Krasovskiy <aibure@altlinux.org> 1.8.0-alt1
+- updated from 1.6.0 to 1.8.0
+
 * Fri Jul 24 2026 Artem Krasovskiy <aibure@altlinux.org> 1.6.0-alt1
 - updated from 1.3.0 to 1.6.0
 
