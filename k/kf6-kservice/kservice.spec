@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.30.0
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://www.kde.org
 License: LGPL-2.0-or-later
 
 Source: %rname-%version.tar
-Patch1: alt-skip-antikde-mimeapps-list.patch
+Patch1: alt-mimeapps-list.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-tools-devel qt6-declarative-devel
@@ -53,7 +53,7 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+%patch1 -p1 -b .mimeapps
 
 %build
 %K6build
@@ -80,6 +80,9 @@ KF6 library
 
 
 %changelog
+* Wed Sep 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt2
+- fix to use /usr/share/applications/KDE-mimeapps.list
+
 * Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
 - new version
 
