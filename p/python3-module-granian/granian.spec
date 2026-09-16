@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.2
+Version: 2.8.3
 Release: alt1
 
 Summary: Rust HTTP server for Python applications built on top of Hyper and Tokio
@@ -100,5 +100,8 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Sep 15 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.8.3-alt1
+- Updated to 2.8.3.
+
 * Tue Sep 01 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.8.2-alt1
 - Initial build for Sisyphus.
