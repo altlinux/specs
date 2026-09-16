@@ -16,7 +16,7 @@
 
 Name: ready-set
 Version: %soversion.%minor_version
-Release: alt1
+Release: alt2
 
 Summary: Modular (System Installer | Initial Setup Wizard)
 License: GPL-3.0-or-later
@@ -465,6 +465,11 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Sep 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.2-alt2
+- Disabled `fatal-warnings` valac arg.
+  There is new libadwaita that deprecate EnumList, but gtk vapi doesn't
+  updated yet.
+
 * Thu Sep 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.2-alt1
 - New version: 0.14.2.
 - Fixed `first-run` unsetting in phrog.

@@ -1,10 +1,11 @@
 %def_enable check
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
+%define sover 1
 
 Name: accountsservice
-Version: 26.12.8
-Release: alt3
+Version: 26.27.3
+Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -34,13 +35,13 @@ BuildRequires: /proc
 
 Requires: polkit
 Requires: shadow-utils
-Requires: lib%name = %version-%release
+Requires: lib%name%sover = %EVR
 
-%package -n lib%name
+%package -n lib%name%sover
 Summary: Client-side library to talk to accountservice
 Group: System/Libraries
 
-%description -n lib%name
+%description -n lib%name%sover
 The libaccountsservice package contains a library that can
 be used by applications that want to interact with the accountsservice
 daemon.
@@ -48,7 +49,7 @@ daemon.
 %package -n lib%name-devel
 Summary: Development files for accountsservice
 Group: Development/Other
-Requires: lib%name = %version-%release
+Requires: lib%name%sover = %EVR
 
 %description -n lib%name-devel
 The libaccountsservice-devel package contains headers and other
@@ -59,19 +60,20 @@ The accountsservice project provides a set of D-Bus interfaces for
 querying and manipulating user account information and an implementation
 of these interfaces, based on the useradd, usermod and userdel commands.
 
-%package -n lib%name-gir
+%package -n lib%name%sover-gir
 Summary: GObject introspection data for the accountsservice library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name%sover = %EVR
 
-%description -n lib%name-gir
+%description -n lib%name%sover-gir
 GObject introspection data for the accountsservice library
 
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for the accountsservice library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-devel = %version-%release lib%name-gir = %version-%release
+Requires: lib%name-devel = %EVR
+Requires: lib%name%sover-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the accountsservice library
@@ -109,10 +111,10 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_datadir/%name
 %_unitdir/accounts-daemon.service
 
-%files -n lib%name
+%files -n lib%name%sover
 %_libdir/*.so.*
 
-%files -n lib%name-gir
+%files -n lib%name%sover-gir
 %_typelibdir/*.typelib
 
 %files -n lib%name-devel
@@ -127,6 +129,10 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Mon Sep 14 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt1
+- 26.27.3 (closes: #60523)
+- Ported to SLP.
+
 * Wed Jun 03 2026 Vladimir Romanov <rirusha@altlinux.org> 26.12.8-alt3
 - Used current user password check for changing it.
 
