@@ -1,5 +1,5 @@
 Name: drumkv1
-Version: 1.4.3
+Version: 1.5.0
 Release: alt1
 
 Summary: Drumkit sampler synthesizer
@@ -58,6 +58,9 @@ This package contains LV2 plugin.
 %_datadir/drumkv1
 
 %changelog
+* Wed Sep 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
+- 1.5.0 released
+
 * Wed Sep 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.3-alt1
 - 1.4.3 released
 
