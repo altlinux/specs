@@ -66,7 +66,7 @@
 %endif
 
 Name: blender
-Version: 4.5.12
+Version: 4.5.14
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -105,6 +105,8 @@ Patch33: blender-alt-cycles-aarch64-hip-cuda-fix.patch
 Patch34: blender-cycles-fix-hip-kernels.patch
 # FFmpeg 8.0 compatibility (AV_INPUT_BUFFER_MIN_SIZE removed)
 Patch35: blender-4.5-ffmpeg-8.0.patch
+# https://projects.blender.org/blender/blender/commit/e3c92c22817
+Patch36: blender-4.5-ffmpeg-9.0.patch
 # ALT Linux: install oneapi library to /usr/lib64 instead of /usr/share/blender/lib
 Patch40: blender-4.5-alt-oneapi-libdir.patch
 Patch2000: blender-e2k-support.patch
@@ -360,6 +362,7 @@ EOF
 %endif
 %patch34 -p1 -b .hip-kernels-fixes
 %patch35 -p1
+%patch36 -p1
 %if_with oneapi
 %patch40 -p1
 %endif
@@ -541,6 +544,10 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Wed Sep 16 2026 Anton Farygin <rider@altlinux.org> 4.5.14-alt1
+- 4.5.12 -> 4.5.14
+- fixed build with ffmpeg 9 (upstream patch)
+
 * Sat Jul 25 2026 Anton Farygin <rider@altlinux.org> 4.5.12-alt1
 - 4.5.11 -> 4.5.12
 
