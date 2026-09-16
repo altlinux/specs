@@ -13,7 +13,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: File tools
@@ -31,7 +31,7 @@ Source: %rname-%version.tar
 Patch2: alt-def-general.patch
 Patch3: alt-def-toolbar.patch
 Patch4: alt-fix-unmounting-during-preview-generation.patch
-Patch5: upstream-8d7e600f.patch
+Patch5: upstream-1c8eab9f.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel
@@ -93,7 +93,7 @@ Obsoletes: libdolphinvcs5 < %EVR
 %patch2 -p1
 %patch3 -p1
 #%patch4 -p2
-#%patch5 -R -p1
+%patch5 -p1
 
 %build
 %K6build \
@@ -153,6 +153,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Wed Sep 16 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
+- add fix against KDEBUG#525784 (thanks xeno@alt)
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
