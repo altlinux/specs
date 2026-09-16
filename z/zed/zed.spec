@@ -20,8 +20,8 @@
 %endif
 
 Name: zed
-Version: 1.19.2
-Release: alt2
+Version: 1.20.1
+Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
 License: GPL-3.0 and Apache-2.0
@@ -104,7 +104,6 @@ export ALLOW_MISSING_LICENSES=1
 
 export LK_CUSTOM_WEBRTC="%webrtc_dir"
 
-export RUSTFLAGS='-Clink-args=-z,relro -Clink-args=-z,-now'
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_DEBUG=0
 export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
@@ -144,6 +143,10 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Wed Sep 16 2026 Anton Zhukharev <ancieg@altlinux.org> 1.20.1-alt1
+- Updated to 1.20.1.
+- Fixed "Emails Us..." action (ALT#60035).
+
 * Tue Sep 15 2026 Anton Zhukharev <ancieg@altlinux.org> 1.19.2-alt2
 - Enabled more build optimizations.
 
