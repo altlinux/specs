@@ -1,5 +1,5 @@
 Name: postfix
-Version: 3.8.15
+Version: 3.8.21
 Release: alt1
 Epoch: 1
 
@@ -662,6 +662,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Wed Sep 16 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.21-alt1
+- 3.8.15 -> 3.8.21 (fixes CVE-2026-43964) (closes ALT#60560).
+
 * Sun Apr 26 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.8.15-alt1
 - 3.8.6 -> 3.8.15 (fixes ftbfs with gcc 15+).
 
