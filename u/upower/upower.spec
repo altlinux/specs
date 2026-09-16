@@ -15,7 +15,7 @@
 %def_enable installed_tests
 
 Name: upower
-Version: 1.91.3
+Version: 1.91.4
 Release: alt1
 
 Summary: Power Management Service
@@ -168,6 +168,9 @@ This package provides UPower integration tests.
 %endif
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 1.91.4-alt1
+- 1.91.4
+
 * Fri Jul 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.91.3-alt1
 - 1.91.3
 
