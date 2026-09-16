@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.5
+Version: 0.5.1
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -34,6 +34,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Wed Sep 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5.1-alt1
+- 0.5 -> 0.5.1
+
 * Wed Aug 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.5-alt1
 - 0.4 -> 0.5
 
