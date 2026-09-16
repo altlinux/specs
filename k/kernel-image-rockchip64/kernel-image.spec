@@ -1,7 +1,7 @@
 %def_without check
 
 Name: kernel-image-rockchip64
-Release: alt1
+Release: alt2
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
 %define kernel_sublevel	.52
@@ -609,6 +609,10 @@ fi
 %modules_dir/build
 
 %changelog
+* Tue Sep 15 2026 Alexei Takaseev <taf@altlinux.org> 6.18.52-alt2
+- Add support Motorcomm YT6801:
+    * config-rockchip64: CONFIG_DWMAC_MOTORCOMM=y
+
 * Tue Sep 15 2026 Alexei Takaseev <taf@altlinux.org> 6.18.52-alt1
 - v6.18.52 (2026-09-14).
 
