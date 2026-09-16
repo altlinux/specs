@@ -4,10 +4,10 @@
 
 Name: kirk
 Version: 4.2.0
-Release: alt3
+Release: alt4
 
 Summary: The official executor of Linux Test Project
-License: BSD-2-Clause
+License: GPL-2.0-or-later
 Group: Development/Tools
 Url: https://kirk.readthedocs.io/en/latest/
 Vcs: https://github.com/linux-test-project/kirk.git
@@ -72,6 +72,9 @@ This package contains the kirk python library.
 %python3_sitelibdir_noarch/%{name}*
 
 %changelog
+* Wed Sep 16 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt4
+- correct license (thx andy@)
+
 * Wed Sep 16 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt3
 - correct package summary and description
 
