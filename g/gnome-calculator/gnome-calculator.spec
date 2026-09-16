@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 2
 # GTK interface library
@@ -49,6 +49,7 @@ BuildRequires: libmpfr-devel libgtksourceview5-devel >= %gtksource_ver
 BuildRequires: pkgconfig(libsoup-%soup_api_ver) >= %soup_ver libmpc-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel libgee0.8-gir-devel
 BuildRequires: gir(Soup) = %soup_api_ver
+BuildRequires: libgmp-devel
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -213,6 +214,9 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

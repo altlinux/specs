@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.RemoteDesktop
 
@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: gnome-remote-desktop
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 %define pw_api_ver 0.3
 %define pw_ver 0.3.49
 %define vnc_ver 0.9.11
-%define freerdp_ver 3.22
+%define freerdp_ver 3.28
 %define fuse_ver 3.9.1
 %define xkbc_ver 1.0.0
 %define nvenc_ver 11.1.5.0
@@ -107,9 +107,21 @@ Remote desktop daemon for GNOME using pipewire.
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.configure-system-daemon.policy
 %_datadir/polkit-1/actions/org.gnome.remotedesktop.enable-system-daemon.policy
 %_datadir/polkit-1/rules.d/20-%name.rules
-%doc README*
+
+# smartcard support
+%exclude %_libdir/libgrdpcsc.so
+%_libdir/libgrdpcsc.so.*
+%_libexecdir/grd-pcscd
+%_unitdir/%name-pcscd.service
+%_datadir/dbus-1/system-services/%xdg_name.Pcscd.service
+%_datadir/dbus-1/system.d/%xdg_name.Pcscd.conf
+%_datadir/polkit-1/actions/org.gnome.remotedesktop.use-grd-pcscd.policy
+%doc README* NEWS
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
 - 50.2
 
