@@ -2,7 +2,7 @@
 %define import_path filippo.io/age
 
 Name: age
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: A simple, modern and secure file encryption tool
@@ -51,6 +51,9 @@ install -pD -m0644 doc/age-keygen.1 %buildroot%_man1dir/age-keygen.1
 %_man1dir/*
 
 %changelog
+* Mon Sep 14 2026 Artem Krasovskiy <aibure@altlinux.org> 1.3.2-alt1
+- updated from 1.3.1 to 1.3.2
+
 * Tue Dec 30 2025 Artem Krasovskiy <aibure@altlinux.org> 1.3.1-alt1
 - Updated to 1.3.1.
 
