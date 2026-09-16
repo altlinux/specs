@@ -1,10 +1,11 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %def_with check
 
 %python3_set_limited_api
 
 Name: pdf-inspector
-Version: 0.1.7
+Version: 1.20.0
 Release: alt1
 
 Summary: Fast Rust library for PDF inspection, classification, and text extraction
@@ -31,7 +32,6 @@ BuildRequires: python3-module-pytest
 %endif
 
 %package -n python3-module-%name
-Version: 0.2.7
 Summary: Python module for %name
 Group: Development/Python3
 
@@ -73,5 +73,8 @@ install -pD -m0755 -t %buildroot%_bindir/ target/release/{pdf2md,detect-pdf,dump
 %python3_sitelibdir/%{pyproject_distinfo pdf-inspector}/
 
 %changelog
+* Tue Sep 15 2026 Artem Krasovskiy <aibure@altlinux.org> 1.20.0-alt1
+- updated from 0.1.7 to 1.20.0
+
 * Tue Aug 11 2026 Artem Krasovskiy <aibure@altlinux.org> 0.1.7-alt1
 - Initial build for Sisyphus
