@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 155.0.1
+Version: 156.0
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,83 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Sep 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 156.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-92033: Privilege escalation in Firefox for Android
+  + CVE-2026-92005: Use-after-free in the Audio/Video: Web Codecs component
+  + CVE-2026-92006: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92007: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92008: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92009: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92010: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92011: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92012: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92013: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92015: Privilege escalation in the WebExtensions component
+  + CVE-2026-92034: Site isolation issue in the Graphics component
+  + CVE-2026-92035: Sandbox escape due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-92016: Use-after-free in the Disability Access APIs component
+  + CVE-2026-92017: Privilege escalation in the DOM: Service Workers component
+  + CVE-2026-92018: Sandbox escape in the DOM: Core & HTML component
+  + CVE-2026-92019: Mitigation bypass in the Remote Settings Client component
+  + CVE-2026-92020: Privilege escalation due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-92022: Use-after-free in the DOM: HTML Parser component
+  + CVE-2026-92023: Use-after-free in the XML component
+  + CVE-2026-92024: Use-after-free in the SVG component
+  + CVE-2026-92025: Use-after-free in the DOM: Navigation component
+  + CVE-2026-92026: Use-after-free in the Networking component
+  + CVE-2026-92036: Incorrect boundary conditions in the Networking: HTTP component
+  + CVE-2026-92027: Use-after-free in the DOM: Streams component
+  + CVE-2026-92028: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-92029: Use-after-free in the SVG component
+  + CVE-2026-92037: Incorrect boundary conditions in the DOM: Animation component
+  + CVE-2026-92038: Mitigation bypass in the Remote Settings Client component
+  + CVE-2026-92039: Mitigation bypass in the DOM: Notifications component
+  + CVE-2026-92040: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-92041: Mitigation bypass in the DOM: Networking component
+  + CVE-2026-92042: Race condition in the DOM: Content Processes component
+  + CVE-2026-92043: Privilege escalation due to incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-92044: Information disclosure in the Networking: HTTP component
+  + CVE-2026-92045: Sandbox escape due to incorrect boundary conditions in the WebRTC component
+  + CVE-2026-92030: Mitigation bypass in the DOM: Copy & Paste and Drag & Drop component
+  + CVE-2026-92046: Use-after-free in the Graphics component
+  + CVE-2026-92047: Privilege escalation in the Crash Reporting component
+  + CVE-2026-92048: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92049: Use-after-free in the Widget: Win32 component
+  + CVE-2026-92050: Sandbox escape due to race condition in the XPConnect component
+  + CVE-2026-92051: Spoofing issue due to invalid pointer in the Graphics component
+  + CVE-2026-92052: Privilege escalation due to uninitialized memory in the Graphics: CanvasWebGL component
+  + CVE-2026-92053: Privilege escalation in the Graphics: CanvasWebGL component
+  + CVE-2026-92054: Privilege escalation in the Memory component
+  + CVE-2026-92055: Privilege escalation in the DevTools component
+  + CVE-2026-92056: Use-after-free in the Graphics: Text component
+  + CVE-2026-92057: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-92031: Information disclosure in the Graphics: ImageLib component
+  + CVE-2026-92032: Sandbox escape due to invalid pointer in the Graphics component
+  + CVE-2026-92058: Use-after-free in the Graphics component
+  + CVE-2026-92059: Incorrect boundary conditions in the DOM: Editor component
+  + CVE-2026-92060: Use-after-free in the Internationalization component
+  + CVE-2026-92061: Incorrect boundary conditions in the Security: Process Sandboxing component
+  + CVE-2026-92062: Privilege escalation in the Session Restore component
+  + CVE-2026-92063: Denial-of-service in the Audio/Video component
+  + CVE-2026-92064: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92065: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92066: Sandbox escape in the Profile Backup component
+  + CVE-2026-92067: Use-after-free in the Widget: Gtk component
+  + CVE-2026-92068: Site isolation issue in the Reader Mode component
+  + CVE-2026-92069: Spoofing issue in the DOM: Navigation component
+  + CVE-2026-92070: Information disclosure in the Networking component
+  + CVE-2026-92071: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92072: Incorrect boundary conditions in the Safe Browsing component
+  + CVE-2026-92073: Privilege escalation in the Enterprise Policies component
+  + CVE-2026-92074: Mitigation bypass in the Popup Blocker component
+  + CVE-2026-92075: Mitigation bypass in the Networking component
+  + CVE-2026-92076: Incorrect boundary conditions in the Networking component
+  + CVE-2026-92077: Denial-of-service in the SVG component
+  + CVE-2026-92078: Denial-of-service in the Security component
+  + CVE-2026-92079: Mitigation bypass in the Widget: Win32 component
+
 * Fri Sep 04 2026 Ajrat Makhmutov <rauty@altlinux.org> 155.0.1-alt1
 - New version.
 
