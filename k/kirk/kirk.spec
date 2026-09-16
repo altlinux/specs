@@ -4,9 +4,9 @@
 
 Name: kirk
 Version: 4.2.0
-Release: alt2
+Release: alt3
 
-Summary: Devicetree Schema Tools
+Summary: The official executor of Linux Test Project
 License: BSD-2-Clause
 Group: Development/Tools
 Url: https://kirk.readthedocs.io/en/latest/
@@ -28,27 +28,23 @@ BuildRequires: ltp-testsuite
 %endif
 
 %description
-The dtschema module contains tools and schema data for Devicetree
-schema validation using the json-schema vocabulary. The tools
-validate Devicetree files using DT binding schema files. The tools
-also validate the DT binding schema files. Schema files are written
-in a JSON compatible subset of YAML to be both human and machine
-readable.
+Kirk is the official executor of Linux Test Project (LTP). It provides
+support for remote testing via Qemu, SSH, LTX, parallel execution and
+much more.
 
-This pacakges contains dt-schema tools.
+This package contains the kirk tools and utilities.
 
 
 %package -n python3-module-%py_name
-Summary: Python library for devicetree schema tools
+Summary: Python library for Kirk
 Group: Development/Python
 
 %description -n python3-module-%py_name
-The dtschema module contains tools and schema data for Devicetree
-schema validation using the json-schema vocabulary. The tools
-validate Devicetree files using DT binding schema files. The tools
-also validate the DT binding schema files. Schema files are written
-in a JSON compatible subset of YAML to be both human and machine
-readable.
+Kirk is the official executor of Linux Test Project (LTP). It provides
+support for remote testing via Qemu, SSH, LTX, parallel execution and
+much more.
+
+This package contains the kirk python library.
 
 
 %prep
@@ -76,6 +72,9 @@ readable.
 %python3_sitelibdir_noarch/%{name}*
 
 %changelog
+* Wed Sep 16 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt3
+- correct package summary and description
+
 * Tue Sep 08 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt2
 - package utils to %_libexecdir/%name.
 
