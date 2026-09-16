@@ -1,7 +1,7 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.1.8
+Version: 2.1.9
 Release: alt1
 
 Summary: Texas Hold'em poker game
@@ -150,6 +150,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_bindir/pokerth_official_server
 
 %changelog
+* Wed Sep 16 2026 Mikhail Efremov <sem@altlinux.org> 2.1.9-alt1
+- Updated to 2.1.9.
+
 * Wed Sep 02 2026 Mikhail Efremov <sem@altlinux.org> 2.1.8-alt1
 - Added server subpackage.
 - Updated to 2.1.8.
