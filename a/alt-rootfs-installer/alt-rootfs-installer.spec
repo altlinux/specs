@@ -1,6 +1,6 @@
 Name: alt-rootfs-installer
 Version: 0.8.1
-Release: alt1
+Release: alt2
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
@@ -27,6 +27,7 @@ install -d %buildroot%_datadir/%name/boards.d
 cp -a boards.d/* %buildroot%_datadir/%name/boards.d/
 install -pm 644 log functions EXTRA_OPTIONS SUPPORTED-BOARDS \
 	%buildroot%_datadir/%name
+install -pm 755 tar_progress %buildroot%_datadir/%name
 
 install -d %buildroot%_bindir
 install -pm 0755 %name %buildroot%_bindir/
@@ -41,6 +42,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Wed Sep 16 2026 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt2
+- Pack missing tar_progress.
+
 * Fri Sep 11 2026 Anton Midyukov <antohami@altlinux.org> 0.8.1-alt1
 - log: fix error message in create_disklabel() (thanks Egor Shestakov).
 - API: add parsable tar extraction progress in percents (thanks Egor Shestakov).
