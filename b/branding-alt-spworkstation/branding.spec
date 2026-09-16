@@ -29,7 +29,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt0.17
+Release: alt0.18
 Epoch: 1
 Url: https://altsp.su
 
@@ -278,6 +278,7 @@ find %buildroot -name \*.in -delete
 pushd mate-settings
 install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
 install -m 644 -D 60_mate-theme.gschema.override '%buildroot%_datadir/glib-2.0/schemas/60_mate-theme.gschema.override'
+install -m 644 -D 65_mate-control-center.gschema.override '%buildroot%_datadir/glib-2.0/schemas/65_mate-control-center.gschema.override'
 popd
 
 #menu
@@ -347,6 +348,7 @@ fi
 %files mate-settings
 %_datadir/glib-2.0/schemas/50_mate-background.gschema.override
 %_datadir/glib-2.0/schemas/60_mate-theme.gschema.override
+%_datadir/glib-2.0/schemas/65_mate-control-center.gschema.override
 
 %_datadir/install3/*
 
@@ -377,6 +379,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Sep 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.18
+- mate-settings: clean action lists in mate-control-center.
+
 * Fri Sep 11 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt0.17
 - os-release: add VERSION to PRETTY_NAME.
 
