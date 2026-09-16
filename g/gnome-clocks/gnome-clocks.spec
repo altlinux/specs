@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 
 %def_enable waked
@@ -23,7 +23,7 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 Source: %name-%version%beta.tar
 %endif
 # https://bugzilla.altlinux.org/51204
-Patch10: %name-50.0-alt-waked.patch
+Patch10: %name-51.0-alt-waked.patch
 
 %define glib_ver 2.80
 %define gweather_ver 3.99
@@ -80,6 +80,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 - updated alt-waked.patch (ALT #51204)

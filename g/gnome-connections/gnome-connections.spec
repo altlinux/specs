@@ -2,7 +2,7 @@
 
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 
 %def_enable check
@@ -78,6 +78,9 @@ BuildRequires: pkgconfig(fuse3) >= %fuse_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri Mar 13 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

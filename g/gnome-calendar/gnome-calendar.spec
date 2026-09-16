@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Calendar
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -93,6 +93,9 @@ This package provides Calendar reference manual.
 %endif
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Mar 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
