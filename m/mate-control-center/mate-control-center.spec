@@ -1,6 +1,6 @@
 Name: mate-control-center
 Version: 1.28.2
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -59,6 +59,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/mate-control-center
+%_datadir/mate-time-admin
 %_datadir/desktop-directories/matecc.directory
 %_datadir/glib-2.0/schemas/org.mate.*.xml
 %_datadir/mime/packages/mate-theme-package.xml
@@ -70,6 +71,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Sep 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.2-alt2
+- fixed mate-time-admin (closes: #60557)
+
 * Mon Sep 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.2-alt1
 - 1.28.2
 
