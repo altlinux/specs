@@ -2,7 +2,7 @@
 %global import_path github.com/legostin/cull
 
 Name: cull
-Version: 0.8.1
+Version: 0.9.0
 Release: alt1
 Summary: Interactive TUI disk space analyzer.
 License: MIT
@@ -45,6 +45,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Sep 16 2026 Pavel Shilov <zerospirit@altlinux.org> 0.9.0-alt1
+- updated from 0.8.1 to 0.9.0
+
 * Fri Aug 07 2026 Pavel Shilov <zerospirit@altlinux.org> 0.8.1-alt1
 - updated from 0.7.0 to 0.8.1
 

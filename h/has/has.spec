@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: has
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 Summary: checks presence of various command line tools and their versions on the path
 License: MIT 
@@ -35,6 +35,9 @@ sed -i 's|.hastest.bats|%_datadir/bats-core|g' Makefile
 %doc README.md
 
 %changelog
+* Wed Sep 16 2026 Pavel Shilov <zerospirit@altlinux.org> 1.6.0-alt1
+- updated from 1.5.2 to 1.6.0
+
 * Sun Aug 03 2025 Pavel Shilov <zerospirit@altlinux.org> 1.5.2-alt1
 - 1.5.0 -> 1.5.2
 
