@@ -1,6 +1,6 @@
 Name: xfce4-panel-profiles
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 Summary: A simple application to manage Xfce panel layouts
 License: GPL-3.0+
@@ -51,6 +51,9 @@ export these panel layouts.
 %_man1dir/%name.*
 
 %changelog
+* Wed Sep 16 2026 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt2
+- Added SL-11 layout.
+
 * Thu May 22 2025 Mikhail Efremov <sem@altlinux.org> 1.1.1-alt1
 - Switched to meson build.
 - Updated to 1.1.1.
