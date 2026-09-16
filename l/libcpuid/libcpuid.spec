@@ -2,18 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 %define git %nil
 %define pypi_version 0.1.0
+%define soname 18
 
 Name: libcpuid
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 Summary: libcpuid provides CPU identification
 License: BSD-2-Clause
 Group: Development/C
 Url: https://github.com/anrieff/libcpuid
-Vcs: https://github.com/anrieff/libcpuid.git
+Vcs: https://github.com/anrieff/libcpuid
 Source: libcpuid-%version.tar
-Patch: %name-%version-%release.patch
-Patch1: %name-cffi-alt-build.patch
+Patch: %name-cffi-alt-build.patch
 
 ExclusiveArch: %ix86 x86_64
 
@@ -26,6 +26,23 @@ BuildRequires: python3-devel python3-module-setuptools python3-module-wheel pyth
 %description
 %summary.
 
+%package -n %name%soname
+Summary: CPU identification library
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n %name%soname
+%summary.
+
+%package -n cpuid_tool
+Summary: Command line interface to %name
+Group: System/Configuration/Hardware
+Requires: %name = %EVR
+
+%description -n cpuid_tool
+Command line interface to %name
+
 %package devel
 Summary: Development files for %name
 Group: Development/C++
@@ -34,8 +51,6 @@ Requires: %name = %EVR
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
-For details about the programming API, please see the docs
-on the project's site (http://libcpuid.sourceforge.net/)
 
 %package -n kernel-source-cpuid
 Summary: cpuid kernel driver for arm64
@@ -81,11 +96,13 @@ popd
 #rm -r kernel-source-cpuid-%version
 #%%endif
 
-%files
-%_libdir/%name.so.*
+%files -n %name%soname
+%_libdir/%name.so.%{soname}*
+
+%files -n cpuid_tool
+%_bindir/cpuid_tool
 
 %files devel
-%_bindir/cpuid_tool
 %_includedir/%name
 %_man3dir/*
 %_libdir/cmake/cpuid
@@ -102,6 +119,10 @@ popd
 #%%endif
 
 %changelog
+* Wed Sep 16 2026 L.A. Kostis <lakostis@altlinux.ru> 0.8.2-alt1
+- 0.8.2.
+- Move cpuid_tool to separate package.
+
 * Wed Aug 20 2025 L.A. Kostis <lakostis@altlinux.ru> 0.8.1-alt1
 - 0.8.1.
 - Added python bindings.
