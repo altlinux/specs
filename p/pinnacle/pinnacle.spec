@@ -3,16 +3,16 @@
 %define oversion %version
 
 Name: pinnacle
-Version: 0.2.2
+Version: 0.2.4
 Release: alt1
 Summary: A WIP Smithay-based Wayland compositor, inspired by AwesomeWM and configured in Lua or Rust
 License: GPLv3
 Group: Graphical desktop/Other
 Url: https://github.com/pinnacle-comp/pinnacle/
 #Source: https://github.com/pinnacle-comp/pinnacle/archive/refs/heads/main.tar.gz#/%name-main.tar.gz
-Source: https://github.com/pinnacle-comp/pinnacle/archive/refs/tags/v0.2.2.tar.gz#/%name-%version.tar.gz
+Source: https://github.com/pinnacle-comp/pinnacle/archive/refs/tags/v0.2.4.tar.gz#/%name-%version.tar.gz
+#BuildRequires: cargo-vendor-filterer
 Source1: vendor.tar
-Patch: pinnacle-arm-fix.patch
 ExcludeArch: i586 armh
 
 BuildRequires(pre): rpm-build-rust rpm-macros-lua rpm-build-lua
@@ -35,7 +35,6 @@ ability to add more languages in the future.
 
 %prep
 %setup -a1
-%patch -p1
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
 [source.crates-io]
@@ -56,9 +55,9 @@ git = "https://github.com/Ottatop/taffy"
 rev = "dcdaa42"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/Smithay/smithay?rev=61f5a0d"]
+[source."git+https://github.com/Smithay/smithay?rev=2928e4f"]
 git = "https://github.com/Smithay/smithay"
-rev = "61f5a0d"
+rev = "2928e4f"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -125,5 +124,8 @@ desktop-file-install \
 %exclude %luarocks_dbdir_prefix-%target_lua_version/manifest
 
 %changelog
+* Sat Sep 12 2026 Ildar Mulyukov <ildar@altlinux.ru> 0.2.4-alt1
+- new version
+
 * Sun Jan 18 2026 Ildar Mulyukov <ildar@altlinux.ru> 0.2.2-alt1
 - Initial build for Sisyphus
