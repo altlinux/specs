@@ -5,8 +5,8 @@
 %define current_ver_mlt %{get_version mlt-utils}
 
 Name: kdenlive
-Version: 25.12.3
-Release: alt2
+Version: 26.04.3
+Release: alt1
 %K6init no_altplace man appdata
 %add_python3_path %_datadir/%name/scripts
 
@@ -47,13 +47,9 @@ Requires: /usr/bin/avconv /usr/bin/avplay /usr/bin/avprobe
 %endif
 
 Source: %name-%version.tar
-Source1: rttr.tar
-Source2: otio.tar
-Source3: pybind11.tar
-Source4: rapidjson.tar
-Source5: Imath.tar
-Patch2: alt-find-lumas.patch
-Patch3: alt-defaults.patch
+Source1: otio.tar
+Source2: pybind11.tar
+Patch1: alt-defaults.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): libavformat-devel
@@ -64,7 +60,6 @@ BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel qt6-svg-devel qt6-declarative-devel qt6-multimedia-devel qt6-declarative-devel qt6-networkauth-devel
 BuildRequires: libkddockwidgets-qt6-devel
 BuildRequires: shared-mime-info libEGL-devel libGLU-devel libv4l-devel
-BuildRequires: imath-devel pybind11-devel rapidjson-devel
 BuildRequires: libswresample-devel
 BuildRequires: mlt7-devel mlt7xx-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
@@ -73,6 +68,8 @@ BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemviews-devel kf6-kjob
 BuildRequires: kf6-knotifyconfig-devel kf6-kplotting-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-kcrash-devel kf6-kfilemetadata-devel kf6-purpose-devel
 BuildRequires: kf6-kdeclarative-devel kf6-kpackage-devel
+# otio
+BuildRequires: imath-devel pybind11-devel rapidjson-devel
 
 %description
 Kdenlive is a non-linear video editor for GNU/Linux, which supports
@@ -85,26 +82,30 @@ DV, HDV and AVCHD(not complete yet) editing.
 Редактор нелінійного монтажу для GNU/Linux
 
 %prep
-%setup -q -a2
-pushd otio/src/deps
-tar xvf %SOURCE3
-tar xvf %SOURCE4
-tar xvf %SOURCE5
+%setup -q -a1
+%patch1 -p1
+pushd otio/src/deps/
+    tar xvf %SOURCE2
 popd
-#%patch2 -p1
-%patch3 -p1
-
-install -m 0644 %SOURCE1 .
-sed -i "s|URL.*github.*rttr.*|URL file://${PWD}/rttr.tar|" rttr.CMakeLists.txt
-sed -i "/GIT_REPOSITORY.*OpenTimelineIO/s|GIT_REPOSITORY.*|URL file://${PWD}/otio|" deps/CMakeLists.txt
 
 %build
+BUILDDIR=$PWD
+pushd otio
 %K6build \
-    -DFETCH_OTIO:BOOL=ON \
-    -DOTIO_AUTOMATIC_SUBMODULES:BOOL=OFF \
-    -DOTIO_DEPENDENCIES_INSTALL:BOOL=OFF \
-    -DOTIO_CXX_INSTALL:BOOL=OFF \
+    -DCMAKE_INSTALL_PREFIX=$BUILDDIR/otio-installed \
+    -DOTIO_CXX_INSTALL=ON \
+    -DOTIO_PYTHON_INSTALL=OFF \
+    -DOTIO_INSTALL_PYTHON_MODULES=OFF \
+    -DOTIO_INSTALL_COMMANDLINE_TOOLS=OFF \
+    -DOTIO_DEPENDENCIES_INSTALL=OFF \
+    -DOTIO_FIND_IMATH=ON \
+    -DOTIO_FIND_RAPIDJSON=ON \
+    -DOTIO_SHARED_LIBS=OFF \
+    -DOTIO_STATIC_LIBS=ON \
     #
+%K6install DESTDIR=/
+popd
+%K6build -DCMAKE_PREFIX_PATH="%_prefix;$BUILDDIR/otio-installed"
 
 %install
 %K6install
@@ -130,6 +131,9 @@ sed -i '/[[:space:]]\/.*[[:space:]]/s|[[:space:]]\(\/.*$\)| "\1"|' %name.lang
 %_datadir/qlogging-categories?/*.*categories
 
 %changelog
+* Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
+- new version
+
 * Tue Apr 28 2026 Sergey V Turchin <zerg@altlinux.org> 25.12.3-alt2
 - update russian translation
 
