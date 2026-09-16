@@ -7,7 +7,7 @@
 
 Name: elmerfem
 Version: 26.2.1
-Release: alt5
+Release: alt6
 
 Summary: Elmer FEM software
 License: LGPL-2.0-only
@@ -197,6 +197,9 @@ echo "      Run -> Start ElmerVTK menu option to view results."
 %_datadir/elmersolver/lua-scripts/defaults.lua
 
 %changelog
+* Wed Sep 16 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt6
+- Support Unicode paths for at least Mesh and Project (closes: #60358).
+
 * Wed Sep 02 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt5
 - Fixed links in Help->About (closes: #60361, #60362).
 
