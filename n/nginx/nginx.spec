@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.30.4
+Version: 1.30.5
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -21,6 +21,7 @@ BuildRequires: libxml2-devel libxslt-devel
 %def_with zip
 %def_with push_stream
 %def_with dav_ext
+%def_with brotli
 %def_with spnego
 %def_enable cache_purge
 %def_enable rtmp
@@ -45,10 +46,9 @@ Source16: nginx-push-stream-module.tar
 Source17: nginx-geoip2-module.tar
 Source18: nginx-zip-module.tar
 Source19: nginx-dav-ext-module.tar
+Source20: nginx-brotli-module.tar
 Source100: %name.watch
 
-Patch0: cache-purge-fix-compatibility.patch
-Patch1: spnego-fix-ngx-strchr-const.patch
 Patch2: push-stream-fix-ngx-strchr-const.patch
 
 Requires(pre): shadow-utils
@@ -158,6 +158,18 @@ Requires: %name = %EVR
 nginx WebDAV PROPFIND, OPTIONS, LOCK and UNLOCK support.
 %endif
 
+%if_with brotli
+%package brotli
+Summary: Brotli compression module for nginx
+Group: System/Servers
+Requires: %name = %EVR
+BuildRequires: libbrotli-devel
+
+%description brotli
+ngx_brotli is a set of two nginx modules: brotli filter module for compressing
+responses on-the-fly and brotli static module for serving pre-compressed files.
+%endif
+
 %package spnego
 Summary: Simple and Protected GSSAPI Negotiation Mechanism for nginx
 Group: System/Servers
@@ -180,21 +192,16 @@ XSLT module for nginx
 Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
-%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17 -a18 -a19
+%setup -a7 -a10 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20
 sed -i 's/INSTALLSITEMAN3DIR=.*/INSTALLDIRS=vendor/' auto/lib/perl/make
 cp -f %SOURCE11 conf/mime.types
-
-pushd cache_purge
-%patch0 -p1
-popd
-
-pushd spnego-http-auth-nginx-module
-%patch1 -p1
-popd
 
 pushd nginx-push-stream-module
 %patch2 -p1
 popd
+
+# use system libbrotli instead of the deps/brotli git submodule
+sed -i 's|^brotli=.*|brotli=%_prefix|' nginx-brotli-module/filter/config
 
 %build
 ./configure \
@@ -252,6 +259,9 @@ popd
 %endif
 %if_with dav_ext
 	--add-dynamic-module=nginx-dav-ext-module \
+%endif
+%if_with brotli
+	--add-dynamic-module=nginx-brotli-module \
 %endif
 	--with-http_sub_module \
 	--with-http_dav_module \
@@ -444,6 +454,14 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_dav_ext_module.so
 %endif
 
+%if_with brotli
+%files brotli
+%config(noreplace) %nginx_etc/modules-available.d/http_brotli_filter.conf
+%config(noreplace) %nginx_etc/modules-available.d/http_brotli_static.conf
+%modpath/ngx_http_brotli_filter_module.so
+%modpath/ngx_http_brotli_static_module.so
+%endif
+
 %files spnego
 %config(noreplace) %nginx_etc/modules-available.d/http_auth_spnego.conf
 %modpath/ngx_http_auth_spnego_module.so
@@ -453,6 +471,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Tue Sep 15 2026 Anton Farygin <rider@altlinux.org> 1.30.5-alt1
+- 1.30.4 -> 1.30.5
+- added brotli module (closes: #60425)
+- updated spnego module to 2026-06-09 git snapshot
+- cache_purge: switched upstream to nginx-modules/ngx_cache_purge fork, updated to 3.0.2
+
 * Fri Jul 17 2026 Anton Farygin <rider@altlinux.org> 1.30.4-alt1
 - 1.30.3 -> 1.30.4 (Fixes: CVE-2026-42533, CVE-2026-60005, CVE-2026-56434)
 
