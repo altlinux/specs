@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.13
+Version:  0.1.14
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -59,6 +59,17 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Tue Sep 08 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.14-alt1
+- Fix order in merging config for net and ssh
+- Fix net none disabling network
+- Fix template for minimal config
+- Add command modificators for qemu
+- Add config option to do not run qemu in the background
+- Add image completion to --name-same-image/-N
+- Allow setting mac address for tap network
+- Update ubuntu, debian, and opensuse images
+- Add alt-dev-gui and alt-p11-dev-gui images
+
 * Mon Jul 27 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.13-alt1
 - Fail on pulling unavailable images
 - Improve bash and zsh completions
