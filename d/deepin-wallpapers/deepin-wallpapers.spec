@@ -1,5 +1,5 @@
 Name: deepin-wallpapers
-Version: 1.7.26
+Version: 1.7.27
 Release: alt1
 
 Summary: Deepin Wallpapers provides wallpapers of DDE
@@ -33,6 +33,9 @@ cp -r deepin %buildroot%_datadir/wallpapers/
 install -dm755 %buildroot%_datadir/backgrounds/deepin/
 touch %buildroot%_datadir/backgrounds/default_background.jpg
 
+# excluded by upstream
+rm -rf %buildroot%_datadir/wallpapers/deepin/platform
+
 %post
 if [ $1 -ge 1 ]; then
   %_sbindir/update-alternatives --install %_datadir/backgrounds/default_background.jpg \
@@ -53,6 +56,10 @@ fi
 %_datadir/wallpapers/deepin/*
 
 %changelog
+* Wed Sep 16 2026 Leontiy Volodin <lvol@altlinux.org> 1.7.27-alt1
+- New version 1.7.27.
+- Excluded platform wallpapers.
+
 * Wed Jun 03 2026 Leontiy Volodin <lvol@altlinux.org> 1.7.26-alt1
 - New version 1.7.26.
 
