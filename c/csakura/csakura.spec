@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: csakura
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: A sakura tree with falling petals for your terminal (cmatrix-style)
@@ -35,6 +35,9 @@ a wandering wind, settle on the ground, and fade.
 %_bindir/%name
 
 %changelog
+* Tue Sep 08 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 2.1.0-alt1
+- v2.1.0
+
 * Tue Sep 01 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.
 
