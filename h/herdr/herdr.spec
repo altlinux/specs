@@ -3,7 +3,7 @@
 %def_with check
 
 Name: herdr
-Version: 0.8.2
+Version: 0.9.0.113.052779c4
 Release: alt1
 
 Summary: Terminal workspace manager for AI coding agents
@@ -29,6 +29,7 @@ BuildRequires: /proc, /dev/pts
 %if_with check
 BuildRequires: git
 BuildRequires: curl
+BuildRequires: python3
 %endif
 
 %description
@@ -48,8 +49,7 @@ agents themselves can drive herdr through its command line and socket API.
 
 rm -f rust-toolchain.toml
 
-mkdir -p .cargo
-cat > .cargo/config.toml <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -64,7 +64,7 @@ export ZIG=%_bindir/zig
 export ZIG_GLOBAL_CACHE_DIR="$PWD/.zig-global-cache"
 export ZIG_LOCAL_CACHE_DIR="$PWD/.zig-local-cache"
 mkdir -p "$ZIG_GLOBAL_CACHE_DIR" "$ZIG_LOCAL_CACHE_DIR"
-cp -a vendor-zig/p "$ZIG_GLOBAL_CACHE_DIR/p"
+cp -a vendor-zig/zig-pkg vendor/libghostty-vt/zig-pkg
 export LIBGHOSTTY_VT_OPTIMIZE=ReleaseFast
 export LIBGHOSTTY_VT_SIMD=true
 
@@ -109,13 +109,17 @@ export LIBGHOSTTY_VT_OPTIMIZE=ReleaseFast
 export LIBGHOSTTY_VT_SIMD=true
 
 isolated=workspace::tests::generated_workspace_ids_are_short_base32_handles
+headless=server::headless::
+pty_actor=pty::actor::unix::
 cargo test --release --offline %{?_smp_mflags} --bins -- \
-	--test-threads=1 --skip "$isolated"
+	--test-threads=1 --skip "$isolated" --skip "$headless" --skip "$pty_actor"
+cargo test --release --offline %{?_smp_mflags} --bins -- \
+	--test-threads=1 "$headless" "$pty_actor"
 cargo test --release --offline %{?_smp_mflags} --bins -- \
 	--exact "$isolated"
 
 %files
-%doc LICENSE README.md CHANGELOG.md config.toml.example website/agent-guide.md
+%doc LICENSE README.md CHANGELOG.md config.toml.example distribution/agent-guide.md
 %_bindir/herdr
 %_datadir/bash-completion/completions/herdr
 %_datadir/zsh/site-functions/_herdr
@@ -124,5 +128,11 @@ cargo test --release --offline %{?_smp_mflags} --bins -- \
 %_datadir/herdr
 
 %changelog
+* Tue Sep 15 2026 Egor Ignatov <egori@altlinux.org> 0.9.0.113.052779c4-alt1
+- Updated to v0.9.0-113-g052779c4.
+
+* Fri Sep 11 2026 Egor Ignatov <egori@altlinux.org> 0.9.0.30.61ca85d5-alt1
+- Updated to v0.9.0-30-g61ca85d5.
+
 * Thu Aug 27 2026 Egor Ignatov <egori@altlinux.org> 0.8.2-alt1
 - First build for ALT.
