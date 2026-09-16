@@ -1,6 +1,6 @@
 Name: opentyrian
-Version: 2.1.20221123
-Release: alt2
+Version: 2.1.20260913
+Release: alt1
 Summary: OpenTyrian is a port of the DOS shoot-em-up Tyrian
 License: GPLv2
 Group: Games/Arcade
@@ -52,13 +52,16 @@ EOF
 
 
 %files
-%doc COPYING README NEWS
+%doc COPYING README.md
 %_bindir/*
 %_liconsdir/*
 %_man6dir/*
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Sep 16 2026 L.A. Kostis <lakostis@altlinux.ru> 2.1.20260913-alt1
+- Updated to v2.1.20260913.
+
 * Thu Jun 20 2024 L.A. Kostis <lakostis@altlinux.ru> 2.1.20221123-alt2
 - installer: fix download and requires (closes #50550).
 
