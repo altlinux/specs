@@ -10,8 +10,8 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.9
-Release: alt2
+Version: 3.7.10
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -98,6 +98,10 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.10-alt1
+- refresh checktree after changes (closes: 45299)
+- fix focus out from combobox (closes: 46976)
+
 * Tue Sep 08 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.9-alt2
 - fix program version (closes: 45990)
 
