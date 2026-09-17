@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.23.0
-Release: alt6
+Release: alt7
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -77,6 +77,9 @@ rm -r %buildroot/%_sysconfdir/xdg/autostart
 %_man1dir/*
 
 %changelog
+* Thu Sep 17 2026 Alexander Danilov <admsasha@altlinux.org> 1:0.23.0-alt7
+- Applied upstream patch (fixes: CVE-2026-57965, CVE-2026-57966).
+
 * Tue Jun 16 2026 Anton Midyukov <antohami@altlinux.org> 1:0.23.0-alt6
 - Remove autostart spice-vdagent.desktop to prevent a race with the
   spice-vdagent.service.
