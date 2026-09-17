@@ -6,8 +6,8 @@
 %define sisyphus_ver 0.21
 
 Name: anti-cppcheck
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 
 Summary: Utility that helps to handle reports produced by cppcheck
 License: GPLv3
@@ -62,6 +62,9 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Sep 17 2026 Alexey Appolonov <alexey@altlinux.org> 0.5.2-alt1
+- Bug fixes (closes: 60585).
+
 * Fri Nov 08 2024 Alexey Appolonov <alexey@altlinux.org> 0.5.1-alt2
 - Synchronization with ax v0.22.
 
