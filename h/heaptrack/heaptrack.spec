@@ -4,7 +4,7 @@
 
 Name: heaptrack
 Version: 1.5.0
-Release: alt2
+Release: alt3
 
 Summary: A heap memory profiler for Linux 
 
@@ -13,18 +13,22 @@ Group: Development/Other
 Url: https://www.kde.org
 VCS: https://github.com/KDE/heaptrack.git
 
-%K5init altplace man
+%K6init man
 
 Source: %name-%version.tar
 Patch1: fix-gcc14-cmake-compat.patch
+Patch2: 0001-Support-KChart6-for-KF6.patch
+Patch3: 0002-Use-QString-for-KConfigGroup-names.patch
+Patch4: 0003-Drop-unused-kitemmodels-dependency.patch
+Patch5: 0004-Use-QPalette-instead-of-KColorScheme.patch
 
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf6
 BuildRequires: gcc-c++ cmake extra-cmake-modules ctest
 BuildRequires: libunwind-devel zlib-devel libzstd-devel
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: libdwarf-devel
-BuildRequires: qt5-base-devel
-BuildRequires: kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemmodels-devel kf5-threadweaver-devel kf5-kconfigwidgets-devel kf5-kio-devel kf5-kdiagram-devel kf5-kiconthemes-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-declarative-devel
+BuildRequires: kf6-kcoreaddons-devel kf6-ki18n-devel kf6-threadweaver-devel kf6-kconfigwidgets-devel kf6-kio-devel kde6-kdiagram-devel kf6-kiconthemes-devel
 BuildRequires: librobin-map-devel
 BuildRequires: elfutils-devel
 
@@ -74,33 +78,42 @@ This package contains GUI for %name.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 rm -f screenshots/.directory
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 
-%K5build
+%K6build -DHEAPTRACK_USE_QT6:BOOL=ON
 
 %install
-%K5install
+%K6install
 %find_lang --with-kde %name
 
 %files -f %name.lang
 %doc LICENSES README.md screenshots
-%_bindir/*
+%_bindir/%name
+%_bindir/%{name}_print
 %_libdir/%name
 
 %files devel
 %_includedir/*
 
 %files gui
-%_K5bin/*
-%_K5xdgapp/*.desktop
-%_K5icon/*/*/*/*%{name}.*
+%_bindir/%{name}_gui
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/%name.png
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Thu Sep 17 2026 Mikhail Tergoev <fidel@altlinux.org> 1.5.0-alt3
+- build GUI with Qt6/KF6 instead of Qt5/KF5 (ALT bug 59545)
+- cherry-picked upstream fixes for KF6 (KChart6, KConfigGroup, QPalette)
+
 * Mon Nov 11 2024 Mikhail Tergoev <fidel@altlinux.org> 1.5.0-alt2
 - fixed build with gcc14
 
