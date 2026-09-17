@@ -1,7 +1,7 @@
 %define libname mdx
 Name: ocaml-%libname
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Summary: Executable code blocks inside markdown files
 Group: Development/ML
 License: ISC
@@ -42,6 +42,7 @@ developing applications that use %name.
 %setup
 
 %build
+sed -i 's/%%%%VERSION%%%%/%version/' bin/main.ml bin/test/main.ml
 %dune_build -p %libname
 
 %install
@@ -54,6 +55,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Thu Sep 17 2026 Anton Farygin <rider@altlinux.org> 2.6.0-alt2
+- fixed --version output (closes: #60598)
+
 * Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 2.6.0-alt1
 - 2.5.2 -> 2.6.0
 
