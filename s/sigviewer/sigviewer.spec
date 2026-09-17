@@ -2,7 +2,7 @@
 
 Name: sigviewer
 Version: 0.7.2
-Release: alt1
+Release: alt2
 Summary: SigViewer is a viewing application for biosignals
 Group: Sciences/Medicine
 License: GPL-3.0+
@@ -46,6 +46,10 @@ QT_QPA_PLATFORM=offscreen ctest --test-dir %_cmake__builddir --output-on-failure
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Sep 17 2026 Anton Farygin <rider@altlinux.org> 0.7.2-alt2
+- XDF: skip empty streams (closes: 60513).
+- Lower main window minimum size to 640x480 (closes: 60512).
+
 * Thu Sep 03 2026 Anton Farygin <rider@altlinux.org> 0.7.2-alt1
 - 0.6.4 -> 0.7.2
 - Switched to CMake build system and Qt6.
