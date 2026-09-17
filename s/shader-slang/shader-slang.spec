@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: shader-slang
-Version: 2026.13.1
+Version: 2026.17
 Release: alt1
 
 Summary: Slang shading language compiler
@@ -142,6 +142,10 @@ rm -v %buildroot%_libdir/libslang.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Sep 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.17-alt1
+- Fix loongarch64 and riscv64 builds (ALT bug #60399).
+- new version (2026.17)
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.13.1-alt1
 - new version 2026.13.1
 
