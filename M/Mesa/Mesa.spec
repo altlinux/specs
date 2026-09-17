@@ -99,7 +99,7 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.2
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -119,11 +119,11 @@ BuildPreReq: /proc
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel libdisplay-info-devel
-BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel xorg-proto-devel libxshmfence-devel
+BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel xorg-proto-devel libxshmfence-devel libxcbutil-keysyms-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
 BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
-BuildRequires: llvm%llvmver-devel clang%llvmver-devel
+BuildRequires: llvm%llvmver-devel clang%llvmver-devel libomp%llvmver-devel
 %ifarch %gallium_opencl_arches %vulkan_nouveau_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
 %endif
@@ -313,7 +313,7 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dplatforms=x11,wayland \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
-	-Dvulkan-layers='device-select, overlay, screenshot' \
+	-Dvulkan-layers='device-select, anti-lag, overlay, screenshot' \
 	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec, mpeg12dec, jpegdec' \
 %ifarch x86_64
 	-Dintel-rt=enabled \
@@ -425,12 +425,14 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/X11/modules/dri/zink_dri.so
 %_libdir/libvulkan_lvp.so
 %_libdir/libVkLayer_MESA_device_select.so
+%_libdir/libVkLayer_MESA_anti_lag.so
 %dir %_datadir/drirc.d
 %_datadir/drirc.d/00-mesa-defaults.conf
 %_datadir/drirc.d/00-zink-defaults.conf
 %_datadir/drirc.d/00-lavapipe-defaults.conf
 %_datadir/vulkan/icd.d/lvp_icd*.json
 %_datadir/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
+%_datadir/vulkan/implicit_layer.d/VkLayer_MESA_anti_lag.json
 
 %files -n vulkan-mesa-layers
 %_bindir/mesa-*.py
@@ -533,6 +535,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Sep 17 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.3-alt1
+- 26.2.3
+
 * Fri Sep 04 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.2-alt1
 - 26.2.2
 
