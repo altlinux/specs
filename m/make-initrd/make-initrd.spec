@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.59.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -15,7 +15,9 @@ Packager: Alexey Gladkov <legion@altlinux.ru>
 %add_findreq_skiplist %_libdir/initrd/*
 %add_debuginfo_skiplist %_libdir/initrd/*
 
+%def_with clevis
 %def_with iscsi
+%def_with zfs
 
 BuildRequires: autoconf
 BuildRequires: udev
@@ -357,8 +359,10 @@ fi
 %{?_with_iscsi:%exclude %_datadir/%name/features/iscsi}
 %doc Documentation/*.md
 
+%if_with clevis
 %files clevis
 %_datadir/%name/features/clevis
+%endif
 
 %files devmapper
 %_datadir/%name/features/devmapper
@@ -409,7 +413,7 @@ fi
 %_datadir/%name/features/bootconfig
 %endif
 
-%ifnarch %e2k
+%if_with zfs
 %files zfs
 %_datadir/%name/features/zfs
 %endif
@@ -421,6 +425,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 16 2026 Michael Shigorin <mike@altlinux.org> 2.59.0-alt2
+- Introduce clevis, zfs knobs (on by default).
+
 * Mon Jul 20 2026 Anton Midyukov <antohami@altlinux.org> 2.59.0-alt1
 - Feature usb-storage:
   + Detect UAS backed devices.
