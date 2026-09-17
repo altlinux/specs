@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.15.0
+Version: 140.16.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -473,6 +473,38 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Thu Sep 17 2026 Pavel Vasenkov <pav@altlinux.org> 140.16.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-92005 Use-after-free in the Audio/Video: Web Codecs component
+  + CVE-2026-92006 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92007 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92008 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92009 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92010 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92011 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92012 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92013 Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92014 Privilege escalation due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-92015 Privilege escalation in the WebExtensions component
+  + CVE-2026-92016 Use-after-free in the Disability Access APIs component
+  + CVE-2026-92017 Privilege escalation in the DOM: Service Workers component
+  + CVE-2026-92018 Sandbox escape in the DOM: Core & HTML component
+  + CVE-2026-92019 Mitigation bypass in the Remote Settings Client component
+  + CVE-2026-92020 Privilege escalation due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-92021 Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-92022 Use-after-free in the DOM: HTML Parser component
+  + CVE-2026-92023 Use-after-free in the XML component
+  + CVE-2026-92024 Use-after-free in the SVG component
+  + CVE-2026-92025 Use-after-free in the DOM: Navigation component
+  + CVE-2026-92026 Use-after-free in the Networking component
+  + CVE-2026-92027 Use-after-free in the DOM: Streams component
+  + CVE-2026-92028 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-92029 Use-after-free in the SVG component
+  + CVE-2026-92030 Mitigation bypass in the DOM: Copy & Paste and Drag & Drop component
+  + CVE-2026-92031 Information disclosure in the Graphics: ImageLib component
+  + CVE-2026-92032 Sandbox escape due to invalid pointer in the Graphics component
+
 * Wed Sep 09 2026 Pavel Vasenkov <pav@altlinux.org> 140.15.0-alt1
 - New ESR version.
 - Security fixes:
