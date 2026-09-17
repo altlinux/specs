@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.11
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -22,6 +22,11 @@ Source2: pcre.tar
 Source3: nanosvg.tar
 Source11: ld_shared_wrapper.pl
 Patch1: wxGTK3.0-disable-ABI-checking.patch
+
+# https://bugzilla.altlinux.org/41885
+# https://github.com/wxWidgets/wxWidgets/pull/25101
+Patch10: 0001-Use-UTF-8-for-environment-variables-names-and-values.patch
+Patch11: 0002-Use-UTF-8-in-wxGetenv-overload-for-wide-strings-too.patch 
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -329,6 +334,11 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Wed Sep 16 2026 Anton Midyukov <antohami@altlinux.org> 3.2.11-alt2
+- Add upstream fixes from 3.3 version (Closes: 41885):
+  + Use UTF-8 for environment variables.
+  + Use UTF-8 in wxGetenv() overload for wide strings too.
+
 * Wed Jul 08 2026 Anton Midyukov <antohami@altlinux.org> 3.2.11-alt1
 - New version 3.2.11.
 
