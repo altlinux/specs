@@ -20,7 +20,7 @@
 %endif
 
 Name: zed
-Version: 1.20.1
+Version: 1.20.2
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -108,10 +108,9 @@ export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_DEBUG=0
 export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
 export CARGO_PROFILE_RELEASE_INCREMENTAL=false
-export CARGO_PROFILE_RELEASE_LTO=fat
+export CARGO_PROFILE_RELEASE_LTO=thin
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
 export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
-export CARGO_PROFILE_RELEASE_STRIP=debuginfo
 cargo build --release %{?_smp_mflags} --offline --verbose --package zed --package cli
 
 %install
@@ -143,6 +142,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Sep 17 2026 Anton Zhukharev <ancieg@altlinux.org> 1.20.2-alt1
+- Updated to 1.20.2.
+
 * Wed Sep 16 2026 Anton Zhukharev <ancieg@altlinux.org> 1.20.1-alt1
 - Updated to 1.20.1.
 - Fixed "Emails Us..." action (ALT#60035).
