@@ -4,7 +4,7 @@
 
 Name: budgie-screensaver
 Version: 5.1.0
-Release: alt1
+Release: alt2
 
 Summary: A fork of gnome-screensaver intended for use with Budgie Desktop
 
@@ -62,6 +62,9 @@ desktop-file-validate %buildroot%_desktopdir/budgie-screensaver.desktop
 %config(noreplace) %_sysconfdir/pam.d/budgie-screensaver
 
 %changelog
+* Fri Sep 18 2026 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt2
+- Fix FTBFS with gnome-desktop 51 (ALT bug #60532).
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
 - initial build for ALT Sisyphus
 
