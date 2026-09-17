@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onefetch
-Version: 2.27.1
+Version: 2.28.1
 Release: alt1
 
 Summary: Command-line Git information tool
@@ -42,24 +42,26 @@ install -Dm 644  docs/onefetch.1 %buildroot%_man1dir/onefetch.1
 %_man1dir/*
 
 %changelog
+* Thu Sep 17 2026 Vladislav Glinkin <smasher@altlinux.org> 2.28.1-alt1
+- New version 2.28.1.
+
 * Tue Mar 24 2026 Vladislav Glinkin <smasher@altlinux.org> 2.27.1-alt1
-- New version
+- New version 2.27.1.
 
 * Wed Aug 20 2025 Vladislav Glinkin <smasher@altlinux.org> 2.25.0-alt1
-- 2.23.1 -> 2.25.0
+- New version 2.25.0.
 
 * Tue Mar 11 2025 Vladislav Glinkin <smasher@altlinux.org> 2.23.1-alt1
-- Update to 2.23.1
+- New version 2.23.1.
 
 * Wed Sep 25 2024 Vladislav Glinkin <smasher@altlinux.org> 2.22.0-alt1
-- Update to 2.22.0
+- New version 2.22.0.
 
 * Sat Jul 06 2024 Vladislav Glinkin <smasher@altlinux.org> 2.21.0-alt1
-- Update to 2.21.0
+- New version 2.21.0.
 
 * Wed Mar 27 2024 Vladislav Glinkin <smasher@altlinux.org> 2.20.0-alt1
-- Update to 2.20.0
+- New version 2.20.0.
 
 * Tue Oct 10 2023 Vladislav Glinkin <smasher@altlinux.org> 2.18.1-alt1
-- Initial build for ALT
-
+- Initial build for ALT.
