@@ -1,14 +1,17 @@
 Name: libstemmer
-Version: 2.0.0
+Version: 2.2.0
 Release: alt1
 Summary: C stemming algorithm library
 
 Group: System/Libraries
 License: BSD-2-Clause
-Url: http://snowball.tartarus.org
-Packager: Vladimir Didenko <cow@altlinux.org>
+Url: https://snowballstem.org/
+VCS: https://github.com/snowballstem/snowball
 
-Source0: %{name}_c.tar
+Source0: %name-%version.tar
+
+# perl: GNUmakefile generates algorithms.mk / modules.h via libstemmer/*.pl
+BuildRequires: perl-base
 
 %description
 Snowball stemming algorithms for use in Information Retrieval Snowball
@@ -35,26 +38,25 @@ Requires: %name = %version-%release
 Development files for C stemmer library
 
 %prep
-%setup -q -n %{name}_c
-
-# Add rule to make libstemmer.so
-sed -i -r "s|(^libstemmer.o:)|libstemmer.so: \$\(snowball_sources:.c=.o\)\n\
-\t\$\(CC\) \$\(CFLAGS\) -shared \$\(LDFLAGS\) -Wl,-soname,libstemmer.so.0 \
--o \$\@.0.0.0 \$\^\n\1|" Makefile
+%setup
 
 %build
-make libstemmer.so CFLAGS="%{optflags} -fPIC -Iinclude"
+# Upstream git tree: compile snowball, generate C sources, then static lib.
+# Shared library is not shipped; link it from PIC objects.
+%make_build libstemmer.a CFLAGS="%optflags -fPIC"
+%__cc %optflags -shared -Wl,-soname,%name.so.0 \
+	-o %name.so.0.0.0 -Wl,--whole-archive libstemmer.a -Wl,--no-whole-archive
 
 %install
-mkdir -p %{buildroot}%{_libdir}
-mkdir -p %{buildroot}%{_includedir}
-install -p -D -m 755 libstemmer.so.0.0.0 %{buildroot}%{_libdir}/
-ln -s libstemmer.so.0.0.0 %{buildroot}%{_libdir}/libstemmer.so.0
-ln -s libstemmer.so.0.0.0 %{buildroot}%{_libdir}/libstemmer.so
-install -p -D -m 644 include/* %{buildroot}%{_includedir}/
+mkdir -p %buildroot%_libdir
+mkdir -p %buildroot%_includedir
+install -p -m755 %name.so.0.0.0 %buildroot%_libdir/
+ln -s %name.so.0.0.0 %buildroot%_libdir/%name.so.0
+ln -s %name.so.0.0.0 %buildroot%_libdir/%name.so
+install -p -m644 include/* %buildroot%_includedir/
 
 %files -n %name
-%doc README
+%doc README.rst COPYING
 %_libdir/%name.so.*
 
 %files -n %name-devel
@@ -62,6 +64,10 @@ install -p -D -m 644 include/* %{buildroot}%{_includedir}/
 %_libdir/%{name}.so
 
 %changelog
+* Thu Sep 17 2026 Anton Farygin <rider@altlinux.org> 2.2.0-alt1
+- 2.0.0 -> 2.2.0
+- switch to build from upstream git (GNUmakefile, generated C sources)
+
 * Wed Aug 5 2020 Vladimir Didenko <cow@altlinux.org> 2.0.0-alt1
 - New version
 
