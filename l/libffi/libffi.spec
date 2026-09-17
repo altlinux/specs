@@ -2,7 +2,7 @@
 %define soname 8
 
 Name: libffi
-Version: 3.7.1
+Version: 3.8.0
 Release: alt1
 Epoch: 1
 
@@ -99,6 +99,9 @@ make -k check
 %_libdir/*.a
 
 %changelog
+* Thu Sep 17 2026 Anton Farygin <rider@altlinux.org> 1:3.8.0-alt1
+- 3.7.1 -> 3.8.0
+
 * Tue Jul 28 2026 Anton Farygin <rider@altlinux.org> 1:3.7.1-alt1
 - 3.5.2 -> 3.7.1
 - re-enabled exec static trampolines
