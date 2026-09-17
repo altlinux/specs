@@ -21,7 +21,7 @@
 
 Name: plasma-%rname
 Version: 6.7.5
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -352,6 +352,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Wed Sep 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.5-alt2
+- fix incorrect stripping of DistTag from the package version (closes: 60550)
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 
