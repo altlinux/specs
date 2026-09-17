@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global import_path github.com/cenkalti/rain
+%global import_path github.com/cenkalti/rain/v2
 
 Name: rain
-Version: 2.3.0
-Release: alt2
+Version: 2.4.0
+Release: alt1
 Summary: Rain is the main BitTorrent client used at put.io
 License: MIT
 Group: Networking/File transfer
@@ -71,18 +71,20 @@ install -Dm 644 %name.service %buildroot%_user_unitdir/%name.service
 %_user_unitdir/%name.service
 
 %changelog
+* Thu Sep 17 2026 Vladislav Glinkin <smasher@altlinux.org> 2.4.0-alt1
+- New version 2.4.0.
+
 * Thu Apr 02 2026 Vladislav Glinkin <smasher@altlinux.org> 2.3.0-alt2
-- Added systemd user service
+- Added systemd user service.
 
 * Tue Mar 24 2026 Vladislav Glinkin <smasher@altlinux.org> 2.3.0-alt1
-- New version
+- New version 2.3.0.
 
 * Fri Sep 05 2025 Vladislav Glinkin <smasher@altlinux.org> 2.2.1-alt1
-- 1.12.12 -> 2.2.1
+- New version 2.2.1.
 
 * Mon Oct 23 2023 Vladislav Glinkin <smasher@altlinux.org> 1.12.12-alt2
-- Added 'Conflicts: bsd-games' to the .spec file
+- Added 'Conflicts: bsd-games' to the .spec file.
 
 * Fri Oct 20 2023 Vladislav Glinkin <smasher@altlinux.org> 1.12.12-alt1
-- Initial build for ALT
-
+- Initial build for ALT.
