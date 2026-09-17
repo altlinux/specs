@@ -4,7 +4,7 @@
 # used by mvn_build
 %def_without javadoc
 
-%define nss_version 3.101
+%define nss_version 3.128
 %define java_version 21
 %define tomcat_version 10.1.36
 
@@ -13,7 +13,7 @@
 
 Name: jss
 Version: 5.8.0
-Release: alt1
+Release: alt2
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
@@ -152,6 +152,7 @@ export BUILD_OPT=1
     -DLIB_DIR=%_libdir \
     -DWITH_JAVA=FALSE \
     -DWITH_JAVADOC=FALSE \
+    -DENABLE_NSS_VERSION_PQC_DEF=ON \
 
 %cmake_build --target all
 
@@ -198,6 +199,11 @@ ln -sr -t %buildroot{%_libdir/jss,%_javadir/jss/jss.jar}
 %_bindir/p7tool
 
 %changelog
+* Thu Sep 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 5.8.0-alt2
+- Fix FTBFS with NSS 3.128:
+  + Build with ENABLE_NSS_VERSION_PQC_DEF.
+  + Raise the NSS requirement to 3.128.
+
 * Tue Dec 16 2025 Stanislav Levin <slev@altlinux.org> 5.8.0-alt1
 - 5.6.0 -> 5.8.0.
 
