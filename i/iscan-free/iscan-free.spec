@@ -3,14 +3,14 @@
 
 Name: iscan-free
 Version: 2.30.4
-Release: alt3
+Release: alt4
 
 Summary: Free Image Scan Version with epkowa Driver for Epson Scanners
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://support.epson.net/linux/src/scanner/iscan/
-License: GPL v2 or later; LGPL v2.1 or later
+License: GPLv2+ and LGPLv2.1+
 Group: Graphics
 
 # Note! Source tarball modified with .gear/postdownload-hoook script
@@ -32,7 +32,7 @@ Patch10: adapt-man-for-free.patch
 # Therefore real "Conflicts" (and not "Obsoletes" which does a silent replacement):
 Conflicts: iscan
 
-#BuildRequires: glibc-devel libappstream-glib-devel libdb4-devel libgtk+3-devel libpolkit-devel 
+#BuildRequires: glibc-devel libappstream-glib-devel libdb4-devel libgtk+3-devel libpolkit-devel
 BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel libltdl7-devel libsane-devel libtiff-devel libusb-devel libxml2-devel
 %if_enabled gimp
 BuildRequires: libgimp-devel
@@ -42,16 +42,10 @@ BuildRequires: libgimp-devel
 BuildRequires: rpm-macros-intro-conflicts
 
 %description
-mage Scan! is a graphical scanner utility for people that do not need
-all the bells and whistles provided by several of the other utilities
-out there (xsane, QuiteInsane, Kooka).
+This package provides the free epkowa SANE backend and supporting tools
+for Epson scanners. It does not include the graphical iscan frontend.
 
-At the moment it only supports SEIKO EPSON scanners and all-in-ones.
-However, the scanner driver it provides can be used by any other SANE
-standard compliant scanner utility.
-
-Note that several scanners require a non-free plugin before they can
-be used with this software.
+Some scanner models require a non-free plugin, which is not included.
 
 %prep
 %setup
@@ -104,9 +98,11 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 %_datadir/iscan/
 %_man5dir/sane-epkowa.5.*
 %_man8dir/*
-
-
 %changelog
+* Sun Sep 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.30.4-alt4
+- Correct License tag syntax.
+- Correct the description of the packaged SANE backend (ALT bug #60405).
+
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.30.4-alt3
 - fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 semantics)
 
@@ -186,7 +182,7 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 - Updated to version 2.1.0-1 (results package version 2.1.0.1):
   The disable-nonfree.patch is no longer needed because the
   new "configure --disable-frontend" option builds it without
-  the %_bindir/iscan frontend which is the only part which still
+  the %%_bindir/iscan frontend which is the only part which still
   would require proprietary binary-only i386-only software.
   All proprietary binary-only i386-only stuff was removed from the
   sources (i.e. the libesmod library and the EAPL license files).
@@ -216,10 +212,10 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 - Made a free version by removing all non-free stuff.
   For an overview see the README or the package description.
   In particular there is no longer the GIMP plugin link
-  to the frontend %_bindir/iscan because it was removed.
+  to the frontend %%_bindir/iscan because it was removed.
 * Mon Aug 08 2005 jsmeix@suse.de
 - Added GIMP plugin link (see "man iscan"
-  and %_docdir/packages/iscan/README).
+  and %%_docdir/packages/iscan/README).
 * Mon Aug 01 2005 jsmeix@suse.de
 - Added the USB usermap file to the iscan package to have the
   USB manufacturer and model IDs available for scanner detection.
@@ -242,7 +238,7 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 - Update to version 1.13.1-1 (results package version 1.13.1.1).
 * Tue Feb 15 2005 jsmeix@suse.de
 - Using '%%triggerin -- sane' to add the 'epkowa' backend to
-%_sysconfdir/sane.d/dll.conf so that now sane can be re-installed
+%%_sysconfdir/sane.d/dll.conf so that now sane can be re-installed
   from scratch without the need to re-install iscan too.
 * Wed Jan 26 2005 jsmeix@suse.de
 - Replaced '/usr/lib' by %%{_libdir} to be prepared for 64-bit
@@ -252,12 +248,12 @@ rm -f %buildroot%_libdir/sane/libsane-epkowa.la
 - Changed the wrong "usb ..." entry in epkowa.conf so that the
   epkowa backend can autodetect its known USB scanners.
 - If the package was removed then remove the epkowa lines
-  in %_sysconfdir/sane.d/dll.conf
+  in %%_sysconfdir/sane.d/dll.conf
 * Wed Jan 19 2005 jsmeix@suse.de
 - Update to version 1.13.0-3 (results package version 1.13.0.3).
 - Removed the redundant requirement for resmgr.
 - Simplified the RPM post install script to add the epkowa
-  backend disabled (with leading '#') to %_sysconfdir/sane.d/dll.conf
+  backend disabled (with leading '#') to %%_sysconfdir/sane.d/dll.conf
 * Mon Jul 19 2004 jsmeix@suse.de
 - Added libieee1284 because sane has now libieee1284 support
   and therefore ican links itself to libieee1284 libraries too.
