@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 7.2.16
-Release: alt2
+Version: 7.2.18
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -966,6 +966,9 @@ XDG_DATA_DIRS="%_datadir" update-desktop-database -q ||:
 %endif
 
 %changelog
+* Wed Sep 16 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.18-alt1
+- Update to newest version 7.2.18
+
 * Mon Sep 07 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.16-alt2
 - Moved control facility from virtualbox-common to the main package (closes: 48283)
 - Load kernel modules only when virtualbox is installed:
