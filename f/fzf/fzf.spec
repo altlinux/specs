@@ -5,24 +5,25 @@
 %add_debuginfo_skiplist %_bindir
 %brp_strip_none %_bindir/*
 
-Name:		fzf
-Version:	0.74.3
-Release:	alt1
-Summary:	A general-purpose command-line fuzzy finder.
+%def_with check
 
-Group:		Development/Tools
-License:	MIT
-URL:		https://github.com/junegunn/fzf
+Name: fzf
+Version: 0.74.4
+Release: alt1
+Summary: A general-purpose command-line fuzzy finder
 
-Packager:	Vladimir Didenko <cow@altlinux.org>
+Group: Development/Tools
+License: MIT
+URL: https://junegunn.github.io/fzf
+VCS: https://github.com/junegunn/fzf
 
 Source0: %name-%version.tar
 
 ExclusiveArch: %go_arches
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
 BuildRequires(pre): rpm-build-vim
-BuildRequires: golang
+BuildRequires: rpm-build-golang
 
 Provides: bash-completion-%name = %version-%release
 Obsoletes: bash-completion-%name < 0.28.0
@@ -58,31 +59,26 @@ Vim plugin for %name
 %build
 go build -a -ldflags '-s -w -X main.version=%version -X main.revision=altlinux' -tags "" -o bin/%name
 
-%install
-mkdir -p %buildroot%_bindir
+%check
+go test ./...
 
+%install
 #install main binary
-install -Dpm0755 bin/%name %{buildroot}%{_bindir}/
+install -Dpm0755 bin/%name %buildroot%_bindir/%name
 
 #install tmux support
-install -Dpm0755 bin/%name-tmux %{buildroot}%{_bindir}/
+install -Dpm0755 bin/%name-tmux %buildroot%_bindir/%name-tmux
 
 #install man pages
-install -d -p %{buildroot}%{_mandir}/man1
-install -Dpm0644 man/man1/*.1 %{buildroot}%{_mandir}/man1/
-
-install -d %{buildroot}%{_datadir}/%name/shell
-install -Dpm0644 shell/key-bindings.* %{buildroot}%{_datadir}/%name/shell/
+install -Dpm0644 -t %buildroot%_mandir/man1/ man/man1/*.1
+install -Dpm0644 -t %buildroot%_datadir/%name/shell shell/key-bindings.*
 
 # Install shell completion
-install -d %{buildroot}%{_datadir}/bash-completion/completions
-install -Dpm0644 shell/completion.bash %{buildroot}%{_datadir}/bash-completion/completions/fzf
-install -d %{buildroot}%{_datadir}/zsh/site-functions
-install -Dpm0644 shell/completion.zsh %{buildroot}%{_datadir}/zsh/site-functions/fzf
+install -Dpm0644 shell/completion.bash %buildroot%_datadir/bash-completion/completions/fzf
+install -Dpm0644 shell/completion.zsh %buildroot%_datadir/zsh/site-functions/fzf
 
 # Install vim plugin
-install -d %buildroot%vim_runtime_dir/plugin
-install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
+install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/fzf.vim
 
 %files
 %_bindir/%name
@@ -94,12 +90,23 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 
 %files tmux
 %_bindir/%name-tmux
-%{_mandir}/man1/%name-tmux.1*
+%_mandir/man1/%name-tmux.1*
 
 %files -n vim-plugin-%name
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Thu Sep 17 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.74.4-alt1
+- Updated to version 0.74.4.
+- Updated URL, added VCS tag.
+- BuildRequires(pre): changed rpm-build-golang to rpm-macros-golang.
+- BuildRequires: changed golang to rpm-build-golang.
+- Added %%check section.
+- Removed manual directory creation in %%install section.
+- Removed Packager tag.
+- Removed braces from macro names.
+- Fixed wrong day of week in changelog for release 0.24.3-alt1.
+
 * Fri Aug 21 2026 Vladimir Didenko <cow@altlinux.org> 0.74.3-alt1
 - New version
 
@@ -324,7 +331,7 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 * Mon Dec 21 2020 Vladimir Didenko <cow@altlinux.org> 0.24.4-alt1
 - New version
 
-* Tue Nov 19 2020 Vladimir Didenko <cow@altlinux.org> 0.24.3-alt1
+* Thu Nov 19 2020 Vladimir Didenko <cow@altlinux.org> 0.24.3-alt1
 - New version
 
 * Tue Nov 10 2020 Vladimir Didenko <cow@altlinux.org> 0.24.2-alt1
