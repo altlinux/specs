@@ -1,5 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_without check
+
 %ifarch %ix86
 # This is necessary to avoid rustc-LLVM ERROR: out of memory.
 %def_without debuginfo
@@ -15,7 +17,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 155.0.1
+Version: 156.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -44,6 +46,8 @@ Patch008: 0008-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
 Patch009: 0009-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
 Patch010: 0010-Apply-chat-message-style-changes-to-already-open-con.patch
 Patch011: 0011-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
+Patch012: 0012-Enable-cut-copy-in-the-calendar-view-context-menu.patch
+Patch013: 0013-Restore-the-task-tree-observers-when-its-frame-is-reb.patch
 ### End Patches
 
 Provides: mailclient
@@ -161,6 +165,10 @@ BuildRequires: python3(sqlite3)
 BuildRequires: python3(imp)
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
+%if_with check
+# certutil and pk12util, which the mochitest harness builds its profile with
+BuildRequires: nss-utils
+%endif
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
 
@@ -184,11 +192,16 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch9 -p2
 %patch10 -p2
 %patch11 -p2
+%patch12 -p2
+%patch13 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
+%if_without check
+ac_add_options --disable-tests
+%endif
 %ifnarch armh %{ix86} ppc64le loongarch64
 ac_add_options --enable-linker=lld
 %endif
@@ -360,6 +373,16 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 	done
 )
 
+%check
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
+
+# We build against the system NSS, so its tools are not where the harness
+# looks for them, next to the binaries it is about to run.
+ln -sfv %_bindir/certutil %_bindir/pk12util objdir/dist/bin/
+
+./mach mochitest --headless comm/
+./mach xpcshell-test comm/
+
 %files
 %doc AUTHORS
 %_bindir/*
@@ -372,6 +395,87 @@ install -Dm644 comm/mail/branding/thunderbird/TB-symbolic.svg \
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Sep 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 156.0-alt1
+- New version.
+- Fix cut and copy in the calendar view context menu (Closes: 58706).
+- Restore the task tree observers when its frame is rebuilt (Closes: 48425).
+- Fixes:
+  + CVE-2026-92238: Ambiguous parsing of mail headers
+  + CVE-2026-92239: Buffer overrun in IMAP
+  + CVE-2026-92240: Out-of-bounds read in IMAP response parser
+  + CVE-2026-92005: Use-after-free in the Audio/Video: Web Codecs component
+  + CVE-2026-92006: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92007: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92008: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92009: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92010: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92011: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92012: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92013: Privilege escalation due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-92015: Privilege escalation in the WebExtensions component
+  + CVE-2026-92034: Site isolation issue in the Graphics component
+  + CVE-2026-92035: Sandbox escape due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-92016: Use-after-free in the Disability Access APIs component
+  + CVE-2026-92017: Privilege escalation in the DOM: Service Workers component
+  + CVE-2026-92018: Sandbox escape in the DOM: Core & HTML component
+  + CVE-2026-92019: Mitigation bypass in the Remote Settings Client component
+  + CVE-2026-92020: Privilege escalation due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-92022: Use-after-free in the DOM: HTML Parser component
+  + CVE-2026-92023: Use-after-free in the XML component
+  + CVE-2026-92024: Use-after-free in the SVG component
+  + CVE-2026-92025: Use-after-free in the DOM: Navigation component
+  + CVE-2026-92026: Use-after-free in the Networking component
+  + CVE-2026-92036: Incorrect boundary conditions in the Networking: HTTP component
+  + CVE-2026-92027: Use-after-free in the DOM: Streams component
+  + CVE-2026-92028: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-92029: Use-after-free in the SVG component
+  + CVE-2026-92037: Incorrect boundary conditions in the DOM: Animation component
+  + CVE-2026-92038: Mitigation bypass in the Remote Settings Client component
+  + CVE-2026-92039: Mitigation bypass in the DOM: Notifications component
+  + CVE-2026-92040: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-92041: Mitigation bypass in the DOM: Networking component
+  + CVE-2026-92042: Race condition in the DOM: Content Processes component
+  + CVE-2026-92043: Privilege escalation due to incorrect boundary conditions in the Audio/Video component
+  + CVE-2026-92044: Information disclosure in the Networking: HTTP component
+  + CVE-2026-92045: Sandbox escape due to incorrect boundary conditions in the WebRTC component
+  + CVE-2026-92030: Mitigation bypass in the DOM: Copy & Paste and Drag & Drop component
+  + CVE-2026-92046: Use-after-free in the Graphics component
+  + CVE-2026-92047: Privilege escalation in the Crash Reporting component
+  + CVE-2026-92048: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92049: Use-after-free in the Widget: Win32 component
+  + CVE-2026-92050: Sandbox escape due to race condition in the XPConnect component
+  + CVE-2026-92051: Spoofing issue due to invalid pointer in the Graphics component
+  + CVE-2026-92052: Privilege escalation due to uninitialized memory in the Graphics: CanvasWebGL component
+  + CVE-2026-92053: Privilege escalation in the Graphics: CanvasWebGL component
+  + CVE-2026-92054: Privilege escalation in the Memory component
+  + CVE-2026-92055: Privilege escalation in the DevTools component
+  + CVE-2026-92056: Use-after-free in the Graphics: Text component
+  + CVE-2026-92057: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-92031: Information disclosure in the Graphics: ImageLib component
+  + CVE-2026-92032: Sandbox escape due to invalid pointer in the Graphics component
+  + CVE-2026-92058: Use-after-free in the Graphics component
+  + CVE-2026-92059: Incorrect boundary conditions in the DOM: Editor component
+  + CVE-2026-92060: Use-after-free in the Internationalization component
+  + CVE-2026-92061: Incorrect boundary conditions in the Security: Process Sandboxing component
+  + CVE-2026-92062: Privilege escalation in the Session Restore component
+  + CVE-2026-92063: Denial-of-service in the Audio/Video component
+  + CVE-2026-92064: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92065: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92066: Sandbox escape in the Profile Backup component
+  + CVE-2026-92067: Use-after-free in the Widget: Gtk component
+  + CVE-2026-92068: Site isolation issue in the Reader Mode component
+  + CVE-2026-92069: Spoofing issue in the DOM: Navigation component
+  + CVE-2026-92070: Information disclosure in the Networking component
+  + CVE-2026-92071: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-92072: Incorrect boundary conditions in the Safe Browsing component
+  + CVE-2026-92073: Privilege escalation in the Enterprise Policies component
+  + CVE-2026-92074: Mitigation bypass in the Popup Blocker component
+  + CVE-2026-92075: Mitigation bypass in the Networking component
+  + CVE-2026-92076: Incorrect boundary conditions in the Networking component
+  + CVE-2026-92077: Denial-of-service in the SVG component
+  + CVE-2026-92078: Denial-of-service in the Security component
+  + CVE-2026-92079: Mitigation bypass in the Widget: Win32 component
+
 * Thu Sep 10 2026 Ajrat Makhmutov <rauty@altlinux.org> 155.0.1-alt1
 - New version.
 
