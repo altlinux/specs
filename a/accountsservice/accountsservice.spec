@@ -5,7 +5,7 @@
 
 Name: accountsservice
 Version: 26.27.3
-Release: alt1
+Release: alt2
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -41,6 +41,9 @@ Requires: lib%name%sover = %EVR
 Summary: Client-side library to talk to accountservice
 Group: System/Libraries
 
+Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
+
 %description -n lib%name%sover
 The libaccountsservice package contains a library that can
 be used by applications that want to interact with the accountsservice
@@ -64,6 +67,9 @@ of these interfaces, based on the useradd, usermod and userdel commands.
 Summary: GObject introspection data for the accountsservice library
 Group: System/Libraries
 Requires: lib%name%sover = %EVR
+
+Provides: lib%name-gir = %EVR
+Obsoletes: lib%name-gir < %EVR
 
 %description -n lib%name%sover-gir
 GObject introspection data for the accountsservice library
@@ -129,6 +135,9 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Thu Sep 17 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt2
+- Add Obsoletes/Provides for renamed packages. (closes: #60594)
+
 * Mon Sep 14 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt1
 - 26.27.3 (closes: #60523)
 - Ported to SLP.
