@@ -1,5 +1,5 @@
 Name: packagekit-background
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Script to update the system with PackageKit
@@ -15,7 +15,6 @@ Source0: PackageKit-systemd-timers.patch
 Source1: packagekit-background.conf
 Patch1: alt-timer.patch
 Patch2: alt-config.patch
-Patch3: alt-service.patch
 
 #BuildRequires: 
 
@@ -30,7 +29,6 @@ ls -al `dirname %SOURCE0`
 patch --force <%SOURCE0 ||:
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %install
 mkdir -p %buildroot/%_bindir/
@@ -56,6 +54,9 @@ install -m 0644 %SOURCE1  %buildroot/%_sysconfdir/sysconfig/packagekit-backgroun
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 0.1.3-alt1
+- don't disable tty1@service on service run
+
 * Mon Aug 24 2026 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt1
 - disable tty1@service on service run
 
