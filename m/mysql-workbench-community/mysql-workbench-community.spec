@@ -2,7 +2,7 @@
 
 Name: mysql-workbench-community
 Version: 8.0.47
-Release: alt5
+Release: alt6
 
 Summary: A MySQL visual database modeling tool
 
@@ -18,7 +18,7 @@ Source1: antlr-4.13.2-complete.jar
 # https://www.mysql.com/support/supportedplatforms/workbench.html
 ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
-Patch0: mysql-workbench-community-8.0.32-alt-suppress-unsupported.patch
+Patch0: %name-8.0.32-alt-suppress-unsupported.patch
 Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
 Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
 Patch3: %name-8.0.33-alt-arm-fix.patch
@@ -26,6 +26,10 @@ Patch4: %name-8.0.40-alt-fix-gcc14-build.patch
 Patch5: %name-8.0.43-swig-4.3.patch
 Patch6: %name-8.0.47-alt-boost-1.91.patch
 Patch7: %name-8.0.47-alt-python-int.patch
+Patch8: %name-8.0.47-alt-python-importlib.patch
+Patch9: %name-8.0.47-arch-C++20.patch
+Patch10: %name-8.0.47-arch-python-long-types.patch
+Patch11: %name-8.0.47-arch-replace-deprecated-python-modules-pipes-with-shlex.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -83,6 +87,8 @@ Requires: %name-data = %version
 # due /usr/lib64/libSegFault.so
 # see https://bugzilla.altlinux.org/35600
 Requires: glibc-devel
+# see https://bugzilla.altlinux.org/46878
+Requires: evince
 
 BuildRequires(pre): unzip
 BuildRequires(pre): rpm-build-xdg
@@ -175,14 +181,7 @@ Look to %_defaultdocdir/%name-%version/License.txt
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p2
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%autopatch -p1
 
 sed -i "s|ldconfig|/sbin/ldconfig|" frontend/linux/workbench/mysql-workbench.in
 
@@ -238,7 +237,7 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %files
 #exclude %_libdir/mysql-workbench/modules/*.py?
 
-%exclude %_datadir/applications/*.desktop
+%_datadir/applications/*.desktop
 %exclude %_datadir/mysql-workbench/*
 
 %doc License.txt README.md AUTHORS
@@ -253,7 +252,6 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_libdir/mysql-workbench/*
 
 %files data
-%_datadir/applications/*.desktop
 %dir %_datadir/mysql-workbench
 %_datadir/mysql-workbench/*
 %_miconsdir/*
@@ -268,6 +266,11 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Sep 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt6
+- NMU: add R: evince (Closes: #46878).
+- NMU: move desktop file to main package (Closes: #56410).
+- NMU: add more patches from Arch and ALT.
+
 * Thu Sep 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt5
 - NMU: fix dashboard with Python 3.14 (Closes: #41654).
 
