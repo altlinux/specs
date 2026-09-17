@@ -34,8 +34,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 11.1
-Release: alt8
+Version: 11.2
+Release: alt3
 Epoch: 1
 Url: https://basealt.ru
 
@@ -399,6 +399,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Sep 15 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt3
+- Bump version to 11.2
+
 * Wed Jul 01 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.1-alt8
 - It was decided to release alt-server-11.1 for loongarch64
 
