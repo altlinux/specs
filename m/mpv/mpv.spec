@@ -4,13 +4,14 @@
 
 Name: mpv
 Version: 0.41.0
-Release: alt1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
 Group: Video
 
 Url: http://mpv.io/
+VCS: https://github.com/mpv-player/mpv.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -167,6 +168,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 0.41.0-alt2
+- NMU: add upstream fix (closes: 60468)
+
 * Fri Dec 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.41.0-alt1
 - 0.41.0
 
