@@ -5,7 +5,7 @@
 
 Name: liblouisutdml
 Version: 2.12.0
-Release: alt7
+Release: alt8
 Summary: Braille transcription library for UTDML documents
 License: LGPL-3.0-or-later
 Group: Accessibility
@@ -38,7 +38,6 @@ liblouisutdml is the successor of liblouisxml.
 %package -n %name%sover
 Group: System/Libraries
 Summary: Lib files for %name
-Provides: %name = %EVR
 
 %description -n %name%sover
 Lib files for %name
@@ -57,6 +56,8 @@ Group: Accessibility
 Summary: Utilities that convert various file formats into braille
 Requires: antiword
 Requires: poppler-utils
+Requires: %name-data
+Requires: liblouis-data
 
 %description utils
 This package provides the command-line utility file2brl that translates XML
@@ -105,7 +106,7 @@ rm -r %buildroot/%_docdir/liblouisutdml
 %_libdir/%name.so.%sover.*
 
 %files data
-%_datadir/%name/
+%_datadir/%name/lbu_files/*
 
 %files devel
 %_includedir/%name/
@@ -114,15 +115,21 @@ rm -r %buildroot/%_docdir/liblouisutdml
 
 %files utils
 %_bindir/file2brl
-%_man1dir/file2brl.1*
+%dir %_datadir/%name/
+%dir %_datadir/%name/lbu_files
 
 %files doc
 %doc doc/copyright-notice
 %doc doc/%name.{html,txt,pdf}
 %doc AUTHORS ChangeLog README NEWS  COPYING.LIB COPYING
 %_infodir/%name.info.*
+%_man1dir/file2brl.1*
 
 %changelog
+* Thu Sep 17 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt8
+- Added req to data packages (Closes: 60601).
+- Moved man to doc package.
+
 * Thu Jun 25 2026 Artem Semenov <savoptik@altlinux.org> 2.12.0-alt7
 - Fixed build with liblouis 3.38.0
 
