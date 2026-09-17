@@ -6,7 +6,7 @@
 Summary:   Package management service
 Name:      packagekit
 Version:   1.3.6
-Release:   alt1
+Release:   alt2
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -328,6 +328,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Thu Sep 17 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.6-alt2
+- set packagekit-offline-update to conflict with getty and kmsconvt
+
 * Mon Jun 29 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.6-alt1
 - new vesion
 
