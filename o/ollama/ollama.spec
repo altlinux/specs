@@ -12,7 +12,7 @@
 
 Name: ollama
 Version: 0.23.4
-Release: alt1
+Release: alt2
 Summary: Get up and running with large language models
 License: MIT
 Group: Sciences/Computer science
@@ -20,7 +20,7 @@ Url: https://ollama.com
 Vcs: https://github.com/ollama/ollama
 %if_with cuda
 # https://bugzilla.altlinux.org/52911
-%filter_from_requires /(libcudart\.so\.12)/d
+%filter_from_requires /(libcudart\.so\.%cuda_major)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 Requires: ollama-cuda = %EVR
 %endif
@@ -41,7 +41,8 @@ BuildRequires: golang
 BuildRequires: look
 BuildRequires: patchelf
 %if_with cuda
-BuildRequires: gcc12-c++
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq
 BuildRequires: nvidia-cuda-devel-static
 %endif
 %if_with vulkan
@@ -89,9 +90,11 @@ sed -i '/PRE_INCLUDE_REGEXES/d' CMakeLists.txt
 
 %build
 %add_optflags -Wno-unused-function
-export NVCC_PREPEND_FLAGS=-ccbin=g++-12
-%cmake -DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
-       -DGGML_BACKEND_DIR=%_libexecdir/ollama
+%cmake -DGGML_BACKEND_DIR=%_libexecdir/ollama \
+%if_with cuda
+	%cuda_cmake_flags \
+%endif
+	%nil
 %cmake_build
 go build -v \
 	-buildmode=pie \
@@ -115,8 +118,11 @@ find %buildroot%_libexecdir/ollama -name 'libggml-*.so' |
 	xargs -trn1 patchelf --set-rpath %_libexecdir/ollama
 
 %check
+%if_with cuda
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .cubin )
-( ! cuobjdump --list-ptx %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
+# SASS for every arch, PTX only for the newest one.
+( ! cuobjdump --list-ptx %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .sm_%cuda_arch_max.ptx )
+%endif
 cat /proc/loadavg
 # We don't have MLX.
 rename go go- x/mlxrunner/mlx/generator/main.go
@@ -170,6 +176,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 0.23.4-alt2
+- Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit.
+
 * Thu May 14 2026 Vitaly Chikunov <vt@altlinux.org> 0.23.4-alt1
 - Update to v0.23.4 (2026-05-12).
 

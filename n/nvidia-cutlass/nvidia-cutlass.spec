@@ -1,12 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
-%define nvcc_host_gcc_version 14
-%define nvcc_host_cc  %_bindir/gcc-%nvcc_host_gcc_version
-%define nvcc_host_cxx %_bindir/g++-%nvcc_host_gcc_version
-
 Name:    nvidia-cutlass
 Version: 4.4.2
-Release: alt1
+Release: alt2
 
 Summary: CUDA Templates and Python DSLs for High-Performance Linear Algebra
 License: BSD-3-Clause
@@ -18,10 +14,10 @@ Source: nvidia-cutlass-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires(pre): rpm-build-python3 cmake rpm-build-ninja
-BuildRequires: gcc%nvcc_host_gcc_version-c++
+BuildRequires(pre): rpm-build-python3 cmake rpm-build-ninja rpm-macros-cuda-toolkit
+%set_gcc_version %cuda_gcc_version
+BuildRequires: %cuda_buildreq
 BuildRequires: python3-module-setuptools python3-module-wheel
-BuildRequires: nvidia-cuda-devel
 BuildRequires: nvidia-cuda-devel-static
 BuildRequires: libcudnn-devel
 
@@ -43,16 +39,11 @@ Group: Development/Other
 %setup
 
 %build
-
-export CC=%nvcc_host_cc
-export CXX=%nvcc_host_cxx
 export CUDACXX=%_bindir/nvcc
-export NVCC_CCBIN=%nvcc_host_cxx
 
-%cmake  -GNinja \
+%cmake -GNinja %cuda_cmake_flags \
 	-DCUTLASS_ENABLE_HEADERS_ONLY=ON \
-	-DCMAKE_CUDA_HOST_COMPILER=%nvcc_host_cxx \
-	-DCUTLASS_NVCC_ARCHS="70;72;75;80;86;87;89;90;90a" \
+	-DCUTLASS_NVCC_ARCHS="%(echo %cuda_archs | tr ' ' ';')" \
 	-DCUTLASS_ENABLE_GTEST_UNIT_TESTS=OFF \
 	-DCUTLASS_ENABLE_TESTS=OFF \
 	-DCUTLASS_ENABLE_CUBLAS=ON \
@@ -71,6 +62,9 @@ export NVCC_CCBIN=%nvcc_host_cxx
 %_cmakedir/NvidiaCutlass
 
 %changelog
+* Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 4.4.2-alt2
+- Use rpm-macros-cuda-toolkit for host compiler and CUDA architectures.
+
 * Fri Jun 26 2026 Nikita Shmatko <nash@altlinux.org> 4.4.2-alt1
 - Updated version to 4.4.2.
 - Switched from clang-20 to gcc-14 to fix build with glibc 2.43.

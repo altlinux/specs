@@ -6,7 +6,7 @@
 %ifarch x86_64
 %def_with cuda
 %def_without oneapi
-%filter_from_requires /libcudart\.so\.12/d
+%filter_from_requires /libcudart\.so\.%cuda_major/d
 %else
 %def_without cuda
 %endif
@@ -18,7 +18,7 @@
 
 Name: openimagedenoise
 Version: 2.3.3
-Release: alt6
+Release: alt7
 Summary: Intel Open Image Denoise library
 Group: Development/Other
 License: Apache-2.0
@@ -35,7 +35,11 @@ Patch2: sycl-fix-deprecated-warning.patch
 # gfx1031 is identical to gfx1030
 Patch3: oidn-alt-rocm-add-gfx1031.patch
 Patch4: oidn-alt-no-fortify-again.patch
+# CUDA 13 dropped sm_70: take the GPU arch list from CMAKE_CUDA_ARCHITECTURES
+# and forward it (and the nvcc host compiler) to the CUDA device subproject
+Patch5: oidn-alt-cuda-archs.patch
 
+BuildRequires(pre): rpm-macros-cuda-toolkit
 BuildRequires: cmake gcc-c++
 BuildRequires: python3
 BuildRequires: tbb-devel
@@ -50,8 +54,9 @@ BuildRequires: hip-devel hip-runtime-amd rocm-comgr-devel rocm-device-libs hsa-r
 BuildRequires: llvm-dpcpp-devel clang-dpcpp-devel clang-dpcpp-tools intel-ocloc libze-devel libigc-devel opencl-headers
 %endif
 %if_with cuda
-# nvcc 12.9 rejects gcc > 14 (crt/host_config.h), use gcc14 as CUDA host compiler
-BuildRequires: nvidia-cuda-devel >= 12.8 nvidia-cuda-devel-static gcc14-c++
+# nvidia-cuda-devel + gcc supported by nvcc (CUDA host compiler)
+BuildRequires: %cuda_buildreq
+BuildRequires: nvidia-cuda-devel-static
 %endif
 
 %description
@@ -124,6 +129,7 @@ EOF
 %patch2 -p2
 #%%patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 %if_with hip
@@ -132,10 +138,6 @@ export ALTWRAP_LLVM_VERSION=rocm
 # co-installed CUDA puts nvcc in PATH, so `hipconfig --platform` autodetects
 # nvidia and hip::device becomes an empty stub; force the AMD HIP platform
 export HIP_PLATFORM=amd
-%endif
-%if_with cuda
-# nvcc 12.9 rejects gcc > 14 (crt/host_config.h); pin nvcc host compiler to gcc14
-export CUDAHOSTCXX=g++-14
 %endif
 %cmake \
 	-DOIDN_STATIC_LIB:BOOL=OFF \
@@ -146,7 +148,7 @@ export CUDAHOSTCXX=g++-14
 	%if_with cuda
 	-DOIDN_DEVICE_CUDA:BOOL=ON \
 	-DOIDN_DEVICE_CUDA_API=RuntimeShared \
-	-DCUDAToolkit_ROOT=%_prefix \
+	%cuda_cmake_flags \
 	%endif
 	%if_with oneapi
 	-DOIDN_DEVICE_SYCL:BOOL=ON \
@@ -209,6 +211,12 @@ chrpath -d %buildroot%_libdir/libOpenImageDenoise_device_cuda.so.%{version}
 %_libdir/cmake/*
 
 %changelog
+* Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 2.3.3-alt7
+- Fixed CUDA build against nvidia-cuda-devel 13.2 (dropped sm_70):
+  + take GPU architectures and nvcc host compiler from rpm-macros-cuda-toolkit;
+  + patch: honor CMAKE_CUDA_ARCHITECTURES, skip CUTLASS SM70 kernels when
+    not targeted, forward CUDA cmake vars to the device subproject.
+
 * Sat Jun 20 2026 Anton Farygin <rider@altlinux.org> 2.3.3-alt6
 - Fixed CUDA build against nvidia-cuda-devel 12.9:
   + set CUDAToolkit_ROOT (new scattered toolkit layout broke nvcc autodetect);

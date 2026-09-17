@@ -2,11 +2,9 @@
 %global __find_debuginfo_files %nil
 
 %define oname nvidia-cuda-toolkit
-%define nsight_compute_ver 2025.2.1
-%define nsight_sys_ver 2025.1.3
-%define min_driver_ver 575.57.08
-%define cuda_release 12
-%define cuda_major 9
+%define min_driver_ver 595.58.03
+%define cuda_release 13
+%define cuda_major 2
 %define cuda_minor 1
 
 %if "%cuda_minor" != "%nil"
@@ -16,13 +14,13 @@
 %endif
 
 %add_verify_elf_skiplist %_datadir/nvidia-cuda-toolkit/*
-%add_verify_elf_skiplist %_libdir/nsight-systems-%nsight_sys_ver/*
-%add_verify_elf_skiplist %_libdir/nsight-compute-%nsight_compute_ver/*
+%add_verify_elf_skiplist %_libdir/nsight-systems/*
+%add_verify_elf_skiplist %_libdir/nsight-compute/*
 
-%add_findreq_skiplist %_libdir/nsight-systems-%nsight_sys_ver/*
-%add_findprov_skiplist %_libdir/nsight-systems-%nsight_sys_ver/*
-%add_findreq_skiplist %_libdir/nsight-compute-%nsight_compute_ver/*
-%add_findprov_skiplist %_libdir/nsight-compute-%nsight_compute_ver/*
+%add_findreq_skiplist %_libdir/nsight-systems/*
+%add_findprov_skiplist %_libdir/nsight-systems/*
+%add_findreq_skiplist %_libdir/nsight-compute/*
+%add_findprov_skiplist %_libdir/nsight-compute/*
 
 %ifarch aarch64
 %define name_arch aarch64
@@ -30,13 +28,11 @@
 %add_findreq_skiplist %_bindir/cuda-gdb*
 %else
 %define name_arch x86_64
-%add_findreq_skiplist %_libdir/nvvp/*
-%add_findprov_skiplist %_libdir/nvvp/*
 %endif
 
 Name: nvidia_cuda_toolkit_%{cuda_version_full}_%name_arch
 Version: %cuda_version_full
-Release: alt2
+Release: alt1
 
 Summary: NVIDIA CUDA Toolkit libraries
 Summary(ru_RU.UTF-8): Библиотеки NVIDIA CUDA Toolkit
@@ -51,11 +47,9 @@ Source2: pkgconfig.tar.xz
 
 Source10: nvidia-nsight-compute.desktop
 Source11: nvidia-nsight-systems.desktop
-Source12: nvidia-visual-profiler.desktop
 
 Source20: ncu-ui.png
 Source21: nsys-ui.png
-Source22: nvvp.png
 
 BuildRequires(pre): rpm-build-python3
 
@@ -65,7 +59,7 @@ BuildRequires: libglvnd-devel gcc-c++ libvdpau-devel tbb-devel
 BuildRequires: /usr/bin/convert chrpath
 BuildRequires: python3-dev
 
-ExclusiveArch: x86_64
+ExclusiveArch: aarch64
 
 %description
 NVIDIA CUDA is a general purpose parallel computing architecture
@@ -115,35 +109,35 @@ NVIDIA CUDA Debugger (GDB)
 %package -n libcublaslt
 Group: System/Libraries
 Summary: NVIDIA cuBLASLt Library
-Provides: libcublasLt.so.12(libcublasLt.so.12)(64bit)
+Provides: libcublasLt.so.13(libcublasLt.so.13)(64bit)
 %description -n libcublaslt
 NVIDIA cuBLASLt Library.
 
 %package -n libcublas
 Group: System/Libraries
 Summary: NVIDIA cuBLAS Library
-Provides: libcublas.so.12(libcublas.so.12)(64bit)
+Provides: libcublas.so.13(libcublas.so.13)(64bit)
 %description -n libcublas
 NVIDIA cuBLAS Library.
 
 %package -n libcudart
 Group: System/Libraries
 Summary: NVIDIA CUDA Runtime Library
-Provides: libcudart.so.12(libcudart.so.12)(64bit)
+Provides: libcudart.so.13(libcudart.so.13)(64bit)
 %description -n libcudart
 NVIDIA CUDA Runtime Library.
 
 %package -n libcufft
 Group: System/Libraries
 Summary: NVIDIA cuFFT Library
-Provides: libcufft.so.11(libcufft.so.11)(64bit)
+Provides: libcufft.so.12(libcufft.so.12)(64bit)
 %description -n libcufft
 NVIDIA cuFFT Library.
 
 %package -n libcufftw
 Group: System/Libraries
 Summary: NVIDIA cuFFTW Library
-Provides: libcufftw.so.11(libcufftw.so.11)(64bit)
+Provides: libcufftw.so.12(libcufftw.so.12)(64bit)
 %description -n libcufftw
 NVIDIA cuFFTW Library.
 
@@ -165,10 +159,17 @@ Summary: GPUDirect Storage - development files
 %description -n libcufile-devel
 GPUDirect Storage - development files
 
+%package -n libcuobjclient
+Group: System/Libraries
+Summary: cuObject Client Library for RDMA-accelerated object storage
+Provides: libcuobjclient.so.1(libcuobjclient.so.1)(64bit)
+%description -n libcuobjclient
+cuObject Client Library for RDMA-accelerated object storage.
+
 %package -n libcupti
 Group: System/Libraries
 Summary: NVIDIA CUDA Profiler Tools Interface runtime library
-Provides: libcupti.so.12(libcupti.so.12)(64bit)
+Provides: libcupti.so.13(libcupti.so.13)(64bit)
 %description -n libcupti
 NVIDIA CUDA Profiler Tools Interface runtime library.
 
@@ -188,14 +189,14 @@ NVIDIA cuRAND Library.
 %package -n libcusolvermg
 Group: System/Libraries
 Summary: NVIDIA cuSOLVERmg Library
-Provides: libcusolverMg.so.11(libcusolverMg.so.11)(64bit)
+Provides: libcusolverMg.so.12(libcusolverMg.so.12)(64bit)
 %description -n libcusolvermg
 NVIDIA cuSOLVERmg Library.
 
 %package -n libcusolver
 Group: System/Libraries
 Summary: NVIDIA cuSOLVER Library
-Provides: libcusolver.so.11(libcusolver.so.11)(64bit)
+Provides: libcusolver.so.12(libcusolver.so.12)(64bit)
 %description -n libcusolver
 NVIDIA cuSOLVER Library.
 
@@ -209,77 +210,77 @@ NVIDIA cuSPARSE Library.
 %package -n libnppc
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives core runtime library
-Provides: libnppc.so.12(libnppc.so.12)(64bit)
+Provides: libnppc.so.13(libnppc.so.13)(64bit)
 %description -n libnppc
 NVIDIA Performance Primitives core runtime library.
 
 %package -n libnppial
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Arithmetic and Logic
-Provides: libnppial.so.12(libnppial.so.12)(64bit)
+Provides: libnppial.so.13(libnppial.so.13)(64bit)
 %description -n libnppial
 NVIDIA Performance Primitives lib for Image Arithmetic and Logic.
 
 %package -n libnppicc
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Color Conversion
-Provides: libnppicc.so.12(libnppicc.so.12)(64bit)
+Provides: libnppicc.so.13(libnppicc.so.13)(64bit)
 %description -n libnppicc
 NVIDIA Performance Primitives lib for Image Color Conversion.
 
 %package -n libnppidei
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Data Exchange and Initialization
-Provides: libnppidei.so.12(libnppidei.so.12)(64bit)
+Provides: libnppidei.so.13(libnppidei.so.13)(64bit)
 %description -n libnppidei
 NVIDIA Performance Primitives lib for Image Data Exchange and Initialization.
 
 %package -n libnppif
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Filters
-Provides: libnppif.so.12(libnppif.so.12)(64bit)
+Provides: libnppif.so.13(libnppif.so.13)(64bit)
 %description -n libnppif
 NVIDIA Performance Primitives lib for Image Filters.
 
 %package -n libnppig
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Geometry transforms
-Provides: libnppig.so.12(libnppig.so.12)(64bit)
+Provides: libnppig.so.13(libnppig.so.13)(64bit)
 %description -n libnppig
 NVIDIA Performance Primitives lib for Image Geometry transforms.
 
 %package -n libnppim
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Morphological operations
-Provides: libnppim.so.12(libnppim.so.12)(64bit)
+Provides: libnppim.so.13(libnppim.so.13)(64bit)
 %description -n libnppim
 NVIDIA Performance Primitives lib for Image Morphological operations.
 
 %package -n libnppist
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Statistics
-Provides: libnppist.so.12(libnppist.so.12)(64bit)
+Provides: libnppist.so.13(libnppist.so.13)(64bit)
 %description -n libnppist
 NVIDIA Performance Primitives lib for Image Statistics.
 
 %package -n libnppisu
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Support
-Provides: libnppisu.so.12(libnppisu.so.12)(64bit)
+Provides: libnppisu.so.13(libnppisu.so.13)(64bit)
 %description -n libnppisu
 NVIDIA Performance Primitives lib for Image Support.
 
 %package -n libnppitc
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives lib for Image Threshold and Compare
-Provides: libnppitc.so.12(libnppitc.so.12)(64bit)
+Provides: libnppitc.so.13(libnppitc.so.13)(64bit)
 %description -n libnppitc
 NVIDIA Performance Primitives lib for Image Threshold and Compare.
 
 %package -n libnpps
 Group: System/Libraries
 Summary: NVIDIA Performance Primitives for signal processing runtime library
-Provides: libnpps.so.12(libnpps.so.12)(64bit)
+Provides: libnpps.so.13(libnpps.so.13)(64bit)
 
 %description -n libnpps
 NVIDIA Performance Primitives for signal processing runtime library.
@@ -287,21 +288,21 @@ NVIDIA Performance Primitives for signal processing runtime library.
 %package -n libnvblas
 Group: System/Libraries
 Summary: NVBLAS runtime library
-Provides: libnvblas.so.12(libnvblas.so.12)(64bit)
+Provides: libnvblas.so.13(libnvblas.so.13)(64bit)
 %description -n libnvblas
 NVBLAS runtime library.
 
 %package -n libnvjitlink
 Group: System/Libraries
 Summary: NVIDIA Compiler JIT LTO Library
-Provides: libnvJitLink.so.12(libnvJitLink.so.12)(64bit)
+Provides: libnvJitLink.so.13(libnvJitLink.so.13)(64bit)
 %description -n libnvjitlink
 NVIDIA Compiler JIT LTO Library.
 
 %package -n libnvjpeg
 Group: System/Libraries
 Summary: NVIDIA JPEG library (nvJPEG)
-Provides: libnvjpeg.so.12(libnvjpeg.so.12)(64bit)
+Provides: libnvjpeg.so.13(libnvjpeg.so.13)(64bit)
 %description -n libnvjpeg
 NVIDIA JPEG library (nvJPEG).
 
@@ -314,7 +315,7 @@ CUDA Runtime Compilation (NVIDIA NVRTC Builtins Library).
 %package -n libnvrtc
 Group: System/Libraries
 Summary: CUDA Runtime Compilation (NVIDIA NVRTC Library)
-Provides: libnvrtc.so.12(libnvrtc.so.12)(64bit)
+Provides: libnvrtc.so.13(libnvrtc.so.13)(64bit)
 %description -n libnvrtc
 CUDA Runtime Compilation (NVIDIA NVRTC Library).
 
@@ -327,7 +328,7 @@ NVIDIA NVVM Library.
 %package -n libnvfatbin
 Group: System/Libraries
 Summary: NVIDIA FatBin Library.
-Provides: libnvfatbin.so.12(libnvfatbin.so.12)(64bit)
+Provides: libnvfatbin.so.13(libnvfatbin.so.13)(64bit)
 %description -n libnvfatbin
 NVIDIA FatBin Library.
 
@@ -337,12 +338,6 @@ Summary: NVIDIA Tools Extension (NVTX) library.
 %description -n libnvtx
 NVIDIA Tools Extension (NVTX) library.
 
-%package -n libaccinj64
-Group: System/Libraries
-Summary: NVIDIA ACCINJ Library (64-bit)
-%description -n libaccinj64
-NVIDIA ACCINJ Library (64-bit).
-
 %package -n gds-tools
 Group: System/Libraries
 Summary: GPUDirect Storage - tools
@@ -350,31 +345,6 @@ Requires: nvidia-cuda-devel = %EVR
 %description -n gds-tools
 GPUDirect Storage - tools.
 
-%package -n libcuinj64
-Group: System/Libraries
-Summary: NVIDIA CUINJ Library (64-bit)
-%description -n libcuinj64
-NVIDIA CUINJ Library (64-bit).
-
-%ifarch x86_64
-%package -n nvidia-profiler
-Group: System/Libraries
-Summary: NVIDIA Profiler for CUDA and OpenCL
-Requires: nvidia-cuda-devel = %EVR
-Requires: libpython3
-%description -n nvidia-profiler
-NVIDIA Profiler for CUDA and OpenCL.
-
-%package -n nvidia-visual-profiler
-Group: System/Libraries
-Summary: NVIDIA Visual Profiler for CUDA and OpenCL
-Requires: nvidia-cuda-toolkit = %EVR
-Requires: nvidia-profiler = %EVR
-Requires: ant java-1.8.0-openjdk
-%description -n nvidia-visual-profiler
-The NVIDIA Visual Profiler is a cross-platform performance profiling tool
-that delivers developers vital feedback for optimizing CUDA C/C++ applications.
-%endif
 
 %package -n nvidia-nsight-compute
 Group: Development/Other
@@ -411,10 +381,14 @@ mkdir -p %buildroot{%_bindir,%_libdir,%_docdir,%_includedir,%_desktopdir,%_pkgco
 pushd builds
 
 cp -vr cuda_cccl/lib64/* %buildroot%_libdir/
-cp -vr cuda_cccl/include/* %buildroot%_includedir/
+cp -vr cuda_cccl/include/cccl/* %buildroot%_includedir/
 
 cp -vr cuda_cudart/lib64/* %buildroot%_libdir/
 cp -vr cuda_cudart/include/* %buildroot%_includedir/
+
+cp -vr cuda_culibos/lib64/* %buildroot%_libdir/
+
+cp -vr cuda_crt/include/* %buildroot%_includedir/
 
 cp -v cuda_cuobjdump/bin/* %buildroot%_bindir/
 
@@ -438,19 +412,22 @@ done
 cp -vr cuda_gdb/bin/* %buildroot%_bindir/
 cp -vr cuda_gdb/extras/Debugger %buildroot%_datadir/%oname/extras/
 
-cp -v cuda_nvcc/nvvm/bin/* %buildroot%_bindir/
-cp -vr cuda_nvcc/nvvm/lib64/* %buildroot%_libdir/
-cp -vr cuda_nvcc/nvvm/include/* %buildroot%_includedir/
+cp -v libnvvm/nvvm/bin/* %buildroot%_bindir/
+cp -vr libnvvm/nvvm/lib64/* %buildroot%_libdir/
+cp -vr libnvvm/nvvm/include/* %buildroot%_includedir/
 
 mkdir -p %buildroot%_libdir/nvvm
-cp -vr cuda_nvcc/nvvm/libdevice %buildroot%_libdir/nvvm/
+cp -vr libnvvm/nvvm/libdevice %buildroot%_libdir/nvvm/
 
 mkdir -p %buildroot%_libdir/nvcc
 cp -vr cuda_nvcc/bin %buildroot%_libdir/nvcc/
 
 cp -vr cuda_nvcc/include/* %buildroot%_includedir/
 
-for i in bin2c cudafe++ fatbinary nvcc __nvcc_device_query nvlink ptxas ; do
+cp -v cuda_ctadvisor/bin/ctadvisor %buildroot%_libdir/nvcc/bin/
+cp -v cuda_tileiras/bin/tileiras %buildroot%_libdir/nvcc/bin/
+
+for i in bin2c cudafe++ ctadvisor fatbinary nvcc __nvcc_device_query nvlink ptxas tileiras ; do
 cat > %buildroot%_bindir/$i <<EOF
 #!/usr/bin/env bash
 exec %_libdir/nvcc/bin/$i "\$@"
@@ -470,6 +447,9 @@ cp -v cuda_nvdisasm/bin/* %buildroot%_bindir/
 cp -vr cuda_nvml_dev/lib64/* %buildroot%_libdir/
 cp -vr cuda_nvml_dev/include/* %buildroot%_includedir/
 cp -vr cuda_nvml_dev/nvml %buildroot%_datadir/%oname/
+
+cp -vr cuda_sandbox_dev/lib64/* %buildroot%_libdir/
+cp -vr cuda_sandbox_dev/include/* %buildroot%_includedir/
 
 cp -v cuda_nvprune/bin/* %buildroot%_bindir/
 
@@ -506,6 +486,9 @@ cp -vr libcufile/include/* %buildroot%_includedir/
 cp -vr libcufile/gds %buildroot%_libdir/
 cp -vr libcufile/gds-*.* %buildroot%_docdir/
 
+cp -vr libcuobjclient/lib64/* %buildroot%_libdir/
+cp -vr libcuobjclient/include/* %buildroot%_includedir/
+
 cp -vr libcurand/lib64/* %buildroot%_libdir/
 cp -vr libcurand/include/* %buildroot%_includedir/
 
@@ -530,55 +513,31 @@ cp -vr libnvjitlink/include/* %buildroot%_includedir/
 cp -vr libnvjpeg/lib64/* %buildroot%_libdir/
 cp -vr libnvjpeg/include/* %buildroot%_includedir/
 
-%ifarch x86_64
-cp -v cuda_nvprof/bin/* %buildroot%_bindir/
-cp -vr cuda_nvprof/lib64/* %buildroot%_libdir/
+cp -vr libnvptxcompiler/lib64/* %buildroot%_libdir/
+cp -vr libnvptxcompiler/include/* %buildroot%_includedir/
 
-cp -v cuda_nvvp/bin/* %buildroot%_bindir/
-cp -vr cuda_nvvp/libnvvp %buildroot%_libdir/nvvp
-
-cat > %buildroot%_bindir/nvvp <<EOF
-#!/usr/bin/env bash
-UBUNTU_MENUPROXY=0 LIBOVERLAY_SCROLLBAR=0 %_libdir/nvvp/nvvp \$@
-EOF
-chmod 755 %buildroot%_bindir/nvvp
-
-# explicit python shebang
-find %buildroot%_libdir/nvvp/plugins/ -name "*.py" -exec sed -i "s|#!%_bindir/python|#!%__python3|" {} \;
-
-# nvvp only works with java 8
-cat >> %buildroot%_libdir/nvvp/nvvp.ini <<EOF
--vm
-/usr/lib/jvm/jre-1.8.0/bin/java
-EOF
-%endif
-
-mkdir -p %buildroot%_libdir/nsight-compute-%nsight_compute_ver
-cp -vr nsight_compute/* %buildroot%_libdir/nsight-compute-%nsight_compute_ver/
+mkdir -p %buildroot%_libdir/nsight-compute
+cp -vr nsight_compute/* %buildroot%_libdir/nsight-compute/
 cp -v integration/nsight-compute/* %buildroot%_bindir/
 # fix path nsight-compute
-sed -i 's|"$CUDA_TOOLKIT_BIN_DIR"/../nsight-compute-*|%_libdir/nsight-compute-*|' %buildroot%_bindir/ncu*
+sed -i 's|"$CUDA_TOOLKIT_BIN_DIR"/../nsight-compute-*|%_libdir/nsight-compute|' %buildroot%_bindir/ncu*
 
-mkdir -p %buildroot%_libdir/nsight-systems-%nsight_sys_ver
-cp -vr nsight_systems/* %buildroot%_libdir/nsight-systems-%nsight_sys_ver/
+mkdir -p %buildroot%_libdir/nsight-systems
+cp -vr nsight_systems/* %buildroot%_libdir/nsight-systems/
 cp -v integration/nsight-systems/* %buildroot%_bindir/
 # fix path nsight-systems
 sed -i 's|"$CUDA_INSTALL_DIR"/|%_libdir/|' %buildroot%_bindir/nsys*
 
-
-
-
 # Remove bundled python _sqlite3 library compiled with python3.10 and rm bad_elf_symbols detected
 %ifarch aarch64
-rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-sbsa-armv8/python/packages/nsys_recipe/third_party/
-rm -vr %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-sbsa-armv8/CollectX
-rm -vr %buildroot%_libdir/nsight-systems-%nsight_sys_ver/host-linux-armv8/Mesa
-rm -vr %buildroot%_libdir/nsight-compute-%nsight_compute_ver/host/linux-desktop-t210-a64/Mesa
+rm -vr %buildroot%_libdir/nsight-systems/target-linux-sbsa-armv8/CollectX
+rm -vr %buildroot%_libdir/nsight-systems/host-linux-armv8/Mesa
+rm -vr %buildroot%_libdir/nsight-compute/host/linux-desktop-t210-a64/Mesa
 %else
-rm -rv %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/python/packages/nsys_recipe/third_party
-rm -vr %buildroot%_libdir/nsight-systems-%nsight_sys_ver/target-linux-x64/CollectX
-rm -vr %buildroot%_libdir/nsight-compute-%nsight_compute_ver/host/target-linux-x64/python/packages/nsys_recipe/third_party
-rm -vr %buildroot%_libdir/nsight-compute-%nsight_compute_ver/target/linux-desktop-glibc_2_11_3-x86
+rm -rv %buildroot%_libdir/nsight-systems/target-linux-x64/python/packages/nsys_recipe/third_party
+rm -vr %buildroot%_libdir/nsight-systems/target-linux-x64/CollectX
+rm -vr %buildroot%_libdir/nsight-compute/host/target-linux-x64/python/packages/nsys_recipe/third_party
+rm -vr %buildroot%_libdir/nsight-compute/target/linux-desktop-glibc_2_11_3-x86
 %endif
 
 # install desktop files and build icons
@@ -590,23 +549,19 @@ for S in 16 24 32 48 64 128 192 256 ; do
     magick %SOURCE21 -resize $S\x$S %buildroot%_iconsdir/hicolor/$S\x$S/apps/nsys-ui.png
 done
 
-%ifarch x86_64
-install -m644 %SOURCE12 %buildroot%_desktopdir/
-for S in 16 24 32 48 64 128 192 256 ; do
-    magick %SOURCE22 -resize $S\x$S %buildroot%_iconsdir/hicolor/$S\x$S/apps/nvvp.png
-done
-%endif
-
 # remove error link
-rm -v %buildroot%_includedir/include
+rm -vf %buildroot%_includedir/include
+rm -vf %buildroot%_libdir/lib64
 
 # fix rpath
 chrpath -d %buildroot%_libdir/*.so.*
 chrpath -d %buildroot%_libdir/libTreeLauncherTargetInjection.so
-%ifarch x86_64
 chrpath -d %buildroot%_bindir/cuda-gdb-minimal
-chrpath -d %buildroot%_bindir/nvprof
-%endif
+
+# NVIDIA ships libs with .gnu_debuglink -> *.sym that we do not package;
+# drop it, otherwise consumers' debuginfo.req requires debug64(libcublas.so.13)
+find %buildroot%_libdir -maxdepth 1 -name '*.so.*' -type f \
+    -exec objcopy --remove-section=.gnu_debuglink {} \;
 
 # Allow newer compilers to work. This is not officially supported.
 # See https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#system-requirements
@@ -623,7 +578,9 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %files -n nvidia-cuda-toolkit
 %_bindir/bin2c
 %_bindir/cudafe++
+%_bindir/ctadvisor
 %_bindir/fatbinary
+%_bindir/tileiras
 %_bindir/nvcc
 %_bindir/__nvcc_device_query
 %_bindir/nvlink
@@ -662,24 +619,14 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_libdir/*.a
 
 %files -n nvidia-cuda-gdb
-%ifarch x86_64
 %_bindir/cuda-gdb-*
-%endif
 %_bindir/cuda-gdb
 %_bindir/cuda-gdbserver
 %_datadir/%oname/extras/Debugger
 
 %files -n gds-tools
 %_libdir/gds/
-%_docdir/gds-*.*/
-
-%ifarch x86_64
-%files -n libaccinj64
-%_libdir/libaccinj64.so.*
-
-%files -n libcuinj64
-%_libdir/libcuinj64.so.*
-%endif
+%_docdir/gds-*.*
 
 %files -n libcublaslt
 %_libdir/libcublasLt.so.*
@@ -705,6 +652,9 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %files -n libcufile-devel
 %_libdir/libcufile.so
 %_libdir/libcufile_rdma.so
+
+%files -n libcuobjclient
+%_libdir/libcuobjclient.so.*
 
 %files -n libcupti
 %_libdir/libcupti.so.*
@@ -773,15 +723,9 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 
 %files -n libnvrtc-builtins
 %_libdir/libnvrtc-builtins.so.*
-%ifarch x86_64
-%_libdir/libnvrtc-builtins.alt.so.*
-%endif
 
 %files -n libnvrtc
 %_libdir/libnvrtc.so.*
-%ifarch x86_64
-%_libdir/libnvrtc.alt.so.*
-%endif
 
 %files -n libnvvm
 %_libdir/libnvvm.so.*
@@ -792,22 +736,10 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %files -n libnvtx
 %_libdir/libnvtx3interop.so.*
 
-%ifarch x86_64
-%files -n nvidia-profiler
-%_bindir/nvprof
-
-%files -n nvidia-visual-profiler
-%_bindir/computeprof
-%_bindir/nvvp
-%_libdir/nvvp/
-%_iconsdir/hicolor/*/apps/nvvp.png
-%_desktopdir/nvidia-visual-profiler.desktop
-%endif
-
 %files -n nvidia-nsight-compute
 %_bindir/ncu
 %_bindir/ncu-ui
-%_libdir/nsight-compute-%nsight_compute_ver/
+%_libdir/nsight-compute/
 %_iconsdir/hicolor/*/apps/ncu-ui.png
 %_desktopdir/nvidia-nsight-compute.desktop
 
@@ -815,40 +747,18 @@ cp -v ../pkgconfig/*.pc %buildroot%_pkgconfigdir/
 %_bindir/nsys
 %_bindir/nsys-ui
 %_bindir/nsight-sys
-%_libdir/nsight-systems-%nsight_sys_ver/
+%_libdir/nsight-systems/
 %_iconsdir/hicolor/*/apps/nsys-ui.png
 %_desktopdir/nvidia-nsight-systems.desktop
 
 %changelog
+* Tue Jun 02 2026 Mikhail Tergoev <fidel@altlinux.org> 13.2.1-alt1
+- updated to 13.2.1
+- deprecated and dropped nvvp and nvprof
+- added libcuobjclient
+
 * Thu Nov 27 2025 Mikhail Tergoev <fidel@altlinux.org> 12.9.1-alt2
 - fixed provides: libcusolver
 
 * Fri Nov 21 2025 Mikhail Tergoev <fidel@altlinux.org> 12.9.1-alt1
-- updated to 12.9.1
-- splitting the repository for each new version
-
-* Sat Sep 13 2025 Grigory Ustinov <grenka@altlinux.org> 12.8.1-alt1.1
-- Fixed building with python3.13.
-
-* Thu May 01 2025 Mikhail Tergoev <fidel@altlinux.org> 12.8.1-alt1
-- updated to 12.8.1 (ALT bug: 53832 54080)
-- removed version from name *.pc files
-
-* Mon Feb 03 2025 Mikhail Tergoev <fidel@altlinux.org> 12.4.1-alt1
-- updated to 12.4.1
-
-* Mon Jan 29 2024 Mikhail Tergoev <fidel@altlinux.org> 12.3.2-alt1
-- updated to 12.3.2 (ALT bug: 49154)
-- returned requires nvidia-cuda-toolkit to nvidia-cuda-devel
-
-* Mon Jan 22 2024 Mikhail Tergoev <fidel@altlinux.org> 12.3.1-alt3
-- drop requires nvidia-cuda-toolkit from nvidia-cuda-devel (ALT bug: 48761)
-- separation of nvidia-cuda-gdb packages from nvidia-cuda-devel (ALT bug: 48762)
-- separation of libcufile-devel packages from nvidia-cuda-devel
-- separation of libcupti-devel packages from nvidia-cuda-devel
-
-* Mon Jan 15 2024 Grigory Ustinov <grenka@altlinux.org> 12.3.1-alt2
-- Fixed working with python3.12.
-
-* Fri Dec 01 2023 Mikhail Tergoev <fidel@altlinux.org> 12.3.1-alt1
-- Initial build for ALT Sisyphus
+- Initial build aarch64 for ALT Sisyphus (ALT bug: 48759)

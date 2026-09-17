@@ -1,6 +1,6 @@
 Name: alvr
 Version: 20.14.1
-Release: alt1
+Release: alt2
 
 Summary: Stream VR games from your PC to your headset via Wi-Fi
 License: MIT
@@ -43,8 +43,9 @@ BuildRequires: nasm
 BuildRequires: nvidia-cuda-devel
 BuildRequires: openxr-devel
 
-# fixed build ffmpeg with CUDA
-BuildRequires: gcc13-c++
+# fixed build ffmpeg with CUDA 13.2.1 (when gcc16 version will appear)
+# gcc15 is not in the p11 repository at the time of update
+BuildRequires: gcc14-c++
 
 Requires: typelib(GLib)
 Requires: typelib(GObject)
@@ -161,6 +162,9 @@ done
 %_datadir/vulkan/explicit_layer.d/alvr_x86_64.json
 
 %changelog
+* Mon Jun 22 2026 Mikhail Tergoev <fidel@altlinux.org> 20.14.1-alt2
+- fixed build with new NVIDIA CUDA Toolkit
+
 * Tue Jun 16 2026 Mikhail Tergoev <fidel@altlinux.org> 20.14.1-alt1
 - updated to version: 20.14.1
 

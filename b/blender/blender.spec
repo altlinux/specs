@@ -67,7 +67,7 @@
 
 Name: blender
 Version: 4.5.14
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -200,15 +200,9 @@ BuildRequires: OpenUSD-devel
 %endif
 
 %if_with cuda
-BuildRequires: nvidia-cuda-devel
-# CUDA 12.x nvcc cannot parse GCC 15 <type_traits> (new __is_pointer
-# and __is_volatile builtins). Fall back to gcc-14 as the CUDA host
-# compiler on Sisyphus (GCC 15); older branches keep the default GCC.
-# %_priority_distbranch lives in /usr/lib/rpm/macros (read by rpm 4.13)
-# but legacy rpmbuild 4.0.4 does not load it; shell out to `rpm --eval`.
-%if "%(rpm --eval '%%_priority_distbranch' 2>/dev/null)" == "sisyphus"
-BuildRequires: gcc14-c++
-%endif
+BuildRequires(pre): rpm-macros-cuda-toolkit
+# nvidia-cuda-devel + gcc supported by nvcc (host compiler)
+BuildRequires: %cuda_buildreq
 # .cubin files are ELF files but we still don't know how
 # to handle them.
 %add_verify_elf_skiplist %_datadir/%name/*/%kern_dir/*.cubin
@@ -405,9 +399,8 @@ export ALTWRAP_LLVM_VERSION=rocm
 %if_with cuda
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
 	-DWITH_CYCLES_CUDA_BUILD_SERIAL:BOOL=ON \
-%if "%(rpm --eval '%%_priority_distbranch' 2>/dev/null)" == "sisyphus"
-	-DCUDA_HOST_COMPILER=%_bindir/gcc-14 \
-%endif
+	-DCUDA_HOST_COMPILER=%cuda_host_cxx \
+	-DCYCLES_CUDA_BINARIES_ARCH="$(for a in %cuda_archs; do echo -n "sm_$a;"; done)compute_%cuda_arch_min" \
 %endif #cuda
 %if_with hiprt
 	-DHIPRT_ROOT_DIR=%prefix \
@@ -544,6 +537,11 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Wed Sep 16 2026 Mikhail Tergoev <fidel@altlinux.org> 4.5.14-alt2
+- Rebuild with nvidia-cuda-toolkit 13.2.1.
+- spec: use rpm-macros-cuda-toolkit (host compiler and GPU arch list
+  now come from %%cuda_host_cxx / %%cuda_archs).
+
 * Wed Sep 16 2026 Anton Farygin <rider@altlinux.org> 4.5.14-alt1
 - 4.5.12 -> 4.5.14
 - fixed build with ffmpeg 9 (upstream patch)

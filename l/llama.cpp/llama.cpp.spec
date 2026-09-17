@@ -12,7 +12,7 @@
 
 Name: llama.cpp
 Version: 10717
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: LLM inference in C/C++
 License: MIT
@@ -24,7 +24,7 @@ ExcludeArch: %ix86
 Requires: %name-cpu = %EVR
 %if_with cuda
 Requires: %name-cuda = %EVR
-%filter_from_requires /(libcudart\.so\.12)/d
+%filter_from_requires /(libcudart\.so\.%cuda_major)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 %endif
 %if_with vulkan
@@ -43,7 +43,8 @@ BuildRequires: libgomp-devel
 BuildRequires: libssl-devel
 BuildRequires: libstdc++-devel-static
 %if_with cuda
-BuildRequires: gcc12-c++
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq
 BuildRequires: nvidia-cuda-devel-static
 BuildRequires: libnccl-devel
 %endif
@@ -154,7 +155,7 @@ perl -00 -ni -e 'print unless /_URL/' tests/test-arg-parser.cpp
 # from (installed) binaries.
 # -Xcompiler=-g1: host-side debug info, otherwise libggml-cuda.so has
 # empty .debug_info and 056-debuginfo.brp terminates the build.
-export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
+export NVCC_PREPEND_FLAGS='-Xcompiler=-g1'
 %cmake \
 	-DCMAKE_SKIP_BUILD_RPATH=yes \
 	-DLLAMA_BUILD_TESTS=ON \
@@ -168,7 +169,7 @@ export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
 %endif
 %if_with cuda
 	-DGGML_CUDA=ON \
-	-DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
+	%cuda_cmake_flags \
 %endif
 %if_with vulkan
 	-DGGML_VULKAN=ON \
@@ -203,7 +204,8 @@ install -dm755 %buildroot%_sysconfdir/llama
 
 %check
 ( ! cuobjdump --list-elf %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .cubin )
-( ! cuobjdump --list-ptx %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
+# SASS for every arch, PTX only for the newest one; ggml rewrites 12X into 12Xa.
+( ! cuobjdump --list-ptx %buildroot%_libexecdir/llama/libggml-cuda.so | grep -F -v -e .sm_%{cuda_arch_max}a.ptx )
 # Local path are more useful for debugging becasue they are not stripped by default.
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
 llama-server --version
@@ -281,6 +283,9 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Mon Sep 14 2026 Mikhail Tergoev <fidel@altlinux.org> 1:10717-alt2
+- Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit
+
 * Mon Aug 31 2026 Alexey Shabalin <shaba@altlinux.org> 1:10717-alt1
 - Update to b10717.
 - Build with libnccl-devel (GGML_CUDA_NCCL=ON).

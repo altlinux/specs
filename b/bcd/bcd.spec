@@ -3,16 +3,17 @@
 %global date0 20180610
 %global optflags_lto %nil
 %global soname 0
-%global gcc_ver 14
 
 %ifarch x86_64 aarch64
 %def_with cuda
-%filter_from_requires /libcudart\.so\.12/d
+%filter_from_requires /libcudart\.so\.%cuda_major/d
+# nvcc does not support default system gcc, use nvcc-supported version as host compiler
+%set_gcc_version %cuda_gcc_version
 %endif
 
 Name: bcd
 Version: 1.1
-Release: alt5.%{?date0}git%{?shortcommit0}
+Release: alt6.%{?date0}git%{?shortcommit0}
 Summary: Bayesian Collaborative Denoiser for Monte-Carlo Rendering
 Group: Graphics
 # BSD: main program
@@ -43,6 +44,8 @@ Patch5: bcd-json.patch
 # Eigen 5.X.X requires C++14
 # https://gitlab.com/libeigen/eigen/-/releases/5.0.0
 Patch6: bcd-cxx14.patch
+# CUDA 13 removed clockRate/deviceOverlap/kernelExecTimeoutEnabled/memoryClockRate from cudaDeviceProp
+Patch7: bcd-cuda13.patch
 
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: make
@@ -54,8 +57,8 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: zlib-devel
 BuildRequires: libgomp-devel
 %if_with cuda
-BuildRequires: nvidia-cuda-devel
-BuildRequires: gcc%{gcc_ver}-c++ libgomp%{gcc_ver}-devel
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq libgomp%cuda_gcc_version-devel
 %endif
 
 %description
@@ -117,7 +120,6 @@ developing applications that use %name.
 %add_optflags -Wno-return-type
 export CXXFLAGS="%optflags $(pkg-config --cflags eigen3) -I%_includedir/nlohmann"
 export LDFLAGS="$(pkg-config --libs eigen3)"
-%{?_with_cuda: export GCC_VERSION=%gcc_ver}
 %cmake \
   -Wno-dev \
   -DBCD_BUILD_GUI=OFF \
@@ -126,7 +128,8 @@ export LDFLAGS="$(pkg-config --libs eigen3)"
   -DCMAKE_EXE_LINKER_FLAGS="$LDFLAGS" \
   %{?_with_cuda: \
    -DCUDA_TOOLKIT_ROOT_DIR=%prefix \
-   -DCUDA_NVCC_FLAGS="--std c++14" \
+   -DCUDA_HOST_COMPILER=%cuda_host_cxx \
+   -DCUDA_NVCC_FLAGS="--std c++14 %cuda_gencode" \
    -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF \
   } \
   %{!?_with_cuda:-DBCD_USE_CUDA=OFF}
@@ -157,6 +160,10 @@ cp -pr include/* %buildroot%_includedir
 %_libdir/*.so
 
 %changelog
+* Thu Sep 17 2026 Mikhail Tergoev <fidel@altlinux.org> 1.1-alt6.20180610gitd94c9fa
+- Fix FTBFS with CUDA 13
+- Use rpm-macros-cuda-toolkit for host compiler and supported GPU archs.
+
 * Thu Apr 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt5.20180610gitd94c9fa
 - gcc: downgrade to 14 due cuda requires.
 

@@ -1,6 +1,6 @@
 Name:    pcl
 Version: 1.15.1
-Release: alt3
+Release: alt4
 
 Summary: Point Cloud Library (PCL)
 License: BSD-3-Clause
@@ -15,10 +15,12 @@ Patch2: cuda-io-pkgconfig-no-openni.patch
 Patch3: cloud-composer-export-symbols.patch
 Patch4: pcl-config-fixes.patch
 Patch5: boost-system-header-only.patch
+Patch6: cuda13-thrust-cccl3.patch
+Patch7: cuda13.2-gpu-functional-identity.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ gcc14-c++
-BuildRequires: nvidia-cuda-devel nvidia-cuda-devel-static nvidia-cuda-toolkit
+BuildRequires(pre): rpm-macros-cmake rpm-macros-cuda-toolkit
+BuildRequires: cmake gcc-c++
+BuildRequires: %cuda_buildreq nvidia-cuda-devel-static nvidia-cuda-toolkit
 BuildRequires: eigen3-devel libflann-devel libflann-devel-static
 BuildRequires: libvtk-devel libgl2ps-devel libhdf5-devel libxml2-devel
 BuildRequires: jsoncpp-devel libXext-devel libX11-devel libXrandr-devel
@@ -80,6 +82,8 @@ Library.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 # Workaround: CUDA 12.9 CCCL _CCCL_PP_SPLICE_WITH_IMPL1 macro
 # has only 2 args (SEP, P1) but is called with 3 in some expansion
@@ -105,9 +109,7 @@ sed -i "/^doxylink =/d" \
   doc/advanced/content/conf.py
 
 %build
-export CUDA_PATH=%_prefix
-
-%cmake \
+%cmake %cuda_cmake_flags \
   -DCMAKE_BUILD_TYPE=Release \
   -DWITH_DOCS=ON \
   -DWITH_CUDA=ON \
@@ -133,8 +135,7 @@ export CUDA_PATH=%_prefix
   -DPCL_PKGCONFIG_SUFFIX:STRING="" \
   -DCMAKE_SKIP_RPATH=ON \
   -DCMAKE_CUDA_COMPILER=%_bindir/nvcc \
-  -DCMAKE_CUDA_HOST_COMPILER=%_bindir/g++-14 \
-  -DCUDAToolkit_ROOT=%_prefix \
+  -DCUDA_ARCH_BIN="%cuda_archs_cmake" \
   -DBoost_USE_DEBUG_RUNTIME=OFF \
   -Wno-dev
 
@@ -199,6 +200,11 @@ ${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 %doc %_cmake__builddir/doc/advanced/advanced
 
 %changelog
+* Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 1.15.1-alt4
+- add cuda13-thrust-cccl3.patch (upstream c1126ecf)
+- add cuda13.2-gpu-functional-identity.patch (upstream c423d307)
+- use rpm-macros-cuda-toolkit
+
 * Mon Jul 27 2026 Sergey Palcheh <minergenon@altlinux.org> 1.15.1-alt3
 - fix configure with boost 1.91: VTK config (built against boost 1.86) falls
   back to module-mode FindBoost, which poisons Boost_USE_DEBUG_RUNTIME=TRUE

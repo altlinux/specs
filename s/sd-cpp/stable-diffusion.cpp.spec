@@ -11,7 +11,7 @@
 
 Name: sd-cpp
 Version: 20260204
-Release: alt1
+Release: alt2
 Summary: Diffusion model (SD, Flux, Wan, Qwen Image) inference in pure C/C++
 License: MIT
 Group: Sciences/Computer science
@@ -21,7 +21,7 @@ Provides: stable-diffusion.cpp = %EVR
 # No point to support only x86-64-v3 on ix86.
 ExcludeArch: %ix86
 %if_enabled cuda
-%filter_from_requires /(libcudart\.so\.12)/d
+%filter_from_requires /(libcudart\.so\.%cuda_major)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 Requires: libnvidia-ptxjitcompiler
 %endif
@@ -34,7 +34,8 @@ BuildRequires: gcc-c++
 BuildRequires: libgomp-devel
 BuildRequires: libstdc++-devel-static
 %if_enabled cuda
-BuildRequires: gcc12-c++
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq
 BuildRequires: nvidia-cuda-devel-static
 %endif
 
@@ -65,7 +66,6 @@ sed -i '/set(TARGET/s/sd/sd-cpp/' examples/cli/CMakeLists.txt
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
-export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 # Even when CUDA is enabled it uses CPU inference for t5xxl (Flux text encoder)
 # which can take 15 minutes on 1 core with SSE4.2. We desperately need AVX2.
 # Basically, we want to build with `-DGGML_AVX2`, but cannot do it lazy way,
@@ -77,7 +77,7 @@ export NVCC_PREPEND_FLAGS=-ccbin=g++-12
 	-DGGML_NATIVE=ON \
 %if_enabled cuda
 	-DSD_CUDA=ON \
-	-DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
+	%cuda_cmake_flags \
 %endif
 	-DGGML_BUILD_NUMBER=1
 %cmake_build
@@ -95,6 +95,9 @@ find %buildroot%_prefix -name '*.a' -print -delete
 %_bindir/sd-cpp-cli
 
 %changelog
+* Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 20260204-alt2
+- Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit.
+
 * Sat Feb 07 2026 Vitaly Chikunov <vt@altlinux.org> 20260204-alt1
 - Update to master-493-65891d7 (2026-02-04).
 

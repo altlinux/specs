@@ -5,9 +5,6 @@
 
 %ifarch x86_64 aarch64
 %def_with cuda
-%filter_from_requires /libcudart\.so\.12/d
-# cuda (12.x) is not ready for gcc15
-%define gcc_ver 14
 %else
 %def_without cuda
 %endif
@@ -16,7 +13,7 @@
 
 Name: opensubdiv
 Version: %soname
-Release: alt4
+Release: alt5
 Summary: An Open-Source subdivision surface library
 Group: Development/Other
 License: TOST
@@ -28,6 +25,7 @@ Source: %name-%version.tar
 Patch1: opensubdiv-alt-no-static-libraries.patch
 Patch2: opensubdiv-alt-tutorials-install.patch
 Patch3: opensubdiv-alt-link-glx.patch
+Patch4: opensubdiv-upstream-cuda13.patch
 
 BuildRequires(pre): cmake rpm-build-python3
 BuildRequires: gcc-c++
@@ -43,11 +41,14 @@ BuildRequires: python3-module-docutils doxygen graphviz
 BuildRequires: libglfw3-devel libXrandr-devel libXxf86vm-devel libXcursor-devel libXinerama-devel libXi-devel libPtex-devel
 BuildRequires: gcc-c++ libgomp-devel
 %if_with cuda
-BuildRequires: nvidia-cuda-devel
-BuildRequires: gcc%{gcc_ver}-c++
-# build runs under gcc%{gcc_ver}: -fopenmp needs the matching libgomp.so,
+BuildRequires(pre): rpm-macros-cuda-toolkit
+# nvcc does not support default system gcc
+%set_gcc_version %cuda_gcc_version
+BuildRequires: %cuda_buildreq
+# build runs under gcc%cuda_gcc_version: -fopenmp needs the matching libgomp.so,
 # otherwise FindOpenMP fails and the Osd OMP evaluator is dropped
-BuildRequires: libgomp%{gcc_ver}-devel
+BuildRequires: libgomp%cuda_gcc_version-devel
+%filter_from_requires /libcudart\.so\.%cuda_major/d
 %endif
 
 %description
@@ -135,11 +136,12 @@ An Open-Source subdivision surface library documentation
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
 %if_with cuda
-export GCC_VERSION=%{gcc_ver}
+%cuda_export
 %endif
 %cmake \
 	-DCMAKE_CXX_STANDARD=17 \
@@ -147,6 +149,9 @@ export GCC_VERSION=%{gcc_ver}
 	-DPYTHON_EXECUTABLE=%_bindir/python3 \
 	-DCMAKE_LIBDIR_BASE=%_lib \
 	-DCMAKE_TUTORIAL_BASE=%_lib/%name \
+%if_with cuda
+	-DOSD_CUDA_NVCC_FLAGS="$(echo %cuda_gencode | tr ' ' ';')" \
+%endif
 	%nil
 
 %cmake_build
@@ -176,6 +181,10 @@ rm -rf %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Sep 14 2026 Mikhail Tergoev <fidel@altlinux.org> 3.7.0-alt5
+- fix FTBFS with CUDA 13: cudaThreadSynchronize() was removed (upstream patch)
+- spec: use rpm-macros-cuda-toolkit (host gcc, nvcc gencode, cuda deps)
+
 * Sun Jun 14 2026 Anton Farygin <rider@altlinux.org> 3.7.0-alt4
 - fix FTBFS: compile cuda with gcc14 (nvcc 12.x rejects gcc15 headers)
 

@@ -9,8 +9,8 @@
 %def_without rocm
 %def_with cuda
 
-# NVCC is incompatible with GCC 15, use GCC 14 as host compiler.
-%set_gcc_version 14
+# NVCC does not support default system GCC, use nvcc-supported version as host compiler.
+%set_gcc_version %cuda_gcc_version
 
 %global __find_debuginfo_files %nil
 
@@ -18,7 +18,7 @@
 
 Name:    python3-module-torch-cuda
 Version: 2.12.0
-Release: alt1
+Release: alt2
 
 Summary: Tensors and dynamic neural networks in Python with strong acceleration support (with CUDA support)
 License: BSD-3-Clause
@@ -64,8 +64,7 @@ AutoProv: nopython3
 %filter_from_requires /python3(libfb.py.log)/d
 
 
-BuildRequires(pre): cmake rpm-build-python3
-BuildRequires: gcc%_gcc_version-c++
+BuildRequires(pre): cmake rpm-build-python3 rpm-macros-cuda-toolkit
 BuildRequires: ninja-build
 BuildRequires: valgrind-devel
 BuildRequires: libfmt-devel
@@ -88,7 +87,7 @@ BuildRequires: moodycamel-concurrentqueue-devel
 BuildRequires: openmpi-devel
 %endif
 %if_with cuda
-BuildRequires: nvidia-cuda-devel
+BuildRequires: %cuda_buildreq
 BuildRequires: libcudnn-devel
 BuildRequires: libnccl-devel
 BuildRequires: nvidia-cuda-devel-static
@@ -220,6 +219,7 @@ export USE_MAGMA=OFF
 export USE_MIMALLOC=OFF
 export USE_MEM_EFF_ATTENTION=OFF
 export USE_MKLDNN=OFF
+export USE_MSLK=OFF
 export USE_MPI=OFF
 export USE_NNPACK=OFF
 export USE_NUMPY=ON
@@ -269,7 +269,7 @@ export NCCL_INCLUDE_DIR="/usr/include/"
 export USE_CUDA=ON
 export USE_CUDNN=ON
 export USE_SYSTEM_NVTX=ON
-export CMAKE_CUDA_ARCHITECTURES="50;70;75;80;86;89;90;90a"
+%cuda_export
 %else
 export USE_CUDA=OFF
 export USE_CUDNN=OFF
@@ -393,6 +393,9 @@ pytest_opts="-ra -q -p no:cacheprovider --disable-warnings"
 %_libdir/libtorch_cuda_linalg.so
 
 %changelog
+* Mon Sep 14 2026 Mikhail Tergoev <fidel@altlinux.org> 2.12.0-alt2
+- Switched to rpm-macros-cuda-toolkit for host compiler and CUDA arch list.
+
 * Mon Aug 31 2026 Nikita Shmatko <nash@altlinux.org> 2.12.0-alt1
 - Updated to 2.12.0 version.
 - Reenabled half ops for nccl symm-mem.

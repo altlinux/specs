@@ -15,7 +15,7 @@
 
 Name: transcribe.cpp
 Version: 0.2.3
-Release: alt1
+Release: alt2
 
 Summary: Speech-to-text (ASR) inference in C/C++
 License: MIT
@@ -33,7 +33,7 @@ Requires: libtranscribe%soversion = %EVR
 Requires: %name-cpu = %EVR
 %if_with cuda
 Requires: %name-cuda = %EVR
-%filter_from_requires /(libcudart\.so\.12)/d
+%filter_from_requires /(libcudart\.so\.%cuda_major)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 %endif
 %if_with vulkan
@@ -44,8 +44,8 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 %if_with cuda
-# cuda requires gcc12
-BuildRequires: gcc12-c++
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq
 BuildRequires: nvidia-cuda-devel-static
 %endif
 %if_with vulkan
@@ -131,7 +131,7 @@ Requires: %name-cpu = %EVR
 # an empty .debug_info and 056-debuginfo.brp terminates the build (as in
 # llama.cpp).
 %define optflags_debug -g1
-export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
+export NVCC_PREPEND_FLAGS='-Xcompiler=-g1'
 %endif
 # Unless -DCMAKE_SKIP_BUILD_RPATH=yes CMake leaves the build time RPATH in the
 # binaries, which are installed from the build tree (upstream has no install
@@ -152,7 +152,7 @@ export NVCC_PREPEND_FLAGS='-ccbin=g++-12 -Xcompiler=-g1'
 %endif
 %if_with cuda
 	-DTRANSCRIBE_CUDA=ON \
-	-DCMAKE_CUDA_ARCHITECTURES='52-virtual;80-virtual' \
+	%cuda_cmake_flags \
 %endif
 %if_with vulkan
 	-DTRANSCRIBE_VULKAN=ON \
@@ -178,9 +178,9 @@ rmdir --ignore-fail-on-non-empty %buildroot%_cmakedir
 
 %check
 %if_with cuda
-# Only the virtual architectures asked for above, nothing else (as in llama.cpp).
 ( ! cuobjdump --list-elf %buildroot%backenddir/libggml-cuda.so | grep -F -v -e .cubin )
-( ! cuobjdump --list-ptx %buildroot%backenddir/libggml-cuda.so | grep -F -v -e .sm_80.ptx -e .sm_52.ptx )
+# SASS for every arch, PTX only for the newest one; ggml rewrites 12X into 12Xa (as in llama.cpp).
+( ! cuobjdump --list-ptx %buildroot%backenddir/libggml-cuda.so | grep -F -v -e .sm_%{cuda_arch_max}a.ptx )
 %endif
 # %backenddir does not exist at build time, so the library falls back to
 # scanning the directory it lives in itself (src/), while the build puts the
@@ -228,6 +228,9 @@ export PATH=$PWD/%_cmake__builddir/bin:$PATH
 %endif
 
 %changelog
+* Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 0.2.3-alt2
+- Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit
+
 * Wed Sep 02 2026 Alexey Shabalin <shaba@altlinux.org> 0.2.3-alt1
 - Update to 0.2.3.
 
