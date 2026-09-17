@@ -5,7 +5,7 @@
 %define schemasdir %_datadir/glib-2.0/schemas
 
 Name: alt-gaming
-Version: 0.0.9
+Version: 0.0.10
 Release: alt1
 
 Summary: Easy system setup to optimize for games.
@@ -145,6 +145,13 @@ fi
 %sysctldir/95-swappiness.conf
 
 %changelog
+* Thu Sep 17 2026 Mikhail Tergoev <fidel@altlinux.org> 0.0.10-alt1
+- updated alt-gaming-check:
+  + fixed kernel version check for ntsync on kernel 7.x+ (ALT bug 59665)
+  + check settings first, package presence second
+  + swappiness below 10 is a warning, not an error (ALT bug 55312)
+  + exact numeric comparisons instead of substring grep
+
 * Mon Jul 21 2025 Mikhail Tergoev <fidel@altlinux.org> 0.0.9-alt1
 - added alt-gaming-ntsync
 - updated alt-gaming-check
