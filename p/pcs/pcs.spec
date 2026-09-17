@@ -5,7 +5,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.12.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -101,11 +101,12 @@ agent (snmpd).
 
 %package       -n gem-pcsd
 Version:       0.12.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Pacemaker/Corosync configuration system service
 Group:         Development/Ruby
 
 Provides:      gem(pcsd) = 0.12.3
+Requires:      gem(curb)
 Requires:      gem(backports)
 Requires:      gem(childprocess)
 Requires:      gem(ethon)
@@ -114,8 +115,15 @@ Requires:      gem(mustermann)
 Requires:      gem(nio4r)
 Requires:      gem(puma)
 Requires:      gem(rack-protection)
+Requires:      gem(rack-test)
 Requires:      gem(sinatra)
 Requires:      gem(tilt)
+Requires:      gem(bundler)
+Requires:      gem(io-console)
+Requires:      gem(json)
+Requires:      gem(power_assert)
+Requires:      gem(rexml)
+Requires:      gem(test-unit)
 Requires:      gem(rackup)
 
 %description   -n gem-pcsd
@@ -125,7 +133,7 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 %if_enabled    doc
 %package       -n gem-pcsd-doc
 Version:       0.12.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Pacemaker/Corosync configuration system service documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pcsd
 Group:         Development/Documentation
@@ -147,7 +155,7 @@ Pacemaker/Corosync gui/cli configuration system and daemon.
 %if_enabled    devel
 %package       -n gem-pcsd-devel
 Version:       0.12.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Pacemaker/Corosync configuration system service development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pcsd
 Group:         Development/Ruby
@@ -273,6 +281,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Thu Sep 17 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.3-alt1.1
+- ! fixed dep to lost gems
+
 * Sat Sep 12 2026 Pavel Skrylev <majioa@altlinux.org> 1:0.12.3-alt1
 - ^ 0.12.2p277.1 -> 0.12.3
 - ! fixed property of the installed file know_hosts to make it
