@@ -1,6 +1,6 @@
 Name: libvidstab
 Version: 1.1.0
-Release: alt2.1
+Release: alt3
 
 Summary: Video stabilization library
 License: GPL
@@ -41,6 +41,9 @@ Development files for Vidstab framework.
 %_pkgconfigdir/vidstab.pc
 
 %changelog
+* Thu Sep 17 2026 Michael Shigorin <mike@altlinux.org> 1.1.0-alt3
+- Fix pkg-config to contain pthreads (bircoph@).
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.0-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
