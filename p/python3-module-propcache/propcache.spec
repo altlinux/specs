@@ -1,11 +1,11 @@
 Name: python3-module-propcache
-Version: 0.5.2
+Version: 0.5.4
 Release: alt1
 
 Summary: Fast implementation of cached properties
 License: Apache-2.0
 Group: Development/Python
-Url: https://pypi.org/project/propcache
+URL: https://pypi.org/project/propcache
 VCS: https://github.com/aio-libs/propcache
 
 Source0: %name-%version.tar
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/propcache-%version.dist-info
 
 %changelog
+* Thu Sep 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.4-alt1
+- 0.5.4 released
+
 * Wed May 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.2-alt1
 - 0.5.2 released
 
