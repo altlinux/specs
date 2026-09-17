@@ -5,7 +5,7 @@ Name: art
 # NOTE: run
 #       ./tools/generateReleaseInfo
 #       on each update
-Version: 1.26.8
+Version: 1.26.9
 Release: alt1
 
 Summary: Advanced raw photo development program
@@ -93,6 +93,9 @@ sed -i "s/sisyphus/master/" ReleaseInfo.cmake
 %_datadir/doc/ART/RELEASE_NOTES.txt
 
 %changelog
+* Thu Sep 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.26.9-alt1
+- New version 1.26.9.
+
 * Mon Aug 24 2026 Nikolay Strelkov <snk@altlinux.org> 1.26.8-alt1
 - New version 1.26.8.
 
