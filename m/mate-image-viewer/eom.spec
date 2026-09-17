@@ -1,8 +1,8 @@
 %define rname eom
 
 Name: mate-image-viewer
-Version: 1.28.0
-Release: alt2
+Version: 1.28.1
+Release: alt1
 Epoch: 1
 Summary: Eye of MATE image viewer
 License: GPLv2+ and LGPLv2+
@@ -67,6 +67,10 @@ Development files for eom
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Thu Sep 17 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+- fixed rendering large embedded PNG image (closes: #49895)
+
 * Tue Oct 28 2025 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.0-alt2
 - rebuild for libpeas changes
 
