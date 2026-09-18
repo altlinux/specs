@@ -2,7 +2,7 @@
 
 Name: xiphos
 Version: 4.3.2.14
-Release: alt2
+Release: alt3
 Summary: Bible study and research tool
 Url: http://xiphos.org/
 Group: Text tools
@@ -23,8 +23,9 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-gir
 BuildRequires: biblesync-devel >= 2.0.1
 BuildRequires: cmake desktop-file-utils intltool libGConf libdbus-glib-devel libdbus-devel 
-BuildRequires: libappstream-glib libdbus-glib-devel libminizip-devel libwebkit2gtk-devel  libdatrie-devel libjpeg-devel 
-BuildRequires: libsword-devel libwebkitgtk4-devel libxml2-devel yelp-tools 
+BuildRequires: libappstream-glib libdbus-glib-devel libminizip-devel libwebkit2gtk4.1-devel  libdatrie-devel libjpeg-devel
+BuildRequires: libsword-devel libxml2-devel yelp-tools perl
+
 BuildRequires: gcc gcc-c++ 
 BuildRequires: libsoup-gir-devel libgtksourceview4-gir-devel
 
@@ -47,6 +48,8 @@ echo %{version} >cmake/source_version.txt
 
 %patch3 -p1
 
+# fix for ALT#44763
+perl -0777 -pi -e 's/(\tmenu =\s*\n?\s*main_versekey_drop_down_(book|chapter|verse)_menu\()/\tif (event->type != GDK_BUTTON_PRESS || event->button != 1)\n\t\treturn FALSE;\n$1/g' src/gtk/navbar_versekey*.c
 
 %build
 export CFLAGS="%{optflags} -Wno-dev -Wno-return-type"
@@ -85,6 +88,10 @@ desktop-file-install --delete-original         \
 %_man1dir/%{name}*
 
 %changelog
+* Sat Sep 19 2026 Ilya Mashkin <oddity@altlinux.ru> 4.3.2.14-alt3
+- Fixed conflict between libsoup2 and libsoup3 (Closes: #60587)
+- Fixed crush/freeze (Closes: #44763)
+
 * Thu Nov 27 2025 Ilya Mashkin <oddity@altlinux.ru> 4.3.2.14-alt2
 - Add R: libgtk4-gir libgtksourceview4-gir
 
