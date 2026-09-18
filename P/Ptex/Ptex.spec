@@ -1,4 +1,4 @@
-%define git a3729367596c827ace086f4baa6cab89b6a7f439
+%define git d8171fc8ed2b24e208b694e9acb0eae068148ef9
 %define soname 2.5
 
 %define _unpackaged_files_terminate_build 1
@@ -8,7 +8,7 @@
 %def_enable test
 
 Name: Ptex
-Version: 2.5.2
+Version: 2.5.4
 Release: alt1
 Summary: Per-Face Texture Mapping for Production Rendering
 
@@ -106,6 +106,9 @@ export FLAVOR=profile
 %_pkgconfigdir/ptex.pc
 
 %changelog
+* Fri Sep 18 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.4-alt1
+- 2.5.4.
+
 * Mon Apr 20 2026 L.A. Kostis <lakostis@altlinux.ru> 2.5.2-alt1
 - 2.5.2.
 
