@@ -9,7 +9,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 3.11.1
+Version: 3.12.3
 Release: alt1
 
 Summary: Real asynchronous file operations with asyncio support
@@ -64,6 +64,9 @@ sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 3.12.3-alt1
+- Updated to 3.12.3.
+
 * Wed Jun 10 2026 Alexandr Shashkin <dutyrok@altlinux.org> 3.11.1-alt1
 - Updated to 3.11.1.
 

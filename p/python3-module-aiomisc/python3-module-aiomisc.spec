@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 18.0.26
+Version: 18.0.28
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -90,6 +90,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 18.0.28-alt1
+- Updated to 18.0.28.
+
 * Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 18.0.26-alt1
 - Updated to 18.0.26.
 

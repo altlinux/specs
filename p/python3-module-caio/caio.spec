@@ -4,7 +4,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.10.2
+Version: 0.12.4
 Release: alt1
 
 Summary: Linux AIO c python bindings
@@ -31,6 +31,7 @@ Python bindings for Linux AIO API and simple asyncio wrapper.
 %prep
 %setup
 %autopatch -p1
+sed -i '/^version /s/= .*$/= "%version"/' pyproject.toml
 
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -50,6 +51,9 @@ Python bindings for Linux AIO API and simple asyncio wrapper.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.4-alt1
+- Updated to 0.12.4.
+
 * Thu Jul 09 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.2-alt1
 - Updated to 0.10.2.
 
