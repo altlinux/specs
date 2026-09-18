@@ -7,7 +7,7 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag r1rv80
+%global gittag r1rv84
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 %global profilen 1.8
 %global profile %(echo %{profilen} | sed "s/\\.//g" )
@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          1.80
+Version:          1.84
 Release:          alt1
 License:          MIT
 URL:              https://www.bouncycastle.org
@@ -35,6 +35,7 @@ Source7:          https://repo1.maven.org/maven2/org/bouncycastle/bcjmail-%{jdko
 Source8:          get-poms.sh
 
 Patch0:           jmail.packages.patch
+Patch1:           bouncycastle-1.84-alt-fix-compilation.patch
 
 BuildArch:        noarch
 
@@ -126,6 +127,7 @@ API documentation for the Bouncy Castle Cryptography APIs.
 %prep
 %setup -q -n bc-java-%{gittag}
 %patch0 -p1
+%patch1 -p2
 
 for x in `find | grep  -e  x_pkcs7_signature.java  -e PKCS7ContentHandler.java -e multipart_signed.java` ; do
   sed "s/getTransferData.ActivationDataFlavor/getTransferData(DataFlavor/g" -i $x
@@ -264,6 +266,9 @@ fi
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Thu Sep 10 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.84-alt1
+- new version
+
 * Thu Jan 29 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.80-alt1
 - new version (thanks fedora for the spec and the patch)
 
