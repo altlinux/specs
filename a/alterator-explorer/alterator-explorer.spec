@@ -3,7 +3,7 @@
 %define alt_name acc
 
 Name: alterator-explorer
-Version: 0.1.19
+Version: 0.1.20
 Release: alt1
 
 Summary: Explorer of Alterator applications operating via D-Bus
@@ -39,7 +39,9 @@ BuildRequires: ImageMagick-tools
 
 Requires: alterator-interface-application >= 0.1.1
 Requires: alterator-backend-categories >= 0.1.6
+Requires: alterator-backend-browsing >= 0.1.1
 Requires: alterator-backend-legacy >= 0.1.9
+Requires: alt-components >= 0.6.16
 
 %if_with legacy
 Requires: alterator-standalone >= 7.4.3
@@ -96,6 +98,10 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Thu Sep 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.20-alt1
+- Add display of available but not installed applications
+  (thx Evgenii Sozonov and Andrey Alekseev).
+
 * Thu May 14 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.19-alt1
 - Fixed:
   + duplication of the icon on the bottom panel when launching acc

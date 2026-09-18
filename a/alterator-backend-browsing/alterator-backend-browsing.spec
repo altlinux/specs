@@ -2,7 +2,7 @@
 %define shortname browsing
 
 Name: alterator-backend-%{shortname}
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Alterator backend for browsing components and applications
@@ -80,5 +80,8 @@ install -p -m 644 interface/org.altlinux.alterator.*.policy \
 
 
 %changelog
+* Thu Sep 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
+- Return handled interface for providers (thx Evgenii Sozonov).
+
 * Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
 - First build.
