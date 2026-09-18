@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.10
+Version: 3.7.11
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Sep 18 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.11-alt1
+- fix slider focus events
+
 * Thu Sep 17 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.10-alt1
 - refresh checktree after changes (closes: 45299)
 - fix focus out from combobox (closes: 46976)
