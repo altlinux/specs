@@ -1,5 +1,5 @@
 Name: tree-sitter-ocaml
-Version: 0.25.0
+Version: 0.26.0
 Release: alt1
 
 Summary: OCaml grammar for tree-sitter
@@ -43,6 +43,9 @@ install -pm0644 grammars/type/package.json %buildroot%_libdir/tree-sitter-ocaml-
 %_libdir/tree-sitter-ocaml*
 
 %changelog
+* Fri Sep 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.26.0-alt1
+- 0.26.0 released
+
 * Tue May 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.0-alt1
 - 0.25.0 released
 
