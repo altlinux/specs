@@ -25,7 +25,7 @@
 
 Name: %rname
 Version: 6.7.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Fri Sep 18 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.5-alt2
+- unhide timezone selector map but without regions (closes: 60555) (thanks katze-942)
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.5-alt1
 - new version
 
