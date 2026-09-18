@@ -6,7 +6,7 @@
 %def_enable docs
 
 Name: tuner
-Version: 0.7.3
+Version: 0.7.4
 Release: alt1
 
 Summary: Extensible control center
@@ -133,6 +133,9 @@ GObject introspection devel data for the lib%name.
 %endif
 
 %changelog
+* Fri Sep 18 2026 Alexander Davydzik <paladindev@altlinux.org> 0.7.4-alt1
+- added deep search
+
 * Tue Sep 01 2026 Alexander Davydzik <paladindev@altlinux.org> 0.7.3-alt1
 - fixed plugin list adaptivity
 - upgraded scale widget adaptivity
