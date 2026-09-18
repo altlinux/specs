@@ -7,29 +7,26 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-install-plugin
-Version:        2.5.2
-Release:        alt1_11jpp11
+Version:        3.2.0
+Release:        alt1
 Summary:        Maven Install Plugin
 
-License:        ASL 2.0
-URL:            http://maven.apache.org/plugins/maven-install-plugin
-Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+License:        Apache-2.0
+URL:            https://maven.apache.org/plugins/maven-install-plugin
+Source0:        https://github.com/apache/maven-install-plugin/archive/%name-%version.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-codec:commons-codec)
+
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
-BuildRequires:  mvn(org.apache.maven:maven-artifact-manager)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires:  mvn(org.apache.maven.shared:maven-shared-utils)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 Source44: import.info
 
@@ -47,7 +44,7 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q
+%setup
 # maven-core has scope "provided" in Plugin Testing Harness, so we
 # need to provide it or tests will fail to compile.  This works for
 # upstream because upstream uses a different version of Plugin Testing
@@ -57,7 +54,7 @@ API documentation for %{name}.
 %pom_add_dep org.apache.maven:maven-compat
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DmavenVersion=3.1.1
+%mvn_build -f
 
 %install
 %mvn_install
@@ -69,6 +66,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Sep 17 2026 Anton Meleshnikov <alton@altlinux.org> 3.2.0-alt1
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.5.2-alt1_11jpp11
 - java11 build
 
