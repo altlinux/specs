@@ -1,5 +1,5 @@
 Name: dnscrypt-proxy
-Version: 2.1.17
+Version: 2.1.18
 Release: alt1
 
 Summary: A protocol for securing communications between a client and a DNS resolver
@@ -54,24 +54,26 @@ popd
 install -D -p -m 0644 %SOURCE1 %buildroot%_unitdir/%name.service
 install -D -p -m 0644 %SOURCE2 %buildroot%_unitdir/%name.socket
 install -D -p -m 0644 dnscrypt-proxy/example-dnscrypt-proxy.toml %buildroot%_sysconfdir/%name.toml
-
-
 %post
 %post_service %name
 
 %preun
 %preun_service %name
-
-
 %files
 %doc README.md LICENSE
 %config(noreplace) %_sysconfdir/dnscrypt-proxy.toml
 %_unitdir/%name.service
 %_unitdir/%name.socket
 %_sbindir/%name
+%dir %_docdir/%name
 %_docdir/%name/*.txt
 
 %changelog
+* Sun Sep 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.18-alt1
+- Own the documentation directory.
+- Fix socket ordering cycle (ALT bug #60421).
+- new version 2.1.18
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.17-alt1
 - new version 2.1.17
 
@@ -119,4 +121,3 @@ install -D -p -m 0644 dnscrypt-proxy/example-dnscrypt-proxy.toml %buildroot%_sys
 
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 2.0.23-alt1_1
 - new version
-
