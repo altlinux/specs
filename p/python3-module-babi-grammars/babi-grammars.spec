@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.0.72
+Version: 0.0.74
 Release: alt1
 
 Summary: grammars for babi
@@ -49,24 +49,26 @@ grammars for babi
 %_datadir/babi/
 
 %changelog
+* Fri Sep 18 2026 Vladislav Glinkin <smasher@altlinux.org> 0.0.74-alt1
+- New version 0.0.74.
+
 * Tue Mar 31 2026 Vladislav Glinkin <smasher@altlinux.org> 0.0.72-alt1
-- New version
+- New version 0.0.72.
 
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.0.62-alt1.1
 - Demodernized packaging.
 
 * Wed Aug 20 2025 Vladislav Glinkin <smasher@altlinux.org> 0.0.62-alt1
-- 0.0.61 -> 0.0.62
+- New version 0.0.62.
 
 * Fri Mar 21 2025 Vladislav Glinkin <smasher@altlinux.org> 0.0.61-alt1
-- 0.0.57 -> 0.0.61
+- New version 0.0.61.
 
 * Thu Oct 31 2024 Vladislav Glinkin <smasher@altlinux.org> 0.0.57-alt1
-- 0.0.54 -> 0.0.57
+- New version 0.0.57.
 
 * Sun Nov 05 2023 Vladislav Glinkin <smasher@altlinux.org> 0.0.54-alt1
-- Updated to 0.0.54
+- New version 0.0.54.
 
 * Wed Aug 30 2023 Vladislav Glinkin <smasher@altlinux.org> 0.0.52-alt1
-- Initial build for ALT
-
+- Initial build for ALT.
