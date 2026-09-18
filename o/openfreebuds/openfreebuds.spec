@@ -2,7 +2,7 @@
 %def_with check
 
 Name: openfreebuds
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 Summary: Open source app for HUAWEI FreeBuds
 License: GPL-3.0
@@ -25,8 +25,11 @@ BuildRequires: qt6-tools
 %if_with check
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-dbus-next
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-psutil
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-qasync
 %endif
 
 %description
@@ -99,6 +102,9 @@ install -m 0644 openfreebuds_qt/assets/pw.mmk.OpenFreebuds.png %buildroot%_pixma
 %exclude %python3_sitelibdir/openfreebuds_qt/designer/*.ui
 
 %changelog
+* Fri Sep 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.18.1-alt1
+- Updated to version 0.18.1.
+
 * Sat Sep 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.18.0-alt1
 - Updated to version 0.18.0.
 
