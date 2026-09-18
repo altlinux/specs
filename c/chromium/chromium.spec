@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        153.0.8010.47
+Version:        153.0.8010.52
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -743,6 +743,68 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Sat Sep 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 153.0.8010.52-alt1
+- New version (153.0.8010.52).
+- Fixes:
+  + CVE-2026-91708: Race condition in Network
+  + CVE-2026-91709: Type confusion in ServiceWorker
+  + CVE-2026-91710: Use after free in WebAppInstalls
+  + CVE-2026-91711: Out of bounds write in ServiceWorker
+  + CVE-2026-91712: Race condition in Extensions
+  + CVE-2026-91713: Missing authorization in Browser
+  + CVE-2026-91714: Observable discrepancy in Fonts
+  + CVE-2026-91715: Type confusion in ServiceWorker
+  + CVE-2026-91716: Use after free in Auth
+  + CVE-2026-91717: Missing authorization in Android
+  + CVE-2026-91718: Use after free in Core
+  + CVE-2026-91719: Code injection in XML
+  + CVE-2026-91720: Uninitialized resource in ANGLE
+  + CVE-2026-91721: Use after free in Internals
+  + CVE-2026-91722: Use after free in Input
+  + CVE-2026-91723: Race condition in WebAppInstalls
+  + CVE-2026-91724: Use after free in Input
+  + CVE-2026-91725: Observable discrepancy in CSS
+  + CVE-2026-91726: Out of bounds read in WebGL
+  + CVE-2026-91727: Incorrect reference resolution in Extensions
+  + CVE-2026-91728: Integer overflow in V8
+  + CVE-2026-91729: Use after free in DigitalCredentials
+  + CVE-2026-91730: Incomplete cleanup in GetUserMedia
+  + CVE-2026-91731: Type confusion in Compositing
+  + CVE-2026-91732: Missing authorization in AppManifest
+  + CVE-2026-91733: Improper state validation in Skia
+  + CVE-2026-91734: Incorrect authorization in Core
+  + CVE-2026-91735: Incorrect authorization in WebUI
+  + CVE-2026-91736: Use after free in DOM
+  + CVE-2026-91737: Use after free in PDF
+  + CVE-2026-91738: Improper input validation in ANGLE
+  + CVE-2026-91739: Missing authorization in Transactions Platform
+  + CVE-2026-91740: Uninitialized resource in Skia
+  + CVE-2026-91741: Type confusion in CacheStorage
+  + CVE-2026-91742: Confused deputy in PriceTracking
+  + CVE-2026-91743: Race condition in Core
+  + CVE-2026-91744: Race condition in PlatformIntegration
+  + CVE-2026-91745: Use after free in V8
+  + CVE-2026-91746: Integer overflow in Compositing
+  + CVE-2026-91747: Use after free in Skia
+  + CVE-2026-91748: Race condition in Extensions
+  + CVE-2026-91749: Use after free in Workers
+  + CVE-2026-93372: Buffer overflow in WebGL
+  + CVE-2026-93373: Use after free in Extensions
+  + CVE-2026-93374: Use after free in Dawn
+  + CVE-2026-93375: Incorrect reference resolution in Tracing
+  + CVE-2026-93376: Out of bounds read in DataTransfer
+  + CVE-2026-93377: Type confusion in V8
+  + CVE-2026-93378: Missing authorization in Storage
+  + CVE-2026-93379: Incorrect authorization in ORB
+  + CVE-2026-93380: Race condition in FileSystem
+  + CVE-2026-93381: Buffer overflow in PDFium
+  + CVE-2026-93382: Use after free in PDFium
+  + CVE-2026-93383: Information leak in Permissions
+  + CVE-2026-93384: Server-side request forgery in Omnibox
+  + CVE-2026-93385: Information leak in Paint
+  + CVE-2026-93386: UI misrepresentation in WebAppInstalls
+  + CVE-2026-93387: Improper state validation in Skia
+
 * Wed Sep 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 153.0.8010.47-alt1
 - New version (153.0.8010.47).
 - Fixes:
