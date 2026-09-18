@@ -7,8 +7,8 @@
 %global luaver 5.4
 
 Name: lua%luaver-module-%oname
-Version: 20250929
-Release: alt2.%rockspecrev
+Version: 20260910
+Release: alt1.%rockspecrev
 
 Summary: Most comprehensive OpenSSL module in the Lua universe
 License: MIT
@@ -19,7 +19,7 @@ Vcs: https://github.com/wahern/luaossl
 Provides: luarocks%luaver(%oname) = %EVR
 
 Source0: %name-%version.tar
-Source1: https://luarocks.org/manifests/daurnimator/luaossl-20250929-0.rockspec
+Source1: https://luarocks.org/manifests/daurnimator/luaossl-20260910-0.rockspec
 
 BuildRequires(pre): rpm-macros-lua >= 1.4
 # Automatically added by buildreq on ...
@@ -54,11 +54,14 @@ luarocks-%luaver install --verbose --local --deps-mode none \
 %lua_modulesdir_noarch/openssl*
 
 %changelog
+* Fri Sep 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 20260910-alt1.0
+- Updated to 20260910.
+
 * Sat Jun 13 2026 Alexandr Shashkin <dutyrok@altlinux.org> 20250929-alt2.0
 - Fixed FTBFS: added patch to work around broken PEM_write_bio_OCSP_RESPONSE
   macro in OpenSSL 3.5.
 
-* Thu Sep 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 20250929-alt1.0
+* Tue Sep 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 20250929-alt1.0
 - Updated to 20250929-0.
 
 * Thu Aug 24 2023 Alexandr Shashkin <dutyrok@altlinux.org> 20220711-alt1.0
