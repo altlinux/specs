@@ -2,8 +2,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: lego
-Version: 5.2.2
-Release: alt2
+Version: 5.5.1
+Release: alt1
 Summary: Let's Encrypt/ACME client and library written in Go
 
 Group: Development/Tools
@@ -20,7 +20,7 @@ ExclusiveArch: %go_arches
 ExcludeArch: i586
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.24.0
+BuildRequires: rpm-build-golang golang >= 1.26.0
 BuildPreReq: /proc
 
 %description
@@ -34,7 +34,7 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-export LDFLAGS="-extldflags '-static'"
+export LDFLAGS="-extldflags '-static' -X main.version=v%{version}"
 export CGO_ENABLED=0
 
 %golang_prepare
@@ -100,6 +100,12 @@ done
 %_bindir/*
 
 %changelog
+* Fri Sep 18 2026 Alexey Romanyuta <r9odt@altlinux.org> 5.5.1-alt1
+- New version 5.5.1.
+
+* Fri Sep 04 2026 Alexey Romanyuta <r9odt@altlinux.org> 5.4.1-alt1
+- New version 5.4.1.
+
 * Thu Jun 21 2026 Alexey Romanyuta <r9odt@altlinux.org> 5.2.2-alt2
 - Add check section to spec file.
 - Exclude i586 architecture.
