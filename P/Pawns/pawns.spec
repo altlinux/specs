@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: Pawns
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: A feature-rich chess application built with C++ and Qt6
@@ -43,5 +43,8 @@ install -D -m0644 io.github.alamahant.%name.png %buildroot%_pixmapsdir/io.github
 %_pixmapsdir/io.github.alamahant.%name.png
 
 %changelog
+* Tue Sep 15 2026 Mikhail Nogin <joycap@altlinux.org> 1.0.1-alt1
+- Updated to 1.0.1.
+
 * Tue Aug 18 2026 Mikhail Nogin <joycap@altlinux.org> 1.0.0-alt1
 - Initial built for Sisyphus.
