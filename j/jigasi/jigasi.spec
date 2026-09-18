@@ -4,7 +4,7 @@
 
 Name:           jigasi
 Version:        1.1
-Release:        alt0.3
+Release:        alt0.4
 
 Summary:        Jitsi Gateway for SIP
 #Group:          Networking/Instant messaging
@@ -17,13 +17,14 @@ URL:            http://www.jitsi.org
 ExclusiveArch:  x86_64
 
 Source0:        %name-%version.tar
-Source1:        m2-%name-%version.tar
+Source1:        m2.tar
 Source2:        %name.sh
 
+Patch0:         0001-Fix-maven-assembly-plugin-descriptors.patch
+
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel-default
-#BuildRequires:  ant
-BuildRequires:  maven
+BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 BuildRequires:  unzip
 BuildRequires:	libmatthew-java
 
@@ -42,12 +43,18 @@ This package contains the jigasi (Jitsi Gateway for SIP) daemon,
 which allows SIP accounts to be invited in Jitsi Meet conferences.
 
 %prep
-tar -x -C ~ -f %SOURCE1
 %setup
+%autopatch -p1
+tar xf %SOURCE1
+
+%pom_add_dep_mgmt io.grpc:grpc-core:1.15.0
+%pom_add_dep_mgmt org.igniterealtime.jbosh:jbosh:0.9.2
+%pom_add_dep_mgmt dnsjava:dnsjava:2.1.7
 
 %build
-#ant rebuild
-mvn install -Dassembly.skipAssembly=false
+%mvn_build -f -j -- \
+	-Dassembly.skipAssembly=false \
+	-Dmaven.repo.local="$PWD/m2/repository"
 
 %install
 %ifarch x86_64
@@ -136,6 +143,9 @@ touch %buildroot%_sysconfdir/jitsi/%name/{config,sip-communicator.properties}
 %_initdir/%name
 
 %changelog
+* Fri Sep 18 2026 Evgeniy Serov <scala@altlinux.org> 1.1-alt0.4
+- Switched to build with XMvn and re-vendored deps.
+
 * Tue Jun 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt0.3
 - Sisyphus build
 
