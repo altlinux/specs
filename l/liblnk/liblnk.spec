@@ -14,7 +14,7 @@
 
 Name: liblnk
 Version: 20260525
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to access the Windows Shortcut File (LNK) format
 License: LGPLv3+ and GFDL-1.3+
@@ -25,6 +25,7 @@ Url: https://github.com/libyal/liblnk.git
 Source: %name-alpha-%version.tar.gz
 Source1: Windows_Shortcut_File_(LNK)_format.pdf
 Source2: %name.watch
+Patch1: alt-network-path-output-encoding.patch
 
 BuildRequires: pkg-config
 BuildRequires: python3-dev
@@ -82,6 +83,7 @@ Python binding for liblnk, which can read Windows Shortcut Link files.
 
 %prep
 %setup
+%patch1 -p1
 cp -a "%SOURCE1" .
 
 %build
@@ -118,6 +120,9 @@ cp -a "%SOURCE1" .
 %python3_sitelibdir/pylnk.la
 
 %changelog
+* Fri Sep 18 2026 Sergey V Turchin <zerg@altlinux.org> 20260525-alt2
+- NMU: fix lnkinfo network path output encoding (closes: 58338)
+
 * Fri Aug 14 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260525-alt1
 - New version 20260525 (Closes: #59822).
 
