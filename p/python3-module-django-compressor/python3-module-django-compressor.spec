@@ -3,7 +3,7 @@
 %define oname django-compressor
 
 Name: python3-module-%oname
-Version: 2.4.1
+Version: 4.6.0
 Release: alt1
 
 Summary: Compresses linked and inline JavaScript or CSS into single cached files
@@ -17,13 +17,15 @@ BuildArch: noarch
 Source: %pypi_name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-django-appconf >= 1.0.3
-BuildRequires: python3-module-rcssmin >= 1.0.6
-BuildRequires: python3-module-rjsmin >= 1.1.0
+BuildRequires: python3-module-rcssmin >= 1.2.1
+BuildRequires: python3-module-rjsmin >= 1.2.4
 
 Requires: python3-module-django-appconf >= 1.0.3
-Requires: python3-module-rcssmin  >= 1.0.6
-Requires: python3-module-rjsmin >= 1.1.0
+Requires: python3-module-rcssmin  >= 1.2.1
+Requires: python3-module-rjsmin >= 1.2.4
 
 %description
 Django Compressor combines and compresses linked and inline Javascript
@@ -55,10 +57,10 @@ This package contein tests.
 #rm -rf %pypi_name.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst LICENSE
@@ -71,6 +73,9 @@ This package contein tests.
 %python3_sitelibdir/*/test_settings.py
 
 %changelog
+* Fri Sep 18 2026 Alexey Shabalin <shaba@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
