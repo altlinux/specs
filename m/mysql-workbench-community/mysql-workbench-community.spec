@@ -1,8 +1,9 @@
 %define gdal_version 39
+%define optflags_lto %nil
 
 Name: mysql-workbench-community
 Version: 8.0.47
-Release: alt6
+Release: alt7
 
 Summary: A MySQL visual database modeling tool
 
@@ -266,6 +267,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Sep 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt7
+- NMU: disable LTO (Closes: #52901).
+
 * Tue Sep 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt6
 - NMU: add R: evince (Closes: #46878).
 - NMU: move desktop file to main package (Closes: #56410).
