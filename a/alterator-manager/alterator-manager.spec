@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -90,6 +90,13 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Fri Sep 18 2026 Ivan Savin <svn17@altlinux.org> 0.2.2-alt1
+- Enable monitoring of directories containing backend files before those files
+  are loaded. Previously, monitoring started only after the backend files had
+  been loaded, creating a window of time during which the contents of the
+  backend directory could be modified without the service detecting the
+  change (the-nexi@).
+
 * Tue Sep 08 2026 Ivan Savin <svn17@altlinux.org> 0.2.1-alt1
 - Migrate to new runners in .forgejo/workflows/clang-format.yml and
   .forgejo/workflows/secrets-check.yaml (alxvmr@).
