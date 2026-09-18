@@ -1,6 +1,6 @@
 Name:    prometheus-jmx_exporter
 Version: 1.0.1
-Release: alt6
+Release: alt7
 Summary: A process for exposing JMX Beans via HTTP for Prometheus consumption
 
 Group:   Development/Java
@@ -39,6 +39,8 @@ tar xf %SOURCE1 -C ~
 subst '/integration_test_suite/d' pom.xml
 # Remove javadoc plugin requirement
 %pom_remove_plugin -r :maven-javadoc-plugin
+# Artifacts are copied only for disabled integration tests
+%pom_remove_plugin -r com.coderplus.maven.plugins:copy-rename-maven-plugin
 
 %build
 %mvn_build -f -j package
@@ -56,6 +58,9 @@ install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-jmx_exporter.pom
 %_mavenpomdir/*
 
 %changelog
+* Mon Sep 14 2026 Evgeniy Serov <scala@altlinux.org> 1.0.1-alt7
+- FTBFS: fix build.
+
 * Wed Dec 17 2025 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt6
 - Built with Java 21.
 
