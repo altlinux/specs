@@ -3,7 +3,7 @@
 
 Name: lsyncd
 Version: 2.3.1
-Release: alt1
+Release: alt2
 
 Summary: Live Syncing Daemon to synchronize local directories with remote targets
 
@@ -16,6 +16,11 @@ Packager: Nikolay A. Fetisov <naf@altlinux.org>
 Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
+# https://github.com/lsyncd/lsyncd/pull/745.patch
+Patch1:  %name-%version-github-pr-745.patch
+# https://github.com/lsyncd/lsyncd/pull/743.pathc
+Patch2:  %name-%version-github-pr-743.patch
+
 Source1: %name.init
 Source2: %name.service
 Source3: %name.logrotate
@@ -23,13 +28,13 @@ Source3: %name.logrotate
 Requires: rsync >= 3.1
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Sat Jan 14 2023
-# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libsasl2-3 libstdc++-devel lua5.4 python-modules python2-base python3-base sh4
-BuildRequires: cmake gcc-c++ libssl-devel lua-devel lua5.3
+# Automatically added by buildreq on Fri Sep 18 2026
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgcc15-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel lua5.4 python3 python3-base sh5
+BuildRequires: cmake gcc-c++ lua-devel
 
 
 %if_with tests
-BuildRequires: lua5-posix rsync openssh /proc
+BuildRequires: rsync openssh /proc
 %endif
 
 %description
@@ -55,6 +60,8 @@ not-so-secure area.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2.0 %_docdir/%name/COPYING) COPYING
@@ -122,6 +129,9 @@ mkdir -p %buildroot%_logdir/%name
 
 
 %changelog
+* Fri Sep 18 2026 Nikolay A. Fetisov <naf@altlinux.org> 2.3.1-alt2
+- Drop hardcoded luac5.3 in the CMake script (Closes: #51934, #54794)
+
 * Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.3.1-alt1
 - Restore from orphaned
 - New version
