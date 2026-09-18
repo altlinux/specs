@@ -5,7 +5,7 @@
 
 Name:    jitsi-videobridge
 Version: 2.3.9258
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
@@ -24,7 +24,6 @@ AutoReqProv: yes,noosgi
 BuildRequires(pre): rpm-build-java
 BuildRequires: java-17-openjdk-devel
 BuildRequires: maven-local
-BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
 
 Requires: java
 
@@ -37,10 +36,18 @@ multiuser video communication
 subst 's/3\.5\.1/3.8.1/;s/>11</>17</' rtp/pom.xml jvb/pom.xml jitsi-media-transform/pom.xml
 subst 's|/var/run|/run|' debian/jitsi-videobridge2.service
 
+%pom_add_dep org.jxmpp:jxmpp-core:1.0.3 jitsi-media-transform
+%pom_add_dep org.jxmpp:jxmpp-jid:1.0.3 jitsi-media-transform
+%pom_add_dep org.minidns:minidns-core:1.0.5 jitsi-media-transform
+
 %build
-mvn -Dmaven.repo.local=${PWD}/m2/repository -DskipTests -Dassembly.skipAssembly=true install
-mvn -Dmaven.repo.local=${PWD}/m2/repository -DskipTests -Dassembly.skipAssembly=true package
-mvn -Dmaven.repo.local=${PWD}/m2/repository dependency:copy-dependencies -DincludeScope=runtime
+ln -s m2/repository .m2
+
+%mvn_build -f -j \
+    -G org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies -- \
+    -Dmaven.repo.local="${PWD}/m2/repository" \
+    -Dassembly.skipAssembly=true \
+    -DincludeScope=runtime
 
 %install
 mkdir -p %buildroot%_sysconfdir/jitsi/videobridge
@@ -105,6 +112,9 @@ fi
 %dir %attr(0755,_jvb,_jvb) %_localstatedir/log/jitsi
 
 %changelog
+* Thu Sep 17 2026 Evgeniy Serov <scala@altlinux.org> 1:2.3.9258-alt2
+- Fixed FTBFS.
+
 * Wed Feb 28 2024 Andrey Cherepanov <cas@altlinux.org> 1:2.3.9258-alt1
 - New version
 - Built with openjdk17
