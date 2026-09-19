@@ -1,8 +1,8 @@
-%define kernel linux-6.12.91
+%define kernel linux-6.12.109
 %define so_version 5
 
 Name:    libkrunfw
-Version: 5.5.0
+Version: 5.6.1
 Release: alt1
 
 Summary: A dynamic library bundling the guest payload consumed by libkrun
@@ -55,5 +55,8 @@ cp %SOURCE1 tarballs
 %_libdir/libkrunfw.so
 
 %changelog
+* Sat Sep 19 2026 Maxim Slipenko <maks1ms@altlinux.org> 5.6.1-alt1
+- updated from 5.5.0 to 5.6.1
+
 * Mon Sep 07 2026 Maxim Slipenko <maks1ms@altlinux.org> 5.5.0-alt1
 - Initial build for Sisyphus
