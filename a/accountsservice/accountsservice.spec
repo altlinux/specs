@@ -5,7 +5,7 @@
 
 Name: accountsservice
 Version: 26.27.3
-Release: alt2
+Release: alt3
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -42,7 +42,6 @@ Summary: Client-side library to talk to accountservice
 Group: System/Libraries
 
 Provides: lib%name = %EVR
-Obsoletes: lib%name < %EVR
 
 %description -n lib%name%sover
 The libaccountsservice package contains a library that can
@@ -63,15 +62,15 @@ The accountsservice project provides a set of D-Bus interfaces for
 querying and manipulating user account information and an implementation
 of these interfaces, based on the useradd, usermod and userdel commands.
 
-%package -n lib%name%sover-gir
+%package -n lib%name-gir
 Summary: GObject introspection data for the accountsservice library
 Group: System/Libraries
 Requires: lib%name%sover = %EVR
 
-Provides: lib%name-gir = %EVR
-Obsoletes: lib%name-gir < %EVR
+Provides: lib%{name}1-gir = %EVR
+Obsoletes: lib%{name}1-gir < %EVR
 
-%description -n lib%name%sover-gir
+%description -n lib%name-gir
 GObject introspection data for the accountsservice library
 
 %package -n lib%name-gir-devel
@@ -79,7 +78,7 @@ Summary: GObject introspection devel data for the accountsservice library
 Group: Development/Other
 BuildArch: noarch
 Requires: lib%name-devel = %EVR
-Requires: lib%name%sover-gir = %EVR
+Requires: lib%name-gir = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the accountsservice library
@@ -120,7 +119,7 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %files -n lib%name%sover
 %_libdir/*.so.*
 
-%files -n lib%name%sover-gir
+%files -n lib%name-gir
 %_typelibdir/*.typelib
 
 %files -n lib%name-devel
@@ -135,6 +134,10 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Sat Sep 19 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt3
+- Fixed `-gir` subpackage name. (closes: #60594)
+- Removed `Obsoletes` to `lib%name` from `lib%{name}1`.
+
 * Thu Sep 17 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt2
 - Add Obsoletes/Provides for renamed packages. (closes: #60594)
 
