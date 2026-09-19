@@ -30,7 +30,7 @@
 
 Name:    hplip
 Version: 3.26.6
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
@@ -760,6 +760,10 @@ fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python
 # ELF binary, if found
 rm -f hpps hpcups dat2drv
 
+# Fix unitdir and udev rules location
+subst 's|^rulessystemdir=.*|rulessystemdir=%_unitdir|' Makefile.am
+subst 's|^rulesdir = .*|rulesdir = %_udev_rulesdir|' Makefile.am
+
 %build
 %add_optflags -Wno-implicit-int -Wno-implicit-function-declaration -Wno-incompatible-pointer-types
 
@@ -1286,6 +1290,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Sep 19 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.26.6-alt2
+- Fixed systemd services and udev rules location across repositories.
+
 * Sat Sep 19 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.26.6-alt1
 - New version (fixes: CVE-2026-91106, CVE-2026-91104, CVE-2026-91102,
   CVE-2026-91103, CVE-2026-91099, CVE-2026-91098, CVE-2026-91097).
