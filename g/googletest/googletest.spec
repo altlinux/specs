@@ -1,6 +1,6 @@
 Name: googletest
-Version: 1.17.0
-Release: alt1.1
+Version: 1.18.0
+Release: alt1
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -10,6 +10,7 @@ Url: https://github.com/google/%name
 
 # https://github.com/google/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch0: %name-nullptr-matcher.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -67,6 +68,7 @@ Development environment for gmock
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %ifarch %e2k
@@ -114,6 +116,9 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %_includedir/gmock
 
 %changelog
+* Sat Sep 19 2026 Nazarov Denis <nenderus@altlinux.org> 1.18.0-alt1
+- New version 1.18.0.
+
 * Thu Dec 18 2025 Fr. Br. George <george@altlinux.org> 1.17.0-alt1.1
 - Rebuild against C++20
 
