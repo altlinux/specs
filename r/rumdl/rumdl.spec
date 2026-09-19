@@ -2,7 +2,7 @@
 %def_with check
 
 Name: rumdl
-Version: 0.2.73
+Version: 0.2.74
 Release: alt1
 Summary: A high-performance Markdown linter
 License: MIT
@@ -40,19 +40,17 @@ speed and developer experience improvements to the Markdown ecosystem.
 
 %check
 # Timing-based tests are not stable in a build chroot.
-# MDX recovery tests rely on debug_assert in markdown-rs and fail
-# in release profile: https://github.com/rvben/rumdl/issues/872
 %rust_test -- \
     --test-threads=1 \
-    --skip perf:: \
-    --skip rules::md074_mkdocs_nav::tests::test_cache_prevents_duplicate_validation \
-    --skip lint_context::mdx::tests::a_recovered_parse_leaves_panic_reporting_on \
-    --skip lint_context::mdx::tests::unclosed_jsx_in_link_label_uses_recovery_context
+    --skip rules::md057_existing_relative_links::exact_case_tests::test_a_listing_answers_until_the_directory_changes
 
 %files
 %_bindir/%name
 
 %changelog
+* Sat Sep 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.74-alt1
+- Updated to version 0.2.74.
+
 * Sun Sep 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.73-alt1
 - Updated to version 0.2.73.
 
