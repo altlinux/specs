@@ -3,7 +3,7 @@
 
 Name:    pcmanfm-qt
 Version: 2.4.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
@@ -51,6 +51,9 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sat Sep 19 2026 Anton Midyukov <antohami@altlinux.org> 1:2.4.1-alt2
+- Remove OpenAsRoot and OpenAsAdmin actions from ui.
+
 * Wed Aug 26 2026 Anton Midyukov <antohami@altlinux.org> 1:2.4.1-alt1
 - New version 2.4.1.
 
