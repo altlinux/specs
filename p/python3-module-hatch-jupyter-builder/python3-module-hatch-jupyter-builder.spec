@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.9.1
-Release: alt3
+Version: 0.10.0
+Release: alt1
 
 Summary: A hatch plugin to help build Jupyter packages
 License: BSD-3-Clause
@@ -51,6 +51,9 @@ sed -i 's/, "--color=yes"//' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo hatch_jupyter_builder}
 
 %changelog
+* Sat Sep 19 2026 Anton Vyatkin <toni@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Wed Apr 15 2026 Anton Vyatkin <toni@altlinux.org> 0.9.1-alt3
 - Fixed FTBFS.
 
