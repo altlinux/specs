@@ -1,9 +1,13 @@
-%define ffmpeg_tag 2c92585
+%define ffmpeg_tag 3b502d4
 %define ffmpeg_version 7.1.2
+
+# Upstream release suffix (e.g. .release.4, .hotfix.2, .rc1).
+# Set to %nil when the upstream version has no suffix.
+%define version_suffix .release.4
 
 Name: sharpemu
 Version: 0.0.3
-Release: alt1
+Release: alt1%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
@@ -66,6 +70,19 @@ pushd ../ffmpeg-%ffmpeg_version
 %make_build
 popd
 
+# Pack FFmpeg shared libraries into zip for MSBuild to skip download.
+# Must exist before "dotnet build": since v0.0.3-release.4 the project
+# fetches this archive in both Build and Publish targets.
+FFMPEG_RUNTIME=artifacts/obj/SharpEmu.CLI/ffmpeg-runtime/%ffmpeg_tag/linux-x64
+%__mkdir_p $FFMPEG_RUNTIME
+zip -j $FFMPEG_RUNTIME/ffmpeg-linux-x64.zip \
+    ../ffmpeg-%ffmpeg_version/libavcodec/libavcodec.so* \
+    ../ffmpeg-%ffmpeg_version/libavformat/libavformat.so* \
+    ../ffmpeg-%ffmpeg_version/libavutil/libavutil.so* \
+    ../ffmpeg-%ffmpeg_version/libswscale/libswscale.so* \
+    ../ffmpeg-%ffmpeg_version/libswresample/libswresample.so* \
+    ../ffmpeg-%ffmpeg_version/libavfilter/libavfilter.so*
+
 # Build SharpEmu
 dotnet restore SharpEmu.slnx --packages .packages -p:NuGetAudit=false
 dotnet build SharpEmu.slnx -c Release --no-restore
@@ -78,11 +95,6 @@ dotnet test SharpEmu.slnx -c Release --no-build --verbosity normal
 pushd ../ffmpeg-%ffmpeg_version
 %makeinstall_std
 popd
-
-# Pack FFmpeg shared libraries into zip for MSBuild to skip download
-FFMPEG_RUNTIME=artifacts/obj/SharpEmu.CLI/ffmpeg-runtime/%ffmpeg_tag/linux-x64
-%__mkdir_p $FFMPEG_RUNTIME
-zip -j $FFMPEG_RUNTIME/ffmpeg-linux-x64.zip %buildroot%_libdir/libavcodec.so* %buildroot%_libdir/libavformat.so* %buildroot%_libdir/libavutil.so* %buildroot%_libdir/libswscale.so* %buildroot%_libdir/libswresample.so* %buildroot%_libdir/libavfilter.so*
 
 # Build and publish SharpEmu
 dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained true -r linux-x64 --no-restore
@@ -119,7 +131,7 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %__rm -rf %buildroot%_libexecdir/%name/licenses
 
 %__mkdir_p %buildroot%_bindir
-%__ln_s %_libexecdir/%name/SharpEmu %buildroot%_bindir/%name
+%__ln_s ../lib/%name/SharpEmu %buildroot%_bindir/%name
 
 %__install -Dm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %__install -Dm644 assets/images/logo.png %buildroot%_pixmapsdir/%name.png
@@ -134,5 +146,8 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Sat Sep 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.3-alt1.release.4
+- Update to v0.0.3-release.4
+
 * Sat Aug 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.3-alt1
 - Initial build for ALT Linux
