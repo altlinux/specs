@@ -29,7 +29,7 @@
 %def_with new_systemd
 
 Name:    hplip
-Version: 3.26.4
+Version: 3.26.6
 Release: alt1
 Epoch:   1
 
@@ -194,6 +194,7 @@ Patch19: hplip-alt-ftbfs-fix-buit.patch
 Patch20: hplip-alt-add-debug-to-hp-plugin.patch
 Patch21: hplip-alt-disable-resize-to-scan-area.patch
 Patch22: hplip-alt-checksum-for-3.25.8.patch
+Patch23: hplip-alt-hp-plugin-mirror.patch
 
 # fedora patches
 Patch101: hplip-pstotiff-is-rubbish.patch
@@ -381,11 +382,6 @@ Patch165: hplip-sclpml-strcasestr.patch
 # 2192131 - parseQueues() doesn't get device uri from 'lpstat -v', because parsing pattern changed
 # https://bugs.launchpad.net/hplip/+bug/2027972
 Patch167: hplip-fix-parsing-lpstat.patch
-# switch to curl by downstream patch from wget to workaround openstack dropping IPv6
-# which causes great delays...
-# Remove this once internal openstack handles IPv6 better - test by pinging IPv6 in OpenStack,
-# it should not hang.
-Patch168: hplip-plugin-curl.patch
 # fix SyntaxWarning from python3.12
 # https://bugs.launchpad.net/hplip/+bug/2029480
 Patch169: hplip-use-raw-strings.patch
@@ -401,10 +397,6 @@ Patch173: hplip-format-qdatetime.patch
 # Python 3.14 removed urlopener
 # https://bugs.launchpad.net/hplip/+bug/2115046
 Patch177: hplip-no-urlopener.patch
-
-# ubuntu patches
-Patch201: hp-plugin-download-fix.patch
-# end ubuntu patches
 
 # debian patches
 Patch302: 01_rss.patch
@@ -711,7 +703,6 @@ rm -f prnt/hpcups/libImageProcessor-*.so
 %patch164 -p1 -b .pcardext-disable
 %patch165 -p1 -b .sclpml-strcasestr
 %patch167 -p1 -b .lpstat-parse
-%patch168 -p1 -b .curl-switch
 %patch169 -p1 -b .raw-strings
 %patch170 -p1 -b .hpaio-gcc14
 %patch172 -p1 -b .gcc-strc23
@@ -722,8 +713,6 @@ rm -f prnt/hpcups/libImageProcessor-*.so
 sed -i.duplex-constraints \
     -e 's,\(UIConstraints.* \*Duplex\),//\1,' \
     prnt/drv/hpcups.drv.in
-
-%patch201 -p1 -b .download-plugin
 
 # debian patches
 %patch302 -p1
@@ -763,6 +752,7 @@ tar -xf %SOURCE6
 %patch20 -p2
 %patch21 -p2
 %patch22 -p2
+%patch23 -p1
 
 egrep -lZr '#!/usr/bin/python$' . | xargs -r0 sed -i 's,#!/usr/bin/python$,#!/usr/bin/python%{pysuffix},'
 fgrep -lZr '#!/usr/bin/env python' . | xargs -r0 sed -i 's,#!/usr/bin/env python,#!/usr/bin/python%{pysuffix},'
@@ -1092,9 +1082,6 @@ fi
 %{_bindir}/hp-info
 %{_bindir}/hp-levels
 %{_bindir}/hp-makeuri
-%if_enabled policykit
-%{_bindir}/hp-pkservice
-%endif
 %{_bindir}/hp-plugin
 %{_bindir}/hp-probe
 %{_bindir}/hp-query
@@ -1134,19 +1121,11 @@ fi
 %{_datadir}/hplip/testpage.py*
 %{_datadir}/hplip/timedate.py*
 %{_datadir}/hplip/unload.py*
-%if_enabled policykit
-%{_datadir}/hplip/pkservice.py*
-%{_datadir}/polkit-1/actions/com.hp.hplip.policy
 %{_unitdir}/hplip-printer@.service
-%endif
 %if_with python3
 #{_datadir}/hplip/__pycache__/check-plugin.*
 %dir %{_datadir}/hplip/__pycache__
 %endif
-# global dbus service
-%{_datadir}/dbus-1/system-services/com.hp.hplip.service
-/etc/dbus-1/system.d/com.hp.hplip.conf
-
 # Directories
 %{_datadir}/hplip/base
 %{_datadir}/hplip/copier
@@ -1307,6 +1286,36 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Sep 19 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.26.6-alt1
+- New version (fixes: CVE-2026-91106, CVE-2026-91104, CVE-2026-91102,
+  CVE-2026-91103, CVE-2026-91099, CVE-2026-91098, CVE-2026-91097).
+- Added support for the following new printers and scanners:
+  + HP ScanJet Enterprise Flow N9000 sn1
+  + HP ScanJet Enterprise Flow 9000 s1
+  + HP ScanJet Pro 4200 s1
+  + HP LaserJet Pro 4006dn
+  + HP LaserJet Pro 4006dw
+  + HP LaserJet Pro 4006n
+  + HP LaserJet Pro 4002d
+  + HP LaserJet Pro 4007dw
+  + HP LaserJet Pro 4007n
+  + HP LaserJet Pro 4008d
+  + HP LaserJet Pro 4008dn
+  + HP LaserJet Pro 4008dw
+  + HP LaserJet Pro MFP 4112dw
+  + HP LaserJet Pro MFP 4112fdn
+  + HP LaserJet Pro MFP 4112fdw
+  + HP LaserJet Pro MFP 4113dw
+  + HP LaserJet Pro MFP 4113dwg
+  + HP LaserJet Pro MFP 4113fdn
+  + HP LaserJet Pro MFP 4113fdng
+  + HP LaserJet Pro MFP 4113fdw
+  + HP LaserJet Pro MFP 4113fdwg
+  + HP LaserJet Pro MFP 4114dw
+  + HP LaserJet Pro MFP 4114fdn
+  + HP LaserJet Pro MFP 4114fdw
+- Get hp-plugin from https://www.openprinting.org/download/printdriver/auxfiles/HP/plugins/
+
 * Thu May 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.26.4-alt1
 - New version (fixes: CVE-2026-8631, CVE-2026-8632).
 - Added support for the following new printers:
