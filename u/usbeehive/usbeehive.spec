@@ -1,5 +1,5 @@
 Name:    usbeehive
-Version: 0.11.0
+Version: 0.12.1
 Release: alt1
 
 Summary: USB device and USB-C cable diagnostics tool
@@ -45,8 +45,12 @@ install -Dm 644 systemd/usbeehived.service %buildroot%_userunitdir/usbeehived.se
 %doc LICENSE README.md
 %_bindir/%name
 %_bindir/usbeehived
+%dir %_userunitdir
 %_userunitdir/usbeehived.service
 
 %changelog
+* Sun Sep 20 2026 Sergey Palcheh <minergenon@altlinux.org> 0.12.1-alt1
+- new version 0.12.1
+
 * Fri Aug 14 2026 Sergey Palcheh <minergenon@altlinux.org> 0.11.0-alt1
 - Initial build for Sisyphus
