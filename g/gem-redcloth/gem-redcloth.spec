@@ -6,7 +6,7 @@
 
 Name:          gem-redcloth
 Version:       4.3.4.14
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Textile parser for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -23,17 +23,14 @@ BuildRequires: gem(diff-lcs) >= 1.5
 BuildRequires: gem(rake) >= 13
 BuildRequires: gem(rake-compiler) >= 0.7.1
 BuildRequires: gem(rspec) >= 3.10.0
-BuildConflicts: gem(diff-lcs) >= 3
-BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency diff-lcs >= 2.0.0,diff-lcs < 3
-%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency diff-lcs >= 1.5
+%ruby_use_gem_dependency rspec >= 3.10.0
+%ruby_use_gem_dependency rake >= 13
+%ruby_use_gem_dependency rake-compiler >= 0.7.1
 Requires:      ruby >= 2.4
 Obsoletes:     ruby-redcloth < %EVR
 Provides:      ruby-redcloth = %EVR
@@ -49,7 +46,7 @@ to HTML.
 
 %package       -n redcloth
 Version:       4.3.4.14
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Textile parser for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета RedCloth
 Group:         Other
@@ -71,7 +68,7 @@ to HTML.
 %if_enabled    doc
 %package       -n gem-redcloth-doc
 Version:       4.3.4.14
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Textile parser for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета RedCloth
 Group:         Development/Documentation
@@ -94,7 +91,7 @@ to HTML.
 %if_enabled    devel
 %package       -n gem-redcloth-devel
 Version:       4.3.4.14
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Textile parser for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета RedCloth
 Group:         Development/Ruby
@@ -105,9 +102,6 @@ Requires:      gem(bundler) > 1.3.4
 Requires:      gem(diff-lcs) >= 1.5
 Requires:      gem(rake) >= 13
 Requires:      gem(rspec) >= 3.10.0
-Conflicts:     gem(diff-lcs) >= 3
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-redcloth-devel
 Textile parser for Ruby development package.
@@ -156,6 +150,9 @@ to HTML.
 
 
 %changelog
+* Sun Sep 20 2026 Pavel Skrylev <majioa@altlinux.org> 4.3.4.14-alt0.1.1
+- ! relaxed deps to some gems
+
 * Sat May 30 2026 Pavel Skrylev <majioa@altlinux.org> 4.3.4.14-alt0.1
 - ^ 4.3.4 -> 4.3.4p14
 
