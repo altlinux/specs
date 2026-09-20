@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: ayatana-ido
-Version: 0.10.0
+Version: 0.10.4
 Release: alt1
 
 Summary: Ayatana Indicator Display Objects
@@ -9,6 +9,7 @@ License: LGPLv3 AND LGPLv2.1
 Group: System/Libraries
 
 Url: https://github.com/AyatanaIndicators/%name
+Vcs: https://github.com/AyatanaIndicators/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/AyatanaIndicators/%name/archive/%version/%name-%version.tar.gz
@@ -128,6 +129,9 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/lib%{name}3-0.4.vapi
 
 %changelog
+* Sun Sep 20 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.4-alt1
+- New version 0.10.4.
+
 * Sat Jun 10 2023 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 
