@@ -16,14 +16,13 @@
 # TODO: def_with clang
 %def_with wayland
 %def_with x11
-%def_with rlottie
 %def_with gsl
 %def_without system_fonts
 %def_without ninja
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 7.1.3
+Version: 7.2.9
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -37,7 +36,6 @@ Vcs: https://github.com/telegramdesktop/tdesktop
 Source: %name-%version.tar
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
-Patch: use-system-rlottie.patch
 #Source1: %name-gsl-%version.tar
 
 
@@ -157,8 +155,10 @@ BuildRequires: bzlib-devel libbrotli-devel gstreamer1.0-devel
 
 BuildRequires: boost-program_options-devel
 
-# uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
-BuildRequires: librlottie-devel >= 0.1.1
+# upstream replaced rlottie with its own Rust renderer since 7.2.0
+BuildRequires: libtlottie-devel
+# text is shaped via Pango on Linux (DESKTOP_APP_USE_PANGO is on by default)
+BuildRequires: libpango-devel
 BuildRequires: libqrcodegen-cpp-devel
 
 # C++ sugar
@@ -251,7 +251,6 @@ or business messaging needs.
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
 %endif
 
-%patch -p1
 
 # See https://github.com/desktop-app/tg_owt/pull/82
 # TODO: there are incorrect using and linking libyuv
@@ -272,9 +271,6 @@ for i in \
     Telegram/ThirdParty/lz4 \
     Telegram/ThirdParty/range-v3 \
     Telegram/ThirdParty/xxHash \
-%if_with rlottie
-    Telegram/ThirdParty/rlottie \
-%endif
     %nil ; do
     echo "Removing $i ..."
     rm -r $i
@@ -334,13 +330,6 @@ export EXTRA_LDFLAGS="-Wl,--push-state,--no-as-needed -latomic -Wl,--pop-state"
 %else
     -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=ON \
 %endif
-%if_with rlottie
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE=ON \
-# FIXME: lottie_cache.h:9:10: fatal error: ffmpeg/ffmpeg_utility.h: No such file or directory
-#    -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
-%else
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE=OFF \
-%endif
     %nil
 
 %if_with ninja
@@ -377,6 +366,11 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Sun Sep 20 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.9-alt1
+- new version 7.2.9.
+- use system libtlottie instead of the dropped rlottie backend.
+- shape text via Pango (upstream default on Linux).
+
 * Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 7.1.3-alt1
 - require Qt 6.11 or newer
 - use system libfido2 and rlottie
