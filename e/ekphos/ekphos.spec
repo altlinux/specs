@@ -1,13 +1,13 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: ekphos
-Version: 0.25.10
+Version: 0.50.20
 Release: alt1
 Summary: Markdown research tool inspired by Obsidian
 License: MIT
 Group: File tools
-Url: https://crates.io/crates/ekphos
-VCS: https://github.com/hanebox/ekphos
+URL: https://crates.io/crates/ekphos
+VCS: https://github.com/nostacks/ekphos
 
 ExcludeArch: %ix86
 
@@ -42,6 +42,9 @@ cp -r themes %buildroot%_datadir/%name
 %doc LICENSE
 
 %changelog
+* Sun Sep 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.50.20-alt1
+- Updated to version 0.50.20.
+
 * Wed Jun 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.25.10-alt1
 - Updated to version 0.25.10.
 
