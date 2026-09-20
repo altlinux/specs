@@ -4,8 +4,8 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 2.5.1
-Release: alt2
+Version: 2.5.2
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: BSD-3-Clause AND BSD-2-Clause AND GPL-3.0-or-later
@@ -172,6 +172,9 @@ fi
 %endif
 
 %changelog
+* Sun Sep 20 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.2-alt1
+- New version.
+
 * Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.1-alt2
 - Set /sbin/nologin to user pcscd (ALT #59646).
 
