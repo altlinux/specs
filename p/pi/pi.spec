@@ -2,8 +2,8 @@
 
 Name: pi
 Epoch:1 
-Version: 0.85.1
-Release: alt2
+Version: 0.86.0
+Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
 License: MIT
@@ -21,7 +21,7 @@ Patch1: pi-0.84.3-alt-disable-update-check.patch
 # The esbuild bundle is only for npm distribution; we ship the unbundled
 # dist + node_modules. Vendored esbuild is linux-x64 only and breaks the
 # noarch rebuild on other arches.
-Patch2: pi-0.85.1-alt-no-esbuild-bundle.patch
+Patch2: pi-0.86.0-alt-no-esbuild-bundle.patch
 
 BuildArch: noarch
 
@@ -102,6 +102,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Sun Sep 20 2026 Anton Farygin <rider@altlinux.org> 1:0.86.0-alt1
+- 0.85.1 -> 0.86.0
+
 * Tue Sep 08 2026 Anton Farygin <rider@altlinux.org> 1:0.85.1-alt2
 - Dropped Requires: esbuild, the shipped build never runs it (closes: 60461).
 
