@@ -160,7 +160,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version: 9.0.1
+Version: 9.0.2
 Release: alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -819,6 +819,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Sun Sep 20 2026 Anton Farygin <rider@altlinux.org> 2:9.0.2-alt1
+- 9.0.1 -> 9.0.2
+
 * Mon Aug 17 2026 Anton Farygin <rider@altlinux.org> 2:9.0.1-alt1
 - 8.1.2 -> 9.0.1
 - rebased v4l2-request patch series (kwiboo/v4l2-request-n8.1) onto 9.0.1
