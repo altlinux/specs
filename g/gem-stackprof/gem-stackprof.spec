@@ -6,28 +6,24 @@
 
 Name:          gem-stackprof
 Version:       0.2.27
-Release:       alt1
+Release:       alt1.1
 Summary:       sampling callstack-profiler for ruby 2.2+
 License:       MIT
 Group:         Development/Ruby
 Url:           http://github.com/tmm1/stackprof
 Vcs:           https://github.com/tmm1/stackprof.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-macros-ruby setup-rb rake
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.0
 BuildRequires: gem(rake-compiler) >= 0.9
-BuildConflicts: gem(minitest) >= 7
-BuildConflicts: gem(rake-compiler) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 6.0,minitest < 7
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency minitest >= 5.0
+%ruby_use_gem_dependency rake-compiler >= 0.9
 Requires:      ruby >= 2.2
 Provides:      gem(stackprof) = 0.2.27
 
@@ -38,7 +34,7 @@ object allocation samplers.
 
 %package       -n stackprof
 Version:       0.2.27
-Release:       alt1
+Release:       alt1.1
 Summary:       sampling callstack-profiler for ruby 2.2+ executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета stackprof
 Group:         Other
@@ -59,7 +55,7 @@ object allocation samplers.
 %if_enabled    doc
 %package       -n gem-stackprof-doc
 Version:       0.2.27
-Release:       alt1
+Release:       alt1.1
 Summary:       sampling callstack-profiler for ruby 2.2+ documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета stackprof
 Group:         Development/Documentation
@@ -81,7 +77,7 @@ object allocation samplers.
 %if_enabled    devel
 %package       -n gem-stackprof-devel
 Version:       0.2.27
-Release:       alt1
+Release:       alt1.1
 Summary:       sampling callstack-profiler for ruby 2.2+ development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета stackprof
 Group:         Development/Ruby
@@ -90,8 +86,6 @@ BuildArch:     noarch
 Requires:      gem(stackprof) = 0.2.27
 Requires:      gem(minitest) >= 5.0
 Requires:      gem(rake-compiler) >= 0.9
-Conflicts:     gem(minitest) >= 7
-Conflicts:     gem(rake-compiler) >= 2
 
 %description   -n gem-stackprof-devel
 sampling callstack-profiler for ruby 2.2+ development package.
@@ -141,6 +135,9 @@ object allocation samplers.
 
 
 %changelog
+* Sun Sep 20 2026 Pavel Skrylev <majioa@altlinux.org> 0.2.27-alt1.1
+- ! relaxed deps to some gems
+
 * Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 0.2.27-alt1
 - ^ 0.2.26 -> 0.2.27
 
