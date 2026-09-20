@@ -3,7 +3,7 @@
 %define nameLC plasma_wallpaper_luisbocanegra.smart.video.wallpaper.reborn
 
 Name: plasma-addon-smart-video-wallpaper-reborn
-Version: 2.14.1
+Version: 2.15.0
 Release: alt1
 
 Summary: Plasma 6 wallpaper plugin to play videos on your Desktop
@@ -15,16 +15,25 @@ Vcs: https://github.com/luisbocanegra/plasma-smart-video-wallpaper-reborn
 
 Source: %name-%version.tar
 
-BuildArch: noarch
-
 Provides: kde-plasma-addon-smart-video-wallpaper-reborn = %EVR
 Obsoletes: kde-plasma-addon-smart-video-wallpaper-reborn < %EVR
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: cmake extra-cmake-modules gcc-c++ pkgconfig(Qt6Qml)
-BuildRequires: qt6-multimedia-devel plasma6-lib-devel kf6-kpackage-devel
-BuildRequires: kf6-kcoreaddons-devel kf6-kwindowsystem-devel gettext-tools
+BuildRequires: cmake
+BuildRequires: extra-cmake-modules
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(Qt6Qml)
+BuildRequires: qt6-multimedia-devel
+BuildRequires: plasma6-lib-devel
+BuildRequires: kf6-kpackage-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: gettext-tools
 BuildRequires: kf6-ki18n-devel
+BuildRequires: knighttime-devel
+BuildRequires: kf6-kcmutils-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kcolorscheme-devel
 
 Requires: ffmpeg
 
@@ -46,9 +55,13 @@ Requires: ffmpeg
 %files -f %nameLC.lang
 %_datadir/metainfo/%nameL.appdata.xml
 %_datadir/plasma/wallpapers/%nameL/*
+%_K6qml/com/github/luisbocanegra
 %doc README.md
 
 %changelog
+* Sun Sep 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.15.0-alt1
+- 2.14.1 -> 2.15.0
+
 * Thu Aug 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.14.1-alt1
 - 2.14.0 -> 2.14.1
 
