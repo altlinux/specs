@@ -3,7 +3,7 @@
 %define __name SimpleWeather
 %define git_name %__name
 %define _name simple-weather
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define uuid %_name@romanlefler.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -14,7 +14,7 @@
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.1.1
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: Weather extension for the GNOME Shell
@@ -35,7 +35,7 @@ Source: %git_name-%version%beta.tar
 %endif
 Source1: %git_name-%version-npm.tar
 # fix install in Makefile
-Patch1: %__name-49.2.0-alt-makefile.patch
+Patch1: %__name-51.0-alt-makefile.patch
 
 Requires: gnome-shell >= 48
 Requires: typelib(Adw) = 1
@@ -68,6 +68,9 @@ mv %git_name-%version-npm.tar %_sourcedir/}
 %doc AUTHORS README.md CHANGELOG*
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0.2-alt1
+- 51.0.2
+
 * Fri Jul 03 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1.1-alt1
 - 50.1.1
 
