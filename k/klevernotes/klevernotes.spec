@@ -2,7 +2,7 @@
 
 Name: klevernotes
 Version: 1.3.1
-Release: alt4
+Release: alt5
 
 Summary: KleverNotes is a note taking and management application
 License: GPL-2.0-or-later
@@ -28,9 +28,23 @@ Patch2: 191.patch
 ExclusiveArch: x86_64 aarch64 loongarch64
 
 BuildRequires(Pre): rpm-macros-cmake
-BuildRequires: cmake qt6-base-devel extra-cmake-modules qt6-base-devel qt6-declarative-devel libqt6-quickcontrols2 qt6-webengine-devel 
-BuildRequires: qt6-svg-devel kf6-kirigami-devel kf6-kirigami-addons-devel kf6-kcoreaddons-devel kf6-kconfig-devel kf6-ki18n-devel 
-BuildRequires: kf6-kconfigwidgets-devel kf6-kio-devel libgomp13-devel kf6-kiconthemes-devel
+BuildRequires: cmake
+BuildRequires: qt6-base-devel
+BuildRequires: extra-cmake-modules
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: libqt6-quickcontrols2
+BuildRequires: qt6-webengine-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: kf6-kirigami-devel
+BuildRequires: kf6-kirigami-addons-devel
+BuildRequires: kf6-kcoreaddons-devel
+BuildRequires: kf6-kconfig-devel
+BuildRequires: kf6-ki18n-devel
+BuildRequires: kf6-kconfigwidgets-devel
+BuildRequires: kf6-kio-devel
+BuildRequires: libgomp-devel
+BuildRequires: kf6-kiconthemes-devel
 
 # These deps are required, but are not autodetected:
 Requires: kf6-kirigami kf6-kirigami-addons
@@ -61,6 +75,9 @@ tar -xf %SOURCE1 -C po/
 %doc *.md 
 
 %changelog
+* Sun Sep 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt5
+- fixed FTBFS: rebuiled with gcc15
+
 * Fri Jul 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.1-alt4
 - fixed: the "Adaptive Tag Size" feature doesn't work (ALT #59323)
 
