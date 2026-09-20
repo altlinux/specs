@@ -6,7 +6,7 @@
 
 Name:          gem-chandler
 Version:       0.9.0.5
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Syncs CHANGELOG entries to GitHub's release notes
 License:       MIT
 Group:         Development/Ruby
@@ -17,6 +17,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_enabled check
 BuildRequires: gem(bundler) >= 2.0
 BuildRequires: gem(coveralls) >= 0.8.20
 BuildRequires: gem(danger) >= 6.0
@@ -29,23 +30,22 @@ BuildRequires: gem(rake) >= 12.0
 BuildRequires: gem(rubocop) >= 0.48.1
 BuildConflicts: gem(bundler) >= 3
 BuildConflicts: gem(coveralls) >= 0.9
-BuildConflicts: gem(danger) >= 10
 BuildConflicts: gem(minitest-reporters) >= 2
-BuildConflicts: gem(mocha) >= 3
-BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rubocop) >= 2
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency danger >= 9.5.1,danger < 10
-%ruby_use_gem_dependency mocha >= 2.0,mocha < 3
-%ruby_use_gem_dependency rake >= 13.1.0,rake < 14
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency danger >= 6.0
+%ruby_use_gem_dependency mocha >= 1.2
+%ruby_use_gem_dependency rake >= 12.0
+%ruby_use_gem_dependency rubocop >= 0.48.1
 %ruby_use_gem_dependency minitest >= 5.10
 Requires:      ruby >= 2.3.0
 Requires:      gem(netrc) >= 0
 Requires:      gem(octokit) >= 2.2.0
 Provides:      gem(chandler) = 0.9.0.5
+
+#ruby_use_gem_version chandler:0.9.0.5
 
 %description
 chandler syncs your CHANGELOG entries to GitHub's release notes so you don't
@@ -56,7 +56,7 @@ process!
 
 %package       -n chandler
 Version:       0.9.0.5
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Syncs CHANGELOG entries to GitHub's release notes executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета chandler
 Group:         Other
@@ -79,7 +79,7 @@ process!
 %if_enabled    doc
 %package       -n gem-chandler-doc
 Version:       0.9.0.5
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Syncs CHANGELOG entries to GitHub's release notes documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета chandler
 Group:         Development/Documentation
@@ -103,7 +103,7 @@ process!
 %if_enabled    devel
 %package       -n gem-chandler-devel
 Version:       0.9.0.5
-Release:       alt1.1
+Release:       alt1.2
 Summary:       Syncs CHANGELOG entries to GitHub's release notes development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета chandler
 Group:         Development/Ruby
@@ -120,11 +120,7 @@ Requires:      gem(rake) >= 12.0
 Requires:      gem(rubocop) >= 0.48.1
 Conflicts:     gem(bundler) >= 3
 Conflicts:     gem(coveralls) >= 0.9
-Conflicts:     gem(danger) >= 10
 Conflicts:     gem(minitest-reporters) >= 2
-Conflicts:     gem(mocha) >= 3
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rubocop) >= 2
 
 %description   -n gem-chandler-devel
 Syncs CHANGELOG entries to GitHub's release notes development package.
@@ -173,6 +169,9 @@ process!
 
 
 %changelog
+* Sun Sep 20 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.0.5-alt1.2
+- ! relaxed deps to some strict gems
+
 * Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 0.9.0.5-alt1.1
 - ! fixed dep to minitest gem
 
