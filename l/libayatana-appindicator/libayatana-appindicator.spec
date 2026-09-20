@@ -7,7 +7,7 @@
 %endif
 
 Name: libayatana-appindicator
-Version: 0.5.92
+Version: 0.6.0
 Release: alt1
 
 Summary: Ayatana application indicators library
@@ -15,16 +15,19 @@ License: LGPLv2.1 AND LGPLv3
 Group: System/Libraries
 
 Url: https://github.com/AyatanaIndicators/%name
+Vcs: https://github.com/AyatanaIndicators/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/AyatanaIndicators/%name/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch0: %name-mono-signals.patch
 
 BuildRequires(pre): rpm-macros-features
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-gir
 
 BuildRequires: cmake
+BuildRequires: gtk-doc
 
 BuildRequires: libayatana-indicator3-devel
 BuildRequires: libdbusmenu-gtk3-devel
@@ -107,8 +110,18 @@ Requires: %{name}3-%sover = %EVR
 %description -n %{name}3-vala
 This package provides Vala language bindings for %{name}3.
 
+%package -n %{name}3-doc
+Summary: API documentation for %{name}3
+Group: Documentation
+BuildArch: noarch
+
+%description -n %{name}3-doc
+This package provides the gtk-doc generated API documentation
+for %{name}3.
+
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
@@ -122,7 +135,7 @@ This package provides Vala language bindings for %{name}3.
 %cmake_install
 
 %files -n %{name}3-%sover
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog README.md
 %_libdir/%{name}3.so.*
 
 %files -n %{name}3-gir
@@ -148,7 +161,15 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/ayatana-appindicator3-0.1.vapi
 %_vapidir/ayatana-appindicator3-0.1.deps
 
+%files -n %{name}3-doc
+%_datadir/gtk-doc/html/%{name}3/
+
 %changelog
+* Sun Sep 20 2026 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
+- New version 0.6.0.
+- Add gtk-doc documentation subpackage.
+- Fix mono bindings build for new-tooltip/activate signals.
+
 * Sun Jun 11 2023 Nazarov Denis <nenderus@altlinux.org> 0.5.92-alt1
 - New version 0.5.92.
 
