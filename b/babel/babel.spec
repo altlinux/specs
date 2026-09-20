@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-%set_gcc_version 13
+%set_gcc_version 14
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -10,13 +10,14 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt9
+Release: alt10
 Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
 Url: http://www.llnl.gov/CASC/components/babel.html
 
 Source: %name-%version.tar
+Patch1: babel-2.0.0-alt-cast-array.patch
 
 Requires: %name-common = %EVR
 Requires: lib%name = %EVR
@@ -268,6 +269,7 @@ This package contains user manual for Babel.
 
 %prep
 %setup
+%autopatch -p1
 find -name Makefile.in -exec sed 's/-traditional/& -Ubool -Uvector/' -i {} \;
 
 # Disable vendoring xml-apis.jar
@@ -423,6 +425,9 @@ done
 %_docdir/%name
 
 %changelog
+* Sun Sep 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0.0-alt10
+- NMU: fix FTBFS with gcc14
+
 * Mon Aug 03 2026 Arseniy Kostevich <faux@altlinux.org> 2.0.0-alt9
 - Replace vendored xml-apis by using xml-commons-apis (Closes: #60044).
 
