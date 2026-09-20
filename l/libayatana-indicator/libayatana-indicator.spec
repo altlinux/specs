@@ -2,7 +2,7 @@
 %def_with gtk2
 
 Name: libayatana-indicator
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 
 Summary: Ayatana Indicator Display Objects
@@ -10,6 +10,7 @@ License: GPLv3
 Group: System/Libraries
 
 Url: https://github.com/AyatanaIndicators/%name
+Vcs: https://github.com/AyatanaIndicators/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/AyatanaIndicators/%name/archive/%version/%name-%version.tar.gz
@@ -106,6 +107,9 @@ popd
 %_datadir/%name
 
 %changelog
+* Sun Sep 20 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.5-alt1
+- New version 0.9.5.
+
 * Sun Jun 11 2023 Nazarov Denis <nenderus@altlinux.org> 0.9.3-alt1
 - New version 0.9.3.
 
