@@ -1,13 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 # The end to end check builds an image and installs a system from it in KVM.
+%if "%_host_cpu" == "x86_64" || "%_host_cpu" == "aarch64"
 %def_with vmcheck
+%else
+%def_without vmcheck
+%endif
 
 %define _common_libdir %prefix/lib
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -26,6 +30,7 @@ Requires: alterator-l10n
 # The progress bar of the CLI counts the width of the bar with bc.
 Requires: bc
 Requires: rsync
+Requires: xz
 Requires: grub-common
 Requires: mtools
 Requires: squashfs-tools
@@ -48,6 +53,7 @@ Requires: alterator-grub
 Requires: libevms
 Requires: installer-alterator-fs >= 1.0.0
 Requires: installer-common-base-stage2
+Requires: installer-common-functions
 Requires: installer-scripts-remount-stage2
 Requires: console-scripts
 Requires: kbd
@@ -64,13 +70,15 @@ BuildRequires: bats
 BuildRequires: /proc
 BuildRequires: /dev
 BuildRequires: shellcheck
+# The backend tests run the real engine headlessly: alterator provides
+# alterator-cmdline and the alteratord they talk to.
+BuildRequires: alterator
 # The check verifies that the features of data/initrd.mk really exist.
 BuildRequires: make-initrd
 BuildRequires: make-initrd-bootchain
 BuildRequires: make-initrd-plymouth
 
 %if_with vmcheck
-%if "%_host_cpu" == "x86_64"
 # The image build needs the root, the loop devices and the running kernel of
 # a real machine, so it is run in KVM: vm-run boots the build chroot itself.
 BuildRequires(pre): rpm-build-vm
@@ -79,15 +87,30 @@ BuildRequires(pre): rpm-build-vm
 BuildRequires(pre): rpm-build-vm-createimage
 BuildRequires: /dev/kvm
 # The built image is booted to check that a system installs from it.
+%if "%_host_cpu" == "x86_64"
 BuildRequires: qemu-system-x86-core
+# The image is booted twice here, by the legacy BIOS of qemu and by the edk2
+# firmware, which is not a part of qemu.
+BuildRequires: edk2-ovmf
+%endif
+%if "%_host_cpu" == "aarch64"
+BuildRequires: qemu-system-aarch64-core
+# That machine has no legacy BIOS: it boots the image through the edk2
+# firmware, which is not a part of qemu here.
+BuildRequires: edk2-aarch64
+%endif
+BuildRequires: shadow-utils
 # The image build copies the build chroot, hence everything the kopidel calls
 # at the run time has to be inside it. This repeats the Requires above, and
 # the check fails loudly when they diverge.
 BuildRequires: alterator-sh-functions
 BuildRequires: bc
 BuildRequires: rsync
+BuildRequires: xz
 BuildRequires: grub-common
+%if "%_host_cpu" == "x86_64"
 BuildRequires: grub-pc
+%endif
 BuildRequires: grub-efi
 BuildRequires: mtools
 BuildRequires: squashfs-tools
@@ -103,10 +126,10 @@ BuildRequires: alterator-grub
 BuildRequires: libevms
 BuildRequires: installer-alterator-fs >= 1.0.0
 BuildRequires: installer-common-base-stage2
+BuildRequires: installer-common-functions
 BuildRequires: installer-scripts-remount-stage2
 BuildRequires: console-scripts
 BuildRequires: kbd
-%endif
 %endif
 %endif
 
@@ -130,9 +153,7 @@ it on other machines, then you have found what you were looking for!
 %make test
 %make shellcheck
 %if_with vmcheck
-%if "%_host_cpu" == "x86_64"
 tests/vm/vmcheck.sh
-%endif
 %endif
 
 %post
@@ -150,6 +171,21 @@ tests/vm/vmcheck.sh
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Sun Sep 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.3-alt1
+- Require installer-common-functions explicitly
+  (Closes: 60553, thx antohami@).
+- Fix the OEM mode leaving the human users and their home directories
+  on the machine; a home that cannot be removed without taking
+  somebody else's data along now fails the installation.
+- Reserve room for the bootloader in a compressed image:
+  a very small one could leave none for it.
+- Fix the build ending well after grub-install has failed.
+- Fix a failed file system copy or archive passing for a finished image.
+- Add a plain progress bar for the terminals that cannot take a live one.
+- Require xz, the archiver the compression is done with.
+- Add more KVM tests of the image build and installation,
+  and run them on aarch64 as well.
+
 * Thu Jul 16 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.2-alt1
 - Fix the image build failing with "Module ub not found"
   on machines that have a USB drive attached.

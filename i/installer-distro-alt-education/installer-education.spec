@@ -1,6 +1,6 @@
 Name:    installer-distro-alt-education
-Version: 11.1
-Release: alt6
+Version: 11.2
+Release: alt1
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -122,6 +122,10 @@ echo "expand-description=no" >%buildroot%_sysconfdir/alterator/pkg-groups.conf
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Fri Sep 18 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt1
+- Stop uninstalling alterator-wizardface, alterator-luks and lftp
+  after the install: the installer removes the first two itself.
+
 * Sun Jun 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.1-alt6
 - 10-vm-profile.sh: Fix swap cap and pad it for hibernation.
 
