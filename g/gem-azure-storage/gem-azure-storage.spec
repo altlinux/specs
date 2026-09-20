@@ -2,7 +2,7 @@
 
 Name:          gem-azure-storage
 Version:       0.15.0
-Release:       alt1.4
+Release:       alt1.5
 Summary:       Microsoft Azure Storage Library for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -27,17 +27,17 @@ BuildRequires: gem(yard) >= 0.8
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency faraday >= 0.9,faraday < 3
-%ruby_use_gem_dependency faraday_middleware >= 0.10,faraday_middleware < 2
-%ruby_use_gem_dependency mocha >= 2.0,mocha < 3
+%ruby_use_gem_dependency rake >= 10.0
+%ruby_use_gem_dependency faraday >= 0.9
+%ruby_use_gem_dependency faraday_middleware >= 0.10
+%ruby_use_gem_dependency mocha >= 1.0
+%ruby_use_gem_dependency minitest >= 5.0
 Requires:      gem(azure-core) >= 0.1
 Requires:      gem(faraday) >= 0.9
 Requires:      gem(faraday_middleware) >= 0.10
 Requires:      gem(nokogiri) >= 1.6.8
 Obsoletes:     ruby-azure-storage < %EVR
 Provides:      ruby-azure-storage = %EVR
-Provides:      azure-storage-ruby = %EVR
 Provides:      gem(azure-storage) = 0.15.0
 
 %ruby_use_gem_version %gemname:%version
@@ -49,7 +49,7 @@ Microsoft Azure Storage Services.
 
 %package       -n gem-azure-storage-doc
 Version:       0.15.0
-Release:       alt1.4
+Release:       alt1.5
 Summary:       Microsoft Azure Storage Library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета azure-storage
 Group:         Development/Documentation
@@ -69,7 +69,7 @@ Microsoft Azure Storage Services.
 
 %package       -n gem-azure-storage-devel
 Version:       0.15.0
-Release:       alt1.4
+Release:       alt1.5
 Summary:       Microsoft Azure Storage Library for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета azure-storage
 Group:         Development/Ruby
@@ -117,6 +117,9 @@ Microsoft Azure Storage Services.
 
 
 %changelog
+* Sun Sep 20 2026 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1.5
+- ! fixed deps to some gems
+
 * Mon Jan 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1.4
 - ! fixed dep to mocha gem
 
