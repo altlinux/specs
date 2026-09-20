@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 
 %def_disable libcap_ng
@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: %name is a password keeper for GNOME
@@ -123,7 +123,6 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:}
 %_sysconfdir/xdg/autostart/*.desktop
 %{?_enable_ssh:%exclude %_sysconfdir/xdg/autostart/gnome-keyring-ssh.desktop}
 %_datadir/glib-2.0/schemas/org.gnome.crypto.cache.gschema.xml
-%_datadir/GConf/gsettings/org.gnome.crypto.cache.convert
 %_datadir/p11-kit/modules/gnome-keyring.module
 %_libdir/gnome-keyring/
 %{?_enable_ssh:%exclude %_libdir/gnome-keyring/*/gkm-ssh-store-standalone.so}
@@ -148,6 +147,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:}
 %endif
 
 %changelog
+* Sun Sep 20 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
