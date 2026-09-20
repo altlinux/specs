@@ -7,7 +7,7 @@
 %def_with check
 
 Name:    qbs
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Modern build tool for software projects
@@ -123,6 +123,7 @@ rm -rfv %buildroot%_datadir/qbs/python
 %_datadir/qbs
 %_libexecdir/qbs
 %_man1dir/qbs.1*
+%_qt6_docdir/qbs.qch
 %exclude %_datadir/qbs/examples
 
 %files -n libqbs%abiversion
@@ -136,6 +137,10 @@ rm -rfv %buildroot%_datadir/qbs/python
 %_datadir/qbs/examples
 
 %changelog
+* Sun Sep 20 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+- Package the qbs.qch documentation file.
+
 * Tue Jul 21 2026 Nikita Shmatko <nash@altlinux.org> 3.3.0-alt1
 - New version 3.3.0.
 - Split out the versioned shared library into a separate libqbs3.3 package.
