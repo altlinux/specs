@@ -3,8 +3,8 @@
 %def_with check
 
 Name: rio
-Version: 0.5.27
-Release: alt3
+Version: 0.5.28
+Release: alt1
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
 Group: Terminals
@@ -98,6 +98,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Sat Sep 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.28-alt1
+- Updated to version 0.5.28.
+
 * Thu Sep 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.27-alt3
 - Match the desktop file ID to Rio's Wayland app ID.
 
