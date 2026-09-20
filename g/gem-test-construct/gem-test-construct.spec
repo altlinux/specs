@@ -6,7 +6,7 @@
 
 Name:          gem-test-construct
 Version:       2.0.2.9
-Release:       alt0.2
+Release:       alt0.2.1
 Summary:       Creates temporary files and directories for testing
 License:       MIT
 Group:         Development/Ruby
@@ -17,21 +17,20 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler) >= 2.1.4
 %if_enabled check
+BuildRequires: gem(bundler) >= 2.1.4
 BuildRequires: gem(minitest) >= 5.0.8
 BuildRequires: gem(mocha) >= 0.14.0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.0
-BuildConflicts: gem(mocha) >= 3
-BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency mocha >= 2.0,mocha < 3
-%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
+%ruby_use_gem_dependency bundler >= 2.1.4
 %ruby_use_gem_dependency minitest >= 5.0.8
+%ruby_use_gem_dependency mocha >= 0.14.0
+%ruby_use_gem_dependency rspec >= 3.0
 %ruby_alias_names test_construct,test-construct
 Provides:      gem(test_construct) = 2.0.2.9
 
@@ -45,7 +44,7 @@ testing.
 %if_enabled    doc
 %package       -n gem-test-construct-doc
 Version:       2.0.2.9
-Release:       alt0.2
+Release:       alt0.2.1
 Summary:       Creates temporary files and directories for testing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test_construct
 Group:         Development/Documentation
@@ -64,7 +63,7 @@ Creates temporary files and directories for testing documentation files.
 %if_enabled    devel
 %package       -n gem-test-construct-devel
 Version:       2.0.2.9
-Release:       alt0.2
+Release:       alt0.2.1
 Summary:       Creates temporary files and directories for testing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета test_construct
 Group:         Development/Ruby
@@ -76,8 +75,6 @@ Requires:      gem(minitest) >= 5.0.8
 Requires:      gem(mocha) >= 0.14.0
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.0
-Conflicts:     gem(mocha) >= 3
-Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-test-construct-devel
 Creates temporary files and directories for testing development package.
@@ -117,6 +114,9 @@ Creates temporary files and directories for testing development package.
 
 
 %changelog
+* Sun Sep 20 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.2.9-alt0.2.1
+- ! relaxed deps to some gems
+
 * Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.2.9-alt0.2
 - ! fixed dep to minitest
 
