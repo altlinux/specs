@@ -1,5 +1,5 @@
 Name:		rpm-build-php
-Version:	12
+Version:	12.1
 Release:	alt1
 Summary:	RPM helper macros to rebuild PHP packages
 Group:		Development/Other
@@ -19,6 +19,10 @@ cp %SOURCE0 %buildroot/%_sysconfdir/rpm/macros.d/php
 %_sysconfdir/rpm/macros.d/php
 
 %changelog
+* Sun Sep 20 2026 Anton Farygin <rider@altlinux.org> 12.1-alt1
+- set %%php_defver to php 8.5 by default (closes: #60634)
+- removed php 8.0 from supported php suffix
+
 * Fri Nov 21 2025 Anton Farygin <rider@altlinux.com> 12-alt1
 - added php 8.5 to supported and enabled versions
 - removed php 7 from supported versions
