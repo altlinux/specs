@@ -1,5 +1,5 @@
 Name: python3-module-protobuf
-Version: 7.36.1
+Version: 7.36.2
 Release: alt1
 
 Summary: Protocol Buffers for Python
@@ -36,6 +36,9 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %python3_sitelibdir/protobuf-%version.dist-info
 
 %changelog
+* Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.36.2-alt1
+- 7.36.2 released
+
 * Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.36.1-alt1
 - 7.36.1 released
 
