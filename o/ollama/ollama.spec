@@ -3,6 +3,10 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed,unresolved=relaxed,rpath=relaxed
 
+# Upstream looks for runtime payloads in ../lib/ollama relative to
+# /usr/bin/ollama (see ml/path.go); keep the upstream layout.
+%define ollama_libdir %_prefix/lib/ollama
+
 %ifarch x86_64
 %def_with cuda
 %else
@@ -11,52 +15,66 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.23.4
-Release: alt2
+Version: 0.34.2
+Release: alt1
 Summary: Get up and running with large language models
 License: MIT
 Group: Sciences/Computer science
-Url: https://ollama.com
-Vcs: https://github.com/ollama/ollama
+URL: https://ollama.com
+VCS: https://github.com/ollama/ollama
+
 %if_with cuda
 # https://bugzilla.altlinux.org/52911
 %filter_from_requires /(libcudart\.so\.%cuda_major)/d
 %filter_from_requires /debug64(libcuda\.so\.1)/d
 Requires: ollama-cuda = %EVR
 %endif
+
 %if_with vulkan
 Requires: %name-vulkan = %EVR
 %endif
 Requires: ollama-cpu = %EVR
 
 ExcludeArch: %ix86
+
 Source: %name-%version.tar
+Source1: vendor.tar
 Source3: ollama-user.conf
+Source4: %name.service
+Source5: completions
+Source6: models-list.txt
+Source7: tags-list.txt
+# ALT: Do not auto-install third-party agents from the internet; point the
+# user at installation instructions instead.
+Patch: alt-no-autoinstall-agents.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
+BuildRequires: rpm-build-golang
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: golang
 BuildRequires: look
 BuildRequires: patchelf
+
 %if_with cuda
 BuildRequires(pre): rpm-macros-cuda-toolkit
 BuildRequires: %cuda_buildreq
 BuildRequires: nvidia-cuda-devel-static
 %endif
+
 %if_with vulkan
 BuildRequires: glslc
 BuildRequires: libvulkan-devel
+BuildRequires: spirv-headers
 %endif
+
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: curl
 }}
 
 %description
-%summary.
-Run OpenAI gpt-oss, DeepSeek-R1, Gemma 3, Llama 4, Mistral, Phi-4,
-Qwen 3, and other models, locally.
+Ollama lets you use open models with your coding agents
+so you can spend less while keeping your data private.
 
 This is a meta-package.
 
@@ -85,48 +103,73 @@ Requires: ollama-cpu = %EVR
 %summary.
 
 %prep
-%setup
-sed -i '/PRE_INCLUDE_REGEXES/d' CMakeLists.txt
+%setup -a 1
+%autopatch -p1
+# Do not bundle CUDA runtime libraries; the system toolkit is used instead.
+sed -i '/PRE_INCLUDE_REGEXES/d' llama/server/CMakeLists.txt
+# Do not strip the Go binary (brp-debuginfo forbids stripped files).
+sed -i 's/"-s -w /"/' cmake/local.cmake
 
 %build
 %add_optflags -Wno-unused-function
-%cmake -DGGML_BACKEND_DIR=%_libexecdir/ollama \
+# ExternalProject sub-builds (llama-server, GPU backends) do not inherit
+# %%optflags from the top-level configure; pass them via the environment so
+# the libraries carry debug info (brp-debuginfo requirement).
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
+# Offline build: use the vendored llama.cpp (see .gear/merge-up.d/) instead
+# of fetching it with CMake FetchContent. The Sisyphus llama.cpp package
+# cannot be used: ollama pins an exact commit (LLAMA_CPP_VERSION) that the
+# repo package never matches, and the build compiles ollama's compat sources
+# into the llama target from the source tree, not an installed library.
+# The compat patch is already applied to the vendored tree.
+export OLLAMA_LLAMA_CPP_SOURCE=$PWD/vendor/llama.cpp
+backends=
+%if_with cuda
+backends=cuda_v%cuda_major
+%endif
+%if_with vulkan
+backends="${backends:+$backends;}vulkan"
+%endif
+# The superbuild (cmake/local.cmake) builds the Go binary, llama-server,
+# CPU backend variants and the requested GPU backends, and stages them all
+# under OLLAMA_LIB_DIR for %cmake_install.
+%cmake -DOLLAMA_VERSION:STRING=%version \
+	-DOLLAMA_LLAMA_BACKENDS:STRING="$backends" \
 %if_with cuda
 	%cuda_cmake_flags \
 %endif
 	%nil
 %cmake_build
-go build -v \
-	-buildmode=pie \
-	-ldflags="
-		-X=github.com/ollama/ollama/version.Version=%version
-		-X=github.com/ollama/ollama/server.mode=release
-	"
-find -type f -perm -1 -ls
 
 %install
 %cmake_install
-install -Dp ollama %buildroot%_bindir/ollama
 install -Dpm644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
 # HTTP server on 127.0.0.1:11434
-install -Dpm644 .gear/%name.service -t %buildroot%_unitdir
+install -Dpm644 %SOURCE4 -t %buildroot%_unitdir
 mkdir -p %buildroot%_localstatedir/%name
-install -Dpm644 models-list.txt tags-list.txt -t %buildroot%_datadir/ollama
-install -Dpm644 .gear/completions %buildroot%_datadir/bash-completion/completions/ollama
-# Add a RPATH to bypass lib.req false positive error.
-find %buildroot%_libexecdir/ollama -name 'libggml-*.so' |
-	xargs -trn1 patchelf --set-rpath %_libexecdir/ollama
+install -Dpm644 %SOURCE6 %SOURCE7 -t %buildroot%_datadir/ollama
+install -Dpm644 %SOURCE5 %buildroot%_datadir/bash-completion/completions/ollama
+# Add a RPATH to bypass lib.req false positive error and to let GPU backend
+# modules in runner subdirectories find the base libraries.
+find %buildroot%ollama_libdir -name 'libggml-*.so*' |
+	xargs -trn1 patchelf --set-rpath %ollama_libdir
 
 %check
 %if_with cuda
-( ! cuobjdump --list-elf %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .cubin )
-# SASS for every arch, PTX only for the newest one.
-( ! cuobjdump --list-ptx %buildroot%_libexecdir/ollama/libggml-cuda.so | grep -F -v -e .sm_%cuda_arch_max.ptx )
+( ! cuobjdump --list-elf %buildroot%ollama_libdir/cuda_v%cuda_major/libggml-cuda.so | grep -F -v -e .cubin )
+# SASS for every arch, PTX only for the newest one (e.g. .sm_121.ptx or
+# arch-specific .sm_121a.ptx).
+( ! cuobjdump --list-ptx %buildroot%ollama_libdir/cuda_v%cuda_major/libggml-cuda.so | grep -F -v -e .sm_%cuda_arch_max )
 %endif
 cat /proc/loadavg
 # We don't have MLX.
-rename go go- x/mlxrunner/mlx/generator/main.go
-go test -v ./...
+rename go go- mlx/generator/main.go
+# TestCodexAppCountsOnlyOllamaRequestsInRegularProfile is flaky in the gyle
+# build environment (passes on host and in local hasher): the request-count
+# cursor skips session files whose mtime precedes the reset timestamp,
+# which is sensitive to filesystem timestamp granularity.
+go test -v ./... -skip 'TestCodexAppCountsOnlyOllamaRequestsInRegularProfile'
 %buildroot%_bindir/ollama --version | grep -Fx 'Warning: client version is %version'
 ldd %buildroot%_bindir/ollama
 %buildroot%_bindir/ollama serve &
@@ -159,23 +202,37 @@ kill %%?ollama
 %_datadir/bash-completion/completions/ollama
 %_unitdir/%name.service
 %_sysusersdir/%name.conf
-%dir %_libexecdir/ollama
-%_libexecdir/ollama/libggml-base.so
-%_libexecdir/ollama/libggml-base.so.*
-%_libexecdir/ollama/libggml-cpu*.so
+%dir %ollama_libdir
+%ollama_libdir/llama-*
+%ollama_libdir/*.so*
+%ollama_libdir/*LICENSE*
 %attr(-,ollama,ollama) %dir %_localstatedir/%name
 
 %if_with cuda
 %files cuda
-%_libexecdir/ollama/libggml-cuda.so
+%ollama_libdir/cuda_v%cuda_major
 %endif
 
 %if_with vulkan
 %files vulkan
-%_libexecdir/ollama/libggml-vulkan.so
+%ollama_libdir/vulkan
 %endif
 
 %changelog
+* Sun Sep 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.2-alt1
+- Updated to version 0.34.2.
+- Build the source tarball from the pristine upstream tag; all ALT-owned
+  files (vendor.tar, service, completions, models/tags lists) now enter
+  the src.rpm as explicit sources.
+- Build llama-server from the vendored pinned llama.cpp: upstream removed
+  the in-tree ggml backend and now fetches llama.cpp with CMake
+  FetchContent (pin: LLAMA_CPP_VERSION), which is impossible in the
+  offline build environment.
+- Install runtime payloads into /usr/lib/ollama with per-runner
+  subdirectories (cuda_v13, vulkan) per the new upstream layout.
+- Do not auto-install third-party coding agents (openclaw, pi, hermes,
+  claude, etc.) from the internet; point at install instructions instead.
+
 * Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 0.23.4-alt2
 - Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit.
 
