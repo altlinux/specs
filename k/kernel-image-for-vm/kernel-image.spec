@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.52
+%define kernel_sublevel 	.53
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -537,6 +537,13 @@ python3 .gear/ltp-runtest.py > kernel-alt-vm
 # mmap22: MAP_DROPPABLE is 64-bit only and the test TBROKs on EOPNOTSUPP.
 echo mmap22 >> skiplist-alt-vm
 %endif
+# With %%buildroot modules exposed (below) these tests really run instead of
+# TCONFing, and ltp before 20260529 (p11 has 20220930) still expects pre-6.18
+# behaviour from them: nested hmac, rfc7539 digest size, a TUN flag it does not
+# know, loop block size errno.
+if [ "$(rpm -q --qf '%%{VERSION}' ltp)" -lt 20260529 ]; then
+	printf '%%s\n' af_alg01 af_alg03 ioctl03 ioctl_loop06 >> skiplist-alt-vm
+fi
 # LTP looks for modules in /lib/modules/$(uname -r) and ignores MODPROBE_OPTIONS
 # that vm-run sets, so bind the %%buildroot modules there.  uevent02/03 open
 # /dev/net/tun and /dev/uinput, which exist only once their modules are loaded
@@ -656,6 +663,14 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 21 2026 Anton Farygin <rider@altlinux.org> 6.18.53-alt1
+- 6.18.52 -> 6.18.53
+
+* Thu Sep 17 2026 Anton Farygin <rider@altlinux.org> 6.18.52-alt2
+- spec: build against the branch's own ltp: skip af_alg01, af_alg03, ioctl03
+  and ioctl_loop06 when ltp is older than 20260529 (their expectations predate
+  6.18; they used to TCONF before %%buildroot modules were exposed to the VM)
+
 * Tue Sep 15 2026 Anton Farygin <rider@altlinux.org> 6.18.52-alt1
 - 6.18.51 -> 6.18.52
 - spec: added kernel-for-vm provides (closes: #60522)
