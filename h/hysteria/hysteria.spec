@@ -9,7 +9,7 @@
 %define skip_tests TestResolver|TestClientServerUDPStress
 
 Name: hysteria
-Version: 2.12.1
+Version: 2.12.3
 Release: alt1
 
 Summary: Hysteria 2 - A powerful, lightning fast network proxy
@@ -93,6 +93,10 @@ mkdir -p %buildroot%_sysconfdir/%name
 %doc README.md
 
 %changelog
+* Wed Sep 16 2026 Vladislav Tatjanin <l27001@altlinux.org> 2.12.3-alt1
+- Bump version to 2.12.3.
+- Fix build on riscv64.
+
 * Sun Aug 09 2026 Vladislav Tatjanin <l27001@altlinux.org> 2.12.1-alt1
 - Bump version to 2.12.1.
 
