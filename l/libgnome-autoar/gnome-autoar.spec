@@ -1,45 +1,47 @@
 %def_disable snapshot
 
 %define _name gnome-autoar
-%define ver_major 0.4
+%define ver_major 0.5
 %define api_ver_base 0
 %define api_ver %api_ver_base.1
+%define namespace GnomeAutoar
+
 %def_enable introspection
 %def_enable vala
-%def_enable gtk_doc
+%def_enable docs
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.2
 Release: alt1
 
 Summary: Automatic archives creating and extracting library
 Group: System/Libraries
-License: LGPL-2.1
+License: LGPL-2.1-or-later
 Url: https://gitlab.gnome.org/GNOME/gnome-autoar
+
+Vcs: https://gitlab.gnome.org/GNOME/gnome-autoar.git
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
-Vcs: https://gitlab.gnome.org/GNOME/gnome-autoar.git
 Source: %_name-%version.tar
 %endif
 
 %define glib_ver 2.38
 %define gi_ver 1.30
-%define gtk_ver 3.2
 %define archive_ver 3.4.0
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libarchive-devel >= %archive_ver
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel}
+BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: dbus-tools-gui}
 
 %description
@@ -50,7 +52,7 @@ directories over the Internet.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -59,7 +61,7 @@ developing applications that use %name.
 %package devel-doc
 Summary: Development documentation for %_name
 Group: Development/Documentation
-Conflicts: %name < %version-%release
+Conflicts: %name < %version
 BuildArch: noarch
 
 %description devel-doc
@@ -68,19 +70,20 @@ This package contains development documentation for %_name library.
 %package gir
 Summary: GObject introspection data for the %_name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
-GObject introspection data for the %_name library
+GObject introspection data for the %_name library.
 
 %package gir-devel
 Summary: GObject introspection devel data for the %_name library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
-GObject introspection devel data for the %_name library
+GObject introspection devel data for the %_name library.
 
 
 %prep
@@ -88,10 +91,10 @@ GObject introspection devel data for the %_name library
 
 %build
 %meson \
-    %{?_disable_introspection:-Dintrospection=disabled} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    %{?_enable_vala:-Dvapi=true} \
-    %{?_enable_check:-Dtests=true}
+    %{subst_enable_meson_feature introspection introspection} \
+    %{subst_enable_meson_bool docs docs} \
+    %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool check tests}
 %nil
 %meson_build
 
@@ -104,38 +107,34 @@ GObject introspection devel data for the %_name library
 
 %files -f %_name.lang
 %_libdir/lib%_name-%api_ver_base.so.*
-%_libdir/lib%_name-gtk-%api_ver_base.so.*
+#%_libdir/lib%_name-gtk-%api_ver_base.so.*
 %doc NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver_base/
 %_libdir/lib%_name-%api_ver_base.so
-%_libdir/lib%_name-gtk-%api_ver_base.so
 %_pkgconfigdir/%_name-%api_ver_base.pc
-%_pkgconfigdir/%_name-gtk-%api_ver_base.pc
 %{?_enable_vala:
 %_vapidir/%_name-%api_ver_base.deps
-%_vapidir/%_name-%api_ver_base.vapi
-%_vapidir/%_name-gtk-%api_ver_base.deps
-%_vapidir/%_name-gtk-%api_ver_base.vapi}
+%_vapidir/%_name-%api_ver_base.vapi}
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/doc/%_name/
 %endif
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GnomeAutoar-%api_ver.typelib
-%_typelibdir/GnomeAutoarGtk-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/GnomeAutoar-%api_ver.gir
-%_girdir/GnomeAutoarGtk-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 %endif
 
-
 %changelog
+* Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Sun Sep 01 2024 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
