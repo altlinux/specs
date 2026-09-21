@@ -1,5 +1,5 @@
 Name: pcsc-lite-ccid
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: Generic USB CCID smart card reader driver
@@ -50,6 +50,9 @@ PC/SC Lite daemon.
 %_udev_rulesdir/92_pcscd_ccid.rules
 
 %changelog
+* Mon Sep 21 2026 Andrey Cherepanov <cas@altlinux.org> 1.8.4-alt1
+- New version.
+
 * Mon Aug 31 2026 Andrey Cherepanov <cas@altlinux.org> 1.8.3-alt1
 - New version.
 
