@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-freon
-Version: 61
+Version: 62
 Release: alt1
 Summary: Shows CPU temperature, disk temperature, video card temperature
 # OFL-1.1 for material-icons
@@ -59,6 +59,9 @@ cp freon@UshakovVasilii_Github.yahoo.com/icons/material-icons/LICENSE LICENSE-ma
 %doc README.md LICENSE LICENSE-material-icons
 
 %changelog
+* Mon Sep 21 2026 Anton Midyukov <antohami@altlinux.org> 62-alt1
+- New version 62.
+
 * Fri Mar 20 2026 Anton Midyukov <antohami@altlinux.org> 61-alt1
 - New version 61.
 
