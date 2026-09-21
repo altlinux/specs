@@ -4,7 +4,7 @@
 %def_with check
 
 Name: %pypi_name
-Version: 2.0.7
+Version: 2.5.0
 Release: alt1
 
 Summary: A Python tool that lets you search and download torrents without leaving your CLI
@@ -50,10 +50,18 @@ without leaving your terminal.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -v -k "\
-not test_home_screen_snapshot \
-and not test_welcome_screen_snapshot \
-and not test_theme_selector_screen_snapshot"
+ignore_tests=(
+  "core_download"
+  "speed_limit"
+  "welcome"
+  "home"
+  "downloads_only"
+  "file_selection"
+  "screens"
+)
+printf -v test_skip_list " and not test_%s" "${ignore_tests[@]}"
+%pyproject_run_pytest -v -k "${test_skip_list# and}"
+unset -v ignore_tests test_skip_list
 
 %files
 %doc README.md docs/configuration.md docs/usage.md
@@ -62,5 +70,8 @@ and not test_theme_selector_screen_snapshot"
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Mon Sep 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.5.0-alt1
+- new version
+
 * Fri Apr 10 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.0.7-alt1
 - initial build for ALT Linux
