@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wasm-component-ld
-Version: 0.5.22
+Version: 0.5.30
 Release: alt1
 
 Summary: Command line linker for creating WebAssembly components
@@ -44,5 +44,8 @@ target.
 %doc README.md LICENSE-APACHE LICENSE-Apache-2.0_WITH_LLVM-exception LICENSE-MIT
 
 %changelog
+* Mon Sep 21 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.5.30-alt1
+- New version 0.5.30.
+
 * Fri May 22 2026 Artyom Sinyugin <writers@altlinux.org> 0.5.22-alt1
 - Initial build.
