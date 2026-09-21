@@ -3,7 +3,7 @@
 %def_enable check
 
 Name:    yq
-Version: 4.1.2
+Version: 4.2.0
 Release: alt1
 Summary: Command-line YAML, XML and TOML processor
 License: Apache-2.0
@@ -57,6 +57,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Mon Sep 21 2026 Ivan A. Melnikov <iv@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Sat Jul 11 2026 Ivan A. Melnikov <iv@altlinux.org> 4.1.2-alt1
 - 4.1.2
 
