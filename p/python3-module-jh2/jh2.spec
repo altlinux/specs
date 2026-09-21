@@ -2,7 +2,7 @@
 %define pypi_name jh2
 
 Name: python3-module-%pypi_name
-Version: 5.0.14
+Version: 5.0.15
 Release: alt1
 
 Summary: HTTP/2 state-machine based protocol implementation
@@ -45,6 +45,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.0.15-alt1
+- 5.0.14 -> 5.0.15
+
 * Fri Aug 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.0.14-alt1
 - 5.0.13 -> 5.0.14
 
