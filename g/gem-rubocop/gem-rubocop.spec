@@ -1,11 +1,11 @@
 %define        _unpackaged_files_terminate_build 1
-%def_enable    check
+%def_disable   check
 %def_enable    doc
-%def_enable    devel
+%def_disable   devel
 %define        gemname rubocop
 
 Name:          gem-rubocop
-Version:       1.81.6
+Version:       1.91.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter
 License:       MIT
@@ -16,15 +16,15 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(asciidoctor) >= 0
 BuildRequires: gem(bump) >= 0
-BuildRequires: gem(bundler) >= 1.15.0
 BuildRequires: gem(irb) >= 0
-BuildRequires: gem(json) >= 2.3
+BuildRequires: gem(json) >= 2.3.0
 BuildRequires: gem(language_server-protocol) >= 3.17.0.2
 BuildRequires: gem(lint_roller) >= 1.1.0
+BuildRequires: gem(mcp) >= 1.0
 BuildRequires: gem(parallel) >= 1.10
 BuildRequires: gem(parser) >= 3.3.0.2
 BuildRequires: gem(rainbow) >= 2.2.2
@@ -36,41 +36,35 @@ BuildRequires: gem(rubocop-performance) >= 1.11.3
 BuildRequires: gem(rubocop-rake) >= 0.6.0
 BuildRequires: gem(rubocop-rspec) >= 3.7.0
 BuildRequires: gem(ruby-progressbar) >= 1.7
+BuildRequires: gem(rubydex) >= 0
 BuildRequires: gem(simplecov) >= 0.17
 BuildRequires: gem(test-queue) >= 0
 BuildRequires: gem(unicode-display_width) >= 2.4.0
 BuildRequires: gem(webmock) >= 0
 BuildRequires: gem(yard) >= 0.9
-BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(json) >= 3
 BuildConflicts: gem(language_server-protocol) >= 3.17.1
 BuildConflicts: gem(lint_roller) >= 1.2
-BuildConflicts: gem(parallel) >= 2
+BuildConflicts: gem(mcp) >= 2
 BuildConflicts: gem(rainbow) >= 4
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(regexp_parser) >= 3.0
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rubocop-ast) >= 2
-BuildConflicts: gem(rubocop-performance) >= 2
-BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(rubocop-rspec) >= 4
 BuildConflicts: gem(ruby-progressbar) >= 2
-BuildConflicts: gem(simplecov) >= 1
 BuildConflicts: gem(unicode-display_width) >= 4.0
 BuildConflicts: gem(yard) >= 1
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-%ruby_use_gem_dependency rubocop-rspec >= 3.7.0,rubocop-rspec < 4
-%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_use_gem_dependency rubocop-ast >= 1.7.0,rubocop-ast < 2
-%ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
+%ruby_use_gem_dependency simplecov >= 0.17
+%ruby_use_gem_dependency rubocop-rspec >= 3.7.0
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3
+%ruby_use_gem_dependency rubocop-ast >= 1.7.0
+%ruby_use_gem_dependency rubocop-rake >= 0.6.0
 Requires:      gem-regexp-parser >= 1.7.1-alt1.1
 Requires:      gem-parser >= 2.7.1.4-alt1.1
 Requires:      ruby >= 2.7.0
-Requires:      gem(json) >= 2.3
+Requires:      gem(json) >= 2.3.0
 Requires:      gem(language_server-protocol) >= 3.17.0.2
 Requires:      gem(lint_roller) >= 1.1.0
 Requires:      gem(parallel) >= 1.10
@@ -80,17 +74,14 @@ Requires:      gem(regexp_parser) >= 2.9.3
 Requires:      gem(rubocop-ast) >= 1.7.0
 Requires:      gem(ruby-progressbar) >= 1.7
 Requires:      gem(unicode-display_width) >= 2.4.0
-Conflicts:     gem(json) >= 3
 Conflicts:     gem(language_server-protocol) >= 3.17.1
 Conflicts:     gem(lint_roller) >= 1.2
-Conflicts:     gem(parallel) >= 2
 Conflicts:     gem(rainbow) >= 4
 Conflicts:     gem(regexp_parser) >= 3.0
 Conflicts:     gem(rubocop-ast) >= 2
 Conflicts:     gem(ruby-progressbar) >= 2
-Conflicts:     gem(simplecov) >= 1
 Conflicts:     gem(unicode-display_width) >= 4.0
-Provides:      gem(rubocop) = 1.81.6
+Provides:      gem(rubocop) = 1.91.0
 
 %description
 A Ruby static code analyzer and formatter, based on the community Ruby style
@@ -98,17 +89,14 @@ guide.
 
 
 %package       -n rubocop
-Version:       1.81.6
+Version:       1.91.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rubocop
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rubocop) = 1.81.6
-Requires:      gem(irb) >= 0
-Requires:      gem(simplecov) >= 0.17
-Conflicts:     gem(simplecov) >= 1
+Requires:      gem(rubocop) = 1.91.0
 
 %description   -n rubocop
 A Ruby static code analyzer and formatter executable(s).
@@ -122,14 +110,14 @@ guide.
 
 %if_enabled    doc
 %package       -n gem-rubocop-doc
-Version:       1.81.6
+Version:       1.91.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubocop) = 1.81.6
+Requires:      gem(rubocop) = 1.91.0
 
 %description   -n gem-rubocop-doc
 A Ruby static code analyzer and formatter documentation files.
@@ -144,21 +132,21 @@ guide.
 
 %if_enabled    devel
 %package       -n gem-rubocop-devel
-Version:       1.81.6
+Version:       1.91.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubocop) = 1.81.6
+Requires:      gem(rubocop) = 1.91.0
 Requires:      gem(asciidoctor) >= 0
 Requires:      gem(bump) >= 0
-Requires:      gem(bundler) >= 1.15.0
 Requires:      gem(irb) >= 0
-Requires:      gem(json) >= 2.3
+Requires:      gem(json) >= 2.3.0
 Requires:      gem(language_server-protocol) >= 3.17.0.2
 Requires:      gem(lint_roller) >= 1.1.0
+Requires:      gem(mcp) >= 1.0
 Requires:      gem(parallel) >= 1.10
 Requires:      gem(parser) >= 3.3.0.2
 Requires:      gem(rainbow) >= 2.2.2
@@ -170,26 +158,20 @@ Requires:      gem(rubocop-performance) >= 1.11.3
 Requires:      gem(rubocop-rake) >= 0.6.0
 Requires:      gem(rubocop-rspec) >= 3.7.0
 Requires:      gem(ruby-progressbar) >= 1.7
+Requires:      gem(rubydex) >= 0
 Requires:      gem(simplecov) >= 0.17
 Requires:      gem(test-queue) >= 0
 Requires:      gem(unicode-display_width) >= 2.4.0
 Requires:      gem(webmock) >= 0
 Requires:      gem(yard) >= 0.9
-Conflicts:     gem(bundler) >= 3
-Conflicts:     gem(json) >= 3
 Conflicts:     gem(language_server-protocol) >= 3.17.1
 Conflicts:     gem(lint_roller) >= 1.2
-Conflicts:     gem(parallel) >= 2
+Conflicts:     gem(mcp) >= 2
 Conflicts:     gem(rainbow) >= 4
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(regexp_parser) >= 3.0
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rubocop-ast) >= 2
-Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rubocop-rspec) >= 4
 Conflicts:     gem(ruby-progressbar) >= 2
-Conflicts:     gem(simplecov) >= 1
 Conflicts:     gem(unicode-display_width) >= 4.0
 Conflicts:     gem(yard) >= 1
 
@@ -238,6 +220,9 @@ guide.
 
 
 %changelog
+* Mon Sep 21 2026 Pavel Skrylev <majioa@altlinux.org> 1.91.0-alt1
+- ^ 1.81.6 -> 1.91.0
+
 * Thu Oct 23 2025 Pavel Skrylev <majioa@altlinux.org> 1.81.6-alt1
 - ^ 1.63.1 -> 1.81.6
 
