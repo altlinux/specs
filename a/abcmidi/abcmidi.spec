@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: abcmidi
-Version: 2026.06.16
+Version: 2026.09.20
 Release: alt1
 
 Summary: Converter from ABC to MIDI format and back
@@ -10,6 +10,8 @@ Group: Sound
 Url: https://github.com/sshlien/abcmidi
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 %description
 This package contains the programs `abc2midi' and `midi2abc',  which
@@ -32,6 +34,7 @@ PostScript code together with the ABC parser from the abcmidi package.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %add_optflags -std=gnu17
@@ -48,6 +51,9 @@ PostScript code together with the ABC parser from the abcmidi package.
 %exclude %_datadir/doc/%name
 
 %changelog
+* Mon Sep 21 2026 Nikolay Strelkov <snk@altlinux.org> 2026.09.20-alt1
+- New version 2026.09.20.
+
 * Wed Jun 17 2026 Nikolay Strelkov <snk@altlinux.org> 2026.06.16-alt1
 - New version 2026.06.16.
 
