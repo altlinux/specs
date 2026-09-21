@@ -3,7 +3,7 @@
 %define appId ru.basealt.altmediawriter
 
 Name:           altmediawriter
-Version:        1.1.0
+Version:        1.1.1
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -62,6 +62,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Fri Sep 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.1.1-alt1
+- Fix error message display (corrected encoding).
+
 * Thu Aug 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.1.0-alt1
 - Port to Qt 6.
 - Automatically select the image variant matching the architecture
