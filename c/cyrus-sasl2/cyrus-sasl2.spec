@@ -1,9 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
 
-%ifnarch %e2k
-%set_gcc_version      13
-%endif
-
 # Use "--disable sql" for build without PostgreSQL and MySQL support
 %def_enable sql
 # Use "--disable ldap" for build without LDAP support
@@ -18,7 +14,7 @@
 
 Name: cyrus-sasl2
 Version: 2.1.28
-Release: alt5
+Release: alt6
 
 Summary: SASL2 is the Simple Authentication and Security Layer
 License: ALT-Cyrus
@@ -313,6 +309,9 @@ cat tests/test_get_salt.log 2>/dev/null ||:
 %endif
 
 %changelog
+* Mon Sep 21 2026 Alexei Takaseev <taf@altlinux.org> 2.1.28-alt6
+- Fix build with gcc 15.
+
 * Wed Jun 03 2026 Michael Shigorin <mike@altlinux.org> 2.1.28-alt5
 - E2K: no gcc13, and there's just one lcc version per branch
   (cf. 2.1.28-alt2.1)
