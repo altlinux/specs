@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.48.2
+Version: 0.49.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -46,6 +46,8 @@ Provides: x-terminal-emulator
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-golang
 
+BuildRequires: shader-slang
+
 BuildRequires: libXi-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXcursor-devel
@@ -69,6 +71,7 @@ BuildRequires: libharfbuzz-devel
 
 BuildRequires: python3-dev
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_design
 BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: python3-module-sphinx-inline-tabs
 BuildRequires: python3-module-sphinxext-opengraph
@@ -239,6 +242,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_bindir/kitten
 
 %changelog
+* Mon Sep 21 2026 Egor Ignatov <egori@altlinux.org> 0.49.0-alt1
+- New version 0.49.0.
+
 * Thu Jul 30 2026 Egor Ignatov <egori@altlinux.org> 0.48.2-alt1
 - New version 0.48.2.
 
