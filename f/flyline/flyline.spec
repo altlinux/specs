@@ -1,5 +1,5 @@
 Name:    flyline
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: A Bash plugin that provides a modern line editing interface
@@ -77,6 +77,9 @@ install -Dm 755 target/release/libflyline.so %buildroot%_libdir/%name/libflyline
 %_libdir/%name/libflyline.so
 
 %changelog
+* Mon Sep 21 2026 Sergey Palcheh <minergenon@altlinux.org> 1.9.0-alt1
+- new version 1.9.0
+
 * Mon Sep 14 2026 Sergey Palcheh <minergenon@altlinux.org> 1.8.0-alt1
 - new version 1.8.0
 
