@@ -3,7 +3,7 @@
 
 Name: qucs-sspar-viewer
 Version: 2026.05.12
-Release: alt1
+Release: alt2
 Summary: Qucs-S S-parameter and RF Circuit Synthesis Tool
 
 Group: Engineering
@@ -35,16 +35,21 @@ This tool is part of the Qucs-S project.
 
 %install
 %cmake_install
+
 mkdir -p %buildroot%_desktopdir/
 install -m 0644 qucs-s-spar-viewer.desktop %buildroot%_desktopdir/
 mkdir -p %buildroot%_liconsdir/
 install -m 0644 qucs-s-spar-viewer.png %buildroot%_liconsdir/
 mkdir -p %buildroot%_man1dir/
 install -m 0644 qucs-s-spar-viewer.1 %buildroot%_man1dir/
-rm -rf docs/help/source
+
+rm -r 	%buildroot%_datadir/%name/doc/.nojekyll \
+	%buildroot%_datadir/%name/doc/sphinx-venv \
+	%buildroot%_datadir/%name/doc/_sources/sphinx-venv
+
 
 %files
-%doc LICENSE VERSION docs
+%doc LICENSE VERSION src/README.md
 %_man1dir/*.1.*
 %_bindir/%name
 %_datadir/%name
@@ -52,6 +57,10 @@ rm -rf docs/help/source
 %_liconsdir/*.png
 
 %changelog
+* Mon Sep 14 2026 Polina Poidenko <polipoki@altlinux.org> 2026.05.12-alt2
+- Deleted part of the excess and duplicate upstream documentation.
+- Added README.
+
 * Fri Jun 26 2026 Polina Poidenko <polipoki@altlinux.org> 2026.05.12-alt1
 - New version 2026.05.12.
 
@@ -60,4 +69,3 @@ rm -rf docs/help/source
 
 * Fri Apr 10 2026 Polina Poidenko <polipoki@altlinux.org> 2026.04.10-alt1
 - Initial build for Sisyphus.
-
