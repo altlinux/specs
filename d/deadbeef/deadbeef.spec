@@ -4,15 +4,14 @@
 
 %set_verify_elf_method textrel=relaxed 
 Name: deadbeef
-Version: 1.9.6
-Release: alt3
+Version: 1.10.3
+Release: alt1
 Summary: DeaDBeeF is an audio player
 Url: https://github.com/Alexey-Yakovenko/deadbeef
 
 Patch2000: %name-e2k.patch
+Patch0: deadbeef-1.10.2-drop-political-references.patch
 Patch1: fix_orphans_int_i.patch
-Patch2: deadbeef-1.9.6-ffmpeg7_build_fix.patch
-Patch3: deadbeef-1.9.6-const_char_build_fix.patch
 Group: Sound
 License: Zlib and GPLv2 and LGPLv2.1
 
@@ -32,8 +31,6 @@ BuildRequires: /usr/bin/yasm
 
 Requires: %name-out-alsa = %EVR
 Requires: %name-gtk3 = %EVR
-
-Obsoletes: %name-medialib
 
 %description
 DeaDBeeF is an audio player for GNU/Linux systems with
@@ -126,6 +123,9 @@ Requires: %name-dsp-mono2stereo = %EVR
 Requires: %name-dsp-libretro = %EVR
 Requires: %name-vfs_zip = %EVR
 Requires: %name-rg_scanner = %EVR
+Requires: %name-lyrics_gtk3 = %EVR
+Requires: %name-medialib = %EVR
+Requires: %name-mpris = %EVR
 
 %ifnarch %ix86
 Requires: %name-ddb_soundtouch = %EVR
@@ -565,14 +565,41 @@ Requires: %name = %EVR
 %description -n %name-rg_scanner
 ReplayGain-Scanner plugin for DeaDBeeF
 
+%package -n %name-lyrics_gtk3
+Summary: Lyrics plugin for DeaDBeeF
+Group: Sound
+Requires: %name = %EVR
+
+%description -n %name-lyrics_gtk3
+Lyrics plugin for DeaDBeeF
+
+%package -n %name-medialib
+Summary: Medialib plugin for DeaDBeeF
+Group: Sound
+Requires: %name = %EVR
+
+%description -n %name-medialib
+Scans disk for music files and manages them as database
+
+%package -n %name-mpris
+Summary: MPRIS (multimedia keys support) plugin for DeaDBeeF
+Group: Sound
+Requires: %name = %EVR
+
+%description -n %name-mpris
+MPRIS (multimedia keys support)
+Control playback using multimedia keys.
+This requires a running MPRIS server.
+GNOME and KDE already have one / no configuration necessary.
+Otherwise you may need to install and configure it manually.
+
 %prep
 %setup
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %ifnarch %ix86 x86_64 %e2k
 sed -i \
@@ -584,6 +611,7 @@ sed -i '/m4/ d' Makefile.am
 # russian translation
 install -m 0644  %SOURCE2 po/ru.po
 echo "ru" >> po/LINGUAS
+cp help.txt help.ru.txt
 
 %build
 %autoreconf
@@ -612,9 +640,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -f %name.lang
 %dir %_libdir/%name
 %doc AUTHORS COPYING COPYING.* NEWS README ChangeLog
-%doc about.txt help.txt
+%doc about.txt help*.txt translators.txt
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/*.desktop
 %_datadir/%name
 %_iconsdir/*/*/*/%name.*
 
@@ -762,6 +790,15 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-rg_scanner
 %_libdir/%name/rg_scanner.so
 
+%files -n %name-lyrics_gtk3
+%_libdir/%name/lyrics_gtk3.so
+
+%files -n %name-medialib
+%_libdir/%name/medialib.so
+
+%files -n %name-mpris
+%_libdir/%name/mpris.so
+
 %ifnarch %ix86
 %files -n %name-ddb_soundtouch
 %_libdir/%name/ddb_soundtouch.so
@@ -777,6 +814,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Sun Sep 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.10.3-alt1
+- new version
+
 * Sat Sep 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.9.6-alt3
 - fix build with gcc 15
 
