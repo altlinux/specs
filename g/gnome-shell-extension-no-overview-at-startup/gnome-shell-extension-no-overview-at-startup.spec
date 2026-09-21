@@ -3,18 +3,20 @@
 
 Name: gnome-shell-extension-%_name-at-startup
 Version: 49
-Release: alt3
+Release: alt4
 
 Summary: No overview at start-up. For GNOME Shell 40+
 Group: Graphical desktop/GNOME
 License: GPL-3.0
-Url: https://github.com/fthx/no-overview
+URL: https://github.com/fthx/no-overview
+VCS: https://github.com/fthx/no-overview.git
 
 BuildArch: noarch
 
 # Source-url: https://github.com/fthx/no-overview/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Patch0: late-hide-overview.patch
+Patch1: add-gnome-50+-support.patch
 
 Requires: gnome-shell >= 48
 Requires: typelib(Adw) = 1
@@ -24,7 +26,7 @@ No overview at start-up. For GNOME Shell.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 
@@ -36,6 +38,9 @@ cp -ar *.js* %buildroot%_datadir/gnome-shell/extensions/%uuid/
 %_datadir/gnome-shell/extensions/%uuid/
 
 %changelog
+* Mon Sep 21 2026 Anton Midyukov <antohami@altlinux.org> 49-alt4
+- metadata.json: add gnome 51 support
+
 * Mon Jun 22 2026 Dmitry Udalov <udalov@altlinux.org> 49-alt3
 - hide overview when extension is enabled after startup
 
