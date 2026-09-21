@@ -1,6 +1,6 @@
 Name: python3-module-emoji
-Version: 2.15.0
-Release: alt2
+Version: 2.16.0
+Release: alt1
 
 Summary: Emoji for Python
 License: BSD
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/emoji-%version.dist-info
 
 %changelog
+* Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.16.0-alt1
+- 2.16.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.15.0-alt2
 - revert unsolicited packaging changes
 
