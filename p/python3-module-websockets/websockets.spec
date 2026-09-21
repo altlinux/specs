@@ -1,5 +1,5 @@
 Name: python3-module-websockets
-Version: 16.1
+Version: 17.1
 Release: alt1
 
 Summary: Python WebSocket library
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %python3_sitelibdir/websockets-%version.dist-info
 
 %changelog
+* Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 17.1-alt1
+- 17.1 released
+
 * Fri Jul 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 16.1-alt1
 - 16.1 released
 

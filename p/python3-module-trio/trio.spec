@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.33.0
-Release: alt1
+Release: alt2
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
 Group: Development/Python3
@@ -78,15 +78,16 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %exclude %python3_sitelibdir/%pypi_name/_tests
-%exclude %python3_sitelibdir/%pypi_name/testing
 %exclude %python3_sitelibdir/%pypi_name/_core/_tests
 
 %files tests
 %python3_sitelibdir/%pypi_name/_tests
-%python3_sitelibdir/%pypi_name/testing
 %python3_sitelibdir/%pypi_name/_core/_tests
 
 %changelog
+* Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.33.0-alt2
+- return trio.testing to base package (closes: 60346)
+
 * Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 0.33.0-alt1
 - Automatically updated to 0.33.0.
 
