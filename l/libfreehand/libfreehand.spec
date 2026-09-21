@@ -1,5 +1,5 @@
 Name: libfreehand
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 Summary: A library for import of Macromedia/Adobe FreeHand documents
 
@@ -80,6 +80,9 @@ rm -rf %buildroot/%_docdir/%name
 %_bindir/*
 
 %changelog
+* Sun Sep 20 2026 Anton Farygin <rider@altlinux.org> 0.1.4-alt1
+- 0.1.3 -> 0.1.4
+
 * Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 0.1.3-alt1
 - 0.1.2 -> 0.1.3
 - fixed URL
