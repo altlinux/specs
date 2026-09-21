@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: 1.3.15
-Release: alt1
+Release: alt1.1
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -35,7 +35,7 @@ Provides: %_name = %EVR
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake ctest libfreetype-devel
 %ifarch %e2k
-BuildRequires: libstdc++5-devel-static
+BuildRequires: libstdc++-devel-static
 %endif
 %{?_enable_docs:BuildRequires: doxygen asciidoc-a2x dblatex %_bindir/pdflatex}
 %{?_enable_check:BuildRequires: python3-module-fonttools}
@@ -60,7 +60,7 @@ Includes and definitions for developing with Graphite2.
 %prep
 %setup -n %__name-%version
 %patch1 -p1 -b .cmake
-%patch2 -p1 -b .e2k-lcc123
+#%%patch2 -p1 -b .e2k-lcc123
 %patch3 -p2 -b .e2k-linking
 %patch11 -p1 -b .nametabletest
 
@@ -99,6 +99,9 @@ sed -i -e 's!<a id="id[a-z]*[0-9]*"></a>!!g' BUILD/doc/manual.html
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.15-alt1.1
+- mike@: fixed build for E2K
+
 * Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.15-alt1
 - 1.3.15
 
