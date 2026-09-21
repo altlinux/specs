@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.20
+%define ver_major 5.22
 %define namespace GtkSource
 %define api_ver 5
 
@@ -10,7 +10,7 @@
 %def_enable vala
 %def_enable installed_tests
 
-%ifarch armh
+%ifarch %ix86 armh
 %def_disable check
 %else
 %def_enable check
@@ -22,7 +22,7 @@
 
 Name: lib%{_name}%api_ver
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: GtkSourceView text widget library
 License: LGPL-2.1-or-later
@@ -172,6 +172,9 @@ dbus-run-session xvfb-run %__meson_test
 
 
 %changelog
+* Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 5.22.0-alt1
+- 5.22.0
+
 * Fri Apr 24 2026 Yuri N. Sedunov <aris@altlinux.org> 5.20.0-alt1.1
 - enabled docs
 
