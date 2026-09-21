@@ -15,7 +15,7 @@
 
 Name: transcribe.cpp
 Version: 0.2.3
-Release: alt2
+Release: alt3
 
 Summary: Speech-to-text (ASR) inference in C/C++
 License: MIT
@@ -28,6 +28,7 @@ Source: %name-%version.tar
 Patch0: %name-%version.patch
 Patch1: transcribe.cpp-0.1.3-alt-rename-ggml-libs.patch
 Patch2: transcribe.cpp-0.1.3-alt-backend-dir.patch
+Patch3: transcribe.cpp-0.2.3-alt-cli-init-backends.patch
 
 Requires: libtranscribe%soversion = %EVR
 Requires: %name-cpu = %EVR
@@ -228,6 +229,9 @@ export PATH=$PWD/%_cmake__builddir/bin:$PATH
 %endif
 
 %changelog
+* Mon Sep 21 2026 Alexey Shabalin <shaba@altlinux.org> 0.2.3-alt3
+- Fix transcribe-cli and transcribe-bench failing with a backend error (closes: #60489)
+
 * Tue Sep 15 2026 Mikhail Tergoev <fidel@altlinux.org> 0.2.3-alt2
 - Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit
 
