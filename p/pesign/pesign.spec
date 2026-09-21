@@ -3,8 +3,8 @@
 %define _runtimedir /run
 
 Name: pesign
-Version: 116
-Release: alt6
+Version: 117
+Release: alt1
 
 Summary: Signing tool for PE-COFF binaries
 License: GPLv3
@@ -130,6 +130,9 @@ fi
 %ghost %attr(570,pesign,root) %_sysconfdir/pki/pesign/secmod.db
 
 %changelog
+* Mon Sep 21 2026 Egor Ignatov <egori@altlinux.org> 117-alt1
+- New version 117.
+
 * Sat Aug 15 2026 Egor Ignatov <egori@altlinux.org> 116-alt6
 - Fix FTBFS with gcc15
 
