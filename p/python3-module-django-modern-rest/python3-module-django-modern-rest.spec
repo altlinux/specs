@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.14.0
+Version: 0.15.0
 Release: alt1
 Summary: Modern REST framework for Django with types and async support
 License: MIT
@@ -23,18 +23,17 @@ BuildRequires(pre): rpm-build-pyproject
 %if_with check
 BuildRequires: python3-module-django-dbbackend-sqlite3
 
+# linters
 %add_pyproject_deps_check_filter codespell
 %add_pyproject_deps_check_filter import-linter
 %add_pyproject_deps_check_filter pyrefly
 %add_pyproject_deps_check_filter pytest-custom-exit-code
 %add_pyproject_deps_check_filter slotscheck
 %add_pyproject_deps_check_filter wemake-python-styleguide
-#not packaged in Sisyphus
+# not packaged in Sisyphus
 %add_pyproject_deps_check_filter xmltodict-rs
 
 %pyproject_builddeps_metadata_extra jwt
-%pyproject_builddeps_metadata_extra msgspec
-%pyproject_builddeps_metadata_extra openapi
 %pyproject_builddeps_metadata_extra pydantic
 # extra for pydantic
 BuildRequires: python3-module-email-validator
@@ -84,5 +83,8 @@ and OpenAPI schema generation.
 %python3_sitelibdir/__pycache__/%dmr_pytest_name.*
 
 %changelog
+* Sat Sep 12 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.15.0-alt1
+- New version (0.15.0).
+
 * Fri Aug 14 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.14.0-alt1
 - Initial build for ALT.
