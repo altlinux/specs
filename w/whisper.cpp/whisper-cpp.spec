@@ -14,8 +14,8 @@
 %define oldname whisper-cpp
 
 Name: whisper.cpp
-Version: 1.9.1
-Release: alt4
+Version: 1.9.3
+Release: alt1
 
 Summary: Port of OpenAI's Whisper model in C/C++
 Group: Sound
@@ -31,7 +31,7 @@ ExcludeArch: %ix86
 Source: %name-%version.tar
 
 Patch0: %name-%version.patch
-Patch1: whisper-cpp-1.8.4-alt-fix-ggml-lib-names-to-resolve-conflict.patch
+Patch1: whisper-cpp-1.9.3-alt-fix-ggml-lib-names-to-resolve-conflict.patch
 Patch2: whisper-cpp-1.8.4-alt-change-default-ggml-model.patch
 Patch3: whisper-cpp-1.9.1-alt-fix-test-segfaults.patch
 Patch4: whisper-cpp-1.9.1-alt-find-backends-without-proc.patch
@@ -61,8 +61,7 @@ BuildRequires: libSDL2-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 %if_with cuda
-# cuda requires gcc12
-BuildRequires: gcc12-c++
+BuildRequires: gcc-c++
 BuildRequires: nvidia-cuda-toolkit nvidia-cuda-devel-static
 %endif
 %if_with vulkan
@@ -178,10 +177,13 @@ commands from the microphone and transcribes them.
 %setup
 %autopatch -p1
 
+# Skip whisper-talk-llama (embeds a copy of llama.cpp) and whisper-lsp.
+# Since llama.cpp is now required to build talk-llama, this method is used.
+# See examples/talk-llama/CMakeLists.txt
+sed -i '/add_subdirectory(talk-llama)/d' examples/CMakeLists.txt
+sed -i '/add_subdirectory(lsp)/d' examples/CMakeLists.txt
+
 %build
-%if_with cuda
-export CUDAHOSTCXX=/usr/bin/g++-12
-%endif
 %cmake -DWHISPER_BUILD_TESTS=ON \
     -DWHISPER_COMMON_FFMPEG=ON \
     -DWHISPER_SDL2=ON \
@@ -189,12 +191,12 @@ export CUDAHOSTCXX=/usr/bin/g++-12
     -DGGML_BACKEND_DL=ON \
     -DGGML_BACKEND_DIR=%_libdir/%name \
     -DDEFAULT_MODEL=%_datadir/%name/ggml-base.bin \
+    -DWHISPER_BUILD_IS_DEV=OFF \
 %if_with vulkan
     -DGGML_VULKAN=ON \
 %endif
 %if_with cuda
     -DGGML_CUDA=ON \
-    -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++-12 \
 %endif
 %ifarch x86_64 riscv64
     -DGGML_CPU_ALL_VARIANTS=ON \
@@ -209,10 +211,6 @@ install -Dpm644 models/ggml-base.en.bin -t %buildroot%_datadir/%name
 install -Dpm644 .gear/whisper-server@.service %buildroot%_unitdir/whisper-server@.service
 install -Dpm644 .gear/whisper-base.env %buildroot%_sysconfdir/whisper/base.env
 install -Dpm644 .gear/whisper-base.en.env %buildroot%_sysconfdir/whisper/base.en.env
-
-# Skip whisper-talk-llama (embeds a copy of llama.cpp) and whisper-lsp.
-rm %buildroot%_bindir/whisper-talk-llama
-rm %buildroot%_bindir/whisper-lsp
 
 %check
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
@@ -281,6 +279,9 @@ whisper-bench -m models/ggml-base.bin
 %_bindir/whisper-command
 
 %changelog
+* Tue Sep 15 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.9.3-alt1
+- Update to 1.9.3.
+
 * Thu Jul 30 2026 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt4
 - Make the CUDA and Vulkan backends optional: libwhisper0 now requires the
   CPU backend only, so installing the library no longer pulls in the NVIDIA
