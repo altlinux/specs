@@ -1,8 +1,9 @@
 %define dname fonts-Fast
 
-Name:    fonts-ttf-Fast
-Version: 20250121
-Release: alt1
+Name:	 fonts-ttf-Fast
+Epoch:	 1
+Version: 0.0.0
+Release: alt1.b2cfd87d
 
 Summary: Free Fast-Font fonts for faster reading
 License: MIT
@@ -40,8 +41,12 @@ it in an coding environment:
 %ttf_fonts_install %dname
 
 %files -f %dname.files
-%doc *.md
+%doc *.md LICENSE *.gif *.jpg
 
 %changelog
+* Tue Sep 15 2026 Polina Poidenko <polipoki@altlinux.org> 1:0.0.0-alt1.b2cfd87d
+- Changed to correct version using the commit hash.
+- Added LICENSE and missing elements for the README.
+
 * Tue Sep 23 2025 Polina Poidenko <polipoki@altlinux.org> 20250121-alt1
 - Initial build for Sisyphus (Closes: 53060).
