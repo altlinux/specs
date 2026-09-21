@@ -10,7 +10,7 @@
 
 Name: nvidia-container-toolkit
 Version: 1.18.2
-Release: alt1
+Release: alt2
 
 Summary: NVIDIA Container Toolkit
 Group: System/Configuration/Hardware
@@ -47,7 +47,6 @@ Provides: nvidia-container-runtime
 # Since this package allows certain components of the NVIDIA Container Toolkit to be installed separately
 # it conflicts with older versions of the nvidia-container-toolkit package that also provide these files.
 Conflicts: nvidia-container-toolkit <= 1.10.0-1
-Requires: libnvidia-ml libcuda
 %ifarch x86_64
 Requires: libnvidia-sandboxutils
 %endif
@@ -138,6 +137,10 @@ fi
 %_bindir/nvidia-container-runtime.legacy
 
 %changelog
+* Mon Sep 21 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.18.2-alt2
+- Include NVML alternatives directory in CDI (thx Vladislav Glinkin) and 
+  remove requires libnvidia-ml and libcuda (closes: #59499).
+
 * Mon Mar 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.18.2-alt1
 - New version 1.18.2.
 - Added systemd service (closes: #58034).
