@@ -1,5 +1,5 @@
 Name:    espanso
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: A Privacy-first, Cross-platform Text Expander
@@ -63,7 +63,6 @@ Requires: wl-clipboard
 Wayland backend for Espanso text expander.
 
 %prep
-%setup
 %setup -a1
 %rust_prep
 
@@ -84,8 +83,7 @@ install -Dm 755 target/release/espanso-x11 %buildroot%_bindir/espanso-x11
 install -Dm 755 target/release/espanso-wayland %buildroot%_bindir/espanso-wayland
 
 install -Dm 644 espanso/src/res/linux/espanso.desktop %buildroot%_desktopdir/espanso.desktop
-install -Dm 644 espanso/src/res/linux/icon.png %buildroot%_pixmapsdir/espanso.png
-sed -i 's/^Icon=icon$/Icon=espanso/' %buildroot%_desktopdir/espanso.desktop
+install -Dm 644 espanso/src/res/linux/espanso.png %buildroot%_pixmapsdir/espanso.png
 
 cat > %buildroot%_bindir/espanso <<'EOF'
 #!/bin/sh
@@ -141,6 +139,9 @@ install -Dm 644 espanso-wayland.service %buildroot%_userunitdir/espanso-wayland.
 %systemd_user_preun espanso-wayland.service
 
 %changelog
+* Mon Sep 21 2026 Sergey Palcheh <minergenon@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Mon Jul 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 
