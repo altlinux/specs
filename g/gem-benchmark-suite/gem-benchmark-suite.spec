@@ -1,9 +1,12 @@
 %define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname benchmark_suite
 
 Name:          gem-benchmark-suite
 Version:       1.0.0.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A set of enhancements to the standard library benchmark.rb
 License:       MIT
 Group:         Development/Ruby
@@ -13,25 +16,23 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-%if_with check
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+%if_enabled check
 BuildRequires: gem(benchmark-ips) >= 1.0
 BuildRequires: gem(hoe) >= 0
-BuildConflicts: gem(benchmark-ips) >= 3
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names benchmark_suite,benchmark-suite
-%ruby_use_gem_dependency benchmark-ips >= 2.10.0,benchmark-ips < 3
+%ruby_use_gem_dependency benchmark-ips >= 1.0
 Requires:      gem(benchmark-ips) >= 1.0
-Conflicts:     gem(benchmark-ips) >= 3
 Obsoletes:     ruby-benchmark_suite < %EVR
 Provides:      ruby-benchmark_suite = %EVR
 Provides:      gem(benchmark_suite) = 1.0.0.4
 
 %ruby_use_gem_version benchmark_suite:1.0.0.4
-%ruby_bindir_to %ruby_bindir
+%ruby_regard_path_tokens benchmark
 
 %description
 This package contains a command line tool for running multiple benchmarks
@@ -41,7 +42,7 @@ second.
 
 %package       -n benchmark
 Version:       1.0.0.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A set of enhancements to the standard library benchmark.rb executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета benchmark_suite
 Group:         Other
@@ -60,9 +61,10 @@ second.
 Исполнямка для самоцвета benchmark_suite.
 
 
+%if_enabled    doc
 %package       -n gem-benchmark-suite-doc
 Version:       1.0.0.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A set of enhancements to the standard library benchmark.rb documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета benchmark_suite
 Group:         Development/Documentation
@@ -80,11 +82,13 @@ second.
 
 %description   -n gem-benchmark-suite-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета benchmark_suite.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-benchmark-suite-devel
 Version:       1.0.0.4
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A set of enhancements to the standard library benchmark.rb development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета benchmark_suite
 Group:         Development/Ruby
@@ -103,6 +107,7 @@ second.
 
 %description   -n gem-benchmark-suite-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета benchmark_suite.
+%endif
 
 
 %prep
@@ -118,23 +123,31 @@ second.
 %ruby_test
 
 %files
-%doc README.md
+%doc History.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n benchmark
-%doc README.md
-%ruby_bindir/benchmark
+%doc History.txt README.md
+%_bindir/benchmark
 
+%if_enabled    doc
 %files         -n gem-benchmark-suite-doc
-%doc README.md
+%doc History.txt README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-benchmark-suite-devel
-%doc README.md
+%doc History.txt README.md
+%endif
 
 
 %changelog
+* Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0.4-alt0.2
+- * rebased to upstream git flow
+- ! relaxed deps to some gems
+
 * Wed Nov 29 2023 Pavel Skrylev <majioa@altlinux.org> 1.0.0.4-alt0.1
 - ^ 1.0.0 -> 1.0.0p4
 
