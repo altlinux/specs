@@ -1,15 +1,17 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Orca
 
-%def_enable braille
 # experimental spiel (https://github.com/eeejay/spiel) support disabled by default
 %def_disable spiel
+%def_enable mathcat
+
+%def_disable bootstrap
 
 Name: orca
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -29,6 +31,8 @@ Source1: voiceman-server
 Source2: %name.watch
 Source3: orca-autostart.desktop
 
+%{?_enable_mathcat:Source5: mathcat-py-cargo.tar}
+
 Requires: typelib(Gtk) = 3.0 typelib(Gtk) = 4.0 typelib(Atspi) = 2.0
 %add_python3_req_skip gi.repository.Gio
 %{?_disable_spiel:%add_typelib_req_skiplist typelib(Spiel)}
@@ -39,19 +43,22 @@ Requires: at-spi2-core
 #Requires: speech-dispatcher-module-flite flite
 # speak russian
 Requires: espeak-ng
+#Requires: spd-module-espeak-ng
 #Requires: RHVoice-Russian
 #Requires: RHVoice-English
 Requires: python3-module-pygobject3
 Requires: python3-module-speechd
 
-BuildArch: noarch
+%{?_disable_mathcat:BuildArch: noarch}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: /proc meson yelp-tools
+BuildRequires: /proc meson yelp-tools %{?_enable_mathcat: rust-cargo}
 BuildRequires: libgtk+3-devel >= 3.24
 BuildRequires: libgtk+3-gir
-BuildRequires: pkgconfig(atspi-2) >= 2.52.0
+BuildRequires: pkgconfig(atspi-2) >= 2.58.6
 BuildRequires: pkgconfig(atk-bridge-2.0)
+# gi/overrides/Atspi.py
+BuildRequires: at-spi2-core typelib(Atspi)
 BuildRequires: pkgconfig(pygobject-3.0) >= 3.18
 # since 49
 BuildRequires: python3(dasbus)
@@ -60,6 +67,7 @@ BuildRequires: python3(brlapi)
 BuildRequires: python3(psutil)
 #BuildRequires: python3(gi.repository.Wnck)
 BuildRequires: python3(speechd)
+BuildRequires: pkgconfig(systemd)
 
 %description
 A flexible, scriptable, extensible screen reader for the GNOME platform
@@ -75,19 +83,29 @@ Orca - это программа экранного доступа для люд
 Jaws For Windows компании Freedom Scientific.
 
 %prep
-%setup -n %name-%version%beta
-# disable Braille support by default
-%{?_disable_braille:sed -i 's/\(enableBraille[[:space:]]*= \)True/\1False/' src/orca/settings.py}
+%setup -n %name-%version%beta %{?_enable_mathcat:%{?_disable_bootstrap:-a5}}
+%{?_enable_mathcat:%{?_enable_bootstrap:
+pushd subprojects/mathcat-py
+[ ! -d .cargo ] && mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/mathcat-py-cargo.tar .cargo/ vendor/
+popd
+}
+sed -i 's/purelib/platlib/' src/orca/meson.build
+find ./ -name meson.build -print0|xargs -r0 \
+sed -i '/subdir: meson.project_name()/i pure: false,' --
+sed -i 's/get_install_dir()/get_install_dir(pure: false)/' subprojects/mathcat-py/meson.build
+}
 
 %build
 %meson \
-%{subst_enable_meson_bool spiel spiel}
+    %{subst_enable_meson_bool spiel spiel} \
+    %{subst_enable_meson_bool mathcat mathcat}
+%nil
 %meson_build
 
 %install
 %meson_install
-
-#install -D -m0644 %SOURCE3 %buildroot%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 
 %find_lang --with-gnome %name
 
@@ -103,8 +121,12 @@ Jaws For Windows компании Freedom Scientific.
 %_iconsdir/hicolor/symbolic/apps/%name-symbolic.svg
 %_man1dir/*
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
+%{?_enable_mathcat:%_datadir/mathcat/Rules/*}
 
 %changelog
+* Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Wed May 27 2026 Yuri N. Sedunov <aris@altlinux.org> 50.2-alt1
 - 50.2
 

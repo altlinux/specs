@@ -1,5 +1,5 @@
 %define _name at-spi2
-%define ver_major 2.60
+%define ver_major 2.62
 %define api_ver_major 2
 %define api_ver 2.0
 %define namespace Atspi
@@ -20,7 +20,7 @@
 %add_findreq_skiplist %python3_sitelibdir/gi/overrides/%namespace.py
 
 Name: %_name-core
-Version: %ver_major.6
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -270,6 +270,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.62.0.1-alt1
+- 2.62.0.1
+
 * Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 2.60.6-alt1
 - 2.60.6
 
