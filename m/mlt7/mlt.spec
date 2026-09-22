@@ -18,9 +18,9 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.36.1
+Version: 7.40.0
 Release: alt1
-%K5init no_altplace
+%K6init no_altplace
 
 Summary: Multimedia framework designed for television broadcasting
 License: GPL-3.0-or-later
@@ -31,20 +31,22 @@ Source: %nam-%version.tar
 Source1: mlt++-config.h
 Source10: glaxnimate.tar
 # ALT
+Patch101: alt-find-ffmpeg.patch
 Patch102: alt-no-version-script.patch
 Patch103: alt-ix86.patch
+Patch104: mlt-ffmpeg9.patch
+Patch105: alt-glaxnimate-legacy-module.patch
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-python3 libavformat-devel
-BuildRequires: qt5-svg-devel
+BuildRequires(pre): rpm-build-kf6 rpm-build-python3 libavformat-devel
 BuildRequires: qt6-svg-devel qt6-5compat-devel
-BuildRequires: cmake
+BuildRequires: cmake extra-cmake-modules kf6-ki18n-devel kf6-kcoreaddons-devel kf6-karchive-devel
 BuildRequires: libvulkan-devel
-BuildRequires: frei0r-devel libSDL-devel libSDL2-devel libSDL2_image-devel libalsa-devel libexif-devel
-BuildRequires: libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
+BuildRequires: frei0r-devel libSDL2-devel libSDL2_image-devel libalsa-devel libexif-devel
+BuildRequires: libavcodec-devel libavfilter-devel libswscale-devel libavdevice-devel libavformat-devel libswresample-devel
 BuildRequires: libfftw3-devel libjack-devel libpulseaudio-devel libsamplerate-devel libsox-devel
-BuildRequires: librubberband-devel libvorbis-devel
+BuildRequires: librubberband-devel libvorbis-devel librnnoise-devel
 BuildRequires: libxml2-devel swig ladspa_sdk liblilv-devel
-BuildRequires: libarchive-devel
+BuildRequires: libarchive-devel libpotrace-devel
 %if_enabled libvidstab
 BuildRequires: libvidstab-devel
 %endif
@@ -63,13 +65,6 @@ Summary: %Name utils
 Group: Video
 %description -n %nam-utils
 %Name utils.
-
-%package -n %nam-qt5
-Summary: %Name Qt plugins
-Group: Video
-Conflicts: libmlt7 < 7.34.1
-%description -n %nam-qt5
-%Name Qt plugins.
 
 %package -n %nam-qt6
 Summary: %Name Qt plugins
@@ -112,6 +107,11 @@ This module allows to work with %Name using python..
 
 %prep
 %setup -n %nam-%version -a10
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 %ifarch %e2k
 # see glaxnimate 0.5.4-alt2 package
 sed -i 's/ch\.unicode()/(ushort)&/' \
@@ -121,25 +121,22 @@ sed -i "s/push_back('\\\\0')/push_back((QChar)'\\\\0')/" \
 %endif
 rm -rf src/modules/glaxnimate/glaxnimate
 mv glaxnimate src/modules/glaxnimate/
-%patch102 -p1
-%patch103 -p1
 
 [ -f src/mlt++/config.h ] || \
     install -m 0644 %SOURCE1 src/mlt++/config.h
 
 %build
-%mIF_ver_lt %_qt5_version 5.9
-%add_optflags -std=c++11
-%endif
-export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
+export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt6_prefix
 %add_optflags -DAVDATADIR="%_datadir/ffmpeg/"
-%K5build \
+%K6build \
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+    -DCLANG_FORMAT=OFF \
     -DSWIG_PYTHON=ON \
     -DMOD_OPENCV=%{?_enable_opencv:ON}%{!?_enable_opencv:OFF} \
-    -DMOD_QT=ON \
     -DMOD_QT6=ON \
-    -DMOD_GLAXNIMATE=ON \
     -DMOD_GLAXNIMATE_QT6=ON \
+    -DGLAXNIMATE_SYSTEM_POTRACE=ON \
     #
 
 %install
@@ -156,10 +153,6 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %exclude %_libdir/mlt-%mlt_major/libmltglaxnimate*.so
 %exclude %_libdir/mlt-%mlt_major/libmltqt*.so
 %_datadir/mlt-%mlt_major/
-
-#%files -n %nam-qt5
-#%_libdir/mlt-%mlt_major/libmltglaxnimate.so
-#%_libdir/mlt-%mlt_major/libmltqt.so
 
 %files -n %nam-qt6
 %_libdir/mlt-%mlt_major/libmltglaxnimate-qt6.so
@@ -186,8 +179,11 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Fri Jul 03 2026 Sergey V Turchin <zerg@altlinux.org> 7.40.0-alt1
+- new version
+
 * Mon Jan 12 2026 Sergey V Turchin <zerg@altlinux.org> 7.36.1-alt1
-- new version (closes: 7417)
+- new version (closes: 57417)
 - don't package Qt5 module
 - don't require Qt6 module
 
