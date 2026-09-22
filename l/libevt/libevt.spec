@@ -14,7 +14,7 @@
 
 Name: libevt
 Version: 20260705
-Release: alt1
+Release: alt2
 
 Summary: Library and tools to access the Windows Event Log (EVT) format
 License: LGPLv3+ and GFDLv1.3+
@@ -129,10 +129,13 @@ cp -a "%SOURCE1" .
 
 %files -n python3-module-%name
 %doc AUTHORS ChangeLog README
-%python3_sitelibdir/pyevt.abi3.so
+%python3_sitelibdir/*pyevt*.so
 %python3_sitelibdir/pyevt.la
 
 %changelog
+* Tue Sep 22 2026 Sergey V Turchin <zerg@altlinux.org> 20260705-alt2
+- NMU: add old python packaging compatibility
+
 * Thu Aug 13 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 20260705-alt1
 - New version 20260705.
 
