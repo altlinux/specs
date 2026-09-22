@@ -5,8 +5,8 @@
 %define        gemname amazing_print
 
 Name:          gem-amazing-print
-Version:       2.0.0
-Release:       alt1
+Version:       3.0.0
+Release:       alt1.1
 Summary:       Pretty print your Ruby objects with style
 License:       MIT
 Group:         Development/Ruby
@@ -16,38 +16,34 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
-BuildRequires: gem(appraisal) >= 0
+BuildRequires: gem(appraisal) >= 2.4.0
 BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(fakefs) >= 1.2
 BuildRequires: gem(logger) >= 1.7
-BuildRequires: gem(nokogiri) >= 1.18.3
+BuildRequires: gem(nokogiri) >= 1.18.9
 BuildRequires: gem(ostruct) >= 0
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(rspec) >= 3.9
 BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(rubocop-rspec) >= 2.4.0
-BuildConflicts: gem(fakefs) >= 3
+BuildRequires: gem(rubocop-rspec) >= 3.6
 BuildConflicts: gem(logger) >= 2
-BuildConflicts: gem(nokogiri) >= 1.19
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency fakefs >= 2.5.0,fakefs < 3
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency nokogiri >= 1.18.9
+%ruby_use_gem_dependency fakefs >= 1.2
+%ruby_use_gem_dependency appraisal >= 2.4.0
+%ruby_use_gem_dependency rubocop >= 1.15.0
 %ruby_alias_names amazing_print,amazing-print
 Requires:      ruby >= 3.1.0
-Requires:      gem(appraisal) >= 0
-Requires:      gem(logger) >= 1.7
-Requires:      gem(ostruct) >= 0
-Conflicts:     gem(logger) >= 2
-Provides:      gem(amazing_print) = 2.0.0
+Requires:      ruby >= 3.2.0
+Provides:      amazing_print = %EVR
+Provides:      gem(amazing_print) = 3.0.0
 
 %description
 Pretty print your Ruby objects with style -- in full color and with proper
@@ -62,14 +58,14 @@ included mixins.
 
 %if_enabled    doc
 %package       -n gem-amazing-print-doc
-Version:       2.0.0
-Release:       alt1
+Version:       3.0.0
+Release:       alt1.1
 Summary:       Pretty print your Ruby objects with style documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета amazing_print
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(amazing_print) = 2.0.0
+Requires:      gem(amazing_print) = 3.0.0
 
 %description   -n gem-amazing-print-doc
 Pretty print your Ruby objects with style documentation files.
@@ -90,25 +86,26 @@ included mixins.
 
 %if_enabled    devel
 %package       -n gem-amazing-print-devel
-Version:       2.0.0
-Release:       alt1
+Version:       3.0.0
+Release:       alt1.1
 Summary:       Pretty print your Ruby objects with style development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета amazing_print
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(amazing_print) = 2.0.0
+Requires:      gem(amazing_print) = 3.0.0
+Requires:      gem(appraisal) >= 2.4.0
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(fakefs) >= 1.2
-Requires:      gem(nokogiri) >= 1.18.3
+Requires:      gem(logger) >= 1.7
+Requires:      gem(nokogiri) >= 1.18.9
+Requires:      gem(ostruct) >= 0
 Requires:      gem(pry) >= 0
 Requires:      gem(rspec) >= 3.9
 Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(rubocop-rspec) >= 2.4.0
-Conflicts:     gem(fakefs) >= 3
-Conflicts:     gem(nokogiri) >= 1.19
+Requires:      gem(rubocop-rspec) >= 3.6
+Conflicts:     gem(logger) >= 2
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-rspec) >= 4
 
 %description   -n gem-amazing-print-devel
@@ -158,6 +155,12 @@ included mixins.
 
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.1
+- ! relaxed deps to some gems
+
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
+- ^ 2.0.0 -> 3.0.0
+
 * Tue Oct 21 2025 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
 - ^ 1.6.0 -> 2.0.0
 
