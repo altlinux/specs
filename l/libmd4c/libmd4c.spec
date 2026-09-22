@@ -9,7 +9,7 @@ UTF-16 encodings.
 %global oname md4c
 
 Name: libmd4c
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 
 Summary: MD4C is Markdown parser implementation in C
@@ -82,6 +82,9 @@ cd %_target_platform && %__python3 ../scripts/run-tests.py
 %_man1dir/md2html.1.xz
 
 %changelog
+* Tue Sep 22 2026 Ulysses Apokin <ulysses@altlinux.org> 0.6.0-alt1
+- New version.
+
 * Fri May 15 2026 Ulysses Apokin <ulysses@altlinux.org> 0.5.3-alt1
 - New version.
 
