@@ -1,15 +1,7 @@
 %def_enable selinux
-# "setuid" or "none"
-%define priv_mode none
-%def_disable support_setuid
-
-%if %priv_mode == "setuid"
-%def_disable userns
-%def_enable support_setuid
-%endif
 
 Name: bubblewrap
-Version: 0.11.2
+Version: 0.13.0
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -24,9 +16,7 @@ Source: %name-%version.tar
 #Source: https://github.com/containers/%name/releases/download/v%version/%name-%version.tar.xz
 #Source: https://github.com/containers/%name/archive/v%version/%name-%version.tar.gz
 
-%if %priv_mode == "none"
 Requires(pre): sysctl-conf-userns
-%endif
 
 %define meson_ver 0.49
 
@@ -37,20 +27,20 @@ BuildRequires: python3 bash-completion >= 2.10
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 
 %description
-Many container runtime tools like systemd-nspawn, docker, etc. focus on providing
-infrastructure for system administrators and orchestration tools (e.g. Kubernetes) to run containers.
+Many container runtime tools like systemd-nspawn, docker, etc. focus on
+providing infrastructure for system administrators and orchestration
+tools (e.g. Kubernetes) to run containers.
 
-These tools are not suitable to give to unprivileged users,
-because it is trivial to turn such access into to a fully privileged root shell on the host.
+These tools are not suitable to give to unprivileged users, because it
+is trivial to turn such access into to a fully privileged root shell on
+the host.
 
 %prep
 %setup
 
 %build
 %meson \
-    %{subst_enable_meson_feature selinux selinux} \
-    %{subst_enable_meson_bool userns require_userns} \
-    %{subst_enable_meson_bool support_setuid support_setuid}
+    %{subst_enable_meson_feature selinux selinux}
 %nil
 %meson_build
 
@@ -58,16 +48,15 @@ because it is trivial to turn such access into to a fully privileged root shell 
 %meson_install
 
 %files
-%if %priv_mode == "setuid"
-%attr(4511,root,root) %_bindir/bwrap
-%else
 %_bindir/bwrap
-%endif
 %_man1dir/bwrap*
 %_datadir/bash-completion/completions/bwrap
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Thu Apr 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.2-alt1
 - 0.11.2 (fixed CVE-2026-41163)
 
