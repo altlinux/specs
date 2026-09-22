@@ -1,6 +1,6 @@
 %global import_path github.com/containerd/nerdctl
 Name:     nerdctl
-Version:  2.3.5
+Version:  2.4.0
 Release:  alt1
 
 Summary:  contaiNERD CTL - Docker-compatible CLI for containerd
@@ -15,6 +15,7 @@ Source:   %name-%version.tar
 Patch1:   wrap-selinuxenabled-to-wariable-to-skip-requires.patch
 Patch2:   add-sbin-to-path-to-work-in-rootless-mode.patch
 Patch3:   nerdctl-2.0.2-alt-rootless-bind-nri-directory.patch
+Patch4:   nerdctl-2.4.0-alt-buildkit-errors.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -36,11 +37,23 @@ Requires: rootlesskit %name slirp4netns
 %description rootless
 %summary
 
+%package build
+Summary: Build container images with nerdctl
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: %name = %EVR
+Requires: buildkit
+
+%description build
+Installs the BuildKit components required to build container images with
+nerdctl.
+
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -75,6 +88,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %exclude %_bindir/%name
 %_bindir/*
 
+%files build
+
 %files
 %_bindir/%name
 %doc *.md
@@ -84,6 +99,10 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Sep 22 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+- Add nerdctl-build (Closes: 48487)
+
 * Mon Jul 20 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.3.5-alt1
 - new version 2.3.5
 
