@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 50.2
+Version: 51.0
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -11,6 +11,9 @@ License: GPL-2.0
 Group: Office
 Url: https://welcome.gnome.org/app/Papers/
 Vcs: https://gitlab.gnome.org/GNOME/papers
+
+# rustc-LLVM ERROR: out of memory
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
@@ -46,7 +49,7 @@ page document formats like PDF and Postscript.
 %package doc
 Summary: Documentation files for Papers
 Group: Documentation
-BuildArch: noarch
+ExcludeArch: %ix86
 Requires: %name = %EVR
 
 %description doc
@@ -56,6 +59,7 @@ Requires: %name = %EVR
 Summary: Development files for Papers
 Group: Development/GNOME and GTK+
 Requires: %name = %EVR
+ExcludeArch: %ix86
 
 %description devel
 %summary.
@@ -64,6 +68,7 @@ Requires: %name = %EVR
 Summary: GObject instrospection data for Papers
 Group: System/Libraries
 Requires: %name = %EVR
+ExcludeArch: %ix86
 
 %description gir
 %summary.
@@ -71,7 +76,7 @@ Requires: %name = %EVR
 %package gir-devel
 Summary: GObject introspection devel data for Papers
 Group: System/Libraries
-BuildArch: noarch
+ExcludeArch: %ix86
 Requires: %name-gir = %EVR
 
 %description gir-devel
@@ -83,6 +88,11 @@ Requires: %name-gir = %EVR
 install -vD %SOURCE2 .cargo/config.toml
 
 %build
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+export CARGO_PROFILE_RELEASE_DEBUG=true
+export CARGO_PROFILE_RELEASE_LTO=fat
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_STRIP=none
 %meson -Dshell=true \
        -Dpreviewer=true \
        -Dthumbnailer=true \
@@ -137,6 +147,10 @@ install -vD %SOURCE2 .cargo/config.toml
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Sep 22 2026 Anton Zhukharev <ancieg@altlinux.org> 51.0-alt1
+- Updated to 51.0 (ALT#60656).
+- Dropped i586.
+
 * Wed Jul 01 2026 Anton Zhukharev <ancieg@altlinux.org> 50.2-alt1
 - Updated to 50.2.
 
@@ -181,4 +195,3 @@ install -vD %SOURCE2 .cargo/config.toml
 
 * Tue Sep 17 2024 Anton Zhukharev <ancieg@altlinux.org> 46.2-alt1
 - Built for ALT Sisyphus.
-
