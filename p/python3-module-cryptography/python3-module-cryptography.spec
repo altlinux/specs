@@ -6,7 +6,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 50.0.0
+Version: 50.0.1
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -90,6 +90,9 @@ py.test3
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Tue Sep 22 2026 Danila Skachedubov <skachedubov@altlinux.org> 50.0.1-alt1
+- new version
+
 * Tue Aug 11 2026 Vladimir Didenko <cow@altlinux.ru> 50.0.0-alt1
 - new version
 
