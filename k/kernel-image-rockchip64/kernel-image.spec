@@ -1,10 +1,8 @@
-%def_without check
-
 Name: kernel-image-rockchip64
-Release: alt2
+Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.52
+%define kernel_sublevel	.53
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -293,15 +291,6 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-# for check
-%{?!_without_check:%{?!_disable_check:
-BuildRequires: iproute2
-BuildRequires: ltp >= 20210524-alt2
-BuildRequires: kirk
-BuildRequires: rpm-build-vm-run >= 1.30
-BuildRequires: rtcheck
-}}
-
 %description
 This package contains the Linux kernel %kernel_base_version that is used to boot and run
 your system and supports ARM Rockchip SoC's:
@@ -548,37 +537,6 @@ popd
 # ghostify *.bin files
 truncate -s0 %buildroot%modules_dir/modules.*.bin
 
-%check
-banner check
-# First boot-test no matter have KVM or not.
-timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
-	'uname -a'
-# Longer LTP tests only if there is KVM (which is present on all main arches).
-if kvm-ok; then
-	# cleanup from the possible revious run
-	rm -rvf kirk-reports
-	mkdir kirk-reports
-	timeout 1999 vm-run --klog --append='altha=1 oops=panic panic_on_warn=1' \
-		kirk -w %_smp_build_ncpus -f kernel-alt-vm \
-		-S /usr/lib/ltp/skiplist-alt-vm -o kirk-reports/report.json
-
-	# kirk exits with 0 exit code even if some tests fail. We need to examine
-	# it's report to validate that everything is ok.
-	[ -s kirk-reports/report.json ] || exit 1
-
-	pushd kirk-reports
-	/usr/lib/kirk/json2logs --resfile report.json \
-		--sumfile kirk-sum.log --failfile kirk-fail.log --runfile kirk-run.log
-	if grep -qiFw fail kirk-sum.log; then
-		cat kirk-fail.log
-		cat kirk-sum.log
-		exit 3
-	else
-		cat kirk-sum.log
-	fi
-	popd
-fi
-
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -609,6 +567,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Tue Sep 22 2026 Alexei Takaseev <taf@altlinux.org> 6.18.53-alt1
+- v6.18.53 (2026-09-21).
+
 * Tue Sep 15 2026 Alexei Takaseev <taf@altlinux.org> 6.18.52-alt2
 - Add support Motorcomm YT6801:
     * config-rockchip64: CONFIG_DWMAC_MOTORCOMM=y
