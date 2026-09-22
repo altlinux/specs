@@ -5,7 +5,7 @@
 %define        gemname cuprite
 
 Name:          gem-cuprite
-Version:       0.17
+Version:       0.18
 Release:       alt1
 Summary:       Headless Chrome driver for Capybara
 License:       MIT
@@ -16,16 +16,15 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         gem-cuprite-%EVR.patch
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(capybara) >= 3.0
 BuildRequires: gem(chunky_png) >= 1.4
-BuildRequires: gem(ferrum) >= 0.17.0
+BuildRequires: gem(ferrum) >= 0.18.0
 BuildRequires: gem(image_size) >= 3.0
 BuildRequires: gem(launchy) >= 2.5
+BuildRequires: gem(logger) >= 0
+BuildRequires: gem(ostruct) >= 0
 BuildRequires: gem(pdf-reader) >= 2.12
 BuildRequires: gem(puma) >= 5.6.7
 BuildRequires: gem(rake) >= 13.0
@@ -35,26 +34,26 @@ BuildRequires: gem(rubocop-rake) >= 0
 BuildRequires: gem(sinatra) >= 3.2
 BuildConflicts: gem(capybara) >= 4
 BuildConflicts: gem(chunky_png) >= 2
-BuildConflicts: gem(ferrum) >= 0.18
+BuildConflicts: gem(ferrum) >= 0.19
 BuildConflicts: gem(image_size) >= 4
 BuildConflicts: gem(launchy) >= 3
 BuildConflicts: gem(pdf-reader) >= 3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(rubocop) >= 2
-BuildConflicts: gem(sinatra) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-%ruby_use_gem_dependency sinatra >= 4.0,sinatra < 5
-Requires:      ruby >= 2.7.0
+%ruby_use_gem_dependency rubocop >= 1.15.0
+%ruby_use_gem_dependency sinatra >= 3.2
+Requires:      ruby >= 3.1
 Requires:      gem(capybara) >= 3.0
-Requires:      gem(ferrum) >= 0.17.0
+Requires:      gem(ferrum) >= 0.18.0
+Requires:      gem(logger) >= 0
+Requires:      gem(ostruct) >= 0
 Conflicts:     gem(capybara) >= 4
-Conflicts:     gem(ferrum) >= 0.18
-Provides:      gem(cuprite) = 0.17
+Conflicts:     gem(ferrum) >= 0.19
+Provides:      gem(cuprite) = 0.18
 
 %description
 Cuprite is a driver for Capybara that allows you to run your tests on a headless
@@ -63,16 +62,14 @@ Chrome browser
 
 %if_enabled    doc
 %package       -n gem-cuprite-doc
-Version:       0.17
+Version:       0.18
 Release:       alt1
 Summary:       Headless Chrome driver for Capybara documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cuprite
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(cuprite) = 0.17
+Requires:      gem(cuprite) = 0.18
 
 %description   -n gem-cuprite-doc
 Headless Chrome driver for Capybara documentation files.
@@ -87,21 +84,21 @@ Chrome browser
 
 %if_enabled    devel
 %package       -n gem-cuprite-devel
-Version:       0.17
+Version:       0.18
 Release:       alt1
 Summary:       Headless Chrome driver for Capybara development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cuprite
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(cuprite) = 0.17
+Requires:      gem(cuprite) = 0.18
 Requires:      gem(capybara) >= 3.0
 Requires:      gem(chunky_png) >= 1.4
-Requires:      gem(ferrum) >= 0.17.0
+Requires:      gem(ferrum) >= 0.18.0
 Requires:      gem(image_size) >= 3.0
 Requires:      gem(launchy) >= 2.5
+Requires:      gem(logger) >= 0
+Requires:      gem(ostruct) >= 0
 Requires:      gem(pdf-reader) >= 2.12
 Requires:      gem(puma) >= 5.6.7
 Requires:      gem(rake) >= 13.0
@@ -111,14 +108,12 @@ Requires:      gem(rubocop-rake) >= 0
 Requires:      gem(sinatra) >= 3.2
 Conflicts:     gem(capybara) >= 4
 Conflicts:     gem(chunky_png) >= 2
-Conflicts:     gem(ferrum) >= 0.18
+Conflicts:     gem(ferrum) >= 0.19
 Conflicts:     gem(image_size) >= 4
 Conflicts:     gem(launchy) >= 3
 Conflicts:     gem(pdf-reader) >= 3
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(sinatra) >= 5
 
 %description   -n gem-cuprite-devel
 Headless Chrome driver for Capybara development package.
@@ -133,7 +128,6 @@ Chrome browser
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -162,6 +156,9 @@ Chrome browser
 
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 0.18-alt1
+- ^ 0.17 -> 0.18
+
 * Fri Nov 28 2025 Pavel Skrylev <majioa@altlinux.org> 0.17-alt1
 - ^ 0.15.1 -> 0.17
 
