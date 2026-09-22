@@ -31,7 +31,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt3
+Release: alt4
 Epoch: 1
 URL: https://altsp.su
 
@@ -386,6 +386,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Sep 22 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt4
+- os-release: add missing @BRAND@ to BUILD_ID.
+
 * Wed Sep 16 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt3
 - mate-settings: clean action lists in mate-control-center.
 
