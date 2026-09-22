@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: fribidi
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -88,6 +88,7 @@ programs which will use fribidi.
 
 %files
 %_bindir/*
+%_man1dir/%name.1*
 %doc README AUTHORS TODO THANKS NEWS
 %{?_disable_snapshot:%doc ChangeLog}
 
@@ -106,6 +107,9 @@ programs which will use fribidi.
 %endif
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.17-alt1
+- 1.0.17
+
 * Thu Sep 26 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.16-alt1
 - 1.0.16
 

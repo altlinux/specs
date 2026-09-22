@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Snapshot
 
@@ -50,8 +50,6 @@ BuildRequires: pkgconfig(gstreamer-video-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-plugins-bad-1.0) >= %gst_ver
 BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
 BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
-# for Glycin
-BuildRequires: pkgconfig(libseccomp) >= %seccomp_ver pkgconfig(lcms2)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils clippy}
 
 %description
@@ -88,6 +86,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

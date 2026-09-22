@@ -1,7 +1,7 @@
-%define ver_major 49
+%define ver_major 50
 
 Name: gnome3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME 3 Desktop installers
@@ -24,7 +24,7 @@ BuildArch: noarch
 %define games_ver 42
 %define weather_ver %ver_major
 %define pm_ver 43
-%define yelp_ver %ver_major
+%define yelp_ver 49.2
 %define dconf_editor_ver 43
 %define tweaks_ver %ver_major
 %define contacts_ver %ver_major
@@ -53,7 +53,7 @@ BuildArch: noarch
 %define logs_ver %ver_major
 %define todo_ver 41.0
 %define characters_ver %ver_major
-%define music_ver %ver_major
+%define music_ver 49
 %define photos_ver 44.0
 %define nettool_ver 42.0
 %define gucharmap_ver 17.0.0
@@ -234,7 +234,10 @@ Requires: showtime
 ## Stock GNOME games
 Requires: gnome-games-full >= %games_ver
 ## Default photo viewer
-Requires: gnome-photos >= %photos_ver
+%ifnarch %ix86
+#Requires: fotema
+%endif
+#Requires: gnome-photos >= %photos_ver
 ## Image viewer, browser and simple editor
 Requires: gthumb
 #Requires: eog >= %eog_ver
@@ -244,7 +247,9 @@ Requires: brasero >= %brasero_ver
 ## Clipboard manager
 Requires: gnome-shell-extension-gpaste
 # A quick previewer for Nautilus
-Requires: sushi
+%ifnarch %ix86
+#Requires: sushi
+%endif
 # mypaint, krita thumbnailer for Nautilus
 Requires: gnome-kra-ora-thumbnailer
 #  Epub thumbnailer for Nautilus
@@ -481,6 +486,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- default: removed sushi no more available for i586
+
 * Tue Dec 23 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - minimal: added resources, gtk3-theme-adw-gtk3
 - default: totem -> showtime

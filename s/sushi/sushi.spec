@@ -1,9 +1,10 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.NautilusPreviewer
+%define namespace Sushi
 %define api_ver 1.0
 %define gst_api_ver 1.0
 
@@ -14,7 +15,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A quick previewer for Nautilus
@@ -28,26 +29,46 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
+# no papers for i586
+ExcludeArch: %ix86
+
 %define gst_ver 1.0
-%define webkit_api_ver 4.1
-%define webkit_ver 2.38
+%define webkit_api_ver 6.0
+%define webkit_ver 2.50
+%define papers_ver 51
+%define glycin_api_ver 2
+%define glycin_ver 2
 
 Requires: gst-plugins-base%gst_api_ver gst-libav
 Requires: %lo_bin
-Requires: typelib(Gtk) = 3.0
-Requires: typelib(GtkSource) = 4
-Requires: typelib(WebKit2) = 4.1
+Requires: typelib(Adw) = 1
+Requires: typelib(GtkSource) = 5
+Requires: typelib(WebKit) = 6.0
+Requires: typelib(GlyGtk4)
+Requires: typelib(PapersDocument) = 4.0
+Requires: typelib(PapersView)
+Requires: typelib(GtkSource) = 5
+Requires: typelib(Soup) = 3.0
+Requires: typelib(GstTag) = 1.0
+Requires: glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson
-BuildRequires: libgtksourceview4-devel libgjs-devel libharfbuzz-devel
-BuildRequires: libevince-devel libepoxy-devel
-BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
+BuildRequires: meson blueprint-compiler
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: libgtksourceview5-devel libgjs-devel libharfbuzz-devel
+BuildRequires: pkgconfig(papers-view-4.0) >= %papers_ver
+BuildRequires: pkgconfig(papers-document-4.0)
+BuildRequires: libepoxy-devel
+BuildRequires: pkgconfig(webkitgtk-%webkit_api_ver) >= %webkit_ver
+BuildRequires: pkgconfig(fribidi)
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
 %if_enabled introspection
-BuildRequires: libgtksourceview4-gir-devel libevince-gir-devel
+BuildRequires: libgtksourceview5-gir-devel papers-gir-devel libwebkitgtk6.0-gir-devel
 BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 %endif
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
 
 %description
 This is sushi, a quick previewer for Nautilus, the GNOME desktop file
@@ -114,14 +135,20 @@ GObject introspection devel data for the Sushi library.
 %_libexecdir/*
 %dir %_libdir/%name
 %_libdir/%name/*.so
+%dir %_libdir/%name/web-process-extensions
+%_libdir/%name/*/*.so
 %dir %_libdir/%name/girepository-1.0
-%_libdir/%name/girepository-1.0/Sushi-%api_ver.typelib
+%_libdir/%name/girepository-1.0/%namespace-%api_ver.typelib
 %_datadir/%name/
 %_datadir/dbus-1/services/*
+%_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

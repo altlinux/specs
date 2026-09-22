@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 49
+%define ver_major 50
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-music
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -27,24 +27,23 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 %define tracker_ver 3.0
-%define gtk4_ver 4.10.0
-%define adwaita_ver 1.6
+%define gtk4_ver 4.18
+%define adwaita_ver 1.8
 %define grilo_ver 0.3.13
 %define python_ver 3.7
 %define mediaart_ver 1.9.1
-%define pygobject_ver 3.50.0
+%define pygobject_ver 3.54.0
 %define pycairo_ver 1.14.0
 
 Requires: python3-module-pygobject3 >= %pygobject_ver
-Requires: tracker3 tracker-miners3 >= %tracker_ver typelib(Tracker) = %tracker_api_ver
+Requires: tinysparql localsearch
 Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
 Requires: typelib(Adw) = 1 typelib(Soup) = %soup_api_ver
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag) = %gst_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson %_bindir/git
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson %_bindir/git yelp-tools
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libsoup%soup_api_ver-devel
@@ -85,6 +84,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Jul 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
+- 50.0-6-g9095682e
+
 * Thu Oct 16 2025 Yuri N. Sedunov <aris@altlinux.org> 49.1-alt1
 - 49.1
 
