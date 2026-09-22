@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 6
 %define service_ver 3
@@ -37,7 +37,7 @@ Source: %name-%version%beta.tar
 %define glib_ver 2.76
 %define gtk_ver 4.20
 %define adw_ver 1.8
-%define dex_ver 0.9
+%define dex_ver 1.2
 %define panel_ver 1.4
 %define systemd_ver 222
 %define polkit_ver 0.105
@@ -124,6 +124,9 @@ developing applications that use GtkGHex library.
 %_pkgconfigdir/%name-capture-%capture_ver.pc
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Tue Mar 17 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
