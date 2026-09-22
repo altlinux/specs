@@ -5,7 +5,7 @@
 %define libkalarmplugin libkalarmplugin%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -30,7 +30,7 @@ BuildRequires: kf6-kcmutils-devel kf6-kdoctools-devel kf6-kio-devel kf6-kwallet-
 BuildRequires: kf6-kglobalaccel-devel kf6-kidletime-devel kf6-knotifyconfig-devel kf6-kitemmodels-devel
 BuildRequires: kf6-kstatusnotifieritem-devel kf6-ktexttemplate-devel kf6-kiconthemes-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel kcalutils-devel
-BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kmime-devel
+BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kf6-kmime-devel
 BuildRequires: kpimtextedit-devel kde6-libkdepim-devel messagelib-devel pimcommon-devel
 
 %description
@@ -117,6 +117,9 @@ Obsoletes: libkalarmplugin5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

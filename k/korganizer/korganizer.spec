@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -33,7 +33,7 @@ BuildRequires: plasma6-activities-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
 BuildRequires: akonadi-search-devel calendarsupport-devel eventviews-devel incidenceeditor-devel
 BuildRequires: kcalutils-devel kf6-kcontacts-devel kidentitymanagement-devel kimap-devel
-BuildRequires: kldap-devel kmailtransport-devel kmime-devel kontactinterface-devel kpimtextedit-devel
+BuildRequires: kldap-devel kmailtransport-devel kf6-kmime-devel kontactinterface-devel kpimtextedit-devel
 BuildRequires: kde6-libkdepim-devel messagelib-devel pimcommon-devel
 
 %description
@@ -107,11 +107,10 @@ Obsoletes: libkorganizerprivate5 < %EVR
 %_K6plug/pim6/kontact/kontact_*.so
 %_K6xdgapp/*korganizer*.desktop
 %_K6data/korganizer/
-#%_K6data/knsrcfiles/*korganizer*
 %_K6cfg/*korganizer*
 %_K6icon/*/*/apps/*korg*.*
 %_K6icon/*/*/apps/quickview.*
-%_K6icon/*/*/status/*moon-phase*.*
+%_K6icon/*/*/*/*realmoon*.*
 %_K6dbus_srv/*korga*.service
 %_datadir/metainfo/*.xml
 
@@ -131,6 +130,9 @@ Obsoletes: libkorganizerprivate5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

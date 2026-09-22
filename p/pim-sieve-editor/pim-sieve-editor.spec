@@ -4,7 +4,7 @@
 %define libsieveeditor libsieveeditor%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -25,7 +25,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: boost-devel libsasl2-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel kf6-kcontacts-devel kimap-devel kmailtransport-devel
-BuildRequires: kmime-devel kpimtextedit-devel kde6-libksieve-devel messagelib-devel pimcommon-devel
+BuildRequires: kf6-kmime-devel kpimtextedit-devel kde6-libksieve-devel messagelib-devel pimcommon-devel
 BuildRequires: kf6-kcrash-devel kf6-kdbusaddons-devel  kf6-kdoctools-devel kf6-kiconthemes-devel kf6-kio-devel
 BuildRequires: kf6-kitemmodels-devel kf6-ktextwidgets-devel kf6-kwallet-devel kf6-syntax-highlighting-devel
 
@@ -85,6 +85,9 @@ Obsoletes: libsieveeditor5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

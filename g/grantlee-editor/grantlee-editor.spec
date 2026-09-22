@@ -4,7 +4,7 @@
 %define libgrantleethemeeditor libgrantleethemeeditor%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -32,8 +32,8 @@ BuildRequires: kf6-ktextwidgets-devel kf6-kwallet-devel kf6-syntax-highlighting-
 BuildRequires: kf6-ktexttemplate-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel grantleetheme-devel
-BuildRequires: kimap-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel messagelib-devel
-BuildRequires: pimcommon-devel
+BuildRequires: kimap-devel kf6-kmime-devel kpimtextedit-devel kde6-libkdepim-devel messagelib-devel
+BuildRequires: pimcommon-devel kidentitymanagement-devel
 
 %description
 KMail Header and KAddressbook Contact Theme Editor.
@@ -98,6 +98,9 @@ Obsoletes: libgrantleethemeeditor5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

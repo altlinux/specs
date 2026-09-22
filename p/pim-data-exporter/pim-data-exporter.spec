@@ -4,7 +4,7 @@
 %define libpimdataexporterprivate libpimdataexporterprivate%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -27,11 +27,11 @@ BuildRequires: boost-devel libassuan-devel libsasl2-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: kf6-kdoctools-devel kf6-kio-devel kf6-kwallet-devel kf6-kholidays-devel kf6-karchive-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-knotifications-devel kf6-kstatusnotifieritem-devel
-BuildRequires: kf6-kitemmodels-devel kf6-ki18n-devel kf6-ktexttemplate-devel kf6-kiconthemes-devel
+BuildRequires: kf6-kitemmodels-devel kf6-ki18n-devel kf6-ktexttemplate-devel kf6-kiconthemes-devel kf6-sonnet-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel calendarsupport-devel
 BuildRequires: kidentitymanagement-devel
-BuildRequires: kimap-devel kmailtransport-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel
+BuildRequires: kimap-devel kmailtransport-devel kf6-kmime-devel kpimtextedit-devel kde6-libkdepim-devel
 BuildRequires: mailcommon-devel messagelib-devel pimcommon-devel
 
 %description
@@ -98,6 +98,9 @@ Obsoletes: libpimdataexporterprivate5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkpimpkpass libkpimpkpass%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -71,6 +71,7 @@ Obsoletes: libkpimpkpass < %EVR
 %_K6inc/KPim6/KPkPass/
 %_K6link/lib*.so
 %_K6lib/cmake/KPim*PkPass/
+%_K6archdata/metatypes/*kpass*
 
 %files -n %libkpimpkpass
 %_K6lib/libKPim6PkPass.so.%sover
@@ -78,6 +79,9 @@ Obsoletes: libkpimpkpass < %EVR
 %_K6qml/org/kde/pkpass/
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

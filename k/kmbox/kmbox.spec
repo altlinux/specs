@@ -1,7 +1,7 @@
 %define rname kmbox
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -15,7 +15,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules gcc-c++ qt6-base-devel
 BuildRequires: boost-devel-headers
-BuildRequires: kmime-devel kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
+BuildRequires: kf6-kmime-devel kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel
@@ -37,7 +37,7 @@ Requires: kf6-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: kmime-devel
+Requires: kf6-kmime-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -76,6 +76,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

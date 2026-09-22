@@ -1,7 +1,7 @@
 %define rname kldap
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: libldap-devel libsasl2-devel
 BuildRequires: libqtkeychain-qt6-devel
-BuildRequires: kmbox-devel kmime-devel
+BuildRequires: kmbox-devel kf6-kmime-devel
 BuildRequires: kf6-kcompletion-devel kf6-ki18n-devel kf6-kwidgetsaddons-devel kf6-kio-devel kf6-kdoctools kf6-kdoctools-devel
 BuildRequires: kf6-kwallet-devel
 
@@ -83,6 +83,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

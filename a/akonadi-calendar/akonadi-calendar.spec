@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -29,7 +29,7 @@ BuildRequires: kf6-kservice-devel kf6-ktextwidgets-devel kf6-kunitconversion-dev
 BuildRequires: kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-ktextaddons-devel
 BuildRequires: akonadi-devel kf6-kcalendarcore-devel kcalutils-devel kf6-kcontacts-devel kidentitymanagement-devel
-BuildRequires: kmailtransport-devel kmime-devel kpimtextedit-devel
+BuildRequires: kmailtransport-devel kf6-kmime-devel kpimtextedit-devel
 BuildRequires: akonadi-mime-devel akonadi-contacts-devel grantleetheme-devel
 BuildRequires: messagelib-devel pimcommon-devel kde6-libkdepim-devel kimap-devel
 BuildRequires: kde6-libkleo-devel
@@ -73,7 +73,9 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 
 %build
-%K6build
+%K6build \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
+    #
 
 %install
 %K6install
@@ -106,6 +108,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

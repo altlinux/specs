@@ -6,7 +6,7 @@
 %def_enable tools
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -171,6 +171,7 @@ Requires: %name-common >= %EVR
     -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
     -DBUILD_TESTING=OFF \
     -DBUILD_TOOLS=%{?_enable_tools:ON}%{!?_enable_tools:OFF} \
+    -DBUILD_PYTHON_BINDINGS:BOOL=OFF \
     -DMYSQLD_SCRIPTS_PATH:FILEPATH="%_K6bin" \
     #
 #    -DDATABASE_BACKEND=MYSQL \
@@ -277,6 +278,9 @@ rm -rf %buildroot/%_sysconfdir/apparmor.d/
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

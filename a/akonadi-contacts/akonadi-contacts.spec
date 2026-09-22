@@ -1,7 +1,7 @@
 %define rname akonadi-contacts
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -18,7 +18,7 @@ BuildRequires: boost-devel extra-cmake-modules qt6-declarative-devel
 BuildRequires: kf6-kdoctools-devel kf6-kio-devel kf6-prison-devel kf6-kcmutils-devel kf6-kcalendarcore-devel kf6-kcontacts-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-ktextwidgets-devel kf6-kitemmodels-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-ktextaddons-devel
-BuildRequires: akonadi-devel akonadi-mime-devel kmime-devel
+BuildRequires: akonadi-devel akonadi-mime-devel kf6-kmime-devel
 BuildRequires: grantleetheme-devel kde6-libkleo-devel
 
 %description
@@ -92,6 +92,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

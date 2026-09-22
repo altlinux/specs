@@ -1,7 +1,7 @@
 %define rname akonadi-calendar-tools
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -25,9 +25,9 @@ BuildRequires: libcups-devel
 BuildRequires: kf6-kdoctools-devel kf6-kio-devel kf6-kcontacts-devel kf6-kcalendarcore-devel
 BuildRequires: kf6-ki18n-devel kf6-kitemmodels-devel
 BuildRequires: kf6-ktextaddons-devel
-BuildRequires: kidentitymanagement-devel kmime-devel kpimtextedit-devel
+BuildRequires: kidentitymanagement-devel kf6-kmime-devel kpimtextedit-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel calendarsupport-devel
-BuildRequires: kcalutils-devel kf6-kcontacts-devel kidentitymanagement-devel kmime-devel kpimtextedit-devel
+BuildRequires: kcalutils-devel kf6-kcontacts-devel kidentitymanagement-devel kf6-kmime-devel kpimtextedit-devel
 BuildRequires: kde6-libkdepim-devel
 
 %description
@@ -52,6 +52,9 @@ Akonadi Calendar Tools.
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

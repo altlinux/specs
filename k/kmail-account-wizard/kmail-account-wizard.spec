@@ -1,7 +1,7 @@
 %define rname kmail-account-wizard
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -25,7 +25,7 @@ BuildRequires: kf6-ktextwidgets-devel kf6-kwallet-devel kf6-syntax-highlighting-
 BuildRequires: kf6-kcmutils-devel kf6-kcrash-devel kf6-kdbusaddons-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel kf6-kcontacts-devel kidentitymanagement-devel
-BuildRequires: kimap-devel kldap-devel kmailtransport-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel
+BuildRequires: kimap-devel kldap-devel kmailtransport-devel kf6-kmime-devel kpimtextedit-devel kde6-libkdepim-devel
 BuildRequires: messagelib-devel pimcommon-devel
 
 %description
@@ -52,6 +52,9 @@ Launch the account wizard to configure PIM accounts.
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libkpim6libkleo libkpim6libkleo%sover
 
 Name: kde6-%rname
-Version: 26.04.3
-Release: alt3
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -76,7 +76,7 @@ Requires: %name-common
 %_includedir/KPim?/Libkleo/
 %_K6link/lib*.so
 %_K6lib/cmake/K*Libkleo/
-%_K6data/KPim?Libkleo/find-modules/
+%_K6data/KPim?Libkleo/
 
 %files -n %libkpim6libkleo
 %_K6lib/libKPim6Libkleo.so.%sover
@@ -84,6 +84,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Aug 20 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt3
 - update requires
 

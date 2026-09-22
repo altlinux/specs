@@ -21,7 +21,7 @@
 %define libadblockplugin libadblockplugin%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -57,7 +57,7 @@ BuildRequires: /usr/bin/rustc rust-cargo corrosion
 BuildRequires: kf6-kdeclarative-devel  kf6-kdoctools-devel kf6-kio-devel kf6-kpackage-devel kf6-kparts-devel
 BuildRequires: kf6-kwallet-devel kf6-syntax-highlighting-devel kf6-prison-devel kf6-kholidays-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-ki18n-devel kf6-kiconthemes-devel kf6-kitemmodels-devel
-BuildRequires: kf6-kcmutils-devel
+BuildRequires: kf6-kcmutils-devel kf6-sonnet-devel
 #
 BuildRequires: kf6-ktextaddons-devel
 BuildRequires: plasma6-activities-devel
@@ -65,7 +65,7 @@ BuildRequires: kde6-libkleo-devel
 BuildRequires: kde6-libkgapi-devel kaddressbook-devel kidentitymanagement-devel kcalutils-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
 BuildRequires: calendarsupport-devel eventviews-devel grantleetheme-devel incidenceeditor-devel kde6-libksieve-devel
-BuildRequires: kimap-devel kmailtransport-devel kmime-devel kpimtextedit-devel ktnef-devel kde6-libgravatar-devel
+BuildRequires: kimap-devel kmailtransport-devel kf6-kmime-devel kpimtextedit-devel ktnef-devel kde6-libgravatar-devel
 BuildRequires: kde6-libkdepim-devel mailcommon-devel messagelib-devel  pimcommon-devel
 BuildRequires: mailimporter-devel akonadi-import-wizard-devel kontactinterface-devel
 BuildRequires: kpkpass-devel kitinerary-devel kldap-devel
@@ -277,6 +277,8 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version -a1
 %patch1 -p1
 
+sed -i '/add_subdirectory.*kaichat-plugins/d' CMakeLists.txt
+
 %build
 %K6build \
     -DKDEPIMADDONS_BUILD_EXAMPLES=OFF \
@@ -321,7 +323,7 @@ Requires: %name-common >= %EVR
 %_K6plug/pim6/templateparser/
 %_K6plug/pim6/webengineviewer/
 %_K6plug/pim6/ldapactivities/
-%_K6plug/autogeneratetext/
+#%_K6plug/autogeneratetext/
 
 %files devel
 #%_datadir/qtcreator/templates/*
@@ -370,6 +372,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libadblockplugin.so.*
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -32,8 +32,8 @@ BuildRequires: kf6-ktextwidgets-devel kf6-kwindowsystem-devel kf6-kstatusnotifie
 BuildRequires: kf6-syndication-devel kf6-syntax-highlighting-devel kf6-ktexttemplate-devel
 BuildRequires: plasma6-activities-devel
 BuildRequires: kde6-libkleo-devel
-BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel grantleetheme-devel kimap-devel
-BuildRequires: kmime-devel kontactinterface-devel kpimtextedit-devel kde6-libkdepim-devel messagelib-devel pimcommon-devel
+BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel grantleetheme-devel kimap-devel kidentitymanagement-devel
+BuildRequires: kf6-kmime-devel kontactinterface-devel kpimtextedit-devel kde6-libkdepim-devel messagelib-devel pimcommon-devel
 
 %description
 RSS/Atom feed reader for KDE.
@@ -117,6 +117,9 @@ Obsoletes: libakregatorprivate5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

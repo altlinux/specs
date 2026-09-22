@@ -5,7 +5,7 @@
 %define libkpim6libkdepimakonadi libkpim6libkdepimakonadi%sover
 
 Name: kde6-%rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -19,7 +19,7 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-tools-devel-static
 BuildRequires: libldap-devel libsasl2-devel
-BuildRequires: akonadi-search-devel kf6-kcalendarcore-devel kf6-kcontacts-devel kldap-devel kmime-devel
+BuildRequires: akonadi-search-devel kf6-kcalendarcore-devel kf6-kcontacts-devel kldap-devel kf6-kmime-devel
 BuildRequires: boost-devel akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
@@ -92,6 +92,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

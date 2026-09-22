@@ -5,7 +5,7 @@
 %define libkpim6mailimporterakonadi libkpim6mailimporterakonadi%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -27,7 +27,7 @@ BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemmodels-devel kf6-kit
 BuildRequires: kf6-knotifications-devel kf6-kparts-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kunitconversion-devel
 BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel
-BuildRequires: kimap-devel grantleetheme-devel kmime-devel kde6-libkdepim-devel
+BuildRequires: kimap-devel grantleetheme-devel kf6-kmime-devel kde6-libkdepim-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: pimcommon-devel kpimtextedit-devel
 
@@ -93,6 +93,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libakonadiconsole libakonadiconsole%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -29,7 +29,7 @@ BuildRequires: kf6-kdoctools-devel kf6-kio-devel kf6-ki18n-devel kf6-kcalendarco
 BuildRequires: kf6-kitemmodels-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
 BuildRequires: kf6-kitemviews-devel kf6-ktexttemplate-devel
 BuildRequires: kf6-ktextaddons-devel
-BuildRequires: kidentitymanagement-devel kimap-devel kmime-devel kpimtextedit-devel
+BuildRequires: kidentitymanagement-devel kimap-devel kf6-kmime-devel kpimtextedit-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel calendarsupport-devel
 BuildRequires: kde6-libkdepim-devel messagelib-devel pimcommon-devel akonadi-search-devel
 BuildRequires: kde6-libkleo-devel
@@ -87,6 +87,9 @@ desktop-file-install \
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

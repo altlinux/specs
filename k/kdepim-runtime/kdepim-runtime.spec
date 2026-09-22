@@ -10,7 +10,7 @@
 %define libakonadi_singlefileresource_widget libakonadi-singlefileresource-widget%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -45,7 +45,7 @@ BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-deve
 BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kholidays-devel kf6-ktexttemplate-devel
 BuildRequires: plasma6-activities-devel
 BuildRequires: akonadi-calendar-devel kcalutils-devel
-BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kmbox-devel kmime-devel kpimtextedit-devel
+BuildRequires: kidentitymanagement-devel kimap-devel kmailtransport-devel kmbox-devel kf6-kmime-devel kpimtextedit-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel pimcommon-devel
 BuildRequires: kde6-libkgapi-devel kde6-libkdepim-devel kldap-devel grantleetheme-devel
 
@@ -189,6 +189,9 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

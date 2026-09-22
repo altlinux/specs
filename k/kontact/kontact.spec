@@ -4,7 +4,7 @@
 %define libkontactprivate libkontactprivate%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -32,7 +32,7 @@ BuildRequires: kf6-kcmutils-devel kf6-kcrash-devel kf6-kdbusaddons-devel kf6-kdo
 BuildRequires: kf6-kiconthemes-devel kf6-kio-devel kf6-kitemmodels-devel kf6-kparts-devel kf6-ktextwidgets-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-kcontacts-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel grantleetheme-devel
-BuildRequires: kidentitymanagement-devel kimap-devel kmime-devel kontactinterface-devel kpimtextedit-devel
+BuildRequires: kidentitymanagement-devel kimap-devel kf6-kmime-devel kontactinterface-devel kpimtextedit-devel
 BuildRequires: kde6-libkdepim-devel mailcommon-devel messagelib-devel pimcommon-devel
 
 %description
@@ -102,6 +102,9 @@ Obsoletes: libkontactprivate5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

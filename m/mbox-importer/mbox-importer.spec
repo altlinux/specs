@@ -1,7 +1,7 @@
 %define rname mbox-importer
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -16,7 +16,6 @@ Provides: kde5-mbox-importer = %EVR
 Obsoletes: kde5-mbox-importer < %EVR
 
 Source: %rname-%version.tar
-Patch1: alt-ki18n.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-build-ubt rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -26,7 +25,7 @@ BuildRequires: kf6-kcrash-devel kf6-kio-devel kf6-kitemmodels-devel kf6-ktextwid
 BuildRequires: kf6-ktexttemplate-devel kf6-kcontacts-devel kf6-kiconthemes-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel kidentitymanagement-devel
-BuildRequires: kimap-devel kmime-devel kpimtextedit-devel mailcommon-devel mailimporter-devel messagelib-devel
+BuildRequires: kimap-devel kf6-kmime-devel kpimtextedit-devel mailcommon-devel mailimporter-devel messagelib-devel
 BuildRequires: pimcommon-devel kde6-libkdepim-devel
 
 %description
@@ -34,7 +33,6 @@ PIM Mailbox importer.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build
@@ -49,6 +47,9 @@ PIM Mailbox importer.
 %_K6xdgapp/*mboximporter*.desktop
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

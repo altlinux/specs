@@ -1,7 +1,7 @@
 %define rname kmailtransport
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: boost-devel-headers libsasl2-devel
 BuildRequires: libqtkeychain-qt6-devel
-BuildRequires: akonadi-devel kmime-devel
+BuildRequires: akonadi-devel kf6-kmime-devel
 BuildRequires: akonadi-mime-devel ksmtp-devel
 BuildRequires: kde6-libkgapi-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
@@ -80,6 +80,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

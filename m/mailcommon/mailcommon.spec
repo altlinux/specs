@@ -4,7 +4,7 @@
 %define libkpim6mailcommon libkpim6mailcommon%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -32,7 +32,7 @@ BuildRequires: kf6-kjobwidgets-devel kf6-knotifications-devel kf6-kparts-devel k
 BuildRequires: kf6-kunitconversion-devel kf6-kwallet-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel
 BuildRequires: kf6-solid-devel kf6-sonnet-devel kf6-syntax-highlighting-devel kf6-ktexttemplate-devel
 BuildRequires: plasma6-activities-devel
-BuildRequires: kmailtransport-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel mailimporter-devel
+BuildRequires: kmailtransport-devel kf6-kmime-devel kpimtextedit-devel kde6-libkdepim-devel mailimporter-devel
 BuildRequires: messagelib-devel pimcommon-devel kde6-libkleo-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kldap-devel
@@ -89,6 +89,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

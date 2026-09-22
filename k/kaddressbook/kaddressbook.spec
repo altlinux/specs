@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -22,7 +22,6 @@ Requires: kdepim-runtime
 %endif
 
 Source: %rname-%version.tar
-Patch1: alt-ki18n.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -33,9 +32,9 @@ BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kf6-kcalendarcore-dev
 BuildRequires: kf6-kcmutils-devel kf6-kdoctools-devel kf6-kio-devel kf6-prison-devel kf6-kiconthemes-devel
 BuildRequires: kf6-kitemmodels-devel kf6-kparts-devel kf6-ki18n-devel kf6-ktexttemplate-devel
 BuildRequires: plasma6-activities-devel
-BuildRequires: kde6-libkleo-devel kidentitymanagement-devel kimap-devel kmime-devel
+BuildRequires: kde6-libkleo-devel kidentitymanagement-devel kimap-devel kf6-kmime-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel akonadi-search-devel grantleetheme-devel
-BuildRequires: kidentitymanagement-devel kimap-devel kmime-devel kldap-devel
+BuildRequires: kidentitymanagement-devel kimap-devel kf6-kmime-devel kldap-devel
 BuildRequires: kontactinterface-devel kpimtextedit-devel kde6-libkdepim-devel messagelib-devel
 BuildRequires: pimcommon-devel
 
@@ -77,7 +76,6 @@ Obsoletes: libkpimaddressbookimportexport5 < %EVR
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build \
@@ -103,6 +101,7 @@ done
 %_K6xdgapp/*kaddressbook*.desktop
 %_K6data/kaddressbook/
 %_K6icon/*/*/apps/kaddressbook.*
+%_K6cfg/*kaddressbook*
 %_datadir/metainfo/*.xml
 
 %files devel
@@ -120,6 +119,9 @@ done
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%gui_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -26,13 +26,14 @@ Patch1: alt-gpgme17.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules boost-devel qt6-declarative-devel
 BuildRequires: libassuan-devel libgpgme-devel
+BuildRequires: libkdsingleapplication-qt6-devel
 BuildRequires: libcups-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kdbusaddons-devel kf6-kdoctools-devel
 BuildRequires: kf6-ki18n-devel kf6-kiconthemes-devel kf6-knotifications-devel kf6-kservice-devel kf6-ktextwidgets-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-sonnet-devel kf6-kitemmodels-devel kf6-kstatusnotifieritem-devel
 BuildRequires: kf6-kcrash-devel kf6-kwallet-devel kf6-kio-devel kf6-kauth-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kconfig-devel
 BuildRequires: kf6-kcolorscheme-devel
-BuildRequires: kmime-devel kde6-libkleo-devel
+BuildRequires: kf6-kmime-devel kde6-libkleo-devel
 BuildRequires: kidentitymanagement-devel kmailtransport-devel kpimtextedit-devel akonadi-mime-devel akonadi-devel
 BuildRequires: mimetreeparser-devel kmbox-devel
 
@@ -112,6 +113,9 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,6}-kleopatra.xml
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

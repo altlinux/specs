@@ -16,8 +16,8 @@
 %define libkpim6webengineviewer libkpim6webengineviewer%sover
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -49,7 +49,7 @@ BuildRequires: kf6-ktextaddons-devel
 BuildRequires: akonadi-search-devel grantleetheme-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 BuildRequires: kidentitymanagement-devel kimap-devel kldap-devel kmailtransport-devel kmbox-devel
-BuildRequires: kmime-devel kpimtextedit-devel kde6-libgravatar-devel kde6-libkdepim-devel kde6-libkleo-devel
+BuildRequires: kf6-kmime-devel kpimtextedit-devel kde6-libgravatar-devel kde6-libkdepim-devel kde6-libkleo-devel
 BuildRequires: pimcommon-devel
 
 %description
@@ -209,6 +209,9 @@ mkdir -p %buildroot/%_K6plug/pim6
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - fix messagelist date column width
 

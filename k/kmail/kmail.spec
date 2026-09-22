@@ -5,7 +5,7 @@
 %define libmailfilteragentprivate libmailfilteragentprivate%pim_sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -36,7 +36,7 @@ BuildRequires: plasma6-activities-devel
 BuildRequires: kde6-libkleo-devel
 BuildRequires: akonadi-contacts-devel akonadi-devel akonadi-mime-devel akonadi-search-devel
 BuildRequires: kcalutils-devel kf6-kcontacts-devel kidentitymanagement-devel kimap-devel kldap-devel
-BuildRequires: kmailtransport-devel kmime-devel kontactinterface-devel kpimtextedit-devel ktnef-devel
+BuildRequires: kmailtransport-devel kf6-kmime-devel kontactinterface-devel kpimtextedit-devel ktnef-devel
 BuildRequires: kde6-libgravatar-devel kde6-libkdepim-devel kde6-libksieve-devel mailcommon-devel messagelib-devel
 BuildRequires: pimcommon-devel
 
@@ -109,6 +109,7 @@ Requires: %name-common >= %EVR
 %_K6icon/*/*/apps/kmail.*
 %_K6notif/kmail2.notifyrc
 %_K6notif/akonadi_*_agent.notifyrc
+%_K6notif/*kontact*.notifyrc
 %_datadir/akonadi/agents/*.desktop
 %_K6dbus_srv/*kmail*.service
 %_datadir/metainfo/*.xml
@@ -134,6 +135,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

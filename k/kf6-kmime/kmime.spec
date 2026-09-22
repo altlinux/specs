@@ -1,7 +1,7 @@
 %define rname kmime
 
-Name: %rname
-Version: 26.04.3
+Name: kf6-%rname
+Version: 6.30.0
 Release: alt1
 %K6init
 
@@ -26,21 +26,25 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf6-filesystem
+Provides: kmime-common = 26.08
+Obsoletes: kmime-common < 26.08
 %description common
 %name common package
 
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Provides: kmime-devel = 26.08
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n libkpim6mime
+%package -n libkf6mime
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
-%description -n libkpim6mime
+Requires: %name-common >= %EVR
+Obsoletes: libkpim6mime < 26.08
+%description -n libkf6mime
 %name library
 
 
@@ -60,16 +64,19 @@ Requires: %name-common
 %_datadir/qlogging-categories6/*.*categories
 
 %files devel
-%_includedir/KPim6/KMime/
+%_K6inc/KMime/
 %_K6link/lib*.so
 %_K6lib/cmake/K*Mime/
 #%_K6archdata/mkspecs/modules/qt_KMime.pri
 
-%files -n libkpim6mime
-%_K6lib/libKPim6Mime.so.*
-
+%files -n libkf6mime
+%_K6lib/libKF6Mime.so.*
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
+- new version
+- moved from kmime
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

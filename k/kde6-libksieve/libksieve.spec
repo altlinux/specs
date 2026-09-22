@@ -13,7 +13,7 @@
 %define libkpim6ksievecore libpim6ksievecore%sover
 
 Name: kde6-%rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -31,7 +31,7 @@ BuildRequires: qt6-webengine-devel
 %endif
 BuildRequires: boost-devel libsasl2-devel
 BuildRequires: libcups-devel
-BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kidentitymanagement-devel kimap-devel kmailtransport-devel kmime-devel
+BuildRequires: kf6-kcalendarcore-devel kf6-kcontacts-devel kidentitymanagement-devel kimap-devel kmailtransport-devel kf6-kmime-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel   kf6-kdoctools-devel
 BuildRequires: kf6-kguiaddons-devel kf6-ki18n-devel kf6-kiconthemes-devel  kf6-kio-devel kf6-kitemmodels-devel
@@ -147,6 +147,9 @@ done
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

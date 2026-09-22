@@ -6,7 +6,7 @@
 
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -36,7 +36,7 @@ BuildRequires: kf6-qqc2-desktop-style-devel kf6-knotifications-devel kf6-ktextte
 BuildRequires: kf6-kirigami-addons-devel kf6-kholidays-devel
 BuildRequires: plasma6-lib-devel
 BuildRequires: akonadi-calendar-devel akonadi-contacts-devel akonadi-devel akonadi-mime-devel
-BuildRequires: kcalutils-devel kidentitymanagement-devel kimap-devel kmime-devel
+BuildRequires: kcalutils-devel kidentitymanagement-devel kimap-devel kf6-kmime-devel
 BuildRequires: kpimtextedit-devel kde6-libkdepim-devel kde6-libkleo-devel mailcommon-devel
 BuildRequires: messagelib-devel pimcommon-devel kmailtransport-devel mimetreeparser-devel
 BuildRequires: kmbox-devel akonadi-search-devel
@@ -104,6 +104,9 @@ Obsoletes: libmerkuro_contact5 < %EVR
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -31,7 +31,7 @@ BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-knotifications-dev
 BuildRequires: kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-devel kf6-solid-devel kf6-sonnet-devel
 BuildRequires: kf6-krunner-devel kf6-kpackage-devel kf6-kcmutils-devel kf6-kcontacts-devel
 BuildRequires: kf6-ktextaddons-devel
-BuildRequires: akonadi-devel kmime-devel akonadi-mime-devel
+BuildRequires: akonadi-devel kf6-kmime-devel akonadi-mime-devel
 
 %description
 %summary.
@@ -124,6 +124,9 @@ sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json*
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

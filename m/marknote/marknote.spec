@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 1.6.0
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Text tools
@@ -26,7 +26,7 @@ BuildRequires: libmd4c-devel
 BuildRequires: kf6-breeze-icons-devel kf6-kcolorscheme-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-ki18n-devel
 BuildRequires: kf6-kirigami-devel kf6-kxmlgui-devel kf6-kiconthemes-devel kf6-knotifications-devel kf6-kitemmodels-devel
 BuildRequires: kf6-kwindowsystem-devel
-BuildRequires: kmime-devel
+BuildRequires: kf6-kmime-devel
 BuildRequires: kf6-kirigami-addons-devel
 
 %description
@@ -59,6 +59,9 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 %_datadir/metainfo/*marknote*
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt2
+- fix build requires
+
 * Thu Jul 23 2026 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt1
 - new version
 

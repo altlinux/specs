@@ -5,8 +5,8 @@
 %define libkpim6mimetreeparserwidgets libkpim6mimetreeparserwidgets%sover
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -88,6 +88,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jul 13 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - update build requries
 

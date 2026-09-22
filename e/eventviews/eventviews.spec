@@ -4,7 +4,7 @@
 %define libkpim6eventviews libkpim6eventviews%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -31,7 +31,7 @@ BuildRequires: kf6-kwidgetsaddons-devel kf6-kwindowsystem-devel kf6-kxmlgui-deve
 BuildRequires: kf6-ktextaddons-devel
 BuildRequires: kde6-kdiagram-devel
 BuildRequires: akonadi-calendar-devel calendarsupport-devel kf6-kcalendarcore-devel kcalutils-devel kf6-kcontacts-devel
-BuildRequires: kidentitymanagement-devel kmime-devel kpimtextedit-devel kde6-libkdepim-devel
+BuildRequires: kidentitymanagement-devel kf6-kmime-devel kpimtextedit-devel kde6-libkdepim-devel
 BuildRequires: akonadi-devel akonadi-mime-devel akonadi-contacts-devel
 
 %description
@@ -85,6 +85,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

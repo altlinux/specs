@@ -1,7 +1,7 @@
 %define rname akonadi-mime
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -17,7 +17,7 @@ BuildRequires: extra-cmake-modules qt6-declarative-devel
 BuildRequires: boost-devel
 BuildRequires: libxslt-devel xsltproc
 BuildRequires: kf6-kdoctools-devel kf6-kio-devel kf6-ki18n-devel kf6-kitemmodels-devel
-BuildRequires: akonadi-devel kmime-devel
+BuildRequires: akonadi-devel kf6-kmime-devel
 
 %description
 Libraries and daemons to implement basic email handling.
@@ -76,6 +76,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Jul 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
