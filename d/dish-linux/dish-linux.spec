@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    dish-linux
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Native Linux client for the Satellite wireless-gamepad server
@@ -59,5 +59,8 @@ SatelliteSetup.exe with the ViGEmBus driver.
 %_man1dir/dish.1*
 
 %changelog
+* Tue Sep 22 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.0-alt1
+- new version 2.1.0
+
 * Fri Sep 18 2026 Sergey Palcheh <minergenon@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus
