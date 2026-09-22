@@ -4,8 +4,8 @@
 %add_verify_elf_skiplist %_libdir/imhex/plugins/*
 
 Name: imhex
-Version: 1.37.4
-Release: alt2.1
+Version: 1.38.1
+Release: alt1
 
 Summary: A hex editor for reverse engineers and programmers
 
@@ -16,19 +16,21 @@ Url: https://imhex.werwolv.net/
 # Source-url: https://github.com/WerWolv/ImHex/releases/download/v%version/Full.Sources.tar.gz
 Source: %name-%version.tar
 
-Patch0: 0001-build-Updated-libfmt-2234.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cli11-devel libcapstone-devel libcurl-devel libfmt-devel libglfw3-devel libmagic-devel
 BuildRequires: libmbedtls-3.6-devel libnativefiledialog-extended-devel libyara-devel nlohmann-json-devel
-BuildRequires: libfreetype-devel libXrandr-devel
+BuildRequires: libfreetype-devel libXrandr-devel libssl-devel libssh2-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: ctest
 
 # For desktop file & AppData
 BuildRequires: libappstream-glib
 BuildRequires: desktop-file-utils
+
+# plugins are in findreq skiplist (they link to each other), list their libs manually
+Requires: libcapstone5 libssh2 libyara10
 
 ExcludeArch: %ix86 armh
 
@@ -45,10 +47,13 @@ same time ImHex is completely free and open source under the GPLv2 language.
 
 %prep
 %setup
-%patch0 -p1
 
 rm -rv lib/third_party/{capstone,fmt,nativefiledialog,yara,nlohmann_json}
 sed -i '/generateSDKDirectory()/d' CMakeLists.txt
+# fmt >= 12: fmt/core.h no longer provides fmt::format
+grep -rl '<fmt/core.h>' lib main plugins tests | xargs sed -i 's,<fmt/core.h>,<fmt/format.h>,'
+# don't fail on missing ImHex-Patterns (not shipped in the source tarball)
+sed -i 's/if (NOT (imhex_patterns_SOURCE_DIR STREQUAL ""))/if (EXISTS "${imhex_patterns_SOURCE_DIR}")/' cmake/build_helpers.cmake
 
 %build
 %cmake \
@@ -75,9 +80,6 @@ cp -av lib/third_party/microtar/LICENSE microtar-LICENSE
 cp -av lib/third_party/xdgpp/LICENSE xdgpp-LICENSE
 rm -rv %buildroot%_datadir/licenses
 
-# this is a symlink for the old appdata name that we don't need
-rm -fv %buildroot%_datadir/metainfo/net.werwolv.%name.appdata.xml
-
 # drop updater binary
 rm -fv %buildroot%_bindir/imhex-updater
 
@@ -87,7 +89,7 @@ rm -fv %buildroot%_bindir/imhex-updater
 %ctest --exclude-regex '(Helpers/StoreAPI|Helpers/TipsAPI|Helpers/ContentAPI)'
 
 %_bindir/desktop-file-validate %buildroot/%_desktopdir/%name.desktop
-%_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/net.werwolv.%name.metainfo.xml
+%_bindir/appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/net.werwolv.ImHex.metainfo.xml
 
 %files
 %doc README.md *LICENSE
@@ -101,6 +103,11 @@ rm -fv %buildroot%_bindir/imhex-updater
 %_datadir/mime/packages/imhex.xml
 
 %changelog
+* Tue Sep 22 2026 Mikhail Tergoev <fidel@altlinux.org> 1.38.1-alt1
+- updated to upstream 1.38.1
+- fixed FTBFS with libfmt 12
+- added explicit Requires for plugin libraries (libcapstone5, libssh2, libyara10)
+
 * Sat Oct 18 2025 Nazarov Denis <nenderus@altlinux.org> 1.37.4-alt2.1
 - fixed FTBFS
 
