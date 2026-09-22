@@ -6,7 +6,7 @@
 
 Name:          gem-dbi-dbrc
 Version:       1.7.0.24
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A simple way to avoid hard-coding passwords with DBI
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -26,14 +26,13 @@ BuildRequires: gem(rubocop-rspec) >= 0
 BuildRequires: gem(gpgme) >= 2.0.21
 BuildRequires: gem(rexml) >= 3.2
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(fakefs) >= 3
 BuildConflicts: gem(gpgme) >= 2.1
 BuildConflicts: gem(rexml) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency fakefs >= 2.5.0,fakefs < 3
+%ruby_use_gem_dependency fakefs >= 1.3
 Requires:      gem(gpgme) >= 2.0.21
 Requires:      gem(rexml) >= 3.2
 Conflicts:     gem(gpgme) >= 2.1
@@ -55,7 +54,7 @@ on remote hosts, not just databases.
 %if_enabled    doc
 %package       -n gem-dbi-dbrc-doc
 Version:       1.7.0.24
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A simple way to avoid hard-coding passwords with DBI documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dbi-dbrc
 Group:         Development/Documentation
@@ -82,7 +81,7 @@ on remote hosts, not just databases.
 %if_enabled    devel
 %package       -n gem-dbi-dbrc-devel
 Version:       1.7.0.24
-Release:       alt0.1
+Release:       alt0.2
 Summary:       A simple way to avoid hard-coding passwords with DBI development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dbi-dbrc
 Group:         Development/Ruby
@@ -95,7 +94,6 @@ Requires:      gem(fakefs) >= 1.3
 Requires:      gem(rubocop) >= 0
 Requires:      gem(rubocop-rspec) >= 0
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(fakefs) >= 3
 
 %description   -n gem-dbi-dbrc-devel
 A simple way to avoid hard-coding passwords with DBI development package.
@@ -143,6 +141,9 @@ on remote hosts, not just databases.
 
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 1.7.0.24-alt0.2
+- ! relaxed deps to some gems
+
 * Sat Aug 03 2024 Pavel Skrylev <majioa@altlinux.org> 1.7.0.24-alt0.1
 - ^ 1.7.0 -> 1.7.0p24
 
