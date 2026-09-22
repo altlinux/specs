@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.30.2
+Version: 0.30.3
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -22,6 +22,7 @@ Conflicts: guile-evms < 0.4-alt13
 BuildPreReq: alterator >= 4.7-alt5
 BuildRequires: grub-common
 BuildRequires: libdevmapper-devel
+BuildRequires: qt6-tools
 
 %ifarch %ix86 x86_64
 Requires: grub-pc > 2.00-alt20
@@ -55,11 +56,22 @@ touch %buildroot%_sysconfdir/efi_removable.flag
 %_altdata_dir/ui/*/
 %_altdata_dir/steps/*
 %_alterator_backend3dir/*
+%_alterator_datadir/backends/grub.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.grub.policy
+%dir %_datadir/alterator-framework/modules/grub
+%_datadir/alterator-framework/modules/grub/manifest.json
+%_datadir/alterator-framework/modules/grub/main.qml
+%dir %_datadir/alterator-framework/modules/grub/ts
+%_datadir/alterator-framework/modules/grub/ts/grub_ru.qm
 %dir %_libexecdir/alterator/hooks/grub.d
 %_bindir/*
 %ghost %_sysconfdir/efi_removable.flag
 
 %changelog
+* Tue Sep 22 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.30.3-alt1
+- add alterator-framework frontend and alterator-manager
+  backend integration (thx Oleg Chagaev)
+
 * Mon Apr 13 2026 Egor Ignatov <egori@altlinux.org> 0.30.2-alt1
 - backend3/grub: restore backward compatibility with grub <2.14-alt1
   (fall back to grub-install when grub-efi-install is not available).
