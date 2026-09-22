@@ -3,7 +3,7 @@
 
 Name: libgeopmd
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: C/C++ implementation of the GEOPM access service
 License: BSD-3-Clause
@@ -12,6 +12,7 @@ Group: System/Libraries
 URL: https://geopm.github.io
 VCS: https://github.com/geopm/geopm.git
 Source0: %name-%version.tar
+Patch0: fix-gmock-deprecated-invoke.patch
 ExclusiveArch: x86_64
 
 BuildRequires: gcc-c++
@@ -61,6 +62,7 @@ Command-line tools for GEOPM access service.
 
 %prep
 %setup -q %name-%version
+%patch0 -p1
 pushd %name
 echo %version > VERSION
 popd
@@ -104,5 +106,8 @@ popd
 %_sbindir/geopmbatch
 
 %changelog
+* Tue Sep 22 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt2
+- Fix build with recent Google Mock.
+
 * Thu Jan 15 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt1
 - first build for ALT
