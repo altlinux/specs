@@ -1,6 +1,6 @@
 Name: cvs
 Version: 1.11.23
-Release: alt9
+Release: alt10
 
 Summary: A version control system
 License: GPLv2+
@@ -171,7 +171,7 @@ sed -i 's|${TMPDIR}/cvs-serv|${TMPDIR:-/tmp}/cvs-serv|g' src/sanity.sh
 sed -i 's/@strong{Note:/@strong{Please notice:/' doc/cvs.texinfo
 
 %build
-%add_optflags -D_GNU_SOURCE
+%add_optflags -D_GNU_SOURCE -std=gnu17
 
 export ac_cv_func_mkstemp=yes \
 	ac_cv_lib_nsl_main=no \
@@ -258,6 +258,9 @@ install -pm644 \
 %_datadir/cvs
 
 %changelog
+* Tue Sep 08 2026 Aleksandr Dovydenkov <asd@altlinux.org> 1.11.23-alt10
+- Fixed FTBFS.
+
 * Sat Jul 01 2023 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt9
 - cvs history: fixed potential heap write out of bounds.
 
