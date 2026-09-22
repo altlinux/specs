@@ -6,7 +6,7 @@
 
 Name:          gem-hammer-cli-foreman
 Version:       3.18.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman commands for Hammer
 License:       GPL-3.0-or-later
 Group:         Development/Ruby
@@ -15,9 +15,7 @@ Vcs:           https://github.com/theforeman/hammer-cli-foreman.git
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(apipie-bindings) >= 0.7.0
 BuildRequires: gem(ci_reporter_minitest) >= 1.0.0
@@ -32,15 +30,14 @@ BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(thor) >= 0
 BuildConflicts: gem(ci_reporter_minitest) >= 1.1
 BuildConflicts: gem(gettext) >= 4.0.0
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(mocha) >= 4
 BuildConflicts: gem(rest-client) >= 3.0.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names hammer_cli_foreman,hammer-cli-foreman
-%ruby_use_gem_dependency mocha >= 2.7.1,mocha < 4
+%ruby_use_gem_dependency mocha >= 2.1.0
+%ruby_use_gem_dependency minitest >= 5.18
 Requires:      gem(apipie-bindings) >= 0.7.0
 Requires:      gem(hammer_cli) >= 3.15.0
 Requires:      gem(jwt) >= 2.2.1
@@ -55,14 +52,12 @@ This Hammer CLI plugin contains set of commands for Foreman.
 %if_enabled    doc
 %package       -n gem-hammer-cli-foreman-doc
 Version:       3.18.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman commands for Hammer documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hammer_cli_foreman
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(hammer_cli_foreman) = 3.18.1
 
 %description   -n gem-hammer-cli-foreman-doc
@@ -78,14 +73,12 @@ This Hammer CLI plugin contains set of commands for Foreman.
 %if_enabled    devel
 %package       -n gem-hammer-cli-foreman-devel
 Version:       3.18.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman commands for Hammer development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hammer_cli_foreman
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
 Requires:      gem(hammer_cli_foreman) = 3.18.1
 Requires:      gem(ci_reporter_minitest) >= 1.0.0
 Requires:      gem(gettext) >= 3.1.3
@@ -96,8 +89,6 @@ Requires:      gem(simplecov) >= 0
 Requires:      gem(thor) >= 0
 Conflicts:     gem(ci_reporter_minitest) >= 1.1
 Conflicts:     gem(gettext) >= 4.0.0
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(mocha) >= 4
 
 %description   -n gem-hammer-cli-foreman-devel
 Foreman commands for Hammer development package.
@@ -139,6 +130,9 @@ This Hammer CLI plugin contains set of commands for Foreman.
 
 
 %changelog
+* Wed Sep 23 2026 Pavel Skrylev <majioa@altlinux.org> 3.18.1-alt1.1
+- ! relaxed dep to some gems
+
 * Sat Mar 21 2026 Pavel Skrylev <majioa@altlinux.org> 3.18.1-alt1
 - ^ 3.5.0 -> 3.18.1
 
