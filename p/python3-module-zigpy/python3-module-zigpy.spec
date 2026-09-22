@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-zigpy
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Library implementing a Zigbee stack
@@ -63,6 +63,9 @@ sed -i '/\[tool.setuptools-git-versioning\]/,+1d' pyproject.toml
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Tue Sep 22 2026 Dina Tagantseva <dinchik@altlinux.org> 2.2.0-alt1
+- New version.
+
 * Wed Aug 05 2026 Dina Tagantseva <dinchik@altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus.
 
