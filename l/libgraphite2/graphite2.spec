@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: 1.3.15
-Release: alt1.1
+Release: alt1.2
 
 Summary: Font rendering capabilities for complex non-Roman writing systems
 Group: System/Libraries
@@ -25,7 +25,7 @@ Source: %_name-%version.tar
 Patch1: graphite2-1.2.0-cmakepath.patch
 # lcc/e2k fixup
 Patch2: graphite2-1.3.13-alt-e2k-lcc123.patch
-Patch3: graphite2-1.3.13-alt-e2k-linking.patch
+Patch3: graphite2-1.3.15-alt-e2k-linking.patch
 # https://salsa.debian.org/fonts-team/graphite2/-/blob/master/debian/patches/nametabletest-NameRecord-bounds.diff?ref_type=heads
 Patch11: graphite2-1.3.14-deb-nametabletest-NameRecord-bounds.diff
 
@@ -99,6 +99,9 @@ sed -i -e 's!<a id="id[a-z]*[0-9]*"></a>!!g' BUILD/doc/manual.html
 %{?_enable_docs:%doc BUILD/doc/manual.html}
 
 %changelog
+* Tue Sep 22 2026 Michael Shigorin <mike@altlinux.org> 1.3.15-alt1.2
+- ilyakurdyukov@: *fixed* build for E2K
+
 * Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.15-alt1.1
 - mike@: fixed build for E2K
 
