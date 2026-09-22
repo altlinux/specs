@@ -9,7 +9,7 @@
 
 Name:          ruby
 Version:       %ruby_version
-Release:       alt5
+Release:       alt5.1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -121,7 +121,8 @@ Group:         Development/Ruby
 Requires(pre): alternatives >= 0:0.2.0-alt0.12
 Requires:      %lname = %EVR
 Requires:      ruby = %EVR
-Provides:      rubygems = 3.3.26
+# from lib/rubygems.rb
+Provides:      rubygems = 3.5.22
 Provides:      rdoc = 6.4.0
 Provides:      bundle = 2.3.26
 Provides:      %name-libs = %EVR
@@ -372,6 +373,9 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt5.1
+- * updated rubygems dep
+
 * Tue Sep 15 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt5
 - ! relaxed some statements for ruby kernel
 
