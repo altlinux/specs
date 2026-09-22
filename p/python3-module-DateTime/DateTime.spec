@@ -6,8 +6,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 5.5
-Release: alt1.1
+Version: 6.0
+Release: alt1
 
 Summary: This package provides a DateTime data type, as known from Zope
 License: ZPL-2.1
@@ -67,6 +67,9 @@ This package contains tests for DateTime.
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Sep 19 2026 Anton Vyatkin <toni@altlinux.org> 1:6.0-alt1
+- New version 6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 1:5.5-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
