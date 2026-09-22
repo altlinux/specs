@@ -7,9 +7,10 @@
 %define pyside_qt6_bins assistant,balsam,balsamui,designer,linguist,lrelease,lupdate,qmlformat,qmlls,qmllint,qsb
 %filter_from_requires /\/qt6\/libexec\//d
 %filter_from_requires \/share\/qt6\/bin\//d
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: python3-module-%mod_name
-Version: 6.10.3
+Version: 6.11.2
 Release: alt2
 
 Summary: Python bindings for the Qt cross-platform application and UI framework
@@ -20,9 +21,9 @@ URL: https://wiki.qt.io/Qt_for_Python
 # Download from https://www.nic.funet.fi/pub/mirrors/download.qt-project.org/official_releases/QtForPython/pyside6/PySide6-6.6.2-src/pyside-setup-everywhere-src-6.6.2.tar.xz
 Source: pyside-setup-everywhere-src-%version.tar
 # FC
-Patch1: 0001-Always-link-to-python-libraries.patch
-Patch2: 0001-Fix-installation.patch
-Patch3: 0001-Revert-Modify-headers-installation-for-CMake-builds.patch
+Patch1: 0001-Fix-header-installation-path-to-follow-filesystem-st.patch
+Patch2: 0001-Fix-header-packaging-and-include-path-regressions.patch
+Patch3: 0001-Always-link-to-python-libraries.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ninja
@@ -144,12 +145,11 @@ to Python, or even to get useful information to debug an application.
 # Fix installation dir
 sed -i 's/purelib/platlib/' sources/shiboken6/cmake/ShibokenHelpers.cmake
 
-%global optflags_lto %nil
 export CXX=/usr/bin/clang++
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/sources/shiboken6/libshiboken:$LD_LIBRARY_PATH
 
-%cmake -G Ninja \
+%cmake -G "Unix Makefiles" \
   -DNUMPY_INCLUDE_DIR:STRING=%python3_sitelibdir/numpy/core/include \
   -DSHIBOKEN_PYTHON_LIBRARIES=`pkg-config python3-embed --libs` \
   -DPYTHON_EXECUTABLE:STRING=python3 \
@@ -160,15 +160,13 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/sources/shiboken6/libshiboken:$LD_
   -DFORCE_LIMITED_API=no \
   -DNO_QT_TOOLS=yes \
   #
-#ninja_build -C "%_cmake__builddir"
-%cmake_build
+%make_build -C %_cmake__builddir
 
 %install
 export PYTHONPATH=$PWD/%_cmake__builddir/sources
 DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/shiboken6
-#DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/shiboken6_generator
+DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/shiboken6_generator
 DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/pyside6
-#DESTDIR="%buildroot" cmake --install %_cmake__builddir/sources/pyside6/pyside-tools
 
 # Install pyside6-app as wrapper for app -g python
 for p in uic rcc ; do
@@ -191,12 +189,6 @@ for name in PySide6 shiboken6 shiboken6_generator; do
   cp -p $name.egg-info/{PKG-INFO,top_level.txt} \
         %buildroot%python3_sitelibdir/$name-%version-py%_python3_version.egg-info/
 done
-
-# Fix CMake config files to use correct absolute paths (OpenSUSE solution)
-# The upstream build is designed for wheel installation with relative paths,
-# but for system installation we need absolute paths
-sed -i 's#/typesystems#/share/PySide6/typesystems#g' %buildroot/%_libdir/cmake/PySide6/*.cmake
-sed -i 's#/glue#/share/PySide6/glue#g' %buildroot/%_libdir/cmake/PySide6/*.cmake
 
 %check
 export PATH=%_qt6_bindir:$PATH
@@ -251,6 +243,7 @@ popd
 %_includedir/PySide6/
 %_libdir/libpyside6*.so
 %_libdir/libpyside6qml.*.so
+%_libdir/libpyside6remoteobjects.a
 %_libdir/cmake/PySide6*
 %_libdir/pkgconfig/pyside6.pc
 
@@ -275,6 +268,12 @@ popd
 %python3_sitelibdir/shiboken6_generator-%version-*.egg-info
 
 %changelog
+* Tue Sep 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- fix cmake files
+
+* Fri Sep 18 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Fri Apr 10 2026 Michael Shigorin <mike@altlinux.org> 6.10.3-alt2
 - no special clang version anymore (thx iv@)
 
