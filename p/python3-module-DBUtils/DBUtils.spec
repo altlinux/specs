@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.0
-Release: alt2.1
+Version: 3.2.0
+Release: alt1
 
 Summary: Database connections for multi-threaded environments
 License: MIT
@@ -52,6 +52,9 @@ of multi-threaded environments.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.2.0-alt1
+- New version.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.1.0-alt2.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
