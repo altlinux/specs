@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.7
+Version: 1.8
 Release: alt1
 Summary: Flexible static resources for web applications
 License: BSD-3-Clause
@@ -113,6 +113,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Sep 22 2026 Anton Vyatkin <toni@altlinux.org> 1.8-alt1
+- New version 1.8.
+
 * Fri Mar 20 2026 Anton Vyatkin <toni@altlinux.org> 1.7-alt1
 - New version 1.7.
 
