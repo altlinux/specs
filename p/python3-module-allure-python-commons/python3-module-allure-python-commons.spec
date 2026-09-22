@@ -2,7 +2,7 @@
 
 %define pypi_name allure-python-commons
 %define mod_name allure_commons
-%define pkg_version 2.16.0
+%define pkg_version 2.16.1
 
 %define test_pypi_name allure-python-commons-test
 %define test_mod_name allure_commons_test
@@ -130,6 +130,9 @@ python3 -m pytest -vra tests/allure_pytest/ \
 %python3_sitelibdir/%{pyproject_distinfo %pytest_pypi_name}/
 
 %changelog
+* Tue Sep 22 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 2.16.1-alt1
+- New version (2.16.1).
+
 * Mon Jun 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 2.16.0-alt1
 - New version (2.16.0).
 
