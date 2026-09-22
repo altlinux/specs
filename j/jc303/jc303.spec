@@ -1,11 +1,12 @@
 Name: jc303
-Version: 0.12.3
+Version: 0.13.0
 Release: alt1
 
 Summary: Roland TB-303 clone plugin
 License: GPLv3
 Group: Sound
-Url: https://midilab.co/jc303/
+URL: https://midilab.co/jc303/
+VCS: https://github.com/midilab/jc303
 
 ExclusiveArch: aarch64 x86_64
 
@@ -72,6 +73,9 @@ cp -av %_cmake__builddir/*_artefacts/*/VST3/* %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Tue Sep 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.13.0-alt1
+- 0.13.0 released
+
 * Mon Nov 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.3-alt1
 - 0.12.3 released
 
