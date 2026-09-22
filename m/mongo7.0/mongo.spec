@@ -4,7 +4,7 @@
 
 Name: mongo7.0
 Version: 7.0.43
-Release: alt1
+Release: alt2
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -12,6 +12,7 @@ Url: https://www.mongodb.org
 Source: %name-%version.tar
 Patch0: mongo7.0-7.0.2-debuginfo.patch
 Patch1: mongo7.0-7.0.14_fix_return_type.patch
+Patch2: mongo5.0-5.0.34-ALT-Fix_build_bundled_boost_with_gcc15.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -19,15 +20,7 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
-%ifarch %e2k
-BuildRequires: gcc-c++
-%else
-%set_gcc_version      13
-%define __cc  gcc-%_gcc_version
-%define __cxx g++-%_gcc_version
-BuildRequires: gcc%_gcc_version-c++
-%endif
-BuildRequires: /proc python3-module-pymongo python3-module-pkg_resources
+BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources
 BuildRequires: libssl-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -97,6 +90,7 @@ MongoDB instance.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 
@@ -124,9 +118,10 @@ MongoDB instance.
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
        --linker=gold \\\
-       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
+       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`" \\\
+       CFLAGS="-std=c11" CXXFLAGS="-std=c++20"
 
-python3 src/third_party/scons-4.9.1/scons.py CC=%__cc CXX=%__cxx %build_opts
+python3 src/third_party/scons-4.9.1/scons.py %build_opts
 
 %install
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
@@ -210,6 +205,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Sep 22 2026 Alexei Takaseev <taf@altlinux.org> 7.0.43-alt2
+- Fix build with gcc15
+
 * Sat Sep 12 2026 Alexei Takaseev <taf@altlinux.org> 7.0.43-alt1
 - 7.0.43 (Fixes: CVE-2026-89099)
 
