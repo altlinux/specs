@@ -5,44 +5,41 @@
 %define        gemname ffi
 
 Name:          gem-ffi
-Version:       1.17.0
-Release:       alt2
+Version:       1.17.4
+Release:       alt1
 Summary:       Ruby foreign function interface
 License:       BSD-3-Clause
 Group:         Development/Ruby
 Url:           https://github.com/ffi/ffi/wiki
 Vcs:           https://github.com/ffi/ffi.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
 Source1:       e2k-types.conf
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 BuildRequires: libffi-devel
 %if_enabled check
+BuildRequires: gem(benchmark) >= 0
 BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(bundler) >= 1.16
+BuildRequires: gem(fiddle) >= 0
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(rake-compiler) >= 1.1
 BuildRequires: gem(rake-compiler-dock) >= 1.2.1
-BuildRequires: gem(rspec) >= 2.15
-BuildRequires: gem(kramdown) >= 0
-BuildRequires: gem(yard) >= 0.9
-BuildRequires: gem(rbs) >= 3.0
-BuildConflicts: gem(bundler) >= 3
+BuildRequires: gem(rspec) >= 3.0
+BuildConflicts: gem(bundler) >= 5
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(yard) >= 1
-BuildConflicts: gem(rbs) >= 4
+BuildConflicts: gem(rspec) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1
+Requires:      ruby >= 2.5
 Obsoletes:     ruby-ffi < %EVR
 Provides:      ruby-ffi = %EVR
-Provides:      gem(ffi) = 1.17.0
-
+Provides:      gem(ffi) = 1.17.4
 
 %description
 Ruby-FFI is a gem for programmatically loading dynamically-linked native
@@ -54,14 +51,14 @@ extension using Ruby-FFI.
 
 %if_enabled    doc
 %package       -n gem-ffi-doc
-Version:       1.17.0
+Version:       1.17.4
 Release:       alt1
 Summary:       Ruby foreign function interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.17.0
+Requires:      gem(ffi) = 1.17.4
 
 %description   -n gem-ffi-doc
 Ruby foreign function interface documentation files.
@@ -79,28 +76,26 @@ extension using Ruby-FFI.
 
 %if_enabled    devel
 %package       -n gem-ffi-devel
-Version:       1.17.0
+Version:       1.17.4
 Release:       alt1
 Summary:       Ruby foreign function interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.17.0
+Requires:      gem(ffi) = 1.17.4
+Requires:      gem(benchmark) >= 0
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(bundler) >= 1.16
+Requires:      gem(fiddle) >= 0
 Requires:      gem(rake) >= 13.0
 Requires:      gem(rake-compiler) >= 1.1
 Requires:      gem(rake-compiler-dock) >= 1.2.1
-Requires:      gem(rspec) >= 2.15
-Requires:      gem(kramdown) >= 0
-Requires:      gem(yard) >= 0.9
-Requires:      gem(rbs) >= 3.0
-Conflicts:     gem(bundler) >= 3
+Requires:      gem(rspec) >= 3.0
+Conflicts:     gem(bundler) >= 5
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(yard) >= 1
-Conflicts:     gem(rbs) >= 4
+Conflicts:     gem(rspec) >= 4
 
 %description   -n gem-ffi-devel
 Ruby foreign function interface development package.
@@ -125,31 +120,34 @@ extension using Ruby-FFI.
 %install
 %ruby_install
 install -pDm644 %SOURCE1 \
-	%buildroot%ruby_gemlibdir/lib/ffi/platform/e2k-linux/types.conf
+   %buildroot%ruby_gemlibdir/lib/ffi/platform/e2k-linux/types.conf
 
 %check
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md COPYING LICENSE LICENSE.SPECS README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-ffi-doc
-%doc README.md
+%doc CHANGELOG.md COPYING LICENSE LICENSE.SPECS README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-ffi-devel
-%doc README.md
+%doc CHANGELOG.md COPYING LICENSE LICENSE.SPECS README.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 1.17.4-alt1
+- ^ 1.17.0 -> 1.17.4
+
 * Mon Sep 02 2024 Michael Shigorin <mike@altlinux.org> 1.17.0-alt2
 - added types.conf for e2k from MCST PDK 8.1rc2 (distributable)
 
