@@ -4,7 +4,7 @@
 %define libkgetcore libkgetcore%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -104,6 +104,9 @@ KF6 library
 
 
 %changelog
+* Tue Sep 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Jul 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

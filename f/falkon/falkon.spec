@@ -16,8 +16,8 @@
 %def_enable python_plugins
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init no_altplace
 
 Summary: Very fast web-browser
@@ -74,7 +74,7 @@ Requires: kde-common
 
 %build
 %K6build \
-    -DBUILD_KEYRING:BOO=ON \
+    -DBUILD_KEYRING:BOOL=ON \
     #
 
 %install
@@ -107,6 +107,9 @@ __EOF__
 
 
 %changelog
+* Tue Sep 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - fix requries (closes: 52755)
 
