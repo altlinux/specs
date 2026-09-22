@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: espflash
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: Utils for flashing Espressif devices
@@ -28,7 +28,7 @@ Group: Development/Tools
 %description -n cargo-espflash
 Cross-compiler and Cargo extension for flashing Espressif devices.
 Supports the ESP32, ESP32-C2/C3/C5/C6/C61, ESP32-H2, ESP32-P4,
-and ESP32-S2/S3
+and ESP32-S2/S3.
 
 %prep
 %setup -a1
@@ -54,6 +54,9 @@ export RUSTFLAGS="-Copt-level=3"
 %_bindir/cargo-espflash
 
 %changelog
+* Tue Sep 22 2026 Mikhail Nogin <joycap@altlinux.org> 4.6.0-alt1
+- Updated to 4.6.0.
+
 * Tue Jul 14 2026 Mikhail Nogin <joycap@altlinux.org> 4.5.0-alt1
 - Updated to 4.5.0.
 
