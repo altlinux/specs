@@ -3,10 +3,10 @@
 
 # Upstream release suffix (e.g. .release.4, .hotfix.2, .rc1).
 # Set to %nil when the upstream version has no suffix.
-%define version_suffix .release.4
+%define version_suffix %nil
 
 Name: sharpemu
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1%{version_suffix}
 
 Summary: PlayStation 5 emulator
@@ -146,6 +146,9 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Tue Sep 22 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt1
+- Update to v0.0.4
+
 * Sat Sep 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.3-alt1.release.4
 - Update to v0.0.3-release.4
 
