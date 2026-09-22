@@ -1,9 +1,9 @@
-%define gdal_version 39
+%define gdal_version %nil
 %define optflags_lto %nil
 
 Name: mysql-workbench-community
 Version: 8.0.47
-Release: alt7
+Release: alt8
 
 Summary: A MySQL visual database modeling tool
 
@@ -267,6 +267,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Tue Sep 22 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.47-alt8
+- Did not require versioning libgdal.
+
 * Thu Sep 17 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt7
 - NMU: disable LTO (Closes: #52901).
 
