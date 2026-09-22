@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.0.post1
+Version: 4.0
 Release: alt1
 Summary: Basic inter-process locks
 License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zc.lockfile/
-#Git: https://github.com/zopefoundation/zc.lockfile.git
+Vcs: https://github.com/zopefoundation/zc.lockfile.git
 
 Source0: %name-%version.tar
 
@@ -68,13 +68,15 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %files
 %doc *.txt *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
 
 %files tests
 %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Tue Sep 22 2026 Anton Vyatkin <toni@altlinux.org> 4.0-alt1
+- New version 4.0.
+
 * Tue Jan 30 2024 Anton Vyatkin <toni@altlinux.org> 3.0.post1-alt1
 - New version 3.0.post1.
 
