@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: gnome-online-accounts-gtk
-Version: 3.50.10
+Version: 3.50.11
 Release: alt1
 
 Summary: A GTK Frontend for GNOME Online Accounts
@@ -51,6 +51,9 @@ sed -i "s|Categories=.*|Categories=Network;FileTransfer;InstantMessaging;News;|"
 %_iconsdir/hicolor/scalable/apps/gnome-online-accounts-gtk.svg
 
 %changelog
+* Tue Sep 22 2026 Nikolay Strelkov <snk@altlinux.org> 3.50.11-alt1
+- New version 3.50.11.
+
 * Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 3.50.10-alt1
 - New version 3.50.10.
 
