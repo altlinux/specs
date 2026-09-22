@@ -4,13 +4,16 @@
 
 Name: mongo6.0
 Version: 6.0.29
-Release: alt1
+Release: alt2
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
 Patch0: mongo6.0-6.0.11-debuginfo.patch
+Patch1: mongo5.0-5.0.34-ALT-Fix_build_bundled_boost_with_gcc15.patch
+Patch2: mongo6.0-6.0.29-ALT-Fix-lost-cstdint.patch
+Patch3: mongo5.0-5.0.34-Fix-hardware_constructive_interference_size-in-aarch64.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
@@ -18,7 +21,7 @@ ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
-BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
+BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -86,6 +89,9 @@ MongoDB instance.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %ifarch aarch64
@@ -112,9 +118,10 @@ MongoDB instance.
        --release \\\
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
-       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
+       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`" \\\
+       CFLAGS="-std=c11" CXXFLAGS="-std=c++17"
 
-python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
+python3 src/third_party/scons-3.1.2/scons.py %build_opts
 
 %install
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
@@ -198,6 +205,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Tue Sep 22 2026 Alexei Takaseev <taf@altlinux.org> 6.0.29-alt2
+- Fix build with gcc15
+
 * Tue Jun 16 2026 Alexei Takaseev <taf@altlinux.org> 6.0.29-alt1
 - 6.0.29 (Fixes: CVE-2026-11933)
 
