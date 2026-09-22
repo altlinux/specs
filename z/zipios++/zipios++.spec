@@ -7,7 +7,7 @@ Group: System/Libraries
 
 Name:           zipios++
 Version:        0.1.5.9
-Release:        alt2_35
+Release:        alt3
 # Automatically converted from old format: LGPLv2+ - review is highly recommended.
 License:        LicenseRef-Callaway-LGPLv2+
 Summary:        C++ library for reading and writing Zip files
@@ -29,7 +29,7 @@ Patch10:        zipios++-zipheadio-size0.patch
 BuildRequires:  gcc-c++
 BuildRequires:  automake
 BuildRequires:  autoconf
-BuildRequires:  libstdc++13-devel
+BuildRequires:  libstdc++-devel
 BuildRequires:  libtool
 BuildRequires:  zlib-devel
 BuildRequires:  pkgconfig(cppunit)
@@ -95,9 +95,6 @@ make V=1 doc
 rm -f %{buildroot}%{_libdir}/*.{a,la}
 
 
-
-
-
 %files
 %doc AUTHORS NEWS README
 %doc --no-dereference COPYING
@@ -110,6 +107,9 @@ rm -f %{buildroot}%{_libdir}/*.{a,la}
 
 
 %changelog
+* Mon Sep 21 2026 Anton Meleshnikov <alton@altlinux.org> 0.1.5.9-alt3
+- FTBFS fix
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.1.5.9-alt2_35
 - update to new release by fcimport
 
