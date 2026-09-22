@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.12
+Version: 5.2.13
 Release: alt1
 
 Source:%name-%version.tar
@@ -27,6 +27,7 @@ Conflicts: ifrename < 29-alt8
 BuildPreReq: alterator >= 5.0
 BuildRequires: alterator-fbi
 BuildRequires: guile22-devel
+BuildRequires: qt6-tools
 
 #old names
 Provides: alterator-network = %version
@@ -70,6 +71,13 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_alterator_datadir/ui/*/
 %_alterator_backend3dir/*
 %_alterator_libdir/ui/*
+%_alterator_datadir/backends/net-eth.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.net-eth.policy
+%dir %_datadir/alterator-framework/modules/net-eth
+%_datadir/alterator-framework/modules/net-eth/manifest.json
+%_datadir/alterator-framework/modules/net-eth/*.qml
+%dir %_datadir/alterator-framework/modules/net-eth/ts
+%_datadir/alterator-framework/modules/net-eth/ts/net-eth_ru.qm
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/net-eth.d
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/net-eth-precommit.d
 
@@ -77,6 +85,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Wed Sep 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 5.2.13-alt1
+- Add alterator-framework UI support (thx Oleg Chagaev).
+
 * Tue Aug 11 2026 Ivan Khanas <xeno@altlinux.org> 5.2.12-alt1
 - backend3/net-eth: do not allow '_' in host name (closes: #45686).
 
@@ -741,4 +752,3 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 
 * Mon Oct 02 2006 Stanislav Ievlev <inger@altlinux.org> 0.1-alt1
 - initial release
-

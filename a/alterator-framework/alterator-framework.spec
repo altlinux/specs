@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-framework
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: Qt 6-based host application for Alterator QML modules
@@ -61,6 +61,14 @@ install -d %buildroot%_datadir/alterator-framework/modules
 
 
 %changelog
+* Wed Sep 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.3-alt1
+- New features (thx Oleg Chagaev):
+  + Add toText() and toObject() helpers to BackendUiData.
+  + Improve option handling and support custom value and text roles.
+- Fix (thx Oleg Chagaev):
+  + Replace hyphens with underscores in generated D-Bus paths and interfaces.
+- Bump API version to 1.4 (thx Oleg Chagaev).
+
 * Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.2-alt1
 - New features (thx Oleg Chagaev):
   + Add DesktopListView.qml component for native desktop-style scrolling.
