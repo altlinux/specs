@@ -10,7 +10,7 @@
 %endif
 
 Name: gpui
-Version: 0.2.57
+Version: 0.2.58
 Release: alt1
 
 Summary: Group policy editor
@@ -138,6 +138,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Mon Sep 21 2026 Ivan Khanas <xeno@altlinux.org> 0.2.58-alt1
+- 0.2.58-alt1
+- Fixes:
+  + Do not report a missing GPT.INI as a read error.
+
 * Mon Aug 24 2026 Vladimir Rubanov <august@altlinux.org> 0.2.57-alt1
 - 0.2.57-alt1
 - Fixes:
