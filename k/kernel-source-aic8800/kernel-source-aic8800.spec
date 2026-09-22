@@ -1,7 +1,7 @@
 %define _customdocdir %_defaultdocdir/%module_name
 
 %define module_name aic8800
-%define module_version 0.0.95.bef3
+%define module_version 0.0.99.27af
 %define module_release alt1
 
 Name: kernel-source-%module_name
@@ -20,6 +20,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 Source: %name-%version.tar
 
 Patch0: aic8800-%version-%release.patch
+Patch1: aic8800-0.0.99.27af-pull97-kernel6.12.patch
 
 BuildArch: noarch
 
@@ -50,6 +51,7 @@ Documentation and helper scripts for %summary.
 %setup -c -q
 pushd %name-%version
 %patch0 -p1
+%patch1 -p1
 cd drivers/aic8800/
 sed -i '/\/sbin\/depmod/d' Makefile
 popd
@@ -73,6 +75,10 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_customdocdir
 
 %changelog
+* Tue Sep 22 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.99.27af-alt1
+- New version 0-99-g27af5ad.
+- Built on main branch again (ALT #60517).
+
 * Wed Aug 05 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.95.bef3-alt1
 - New version 0-95-gbef3cc2.
 - Fixed build on 6.12 kernel.
