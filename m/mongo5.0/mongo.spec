@@ -4,19 +4,23 @@
 
 Name: mongo5.0
 Version: 5.0.34
-Release: alt2
+Release: alt3
 Summary: mongo client shell and tools
 License: SSPL-1.0
 Group: Development/Databases
 Url: https://www.mongodb.org
 Source: %name-%version.tar
 Patch0: mongo5.0-5.0.21-debuginfo.patch
+Patch1: mongo5.0-5.0.34-ALT-Fix_Check_-U_FORTIFY_SOURCE.patch
+Patch2: mongo5.0-5.0.34-ALT-Fix_find_OpenSSL_with_gcc15.patch
+Patch3: mongo5.0-5.0.34-ALT-Fix_build_bundled_boost_with_gcc15.patch
+Patch4: mongo5.0-5.0.34-Fix-hardware_constructive_interference_size-in-aarch64.patch
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
 ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 BuildRequires(pre): rpm-macros-valgrind
-BuildRequires: /proc gcc10-c++ gcc10 python3-module-pymongo python3-module-pkg_resources
+BuildRequires: /proc gcc-c++ python3-module-pymongo python3-module-pkg_resources
 BuildRequires: libssl-devel libpcre-devel libpcrecpp-devel libreadline-devel
 BuildRequires: libpcap-devel libsnappy-devel
 BuildRequires: systemd-devel libgperftools-devel libsasl2-devel libstemmer-devel
@@ -87,6 +91,10 @@ MongoDB instance.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # CRLF -> LF
 sed -i 's/\r//' README
@@ -118,9 +126,10 @@ sed -i 's/\r//' README
        MONGO_VERSION="%{version}-%{release}" \\\
        --disable-warnings-as-errors \\\
        --debug-compress=as \\\
-       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`"
+       CCFLAGS="%{?optflags} %{?ccflags_arch_opts} `pkg-config --cflags libpcrecpp`" \\\
+       CFLAGS="-std=c11" CXXFLAGS="-std=c++17"
 
-python3 src/third_party/scons-3.1.2/scons.py CC=gcc-10 CXX=g++-10 %build_opts
+python3 src/third_party/scons-3.1.2/scons.py %build_opts
 
 %install
 
@@ -211,6 +220,9 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Mon Sep 21 2026 Alexei Takaseev <taf@altlinux.org> 5.0.34-alt3
+- Fix build with gcc15
+
 * Tue Jun 16 2026 Alexei Takaseev <taf@altlinux.org> 5.0.34-alt2
 - 5.0.34 (Fixes: CVE-2026-11933)
 
