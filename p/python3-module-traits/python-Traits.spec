@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 7.1.0
+Version: 7.2.0
 Release: alt1
 
 Summary: Observable typed attributes for Python classes
@@ -121,6 +121,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 22 2026 Anton Vyatkin <toni@altlinux.org> 7.2.0-alt1
+- New version 7.2.0.
+
 * Tue Dec 23 2025 Anton Vyatkin <toni@altlinux.org> 7.1.0-alt1
 - New version 7.1.0.
 
