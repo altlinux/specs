@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
@@ -34,14 +34,14 @@ Requires: libgda6-sqlite gettext-tools
 %define xml_ver 2.4.12
 %define json_glib_ver 1.2.0
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson yelp-tools
 BuildRequires: libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libsoup3.0-devel gsettings-desktop-schemas-devel iso-codes-devel
-BuildRequires: libspelling-devel >= %spell_ver libxml2-devel >= %xml_ver
+BuildRequires: libspelling-devel >= %spell_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
@@ -76,11 +76,14 @@ GNU gettext/GNOME desktop world.
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
 %_man1dir/%name.1*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc AUTHORS NEWS README* THANKS
 
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
