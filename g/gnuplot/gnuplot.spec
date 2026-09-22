@@ -3,7 +3,7 @@
 
 Name: gnuplot
 Epoch: 1
-Version: 6.0.4
+Version: 6.0.5
 Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
@@ -42,6 +42,8 @@ BuildRequires: libopenspecfun-devel
 
 # for docs
 BuildRequires: /usr/bin/pdflatex texlive-texmf
+BuildRequires: fonts-ttf-gnu-freefont-serif
+BuildRequires: fonts-ttf-gnu-freefont-mono
 # for wxt terminal
 BuildRequires: libcairo-devel libpango-devel libwxGTK3.2-devel
 # for qt terminal
@@ -268,6 +270,9 @@ rm -v demo/html/Makefile*
 %doc demo
 
 %changelog
+* Mon Sep 21 2026 Grigory Ustinov <grenka@altlinux.org> 1:6.0.5-alt1
+- Automatically updated to 6.0.5.
+
 * Thu Jan 29 2026 Grigory Ustinov <grenka@altlinux.org> 1:6.0.4-alt1
 - Automatically updated to 6.0.4 (Closes: #57592).
 
