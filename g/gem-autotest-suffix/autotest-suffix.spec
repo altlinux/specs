@@ -6,7 +6,7 @@
 
 Name:          gem-autotest-suffix
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Enable suffix named tests in Autotest
 License:       MIT
 Group:         Development/Ruby
@@ -20,15 +20,13 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(hoe) >= 3.13
 BuildRequires: gem(minitest) >= 5.7
 BuildRequires: gem(rdoc) >= 4.0
-BuildConflicts: gem(hoe) >= 5
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(rdoc) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency hoe >= 4.23,hoe < 5
-%ruby_use_gem_dependency rdoc >= 6.12,rdoc < 7
+%ruby_use_gem_dependency hoe >= 3.13
+%ruby_use_gem_dependency rdoc >= 4.0
+%ruby_use_gem_dependency minitest >= 5.7
 Provides:      gem(autotest-suffix) = 1.1.0
 
 %description
@@ -38,7 +36,7 @@ Autotest plugin to enable rails-style test filenames.
 %if_enabled    doc
 %package       -n gem-autotest-suffix-doc
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Enable suffix named tests in Autotest documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета autotest-suffix
 Group:         Development/Documentation
@@ -59,7 +57,7 @@ Autotest plugin to enable rails-style test filenames.
 %if_enabled    devel
 %package       -n gem-autotest-suffix-devel
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Enable suffix named tests in Autotest development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета autotest-suffix
 Group:         Development/Ruby
@@ -69,9 +67,6 @@ Requires:      gem(autotest-suffix) = 1.1.0
 Requires:      gem(hoe) >= 3.13
 Requires:      gem(minitest) >= 5.7
 Requires:      gem(rdoc) >= 4.0
-Conflicts:     gem(hoe) >= 5
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(rdoc) >= 7
 
 %description   -n gem-autotest-suffix-devel
 Enable suffix named tests in Autotest development package.
@@ -113,6 +108,9 @@ Autotest plugin to enable rails-style test filenames.
 
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1.1
+- ! relaxed deps to some gems
+
 * Fri Oct 31 2025 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
