@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.106
-Release: alt1.ga4b3599ec
+Version: 1.4.1.150
+Release: alt1.g126edd142
 Summary: A music player and library organiser
 
 Group: Sound
@@ -12,6 +12,7 @@ Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
 Patch1: 01-fix-version.patch
+# Patch2: 02-fix-old-system-projectm.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
@@ -19,7 +20,6 @@ BuildRequires: cmake
 BuildRequires: /proc
 BuildRequires: boost-devel-headers gcc-c++
 BuildRequires: libgio-devel libglew-devel libgpod-devel libmtp-devel
-BuildRequires: libqt5-opengl libqt5-sql libqt5-webkit libqt5-xmlpatterns qt5-x11extras-devel
 BuildRequires: libtag-devel
 BuildRequires: gstreamer%gst_api_ver-devel
 BuildRequires: gst-plugins%gst_api_ver-devel
@@ -30,11 +30,30 @@ BuildRequires: libcryptopp-devel >= 6
 # SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER is available since 3.12
 BuildRequires: libsqlite3-devel >= 3.12
 BuildRequires: libpulseaudio-devel
-BuildRequires: qt5-tools-devel
+BuildRequires: pkgconfig(libpng)
+
+BuildRequires: libGL-devel
+BuildRequires: libqtsingleapplication-qt6-devel
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6Sql)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Xml)
+BuildRequires: pkgconfig(Qt6OpenGL)
+BuildRequires: pkgconfig(Qt6OpenGLWidgets)
+BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: pkgconfig(Qt6Test)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6Linguist)
+
 BuildRequires: libalsa-devel
 BuildRequires: libfftw3-devel
 BuildRequires: git
-BuildRequires: libclastfm-devel
+# liblastfm isn't a dependency any more - Last.fm scrobbling talks directly
+# to the web service API now (src/internet/lastfm/lastfmws.*).
+# BuildRequires: libclastfm-devel
 
 BuildRequires: protobuf-compiler
 # Enable Google Drive support
@@ -97,10 +116,10 @@ Features include:
 %ifarch %e2k
 %add_optflags -Winvalid-offsetof
 sed -i "s|== Separator|== QChar(Separator)|" \
-	ext/libclementine-tagreader/fmpsparser.cpp
+    ext/libclementine-tagreader/fmpsparser.cpp
 %endif
 sed -i 's|local_server_name_ = qApp->applicationName().toLower();|local_server_name_ = QString(qApp->applicationName()).toLower();|' \
-	ext/libclementine-common/core/workerpool.h
+    ext/libclementine-common/core/workerpool.h
 
 if [ ! -d .git ]; then
     git init
@@ -112,7 +131,7 @@ if [ ! -d .git ]; then
 fi
 
 %build
-%cmake -DUSE_SYSTEM_PROJECTM:BOOL=ON \
+%cmake -DUSE_SYSTEM_PROJECTM:BOOL=OFF \
        -DFORCE_GIT_REVISION:STRING=%version.%release \
        -DBUILD_WERROR:BOOL=OFF \
        -DCMAKE_BUILD_TYPE:STRING=Release \
@@ -124,7 +143,7 @@ fi
 
 %install
 %cmakeinstall_std
-%find_lang --with-kde %name
+%find_lang --with-qt %name
 
 %check
 desktop-file-validate %buildroot%_desktopdir/org.clementine_player.Clementine.desktop
@@ -142,6 +161,11 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Wed Sep 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.150-alt1.g126edd142
+- Update upstream source to 1.4.1.150-g126edd142
+- Switch to Qt6
+- Use bundled libprojectM
+
 * Mon Sep 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.106-alt1.ga4b3599ec
 - Update upstream source to 1.4.1.106-ga4b3599ec
 
