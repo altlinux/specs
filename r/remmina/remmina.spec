@@ -7,7 +7,7 @@
 
 Name: remmina
 Version: 1.4.43
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -16,6 +16,8 @@ Url: http://remmina.sourceforge.net
 Source: %name-%version.tar
 #Source1: ru.po
 Patch0: %name-%version.patch
+# https://gitlab.com/Remmina/Remmina/-/work_items/3141
+Patch1: %name-1.4.40-kf6wallet.patch
 
 Requires: icon-theme-hicolor
 
@@ -45,7 +47,7 @@ BuildRequires: pkgconfig(atk)
 BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(wayland-egl) pkgconfig(wayland-scanner) pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libsecret-1)
-%{?_with_kwallet:BuildRequires: kf5-kwallet-devel}
+%{?_with_kwallet:BuildRequires: kf6-kwallet-devel qt6-base-devel}
 BuildRequires: pkgconfig(libssh) >= 0.6
 BuildRequires: pkgconfig(libvncserver) pkgconfig(libvncclient)
 %{?_with_gvnc:BuildRequires: pkgconfig(gvnc-1.0) pkgconfig(gvncpulse-1.0) pkgconfig(gtk-vnc-2.0)}
@@ -241,7 +243,7 @@ that shows up under the display manager session menu.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 #cp -f %%SOURCE1 po/
 
@@ -261,7 +263,7 @@ that shows up under the display manager session menu.
     -DWITH_KIOSK_SESSION=ON \
     %{?_with_gvnc:-DWITH_GVNC=ON} \
     %{?_with_x2go:-DWITH_X2GO=ON} \
-    %{?_with_kwallet:-DWITH_KF5WALLET=ON} \
+    %{?_with_kwallet:-DWITH_KF6WALLET=ON} \
     -DWITH_PYTHON=ON \
     -DREMMINA_RUNTIME_PLUGINDIR=%_libdir/remmina/plugins \
     -DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
@@ -366,6 +368,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 23 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.43-alt2
+- Built with KF6 (ALT #60653).
+
 * Mon Feb 23 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.43-alt1
 - New version.
 
