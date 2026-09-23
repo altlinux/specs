@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: foomuuri
-Version: 0.31
+Version: 0.33
 Release: alt1
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
@@ -51,6 +51,24 @@ NetworkManager's zone support.
 This optional package provides FirewallD D-Bus emulation for Foomuuri,
 allowing dynamically assign interfaces to Foomuuri zones via NetworkManager.
 
+%package -n prometheus-foomuuri-exporter
+Summary: Prometheus metrics exporter for Foomuuri
+Group: Monitoring
+BuildArch: noarch
+Requires: %name = %EVR
+Requires: python3-module-prometheus_client
+
+%description -n prometheus-foomuuri-exporter
+Foomuuri is a firewall generator for nftables based on the concept of zones.
+It is suitable for all systems from personal machines to corporate firewalls,
+and supports advanced features such as a rich rule language, IPv4/IPv6 rule
+splitting, dynamic DNS lookups, a D-Bus API and FirewallD emulation for
+NetworkManager's zone support.
+
+This optional package provides a Prometheus exporter that exposes Foomuuri
+Monitor statistics (target connectivity state, packet loss, ping latency)
+and ruleset metrics (set sizes, named counters) as Prometheus metrics.
+
 %prep
 %setup
 %autopatch -p1
@@ -64,9 +82,15 @@ sed -i \
     -e 's|/usr/lib/tmpfiles.d|%_tmpfilesdir|g' \
     Makefile
 
+sed -i \
+    -e 's|/etc/default|%_sysconfdir/sysconfig|g' \
+    prometheus/prometheus-foomuuri-exporter.service
 %build
 %install
 SYSTEMD_SYSTEM_LOCATION=%_unitdir BINDIR=%_sbindir %makeinstall_std
+EXPORTER_DIR=%_bindir SYSTEMD_SYSTEM_LOCATION=%_unitdir \
+    SETTINGS_LOCATION=%_sysconfdir/sysconfig \
+    make -C prometheus install DESTDIR=%buildroot
 
 %check
 vm-run \
@@ -79,6 +103,12 @@ vm-run \
 
 %preun
 %preun_systemd foomuuri.service foomuuri-boot.service foomuuri-dbus.service foomuuri-iplist.timer foomuuri-iplist.service foomuuri-monitor.service
+
+%post -n prometheus-foomuuri-exporter
+%post_systemd_postponed prometheus-foomuuri-exporter.service
+
+%preun -n prometheus-foomuuri-exporter
+%preun_systemd prometheus-foomuuri-exporter.service
 
 %files
 %doc README.md CHANGELOG.md COPYING
@@ -98,7 +128,17 @@ vm-run \
 %_datadir/dbus-1/system.d/fi.foobar.Foomuuri-FirewallD.conf
 %_datadir/%name/dbus-firewalld.conf
 
+%files -n prometheus-foomuuri-exporter
+%config(noreplace) %_sysconfdir/sysconfig/prometheus-foomuuri-exporter
+%_bindir/prometheus-foomuuri-exporter
+%_unitdir/prometheus-foomuuri-exporter.service
+%_man1dir/prometheus-foomuuri-exporter.1*
+
 %changelog
+* Tue Sep 22 2026 Alexey Shabalin <shaba@altlinux.org> 0.33-alt1
+- Updated from 0.31 to 0.33
+- Add prometheus-foomuuri-exporter subpackage
+
 * Wed Jan 28 2026 Alexey Shabalin <shaba@altlinux.org> 0.31-alt1
 - New version 0.31 (Fixes: CVE-2025-67603, CVE-2025-67858).
 
