@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt1
+Release: alt2
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -236,35 +236,6 @@ Requires: lightdm-gtk-greeter
 %description xfce-settings
 XFCE settings for %distro_name
 
-%package fvwm-settings
-BuildArch: noarch
-Summary: FVWM2 settings for %distro_name
-License: Distributable
-Group:   Graphical desktop/FVWM based
-Requires: altlinux-freedesktop-menu-gnomish-menu
-%branding_add_conflicts %flavour fvwm-settings
-
-%description fvwm-settings
-FVWM2 settings for %distro_name
-
-%package mate-settings
-BuildArch: noarch
-Summary: MATE settings for %distro_name
-License: Distributable
-Group:   Graphical desktop/GNOME
-Requires: %name-system-settings
-Requires: dconf
-# Specified themes
-Requires: papirus-icon-theme
-Requires: gtk-theme-breeze
-#
-%branding_add_conflicts %flavour mate-settings
-Requires(post): lightdm-gtk-greeter
-Requires(post): libgio
-
-%description mate-settings
-MATE settings for %distro_name
-
 %package slideshow
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
@@ -320,6 +291,10 @@ Group: System/Base
 Requires(post): lightdm
 %branding_add_conflicts %flavour system-settings
 Conflicts: branding-xalt-kworkstation-graphics
+# Dropped with nothing to replace them, and this package is what cleans the
+# ~/.fvwm2rc and ~/.config/Trolltech.conf they handed out.
+Obsoletes: %name-fvwm-settings <= 11.2-alt1
+Obsoletes: %name-mate-settings <= 11.2-alt1
 
 %description system-settings
 Some system settings for %distro_name.
@@ -332,7 +307,8 @@ cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/l
 
 %ifarch %e2k %ix86
 # 2021: no chromium port available
-grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel |
+grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel \
+		xfce-settings/xdg/xfce4/whiskermenu |
 	xargs -r -- sed -i 's,chromium,firefox,g;s,Chromium,Firefox,g'
 %endif
 %ifarch %e2k
@@ -383,20 +359,15 @@ sed -i '/pam_env\.so/ {
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %endif
 
-%post mate-settings
-subst 's/^#\?theme-name=.*/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
-subst 's/^#\?icon-theme-name=.*/icon-theme-name=%icon_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
-subst 's/^#\?indicators=.*/indicators=~clock;~spacer;~host;~spacer;~session;~layout;~a11y;~power/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
-subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
-/usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
-
 %post xfce-settings
 subst 's/^#\?theme-name=.*/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 subst 's/^#\?icon-theme-name=.*/icon-theme-name=%icon_theme/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 subst 's/^#\?indicators=.*/indicators=~clock;~spacer;~host;~spacer;~session;~layout;~a11y;~power/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
 subst 's/^#\?clock-format=.*/clock-format=%A, %x %H:%M/' /etc/lightdm/lightdm-gtk-greeter.conf ||:
-# Set gtk+2 theme for root too
-grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc/gtk-2.0/gtkrc
+# A root session goes through no login shell, so XDG_CONFIG_DIRS never
+# reaches it and this is the only GTK2 slot left.
+grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc 2>/dev/null ||
+	cat %_datadir/branding-%flavour/xdg/gtk-2.0/gtkrc >> /etc/gtk-2.0/gtkrc ||:
 # Set default background
 if [ "$(readlink %_datadir/backgrounds/xfce/default-background)" != "%def_desktop_wallpaper" ]; then                                                                                          
     ln -sf "%def_desktop_wallpaper" %_datadir/backgrounds/xfce/default-background ||:
@@ -442,31 +413,27 @@ fi
 %_datadir/kio_desktop/DesktopLinks/trash.desktop
 %attr(0755,root,root) %_datadir/Desktop/Home.desktop
 %attr(0755,root,root) %_datadir/Desktop/trash.desktop
-/etc/skel/.config/autostart/nm-applet.desktop
-/etc/skel/.config/k*
-/etc/skel/.config/plasma*
+%_datadir/branding-%flavour/xdg/k*
+%_datadir/branding-%flavour/xdg/plasmashellrc
+%dir %_sysconfdir/xdg/plasma-workspace
+%dir %_sysconfdir/xdg/plasma-workspace/env
+%_sysconfdir/xdg/plasma-workspace/env/zz-branding-%flavour.sh
+# No system-level merge for the applet layout (ShellCorona falls back to the
+# default layout only when no containment loads at all) -- stays in skel.
+/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
 %_datadir/wallpapers/alt-education/
 %_datadir/plasma/look-and-feel/org.altlinux.education.desktop/
-
-%files fvwm-settings
-%_sysconfdir/skel/.fvwm2rc
-
-%files mate-settings
-%_datadir/glib-2.0/schemas/*.gschema.override
 
 %files xfce-settings
 %_sysconfdir/X11/profile.d/zdg-move-templates.sh
 /etc/skel/XDG-Templates.skel/
-/etc/skel/.wm-select
-/etc/skel/.config/Terminal
-/etc/skel/.config/Thunar/
-/etc/skel/.config/audacious/
 /etc/skel/.config/xfce4
 /etc/skel/.face
-/etc/skel/.gtkrc-2.0
 /etc/skel/.local
-# License-agreement menu mask is owned by system-settings
-%exclude /etc/skel/.local/share/applications/alterator-notes-license.desktop
+%_datadir/branding-%flavour/xdg/gtk-2.0/
+%_datadir/branding-%flavour/xdg/Thunar/
+%_datadir/branding-%flavour/xdg/xfce4/
+%_datadir/branding-%flavour/xdg/xfce-mimeapps.list
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -489,21 +456,64 @@ fi
 
 %files system-settings
 %config %_sysconfdir/polkit-1/rules.d/*.rules
-%dir /etc/skel/.local
-%dir /etc/skel/.local/share
-%dir /etc/skel/.local/share/applications
-/etc/skel/.local/share/applications/alterator-notes-license.desktop
-/etc/skel/.config/autostart/*.desktop
-%exclude /etc/skel/.config/autostart/nm-applet.desktop
-/etc/skel/.config/meditrc
-/etc/skel/.config/user-dirs.locale
-/etc/skel/.config/fontconfig/
+%_sysconfdir/profile.d/zz-branding-%flavour.sh
+%dir %_datadir/branding-%flavour
+%dir %_datadir/branding-%flavour/xdg
+# gtk.css has no system-level slot at all: GtkSettings only ever loads
+# $XDG_CONFIG_HOME/gtk-3.0/gtk.css -- stays in skel.
 /etc/skel/.config/gtk-3.0
-/etc/skel/.config/Trolltech.conf
-/etc/skel/.vimrc
-/etc/skel/.recoll
+%config %_sysconfdir/fonts/conf.d/12-branding-%flavour.conf
+%_datadir/vim/vimfiles/plugin/branding-%flavour.vim
+%_datadir/branding-%flavour/xdg/gtk-3.0/
+%_datadir/branding-%flavour/recoll/
+%_datadir/branding-%flavour/xdg-data/
 
 %changelog
+* Mon Sep 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt2
+- Ship the desktop defaults system-wide instead of /etc/skel, which is
+  copied once at account creation and so never reaches an account that
+  already exists:
+  + Put our own directory first in XDG_CONFIG_DIRS and XDG_DATA_DIRS from
+    one snippet in /etc/profile.d, linked into the Plasma session env
+    directory, the only slot a Wayland session is sure to read.
+  + Move the xfconf channels, the Thunar and Whisker menu files, the
+    KConfig defaults, GTK, recoll, fontconfig and vim there. Only what
+    has no system-wide slot stays in skel: gtk.css, the panel launcher
+    items and the Plasma applet layout.
+  + Mask the alterator-notes license launcher through the data layer
+    instead of a copy in every home directory.
+- Reduce what we ship to the settings that differ from the defaults of
+  the programs that read them:
+  + Drop the xfce4-screensaver, keyboard-layout, keyboards and
+    xfce4-settings-manager channels and the empty Thunar accels file.
+  + Trim the xfwm4, xsettings, xfce4-desktop, xfce4-notifyd, power
+    manager, Thunar and KDE files to our own values.
+  + Stop listing properties without a value: xfconf does not fall back
+    to the system file merged before ours, it erases what that file set,
+    which is how the failsafe session lost its client list.
+  + Keep the keyboard shortcuts in the default profile; the custom one
+    replaces the stock set wholesale, which had taken away Ctrl+Alt+T
+    and the window tiling keys.
+  + Read the terminal defaults from the xfconf channel: terminalrc is
+    consulted once and copied into the user's own configuration.
+- Drop defaults whose program the edition no longer ships: audacious,
+  .wm-select, the xscreensaver and tracker-store autostart, the orage
+  clock, xfce4-mixer, xfce4-volumed-pulse, nm-applet and the Qt 4 style
+  override. Point the rest at programs that are installed: catfish for
+  the Thunar search action, vlc and parole for discs, xfburn for burning.
+- Drop the fvwm-settings and mate-settings subpackages and obsolete them.
+- kde-settings:
+  + Give the global theme the appearance keys Plasma caches in
+    kdedefaults, where a previously active theme keeps shadowing ours.
+  + Stop masking the kgpg autostart: the installer offers one desktop
+    environment per system, so an Xfce one has neither this package nor
+    kgpg itself.
+  + Take over the Plasma session environment drop-in.
+- xfce-settings: Bind Super+L to the screen lock and
+  Super+Esc to the task manager, the way KDE does.
+- menu: Stop hiding the mc entries, the Wine
+  console and minesweeper (Closes: 42419).
+
 * Tue Jul 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt1
 - New version.
 - kde-settings:
