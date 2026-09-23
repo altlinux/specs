@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: python3-module-kdtree
-Version: 0.16
-Release: alt2
+Version: 0.17
+Release: alt1
 
 Summary: A Python implementation of a kd-tree
 License: ISC
@@ -36,6 +38,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17-alt1
+- 0.16 -> 0.17
+
 * Mon Feb 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.16-alt2
 - added obsoletes and provides (ALT #52916)
 
