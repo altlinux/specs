@@ -3,7 +3,7 @@
 %define libkokocommon libkokocommon%sover
 
 Name: %rname
-Version: 26.04.2
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -28,11 +28,12 @@ Source103: cities1000.txt
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
 BuildRequires: qt6-declarative-devel qt6-positioning-devel qt6-svg-devel 
-BuildRequires: zip
+BuildRequires: zip libcups-devel
 BuildRequires: kde6-kquickimageeditor-devel kf6-kdeclarative-devel kf6-kfilemetadata-devel kf6-ki18n-devel
 BuildRequires: kf6-kirigami-devel kf6-knotifications-devel kf6-kpackage-devel
 BuildRequires: kf6-kirigami-addons kf6-kirigami-addons-devel
 BuildRequires: kf6-purpose-devel
+BuildRequires: kf6-kirigami-app-components-devel
 BuildRequires: libexiv2-devel
 BuildRequires: libxcbutil-devel
 
@@ -91,6 +92,9 @@ rm -f cities1000.txt
 
 
 %changelog
+* Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 

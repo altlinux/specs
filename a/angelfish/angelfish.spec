@@ -1,7 +1,7 @@
 %define rname angelfish
 
 Name: %rname
-Version: 26.04.2
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname qrca
 
 Name: %rname
-Version: 26.04.2
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Summary: QR code scanner for Plasma and Plasma Mobile
@@ -65,6 +65,9 @@ own for easily sharing data between devices.
 %_datadir/metainfo/*qrca*.xml
 
 %changelog
+* Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jun 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt2
 - update packaging
 

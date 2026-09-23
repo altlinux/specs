@@ -1,7 +1,7 @@
 %define rname krecorder
 
 Name: %rname
-Version: 26.04.2
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -23,7 +23,7 @@ BuildRequires: extra-cmake-modules qt6-base-devel
 BuildRequires: qt6-multimedia-devel qt6-declarative-devel qt6-svg-devel qt6-wayland-devel
 BuildRequires: kf6-kirigami-addons-devel
 BuildRequires: kf6-kconfig-devel kf6-ki18n-devel kf6-kirigami-devel kf6-kcoreaddons-devel
-BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-kwindowsystem-devel kf6-kio-devel
 
 %description
 A convergent audio recording application for Plasma.
@@ -53,6 +53,9 @@ Features:
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 

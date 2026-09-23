@@ -1,7 +1,7 @@
 %define rname kweather
 
 Name: %rname
-Version: 26.04.2
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -23,6 +23,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-charts-devel qt6-svg-devel qt6-declarative-devel
 BuildRequires: kf6-ki18n-devel kf6-kirigami-devel kf6-kirigami-addons-devel kf6-kwindowsystem-devel
 BuildRequires: kf6-knotifications-devel kf6-kpackage-devel kf6-kservice-devel kf6-kcrash-devel
+BuildRequires: kf6-krunner-devel
 BuildRequires: kweathercore-devel
 BuildRequires: plasma6-lib-devel
 
@@ -47,11 +48,13 @@ A convergent weather application for Plasma.
 %_K6xdgapp/*kweather*.desktop
 %_K6dbus_srv/*kweather*.service
 %_K6icon/hicolor/*/apps/*kweather*
-#%_K6data/plasma/plasmoids/*kweather*/
+%_K6plug/kf6/krunner/*kweather*.so
 %_datadir/metainfo/*.xml
 
-
 %changelog
+* Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 
