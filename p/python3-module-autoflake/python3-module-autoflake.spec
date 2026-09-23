@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.3
+Version: 2.4.0
 Release: alt1
 
 Summary: Removes unused imports and unused variables as reported by pyflakes
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -55,13 +57,15 @@ autoflake also removes useless pass statements by default.
 %pyproject_run_unittest test_autoflake.py
 
 %files
-%doc LICENSE README.md
 %_bindir/autoflake
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 23 2026 Anton Zhukharev <ancieg@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Fri Feb 20 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.3-alt1
 - Updated to 2.3.3.
 
