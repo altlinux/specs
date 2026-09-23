@@ -37,7 +37,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.18
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -86,6 +86,7 @@ Patch1014: alt-loongarch64-support.patch
 Patch1015: qt5-base-5.15.11-alt-qtbase-5.15.9-work-around-pyside2-brokenness.patch
 #
 Patch2000: 9103-qtbase-5.15.13-qmenu_fix_shortcuts.patch
+Patch2024: qtbase-e2k.patch
 
 # macros
 %define _qt5 %gname
@@ -431,6 +432,10 @@ done
 #
 %patch2000 -p1
 
+%ifarch %e2k
+%patch2024 -p1
+%add_optflags -mno-sse4.2 -mno-avx
+%endif
 bin/syncqt.pl -version %version
 
 # install optflags
@@ -509,6 +514,9 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     -no-use-gold-linker \
 %ifarch %ix86
     -no-sse2 \
+%endif
+%ifarch %e2k
+    -no-sse4.2 -no-avx -no-avx2 \
 %endif
     -no-reduce-relocations \
     -no-feature-relocatable \
@@ -874,6 +882,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Sep 23 2026 Michael Shigorin <mike@altlinux.org> 5.15.18-alt2
+- ALT patch for e2k support (ilyakurdyukov@)
+
 * Wed Feb 11 2026 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt1
 - new version
 
