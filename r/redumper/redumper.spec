@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: redumper
-Version: 750
+Version: 752
 Release: alt1
 
 Summary: Low level CD dumper utility
@@ -49,6 +49,9 @@ is now the default dumping software used for Redump optical-disc submissions.
 %doc LICENSE README.md
 
 %changelog
+* Tue Sep 22 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 752-alt1
+- Version b752.
+
 * Fri Sep 11 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 750-alt1
 - Initial build for Sisyphus.
 
