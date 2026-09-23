@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitu
-Version: 0.41.0
+Version: 0.43.0
 Release: alt1
 
 Summary: A terminal user interface for Git
@@ -36,21 +36,23 @@ install -D %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Wed Sep 23 2026 Vladislav Glinkin <smasher@altlinux.org> 0.43.0-alt1
+- New version 0.43.0.
+
 * Wed Apr 01 2026 Vladislav Glinkin <smasher@altlinux.org> 0.41.0-alt1
-- New version
+- New version 0.41.0.
 
 * Thu Sep 11 2025 Ivan A. Melnikov <iv@altlinux.org> 0.35.0-alt2
-- NMU: fix FTBFS on loongarch64
+- NMU: fix FTBFS on loongarch64.
 
 * Mon Sep 08 2025 Vladislav Glinkin <smasher@altlinux.org> 0.35.0-alt1
-- 0.34.0 -> 0.35.0
+- New version 0.35.0.
 
 * Tue Aug 19 2025 Vladislav Glinkin <smasher@altlinux.org> 0.34.0-alt1
-- 0.29.0 -> 0.34.0
+- New version 0.34.0.
 
 * Tue Mar 11 2025 Vladislav Glinkin <smasher@altlinux.org> 0.29.0-alt1
-- 0.26.0 -> 0.29.0
+- New version 0.29.0.
 
 * Wed Oct 30 2024 Vladislav Glinkin <smasher@altlinux.org> 0.26.0-alt1
-- Initial build for ALT
-
+- Initial build for ALT.
