@@ -10,9 +10,9 @@
 %endif
 
 Name: timeshift
-Version: 25.12.4
+Version: 26.09.0
 Summary: System restore tool for Linux
-Release: alt2
+Release: alt1
 License: GPL-2.0-or-later
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -80,6 +80,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md LICENSES/GPL-2.0-or-later.txt
 
 %changelog
+* Tue Sep 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 26.09.0-alt1
+- Updated to version 26.09.0.
+
 * Thu May 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 25.12.4-alt2
 - Use only polkit in timeshift-launcher (closes: #59353).
 
