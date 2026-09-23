@@ -9,20 +9,22 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2026.05
-Release: alt4
+Version: 2026.09
+Release: alt1
 
-Url: https://altmobile.org
+URL: https://altmobile.org
+VCS: https://altlinux.space/alt-mobile/branding-alt-mobile
 
 BuildRequires(pre): rpm-macros-branding
+BuildRequires(pre): rpm-macros-ready-set
 
 BuildRequires: libalternatives-devel
 BuildRequires: distro-licenses
 
 Source: branding.tar
 
-Group: Graphics
-Summary: System/Base
+Group: System/Base
+Summary: Distro-specific packages with design and texts
 License: GPL-3.0-or-later
 
 %define Brand_ru Альт
@@ -40,7 +42,7 @@ License: GPL-3.0-or-later
 %define status_en %nil
 
 %description
-Distro-specific packages with design and texts
+%summary.
 
 # argh
 %define design_graphics_abi_epoch 0
@@ -55,7 +57,7 @@ Distro-specific packages with design and texts
 %define artworks_weight 4
 
 %package release
-Summary: %distro_name release file
+Summary: %distro_name %version release file
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: alt-os-release
@@ -65,7 +67,7 @@ Conflicts: altlinux-release-%altbranch
 %branding_add_conflicts %flavour release
 
 %description release
-%distro_name %version release file.
+%summary.
 
 %package notes
 Provides: alt-license-theme = %version alt-notes-%theme
@@ -76,7 +78,7 @@ BuildArch: noarch
 %branding_add_conflicts %flavour notes
 
 %description notes
-Distribution license and release notes.
+%summary.
 
 %package bootsplash
 Summary: Theme for splash animations during bootup
@@ -136,7 +138,35 @@ BuildArch: noarch
 Conflicts: phosh-background-settings
 
 %description phosh-settings
-Distribution settings for Phosh.
+%summary.
+
+%package pine
+Summary: Distribution settings for PINE64 devices
+License: GPL-3.0-or-later
+Group: Graphical desktop/Other
+BuildArch: noarch
+%branding_add_conflicts %flavour pine
+
+%description pine
+%summary.
+
+%package ready-set
+Summary: Distribution settings for ReadySet
+License: GPL-3.0-or-later
+Group: Other
+Requires: ready-set-phrog
+Requires: ready-set-plugin-language
+Requires: ready-set-plugin-license-agreement
+Requires: ready-set-plugin-keyboard
+Requires: ready-set-plugin-network
+Requires: ready-set-plugin-privacy
+Requires: ready-set-plugin-date-and-time
+Requires: ready-set-plugin-user-passwdqc
+BuildArch: noarch
+%branding_add_conflicts %flavour ready-set
+
+%description ready-set
+%summary.
 
 %prep
 %setup -n branding
@@ -196,10 +226,11 @@ pushd notes
 popd
 ln -s /usr/share/license/GPL-3.0-or-later %buildroot/%_datadir/alt-notes/LICENSE
 
-install -Dm644 phosh-settings/50-background.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-background.gschema.override;
-install -Dm644 phosh-settings/50-lockscreen.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-lockscreen.gschema.override;
-install -Dm644 phosh-settings/50-camera-privacy-disabled.gschema.override %buildroot/%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override;
-install -Dm644 phosh-settings/50-interface.gschema.override %buildroot/%_datadir/glib-2.0/schemas/
+# phosh-settings, pine
+install -Dpm0644 -t %buildroot%_datadir/glib-2.0/schemas/ phosh-settings/* pine/*
+
+# ready-set
+install -Dm644 ready-set/config %buildroot%_datadir/ready-set/config
 
 #bootsplash
 %post bootsplash
@@ -231,10 +262,30 @@ subst "s/Theme=.*/Theme=spinner-alt/" /etc/plymouth/plymouthd.conf
 %files phosh-settings
 %_datadir/glib-2.0/schemas/50-background.gschema.override
 %_datadir/glib-2.0/schemas/50-lockscreen.gschema.override
-%_datadir/glib-2.0/schemas/50-camera-privacy-disabled.gschema.override
+%_datadir/glib-2.0/schemas/50-ignore-hw-keyboards.gschema.override
 %_datadir/glib-2.0/schemas/50-interface.gschema.override
+%_datadir/glib-2.0/schemas/50-lock-enabled.gschema.override
+
+%files pine
+%_datadir/glib-2.0/schemas/50-enable-animations.gschema.override
+
+%files ready-set
+%__ready_set_datadir/config
 
 %changelog
+* Wed Sep 23 2026 David Sultaniiazov <x1z53@altlinux.org> 2026.09-alt1
+- General changes:
+  + use `%summary` in `%description` where possible;
+  + replace `Url` with `URL`;
+  + add `VCS`.
+- `ready-set`:
+  + add config.
+- `phosh-settings`:
+  + move overrides from `ready-set-on-phrog`;
+  + drop camera disable.
+- `pine`:
+  + move overrides from `ready-set-on-phrog`.
+
 * Mon May 25 2026 Andrew Savchenko <bircoph@altlinux.org> 2026.05-alt4
 - Fix distro family name
 
