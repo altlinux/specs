@@ -5,8 +5,8 @@
 %define        gemname acts_as_list
 
 Name:          gem-acts-as-list
-Version:       1.2.6
-Release:       alt1
+Version:       1.2.6.2
+Release:       alt0.1
 Summary:       A gem adding sorting, reordering capabilities to an active_record model
 License:       MIT
 Group:         Development/Ruby
@@ -16,7 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(activerecord) >= 6.1
 BuildRequires: gem(activesupport) >= 6.1
@@ -33,24 +33,25 @@ BuildRequires: gem(pg) >= 1.5.5
 BuildRequires: gem(rake) >= 13.0
 BuildRequires: gem(sqlite3) >= 1.7.3
 BuildRequires: gem(timecop) >= 0.9.8
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(minitest-hooks) >= 1.6
-BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(pg) >= 1.6
 BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(sqlite3) >= 1.8
 BuildConflicts: gem(timecop) >= 0.10
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency mocha >= 2.0,mocha < 3
-%ruby_use_gem_dependency mysql2 >= 0.5.7,mysql2 < 1
+%ruby_use_gem_dependency mocha >= 2.0
+%ruby_use_gem_dependency mysql2 >= 0.5.6
+%ruby_use_gem_dependency minitest >= 5.0
+%ruby_use_gem_dependency sqlite3 >= 1.7.3
 %ruby_alias_names acts_as_list,acts-as-list
 Requires:      ruby >= 2.5
 Requires:      gem(activerecord) >= 6.1
 Requires:      gem(activesupport) >= 6.1
-Provides:      gem(acts_as_list) = 1.2.6
+Provides:      gem(acts_as_list) = 1.2.6.2
+
+%ruby_use_gem_version acts_as_list:1.2.6.2
 
 %description
 This "acts_as" extension provides the capabilities for sorting and reordering a
@@ -60,14 +61,14 @@ number of objects in a list. The class that has this specified needs to have a
 
 %if_enabled    doc
 %package       -n gem-acts-as-list-doc
-Version:       1.2.6
-Release:       alt1
+Version:       1.2.6.2
+Release:       alt0.1
 Summary:       A gem adding sorting, reordering capabilities to an active_record model documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета acts_as_list
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(acts_as_list) = 1.2.6
+Requires:      gem(acts_as_list) = 1.2.6.2
 
 %description   -n gem-acts-as-list-doc
 A gem adding sorting, reordering capabilities to an active_record model
@@ -84,14 +85,14 @@ number of objects in a list. The class that has this specified needs to have a
 
 %if_enabled    devel
 %package       -n gem-acts-as-list-devel
-Version:       1.2.6
-Release:       alt1
+Version:       1.2.6.2
+Release:       alt0.1
 Summary:       A gem adding sorting, reordering capabilities to an active_record model development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета acts_as_list
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(acts_as_list) = 1.2.6
+Requires:      gem(acts_as_list) = 1.2.6.2
 Requires:      gem(base64) >= 0
 Requires:      gem(benchmark) >= 0
 Requires:      gem(bigdecimal) >= 0
@@ -105,12 +106,9 @@ Requires:      gem(pg) >= 1.5.5
 Requires:      gem(rake) >= 13.0
 Requires:      gem(sqlite3) >= 1.7.3
 Requires:      gem(timecop) >= 0.9.8
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(minitest-hooks) >= 1.6
-Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(pg) >= 1.6
 Conflicts:     gem(rake) >= 14
-Conflicts:     gem(sqlite3) >= 1.8
 Conflicts:     gem(timecop) >= 0.10
 
 %description   -n gem-acts-as-list-devel
@@ -156,6 +154,10 @@ number of objects in a list. The class that has this specified needs to have a
 
 
 %changelog
+* Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 1.2.6.2-alt0.1
+- ^ 1.2.6 -> 1.2.6p2
+- ! relaxed some deps to gems
+
 * Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 1.2.6-alt1
 - ^ 1.0.4 -> 1.2.6
 - * define explicit dependencies
