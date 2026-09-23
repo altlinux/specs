@@ -2,7 +2,7 @@
 
 Name: kf6-%rname
 Version: 6.30.0
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -35,6 +35,7 @@ Obsoletes: kmime-common < 26.08
 Group: Development/KDE and QT
 Summary: Development files for %name
 Provides: kmime-devel = 26.08
+Obsoletes: kmime-devel < 26.08
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -73,6 +74,9 @@ Obsoletes: libkpim6mime < 26.08
 %_K6lib/libKF6Mime.so.*
 
 %changelog
+* Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt2
+- fix obsoletes
+
 * Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
 - new version
 - moved from kmime
