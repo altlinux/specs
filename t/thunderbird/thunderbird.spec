@@ -17,7 +17,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 156.0
+Version: 156.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -43,11 +43,10 @@ Patch005: 0005-ALT-stop-putting-commonDialogs.properties-into-share.patch
 Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
 Patch007: 0007-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
 Patch008: 0008-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
-Patch009: 0009-Play-new-mail-sound-even-when-the-desktop-disables-e.patch
-Patch010: 0010-Apply-chat-message-style-changes-to-already-open-con.patch
-Patch011: 0011-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
-Patch012: 0012-Enable-cut-copy-in-the-calendar-view-context-menu.patch
-Patch013: 0013-Restore-the-task-tree-observers-when-its-frame-is-reb.patch
+Patch009: 0009-Apply-chat-message-style-changes-to-already-open-con.patch
+Patch010: 0010-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
+Patch011: 0011-Enable-cut-and-copy-in-the-calendar-view-context-men.patch
+Patch012: 0012-Restore-the-task-tree-observers-when-its-frame-is-re.patch
 ### End Patches
 
 Provides: mailclient
@@ -168,6 +167,9 @@ BuildRequires: libnss-devel
 %if_with check
 # certutil and pk12util, which the mochitest harness builds its profile with
 BuildRequires: nss-utils
+# upstream runs the browser-chrome tests under Xvfb, and some of them fail
+# headless, where focus and screen size do not behave
+BuildRequires: xvfb-run xorg-xvfb
 %endif
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -193,7 +195,6 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
-%patch13 -p2
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -380,7 +381,8 @@ export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 # looks for them, next to the binaries it is about to run.
 ln -sfv %_bindir/certutil %_bindir/pk12util objdir/dist/bin/
 
-./mach mochitest --headless comm/
+mkdir -p /tmp/.X11-unix
+xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 ./mach xpcshell-test comm/
 
 %files
@@ -395,6 +397,12 @@ ln -sfv %_bindir/certutil %_bindir/pk12util objdir/dist/bin/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Sep 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 156.0.1-alt1
+- New version.
+- Drop the new-mail sound patch rejected upstream: the Xfce
+  event-sounds default is not a Thunderbird bug.
+- Rework the chat message style patch after upstream review.
+
 * Thu Sep 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 156.0-alt1
 - New version.
 - Fix cut and copy in the calendar view context menu (Closes: 58706).
