@@ -4,7 +4,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.49.4
+Version: 5.49.5
 Release: alt1
 
 Source: %name-%version.tar
@@ -164,6 +164,11 @@ fi ||:
 
 
 %changelog
+* Wed Sep 23 2026 Paul Wolneykien <manowar@altlinux.org> 5.49.5-alt1
+- Update the ahttpd.conf(5) manual page (loginchain, prelogin-only).
+- Allow to cancel login in the middle of the login chain.
+- Fix: Deny access to the main control panel for prelogin-only users.
+
 * Tue Feb 20 2024 Paul Wolneykien <manowar@altlinux.org> 5.49.4-alt1
 - Fixed a typo in the ahttpd.acl.conf(5) manual page.
 - Configure ahttpd to use TLSv1.3 or higher (closes: 44991).
