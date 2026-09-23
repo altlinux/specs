@@ -3,13 +3,13 @@
 %define binname dust
 
 Name: du-dust
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: A more intuitive version of du in rust
 License: Apache-2.0
 Group: File tools
-Url: https://crates.io/crates/du-dust
+Url: https://github.com/bootandy/dust
 Vcs: https://github.com/bootandy/dust
 
 Source0: %name-%version.tar
@@ -71,6 +71,9 @@ install -pD -m644 completions/%binname.fish \
 %_datadir/fish/vendor_completions.d/%binname.fish
 
 %changelog
+* Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.6-alt1
+- Updated to 1.2.6.
+
 * Tue Sep 15 2026 Andrey Kovalev <ded@altlinux.org> 1.2.5-alt1
 - Updated to 1.2.5.
 
