@@ -1,6 +1,6 @@
 Name: giada
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Giada - Your Hardcore Loop Machine
 License: GPLv3
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(nlohmann_json)
 BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(rtmidi)
+BuildRequires: pkgconfig(rubberband)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(sndfile)
 BuildRequires: pkgconfig(xcursor)
@@ -63,6 +64,9 @@ rm -vf %buildroot{%_bindir/fltk*,%_libdir/libfltk*,%_mandir/man?/fltk*}
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Sep 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.0-alt1
+- 1.6.0 released
+
 * Mon Jun 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt2
 - fixed build with recent fmt
 
