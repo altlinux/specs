@@ -1,159 +1,434 @@
-Name:    task-edu
-Version: 1.8.5
+%define edu_programming_reqs \
+Requires: gcc \
+Requires: java-devel \
+Requires: codeblocks \
+Requires: codeblocks-contrib \
+Requires: bluefish \
+Requires: geany >= 2.1 \
+%ifnarch %e2k \
+Requires: geany-plugins \
+%endif \
+Requires: logisim \
+Requires: basic256 \
+Requires: kumir2 \
+%ifarch %ix86 x86_64 \
+Requires: freebasic \
+Requires: fpc \
+Requires: fpc-ide \
+%ifarch %_dotnet_archlist \
+Requires: pascalabcnet \
+%endif \
+Requires: kchmviewer \
+%endif \
+%ifnarch %e2k loongarch64 \
+Requires: lazarus \
+%endif \
+Requires: gambas-full \
+%{nil}
+
+%define edu_graphics_reqs \
+Requires: gimp \
+Requires: gimp-help-ru \
+Requires: inkscape \
+Requires: scribus \
+Requires: dia \
+%ifnarch %e2k \
+Requires: shotwell \
+%endif \
+Requires: imagination \
+Requires: shutter \
+%ifarch x86_64 aarch64 \
+Requires: blender \
+%endif \
+%{nil}
+
+%define edu_av_editing_reqs \
+Requires: audacity \
+Requires: kdenlive \
+Requires: cheese \
+Requires: gst-plugins-bad \
+Requires: gst-plugins-ugly \
+%{nil}
+
+%define edu_math_reqs \
+Requires: octave \
+Requires: gnuplot-qt \
+Requires: wxMaxima \
+%{nil}
+
+%define edu_reference_reqs \
+%ifnarch %e2k %ix86 \
+Requires: calibre \
+Requires: goldendict-ng \
+%else \
+Requires: stardict \
+%endif \
+Requires: dict-mueller7-utf8 \
+%ifarch x86_64 aarch64 \
+Requires: freeplane \
+%endif \
+%ifarch %e2k \
+Requires: freemind \
+%endif \
+Requires: connector \
+%{nil}
+
+%define edu_content_filter_reqs \
+Requires: netpolice-filter \
+Requires: netpolice-main \
+# For Skydns \
+%ifnarch %e2k \
+Requires: ddclient \
+%endif \
+Requires: perl-IO-Socket-SSL \
+%{nil}
+
+%define edu_db_connectors_reqs \
+Requires: perl-DBD-mysql \
+Requires: postgresql-jdbc \
+Requires: mysql-connector-java \
+%{nil}
+
+%define edu_l10n_reqs \
+Requires: qt5-translations \
+%ifnarch %e2k %not_qt6_qtwebengine_arches \
+Requires: khelpcenter \
+%endif \
+Requires: mythes-ru \
+Requires: hyphen-ru \
+Requires: aspell-ru-lebedev \
+Requires: hunspell-ru-lebedev \
+Requires: man-pages-ru \
+%{nil}
+
+%define edu_scanning_reqs \
+Requires: xsane \
+Requires: xsane-doc-ru \
+Requires: simple-scan \
+Requires: sane \
+Requires: sane-airscan \
+Requires: hplip-sane \
+Requires: gimagereader-gtk \
+Requires: tesseract \
+Requires: tesseract-langpack-ru \
+Requires: tesseract-langpack-en \
+%{nil}
+
+%define edu_fonts_reqs \
+Requires: fonts-ttf-liberation \
+Requires: fonts-ttf-dejavu \
+Requires: fonts-ttf-google-droid-sans \
+Requires: fonts-ttf-google-droid-sans-mono \
+Requires: fonts-ttf-google-droid-serif \
+Requires: fonts-ttf-ubuntu-font-family \
+Requires: fonts-ttf-gost \
+Requires: fonts-ttf-xorg \
+Requires: fonts-ttf-PTAstra \
+Requires: fonts-ttf-XO \
+Requires: fonts-ttf-google-noto-sans \
+Requires: fonts-ttf-google-crosextra-caladea \
+Requires: fonts-ttf-google-crosextra-carlito \
+Requires: fonts-ttf-wqy-zenhei \
+Requires: fonts-ttf-unifont \
+Requires: fonts-otf-mozilla-fira \
+%{nil}
+
+%define edu_desktop_search_reqs \
+Requires: recoll \
+Requires: recoll-extras \
+Requires: perl-Image-ExifTool \
+Requires: antiword \
+Requires: unrtf \
+Requires: wv \
+Requires: xpdf-utils \
+Requires: aspell \
+Requires: python3-module-pychm \
+Requires: python3-module-lxml \
+# For search exercises \
+Requires: docx2txt \
+Requires: odt2txt \
+%{nil}
+
+%define edu_alterator_reqs \
+Requires: altcenter \
+Requires: alterator-browser-qt6 \
+Requires: alterator-fbi \
+Requires: alterator-standalone \
+Requires: alterator-notes-base \
+Requires: alterator-auth \
+Requires: alterator-control \
+Requires: alterator-datetime \
+Requires: alterator-gpupdate \
+Requires: alterator-groups \
+Requires: alterator-grub \
+Requires: alterator-logs \
+Requires: alterator-net-eth \
+Requires: alterator-net-general \
+Requires: alterator-net-openvpn \
+Requires: alterator-net-pppoe \
+Requires: alterator-net-pptp \
+Requires: alterator-net-wifi \
+Requires: alterator-net-vlan \
+Requires: alterator-osec \
+Requires: alterator-packages \
+Requires: alterator-ports-access \
+Requires: alterator-printers \
+Requires: alterator-root \
+Requires: alterator-services \
+Requires: alterator-sslkey \
+Requires: alterator-sysconfig \
+Requires: alterator-sysinfo \
+Requires: alterator-updates \
+Requires: alterator-usbguard \
+Requires: alterator-usbmount \
+Requires: alterator-users \
+Requires: alterator-xkb \
+Requires: alterator-zram-swap \
+Requires: alterator-kopidel \
+Requires: alterator-update-kernel \
+Requires: alterator-net-iptables \
+Requires: alterator-limits \
+%{nil}
+
+%define edu_games_reqs \
+Requires: gnome-games-klotski \
+Requires: gnome-games-mahjongg \
+%ifnarch %e2k \
+Requires: gnome-games-aisleriot \
+%endif \
+%ifnarch %e2k \
+Requires: gnome-games-mines \
+Requires: gnome-games-tetravex \
+%endif \
+Requires: dosbox \
+%{nil}
+
+%define edu_remote_management_reqs \
+%ifnarch %e2k \
+Requires: puppet \
+%endif \
+%ifarch x86_64 aarch64 \
+Requires: x11spice \
+Requires: openssh-server \
+%endif \
+Requires: freerdp3-server \
+Requires: veyon \
+%{nil}
+
+%define edu_software_management_reqs \
+Requires: gnome-software \
+Requires: gnome-software-plugin-stplr \
+Requires: packagekit \
+Requires: rpminstall \
+Requires: stplr-repo-aides \
+Requires: flatpak \
+%ifnarch %e2k \
+Requires: flatpak-repo-flathub \
+%endif \
+Requires: apt-updatecache \
+%{nil}
+
+%define edu_printing_reqs \
+Requires: cups \
+Requires: cups-filters \
+Requires: cups-pdf \
+Requires: cups-browsed \
+Requires: system-config-printer \
+Requires: system-config-printer-udev \
+Requires: printer-drivers-base \
+Requires: gutenprint-cups-ppds \
+Requires: hplip-hpijs \
+Requires: printer-driver-oki \
+Requires: bluez-cups \
+Requires: printer-testpages \
+Requires: ipp-usb \
+%ifnarch %e2k \
+Requires: printer-driver-brlaser \
+Requires: epson-inkjet-printer-escpr \
+%endif \
+%{nil}
+
+%define edu_antivirus_reqs \
+Requires: clamav \
+Requires: clamav-db \
+Requires: clamtk \
+%{nil}
+
+%define edu_burning_reqs \
+Requires: brasero \
+%{nil}
+
+%define edu_mail_reqs \
+%ifarch %thunderbird_arches \
+Requires: thunderbird \
+%endif \
+%{nil}
+
+%define edu_base_reqs \
+%edu_programming_reqs \
+%edu_graphics_reqs \
+%edu_av_editing_reqs \
+%edu_math_reqs \
+%edu_reference_reqs \
+%edu_content_filter_reqs \
+%edu_db_connectors_reqs \
+%edu_l10n_reqs \
+%edu_scanning_reqs \
+%edu_fonts_reqs \
+%edu_desktop_search_reqs \
+%edu_alterator_reqs \
+%edu_games_reqs \
+%edu_remote_management_reqs \
+%edu_software_management_reqs \
+%edu_printing_reqs \
+%edu_antivirus_reqs \
+%edu_burning_reqs \
+%edu_mail_reqs \
+%{nil}
+
+%define edu_python_reqs \
+Requires: python3-tools \
+Requires: pip \
+Requires: python3-module-pygame \
+Requires: python3-module-pygame-doc \
+Requires: python3-modules-curses \
+%{nil}
+
+%define edu_professional_reqs \
+%edu_python_reqs \
+Requires: inkscape \
+Requires: gimp \
+Requires: gimp-help-ru \
+%ifarch x86_64 aarch64 %e2k \
+Requires: blender \
+%endif \
+Requires: scribus \
+Requires: codeblocks \
+%ifnarch %e2k loongarch64 \
+Requires: lazarus \
+%endif \
+%ifarch x86_64 aarch64 \
+Requires: freecad \
+%endif \
+%ifnarch %e2k \
+Requires: qcad \
+%endif \
+Requires: wxMaxima \
+Requires: octave \
+Requires: gnuplot-qt \
+%ifnarch %e2k %ix86 \
+Requires: qt-creator \
+Requires: qt-creator-doc \
+%endif \
+%ifnarch %ix86 \
+Requires: projectlibre \
+%endif \
+Requires: cmake \
+Requires: ninja-build \
+Requires: qt5-base-devel \
+Requires: qt5-base-doc \
+Requires: fritzing \
+%{nil}
+
+%define edu_desktop_common_reqs \
+Requires: desktop-screensaver-modules-xscreensaver \
+Requires: desktop-screensaver-modules-xscreensaver-gl \
+Requires: altlinux-freedesktop-menu-shallow-menu \
+Requires: altlinux-freedesktop-menu-mate-like-menu \
+Requires: altlinux-freedesktop-menu-icon-theme-default \
+%ifarch %e2k \
+# better optimized for 8C \
+Requires: mplayer \
+%endif \
+%ifarch x86_64 \
+Requires: libva-driver-intel \
+Requires: libva-intel-media-driver \
+%endif \
+Requires: simplescreenrecorder \
+Requires: quick-usb-formatter \
+%{nil}
+
+%define edu_highschool_own_reqs \
+Requires: kolourpaint \
+Requires: openscad \
+Requires: synfigstudio \
+Requires: trikStudio \
+Requires: marble \
+Requires: afce \
+%ifarch x86_64 aarch64 \
+Requires: scratch-desktop \
+%endif \
+%ifnarch %e2k \
+Requires: qcad \
+Requires: trikStudioJunior \
+%endif \
+%ifarch x86_64 aarch64 \
+Requires: freecad \
+%endif \
+%edu_python_reqs \
+Requires: gcompris-qt \
+Requires: gcompris-qt-voices-ru \
+Requires: ktouch \
+Requires: kbruch \
+Requires: parley \
+Requires: kanagram \
+Requires: khangman \
+Requires: kwordquiz \
+Requires: kturtle \
+Requires: step \
+Requires: kig \
+Requires: kmplot \
+Requires: kalgebra \
+Requires: cantor \
+Requires: rocs \
+Requires: kgeography \
+Requires: minuet \
+Requires: abiword \
+# stellarium is ExcludeArch: %%ix86 (translation encoding problems) \
+%ifnarch %ix86 \
+Requires: stellarium \
+%endif \
+%{nil}
+
+%define edu_teacher_reqs \
+Requires: veyon \
+Requires: ansible \
+%ifnarch %e2k \
+Requires: semaphore \
+%endif \
+Requires: virt-viewer \
+%ifnarch %not_qt6_qtwebengine_arches \
+Requires: OpenBoard \
+%endif \
+%{nil}
+
+Name: task-edu
+Version: 1.9.0
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
 Summary: Educational software (base set)
 License: GPL-3.0+
-Group:   Education
-
-URL:     http://altlinux.org/education
+Group: Education
+Url: http://altlinux.org/education
 
 BuildRequires(pre): rpm-macros-thunderbird
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires(pre): rpm-macros-dotnet
 
-# Education (base part)
-Requires: task-edu-lite = %EVR
-%ifarch x86_64 aarch64
-Requires: blender
-%endif
-Requires: clamav
-Requires: clamav-db
-Requires: clamtk
-Requires: dosbox
-%ifarch %ix86 x86_64
-Requires: freebasic
-Requires: fpc
-Requires: fpc-ide
-%ifarch %_dotnet_archlist
-Requires: pascalabcnet
-%endif
-Requires: kchmviewer
-%endif
-Requires: brasero
-%ifarch %ix86 x86_64 %e2k
-Requires: veyon
-%endif
-# Big educational software
-%ifarch %ix86 x86_64
-Requires: lazarus
-Requires: gambas-full
-%endif
+Provides: %name-lite = %EVR
+Obsoletes: %name-lite < %EVR
+%edu_base_reqs
 
 %description
-%{summary}.
-
-%package lite
-Summary(ru_RU.UTF-8): Базовый набор образовательного ПО, облегчённый для rootfs
-Summary: Basic set of educational software, lightweight for rootfs
-Group: Education
-# Education (base part)
-Requires: audacity
-Requires: bluefish
-Requires: codeblocks
-Requires: codeblocks-contrib
-Requires: dia
-%ifnarch %e2k %ix86 ppc64le armh
-Requires: calibre
-Requires: goldendict-ng
-%else
-Requires: stardict
-%endif
-Requires: dict-mueller7-utf8
-Requires: gcc
-Requires: inkscape
-Requires: gimp
-Requires: gimp-help-ru
-Requires: java-devel
-Requires: kdenlive
-Requires: scribus
-%ifnarch %e2k
-Requires: shotwell
-%endif
-Requires: logisim
-Requires: basic256
-Requires: geany >= 2.1
-%ifnarch %e2k
-Requires: geany-plugins
-%else
-Requires: freemind
-%endif
-Requires: gnome-games-klotski
-Requires: gnome-games-mahjongg
-%ifnarch %e2k
-Requires: gnome-games-aisleriot
-%endif
-Requires: xsane
-Requires: xsane-doc-ru
-Requires: simple-scan
-%ifnarch armh
-Requires: imagination
-%endif
-Requires: connector
-Requires: fonts-otf-mozilla-fira
-Requires: kumir2
-# Big educational software
-%if_with fortran
-Requires: octave
-%endif
-Requires: gnuplot-qt
-%ifnarch ppc64le
-Requires: wxMaxima
-%endif
-# OCR
-Requires: gimagereader-gtk
-Requires: tesseract
-Requires: tesseract-langpack-ru
-Requires: tesseract-langpack-en
-# localization
-Requires: qt5-translations
-%ifnarch %e2k %not_qt6_qtwebengine_arches
-Requires: khelpcenter
-%endif
-# Content filter and antivirus
-Requires: netpolice-filter
-Requires: netpolice-main
-# For Skydns
-%ifnarch %e2k
-Requires: ddclient
-%endif
-Requires: perl-IO-Socket-SSL
-# For search exercises
-Requires: docx2txt odt2txt
-# Mass management and remote assistance
-%ifnarch %e2k
-Requires: puppet
-%endif
-%ifarch x86_64 aarch64
-Requires: x11spice
-Requires: openssh-server
-%endif
-Requires: mythes-ru
-Requires: hyphen-ru
-Requires: gst-plugins-bad
-Requires: gst-plugins-ugly
-Requires: perl-DBD-mysql
-Requires: postgresql-jdbc
-Requires: mysql-connector-java
-# Mozilla
-%ifarch %thunderbird_arches
-Requires: thunderbird
-%endif
-%ifarch x86_64 aarch64
-Requires: freeplane
-%endif
-Requires: alterator-net-iptables
-Requires: alterator-limits
-%description lite
 %{summary}.
 
 %package tools
 Summary(ru_RU.UTF-8): Вспомогательные программы для Альт Образование
 Summary: Utilities for ALT Education
 Group: Other
-%ifnarch %e2k armh
+%ifnarch %e2k
 Requires: grub-customizer
 %endif
 # Electronic board support
@@ -167,13 +442,15 @@ Requires: bumblebee
 Requires: virtualbox-guest-utils
 Requires: xorg-dri-intel
 %endif
-%ifnarch armh
 Requires: adp
-%endif
 %ifarch %e2k
 Requires: rtc
 %endif
 Requires: touchegg
+Requires: xfburn
+Requires: xorg-drv-wacom
+Requires: zenity
+Requires: yelp
 %description tools
 %{summary}.
 
@@ -183,13 +460,9 @@ Summary: Educational software (preschool)
 Group: Education
 Requires: gcompris-qt
 Requires: gcompris-qt-voices-ru
-# wait for python3 version
-#Requires: childsplay
-#Requires: childsplay-alphabet_sounds_ru
 Requires: tuxpaint
 Requires: khangman
 Requires: kanagram
-# localization
 Requires: qt5-translations
 %ifnarch %e2k %not_qt6_qtwebengine_arches
 Requires: khelpcenter
@@ -203,74 +476,8 @@ Summary: Educational software (highschool)
 Group: Education
 Provides: %name-gradeschool = %EVR
 Obsoletes: %name-gradeschool < %EVR
-Requires: task-edu = %EVR
-Requires: kumir2
-Requires: codeblocks
-Requires: kolourpaint
-%ifarch %ix86 x86_64
-Requires: lazarus
-Requires: openscad
-%endif
-%ifarch %ix86 x86_64 %e2k
-Requires: synfigstudio
-%endif
-Requires: dia
-Requires: trikStudio
-Requires: marble
-%ifnarch ppc64le
-Requires: wxMaxima
-%endif
-Requires: bluefish
-Requires: afce
-# localization
-Requires: qt5-translations
-%ifarch %ix86 %e2k
-Requires: scratch
-%endif
-%ifarch x86_64 aarch64
-Requires: scratch-desktop
-%endif
-%ifnarch %e2k
-Requires: qcad
-Requires: trikStudioJunior
-%endif
-%ifnarch %e2k %not_qt6_qtwebengine_arches
-Requires: khelpcenter
-%endif
-%ifarch x86_64 aarch64
-Requires: freecad
-%endif
-Requires: python3-tools
-Requires: pip
-Requires: python3-module-pygame
-Requires: python3-module-pygame-doc
-Requires: python3-modules-curses
-Requires: gcompris-qt
-Requires: gcompris-qt-voices-ru
-Requires: ktouch
-Requires: kbruch
-Requires: parley
-Requires: kanagram
-Requires: khangman
-Requires: kwordquiz
-Requires: kturtle
-Requires: marble
-Requires: step
-Requires: kig
-Requires: kmplot
-Requires: kalgebra
-Requires: cantor
-Requires: rocs
-Requires: kbruch
-Requires: kgeography
-Requires: minuet
-Requires: abiword
-Requires: afce
-# Astronomy
-# stellarium is ExcludeArch: %%ix86 (translation encoding problems)
-%ifnarch %ix86
-Requires: stellarium
-%endif
+%edu_base_reqs
+%edu_highschool_own_reqs
 %description highschool
 %{summary}.
 
@@ -278,49 +485,8 @@ Requires: stellarium
 Summary(ru_RU.UTF-8): Образовательное программное обеспечение (среднее профессиональное образование)
 Summary: Educational software (secondary vocational)
 Group: Education
-Requires: inkscape
-Requires: gimp
-Requires: gimp-help-ru
-%ifarch x86_64 aarch64 %e2k
-Requires: blender
-%endif
-Requires: scribus
-Requires: codeblocks
-%ifarch %ix86 x86_64
-Requires: lazarus
-#Requires: scilab
-%endif
-%ifarch x86_64 aarch64
-Requires: freecad
-%endif
-%ifnarch %e2k armh ppc64le
-Requires: qcad
-%endif
-%ifnarch ppc64le
-Requires: wxMaxima
-%endif
-Requires: octave
-Requires: gnuplot-qt
-%ifnarch %e2k %ix86 armh ppc64le
-Requires: qt-creator
-Requires: qt-creator-doc
-%endif
-%ifnarch %ix86
-Requires: projectlibre
-%endif
-Requires: cmake
-Requires: ninja-build
-Requires: qt5-base-devel
-Requires: qt5-base-doc
-#Requires: Eclipse
-#Requires: Texmacs
+%edu_professional_reqs
 Requires: logisim
-Requires: fritzing
-Requires: python3-tools
-Requires: python3-module-pygame
-Requires: python3-module-pygame-doc
-Requires: python3-modules-curses
-Requires: pip
 %description secondary-vocational
 %{summary}.
 
@@ -328,57 +494,16 @@ Requires: pip
 Summary(ru_RU.UTF-8): Образовательное программное обеспечение (высшее образование)
 Summary: Educational software (university)
 Group: Education
-Requires: inkscape
-Requires: gimp
-Requires: gimp-help-ru
-%ifarch x86_64 aarch64
-Requires: blender
-%endif
-Requires: scribus
-Requires: codeblocks
-%ifnarch %e2k %ix86 armh ppc64le
-Requires: qt-creator
-Requires: qt-creator-doc
-%endif
-Requires: cmake
-Requires: ninja-build
-Requires: qt5-base-devel
-Requires: qt5-base-doc
-#Requires: Eclipse
-%ifarch %ix86 x86_64
-Requires: lazarus
+%edu_professional_reqs
 Requires: gambas-full
 Requires: openscad
-#Requires: scilab
-%endif
 Requires: swi-prolog
-#Requires: Texmacs
-%ifnarch ppc64le
-Requires: wxMaxima
-%endif
-%ifnarch %ix86
-Requires: projectlibre
-%endif
-Requires: octave
-Requires: gnuplot-qt
-%ifnarch %e2k
-Requires: qcad
-%endif
-%ifarch x86_64 aarch64
-Requires: freecad
-%endif
-%ifnarch %e2k %ix86 armh ppc64le
+%ifnarch %e2k %ix86
 Requires: qgis
 Requires: qgis-grass
 Requires: qgis-python
 %endif
 Requires: openmpi
-Requires: fritzing
-Requires: python3-tools
-Requires: python3-module-pygame
-Requires: python3-module-pygame-doc
-Requires: python3-modules-curses
-Requires: pip
 %description university
 %{summary}.
 
@@ -431,31 +556,13 @@ Requires: xfce4-screensaver
 Requires: libcanberra-gtk2
 Requires: alacarte
 Requires: screenkey
-# Graphics
 Requires: atril-gtk
 Requires: atril-gtk-djvu
 Requires: atril-gtk-pixbuf
 Requires: atril-gtk-xps
-# Append all modules from xscreensaver                                                        
-Requires: desktop-screensaver-modules-xscreensaver
-Requires: desktop-screensaver-modules-xscreensaver-gl
-# Menu
-Requires: altlinux-freedesktop-menu-shallow-menu
-Requires: altlinux-freedesktop-menu-mate-like-menu
-Requires: altlinux-freedesktop-menu-icon-theme-default
-%ifarch %e2k
-# better optimized for 8C
-Requires: mplayer
-%endif
-%ifarch x86_64
-Requires: libva-driver-intel
-Requires: libva-intel-media-driver
-%endif
-# Multimedia                                                                                  
+%edu_desktop_common_reqs
 Requires: vlc-maxi
-Requires: simplescreenrecorder
-Requires: quick-usb-formatter
-%ifnarch %e2k ppc64le
+%ifnarch %e2k
 Requires: nextcloud-client
 %endif
 Requires: branding-alt-education-xfce-settings
@@ -488,28 +595,11 @@ Requires: kdeconnect
 %ifarch x86_64 aarch64
 Requires: plasma-addon-alt-weather
 %endif
-%ifnarch %e2k ppc64le
+%ifnarch %e2k
 Requires: nextcloud-client-kde
 %endif
 Requires: branding-alt-education-kde-settings
-# Append all modules from xscreensaver                                                        
-Requires: desktop-screensaver-modules-xscreensaver
-Requires: desktop-screensaver-modules-xscreensaver-gl
-# Menu
-Requires: altlinux-freedesktop-menu-shallow-menu
-Requires: altlinux-freedesktop-menu-mate-like-menu
-Requires: altlinux-freedesktop-menu-icon-theme-default
-%ifarch %e2k
-# better optimized for 8C
-Requires: mplayer
-%endif
-%ifarch x86_64
-Requires: libva-driver-intel
-Requires: libva-intel-media-driver
-%endif
-# Multimedia                                                                                  
-Requires: simplescreenrecorder
-Requires: quick-usb-formatter
+%edu_desktop_common_reqs
 %description kde
 %{summary}.
 
@@ -517,17 +607,7 @@ Requires: quick-usb-formatter
 Summary(ru_RU.UTF-8): Образовательное программное обеспечение (для учителей)
 Summary: Software for teachers
 Group: Education
-%ifnarch armh
-Requires: veyon
-%endif
-Requires: ansible
-%ifnarch %e2k armh
-Requires: semaphore
-%endif
-Requires: virt-viewer
-%ifnarch %not_qt6_qtwebengine_arches
-Requires: OpenBoard
-%endif
+%edu_teacher_reqs
 %description teacher
 %{summary}.
 
@@ -535,7 +615,7 @@ Requires: OpenBoard
 Summary(ru_RU.UTF-8): Образовательное программное обеспечение (серверные приложения)
 Summary: Server applications for education
 Group: Education
-%ifnarch %e2k armh
+%ifnarch %e2k
 Requires: semaphore
 %endif
 Requires: mariadb-server
@@ -600,43 +680,24 @@ Requires: tcpdump
 %description server-apps
 %{summary}.
 
-%package video-conferencing
-Summary(ru_RU.UTF-8): Образовательное программное обеспечение (сервер видеоконференций)
-Summary: Video-conferencing server for education
-Group: Education
-Requires: prosody
-Requires: jitsi-meet-doc
-Requires: jitsi-meet-prosody
-Requires: jitsi-meet-web
-Requires: jitsi-meet-web-config
-Requires: jitsi-videobridge
-%ifarch x86_64
-Requires: jicofo
-%endif
-%description video-conferencing
-%{summary}.
-
 %package school
 Summary(ru_RU.UTF-8): Образовательное программное обеспечение для школ
 Summary: Complete list of education software for schools
-Group:   Education
-Requires: task-edu
-Requires: task-edu-gradeschool
-Requires: task-edu-highschool
-Requires: task-edu-teacher
+Group: Education
+%edu_base_reqs
+%edu_highschool_own_reqs
+%edu_teacher_reqs
 %description school
 %{summary}.
 
 %files
-
-%files lite
 
 %files tools
 
 %files preschool
 
 %files highschool
- 
+
 %files secondary-vocational
 
 %files university
@@ -651,13 +712,26 @@ Requires: task-edu-teacher
 
 %files server-apps
 
-%ifnarch %e2k %ix86 armh ppc64le
-#files video-conferencing
-%endif
-
 %files school
 
 %changelog
+* Wed Sep 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.9.0-alt1
+- Take over the packages the ALT Education profile
+  used to list by hand in its misc and misc-base lists.
+- Fold lite into task-edu (Provides/Obsoletes task-edu-lite).
+- Drop the video-conferencing subpackage: Jitsi Meet is out of the product.
+- Drop every subpackage-to-subpackage requirement:
+  a subpackage now requires leaf packages only.
+- Require gambas-full, openscad, synfigstudio, lazarus
+  and veyon on every architecture they are built for.
+- university: Require blender on e2k, where it is built.
+- Require octave unconditionally: the fortran
+  bcond it hung on was never defined.
+- highschool: Drop scratch and the requirements the base set already carries.
+- preschool: Drop the commented-out childsplay requirements.
+- Drop the arch conditions for armh, ppc64le and riscv64.
+- Spec cleanup.
+
 * Mon Sep 14 2026 Ivan Khanas <xeno@altlinux.org> 1.8.5-alt1
 - lite: add alterator-limits.
 
