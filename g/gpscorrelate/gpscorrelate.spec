@@ -4,7 +4,7 @@
 %def_with check
 
 Name: gpscorrelate
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: GPS photo tagging application
@@ -86,5 +86,8 @@ install -D -m 644 io.github.dfandrich.gpscorrelate.metainfo.xml %buildroot%_data
 %_datadir/metainfo/io.github.dfandrich.gpscorrelate.metainfo.xml
 
 %changelog
+* Wed Sep 23 2026 Nikolay Strelkov <snk@altlinux.org> 2.4-alt1
+- New version 2.4.
+
 * Fri Jan 16 2026 Nikolay Strelkov <snk@altlinux.org> 2.3-alt1
 - Initial build for Sisyphus
