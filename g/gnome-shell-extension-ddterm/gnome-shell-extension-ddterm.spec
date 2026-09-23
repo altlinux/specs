@@ -1,20 +1,20 @@
 %def_disable snapshot
 
 %define _name ddterm
-%define ver_major 63
+%define ver_major 64
 %define beta %nil
 # too many names since 63.0.1
 %define uuid %_name@amezin.github.com
 %define rdn_name com.github.amezin.%_name
 %define xdg_name org.gnome.shell.extensions.%_name
-%define gti_ver 5b0771f
+%define gti_ver e6e5802
 
 %def_enable check
 
 %def_disable bootstrap
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.2.3
+Version: %ver_major.0.0
 Release: alt1%beta
 
 %define gettext_domain %name
@@ -29,7 +29,9 @@ Vcs: https://github.com/ddterm/gnome-shell-extension-ddterm.git
 BuildArch: noarch
 
 %if_disabled snapshot
-Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
+#Source: %url/archive/v%version%beta/%name-%version%beta.tar.gz
+# meson-disted tarball
+Source: %url/releases/download/v%version%beta/%_name-%version%beta.tar.gz
 %else
 Source: %_name-%version%beta.tar
 %endif
@@ -38,7 +40,7 @@ Source1: gjs-typelib-installer-%gti_ver.tar
 
 %define meson_ver 1.8.0
 
-Requires: gnome-shell >= 47
+Requires: gnome-shell >= 48
 Requires: typelib(Adw) = 1 typelib(Vte) = 3.91
 Requires: typelib(GnomeDesktop)
 
@@ -47,18 +49,23 @@ BuildRequires: meson >= %meson_ver xvfb-run
 BuildRequires: /usr/bin/gjs
 BuildRequires: /usr/bin/gtk-builder-tool /usr/bin/gtk4-builder-tool
 BuildRequires: /usr/bin/glib-compile-schemas /usr/bin/gapplication xsltproc
-%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstreamcli
+#BuildRequires: python3(pytest) python3-module-pygobject3
+#BuildRequires: xorg-xephyr dbus gnome-shell wl-clipboard
+}
 
 %description
 %summary
 
 %prep
-%setup -n %name-%version%beta -a1
-mv gjs-typelib-installer-%gti_ver subprojects/gjs-typelib-installer
+%setup -n %_name-%version%beta %{?_enable_snapshot:-a1
+mv gjs-typelib-installer-%gti_ver subprojects/gjs-typelib-installer}
+
+sed -i "s|'pytest'|'py.test-3'|" tests/meson.build
 
 %build
 %meson
-xvfb-run %meson_build
+%meson_build
 
 %install
 %meson_install
@@ -76,6 +83,9 @@ xvfb-run %__meson_test
 %doc README* CHANGELOG*
 
 %changelog
+* Wed Sep 23 2026 Yuri N. Sedunov <aris@altlinux.org> 64.0.0-alt1
+- 64.0.0 (GNOME 51 supported)
+
 * Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 63.2.3-alt1
 - 63.2.3
 
