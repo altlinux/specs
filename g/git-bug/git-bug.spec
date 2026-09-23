@@ -2,8 +2,8 @@
 %define import_path github.com/git-bug/git-bug
 
 Name: git-bug
-Version: 0.10.1
-Release: alt2
+Version: 0.11.0
+Release: alt1
 
 Summary: Distributed, offline-first bug tracker embedded in git
 License: GPL-3.0-or-later
@@ -34,11 +34,7 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 pushd $BUILDDIR/src/$IMPORT_PATH
-export GIT_COMMIT="unknown"
-export GIT_LAST_TAG="v%version"
-export GIT_EXACT_TAG="$GIT_LAST_TAG"
-export COMMANDS_PATH="github.com/git-bug/git-bug/commands"
-export LDFLAGS="-X ${COMMANDS_PATH}.GitCommit=${GIT_COMMIT} -X ${COMMANDS_PATH}.GitLastTag=${GIT_LAST_TAG} -X ${COMMANDS_PATH}.GitExactTag=${GIT_EXACT_TAG}"
+export LDFLAGS="-X main.version=%version"
 %golang_build .
 popd
 
@@ -53,12 +49,7 @@ install -Dpm 0644 misc/completion/fish/%name %buildroot%_datadir/fish/vendor_com
 install -Dpm 0644 misc/completion/zsh/%name %buildroot%_datadir/zsh/site-functions/_%name
 
 # Install man pages
-pushd doc/man
-	for i in *.1 ;
-	do
-		install -Dpm 0644 $i %buildroot%_man1dir/$i
-	done
-popd
+install -Dpm 0644 -t %buildroot%_man1dir doc/man/*.1
 
 %files
 %doc README.md LICENSE
@@ -69,6 +60,9 @@ popd
 %_man1dir/*
 
 %changelog
+* Wed Sep 23 2026 Ulysses Apokin <ulysses@altlinux.org> 0.11.0-alt1
+- New version.
+
 * Fri Jun 26 2026 Ulysses Apokin <ulysses@altlinux.org> 0.10.1-alt2
 - Packaged man pages and shell completions.
 - Clarified license and group identifiers.
