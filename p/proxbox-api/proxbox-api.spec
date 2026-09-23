@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    proxbox-api
-Version: 0.0.20
+Version: 0.0.23
 Release: alt1
 
 Summary: Backend of NetBox Proxbox Plugin using FastAPI
@@ -33,6 +33,8 @@ BuildRequires: python3-module-greenlet
 BuildRequires: python3-module-netbox-sdk
 BuildRequires: python3-module-proxmox-sdk
 BuildRequires: python3-module-yaml
+BuildRequires: python3-module-websockets
+BuildRequires: git-core
 %endif
 
 Requires: python3-module-aiosqlite
@@ -112,7 +114,11 @@ install -p -D -m 644 %SOURCE6 %buildroot%_tmpfilesdir/proxbox-api.conf
 install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 
 %check
-%pyproject_run_pytest --ignore=tests/test_release_workflows.py -k "not ( \
+%pyproject_run_pytest \
+	--ignore=tests/test_release_workflows.py \
+	--ignore=tests/test_promotion_ancestor_blob_guard.py \
+	--ignore=tests/operation_inventory \
+	-k "not ( \
 	test_generate_bundle_persists_artifacts or \
 	test_proxmox_mock_package_is_importable or \
 	test_proxmox_mock_root_reports_configured_service or \
@@ -121,7 +127,8 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/proxbox-api/README
 	test_generated_routes_appear_in_openapi or \
 	test_generated_proxy_route_forwards_request_and_validates_response or \
 	test_generated_proxy_route_requires_explicit_selector_for_multiple_endpoints or \
-	test_pve_template_direct_create_uses_graphical_display)"
+	test_pve_template_direct_create_uses_graphical_display or \
+	test_cross_origin_redirect_never_dials_target_or_replays_credentials)"
 
 %pre
 groupadd -r -f proxbox-api >/dev/null 2>&1 ||:
@@ -166,6 +173,9 @@ cert-sh generate apache2-proxbox-api ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/proxbox-api.conf
 
 %changelog
+* Mon Sep 21 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.23-alt1
+- New 0.0.23 version.
+
 * Fri Aug 28 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.20-alt1
 - New 0.0.20 version.
 

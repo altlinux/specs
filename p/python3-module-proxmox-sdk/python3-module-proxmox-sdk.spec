@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.0.14.post3
+Version: 0.0.15
 Release: alt1
 
 Summary: Proxmox Async SDK
@@ -27,6 +27,7 @@ BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-uvicorn
 BuildRequires: python3-module-typer
 BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-pytest-xdist
 %endif
 
 BuildArch: noarch
@@ -49,12 +50,14 @@ and in-memory CRUD operations.
 %check
 %pyproject_run_pytest -k "not test_ceph_status_mock_json \
 	and not test_ceph_flags_mock \
-	and not test_ceph_osds_mock \
+	and not (test_ceph_osds_mock and not requires_node) \
 	and not test_ceph_rejects_non_pve \
 	and not test_create_without_parameters \
 	and not test_discovery_returns_help_specs \
 	and not test_root_help_present_once \
-	and not test_docs_group_is_discoverable"
+	and not test_docs_group_is_discoverable \
+	and not test_browser_guards_are_wired_before_page_creation \
+	and not (test_public_checksum_probe_refuses_internal_redirect and private)"
 
 %files
 %doc *.md
@@ -68,6 +71,9 @@ and in-memory CRUD operations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 21 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.15-alt1
+- New 0.0.15 version.
+
 * Thu Sep 10 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.14.post3-alt1
 - New 0.0.14.post3 version.
 

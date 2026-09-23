@@ -1,5 +1,5 @@
 Name:    netbox-topology-views
-Version: 4.5.1
+Version: 4.7.0
 Release: alt1
 
 Summary: A netbox plugin that draws topology views
@@ -12,7 +12,7 @@ AutoReqProv: yes, nopython
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-Requires: netbox >= 4.5.0
+Requires: netbox >= 4.7.0
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-topology-views/RE
 %_defaultdocdir/netbox-topology-views/README
 
 %changelog
+* Tue Sep 22 2026 Alexander Burmatov <thatman@altlinux.org> 4.7.0-alt1
+- New 4.7.0 version.
+
 * Tue Apr 14 2026 Alexander Burmatov <thatman@altlinux.org> 4.5.1-alt1
 - New 4.5.1 version.
 
