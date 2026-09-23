@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.49
+%define ver_major 51
 %def_disable introspection
 %def_enable gtk_doc
 %def_enable man
@@ -35,7 +35,7 @@ Requires: lib%name = %EVR dbus
 Requires: %name-profile
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson libgio-devel >= 2.44.0 libdbus-devel
+BuildRequires: meson libgio-devel >= 2.76.0 libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools >= 0.18.0}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
@@ -190,6 +190,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %endif
 
 %changelog
+* Wed Sep 23 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Oct 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.49.0-alt1
 - 0.49.0
 

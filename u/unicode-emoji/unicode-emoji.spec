@@ -1,7 +1,8 @@
 %define unicodedir %_datadir/unicode
 %define emojidir %unicodedir/emoji
-%define unicode_ver 17.0.0
-%define emoji_ver 17.0
+%define ver_major 18.0
+%define unicode_ver %ver_major.0
+%define emoji_ver %ver_major.0
 
 Name: unicode-emoji
 Version: %emoji_ver
@@ -10,14 +11,14 @@ Release: alt1
 Summary: Unicode Emoji Data Files
 Group: Development/Other
 License: MIT
-Url: https://www.unicode.org/Public/emoji
+Url: https://www.unicode.org/emoji
 
-Source: %url/%version/ReadMe.txt
+Source: https://www.unicode.org/Public/%unicode_ver/ucd/emoji/ReadMe.txt
 Source1: https://www.unicode.org/Public/%unicode_ver/ucd/emoji/emoji-data.txt
-Source2: %url/%version/emoji-sequences.txt
-Source3: %url/%version/emoji-test.txt
+Source2: https://www.unicode.org/Public/%unicode_ver/emoji/emoji-sequences.txt
+Source3: https://www.unicode.org/Public/%unicode_ver/emoji/emoji-test.txt
 Source4: https://www.unicode.org/Public/%unicode_ver/ucd/emoji/emoji-variation-sequences.txt
-Source5: %url/%version/emoji-zwj-sequences.txt
+Source5: https://www.unicode.org/Public/%unicode_ver/emoji/emoji-zwj-sequences.txt
 
 # http://www.unicode.org/terms_of_use.html referenced in ReadMe.txt redirects to:
 Source6: http://www.unicode.org/copyright.html
@@ -31,7 +32,7 @@ http://www.unicode.org/reports/tr51/index.html
 
 %prep
 %setup -cT
-grep -q "Version[: ]%version" %_sourcedir/{emoji-*,ReadMe}.txt || (echo "text files seems not %version" ; exit 1)
+grep -q "Version[: ]%ver_major" %_sourcedir/{emoji-*,ReadMe}.txt || (echo "text files seems not %version" ; exit 1)
 
 %install
 mkdir -p %buildroot%emojidir
@@ -43,6 +44,9 @@ cp -a %_sourcedir/{copyright.html,ReadMe.txt} .
 %doc copyright.html ReadMe.txt
 
 %changelog
+* Wed Sep 23 2026 Yuri N. Sedunov <aris@altlinux.org> 18.0.0-alt1
+- 18.0.0
+
 * Thu Mar 20 2025 Yuri N. Sedunov <aris@altlinux.org> 17.0-alt1
 - 17.0
 

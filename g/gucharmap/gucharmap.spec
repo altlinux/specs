@@ -3,13 +3,15 @@
 %def_enable vala
 %def_enable docs
 
-%define ver_major 17.0
+%define ver_major 18.0
 %define api_ver 2.90
-%define unicode_ver 17.0.0
+%define unicode_ver 18.0.0
 %define ucd_path %_datadir/unicode/ucd
 
+%def_enable system_ucd
+
 Name: gucharmap
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -37,7 +39,8 @@ Requires: lib%name = %EVR
 Requires: dconf gnome-icon-theme
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
-BuildRequires: meson >= %meson_ver unicode-ucd >= %unicode_ver unzip
+BuildRequires: meson >= %meson_ver unzip
+%{?_enable_system_ucd:BuildRequires: unicode-ucd >= %unicode_ver}
 BuildRequires: desktop-file-utils appdata-tools
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -94,15 +97,16 @@ This package contains development documentation for GNOME Unicode
 character map library.
 
 %prep
-%setup -a1
-cp %SOURCE1 %SOURCE2 ./
+%setup %{?_disable_system_ucd:-a1
+cp %SOURCE1 %SOURCE2 ./}
 
 %build
 %meson \
     %{subst_enable_meson_bool introspection gir} \
     %{subst_enable_meson_bool vala vapi} \
     %{subst_enable_meson_bool docs docs} \
-    -Ducd_path=$PWD
+    %{?_disable_system_ucd:-Ducd_path=$PWD} \
+    %{?_enable_system_ucd:-Ducd_path=%ucd_path}
 %nil
 %meson_build
 
@@ -140,6 +144,9 @@ cp %SOURCE1 %SOURCE2 ./
 %endif
 
 %changelog
+* Wed Sep 23 2026 Yuri N. Sedunov <aris@altlinux.org> 18.0.0-alt1
+- 18.0.0
+
 * Sat May 02 2026 Yuri N. Sedunov <aris@altlinux.org> 17.0.2-alt1
 - 17.0.2
 

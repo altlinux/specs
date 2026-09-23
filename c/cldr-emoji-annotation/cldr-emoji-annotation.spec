@@ -1,11 +1,12 @@
 %def_disable snapshot
 
 %define ver_major 48
-%define tag_ver release-%ver_major
+%define ver_minor 2
+%define tag_ver release-%ver_major-%ver_minor
 %def_enable check
 
 Name: cldr-emoji-annotation
-Version: %ver_major
+Version: %ver_major.%ver_minor
 Release: alt1
 
 # Annotation files are in Unicode license
@@ -103,6 +104,12 @@ done
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Sep 23 2026 Yuri N. Sedunov <aris@altlinux.org> 48.2-alt1
+- 48.2
+
+* Tue Jan 13 2026 Yuri N. Sedunov <aris@altlinux.org> 48.1-alt1
+- 48.1
+
 * Thu Oct 30 2025 Yuri N. Sedunov <aris@altlinux.org> 48-alt1
 - 48
 
