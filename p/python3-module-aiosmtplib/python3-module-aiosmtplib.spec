@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.2
+Version: 5.1.3
 Release: alt1
 
 Summary: asyncio SMTP client
@@ -39,9 +39,7 @@ It is an async version of the smtplib module, with similar APIs.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
 %pyproject_deps_resync_check_pipreqfile requirements-dev.txt
-%endif
 
 %build
 %pyproject_build
@@ -57,6 +55,9 @@ It is an async version of the smtplib module, with similar APIs.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 23 2026 Anton Zhukharev <ancieg@altlinux.org> 5.1.3-alt1
+- Updated to 5.1.3 (fixes GHSA-chr7-p3h9-q87h).
+
 * Mon Jul 06 2026 Anton Zhukharev <ancieg@altlinux.org> 5.1.2-alt1
 - Updated to 5.1.2 (fixes GHSA-v3q9-hj7j-63hq, GHSA-vxj7-4xrp-5vr4).
 
