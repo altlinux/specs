@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.5.4
+Version: 3.5.5
 Release: alt1
 
 Summary: The Official API Spec Language for Dropbox API V2
@@ -50,6 +50,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Sep 23 2026 Anton Vyatkin <toni@altlinux.org> 3.5.5-alt1
+- New version 3.5.5.
+
 * Tue Aug 04 2026 Anton Vyatkin <toni@altlinux.org> 3.5.4-alt1
 - New version 3.5.4.
 
