@@ -19,7 +19,7 @@
 %global import_path     %{provider_prefix}
 
 Name: mongo-tools
-Version: 100.18.0
+Version: 100.19.0
 Release: alt1
 
 Summary: Mongo client tools
@@ -57,7 +57,9 @@ cp -alv -- vendor/* "$BUILDDIR/src"
 mkdir bin
 binaries=(bsondump mongostat mongofiles mongoexport mongoimport mongorestore mongodump mongotop)
 for bin in "${binaries[@]}"; do
-    go build -o bin/${bin} \-tags ssl $BUILDDIR/src/%{import_path}/${bin}/main/${bin}.go
+    go build -o bin/${bin} \-tags ssl \
+	-ldflags "-X main.VersionStr=%version -X main.GitCommit=-" \
+	$BUILDDIR/src/%{import_path}/${bin}/main/${bin}.go
 done
 
 %install
@@ -75,6 +77,10 @@ install -p -m 644 man/* %{buildroot}%{_man1dir}/
 %_man1dir/*.1*
 
 %changelog
+* Wed Sep 23 2026 Andrey Cherepanov <cas@altlinux.org> 100.19.0-alt1
+- New version.
+- Fixed version string.
+
 * Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 100.18.0-alt1
 - New version.
 
