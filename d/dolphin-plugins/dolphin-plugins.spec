@@ -1,7 +1,7 @@
 %define rname dolphin-plugins
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -44,12 +44,16 @@ BuildRequires: dolphin-devel
 %doc LICENSES/*
 %_K6plug/dolphin/vcs/*fileview*.so
 %_K6plug/kf6/kfileitemaction/*.so
+%_K6plug/kf6/overlayicon/*.so
 %_K6cfg/fileview*pluginsettings.kcfg
 %_datadir/qlogging-categories6/*.*categories
 %_datadir/metainfo/*.xml
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

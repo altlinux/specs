@@ -7,8 +7,8 @@
 %add_findreq_skiplist %_datadir/nautilus-python/extensions/*.py
 
 Name: kdeconnect
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: Communications
@@ -30,7 +30,6 @@ Requires: libkf6peoplewidgets
 #Requires: kpeoplevcard
 
 Source: %rname-%version.tar
-Patch1: alt-def-bluetooth.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: libssl-devel
@@ -94,7 +93,6 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -132,6 +130,8 @@ done
 %_K6icon/hicolor/*/apps/*kdeconnect*.*
 %_K6data/plasma/plasmoids/org.kde.kdeconnect/
 %_K6data/kdeconnect/
+%_K6data/solid/actions/*kdeconnect*
+%_K6data/remoteview/*kdeconnect*
 %_datadir/metainfo/*kdeconnect*.xml
 %_datadir/zsh/site-functions/_kdeconnect
 #
@@ -148,6 +148,9 @@ done
 #%_K6lib/libkdeconnectpluginkcm.so.*
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Fri Aug 28 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - disable bluetooth by default
 

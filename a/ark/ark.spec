@@ -6,8 +6,8 @@
 %def_enable libzip
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: Archiving/Compression
@@ -92,10 +92,10 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K6plug/kf6/kio_dnd/extracthere.so
 %_K6plug/kf6/kfileitemaction/*.so
 %_K6xdgapp/*ark*.desktop
-%_K6cfg/*ark*.kcfg
+%_K6cfg/*ark*
 %_K6icon/hicolor/*/apps/ark.*
 %_K6plug/kerfuffle/
-#%_K6conf_up/*ark*
+%_K6conf_up/*ark*
 %_datadir/metainfo/*.xml
 
 #%files devel
@@ -110,6 +110,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - enable libzip but priority lower then 7z
 

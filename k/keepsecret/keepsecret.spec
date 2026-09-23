@@ -1,7 +1,7 @@
 %define rname keepsecret
 
 Name: %rname
-Version: 26.08.0
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -50,6 +50,9 @@ It can be used with KWallet, but also other systems such as oo7, Gnome-keyring o
 %_datadir/qlogging-categories6/*keepsecret*
 
 %changelog
+* Tue Sep 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Thu Sep 03 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.0-alt1
 - new version
 

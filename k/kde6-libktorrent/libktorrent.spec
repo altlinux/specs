@@ -4,7 +4,7 @@
 %define libktorrent libktorrent6_%sover
 
 Name: kde6-%rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -60,6 +60,7 @@ This package contains the development files for %name.
 %build
 %K6build \
     -DKDE_INSTALL_LOCALEDIR=%_K6i18n \
+    -DKDE_INSTALL_INCLUDEDIR=%_K6inc \
   #
 
 %install
@@ -79,6 +80,9 @@ This package contains the development files for %name.
 %_K6link/lib*.so
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

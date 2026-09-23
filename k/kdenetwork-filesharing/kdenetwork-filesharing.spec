@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client,samba-usershares
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -80,6 +80,9 @@ rm -f po/ru/kfileshare.po.old
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - apply patch against altbug#59726
 

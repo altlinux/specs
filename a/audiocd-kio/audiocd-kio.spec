@@ -4,7 +4,7 @@
 %define libaudiocdplugins libaudiocdplugins%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -85,7 +85,7 @@ Requires: %name-common >= %EVR
 %_datadir/qlogging-categories6/*.*categories
 
 %files -n kio-audiocd
-%_K6plug/*audiocd*.so
+%_K6plug/audiocd/
 %_K6plug/kf6/kio/*audiocd*.so
 %_K6plug/plasma/kcms/systemsettings_qwidgets/*audiocd*.so
 %_K6xdgapp/*audiocd*.desktop
@@ -105,6 +105,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

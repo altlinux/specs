@@ -5,7 +5,7 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: %rname
-Version: 26.04.3
+Version: 26.08.1
 Release: alt1
 %K6init no_altplace
 
@@ -50,7 +50,7 @@ BuildRequires: kf6-kunitconversion-devel kf6-kwidgetsaddons-devel kf6-kwindowsys
 BuildRequires: kf6-sonnet-devel kf6-knewstuff-devel kf6-kglobalaccel-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel
 BuildRequires: libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
-BuildRequires: libxkbfile-devel
+BuildRequires: libxkbfile-devel libssh-devel
 
 %description
 As well as being a standalone program, it is also used by other KDE programs
@@ -164,6 +164,9 @@ __EOF__
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Jul 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname kruler
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: Graphics
@@ -49,6 +49,9 @@ BuildRequires: kf6-kcrash-devel
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - fix show by system tray
 

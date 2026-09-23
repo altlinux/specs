@@ -12,8 +12,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init
 
 Group: File tools
@@ -153,6 +153,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K6xdgapp \
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Sep 16 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - add fix against KDEBUG#525784 (thanks xeno@alt)
 

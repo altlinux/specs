@@ -9,8 +9,8 @@
 %define libokularcore libokular6core%sover
 
 Name: %rname
-Version: 26.04.3
-Release: alt2
+Version: 26.08.1
+Release: alt1
 %K6init no_altplace
 
 Group: Office
@@ -194,6 +194,9 @@ fi
 
 
 %changelog
+* Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Wed Aug 05 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - add cryptopro backend option to pdf settings
 
