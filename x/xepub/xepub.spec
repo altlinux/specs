@@ -3,7 +3,7 @@
 %def_with check
 
 Name: xepub
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: EPUB reader for the Linux desktop
@@ -23,6 +23,8 @@ BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: /usr/bin/gtk4-update-icon-cache
 
 %filter_from_requires /python3(window)/d
+
+Requires: xapp-symbolic-icons
 
 %description
 EPUB reader for the Linux desktop.
@@ -58,5 +60,8 @@ Xepub is a secure, comfortable, paginated EPUB reader.
 %_datadir/xepub/window.ui
 
 %changelog
+* Wed Sep 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
+- New version 1.0.2.
+
 * Sat Sep 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
