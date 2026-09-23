@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: codewhale
-Version: 0.9.13
+Version: 0.10.0
 Release: alt1
 
 Summary: Open-source coding agent for your terminal
@@ -40,20 +40,15 @@ agents with different models and roles.
 install -vpD %SOURCE2 .cargo/config.toml
 
 %build
-export RUSTFLAGS='-Clink-args=-z,relro -Clink-args=-z,-now'
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
-export CARGO_PROFILE_RELEASE_DEBUG=1
+export CARGO_PROFILE_RELEASE_DEBUG=true
 export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
 export CARGO_PROFILE_RELEASE_INCREMENTAL=false
 export CARGO_PROFILE_RELEASE_LTO=fat
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
 export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
 export CARGO_PROFILE_RELEASE_STRIP=none
-cargo build \
-    %_smp_mflags \
-    --release \
-    --offline \
-    --all-features
+cargo build %_smp_mflags --release --offline
 
 %install
 install -vpD -m0755 target/release/codewhale -t %buildroot%_bindir
@@ -76,6 +71,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_codewhale
 
 %changelog
+* Wed Sep 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.10.0-alt1
+- Updated to 0.10.0.
+
 * Mon Sep 14 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.13-alt1
 - Updated to 0.9.13.
 
