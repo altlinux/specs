@@ -15,7 +15,7 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.34.2
+Version: 0.34.3
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -219,6 +219,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Wed Sep 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.3-alt1
+- Updated to version 0.34.3.
+
 * Sun Sep 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.2-alt1
 - Updated to version 0.34.2.
 - Build the source tarball from the pristine upstream tag; all ALT-owned
