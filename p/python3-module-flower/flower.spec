@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-flower
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Summary: Real-time monitor and web admin for Celery
 License: BSD-3-Clause
@@ -36,6 +36,9 @@ information about the status of Celery workers and tasks.
 %python3_sitelibdir/%{pyproject_distinfo flower}
 
 %changelog
+* Wed Sep 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.2.0-alt1
+- Updated to version 2.2.0.
+
 * Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.1.0-alt1
 - Updated to version 2.1.0.
 
