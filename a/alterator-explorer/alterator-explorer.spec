@@ -4,7 +4,7 @@
 
 Name: alterator-explorer
 Version: 0.1.20
-Release: alt1
+Release: alt2
 
 Summary: Explorer of Alterator applications operating via D-Bus
 License: GPLv2+
@@ -41,7 +41,7 @@ Requires: alterator-interface-application >= 0.1.1
 Requires: alterator-backend-categories >= 0.1.6
 Requires: alterator-backend-browsing >= 0.1.1
 Requires: alterator-backend-legacy >= 0.1.9
-Requires: alt-components >= 0.6.16
+Requires: alt-components >= 0.6.16-alt2
 
 %if_with legacy
 Requires: alterator-standalone >= 7.4.3
@@ -98,6 +98,9 @@ touch %buildroot/%_bindir/%alt_name
 %endif
 
 %changelog
+* Wed Sep 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.20-alt2
+- Bump the alt-components version (to use the handled_interface flag).
+
 * Thu Sep 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.20-alt1
 - Add display of available but not installed applications
   (thx Evgenii Sozonov and Andrey Alekseev).

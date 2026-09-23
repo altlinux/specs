@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.9
+Version: 0.10.10
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,7 +15,8 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: autoconf-common
-BuildRequires: alterator-entry >= 0.4.15
+BuildRequires: alterator-entry >= 0.4.16
+BuildRequires: python3-module-html5lib
 BuildRequires(pre): rpm-macros-alterator
 
 Provides: alterator-components-base = 0.1.5
@@ -157,6 +158,7 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %check
 # check Components and Editions
 ./scripts/validate_categories.py
+./scripts/validate_html.py
 
 %triggerpostun -- alt-editions-server < 0.10.4-alt1, alt-editions-education < 0.10.4-alt1
 ./usr/lib/alt-components-base-editions.sh
@@ -174,12 +176,23 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %dir %_alterator_datadir/editions
 %_alterator_datadir/editions/edition_server
 %_alterator_datadir/editions/edition_domain
+%_alterator_datadir/editions/edition_domain_ipa
 
 %files -n alt-editions-education
 %dir %_alterator_datadir/editions
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Wed Sep 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.10-alt1
+- Add ALT Domain IPA edition (thx Danila Skachedubov).
+- Update components:
+  + add freeipa-server-gpo and freeipa-healthcheck
+    (thx Danila Skachedubov);
+  + update browsing provider metadata (thx Evgenii Sozonov);
+  + drop application providers from alt-server-gnome-environment;
+  + drop kernel-modules-virtualbox-addition (thx Dmitriy Terekhin).
+- Update edition release and final notes (thx Danila Skachedubov).
+
 * Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.9-alt1
 - components: Add provides metadata for Alterator entries.
 

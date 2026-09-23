@@ -2,7 +2,7 @@
 
 Name: alt-components
 Version: 0.6.16
-Release: alt1
+Release: alt2
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -33,7 +33,7 @@ Requires: alterator-backend-systeminfo >= 0.4.3-alt1
 Requires: alterator-backend-edition >= 0.4.1
 Requires: alterator-backend-browsing
 Requires: libqbase
-Requires: alt-components-base >= 0.10.9
+Requires: alt-components-base >= 0.10.10
 
 Provides: alterator-application-components = %version-%release
 Obsoletes: alterator-application-components < 0.4.0
@@ -65,6 +65,10 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Sep 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.16-alt2
+- Bump the alt-components-base version (to support the handled_interface
+  flag in applications that use it).
+
 * Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.16-alt1
 - Added:
   + CLI option for installing and removing components (thx Pavel Khromov);
