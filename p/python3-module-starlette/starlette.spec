@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -75,6 +75,9 @@ It is production-ready, and gives you the following:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.7.0-alt1
+- Updated to 1.7.0.
+
 * Fri Sep 17 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.6.0-alt1
 - Updated to 1.6.0.
 

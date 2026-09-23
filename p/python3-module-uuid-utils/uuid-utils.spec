@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.17.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Fast, drop-in replacement for Python's uuid module, powered by Rust
@@ -69,6 +69,9 @@ Available UUID versions:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.0.0-alt1
+- Updated to 1.0.0.
+
 * Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.17.0-alt1
 - Updated to 0.17.0.
 

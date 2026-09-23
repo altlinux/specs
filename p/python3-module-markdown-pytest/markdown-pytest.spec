@@ -4,8 +4,8 @@
 %define module_name markdown_pytest
 
 Name: python3-module-%pypi_name
-Version: 0.3.2
-Release: alt2
+Version: 0.6.6
+Release: alt1
 
 Summary: A simple module to test your documentation examples with pytest
 License: Apache-2.0
@@ -38,10 +38,14 @@ are executed just like any other Pytest tests.
 %prep
 %setup
 %autopatch -p1
+
+# Fix the version in pyproject.toml
+sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
+
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -51,7 +55,8 @@ are executed just like any other Pytest tests.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+# docs/ examples are not part of the test suite
+%pyproject_run_pytest --ignore=docs
 
 %files
 %doc README.md
@@ -60,6 +65,9 @@ are executed just like any other Pytest tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.6-alt1
+- Updated to 0.6.6.
+
 * Wed Feb 25 2026 Stanislav Levin <slev@altlinux.org> 0.3.2-alt2
 - NMU: fixed FTBFS (pytest 9).
 
