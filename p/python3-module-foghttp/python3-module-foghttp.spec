@@ -24,7 +24,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Observable Rust-powered HTTP client for Python services
@@ -69,6 +69,14 @@ install -vD %SOURCE3 .cargo/config.toml
 %pyproject_deps_resync_metadata
 
 %build
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_DEBUG=true
+export CARGO_PROFILE_RELEASE_STRIP=none
+export CARGO_PROFILE_RELEASE_LTO=fat
+export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
+export CARGO_PROFILE_RELEASE_INCREMENTAL=false
+export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
 %pyproject_build
 
 %install
@@ -83,6 +91,9 @@ install -vD %SOURCE3 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4.1-alt1
+- Updated to 0.4.1.
+
 * Wed Aug 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - Updated to 0.4.0.
 
