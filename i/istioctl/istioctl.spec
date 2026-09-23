@@ -1,5 +1,5 @@
 Name: istioctl
-Version: 1.31.0
+Version: 1.31.1
 Release: alt1
 
 Summary: CLI for the istio service mesh in Kubernetes
@@ -88,6 +88,9 @@ mkdir -p %buildroot%_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Sep 23 2026 Leontiy Volodin <lvol@altlinux.org> 1.31.1-alt1
+- New version 1.31.1 (Fixes: GHSA-qm8v-g4f9-qhjx).
+
 * Mon Sep 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.31.0-alt1
 - New version 1.31.0.
 
