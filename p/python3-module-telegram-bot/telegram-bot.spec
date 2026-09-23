@@ -1,5 +1,5 @@
 Name: python3-module-telegram-bot
-Version: 22.7
+Version: 22.8
 Release: alt1
 
 Summary: Python interface for the Telegram Bot API
@@ -50,6 +50,9 @@ BuildRequires: python3-module-cachetools
 %python3_sitelibdir/python_telegram_bot-%version.dist-info
 
 %changelog
+* Wed Sep 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.8-alt1
+- 22.8 released
+
 * Tue Jun 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.7-alt1
 - 22.7 released
 
