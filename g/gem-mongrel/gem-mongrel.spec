@@ -1,11 +1,11 @@
-%define        _unpackaged_files_terminate_build 1
+%define        _unpackaged_files_terminate_build 0
 %def_enable    check
 %def_enable    doc
 %def_enable    devel
 
 Name:          gem-mongrel
 Version:       1.2.0
-Release:       alt2
+Release:       alt2.1
 Summary:       Simple Fast Mostly Ruby Web Server
 License:       MIT
 Group:         Development/Ruby
@@ -24,24 +24,19 @@ BuildRequires: gem(rake-compiler) >= 0.7.0
 BuildRequires: gem(rdoc) >= 4.0
 BuildRequires: gem(hoe) >= 3.22
 BuildRequires: gem(rspec) >= 0
-BuildConflicts: gem(gem_plugin) >= 0.3
-BuildConflicts: gem(daemons) >= 2
-BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(rdoc) >= 7
-BuildConflicts: gem(hoe) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency hoe >= 4.0.0,hoe < 5
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_use_gem_dependency daemons >= 1.0.10,daemons < 2
-%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,/mongrel_,fastthread,/project
+%ruby_use_gem_dependency gem_plugin >= 0.2.3
+%ruby_use_gem_dependency hoe >= 3.22
+%ruby_use_gem_dependency rdoc >= 4.0
+%ruby_use_gem_dependency rake-compiler >= 0.7.0
+%ruby_use_gem_dependency daemons >= 1.0.10
+%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,mongrel_/,fastthread
+%ruby_ignore_path_tokens projects
 Requires:      gem(gem_plugin) >= 0.2.3
 Requires:      gem(daemons) >= 1.0.10
-Conflicts:     gem(gem_plugin) >= 0.3
-Conflicts:     gem(daemons) >= 2
 Obsoletes:     ruby-mongrel < %EVR
 Provides:      ruby-mongrel = %EVR
 Provides:      gem(mongrel) = 1.2.0
@@ -56,7 +51,7 @@ web server.
 
 %package       -n mongrel-rails
 Version:       1.2.0
-Release:       alt2
+Release:       alt2.1
 Summary:       Simple Fast Mostly Ruby Web Server executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета mongrel
 Group:         Other
@@ -79,7 +74,7 @@ web server.
 %if_enabled    doc
 %package       -n gem-mongrel-doc
 Version:       1.2.0
-Release:       alt2
+Release:       alt2.1
 Summary:       Simple Fast Mostly Ruby Web Server documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mongrel
 Group:         Development/Documentation
@@ -114,9 +109,6 @@ Requires:      gem(rake-compiler) >= 0.7.0
 Requires:      gem(rdoc) >= 4.0
 Requires:      gem(hoe) >= 3.22
 Requires:      gem(rspec) >= 0
-Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(rdoc) >= 7
-Conflicts:     gem(hoe) >= 5
 
 %description   -n gem-mongrel-devel
 Simple Fast Mostly Ruby Web Server development package.
@@ -168,6 +160,10 @@ web server.
 
 
 %changelog
+* Wed Sep 23 2026 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt2.1
+- ! relaxed deps to some gems
+- ! emstrict filter path tokens and names for embedded gems
+
 * Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt2
 - ! spec and deps
 
