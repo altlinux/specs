@@ -8,7 +8,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-control-center
-Version: 2.1.1
+Version: 2.1.3
 Release: alt1
 
 Summary: A fork of GNOME Control Center for the Budgie 10 Series
@@ -60,6 +60,7 @@ BuildRequires: pkgconfig(mm-glib)
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(smbclient)
+BuildRequires: pkgconfig(tecla) >= 47.0
 BuildRequires: pkgconfig(udisks2)
 BuildRequires: pkgconfig(upower-glib) >= 0.99.13
 BuildRequires: pkgconfig(x11)
@@ -97,6 +98,9 @@ Requires: libalsa
 
 # For the color panel
 Requires: colord
+
+# For the keyboard layout preview
+Requires: %_bindir/tecla
 
 # For the printers panel
 Requires: cups-pk-helper
@@ -215,6 +219,11 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.buddiesof
 %_datadir/sounds/budgie/default/alerts/*.ogg
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.3-alt1
+- new version 2.1.3
+- fix FTBFS with gnome-desktop 51: upstream removed color and wacom panels (ALT bug #60532)
+- use system tecla instead of bundled subproject
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1
 - enable bluetooth support
