@@ -11,7 +11,7 @@
 
 Name: 	  fpc
 Version:  3.2.3
-Release:  alt3
+Release:  alt4
 Epoch:    3
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -71,7 +71,7 @@ Patch23: fpc-honor_SOURCE_DATE_EPOCH_in_date.patch
 Patch24: fpc-prevent_date_in_fpcdocs.patch
 Patch26: fpc-relpath.patch
 Patch27: fpc-rename-instantfpc-to-ifpc.patch
-Patch28: fpc-use-bfd-explicitly.patch
+Patch28: fpc-3.2.3-alt-use-bfd-for-linker.patch
 Patch29: fpc-aarch64-paths.patch
 
 # Other patches
@@ -97,6 +97,11 @@ Patch101: 0001-FT_Get_Sfnt_Name-and-related.patch
 Patch102: 0002-FT_Get_Sfnt_Table-and-related.patch
 Patch103: 0003-Make-FontID-public.patch
 Patch104: 0004-Add-TTT_HoriHeader.patch
+
+Patch105: fpc-3.2.3-upstream-screen-width-more-than-255-chars.patch
+Patch106: fpc-3.2.3-upstream-raise-FVMaxWidth.patch
+Patch107: fpc-3.2.3-alt-quit-when-terminal-closed.patch
+Patch108: fpc-3.2.3-alt-message-language-from-locale.patch
 
 Requires: fpc-units-rtl
 Requires: fpc-compiler
@@ -196,6 +201,10 @@ pushd fpcsrc
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
+%patch105 -p1
+%patch106 -p1
+%patch107 -p1
+%patch108 -p1
 popd
 
 %if_with sources
@@ -292,7 +301,6 @@ install -p -m 644 utils/fppkg/units/%ppctarget/*.{o,ppu} %buildroot%fpc_dir/unit
 sed -i "s|\$fpctarget|%ppctarget|g" %buildroot%_sysconfdir/%name.cfg
 sed -i "s|\$fpctarget|%ppctarget|g" %buildroot%_sysconfdir/fp.cfg
 sed -i "s|/usr/lib|%_libdir|g" %buildroot%_sysconfdir/fp.cfg
-sed -i "s|errorn.msg|errorn.msg\n-Fr%fpc_dir/msg/errorru.msg|g" %buildroot%_sysconfdir/%name.cfg
 sed -i "s|\$fpcversion|fpc|g" %buildroot%_sysconfdir/%name.cfg
 
 popd
@@ -1067,6 +1075,12 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Thu Sep 24 2026 Ajrat Makhmutov <rauty@altlinux.org> 3:3.2.3-alt4
+- Pick the error message language from the system locale (Closes: 45589).
+- Quit the IDE when the terminal it runs in is closed (Closes: 24788).
+- Support terminals wider than 240 columns in the IDE (Closes: 42047).
+- Fix -Xg by dropping the .bfd suffix from objcopy and strip (Closes: 41425).
+
 * Fri Jun 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 3:3.2.3-alt3
 - Fix FTBFS: build only the fpdoc-generated API documentation
   (rtl/fcl/fclres) in HTML and CHM and skip the LaTeX manuals, which
