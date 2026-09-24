@@ -1,5 +1,5 @@
 Name: license-list-xml
-Version: 3.28.0
+Version: 3.29.0
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
@@ -88,6 +88,9 @@ cp -dp src/exceptions/*.xml %buildroot%_datadir/%name/exceptions/
 %_licensedir-exception
 
 %changelog
+* Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 3.29.0-alt1
+- 3.28.0 -> 3.29.0
+
 * Sat Feb 21 2026 Anton Farygin <rider@altlinux.org> 3.28.0-alt1
 - New release (3.28.0).
 
