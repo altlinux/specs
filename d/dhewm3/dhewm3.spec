@@ -2,7 +2,7 @@
 
 Name: dhewm3
 Version: 1.5.5
-Release: alt1
+Release: alt2
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
 License: GPL-3.0-only
@@ -17,7 +17,7 @@ BuildRequires(pre): rpm-macros-cmake ImageMagick-tools
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkg-config
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libcurl-devel
 BuildRequires: libopenal-devel
 BuildRequires: zlib-devel
@@ -67,7 +67,9 @@ ln -svf %_includedir/stb/stb_image.h \
     %_includedir/stb/stb_image_write.h ./
 popd
 cd neo
-%cmake_insource
+%cmake_insource \
+    -DSDL3=ON \
+    -DCMAKE_INSTALL_DATAROOTDIR="share/games"
 
 %make_build
 
@@ -101,6 +103,10 @@ install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_i
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Sep 24 2026 L.A. Kostis <lakostis@altlinux.ru> 1.5.5-alt2
+- Fix basedir (closes #53261).
+- SDL2->SDL3.
+
 * Thu Sep 24 2026 L.A. Kostis <lakostis@altlinux.ru> 1.5.5-alt1
 - 1.5.5.
 - Unbundle stb.
