@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 4.1
+%define ver_major 4.2
 %define beta %nil
 
 %def_enable docs
@@ -97,6 +97,9 @@ mkdir -p %buildroot%_datadir/nautilus-python/extensions/__pycache__
 %exclude %_docdir/%name
 
 %changelog
+* Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Tue Oct 07 2025 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
 - 4.1.0
 
