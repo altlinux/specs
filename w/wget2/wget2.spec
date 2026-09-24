@@ -1,10 +1,10 @@
-%define libmajor 4
+%define libmajor 5
 %define libname libwget%libmajor
 %define devname	libwget-devel
 
 Name: wget2
 Summary: The successor of GNU Wget, a file and recursive website downloader
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 License: %gpl3plus
 Group: Networking/WWW
@@ -94,6 +94,10 @@ rm -rf %buildroot%_bindir/wget2_noinstall
 %_mandir/man3/libwget-*.3*
 
 %changelog
+* Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt1
+- 2.2.1 -> 2.3.0
+- soname bumped: libwget4 -> libwget5
+
 * Tue Jul 28 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt1
 - 2.0.0 -> 2.2.1
 
