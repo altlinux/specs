@@ -1,10 +1,11 @@
 %define git %nil
 %define module_name	v4l2loopback
-%define module_version	0.15.3
+%define module_version	0.15.4
 %define module_release	alt1
 
 %define flavour		6.18
 %define karch %ix86 x86_64 aarch64 ppc64le armh
+
 BuildRequires(pre): kernel-headers-modules-6.18
 %setup_kernel_module %flavour
 
@@ -49,6 +50,9 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 
 %build
+if [ -n "%flavour" -a "%flavour" == 'lks-wks' ]; then
+%setup_llvm_env
+fi
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` modules
 
 %install
@@ -62,6 +66,10 @@ install v4l2loopback.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Sep 24 2026 L.A. Kostis <lakostis@altlinux.org> 0.15.4-alt1
+- 0.15.4.
+- added support for lks-wks llvm built kernel.
 
 * Fri Dec 19 2025 L.A. Kostis <lakostis@altlinux.org> 0.15.3-alt1
 - 0.15.3.
