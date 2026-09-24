@@ -162,7 +162,7 @@
 
 Name: qemu
 Version: 10.2.4
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1500,6 +1500,9 @@ groupadd -r -f %_group
 %exclude %docdir/LICENSE
 
 %changelog
+* Thu Sep 24 2026 Alexey Shabalin <shaba@altlinux.org> 10.2.4-alt2
+- Update vitastor block driver from vitastor/3.2.1.
+
 * Tue Sep 01 2026 Alexey Shabalin <shaba@altlinux.org> 10.2.4-alt1
 - 10.2.4 (Fixes: CVE-2026-3886, CVE-2026-3890, CVE-2024-6519, CVE-2026-5763,
   CVE-2026-5744, CVE-2026-5761, CVE-2026-6502, CVE-2026-41435, CVE-2026-41436,
