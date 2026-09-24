@@ -3,7 +3,7 @@
 
 Name: horizon
 Version: 2.7.2
-Release: alt1
+Release: alt2
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0-or-later
@@ -69,6 +69,9 @@ BuildRequires: libspnav-devel
 %doc *.md
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.7.2-alt2
+- NMU: support podofo 1.x (backport of upstream PR #847)
+
 * Sun Dec 14 2025 Anton Midyukov <antohami@altlinux.org> 2.7.2-alt1
 - New version 2.7.2.
 

@@ -1,8 +1,8 @@
-%define major 0.10
-%define abiversion 2
+%define major 1.1
+%define abiversion 4
 
 Name: podofo
-Version: %major.5
+Version: %major.2
 Release: alt1
 
 Summary: PDF manipulation library and tools
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: fontconfig-devel libfreetype-devel
+BuildRequires: libfmt-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel
 BuildRequires: zlib-devel libxml2-devel libssl-devel
 
@@ -67,13 +68,13 @@ subst "s|@PODOFO_VERSION@|%version|" src/podofo/libpodofo.pc.in
 #mkdir test/TokenizerTest/objects
 
 %build
-%cmake -DPODOFO_BUILD_TOOLS=ON
+# upstream renamed the option in 1.x and marks the tools unsupported
+%cmake -DPODOFO_BUILD_UNSUPPORTED_TOOLS=ON \
+    -DPODOFO_DEVENDOR_FMT=ON
 %cmake_build
 
 %install
 %cmakeinstall_std
-mkdir -p %buildroot%_cmakedir/
-mv %buildroot%_datadir/%name %buildroot%_cmakedir/
 
 %files
 %doc README.md
@@ -91,6 +92,13 @@ mv %buildroot%_datadir/%name %buildroot%_cmakedir/
 %_libdir/libpodofo.so
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
+- new version 1.1.2
+- build lib package as libpodofo4 (soname changed from 2 to 4)
+- use PODOFO_BUILD_UNSUPPORTED_TOOLS, the option was renamed upstream
+- drop obsolete cmake files relocation (upstream installs them to %_cmakedir)
+- build with system fmtlib instead of the bundled copy (fixes i586 build)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10.5-alt1
 - new version 0.10.5
 

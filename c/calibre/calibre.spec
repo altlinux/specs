@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 8.16.2
+Version: 9.15.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -37,7 +37,7 @@ BuildRequires(pre): rpm-macros-qt6-webengine
 %add_python3_req_skip calibre_extensions.winsapi
 
 # internal extensions?
-%add_python3_req_skip calibre_extensions calibre_extensions.fast_css_transform calibre_extensions.freetype calibre_extensions.progress_indicator calibre_extensions.speedup
+%add_python3_req_skip calibre_extensions calibre_extensions.fast_css_transform calibre_extensions.fast_html_entities calibre_extensions.imageops calibre_extensions.translator calibre_extensions.freetype calibre_extensions.progress_indicator calibre_extensions.speedup
 
 %add_python3_path %_libdir/%name
 
@@ -157,6 +157,7 @@ BuildRequires: libhunspell-devel >= 1.7.2
 %py3_use html5-parser >= 0.4.12
 %py3_use css-parser >= 1.0.10
 %py3_use dateutil >= 2.8.2
+%py3_use tzlocal
 %py3_use jeepney >= 0.8.0
 %py3_use dns >= 2.4.2
 %py3_use mechanize >= 0.4.8
@@ -350,6 +351,13 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 9.15.0-alt1
+- new version 9.15.0
+- build with podofo 1.1.2 (fixes FTBFS on podofo 0.10 API)
+- add tzlocal requirement
+- update alt-drop-pykakasi.patch for reformatted upstream source
+- skip autorequires on the new bundled calibre_extensions modules
+
 * Fri Mar 13 2026 Vitaly Lipatov <lav@altlinux.ru> 8.16.2-alt1
 - new version 8.16.2
 - drop loongarch64/riscv64 patch (stb_sprintf.h removed upstream)
