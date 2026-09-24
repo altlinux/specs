@@ -346,6 +346,7 @@ Requires: libva-intel-media-driver \
 %endif \
 Requires: simplescreenrecorder \
 Requires: quick-usb-formatter \
+Requires: xorg-conf-libinput-touchpad \
 %{nil}
 
 %define edu_highschool_own_reqs \
@@ -403,7 +404,7 @@ Requires: OpenBoard \
 %{nil}
 
 Name: task-edu
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -715,6 +716,9 @@ Group: Education
 %files school
 
 %changelog
+* Thu Sep 24 2026 Pavel Petrykin <silverducks@altlinux.org> 1.9.1-alt1
+- Add xorg-conf-libinput-touchpad to edu_desktop_common_reqs.
+
 * Wed Sep 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.9.0-alt1
 - Take over the packages the ALT Education profile
   used to list by hand in its misc and misc-base lists.
