@@ -3,8 +3,8 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.1.4
-Release: alt1.git0c6accc5
+Version: 0.1.5
+Release: alt1
 
 Summary: Patch built-in python objects
 License: GPLv3 and MIT
@@ -43,6 +43,9 @@ things spy on things or to integrate profiling.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Sep 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.1.5-alt1
+- Updated to 0.1.5.
+
 * Wed Apr 02 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.1.4-alt1.git0c6accc5
 - Initial build for ALT Sisyphus.
 
