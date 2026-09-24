@@ -8,7 +8,7 @@
 
 Name: kdevelop-python
 Version: 26.04.3
-Release: alt3
+Release: alt4
 
 Group: Development/Other
 Summary: Python 3 language plugin for KDevelop
@@ -22,6 +22,7 @@ Requires: kdevelop
 Source: %rname-%version.tar
 Patch1: alt-python-version.patch
 Patch2: alt-soname.patch
+Patch3: alt-remove-ziptarget.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: rpm-build-python3
@@ -76,6 +77,7 @@ Requires: %name-common >= %EVR
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/env python3|" documentation_src/pyqt/sip_to_xml5.py \
                                                            documentation_src/numpy/generate_numpy_doc.py \
@@ -121,6 +123,9 @@ rm -v %buildroot%_datadir/kdevappwizard/templates/django_project.tar.bz2
 %_K6lib/libkdevpythonparser.so.*
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt4
+- remove unexistent _ZipTarget
+
 * Tue Sep 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt3
 - fix packaging
 
