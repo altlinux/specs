@@ -1,11 +1,11 @@
 Name: ktls-utils
-Version: 1.4.0
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: TLS handshake utilities for in-kernel TLS consumers
 License: GPLv2
 Group: Networking/Other
-Url: https://github.com/oracle/ktls-utils/
+URL: https://github.com/oracle/ktls-utils/
 
 Source: %name-%version.tar
 
@@ -42,13 +42,18 @@ parameters are passed back to the kernel via standard kTLS socket options.
 %dir %_sysconfdir/tlshd/tags.d
 %_sysconfdir/tlshd/tags.d/tags.example
 %config(noreplace) %_sysconfdir/tlshd/config
+%_sbindir/nfstlskey
 %_sbindir/tlshd
 %_unitdir/tlshd.service
 %_man5dir/tlshd.conf.5*
 %_man7dir/tls-session-tags.7*
+%_man8dir/nfstlskey.8*
 %_man8dir/tlshd.8*
 
 %changelog
+* Thu Sep 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
+- 1.5.0 released
+
 * Tue Jun 16 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt2
 - NMU: explicitly specified %%_unitdir for systemd unit installation
 
