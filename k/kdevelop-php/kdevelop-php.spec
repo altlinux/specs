@@ -8,7 +8,7 @@
 
 Name: kdevelop-php
 Version: 26.04.3
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Development/Other
@@ -18,6 +18,7 @@ Url: https://invent.kde.org/kdevelop/kdev-php
 
 ExcludeArch: %not_qt6_qtwebengine_arches
 Requires: kdevelop
+Requires: /usr/bin/php
 
 Source: %rname-%version.tar
 Patch1: alt-soname.patch
@@ -91,8 +92,8 @@ Requires: %name-common >= %EVR
 %K6install
 %find_lang kdevphp
 
-%files common
-%files -f kdevphp.lang
+%files common -f kdevphp.lang
+%files
 %_libdir/qt6/plugins/kdevplatform/*/kdevphpdocs.so
 %_libdir/qt6/plugins/kdevplatform/*/kdevphplanguagesupport.so
 %_libdir/qt6/plugins/kdevplatform/*/kdevphpunitprovider.so
@@ -117,6 +118,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libkdevphpparser.so.*
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt3
+- fix requires
+
 * Tue Sep 15 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt2
 - fix packaging
 
