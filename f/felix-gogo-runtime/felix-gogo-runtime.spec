@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,7 +15,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           felix-gogo-runtime
 Version:        1.1.6
-Release:        alt1
+Release:        alt2
 Summary:        Apache Felix Gogo command line shell for OSGi
 # One file is also MIT licensed:
 #  src/main/java/org/apache/felix/gogo/runtime/Expression.java
@@ -89,6 +89,9 @@ sed -i '/(echoout/ d' src/test/java/org/apache/felix/gogo/runtime/TestParser.jav
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Sep 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.6-alt2
+- fixed FTBFS: rebuilded with jpackage-default
+
 * Tue Dec 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.1.6-alt1
 - 1.1.4 -> 1.1.6
 - Fix FTBFS.
