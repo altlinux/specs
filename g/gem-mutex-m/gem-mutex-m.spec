@@ -6,7 +6,7 @@
 
 Name:          gem-mutex-m
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Mixin to extend objects to be handled like a Mutex
 License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
@@ -23,16 +23,15 @@ BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rbs) >= 3.4
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(test-unit) >= 0
-BuildConflicts: gem(rbs) >= 4
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_alias_names mutex_m,mutex-m
+%ruby_use_gem_dependency rbs >= 3.4
 Requires:      ruby >= 2.5
 Requires:      gem(rbs) >= 3.4
 Requires:      gem(rdoc) >= 0
-Conflicts:     gem(rbs) >= 4
 Provides:      gem(mutex_m) = 0.3.0
 
 %description
@@ -42,7 +41,7 @@ Mixin to extend objects to be handled like a Mutex.
 %if_enabled    doc
 %package       -n gem-mutex-m-doc
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Mixin to extend objects to be handled like a Mutex documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mutex_m
 Group:         Development/Documentation
@@ -61,7 +60,7 @@ Mixin to extend objects to be handled like a Mutex documentation files.
 %if_enabled    devel
 %package       -n gem-mutex-m-devel
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Mixin to extend objects to be handled like a Mutex development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mutex_m
 Group:         Development/Ruby
@@ -110,6 +109,9 @@ Mixin to extend objects to be handled like a Mutex development package.
 
 
 %changelog
+* Thu Sep 24 2026 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1.1
+- ! relaxed dep to rbs gem
+
 * Thu Oct 23 2025 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
