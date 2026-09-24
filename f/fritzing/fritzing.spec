@@ -1,6 +1,6 @@
 Name: fritzing
 Version: 1.0.8
-Release: alt1
+Release: alt2
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -127,6 +127,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Thu Sep 24 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.8-alt2
+- Repaired broken ngspice simulation.
+
 * Tue Sep 22 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
 - Build new version.
 
