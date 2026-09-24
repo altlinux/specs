@@ -1,6 +1,6 @@
 Name: fritzing
-Version: 1.0.6
-Release: alt2
+Version: 1.0.8
+Release: alt1
 
 Summary: Intuitive EDA platform featuring from prototype to product
 License: GPLv2 and GPLv3 and CC-BY-SA-3.0
@@ -24,7 +24,6 @@ Source2: parts.db
 Patch: fritzing-desktop-file-translation.patch
 
 Patch1: 0003-maximum-qt-version.patch
-Patch2: 0004-Work-around-build-issues-with-Qt-6.9.patch
 Patch3: 0010-quazip-detect.patch
 Patch4: 0011-ngspice-detect.patch
 Patch5: 0012-clipper1-detect.patch
@@ -58,6 +57,8 @@ Summary: Data files for %name
 License: GPLv3
 Group: Engineering
 BuildArch: noarch
+# Internal self provide dependency
+%add_python3_req_skip fzp_utils
 
 %description data
 Fritzing is an open-source initiative to support designers, artists,
@@ -73,7 +74,6 @@ This package contains shared data files for Fritzing.
 
 %patch -p1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -127,6 +127,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Tue Sep 22 2026 Grigory Ustinov <grenka@altlinux.org> 1.0.8-alt1
+- Build new version.
+
 * Fri Feb 06 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt2
 - Fixed FTBFS with Qt 6.10.
 
