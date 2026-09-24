@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: geeqie
-Version: 3.1
+Version: 3.2
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -74,7 +74,7 @@ ExifTool.
     -Dgq_helpdir='share/%name' \
     %{subst_enable_meson_feature ffmpegthumbnailer videothumbnailer} \
     %{subst_enable_meson_feature lua lua} \
-    %{subst_enable_meson_feature map gps-map}
+    %{subst_enable_meson_feature map gps_map}
 %nil
 %meson_build
 
@@ -114,6 +114,9 @@ ExifTool.
 %doc NEWS README.*
 
 %changelog
+* Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
+- 3.2
+
 * Mon Aug 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.1-alt1
 - 3.1 (ported to GTK4)
 
