@@ -11,9 +11,9 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 10717
-Release: alt2
-Epoch: 1
+Version: 0.5.0
+Release: alt1
+Epoch: 2
 Summary: LLM inference in C/C++
 License: MIT
 Group: Sciences/Computer science
@@ -140,10 +140,8 @@ Requires: %name-cpu = %EVR
 %prep
 %setup
 %autopatch -p1
-commit=$(awk '$2=="b%version"{print$1}' .gear/tags/list)
+commit=$(awk '$2=="v%version"{print$1}' .gear/tags/list)
 cat <<-EOF >> cmake/build-info.cmake
-	set(BUILD_NUMBER %version)
-	set(GGML_BUILD_NUMBER %version)
 	set(BUILD_COMMIT "${commit::8} [%release]")
 EOF
 # We do not have Internet access (issues/13371).
@@ -159,6 +157,7 @@ export NVCC_PREPEND_FLAGS='-Xcompiler=-g1'
 %cmake \
 	-DCMAKE_SKIP_BUILD_RPATH=yes \
 	-DLLAMA_BUILD_TESTS=ON \
+	-DLLAMA_BUILD_IS_DEV=OFF \
 	-DGGML_BACKEND_DL=ON \
 	-DGGML_BACKEND_DIR=%_libexecdir/llama \
 	-DGGML_CPU=ON \
@@ -209,7 +208,7 @@ install -dm755 %buildroot%_sysconfdir/llama
 # Local path are more useful for debugging becasue they are not stripped by default.
 export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/bin
 llama-server --version
-llama-server --version |& grep -Ex 'version: \S+ \(build %version, commit \S+ \[%release\]\)'
+llama-server --version |& grep -Ex 'version: %version \(build 0, commit \S+ \[%release\]\)'
 # test-eval-callback and test-tokenizers-ggml-vocabs want network.
 # test-save-load-state/-state-restore-fragmented require the test-download-model fixture (no network).
 # test-thread-safety requires GPU; test-recurrent-state-rollback (MTP) is not runnable w/o CUDA.
@@ -283,6 +282,9 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 2:0.5.0-alt1
+- Update to v0.5.0 (upstream switched to semver; Epoch bumped).
+
 * Mon Sep 14 2026 Mikhail Tergoev <fidel@altlinux.org> 1:10717-alt2
 - Rebuild with nvidia-cuda-toolkit 13.2.1 using rpm-macros-cuda-toolkit
 
