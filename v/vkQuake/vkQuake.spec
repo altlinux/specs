@@ -1,6 +1,6 @@
 Name: vkQuake
-Version: 1.35.0
-Release: alt1.1
+Version: 1.36.0
+Release: alt1
 
 Summary: Quake I engine
 License: GPL-2.0
@@ -53,6 +53,9 @@ install -pDm644 Misc/%{name}_256.png %buildroot%_iconsdir/hicolor/256x256/apps/v
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Sep 24 2026 L.A. Kostis <lakostis@altlinux.ru> 1.36.0-alt1
+- 1.36.0.
+
 * Tue Sep 08 2026 L.A. Kostis <lakostis@altlinux.ru> 1.35.0-alt1.1
 - Added .desktop and icons (closes #60249).
 
