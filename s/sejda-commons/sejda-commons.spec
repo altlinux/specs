@@ -1,8 +1,9 @@
 Name: sejda-commons
-Version: 2.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A collection of utilities and common classes used by Sejda and PDFsam
+
 License: Apache-2.0
 Group: Development/Java
 Url: https://sejda.org
@@ -45,5 +46,8 @@ A collection of utilities and common classes used by Sejda and PDFsam.
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Sep 09 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
+- NMU: update to 3.0.1.
+
 * Mon Mar 23 2026 Anton Meleshnikov <alton@altlinux.org> 2.0.0-alt1
 - Initial build for Sisyphus.
