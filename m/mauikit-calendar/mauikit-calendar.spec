@@ -3,7 +3,7 @@
 
 Name: mauikit-calendar
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: Calendar support components for Maui applications
 License: LGPL-3.0-only
@@ -38,6 +38,7 @@ BuildRequires: kf6-kcontacts-devel
 BuildRequires: kf6-ktexttemplate-devel
 BuildRequires: akonadi-mime-devel
 BuildRequires: kcalutils-devel
+BuildRequires: kf6-kmime-devel
 
 # no akonadi-calendar-devel
 ExcludeArch: %ix86 riscv64
@@ -101,5 +102,8 @@ Requires: %{name} = %{version}-%{release}
 %_libdir/libMauiKitCalendar4.so
 
 %changelog
+* Thu Sep 24 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt2
+- Added kf6-kmime-devel to buildrequires to fix FTBFS.
+
 * Sat Jan 10 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt1
 - Initial build for Sisyphus
