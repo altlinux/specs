@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Sep 24 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt2
+- update to latest public distr
+- fix some typos (closes: #60080, #60081, #60082)
+
 * Fri Jul 24 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt1
 - update to Simply Linux 11.2beta
 - the spec file has been rewritten to support alternatives
