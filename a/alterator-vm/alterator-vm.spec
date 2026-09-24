@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.53
+Version: 0.4.54
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -54,6 +54,15 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %lang(uz) %_datadir/locale/uz/LC_MESSAGES/%name.mo
 
 %changelog
+* Mon Sep 21 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.54-alt1
+- option fixes:
+  + re-fill mount options when switching between mount points with identical
+    known options (Closes: #46928)
+  + activate OK button when re-filling mount options (Closes: #46903)
+  + do not deactivate OK button if non-required value becomes empty
+    (Closes: #46786, #46842)
+- help: suggest ext4 as default (Closes: #59958)
+
 * Thu Aug 27 2026 Oleg Solovyov <mcpain@altlinux.org> 0.4.53-alt1
 - autoinstall: replace "/" -> "_" in default volume names for LVM
 

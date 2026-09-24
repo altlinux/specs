@@ -6,7 +6,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt94
+Release: alt95
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,12 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Sep 24 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt95
+- btrfs: handle deleting btrfs raid (Closes: #46187)
+- lvm: fix removing one and only removable PV from VG (Closes: #47022)
+- gpt: re-read device maj:min after re-creating partitons (Closes: #60510)
+- raid: retry stopping array on EBUSY
+
 * Thu Jul 16 2026 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt94
 - commit: fix multi-disk LVM
 
