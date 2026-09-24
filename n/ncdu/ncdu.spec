@@ -1,22 +1,28 @@
 Name: ncdu
-Version: 2.9.2
+Version: 2.11.1
 Release: alt1
 
 Summary: Text-based disk usage viewer
 
 Group: File tools
 License: MIT
-Url: http://dev.yorhel.nl/ncdu/
+Url: https://github.com/BratishkaErik/ncdu
 
-Source: http://dev.yorhel.nl/download/%name-%version.tar
+# The original author (Yorhel) passed away in 2026; the project is continued
+# at https://github.com/BratishkaErik/ncdu, which is the only variant
+# buildable with Zig 0.16.
+# Source-url: https://github.com/BratishkaErik/ncdu/releases/download/v%version/%name-%version-src.tar.gz
+Source: %name-%version.tar
+Source1: %name-development-%version.tar
 
 ExclusiveArch: %zig_arches
 
 BuildRequires(pre): rpm-macros-zig
 BuildRequires: zig libncursesw-devel libzstd-devel
 
-# No build.zig.zon, disable system integration
-%define _zig_system_integration %nil
+# translate_c resolves its test case dir against its own build root and
+# requires it to be absolute, so --system must get an absolute path
+%define _zig_vendor_dir %_builddir/%name-%version/zig-pkg
 
 %description
 ncdu (NCurses Disk Usage) is a curses-based version of the well-known 'du',
@@ -24,6 +30,10 @@ and provides a fast way to see what directories are using your disk space.
 
 %prep
 %setup
+
+# zig packages for the offline --system build, prepared by rpmgs
+# in .gear/predownloaded-development (hasher has no network)
+tar -xf %{SOURCE1}
 
 %build
 %zig_build
@@ -38,6 +48,12 @@ install -Dpm644 ncdu.1 %buildroot%_man1dir/ncdu.1
 %_man1dir/ncdu.1.*
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
+- new version (2.11.1) via gear-uupdate
+- switch upstream to https://github.com/BratishkaErik/ncdu: the original
+  author passed away in 2026 and 2.9.2 does not build with Zig 0.16
+- ship predownloaded zig deps in Source1 for offline build
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.2-alt1
 - new version 2.9.2
 - switch to Zig build system (ncdu 2.x)
