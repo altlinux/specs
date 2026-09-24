@@ -6,7 +6,7 @@
 %define libkirigamiaddonscomponents libkirigamiaddonscomponents%sover
 
 Name: kf6-%rname
-Version: 1.12.1
+Version: 1.14.1
 Release: alt1
 %K6init
 
@@ -112,6 +112,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiAddonsComponents.so.*
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 1.14.1-alt1
+- new version
+
 * Tue Jun 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.12.1-alt1
 - new version
 
