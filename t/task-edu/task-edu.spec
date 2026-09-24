@@ -264,6 +264,10 @@ Requires: thunderbird \
 %endif \
 %{nil}
 
+%define edu_hardware_quirk_reqs \
+Requires: udev-rules-nvidia-sleep \
+%{nil}
+
 %define edu_base_reqs \
 %edu_programming_reqs \
 %edu_graphics_reqs \
@@ -284,6 +288,7 @@ Requires: thunderbird \
 %edu_antivirus_reqs \
 %edu_burning_reqs \
 %edu_mail_reqs \
+%edu_hardware_quirk_reqs \
 %{nil}
 
 %define edu_python_reqs \
@@ -404,7 +409,7 @@ Requires: OpenBoard \
 %{nil}
 
 Name: task-edu
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -716,6 +721,9 @@ Group: Education
 %files school
 
 %changelog
+* Thu Sep 24 2026 Pavel Petrykin <silverducks@altlinux.org> 1.9.2-alt1
+- Add udev-rules-nvidia-sleep hardware quirk to all installation recipes.
+
 * Thu Sep 24 2026 Pavel Petrykin <silverducks@altlinux.org> 1.9.1-alt1
 - Add xorg-conf-libinput-touchpad to edu_desktop_common_reqs.
 
