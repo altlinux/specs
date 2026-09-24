@@ -24,7 +24,7 @@
 %define Name Parted
 Name: parted
 %define lname lib%name
-Version: 3.7
+Version: 3.8
 Release: alt1
 
 Summary: Flexible partitioning tool
@@ -238,6 +238,9 @@ __MENU__
 
 
 %changelog
+* Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 3.8-alt1
+- 3.7 -> 3.8
+
 * Wed Apr 15 2026 Anton Farygin <rider@altlinux.org> 3.7-alt1
 - 3.6.37 -> 3.7
 
