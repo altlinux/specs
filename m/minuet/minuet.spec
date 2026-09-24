@@ -4,7 +4,7 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: %rname
-Version: 26.04.2
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -16,18 +16,20 @@ License: GPL-2.0-or-later
 Provides:  kde5-minuet = %EVR
 Obsoletes: kde5-minuet < %EVR
 
-Requires: kf6-kirigami
+Requires: kf6-kirigami kf6-kirigami-addons kf6-qqc2-desktop-style
 
 Source: %rname-%version.tar
 
 BuildRequires(pre): rpm-build-kf6
-BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-declarative-devel qt6-svg-devel
+BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel
 BuildRequires: libvulkan-devel
-BuildRequires: drumstick-devel libalsa-devel libfluidsynth-devel
+BuildRequires: drumstick-devel libalsa-devel libfluidsynth-devel libaubio5-devel
 BuildRequires: kf6-kauth-devel kf6-kbookmarks-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel kf6-kconfigwidgets-devel
 BuildRequires: kf6-kcoreaddons-devel kf6-kcrash-devel  kf6-kdoctools-devel kf6-ki18n-devel kf6-kio-devel kf6-kirigami kf6-kirigami-devel
 BuildRequires: kf6-kitemviews-devel kf6-kjobwidgets-devel kf6-kservice-devel kf6-kwidgetsaddons-devel
 BuildRequires: kf6-kxmlgui-devel kf6-solid-devel
+BuildRequires: kf6-qqc2-desktop-style kf6-qqc2-desktop-style-devel
+BuildRequires: kf6-kirigami-addons kf6-kirigami-addons-devel
 
 %description
 Minuet is an application for music education. It features a set of ear training exercises regarding intervals, chords, scales and more.
@@ -94,6 +96,9 @@ Requires: %name-common
 
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Tue Jun 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 
