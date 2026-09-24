@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2026.07
-Release: alt2
+Release: alt3
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -39,6 +39,16 @@ sed '/^CONFIG_DEFAULT_FDT_FILE/ s,powkiddy-x55,powkiddy-x35s,' \
 sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3566-powkiddy-x55,rk3568-anbernic-rg-ds,' \
 	< configs/powkiddy-x55-rk3566_defconfig \
 	> configs/anbernic-rg-ds-rk3568_defconfig
+# ALT#60207
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3588s-orangepi-5,rk3588s-orangepi-5-pro,' \
+	< configs/orangepi-5-rk3588s_defconfig \
+	> configs/orangepi-5-pro-rk3588s_defconfig
+# ALT#60270
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3588-generic,rk3588-repka-pi5,' \
+	< configs/generic-rk3588_defconfig \
+	> configs/repka_pi5_defconfig
+echo 'CONFIG_DEVICE_TREE_INCLUDES="rk3588-repka-pi5-u-boot.dtsi"' \
+	>> configs/repka_pi5_defconfig
 sed -i '/^CONFIG_FS_EXFAT/d' configs/*
 rm configs/generic-rk33*_defconfig
 
@@ -87,6 +97,10 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Wed Sep 23 2026 Dmitry Terekhin <jqt4@altlinux.org> 2026.07-alt3
+- added Orange Pi 5 Pro board (closes: 60207)
+- added RBS Repka Pi 5 board (closes: 60270)
+
 * Fri Aug 14 2026 Anton Farygin <rider@altlinux.org> 2026.07-alt2
 - fixed build with dtc 1.8.1: disabled node_name_not_empty check
   (binman template nodes like @atf-SEQ are intentional)
