@@ -2,13 +2,13 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 11.0
-%define preview ~rc1
+%define preview ~rc.1.26425.128
 %define _dotnet_coreversion 11.0.0%preview
 %define _dotnet_sdkversion 11.0.100%preview
 
-%define _dotnet_corerelease 11.0.0-preview.1.26104.118
+%define _dotnet_corerelease 11.0.0-rc.1.26425.128
 # used for build
-%define _dotnet_sdkrelease 11.0.100-preview.1.26104.118
+%define _dotnet_sdkrelease 11.0.100-rc.1.26425.128
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
 
@@ -49,11 +49,12 @@ AutoProv: no
 
 # TODO:
 BuildRequires(pre): rpm-macros-dotnet
+BuildRequires: /usr/bin/ninja
 BuildRequires(pre): rpm-macros-features >= 0.6
 
 BuildRequires: /proc
 
-BuildRequires: clang llvm
+BuildRequires: clang llvm lld
 BuildRequires: python3 >= 3.7.1
 
 # cmake_minimum_required for Native and mono
@@ -63,7 +64,7 @@ BuildRequires: libstdc++-devel
 %if_with libunwind
 BuildRequires: libunwind-devel >= 1.5
 %endif
-BuildRequires: liblttng-ust-devel liblwp-devel
+BuildRequires: liblttng-ust-devel
 
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
@@ -203,10 +204,18 @@ cat <<EOF >.version
 %_dotnet_corerelease
 EOF
 
+# Native-only builds do not generate product version files through MSBuild.
+# Prepare them before compiling so CoreCLR embeds the actual runtime version.
+mkdir -p artifacts/obj
+eng/native/version/copy_version_files.sh
+subst 's|Version N/A|Version %_dotnet_corerelease|' artifacts/obj/_version.c
+subst 's|RuntimeProductVersion 0.0.0-dev|RuntimeProductVersion %_dotnet_corerelease|' artifacts/obj/runtime_version.h
+
 # build CLR
 cd src/coreclr/
 bash -x ./build-runtime.sh \
-    %debrelopt -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
+    %debrelopt -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0 -keepnativesymbols\
+    -cmakeargs -DFEATURE_DYNAMIC_CODE_COMPILED=1 \
     -cmakeargs -DENABLE_LLDBPLUGIN=0 \
 %if_without single_file_diagnostics
     -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
@@ -221,10 +230,6 @@ cd -
 cd src/native/libs/
 bash -x ./build-native.sh %debrelopt
 cd -
-
-# FIXME: allow get the release info from release.json file
-subst 's|Version N/A|Version %_dotnet_corerelease|' artifacts/obj/_version.c
-subst 's|RuntimeProductVersion 0.0.0-dev|RuntimeProductVersion %_dotnet_corerelease|' artifacts/obj/runtime_version.h
 
 # build host commands
 export artifacts=$(pwd)/artifacts
@@ -293,6 +298,7 @@ cp -a %bootstrapdir/shared/Microsoft.NETCore.App/%_dotnet_corerelease/Microsoft.
 
 # missed in the official package
 rm -fv %buildroot%_dotnet_shared/libsuperpmi-shim-*.so
+rm -fv %buildroot%_dotnet_shared/libmscordbi_universal.so
 rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 
 %check
@@ -308,6 +314,7 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 
 # managed code
 %_dotnet_shared/Microsoft.CSharp.dll
+%_dotnet_shared/Microsoft.Extensions.*.dll
 %_dotnet_shared/Microsoft.VisualBasic.Core.dll
 %_dotnet_shared/Microsoft.VisualBasic.dll
 %_dotnet_shared/Microsoft.Win32.Primitives.dll
@@ -388,6 +395,15 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rc.1.26425.128-alt1
+- Update to .NET Runtime 11.0.0-rc.1.26425.128.
+
+* Fri Sep 18 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rpreview.7.26381.103-alt2
+- Enable dynamic code compilation in the native-only CoreCLR build.
+
+* Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rpreview.7.26381.103-alt1
+- .NET Runtime 11.0.0-preview.7.26381.103
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rc1-alt1
 - .NET 11.0.0.rc1
 - initial build for ALT Sisyphus

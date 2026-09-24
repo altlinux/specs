@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 11.0
-%define preview ~rc1
+%define preview ~rc.1.26425.128
 %define _dotnet_coreversion 11.0.0%preview
 
-%define _dotnet_corerelease 11.0.0-preview.1.26104.118
-%define _dotnet_corerelease1 11.0.0-preview.1.26104.118
+%define _dotnet_corerelease 11.0.0-rc.1.26425.128
+%define _dotnet_corerelease1 11.0.0-rc.1.26425.128
 
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
@@ -133,6 +133,12 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rc.1.26425.128-alt1
+- Update to ASP.NET Core 11.0.0-rc.1.26425.128.
+
+* Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rpreview.7.26381.103-alt1
+- ASP.NET Core 11.0.0-preview.7.26381.103
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.0~rc1-alt1
 - ASP.NET 11.0.0 rc1
 - initial release for ALT Sisyphus

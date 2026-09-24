@@ -1,17 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 11.0
-%define preview ~rc1
+%define preview ~rc.1.26425.128
 %define _dotnet_coreversion 11.0.0%preview
 %define _dotnet_sdkversion 11.0.100%preview
 
-%define _dotnet_corerelease 11.0.0-preview.1.26104.118
+%define _dotnet_corerelease 11.0.0-rc.1.26425.128
 %define _dotnet_corerelease1 %nil
 
-%define _dotnet_sdkmanifestsrelease0 11.0.100-preview.1
-#define _dotnet_sdkmanifestsrelease1 9.0.100
-%define _dotnet_sdkmanifestsrelease 11.0.100
-%define _dotnet_sdkrelease 11.0.100-preview.1.26104.118
+%define _dotnet_sdkmanifestsrelease1 11.0.100-preview.6
+%define _dotnet_sdkmanifestsrelease 11.0.100-rc.1
+%define _dotnet_sdkrelease 11.0.100-rc.1.26425.128
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -50,6 +49,12 @@ ExclusiveArch: x86_64 aarch64
 #BuildPreReq: /proc
 
 %set_verify_elf_method textrel=relaxed
+# Microsoft prebuilt aarch64 dotnet has a malformed ELF version table; skip only it.
+%add_verify_elf_skiplist %_dotnetdir/dotnet
+%add_verify_elf_skiplist %_dotnetdir/host/fxr/*/libhostfxr.so
+%add_verify_elf_skiplist %_dotnetdir/packs/Microsoft.NETCore.App.Host.%_dotnet_rid/*/runtimes/%_dotnet_rid/native/apphost
+%add_verify_elf_skiplist %_dotnetdir/packs/Microsoft.NETCore.App.Host.%_dotnet_rid/*/runtimes/%_dotnet_rid/native/libnethost.so
+%add_verify_elf_skiplist %_dotnetdir/packs/Microsoft.NETCore.App.Host.%_dotnet_rid/*/runtimes/%_dotnet_rid/native/singlefilehost
 AutoReq: no,lib,shell
 AutoProv: no
 
@@ -86,6 +91,10 @@ tar xfv %SOURCE2
 %install
 mkdir -p %buildroot%_libdir/%name/
 cp -a * %buildroot%_libdir/%name/
+%ifarch aarch64
+# The SDK also carries x86_64-only tools; native linux-arm64 tools are present.
+rm -rf %buildroot%_libdir/%name/sdk/*/DotnetTools/aspnetcoretools/*/tools/any/linux-x64
+%endif
 
 # due missed lldb (https://bugzilla.altlinux.org/show_bug.cgi?id=33411)
 rm -f %buildroot%_libdir/%name/shared/Microsoft.NETCore.App/*/libsosplugin.so
@@ -103,6 +112,12 @@ strip \
 	host/fxr/%_dotnet_corerelease/libhostfxr.so \
 	dotnet \
 	#
+
+%check
+export DOTNET_ROOT=%buildroot%_dotnetdir
+export PATH="$DOTNET_ROOT:$PATH"
+"$DOTNET_ROOT/dotnet" --list-sdks | grep -F "%_dotnet_sdkrelease"
+"$DOTNET_ROOT/dotnet" --list-runtimes | grep -F "Microsoft.NETCore.App %_dotnet_corerelease"
 
 %files
 %dir %_dotnetdir/
@@ -141,5 +156,12 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rc.1.26425.128-alt1
+- Update to .NET SDK 11.0.100-rc.1.26425.128.
+
+* Tue Sep 01 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rpreview.7.26381.103-alt1
+- .NET 11 preview.7 SDK.
+- Update SDK manifests path.
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rc1-alt1
 - The .NET 11.0.0-rc.1 and .NET SDK 11.0.100-rc.1 release

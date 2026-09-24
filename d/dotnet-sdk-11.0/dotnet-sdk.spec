@@ -4,17 +4,16 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 11.0
-%define preview ~rc1
+%define preview ~rc.1.26425.128
 %define _dotnet_coreversion 11.0.0%preview
 %define _dotnet_sdkversion 11.0.100%preview
 
-%define _dotnet_corerelease 11.0.0-preview.1.26104.118
-%define _dotnet_corerelease1 11.0.0-preview.1.26104.118
+%define _dotnet_corerelease 11.0.0-rc.1.26425.128
+%define _dotnet_corerelease1 11.0.0-rc.1.26425.128
 
-%define _dotnet_sdkmanifestsrelease0 11.0.100-preview.1
-#define _dotnet_sdkmanifestsrelease1 9.0.100
-%define _dotnet_sdkmanifestsrelease 11.0.100
-%define _dotnet_sdkrelease 11.0.100-preview.1.26104.118
+%define _dotnet_sdkmanifestsrelease1 11.0.100-preview.6
+%define _dotnet_sdkmanifestsrelease 11.0.100-rc.1
+%define _dotnet_sdkrelease 11.0.100-rc.1.26425.128
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -117,6 +116,13 @@ cp -a %bootstrapdir/sdk/%_dotnet_sdkrelease/* %buildroot%_dotnet_sdk/
 cp -a %bootstrapdir/sdk/%_dotnet_sdkrelease/.version %buildroot%_dotnet_sdk/
 cp -a %bootstrapdir/sdk/%_dotnet_sdkrelease/.toolsetversion %buildroot%_dotnet_sdk/
 
+# This optional AOT SDK library is prebuilt; without it the muxer uses dotnet.dll.
+rm -f %buildroot%_dotnet_sdk/libdotnet-aot.so
+
+# RC1 ships the ASP.NET CLI tools only as prebuilt NativeAOT binaries.
+# Do not package them until dotnet-aspnetcore builds aspnetcoretools from source.
+rm -rf %buildroot%_dotnet_sdk/DotnetTools/aspnetcoretools
+
 # dotnet-targeting-pack
 mkdir -p %buildroot%_dotnetdir/packs/
 cp -a %bootstrapdir/packs/Microsoft.NETCore.App.Ref/ %buildroot%_dotnetdir/packs/
@@ -145,11 +151,11 @@ cp -a %bootstrapdir/sdk-manifests/%_dotnet_sdkmanifestsrelease0/* %buildroot%_do
 rm -vf %buildroot%_dotnet_sdk/AppHostTemplate/apphost
 cp -v %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_sdk/AppHostTemplate/apphost
 
-# can't build right now this wrappers
-#rm -v %buildroot%_dotnet_sdk/Roslyn/bincore/{VBCSCompiler,csc,vbc}
-# bash implementation of CreateAppHost
+# Replace prebuilt launchers with the apphost built by dotnet-runtime.
+# This is a shell implementation of CreateAppHost.
 PLACEHOLDER="c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2"
-for i in %buildroot%_dotnet_sdk/Roslyn/bincore/{VBCSCompiler,csc,vbc} ; do
+for i in %buildroot%_dotnet_sdk/MSBuild \
+         %buildroot%_dotnet_sdk/Roslyn/bincore/{VBCSCompiler,csc,vbc} ; do
     cp -v %buildroot%_dotnet_sdk/AppHostTemplate/apphost $i
     APP_DLL="$(basename $i).dll\x0"
     PADDED_APP_DLL=$(printf "%%-${#PLACEHOLDER}s" "$APP_DLL")
@@ -187,6 +193,14 @@ done
 %endif
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rc.1.26425.128-alt1
+- Update to .NET SDK 11.0.100-rc.1.26425.128.
+
+* Tue Sep 01 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rpreview.7.26381.103-alt1
+- .NET 11 preview.7 SDK.
+- Update SDK manifests paths.
+- Replace prebuilt launchers and remove prebuilt NativeAOT tools.
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rc1-alt1
 - .NET SDK 11.0.100 rc 1
 - initial build for ALT Sisyphus
