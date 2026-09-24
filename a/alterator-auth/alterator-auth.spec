@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.53
+Version: 0.54
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -191,6 +191,9 @@ install -m 644 alterator-framework/ts/auth_ru.qm %buildroot%_datadir/alterator-f
 %files -n task-auth-freeipa
 
 %changelog
+* Thu Sep 24 2026 Andrey Cherepanov <cas@altlinux.org> 0.54-alt1
+- system-auth: added --target-server option to connect to a specific server (ALT #40903)
+
 * Tue Jun 30 2026 Andrey Limachko <liannnix@altlinux.org> 0.53-alt1
 - Add alterator-framework UI support (thx Oleg Chagaev). 
 
