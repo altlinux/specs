@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        153.0.8010.52
+Version:        154.0.8037.57
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -97,7 +97,7 @@ Patch013: 0013-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch014: 0014-DEBIAN-build-using-system-openjpeg.patch
 Patch015: 0015-DEBIAN-use-system-jpeg-library.patch
 Patch016: 0016-DEBIAN-disable-font-tests.patch
-Patch017: 0017-DEBIAN-fixes-crubit.patch
+Patch017: 0017-DEBIAN-disable-tests.patch
 Patch018: 0018-Use-yandex-search-as-default.patch
 Patch019: 0019-DEBIAN-bindgen.patch
 
@@ -123,7 +123,7 @@ Patch037: 0037-ALT-clang-path.patch
 Patch038: 0038-DEBIAN-iota.patch
 Patch039: 0039-DEBIAN-llvm-19-value-or.patch
 
-Patch040: 0040-DEBIAN-foreach.patch
+Patch040: 0040-DEBIAN-verification-tokens.patch
 Patch041: 0041-DEBIAN-highway-include-path.patch
 Patch042: 0042-DEBIAN-material-utils.patch
 Patch043: 0043-DEBIAN-memory-allocator-dcheck-assert-fix.patch
@@ -131,7 +131,7 @@ Patch044: 0044-DEBIAN-av1-vaapi.patch
 Patch045: 0045-DEBIAN-node-version-ck.patch
 Patch046: 0046-DEBIAN-libcpp-headers.patch
 Patch047: 0047-DEBIAN-libpng-testonly.patch
-# Patch048:
+Patch048: 0048-DEBIAN-disable-ai-search-shortcuts.patch
 Patch049: 0049-DEBIAN-clang19-cookie-string-view.patch
 
 # Patch050:
@@ -143,9 +143,9 @@ Patch055: 0055-DEBIAN-llvm-22-clang22.patch
 Patch056: 0056-ALT-highway-path.patch
 Patch057: 0057-DEBIAN-llvm-22-shut-up-clang.patch
 Patch058: 0058-DEBIAN-llvm.patch
-Patch059: 0059-DEBIAN-rust-cbor.patch
+Patch059: 0059-DEBIAN-llvm-19-clone-traits.patch
 
-Patch060: 0060-DEBIAN-llvm-19-clone-traits.patch
+Patch060: 0060-DEBIAN-ungoogled-crubit.patch
 Patch061: 0061-DEBIAN-autofill-binarypb.patch
 Patch062: 0062-DEBIAN-nodejs-set-intersection.patch
 Patch063: 0063-OPENSUSE-chromium-146-static-assert.patch
@@ -743,6 +743,118 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Thu Sep 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 154.0.8037.57-alt1
+- New version (154.0.8037.57).
+- Fixes:
+  + CVE-2026-95274: Improper output encoding in DevTools
+  + CVE-2026-95275: Incorrect reference resolution in MediaStream
+  + CVE-2026-95276: Improper input validation in Themes
+  + CVE-2026-95277: Use after free in Views
+  + CVE-2026-95278: Missing authorization in WakeLock
+  + CVE-2026-95279: UI misrepresentation in Omnibox
+  + CVE-2026-95280: Race condition in V8
+  + CVE-2026-95281: Buffer overflow in ANGLE
+  + CVE-2026-95282: Use after free in Platform
+  + CVE-2026-95283: Buffer overflow in Tint
+  + CVE-2026-95284: Buffer overflow in ANGLE
+  + CVE-2026-95285: Missing authorization in WebView
+  + CVE-2026-95286: Type confusion in Bindings
+  + CVE-2026-95287: Missing authorization in Navigation
+  + CVE-2026-95288: UI misrepresentation in Mobile
+  + CVE-2026-95289: Incorrect authorization in Scroll
+  + CVE-2026-95290: Missing authorization in NFC
+  + CVE-2026-95291: UI misrepresentation in SecurityIndicators
+  + CVE-2026-95292: Incorrect authorization in Safebrowsing
+  + CVE-2026-95293: Uninitialized resource in GPU
+  + CVE-2026-95294: UI misrepresentation in Browser
+  + CVE-2026-95295: Information leak in Mobile
+  + CVE-2026-95296: Missing authorization in Core
+  + CVE-2026-95297: Missing authorization in Contextual Tasks
+  + CVE-2026-95298: Use after free in Browser
+  + CVE-2026-95299: Use after free in GPU
+  + CVE-2026-95300: Missing authorization in DevTools
+  + CVE-2026-95301: Missing authorization in Extensions
+  + CVE-2026-95302: Incorrect authorization in WebAPKs
+  + CVE-2026-95303: Incomplete cleanup in SmartCard
+  + CVE-2026-95304: Out of bounds write in V8
+  + CVE-2026-95305: UI misrepresentation in Chromoting
+  + CVE-2026-95306: Type confusion in V8
+  + CVE-2026-95307: UI misrepresentation in ExtensionsMenu
+  + CVE-2026-95308: Integer overflow in Metrics
+  + CVE-2026-95309: UI misrepresentation in Mobile
+  + CVE-2026-95310: Use after free in AdFilter
+  + CVE-2026-95311: Free of non-heap memory in Fonts
+  + CVE-2026-95312: Information leak in Passwords
+  + CVE-2026-95313: Use after free in Fullscreen
+  + CVE-2026-95314: Incorrect authorization in HID
+  + CVE-2026-95315: Use after free in Aura
+  + CVE-2026-95316: Unchecked return value in Performance
+  + CVE-2026-95317: Incorrect authorization in MediaCapture
+  + CVE-2026-95318: Buffer overflow in Video
+  + CVE-2026-95319: Use after free in Printing
+  + CVE-2026-95320: Missing authorization in Navigation
+  + CVE-2026-95321: UI misrepresentation in Payments
+  + CVE-2026-95322: Out of bounds write in GPU
+  + CVE-2026-95323: UI misrepresentation in Chromium
+  + CVE-2026-95324: Uninitialized resource in GPU
+  + CVE-2026-95325: Use after free in ANGLE
+  + CVE-2026-95326: Incomplete cleanup in Bluetooth
+  + CVE-2026-95327: Information leak in Networking
+  + CVE-2026-95328: Confused deputy in Mobile
+  + CVE-2026-95329: Out of bounds write in WebGL
+  + CVE-2026-95330: Improper state validation in Downloads
+  + CVE-2026-95331: Out of bounds write in ANGLE
+  + CVE-2026-95332: Use of uninitialized variable in Tint
+  + CVE-2026-95333: Use after free in Metrics
+  + CVE-2026-95334: Incorrect reference resolution in WebProtect
+  + CVE-2026-95335: Use after free in HID
+  + CVE-2026-95336: Information leak in Transactions Platform
+  + CVE-2026-95337: UI misrepresentation in Messages
+  + CVE-2026-95338: Use after free in PDFium
+  + CVE-2026-95339: Use after free in ServiceWorker
+  + CVE-2026-95340: Incorrect authorization in PictureInPicture
+  + CVE-2026-95341: Improper input validation in Desktop
+  + CVE-2026-95342: Missing authorization in V8
+  + CVE-2026-95343: Use after free in WebAudio
+  + CVE-2026-95344: Race condition in DevTools
+  + CVE-2026-95345: Use after free in Actor
+  + CVE-2026-95346: UI misrepresentation in Chromoting
+  + CVE-2026-95347: Use after free in Updater
+  + CVE-2026-95348: Use after free in Bluetooth
+  + CVE-2026-95349: Buffer overflow in WebGL
+  + CVE-2026-95350: Buffer overflow in ANGLE
+  + CVE-2026-95351: Use after free in Views
+  + CVE-2026-95352: Incorrect authorization in DevTools
+  + CVE-2026-95353: Use after free in Bindings
+  + CVE-2026-95354: Use after free in Verifier
+  + CVE-2026-95355: Incorrect authorization in Navigation
+  + CVE-2026-95356: Use after free in WindowDialog
+  + CVE-2026-95357: Out of bounds write in GPU
+  + CVE-2026-95358: Incorrect authorization in Mobile
+  + CVE-2026-95359: Uninitialized resource in GPU
+  + CVE-2026-95360: Race condition in Editing
+  + CVE-2026-95361: Confused deputy in DevTools
+  + CVE-2026-95362: Cross-site request forgery in DevTools
+  + CVE-2026-95363: UI misrepresentation in FileSystem
+  + CVE-2026-95364: Improper input validation in Passwords
+  + CVE-2026-95365: Type confusion in IndexedDB
+  + CVE-2026-95366: Use of released resource in Core
+  + CVE-2026-95367: Information leak in DataTransfer
+  + CVE-2026-95368: Incorrect authorization in DevTools
+  + CVE-2026-95369: Inappropriate implementation in XML
+  + CVE-2026-95370: Inappropriate implementation in NFC
+  + CVE-2026-95371: Missing authorization in Views
+  + CVE-2026-95372: Use after free in Chromecast
+  + CVE-2026-95373: Use after free in DevTools
+  + CVE-2026-95374: Incorrect authorization in Network
+  + CVE-2026-95375: Incorrect authorization in BrowserTag
+  + CVE-2026-95376: Externally controlled reference in DevTools
+  + CVE-2026-95380: Type confusion in V8
+  + CVE-2026-95381: Improper input validation in Printing
+  + CVE-2026-95382: Improper input validation in Auth
+  + CVE-2026-95384: Race condition in Transactions Platform
+  + CVE-2026-95385: Inappropriate implementation in PlatformIntegration
+
 * Sat Sep 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 153.0.8010.52-alt1
 - New version (153.0.8010.52).
 - Fixes:
