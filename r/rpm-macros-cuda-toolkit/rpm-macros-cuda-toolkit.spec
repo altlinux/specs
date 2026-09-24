@@ -1,5 +1,5 @@
 Name: rpm-macros-cuda-toolkit
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: RPM helper macros to rebuild packages depending on nvidia-cuda-toolkit
@@ -25,5 +25,9 @@ install -D -m644 %SOURCE0 %buildroot%_rpmmacrosdir/cuda-toolkit
 %_rpmmacrosdir/cuda-toolkit
 
 %changelog
+* Thu Sep 24 2026 Mikhail Tergoev <fidel@altlinux.org> 0.2-alt1
+- Fix %%cuda_version and %%cuda_gcc_version for p11 (Closes: #60651)
+- For CUDA 12 returned Maxwell/Pascal/Volta archs to %%cuda_archs
+
 * Mon Sep 14 2026 Mikhail Tergoev <fidel@altlinux.org> 0.1-alt1
 - Initial build for ALT Sisyphus
