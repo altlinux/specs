@@ -5,7 +5,7 @@
 
 Name: qt5-script
 Version: 5.15.18
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt5 - QtScript component
@@ -65,7 +65,8 @@ Requires: libqt5-core = %_qt5_version
 %setup -qn %qt_module-everywhere-src-%version
 %ifarch %e2k
 %patch2000 -p2
-%else
+%endif
+%ifarch %loongarch64
 %patch1 -p1
 %endif
 sed -i -E 's|MODULE_VERSION[[:space:]]+.*$|MODULE_VERSION = %version|' .qmake.conf
@@ -110,6 +111,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 5.15.18-alt3
+- using LoongArch patch only on LoongArch
+
 * Wed Sep 23 2026 Michael Shigorin <mike@altlinux.org> 5.15.18-alt2
 - ALT patch for e2k support (ilyakurdyukov@)
 
