@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.15
+Version: 0.1.16
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -30,6 +30,8 @@ Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-interface-diag >= 0.1.4
 Requires: libtomlplusplus
 Requires: icon-theme-adwaita-legacy
+Requires: alterator-backend-browsing >= 0.1.0
+Requires: alt-components >= 0.6.16
 
 Source0: %name-%version.tar
 
@@ -61,6 +63,13 @@ install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/appl
 %_man1dir/%name.1*
 
 %changelog
+* Wed Sep 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.16-alt1
+- fix test launch sequence (thx Alexey Saprunov)
+- fix version header generation (thx Alexey Saprunov)
+- clarify diagnostic tool installation status (thx Evgenii Sozonov)
+- update application icon
+- remove the backport entry for p11 from the changelog
+
 * Tue Feb 10 2026 Kozyrev Yuri <kozyrevid@altlinux.org> 0.1.15-alt1
 - chore: update changelog (thx Andrey Alekseev)
 - fix: prevent QSpinBox from triggerring commitData early (thx Andrey Alekseev)
