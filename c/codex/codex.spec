@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.146.0
+Version: 0.156.1
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -25,7 +25,8 @@ BuildRequires: help2man
 BuildRequires: openssl-devel
 BuildRequires: rust-cargo
 BuildRequires: libcap-devel
-# Code Mode embeds V8, which is built from the vendored sources (V8_FROM_SOURCE):
+# Code Mode runs in the codex-code-mode-host helper, which embeds V8. V8 is
+# built from the vendored sources (V8_FROM_SOURCE):
 # gn/ninja drive that build, clang compiles it, libclang is used by bindgen and
 # python3 runs the V8 build scripts.
 BuildRequires: gn
@@ -83,10 +84,12 @@ cargo build \
 	--config=.cargo/vendor-config.toml \
 	--manifest-path=codex-rs/Cargo.toml \
 	%_smp_mflags --offline --release \
-	-p codex-cli
+	-p codex-cli -p %name-code-mode-host
 
 %install
 install -Dp %name-rs/target/release/%name -t %buildroot%_bindir
+# Code Mode runs in this helper process; InstallContext looks for it next to codex.
+install -Dp %name-rs/target/release/%name-code-mode-host -t %buildroot%_bindir
 mkdir -p %buildroot%_datadir/bash-completion/completions \
 	 %buildroot%_datadir/fish/vendor_completions.d \
 	 %buildroot%_datadir/zsh/site-functions
@@ -109,12 +112,19 @@ codex --version | grep -Fx '%name-cli %version'
 %define _customdocdir %_docdir/%name
 %doc CHANGELOG.md LICENSE README.md docs README.alt
 %_bindir/codex
+%_bindir/codex-code-mode-host
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
 %_man1dir/codex.1*
 
 %changelog
+* Wed Sep 23 2026 Alexey Shabalin <shaba@altlinux.org> 0.156.1-alt1
+- Update to rust-v0.156.1.
+
+* Mon Sep 21 2026 Alexey Shabalin <shaba@altlinux.org> 0.155.1-alt1
+- updated from 0.146.0 to 0.155.1
+
 * Wed Aug 05 2026 Alexey Shabalin <shaba@altlinux.org> 0.146.0-alt1
 - Update to rust-v0.146.0.
 - Build the V8 runtime from the vendored sources instead of stubbing Code Mode
