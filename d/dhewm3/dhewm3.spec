@@ -1,8 +1,8 @@
 %define git %nil
 
 Name: dhewm3
-Version: 1.5.4
-Release: alt2
+Version: 1.5.5
+Release: alt1
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
 License: GPL-3.0-only
@@ -22,6 +22,7 @@ BuildRequires: libcurl-devel
 BuildRequires: libopenal-devel
 BuildRequires: zlib-devel
 BuildRequires: libbacktrace-devel
+BuildRequires: libstb-devel
 
 %description
 dhewm3 is a DOOM 3 GPL source port.
@@ -61,6 +62,10 @@ $HOME/.dhewm3/
 %setup
 
 %build
+pushd neo/renderer
+ln -svf %_includedir/stb/stb_image.h \
+    %_includedir/stb/stb_image_write.h ./
+popd
 cd neo
 %cmake_insource
 
@@ -96,6 +101,10 @@ install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_i
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Sep 24 2026 L.A. Kostis <lakostis@altlinux.ru> 1.5.5-alt1
+- 1.5.5.
+- Unbundle stb.
+
 * Thu Feb 27 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.4-alt2
 - Apply patch from upstream to unlock 32bit in bundled zlib.
 
