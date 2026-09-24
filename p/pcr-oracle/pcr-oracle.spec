@@ -9,7 +9,7 @@
 %endif
 
 Name: pcr-oracle
-Version: 0.6.4
+Version: 0.6.6
 Release: alt1
 
 Summary: Predict TPM PCR values for future boot
@@ -18,7 +18,9 @@ Group: System/Configuration/Boot and Init
 
 Url: https://github.com/openSUSE/pcr-oracle
 VCS: https://github.com/openSUSE/pcr-oracle
+
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: libelf-devel
 BuildRequires: libssl-devel
@@ -51,6 +53,7 @@ and files etc as found in the running system.
 
 %prep
 %setup
+%patch0 -p1
 
 # fix libjson pkgname
 sed -i '/uc_pkg_config_check_package/ s/json/json-c/' ./microconf/stage3/05-json
@@ -83,7 +86,10 @@ vm-run --sbin --udevd --kvm=cond \
        -device %swtpm_device,tpmdev=tpm0 \
        --heredoc <<EOF
 set -eux
-for test in ./test*.sh; do
+# the build tree is a 9p mount, so tar running as root inside the VM
+# cannot restore the ownership recorded in the testcase tarballs
+export TAR_OPTIONS=--no-same-owner
+for test in ./tests/test*.sh; do
     \$test
 done
 EOF
@@ -92,8 +98,16 @@ EOF
 %doc README.md LICENSE
 %_bindir/pcr-oracle
 %_man8dir/pcr-oracle.*
+%_bindir/tpm2key-tool
+%_man8dir/tpm2key-tool.*
 
 %changelog
+* Thu Sep 24 2026 Egor Ignatov <egori@altlinux.org> 0.6.6-alt1
+- New version 0.6.6.
+
+* Wed Aug 19 2026 Egor Ignatov <egori@altlinux.org> 0.6.5-alt1
+- New version 0.6.5.
+
 * Fri Jul 17 2026 Egor Ignatov <egori@altlinux.org> 0.6.4-alt1
 - New version 0.6.4.
 
