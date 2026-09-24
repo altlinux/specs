@@ -5,7 +5,7 @@
 
 Name: accountsservice
 Version: 26.27.3
-Release: alt3
+Release: alt4
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -40,8 +40,6 @@ Requires: lib%name%sover = %EVR
 %package -n lib%name%sover
 Summary: Client-side library to talk to accountservice
 Group: System/Libraries
-
-Provides: lib%name = %EVR
 
 %description -n lib%name%sover
 The libaccountsservice package contains a library that can
@@ -134,6 +132,9 @@ mkdir -p %buildroot%_datadir/%name/interfaces
 %_girdir/*.gir
 
 %changelog
+* Thu Sep 24 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt4
+- Dropped provides to lib%name. (closes: #60639)
+
 * Sat Sep 19 2026 Vladimir Romanov <rirusha@altlinux.org> 26.27.3-alt3
 - Fixed `-gir` subpackage name. (closes: #60594)
 - Removed `Obsoletes` to `lib%name` from `lib%{name}1`.
