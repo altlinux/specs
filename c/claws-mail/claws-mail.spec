@@ -19,7 +19,7 @@
 
 Name:   	claws-mail
 Version:	4.4.0
-Release: 	alt2
+Release: 	alt3
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
 License: 	GPLv3+
@@ -31,6 +31,15 @@ Vcs:		git://git.claws-mail.org/claws.git
 Source: %name-%version.tar
 Source1: ru.po
 Patch:	%name-%version-%release.patch
+
+# Patches from upstream git:
+Patch100: IMAP-check-allocations-and-stop-leaking-message-data.patch
+Patch101: IMAP-fix-a-crash-when-a-fetched-message-carries-no-f.patch
+Patch102: PGP-fix-a-crash-in-key-selection-when-a-key-has-no-u.patch
+Patch103: fix-bug-4518-Crash-when-unloading-PGP-Core.patch
+Patch104: fix-bug-4935-Manage-Sieve-plugin-segfault-on-NULL-pa.patch
+Patch105: fix-bug-4943-Crash-SIGSEGV-in-notification-plugin-wh.patch
+Patch106: vCalendar-fix-a-crash-when-the-temporary-reply-file-.patch
 
 Obsoletes:	%_oldname < %version
 Provides:	%_oldname
@@ -603,6 +612,14 @@ echo 'echo "%version"' >./version
 
 %patch -p1
 
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
+%patch106 -p1
+
 # Merge our own and upstream Russian translations
 msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
 mv -f merged_ru.po po/ru.po
@@ -821,6 +838,22 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Thu Sep 24 2026 Mikhail Efremov <sem@altlinux.org> 4.4.0-alt3
+- Patches from upstream git:
+  + IMAP: check allocations and stop leaking message data when
+    fetching envelopes fails;
+  + IMAP: fix a crash when a fetched message carries no flag
+    information;
+  + PGP: fix a crash in key selection when a key has no user ID;
+  + fix bug 4518, 'Crash when unloading PGP/Core';
+  + fix bug 4935, 'Manage Sieve plugin segfault on NULL paste in
+    editor';
+  + fix bug 4943, 'Crash (SIGSEGV) in notification plugin when
+    clicking Ayatana Indicator preferences page';
+  + vCalendar: fix a crash when the temporary reply file cannot
+    be written.
+- Fixed mangled multibyte characters at HTML chunk boundaries.
+
 * Thu Apr 02 2026 Mikhail Efremov <sem@altlinux.org> 4.4.0-alt2
 - Used our own Russian translation.
 
