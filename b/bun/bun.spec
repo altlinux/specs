@@ -19,10 +19,10 @@
 # steps use Bun.build and Bun.Transpiler, for which Node.js has no equivalent,
 # and Bun's own bundler is what emits the JavaScript builtins with
 # JavaScriptCore private-name intrinsics. The bun-bootstrap package supplies
-# that first Bun. Turn this switch off once bun is in the distribution: it then
-# builds with the Bun that is already there, and no foreign binary is
-# involved.
-%def_with bootstrap
+# that first Bun; once bun is in the distribution it builds with itself and no
+# foreign binary is involved. The self-hosted path is the default; enabling the
+# bootstrap switch falls back to bun-bootstrap.
+%def_without bootstrap
 # Bun pins a Rust nightly, but every unstable feature it uses is present in the
 # distribution compiler; only the nightly gate is missing. Build with the
 # distribution compiler and open the gate, which is what rustc's own bootstrap
@@ -31,7 +31,7 @@
 
 Name: bun
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: Fast all-in-one JavaScript runtime and toolkit
 # Bun itself is MIT, but it is one statically linked executable and everything
@@ -170,7 +170,7 @@ Provides: bundled(zlib-ng)
 # where an upstream bootstrap binary is published for the same architecture.
 ExclusiveArch: x86_64 aarch64
 %if_with bootstrap
-BuildRequires: %name-bootstrap = %version
+BuildRequires: %name-bootstrap
 %else
 BuildRequires: %name
 %endif
@@ -389,5 +389,8 @@ EOF
 %_bindir/%{name}x
 
 %changelog
+* Thu Sep 24 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.2-alt2
+- Build with the bun package itself instead of bun-bootstrap
+
 * Wed Sep 23 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.2-alt1
 - Initial build
