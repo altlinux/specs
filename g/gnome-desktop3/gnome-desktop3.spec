@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 44
+%define ver_major 51
 %define beta %nil
 %define api_ver 3.0
 %define api_ver4 4.0
@@ -19,8 +19,8 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.5
-Release: alt1%beta
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
 License: GPL-2.0 and LGPL-2.0
@@ -43,7 +43,7 @@ Provides: %_name = %version-%release
 %define glib_ver 2.54.0
 %define gdk_pixbuf_ver 2.36.5
 %define gtk3_ver 3.3.6
-%define gtk4_ver 4.4.0
+%define gtk4_ver 4.12.0
 %define gsds_ver 3.28.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
@@ -165,10 +165,11 @@ the functionality of the Gnome 3 desktop library.
 
 %files -n lib%name -f %_name.lang
 %{?_enable_legacy_library:%_libdir/lib%_name-3.so.*}
+%_libdir/libgnome-qr-4.so.*
 %{?_enable_gtk4:
 %_libdir/lib%_name-4.so.*
 %_libdir/libgnome-bg-4.so.*
-%_libdir/libgnome-rr-4.so.*}
+%_libdir/libgnome-qr-gtk-4.so.*}
 %doc AUTHORS NEWS README*
 
 %files -n lib%name-devel
@@ -177,15 +178,16 @@ the functionality of the Gnome 3 desktop library.
 %_includedir/%_name-%api_ver
 %_libdir/lib%_name-3.so
 %_pkgconfigdir/%_name-%api_ver.pc}
+%_libdir/libgnome-qr-4.so
+%_pkgconfigdir/gnome-qr-4.pc
 %{?_enable_gtk4:
 %_includedir/%_name-4.0
 %_libdir/libgnome-bg-4.so
 %_libdir/lib%_name-4.so
-%_libdir/libgnome-rr-4.so
-#%_datadir/gnome/gnome-version.xml
+%_libdir/libgnome-qr-gtk-4.so
 %_pkgconfigdir/gnome-bg-4.pc
 %_pkgconfigdir/%_name-4.pc
-%_pkgconfigdir/gnome-rr-4.pc}
+%_pkgconfigdir/gnome-qr-gtk-4.pc}
 
 %if_enabled gtk_doc
 %files -n lib%name-devel-doc
@@ -200,17 +202,19 @@ the functionality of the Gnome 3 desktop library.
 %if_enabled introspection
 %files -n lib%name-gir
 %{?_enable_legacy_library:%_typelibdir/GnomeDesktop-%api_ver.typelib}
+%_typelibdir/GnomeQR-4.0.typelib
 %{?_enable_gtk4:
 %_typelibdir/GnomeBG-4.0.typelib
 %_typelibdir/GnomeDesktop-4.0.typelib
-%_typelibdir/GnomeRR-4.0.typelib}
+%_typelibdir/GnomeQRGtk-4.0.typelib}
 
 %files -n lib%name-gir-devel
 %{?_enable_legacy_library:%_girdir/GnomeDesktop-%api_ver.gir}
+%_girdir/GnomeQR-4.0.gir
 %{?_enable_gtk4:
 %_girdir/GnomeBG-4.0.gir
 %_girdir/GnomeDesktop-4.0.gir
-%_girdir/GnomeRR-4.0.gir}
+%_girdir/GnomeQRGtk-4.0.gir}
 %endif
 
 %if_enabled installed_tests
@@ -221,6 +225,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Mon Feb 09 2026 Yuri N. Sedunov <aris@altlinux.org> 44.5-alt1
 - 44.5
 
