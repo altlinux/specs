@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 3.0.16
+Version: 3.2.1
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -26,6 +26,9 @@ BuildRequires: pkgconfig(libcares) pkgconfig(openssl)
 BuildRequires: libgperftools-devel
 BuildRequires: node >= 10
 BuildRequires: libjerasure-devel libisal-devel
+%ifarch x86_64 aarch64
+BuildRequires: libisal_crypto-devel
+%endif
 BuildRequires: libgf-complete-devel
 BuildRequires: rdma-core-devel
 
@@ -267,6 +270,8 @@ fi
 %files nfs
 %_bindir/%name-nfs
 %_bindir/vitastor-kv
+%_sbindir/mount.vitastorfs
+%_sbindir/mount.vitastorblk
 
 %files -n lib%name-client
 %_libdir/lib%{name}_client.so.*
@@ -286,6 +291,9 @@ fi
 %endif
 
 %changelog
+* Thu Sep 24 2026 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Tue Sep 01 2026 Alexey Shabalin <shaba@altlinux.org> 3.0.16-alt1
 - 3.0.16
 
