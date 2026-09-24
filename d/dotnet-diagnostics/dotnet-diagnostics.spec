@@ -5,7 +5,7 @@
 
 Name:    dotnet-diagnostics
 Version: %_dotnet_major.505301
-Release: alt1
+Release: alt2
 
 Summary: Various .NET Core runtime diagnostic tools
 License: MIT
@@ -43,6 +43,27 @@ Requires: dotnet-runtime-%_dotnet_major
 
 %description
 %summary.
+
+%package -n dotnet-dump
+Summary:  Simple cross-platform command line tool by .NET Global Tools to collect a dump
+Group:    Development/Tools
+Requires: dotnet-runtime-%_dotnet_major
+
+%description -n dotnet-dump
+This tool is important on restricted Linux platforms where a fully working
+lldb isn't available. The dotnet-dump tool allows you to run SOS commands to
+analyze crashes and the garbage collector (GC), but it isn't a native debugger
+so things like displaying native stack frames aren't supported.
+
+%package -n dotnet-sos
+Summary:  SOS (Son of Strike) plugin for LLDB by .NET Global Tools
+Group:    Development/Tools
+Requires: lldb%llvmver
+Requires: python3-module-lldb%llvmver
+
+%description -n dotnet-sos
+This extension lets you inspect managed .NET Core state from native debuggers
+like LLDB.
 
 %prep
 %setup
@@ -108,7 +129,7 @@ bash -x ./build.sh /p:NoCache=true -c Release
 %__mkdir_p %buildroot%_bindir
 
 diag_tools="dotnet-dump dotnet-gcdump dotnet-trace dotnet-counters \
-            dotnet-dsrouter dotnet-sos dotnet-stack"
+            dotnet-dsrouter dotnet-stack"
 
 for tool in $diag_tools; do
     ToolDir="%_libdir/dotnet/tools/$tool"
@@ -139,20 +160,60 @@ for tool in $diag_tools; do
     find "$AppPath" -maxdepth 1 \( -name "*.dll" -o -name "*.so" -o -name "*.json" \) \
     -exec cp -a {} "%buildroot$ToolDir/" \;
 
-    %__ln_s "$ToolDir/$tool" "%buildroot%_bindir/$tool"
+    if [ $tool != "dotnet-dump" ]; then
+        %__ln_s "$ToolDir/$tool" "%buildroot%_bindir/$tool"
+    fi
 done
+
+# Manually pack dotnet-dump
+find ./artifacts/bin/dotnet-dump/Release/net6.0 \
+-maxdepth 1 \( -name "*.dll" -o -name "*.json" \) \
+-exec cp -a {} "%buildroot/%_libdir/dotnet/tools/dotnet-dump" \;
+
+tee << EOF > %buildroot%_bindir/dotnet-dump
+#!/bin/bash
+DOTNET_HOST="%_bindir/dotnet"
+
+if [ ! -x \$DOTNET_HOST ]; then
+    echo "Error: .NET Runtime is not installed or not found at \$DOTNET_HOST" >&2
+    exit 1
+fi
+
+exec \$DOTNET_HOST "%_libdir/dotnet/tools/dotnet-dump/dotnet-dump.dll" \$@
+EOF
+
+%pre -n dotnet-sos
+if [ $1 -eq 1 ]; then
+    echo "To load the native plugin for LLDB, you need to add the following line"
+    echo "to the ~/.lldbinit startup configuration file or execute it in the "
+    echo "debugger's command line: "
+    echo "plugin load %_libdir/dotnet/tools/dotnet-dump/libsosplugin.so"
+fi
 
 %files
 %doc README.md LICENSE.TXT
-%_bindir/dotnet-dump
 %_bindir/dotnet-gcdump
 %_bindir/dotnet-trace
 %_bindir/dotnet-counters
 %_bindir/dotnet-dsrouter
 %_bindir/dotnet-stack
-%_bindir/dotnet-sos
 %_libdir/dotnet/tools
+%exclude %_libdir/dotnet/tools/dotnet-dump
+
+%files -n dotnet-dump
+%attr(755, root, root) %_bindir/dotnet-dump
+%_libdir/dotnet/tools/dotnet-dump
+%exclude %_libdir/dotnet/tools/dotnet-dump/libsos*.so
+%exclude %_libdir/dotnet/tools/dotnet-dump/libdbgshim.so
+
+%files -n dotnet-sos
+%doc artifacts/bin/linux.x64.Release/sosdocsunix.txt
+%_libdir/dotnet/tools/dotnet-dump/libsos*.so
+%_libdir/dotnet/tools/dotnet-dump/libdbgshim.so
 
 %changelog
+* Thu Sep 24 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt2
+- Moved -dump and -sos components to subpackages (Closes: #60506).
+
 * Thu Sep 03 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt1
 - Initial build for Sisyphus.
