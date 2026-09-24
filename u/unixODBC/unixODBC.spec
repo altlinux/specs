@@ -1,11 +1,9 @@
-%set_gcc_version      13
-
 %define abiversion 2
 %define somask %{abiversion}*
 
 Name:    unixODBC
 Version: 2.3.14
-Release: alt1
+Release: alt2
 
 Summary: Unix ODBC driver manager and database drivers
 Summary(ru_RU.UTF-8): Система управления драйверами ODBC для unix 
@@ -33,7 +31,7 @@ Patch5: %name-remove-rpath-to-libdir.patch
 Patch11: keep-typedefs.patch
 Patch12: so-version-bump.patch
 
-BuildRequires: flex gcc13-c++ libltdl7-devel libreadline-devel
+BuildRequires: flex gcc-c++ libltdl7-devel libreadline-devel
 BuildRequires: chrpath
 
 %description
@@ -121,14 +119,12 @@ rm libltdl/config-h.in
 cp %_datadir/libtool/libltdl/config-h.in libltdl/config-h.in
 
 %build
-export CC=%__cc
-export CXX=%__cxx
-
 autoreconf -vfi
 
 # unixODBC 2.2.14 is not aliasing-safe
-CFLAGS="%{optflags} -fno-strict-aliasing"
-CXXFLAGS="$CFLAGS"
+CXXFLAGS="%{optflags} -fno-strict-aliasing"
+# bundled legacy drivers (nn, MiniSQL, Postgre7.1, template) are pre-C23 code
+CFLAGS="$CXXFLAGS -std=gnu17"
 export CFLAGS CXXFLAGS
 
 %configure \
@@ -202,6 +198,10 @@ find doc -name Makefile\* -delete
 %_pkgconfigdir/odbcinst.pc
 
 %changelog
+* Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.14-alt2
+- build with default gcc (gcc13 is gone from Sisyphus)
+- fix build with GCC 15: build legacy bundled drivers as gnu17, not C23
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.14-alt1
 - new version 2.3.14
 
