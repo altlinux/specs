@@ -13,7 +13,7 @@
 %def_without check
 
 Name: teleport
-Version: 18.9.1
+Version: 18.11.1
 Release: alt1
 
 Summary: The easiest, and most secure way to access and protect all of your infrastructure
@@ -112,7 +112,12 @@ export RUST_TARGET_ARCH="$(rustc -vV | sed -n 's,host: ,,p')"
 %golang_prepare
 
 pushd $BUILDDIR/src/$IMPORT_PATH
-RDPCLIENT_SKIP_BUILD=1 with_rdpclient="no" WEBASSETS_SKIP_BUILD=0 FIDO2=dynamic make all
+pushd $BUILDDIR/src/$IMPORT_PATH
+    MODULES_ROOT_DIR="integrations/terraform-modules" \
+    RDPCLIENT_SKIP_BUILD=1 \
+    with_rdpclient="no" \
+    WEBASSETS_SKIP_BUILD=0 FIDO2=dynamic \
+    make all BINS="teleport tctl tsh tbot fdpass-teleport"
 popd
 
 %install
@@ -137,7 +142,6 @@ make test
 
 %files server
 %_bindir/%name
-%_bindir/%name-update
 %_unitdir/%name-auth.service
 %_unitdir/%name-node.service
 %_unitdir/%name-proxy.service
@@ -157,6 +161,9 @@ make test
 %_bindir/tbot
 
 %changelog
+* Thu Sep 24 2026 Artem Krasovskiy <aibure@altlinux.org> 18.11.1-alt1
+- New version 18.11.1.
+
 * Tue Jun 23 2026 Artem Krasovskiy <aibure@altlinux.org> 18.9.1-alt1
 - New version 18.9.1.
 
