@@ -3,7 +3,7 @@
 
 Name: plumelib-options
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Summary: Command-line option processing for Java
 License: MIT
@@ -60,6 +60,9 @@ documentation are generated automatically.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 2.0.3-alt3
+- Fix FTBFS: project sourceCompatibility was removed and junit-platform-launcher is required in Gradle 9.
+
 * Fri Dec 19 2025 Anton Meleshnikov <alton@altlinux.org> 2.0.3-alt2
 - NMU: FTBFS Fix.
 

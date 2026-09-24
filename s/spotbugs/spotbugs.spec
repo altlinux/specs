@@ -2,7 +2,7 @@
 
 Name: spotbugs
 Version: 4.9.8
-Release: alt2
+Release: alt3
 
 Summary: SpotBugs is the spiritual successor of FindBugs
 License: Apache-2.0
@@ -14,12 +14,15 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Patch0: 0001-Remove-all-external-gradle-plugins-alt-patch.patch
 Patch1: 0002-Apache-bcel-6.8.2-compat-alt-patch.patch
+Patch2: 0003-Fix-junit-platform-commons-groupId-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: xgradle
 BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
+# toolchain languageVersion 11
+BuildRequires: java-11-openjdk-devel
 BuildRequires: google-gson
 BuildRequires: objectweb-asm
 BuildRequires: jsr-305
@@ -109,6 +112,9 @@ rm -rf buildSrc
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Sep 25 2026 Ivan Khanas <xeno@altlinux.org> 4.9.8-alt3
+- Fix FTBFS: Gradle 9 requires JDK 17 and junit-platform-commons had a wrong groupId.
+
 * Fri Jun 26 2026 Anton Meleshnikov <alton@altlinux.org> 4.9.8-alt2
 - FTBFS fix (bcel was renamed).
 

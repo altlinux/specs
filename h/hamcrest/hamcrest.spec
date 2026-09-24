@@ -3,7 +3,7 @@
 
 Name: hamcrest
 Version: 3.0
-Release: alt1
+Release: alt2
 
 Summary: Library of matchers for building test expressions
 License: BSD-3-Clause
@@ -41,7 +41,9 @@ UI validation rules.
 %autopatch -p1
 
 # Disable the hamcrest-integration module as very obsolete.
-sed -i '/^[[:space:]]*'\''hamcrest-integration'\''/d' settings.gradle
+sed -i -e '/^[[:space:]]*'\''hamcrest-integration'\''/d' \
+  -e "s/'hamcrest-library',\$/'hamcrest-library'/" \
+  settings.gradle
 
 # Aliases for compatibility.
 %mvn_alias org.hamcrest:hamcrest \
@@ -68,6 +70,9 @@ sed -i '/^[[:space:]]*'\''hamcrest-integration'\''/d' settings.gradle
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 3.0-alt2
+- Fix FTBFS: removing hamcrest-integration left a trailing comma in settings.gradle, rejected by Gradle 9.
+
 * Fri Nov 14 2025 Ivan Khanas <xeno@altlinux.org> 3.0-alt1
 - New version.
 - Switch to xgradle.

@@ -3,7 +3,7 @@
 
 Name: objectweb-asm
 Version: 9.9
-Release: alt1
+Release: alt2
 
 Summary: Java bytecode manipulation and analysis framework
 License: BSD
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Patch0: 0001-Remove-all-external-gradle-plugins-alt-patch.patch
 Patch1: 0002-Janino-3.1.7-compatibility-for-tests-alt-patch.patch
+Patch3: 0004-Gradle-9-archive-permissions-alt-patch.patch
 %if_with check
 # Fix warnings "unknown enum constant Status.STABLE".
 Patch2: 0003-Add-an-explicit-dependency-on-apiguardian-alt-patch.patch
@@ -73,6 +74,9 @@ This package provides %summary.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 9.9-alt2
+- Fix FTBFS: dirMode and fileMode were removed in Gradle 9.
+
 * Thu Nov 13 2025 Ivan Khanas <xeno@altlinux.org> 9.9-alt1
 - New version.
 - Switch to xgradle.

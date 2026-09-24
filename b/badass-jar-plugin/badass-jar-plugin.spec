@@ -2,7 +2,7 @@
 
 Name: badass-jar-plugin
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Plugin that lets you seamlessly create modular jars that target a Java release before 9
 License: Apache-2.0
@@ -16,13 +16,14 @@ BuildRequires: xgradle
 BuildRequires: /proc
 BuildRequires: dos2unix
 BuildRequires: rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 BuildRequires: shadow-gradle-plugin
 BuildRequires: javaparser
 BuildRequires: objectweb-asm
 
 Source0: %name-%version.tar
 Patch0: 0001-Remove-unwanted-plugins-alt-patch.patch
+Patch1: 0002-Adapt-for-Gradle-9-alt-patch.patch
 
 %description
 This plugin lets you seamlessly create modular jars that target a Java release
@@ -45,5 +46,8 @@ dos2unix build.gradle
 
 %files -f .mfiles
 %changelog
+* Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 2.0.0-alt2
+- Fix FTBFS: Gradle 9 requires JDK 17 and removed project sourceCompatibility and archivesBaseName.
+
 * Thu Nov 06 2025 Ivan Khanas <xeno@altlinux.org> 2.0.0-alt1
 - First build for ALT.

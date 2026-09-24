@@ -2,20 +2,19 @@
 %def_with check
 
 Name: xgradle
-Version: 0.2.2
+Version: 1.0.1
 Release: alt1
 
 Summary: Gradle plugin for system dependency resolution and offline builds
 License: Apache-2.0
 Group: Development/Java
-Url: https://github.com/IvanKhanas/xgradle
-Vcs: https://github.com/IvanKhanas/xgradle.git
+Url: https://github.com/ikxeno/xgradle
+Vcs: https://github.com/ikxeno/xgradle.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %name-tags.tar
 Source2: commit.sh
-Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: /proc
@@ -49,7 +48,9 @@ BuildRequires: apache-commons-cli
 %package resolution-plugin
 Summary: Artifacts for the plugin to function
 Group: Development/Java
-Requires: gradle
+Requires: gradle >= 9
+# XMvn configuration and metadata of installed packages
+Requires: javapackages-tools
 Provides: xgradle-core = %EVR
 Obsoletes: xgradle-core < %EVR
 
@@ -98,7 +99,6 @@ CLI tool APIs. Essential for developers extending XGradle functionality.
 
 %prep
 %setup -a1
-%autopatch -p1
 
 cp %SOURCE2 .
 chmod +x commit.sh
@@ -107,7 +107,6 @@ chmod +x commit.sh
 %gradle_publish -DgitCommitId=$(./commit.sh) \
   -Prelease \
   -Djava11 \
-  --offline \
   #
 
 %install
@@ -149,7 +148,7 @@ install -Dm 644 rpm-macros/xgradle-fjava \
   -t %buildroot/%_rpmmacrosdir
 
 %check
-%gradle_check --offline
+%gradle_check
 
 %files
 
@@ -174,6 +173,11 @@ install -Dm 644 rpm-macros/xgradle-fjava \
 %_rpmmacrosdir/xgradle-fjava
 
 %changelog
+* Fri Sep 25 2026 Ivan Khanas <xeno@altlinux.org> 1.0.1-alt1
+- New version: dependencies are resolved from XMvn metadata
+  through a generated ivy repository.
+- resolution-plugin: require gradle >= 9 and javapackages-tools.
+
 * Mon Sep 07 2026 Ivan Khanas <xeno@altlinux.org> 0.2.2-alt1
 - Add --offline flag to macros.
 

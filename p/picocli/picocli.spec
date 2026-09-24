@@ -3,7 +3,7 @@
 
 Name: picocli
 Version: 4.7.7
-Release: alt1
+Release: alt2
 
 Summary: Picocli is a modern Java cli framework
 License: Apache-2.0
@@ -94,6 +94,9 @@ compilation.
 %_mavenpomdir/picocli/picocli-codegen.pom
 
 %changelog
+* Fri Sep 25 2026 Ivan Khanas <xeno@altlinux.org> 4.7.7-alt2
+- Fix FTBFS: Gradle 9 fails test tasks that discover no tests.
+
 * Wed Dec 03 2025 Ivan Khanas <xeno@altlinux.org> 4.7.7-alt1
 - First build for ALT.
 

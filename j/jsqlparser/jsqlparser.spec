@@ -8,7 +8,7 @@
 
 Name: jsqlparser
 Version: 5.3
-Release: alt1
+Release: alt2
 
 Summary: JSQLParser is a SQL statement parser built from JavaCC
 Group: Development/Java
@@ -73,5 +73,8 @@ export VERSION=%version
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Sep 25 2026 Ivan Khanas <xeno@altlinux.org> 5.3-alt2
+- Fix FTBFS: Gradle 9 requires junit-platform-launcher on the test runtime classpath.
+
 * Mon Mar 23 2026 Arseniy Kostevich <faux@altlinux.org> 5.3-alt1
 - Initial build for ALT.

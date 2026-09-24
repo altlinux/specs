@@ -2,7 +2,7 @@
 
 Name: freeplane-twemoji
 Version: 12.1.4
-Release: alt2
+Release: alt3
 
 Summary: Emoji package
 License: CC-BY-4.0
@@ -40,6 +40,9 @@ BuildRequires: jpackage-default
 %files -f .mfiles
 
 %changelog
+* Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 12.1.4-alt3
+- Fix FTBFS: project.manifest() was removed in Gradle 9.
+
 * Wed Apr 22 2026 Arseniy Kostevich <faux@altlinux.org> 12.1.4-alt2
 - Include emojilist.txt in jar.
 

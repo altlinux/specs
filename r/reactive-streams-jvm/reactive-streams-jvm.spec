@@ -3,7 +3,7 @@
 
 Name: reactive-streams-jvm
 Version: 1.0.4
-Release: alt3
+Release: alt4
 
 Summary: Standard for asynchronous stream processing with non-blocking backpressure
 License: Apache-2.0
@@ -26,6 +26,7 @@ BuildRequires: beust-jcommander
 Source0: %name-%version.tar
 Patch0: 0001-Adapt-for-Gradle-8-alt-patch.patch
 Patch1: 0002-Adapt-for-bnd-7-alt-patch.patch
+Patch2: 0003-Adapt-for-Gradle-9-alt-patch.patch
 
 %package javadoc
 Group: Development/Java
@@ -66,6 +67,9 @@ export DEFAULT_TIMEOUT_MILLIS=200
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 1.0.4-alt4
+- Fix FTBFS: project sourceCompatibility was removed in Gradle 9.
+
 * Mon Nov 10 2025 Ivan A. Melnikov <iv@altlinux.org> 1.0.4-alt3
 - NMU: Run check on all architectures (fixes bug in previous release).
 
