@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: Run ASGI application with aiohttp
 License: Apache-2.0
@@ -64,6 +64,12 @@ and aiohttp together.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.1-alt2
+- Fixed importing an ASGI application module from the current working
+  directory in the CLI (Closes: #57108).
+- Fixed --port option of the CLI to be parsed as integer.
+- Fixed --address option to accept bracketed IPv6 literals.
+
 * Mon Jun 23 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.1-alt1
 - Updated to 0.6.1.
 
