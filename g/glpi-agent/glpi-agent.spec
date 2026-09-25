@@ -1,6 +1,6 @@
 Name:    glpi-agent
-Version: 1.19
-Release: alt2
+Version: 1.20
+Release: alt1
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -144,6 +144,9 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Sep 25 2026 Andrey Cherepanov <cas@altlinux.org> 1.20-alt1
+- New version.
+
 * Mon Aug 24 2026 Andrey Cherepanov <cas@altlinux.org> 1.19-alt2
 - Added requirements for printer and resolution detection (ALT #60257).
 
