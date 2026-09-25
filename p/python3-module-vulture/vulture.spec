@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 2.4
-Release: alt1.1
+Version: 2.16
+Release: alt1
 
 Summary: Find dead Python code
 License: MIT
@@ -14,10 +14,10 @@ URL:     https://github.com/jendrikseipp/vulture
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-toml
 %endif
 
@@ -41,21 +41,25 @@ very helpful tool for higher code quality.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3 -v tests
+%pyproject_run_pytest -o addopts=''
 
 %files
-%_bindir/*
+%_bindir/%modulename
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version.dist-info
 %doc *.md
+%exclude %python3_sitelibdir/dev
 
 %changelog
+* Fri Sep 25 2026 Anton Vyatkin <toni@altlinux.org> 2.16-alt1
+- New version 2.16 (Closes: #52012).
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.4-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
