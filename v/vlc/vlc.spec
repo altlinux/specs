@@ -1,6 +1,6 @@
 Name: vlc
-Version: 3.0.23
-Release: alt4
+Version: 3.0.24
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -11,6 +11,7 @@ Source: vlc-%version.tar
 
 BuildRequires: gcc-c++ yasm /proc
 BuildRequires: freetype2-devel glib2-devel flex
+BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel
 BuildRequires: libdvdcss-devel libnotify-devel libvdpau-devel
 BuildRequires: libmpeg2-devel libebml-devel >= 1.3.5-alt1
 BuildRequires: libmatroska-devel libcddb-devel liblive-devel aalib-devel
@@ -31,7 +32,7 @@ BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
 BuildRequires: libtar-devel libva-devel libvpx-devel libx265-devel
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel
 BuildRequires: libEGL-devel libGL-devel libGLES-devel
-BuildRequires: libschroedinger-devel libsmbclient-devel
+BuildRequires: libsmbclient-devel
 BuildRequires: libupnp-devel liblua5-devel lua5
 BuildRequires: libtiger-devel libudev-devel libsqlite3-devel
 BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
@@ -41,12 +42,12 @@ BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel
 BuildRequires: libaom-devel libsamplerate-devel
 BuildRequires: libdav1d-devel libSDL_image-devel libsystemd-devel
 BuildRequires: libwayland-egl-devel wayland-protocols
-BuildRequires: libsrt-devel
+BuildRequires: libsrt-devel librist-devel
 
-%define allplugins aa ass audiocd bluray chromaprint dbus dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml
+%define allplugins aa ass audiocd bluray chromaprint dbus dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg flac freetype live555 matroska mpeg2 ogg opus pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
-%define mergedplugins alsa dvb gnutls ts
+%define mergedplugins alsa dvb gnutls schroedinger ts
 
 %define vlcrequires() %(for p in %{*}; do printf 'Requires: vlc-plugin-%%s = %%s\\n' $p %version-%release; done)
 %define vlcobsolete() %(for p in %{*}; do printf 'Provides: vlc-plugin-%%s = %%s\\nObsoletes: vlc-plugin-%%s\\n' $p %version-%release $p;done)
@@ -278,11 +279,6 @@ Summary: REAL RTSP access plugin for VLC media player
 Group: Video
 Requires: lib%name = %EVR
 
-%package plugin-schroedinger
-Summary: Dirac codec (via libschroedinger) plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
-
 %package plugin-shout
 Summary: SHOUT access output plugin for VLC media player
 Group: Video
@@ -508,10 +504,6 @@ This package containts PulseAudio output plugin for VLC media player.
 %description plugin-realrtsp
 This package contains REAL RTSP access plugin for VLC media player.
 
-%description plugin-schroedinger
-This package contains dirac codec (via libschroedinger) plugin for VLC media
-player.
-
 %description plugin-shout
 This package adds support for SHOUT output access/services discovery
 to VLC media player.
@@ -576,7 +568,6 @@ echo %version-%release > src/revision.txt
 
 %build
 export BUILDCC=gcc
-(cd contrib && ./bootstrap && make)
 ./bootstrap
 
 %configure \
@@ -620,7 +611,6 @@ export BUILDCC=gcc
 	--enable-postproc \
 	--enable-pulse \
 	--enable-realrtsp \
-	--enable-schroedinger \
 	--enable-sftp \
 	--enable-shout \
 	--enable-skins2 \
@@ -643,7 +633,6 @@ export BUILDCC=gcc
 	--with-default-monospace-font=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
 	--with-default-font-family="Sans Serif" \
 	--with-default-monospace-font-family="Monospace" \
-	--with-contrib=$(gcc -dumpmachine) \
 	#
 
 %make_build
@@ -1091,9 +1080,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/gui/libqt_plugin.so
 %_datadir/applications/vlc.desktop
 
-%files plugin-schroedinger
-%vlc_plugindir/codec/libschroedinger_plugin.so
-
 %files plugin-jack
 %vlc_plugindir/audio_output/libjack_plugin.so
 %vlc_plugindir/access/libaccess_jack_plugin.so
@@ -1294,6 +1280,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Sep 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.24-alt1
+- 3.0.24 released
+
 * Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 3.0.23-alt4
 - build with taglib-devel (ALT #54494)
 - qt: fix playlist extension in the GTK save dialog (ALT #54187)
