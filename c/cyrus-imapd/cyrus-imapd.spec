@@ -7,18 +7,12 @@
 
 # http://bugzilla.altlinux.org/31381
 %def_without unit_tests
-
-# 3.0.8 with python-module-sphinx-1.4 (p8):
-# File "./docsrc/exts/sphinxlocal/builders/manpage.py", line 78, in write
-#     darkgreen, [docname])
-# TypeError: inline_all_toctrees() takes exactly 5 arguments (6 given)
 %def_with sphinx
-
 %def_with srs2
 %def_without snmp
 
 Name: cyrus-imapd
-Version: 3.8.7
+Version: 3.8.8
 Release: alt1
 
 Summary: A high-performance email, contacts and calendar server
@@ -517,6 +511,17 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Fri Sep 25 2026 L.A. Kostis <lakostis@altlinux.ru> 3.8.8-alt1
+- 3.8.8.
+- security fixes:
+  CVE-2026-61907: JMAP snooze bypasses destination-mailbox ACL
+  CVE-2026-61908: JMAP email-header blob ID out-of-bounds index
+  CVE-2026-61909: CalDAV/CardDAV multiget bypasses per-href ACL
+  CVE-2026-61910: Mailbox/set let sharee change special-use role on
+                  shared mailboxes
+  CVE-2026-61911: Sieve mailbox existence oracle
+  CVE-2026-61915: VPATCH BYPARAM double-free
+
 * Mon Aug 17 2026 L.A. Kostis <lakostis@altlinux.ru> 3.8.7-alt1
 - 3.8.7.
 - security fixes:
