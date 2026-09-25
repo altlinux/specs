@@ -3,13 +3,14 @@
 %define libname libcxx-rust-cssparser%sover
 
 Name: rust-cssparser
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Group: System/Libraries
 Summary: C++ library for parsing CSS using the Rust cssparser crate
 License: LGPL-2.1-only OR LGPL-3.0-only
 Url: https://invent.kde.org/libraries/cxx-rust-cssparser
+# https://download.kde.org/stable/cxx-rust-cssparser/
 
 Source: %rname-%version.tar
 Source1: vendor.tar
@@ -39,7 +40,7 @@ Headers and CMake metadata for developing applications with %name.
 %build
 export CARGO_HOME="$PWD/rust/.cargo"
 export CARGO_NET_OFFLINE=true
-cargo install --locked --path rust/vendor/cxxbridge-cmd-1.0.194 --root "$PWD/cxxbridge"
+cargo install --locked --path rust/vendor/cxxbridge-cmd-1.0.199 --root "$PWD/cxxbridge"
 export PATH="$PWD/cxxbridge/bin:$PATH"
 %cmake \
     -DBUILD_DOCS:BOOL=OFF \
@@ -63,5 +64,8 @@ export PATH="$PWD/cxxbridge/bin:$PATH"
 %_libdir/lib*.so
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
+- new version
+
 * Fri Jul 24 2026 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
 - initial build
