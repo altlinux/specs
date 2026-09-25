@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt3
+Release: alt4
 Epoch: 1
 Url: https://basealt.ru
 
@@ -399,6 +399,10 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 25 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt4
+- Fix BUILD_ID field in os-release (Closes: 60699)
+- Fix link to English version of page (Closes: 60698)
+
 * Tue Sep 15 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt3
 - Bump version to 11.2
 
