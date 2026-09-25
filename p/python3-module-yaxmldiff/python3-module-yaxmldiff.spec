@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.2.0
+Version: 0.3.0
 Release: alt1
 
 Summary: Yet Another XML Diff Library
@@ -15,10 +15,10 @@ Source: https://pypi.io/packages/source/y/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(wheel) python3(hatchling) python3(hatch-fancy-pypi-readme)
 %{?_enable_check:BuildRequires: python3(pytest) python3(pylint)
-BuildRequires: python3(mypy) python3(lxml)}
+BuildRequires: python3(mypy) python3(lxml) python3(cappa) python3(inline_snapshot)}
 
 %description
 This library checks if two XML documents seem semantically equivalent.
@@ -37,10 +37,14 @@ If not, it produces something similar to a unified diff.
 %pyproject_run_pytest
 
 %files
+%_bindir/%pypi_name
 %python3_sitelibdir_noarch/*
 %doc README* CHANGELOG*
 
 %changelog
+* Mon Aug 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Fri May 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - first build for Sisyphus
 
