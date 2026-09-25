@@ -1,6 +1,6 @@
 Name:           log4j
-Version:        2.20.0
-Release:        alt1.1
+Version:        2.25.4
+Release:        alt1
 
 Summary:        Java logging package
 License:        Apache-2.0
@@ -10,24 +10,25 @@ VCS:            https://github.com/apache/logging-log4j2
 
 Source0:        %name-%version.tar
 
-Patch0:         logging-log4j-Remove-unsupported-EventDataConverter.patch
-Patch1:         0002-Remove-usage-of-toolchains.patch
+Patch0:         0001-Remove-InlineMe-annotations.patch
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
+BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
+BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bnd.annotation)
+BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
 BuildRequires:  mvn(com.lmax:disruptor)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.fusesource.jansi:jansi)
 BuildRequires:  mvn(org.jctools:jctools-core)
+BuildRequires:  mvn(org.jspecify:jspecify)
+BuildRequires:  mvn(org.osgi:osgi.annotation)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 
@@ -37,146 +38,126 @@ BuildArch:      noarch
 Log4j is a tool to help the programmer output log statements to a
 variety of output targets.
 
-%javadoc_package
-
-%package slf4j
+%package        slf4j
 Group:          Development/Java
 Summary:        Binding between LOG4J 2 API and SLF4J
 
-%description slf4j
+%description    slf4j
 Binding between LOG4J 2 API and SLF4J.
 
-%package jcl
+%package        jcl
 Group:          Development/Java
 Summary:        Apache Log4j Commons Logging Bridge
 
-%description jcl
+%description    jcl
 Apache Log4j Commons Logging Bridge.
 
-%package web
+%package        web
 Group:          Development/Java
 Summary:        Apache Log4j Web
- 
-%description web
+
+%description    web
 Support for Log4j in a web servlet container.
 
-%package bom
+%package        bom
 Group:          Development/Java
 Summary:        Apache Log4j BOM
- 
-%description bom
-Apache Log4j 2 Bill of Material
+
+%description    bom
+Apache Log4j Bill of Materials.
 
 %prep
 %setup
 %autopatch -p1
 
-%pom_remove_parent
-%pom_remove_parent log4j-bom
-
 %pom_remove_plugin -r :apache-rat-plugin
-%pom_remove_plugin -r :maven-site-plugin
 %pom_remove_plugin -r :maven-source-plugin
-%pom_remove_plugin -r :maven-toolchains-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin -r com.diffplug.spotless:spotless-maven-plugin
-%pom_remove_plugin -r org.apache.logging.log4j:log4j-changelog-maven-plugin
-%pom_remove_plugin -r org.codehaus.mojo:xml-maven-plugin
- 
-find -name '*.jar' -o -name '*.class' -delete
+%pom_remove_plugin -r org.ops4j.pax.exam:exam-maven-plugin
+%pom_remove_plugin org.gradlex:gradle-module-metadata-maven-plugin log4j-parent
+%pom_remove_plugin org.codehaus.gmavenplus:gmavenplus-plugin log4j-parent
+
+%pom_remove_plugin :maven-clean-plugin log4j-parent
+
+%pom_remove_plugin org.apache.logging.log4j:log4j-docgen-maven-plugin
+%pom_xpath_remove 'pom:path[pom:artifactId="log4j-docgen"]' log4j-parent
+%pom_xpath_remove 'pom:processor[text()="org.apache.logging.log4j.docgen.processor.DescriptorGenerator"]' log4j-parent
+%pom_xpath_remove 'pom:compilerArgs/pom:arg[starts-with(text(), "-Alog4j.docgen.")]' log4j-parent
+%pom_xpath_remove 'pom:execution[pom:id="define-log4jDocgenDescriptorFilepath"]' log4j-parent
+
+%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-resources-plugin"]/pom:dependencies'
 rm -rf docs/api
- 
-%pom_disable_module %name-distribution
-%pom_disable_module %name-samples
-%pom_disable_module %name-flume-ng
-%pom_disable_module %name-perf
- 
-%pom_remove_dep -r org.codehaus.groovy:groovy-bom
+
 %pom_remove_dep -r com.fasterxml.jackson:jackson-bom
 %pom_remove_dep -r jakarta.platform:jakarta.jakartaee-bom
-%pom_remove_dep -r org.eclipse.jetty:jetty-bom
 %pom_remove_dep -r org.junit:junit-bom
-%pom_remove_dep -r io.fabric8:kubernetes-client-bom
-%pom_remove_dep -r io.netty:netty-bom
 %pom_remove_dep -r org.springframework:spring-framework-bom
- 
+%pom_remove_dep org.apache.groovy:groovy-bom log4j-parent
+%pom_remove_dep org.mockito:mockito-bom log4j-parent
+
+%pom_change_dep -r org.osgi:org.osgi.core org.osgi:osgi.core
+%pom_change_dep -r org.osgi:org.osgi.annotation.bundle org.osgi:osgi.annotation
+%pom_remove_dep -r org.osgi:org.osgi.annotation.versioning
+
+# with patch0
+%pom_remove_dep com.google.errorprone:error_prone_annotations log4j-parent
+
+%pom_xpath_set 'pom:properties/pom:bnd-jpms-module-info' \
+    '$[bnd-module-name];access=0;modules="biz.aQute.bnd.annotation,osgi.annotation"' \
+    log4j-parent
+
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockingQueueFactory.java
 %pom_remove_dep -r com.conversantmedia:disruptor
- 
-rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 %pom_remove_dep -r :kafka-clients
- 
 %pom_remove_dep -r javax.jms:javax.jms-api
- 
-%pom_disable_module %name-jdbc-dbcp2
- 
-%pom_disable_module %name-mongodb3
-%pom_disable_module %name-mongodb4
- 
-%pom_remove_dep :jconsole %name-jmx-gui
-%pom_add_dep sun.jdk:jconsole %name-jmx-gui
- 
-%pom_change_dep -r org.osgi:org.osgi.core org.osgi:osgi.core
- 
-%pom_remove_plugin :maven-failsafe-plugin
- 
-%pom_remove_dep -r :slf4j-ext
- 
-# Make compiled code compatible with OpenJDK 8
-%pom_xpath_inject 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration' "<release>8</release>"
- 
+
 %pom_disable_module %name-api-test
 %pom_disable_module %name-core-test
 %pom_disable_module %name-layout-template-json-test
+%pom_disable_module %name-fuzz-test
+%pom_disable_module %name-core-fuzz-test
+%pom_disable_module %name-layout-template-json-fuzz-test
+%pom_disable_module %name-slf4j2-impl-fuzz-test
+%pom_disable_module %name-osgi-test
+%pom_disable_module %name-perf-test
+%pom_disable_module %name-core-its
 %pom_disable_module %name-slf4j2-impl
 %pom_disable_module %name-taglib
-%pom_disable_module %name-jmx-gui
 %pom_disable_module %name-jakarta-web
+%pom_disable_module %name-jakarta-jms
+%pom_disable_module %name-jakarta-smtp
 %pom_disable_module %name-iostreams
 %pom_disable_module %name-jul
-%pom_disable_module %name-core-its
 %pom_disable_module %name-jpa
+%pom_disable_module %name-jdbc-dbcp2
 %pom_disable_module %name-couchdb
 %pom_disable_module %name-cassandra
+%pom_disable_module %name-mongodb
+%pom_disable_module %name-mongodb4
 %pom_disable_module %name-appserver
-%pom_disable_module %name-spring-cloud-config
 %pom_disable_module %name-spring-boot
+%pom_disable_module %name-spring-cloud-config-client
 %pom_disable_module %name-docker
-%pom_disable_module %name-kubernetes
 %pom_disable_module %name-layout-template-json
- 
+
 %pom_remove_dep -r :jackson-core
 %pom_remove_dep -r :jackson-databind
 %pom_remove_dep -r :jackson-dataformat-yaml
 %pom_remove_dep -r :jackson-dataformat-xml
-%pom_remove_dep -r :woodstox-core
+%pom_remove_dep :jackson-annotations log4j-core-java9
+%pom_remove_dep org.codehaus.woodstox:stax2-api log4j-core
 %pom_remove_dep -r :jeromq
 %pom_remove_dep -r :commons-csv
- 
+
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,config/yaml,config/json,parser}
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/{db,mom,nosql}
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/layout/*{Csv,Jackson,Xml,Yaml,Json,Gelf}*.java
+rm -r log4j-core-java9/src/main/java/org/apache/logging/log4j/core/jackson
 rm log4j-1.2-api/src/main/java/org/apache/log4j/builders/layout/*Xml*.java
-rm log4j-api/src/main/java/org/apache/logging/log4j/util/Activator.java
 rm -r log4j-1.2-api/src/main/java/org/apache/log4j/or/jms
 
-%mvn_alias :%name-1.2-api %name:%name
-%mvn_file ':{%name-1.2-api}' %name/@1 %name
- 
-%mvn_package :%name-slf4j-impl slf4j
-%mvn_package :%name-to-slf4j slf4j
-%mvn_package :%name-taglib taglib
-%mvn_package :%name-jcl jcl
-%mvn_package :%name-jmx-gui jmx-gui
-%mvn_package :%name-web web
-%mvn_package :%name-bom bom
-%mvn_package :%name-cassandra nosql
-%mvn_package :%name-couchdb nosql
- 
-%mvn_package :log4j-core-its __noinstall
- 
-%mvn_package ::zip: __noinstall
- 
 %pom_remove_dep com.sun.mail:javax.mail log4j-core
 %pom_remove_dep javax.mail:javax.mail-api log4j-core
 %pom_remove_dep javax.activation:javax.activation-api log4j-core
@@ -184,15 +165,28 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/net/MimeMessageBuilder
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/net/SmtpManager.java
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/appender/SmtpAppender.java
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadContextMapFilter.java
- 
-%pom_remove_dep org.eclipse.angus:angus-activation log4j-jakarta-smtp
-%pom_remove_dep org.eclipse.angus:jakarta.mail log4j-jakarta-smtp
- 
-%pom_remove_plugin -r org.apache.maven.plugins:maven-failsafe-plugin
-%pom_remove_plugin -r org.ops4j.pax.exam:exam-maven-plugin
+
+%pom_xpath_remove -r 'pom:dependencies/pom:dependency[pom:scope="test"]'
+
+%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin . '
+<configuration>
+  <annotationProcessorPaths combine.self="override"/>
+  <compilerArgs combine.self="override">
+    <arg>-Xlint:all</arg>
+  </compilerArgs>
+</configuration>'
+
+%mvn_alias :%name-1.2-api %name:%name
+%mvn_file ':{%name-1.2-api}' %name/@1 %name
+%mvn_package :%name-slf4j-impl slf4j
+%mvn_package :%name-to-slf4j slf4j
+%mvn_package :%name-jcl jcl
+%mvn_package :%name-web web
+%mvn_package :%name-bom bom
+%mvn_package ::zip: __noinstall
 
 %build
-%mvn_build -f
+%mvn_build -f -j
 
 %install
 %mvn_install
@@ -206,6 +200,10 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadCo
 %files bom -f .mfiles-bom
 
 %changelog
+* Thu Sep 24 2026 Evgeniy Serov <scala@altlinux.org> 2.25.4-alt1
+- Updated to 2.25.4.
+- Disabled javadoc.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.20.0-alt1.1
 - Cosmetic fixes.
 
