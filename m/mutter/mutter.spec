@@ -3,10 +3,9 @@
 
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
-# %%ver_major - 32
-%define api_ver 18
+%define api_ver %ver_major
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define rdn_name org.gnome.Mutter
@@ -17,14 +16,12 @@
 %def_enable xwayland
 %def_enable remote_desktop
 %def_enable installed_tests
-%def_enable egl_device
-%def_enable wayland_eglstream
 
 %define gvdb_ver b54bc5da
 
 Name: mutter
-Version: %ver_major.4
-Release: alt2%beta
+Version: %ver_major.0
+Release: alt1%beta
 Epoch: 1
 
 Summary: Clutter based compositing Window Manager
@@ -60,16 +57,15 @@ Source: %name-%version%beta.tar
 %define gi_ver 0.9.5
 %define glib_ver 2.81.1
 %define pango_ver 1.46.0
-%define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
-%define wayland_ver 1.23
-%define wayland_protocols_ver 1.47
+%define wayland_ver 1.26
+%define wayland_protocols_ver 1.48
 # xwayland with ei support
 %define xwayland_ver 2:23.2.2-alt2
 %define upower_ver 0.99.0
-%define libinput_ver 1.30
+%define libinput_ver 1.31.0
 %define fribidi_ver 1.0.0
-%define gsds_ver 48
+%define gsds_ver 51
 %define gudev_ver 238
 %define pipewire_ver 1.6.0
 %define sysprof_ver 3.38
@@ -80,8 +76,6 @@ Source: %name-%version%beta.tar
 %define colord_ver 1.4.5
 %define eis_ver 1.5.0
 %define display_info_ver 0.2
-%define glycin_api_ver 2
-%define glycin_ver 2.0
 
 Requires: lib%name = %EVR
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
@@ -96,7 +90,6 @@ BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(epoxy)
 BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpango-devel >= %pango_ver
-BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: libjson-glib-devel >= %json_glib_ver
@@ -116,20 +109,20 @@ BuildRequires: libgraphene-gir-devel >= %graphene_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver
 BuildRequires: pkgconfig(libei-1.0) pkgconfig(libeis-1.0) >= %eis_ver
 BuildRequires: pkgconfig(libevdev) pkgconfig(umockdev-1.0)
-BuildRequires: pkgconfig(glycin-2) >= %glycin_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
-BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel libgudev-devel >= %gudev_ver
+BuildRequires: libdrm-devel >= %drm_ver libsystemd-devel
+BuildRequires: libudev-devel libgudev-devel >= %gudev_ver
 BuildRequires: libGL-devel libGLES-devel  %_bindir/cvt
 BuildRequires: libdbus-devel
 BuildRequires: pkgconfig(libdisplay-info) >= %display_info_ver
 BuildRequires: pkgconfig(bash-completion)
 BuildRequires: python3(argcomplete) zenity /usr/bin/rst2man
-%{?_enable_egl_device:BuildRequires: libEGL-devel}
-%{?_enable_wayland_eglstream:BuildRequires: pkgconfig(wayland-egl) pkgconfig(wayland-eglstream-protocols)}
+BuildRequires: libEGL-devel pkgconfig(wayland-egl)
 %{?_enable_xwayland:
 BuildRequires: xorg-xwayland-devel >= %xwayland_ver
 BuildRequires: pkgconfig(gtk4)
+BuildRequires: pkgconfig(cairo)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcomposite)
 BuildRequires: pkgconfig(xcursor)
@@ -154,7 +147,6 @@ Mutter is a Wayland display server and compositor library.
 %package -n lib%name
 Summary: Shared library for Mutter
 Group: System/Libraries
-Requires: glycin-%glycin_api_ver-loaders
 
 %description -n lib%name
 This package contains shared library needed to run Mutter.
@@ -217,7 +209,7 @@ echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-m
 
 sed -i 's|/usr\(/bin/bash\)|\1|' src/tests/socket-launch.sh
 
-#sed -i 's/\.beta//' meson.build
+sed -i 's/\.rc//' meson.build
 
 %ifarch %e2k
 sed -i '/-Werror=return-type/d' meson.build
@@ -227,8 +219,6 @@ sed -i '/-Werror=return-type/d' meson.build
 %meson \
     -Dintrospection=true \
     %{subst_enable_meson_bool remote_desktop remote_desktop} \
-    %{subst_enable_meson_bool egl_device egl_device} \
-    %{subst_enable_meson_bool wayland_eglstream wayland_eglstream} \
     %{subst_enable_meson_bool installed_tests installed_tests} \
     %ifarch %ix86
     -Dclutter_tests=false
@@ -303,6 +293,7 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %files gnome
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/glib-2.0/schemas/%xdg_name.wayland.gschema.xml
+%_datadir/glib-2.0/schemas/%xdg_name.experimental.gschema.xml
 %_datadir/GConf/gsettings/%name-schemas.convert
 %_datadir/gnome-control-center/keybindings/*.xml
 
@@ -313,6 +304,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1:51.0-alt1
+- 51.0
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1:50.4-alt2
 - 50.4
 

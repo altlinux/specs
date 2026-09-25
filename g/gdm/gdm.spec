@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 1.0
 
@@ -21,7 +21,7 @@
 %def_enable check
 
 Name: gdm
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME Display Manager
@@ -50,9 +50,6 @@ Patch2: gdm-40.beta-alt-Xsession.patch
 Patch8: gdm-44.1-alt-Xsession-Xterm.patch
 # for p11
 Patch9: gdm-48-Revert-Disable-Xorg-session-by-default.patch
-
-# https://gitlab.gnome.org/GNOME/gdm/-/merge_requests/357
-Patch10: gdm-51-up-kmsconvt.patch
 
 Obsoletes: %name-gnome
 Provides: %name-gnome = %EVR
@@ -85,7 +82,7 @@ Requires: polkit
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-gir rpm-macros-pam0 rpm-build-systemd
-BuildRequires: meson gcc-c++ desktop-file-utils gnome-common yelp-tools
+BuildRequires: meson gcc-c++ desktop-file-utils
 BuildRequires: iso-codes-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -171,7 +168,6 @@ This package contains user documentation for Gdm.
 %setup -n %name-%version%beta
 %patch2 -p1 -b .XSession
 %patch8 -p1 -b .XSession-Xterm
-%patch10 -p1
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 %SOURCE15  data/pam-%default_pam_config/
@@ -186,6 +182,7 @@ export PATH=$PATH:/sbin
     -Dsysconfsubdir='%gdm_subconfdir' \
     -Dpam-prefix='%_sysconfdir' \
     -Dpam-mod-dir='%_pam_modules_dir' \
+    -Dpam-services-dir='%_sysconfdir/pam.d' \
     -Ddefault-pam-config='%default_pam_config' \
     -Ddmconfdir='%_sysconfdir/X11/sessions' \
     -Ddbus-sys='%_datadir/dbus-1/system.d' \
@@ -280,6 +277,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Sep 06 2026 Yuri N. Sedunov <aris@altlinux.org> 50.3-alt1
 - 50.3
 

@@ -1,14 +1,14 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable docs
 %def_enable man
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -33,9 +33,10 @@ Requires(pre): libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
-Requires: upower gcr gcr4
+Requires: upower gcr4
 Requires: xdg-user-dirs
 Requires: %name-wayland = %EVR
+#Requires: oo7-daemon
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
 BuildRequires: meson
@@ -142,6 +143,9 @@ export PATH=$PATH:/sbin
 %_datadir/wayland-sessions/gnome.desktop
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri May 29 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: gnome-control-center
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -43,13 +43,13 @@ Patch10: %name-50.x-up-Allow_changing_password_with_remote_user.patch
 %define gtk4_ver 4.17.5
 %define adwaita_ver 1.8
 %define bp_ver 0.19
-%define desktop_ver 43
+%define desktop_ver %ver_major
 %define fontconfig_ver 1.0.0
 %define gsds_ver %ver_major
 # nm_client_get_permissions_state()
 %define nm_ver 1.52
 %define goa_ver 3.51.0
-%define acc_ver 23.11.69
+%define acc_ver 26.27.3
 %define sett_daemon_ver 48
 %define bt_api_ver 3.0
 %define bt_ver 42
@@ -109,6 +109,7 @@ BuildRequires: fontconfig-devel >= %fontconfig_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4)
+BuildRequires: pkgconfig(gnome-qr-gtk-4) >= %desktop_ver gir(GnomeQRGtk) = 4.0
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: gnome-settings-daemon-devel >= %sett_daemon_ver
 BuildRequires: libcolord-devel >= %colord_ver pkgconfig(colord-gtk4)
@@ -234,6 +235,9 @@ sed -e '/Europe\/Simferopol/ s/^#*/#/' %SOURCE1 > %buildroot%_datadir/%name/zone
 
 
 %changelog
+* Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 50.4-alt1
 - 50.4
 

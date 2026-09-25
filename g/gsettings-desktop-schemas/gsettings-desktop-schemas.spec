@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define namespace GDesktopEnums
 %define api_ver 3.0
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A collection of GSettings schemas
@@ -117,9 +117,6 @@ GObject introspection devel data for %name.
 %_datadir/glib-2.0/schemas/org.gnome.desktop.notifications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.privacy.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.search-providers.gschema.xml
-
-%_datadir/GConf/gsettings/gsettings-desktop-schemas.convert
-%_datadir/GConf/gsettings/wm-schemas.convert
 %doc AUTHORS README NEWS
 
 %files devel
@@ -135,6 +132,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

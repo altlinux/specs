@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 
 %def_enable check
@@ -23,9 +23,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 Source: %name-%version%beta.tar
 %endif
 
-%define xdg_desktop_portal_ver 1.19.1
+%define xdg_desktop_portal_ver 1.22
 %define adw_ver 1.8
-%define gsds_ver 47
+%define gsds_ver 48
 
 Requires: xdg-desktop-portal-gtk >= 1.14
 Conflicts: xdg-desktop-portal-gtk < 1.12.0
@@ -66,6 +66,9 @@ to provide various portal features.
 
 
 %changelog
+* Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Mon Mar 16 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name dash-to-dock
-%define ver_major 106
+%define ver_major 109
 %define beta %nil
 %define uuid %_name@micxgx.gmail.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -60,6 +60,9 @@ available.
 %doc README.md
 
 %changelog
+* Fri Sep 25 2026 Yuri N. Sedunov <aris@altlinux.org> 109-alt1
+- 109
+
 * Sun Jul 26 2026 Yuri N. Sedunov <aris@altlinux.org> 106-alt1
 - 106 (GNOME 51 supported)
 

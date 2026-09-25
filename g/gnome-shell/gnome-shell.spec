@@ -1,21 +1,22 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
-%define api_ver 18
+%define api_ver %ver_major
 %define gst_api_ver 1.0
 %define gvc_ver 0a4eda0
 
 %def_enable xwayland
 %def_enable extensions_tool
-%def_enable extensions_app
+# moved to separate project since 51
+%def_disable extensions_app
 %def_disable gtk_doc
 %def_enable man
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -53,14 +54,17 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define atspi_ver 2.5.91
 %define menus_ver 3.5.3
 %define desktop_ver 3.35.90
-%define json_glib_ver 0.13.2
-%define nm_ver 1.10.4
+%define json_glib_ver 1.6
+%define nm_ver 1.24
 %define ibus_ver 1.5.19
 %define gsds_ver %ver_major
 %define libsecret_ver 0.18
 %define malcontent_ver 0.11
 %define gweather_api_ver 4.0
 %define webkit_api_ver 6.0
+%define glycin_api_ver 2
+%define glycin_ver 2.0
+%define rsvg_ver 2.46
 
 Requires: %name-data = %EVR
 # to avoid circular dependency
@@ -74,10 +78,6 @@ Requires: gdm-data
 Requires: tecla
 # network.js requires
 Requires: gnome-control-center
-# since 3.16
-# 
-#Requires: polari
-# for OSK
 Requires: ibus ibus-gtk4
 # for zipped extensions
 Requires: unzip
@@ -86,6 +86,7 @@ Requires: malcontent >= %malcontent_ver
 Requires: pipewire
 Requires: xdg-desktop-portal-gnome
 Requires: fonts-ttf-adwaita
+Requires: glycin-%glycin_api_ver-loaders
 #Requires: localsearch
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -103,8 +104,10 @@ Requires: typelib(Gdm)
 Requires: typelib(Geoclue)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
+Requires: typelib(Gly) = 2
 Requires: typelib(GnomeBluetooth) = %bt_api_ver
 Requires: typelib(GnomeDesktop)
+Requires: typelib(GnomeQR)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gst)
@@ -168,6 +171,8 @@ BuildRequires: libibus-devel >= %ibus_ver
 BuildRequires: gir(Gcr) = %gcr_api_ver libsecret-devel >= %libsecret_ver libpolkit-gir-devel
 BuildRequires: libgnome-autoar-devel
 BuildRequires: pkgconfig(tecla)
+BuildRequires: pkgconfig(glycin-2) >= %glycin_ver
+BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver pkgconfig(cairo)
 %{?_enable_xwayland:BuildRequires: libX11-devel libXfixes-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
@@ -222,7 +227,6 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %meson \
     %{subst_enable_meson_bool gtk_doc gtk_doc} \
     %{subst_enable_meson_bool extensions_tool extensions_tool} \
-    %{subst_enable_meson_bool extensions_app extensions_app} \
     %{?_enable_snapshot:%meson_build %name-pot %name-update-po}
 %nil
 #%meson_build %name-pot %name-update-po
@@ -259,6 +263,7 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 #%_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name.Extensions.desktop
 %_desktopdir/%xdg_name.PortalHelper.desktop
+%_desktopdir/%xdg_name.CalendarServer.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/%xdg_name.CalendarServer.service
 %_datadir/dbus-1/services/%xdg_name.HotplugSniffer.service
@@ -309,6 +314,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 50.4-alt1
 - 50.4
 

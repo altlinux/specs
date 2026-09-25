@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: gnome-shell-extensions
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -206,6 +206,9 @@ This extension provides system monitor for GNOME Shell.
 %doc NEWS README.md
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Mon Sep 07 2026 Yuri N. Sedunov <aris@altlinux.org> 50.3-alt1
 - 50.3
 

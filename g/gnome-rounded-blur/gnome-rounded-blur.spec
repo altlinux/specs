@@ -11,7 +11,7 @@
 
 Name: %_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GNOME Rounded Blur
 Group: System/Libraries
@@ -25,9 +25,11 @@ Source: https://github.com/kancko/gnome-rounded-blur/archive/v%version/%_name-%v
 %else
 Source: %_name-%version.tar
 %endif
+#https://github.com/kancko/gnome-rounded-blur/pull/7
+Patch10: gnome-rounded-blur-1.0.1-up-mutter-51.patch
 
-# mutter-50
-%define mutter_api_ver 18
+# mutter-51
+%define mutter_api_ver 51
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
@@ -76,6 +78,7 @@ GObject introspection devel data for %_name.
 
 %prep
 %setup -n %_name-%version
+%patch10 -p1
 
 %build
 %meson
@@ -103,6 +106,9 @@ GObject introspection devel data for %_name.
 %_girdir/%namespace-%api_ver.gir
 
 %changelog
+* Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt2
+- fixed for mutter-51
+
 * Thu May 14 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - first build for sisyphus
 

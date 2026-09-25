@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.SettingsDaemon
 
@@ -14,7 +14,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -34,7 +34,7 @@ Source: %name-%version%beta.tar
 %define gnome_desktop_ver 3.37.1
 %define notify_ver 0.8.7
 %define pulse_ver 2.0
-%define gsds_ver 47
+%define gsds_ver 51
 %define colord_ver 0.1.9
 %define dconf_ver 0.8
 %define upower_ver 0.99.12
@@ -179,6 +179,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Wed Apr 15 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Kiosk
 
@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: gnome-kiosk
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Kiosk
@@ -29,11 +29,13 @@ Vcs: https://gitlab.gnome.org/halfline/gnome-kiosk.git
 
 %define glib_ver 2.68.0
 %define gtk4_ver 4.0
-%define mutter_api_ver 18
-%define mutter_ver 50
+%define mutter_api_ver %ver_major
+%define mutter_ver %ver_major
 %define ibus_ver 1.5.24
+%define glycin_api_ver 2
 
 Requires: dconf gnome-settings-daemon
+Requires: glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson dconf desktop-file-utils
@@ -44,6 +46,7 @@ BuildRequires: pkgconfig(libmutter-%mutter_api_ver) >= %mutter_ver
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(ibus-1.0) >= %ibus_ver
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(glycin-%glycin_api_ver)
 
 %description
 GNOME Kiosk provides a desktop environment suitable for fixed purpose, or
@@ -134,6 +137,9 @@ sed -i 's|/usr/\(bin/sh\)|/\1|' kiosk-script/%name-script
 %_userunitdir/gnome-session@%xdg_name.SearchApp.target.d/session.conf
 
 %changelog
+* Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sat May 30 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1-alt1
 - 50.1
 
