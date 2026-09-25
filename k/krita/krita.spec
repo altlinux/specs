@@ -37,8 +37,8 @@
 %define libkritamultiarch libkritamultiarch%sover
 
 Name: krita
-Version: 6.0.3
-Release: alt2
+Version: 6.0.4
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -63,7 +63,6 @@ Source: krita-%version.tar
 Patch1: alt-find-pyqt.patch
 Patch2: alt-soname.patch
 Patch3: alt-use-main-version.patch
-Patch4: 8451f975.patch
 
 # Automatically added by buildreq on Thu Nov 16 2017 (-bi)
 # optimized out: boost-devel-headers cmake cmake-modules elfutils fontconfig gcc-c++ glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache ilmbase-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgpg-error liblcms2-devel libpoppler-devel libpoppler1-qt5 libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl pkg-config python-base python-modules python3 python3-base python3-module-yieldfrom qt5-base-common qt5-base-devel rpm-build-python3 ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -377,7 +376,6 @@ Requires: %name-common >= %EVR
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 #sed -i 's|sipbuild|sipbuild5|' cmake/modules/FindSIP.py
 #sed -i 's|sipbuild|sipbuild5|' cmake/modules/sip-generate.py
@@ -459,9 +457,9 @@ done
 %files -n %libkritaqmlwidgets
 %_libdir/libkritaqmlwidgets.so.%sover
 %_libdir/libkritaqmlwidgets.so.*
-%files -n %libkritacolor
-%_libdir/libkritacolor.so.%sover
-%_libdir/libkritacolor.so.*
+#%files -n %libkritacolor
+#%_libdir/libkritacolor.so.%sover
+#%_libdir/libkritacolor.so.*
 %files -n %libkritapigment
 %_libdir/libkritapigment.so.%sover
 %_libdir/libkritapigment.so.*
@@ -521,6 +519,9 @@ done
 %_libdir/libkritamultiarch.so.*
 
 %changelog
+* Fri Sep 25 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.4-alt1
+- new version
+
 * Mon Sep 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.0.3-alt2
 - add fix against KDEBUG#523857 (closes: 60437)
 
