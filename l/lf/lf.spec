@@ -1,5 +1,5 @@
 %global import_path github.com/gokcehan/lf
-%define lf_ver 41
+%define lf_ver 42
 Name:     lf
 Version:  r%lf_ver
 Release:  alt1
@@ -55,6 +55,9 @@ install -D -m644 etc/lf.zsh \
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Fri Sep 25 2026 Ilya Demyanov <turbid@altlinux.org> r42-alt1
+- New upstream version r42
+
 * Thu Feb 05 2026 Ilya Demyanov <turbid@altlinux.org> r41-alt1
 - New upstream version r41
 
