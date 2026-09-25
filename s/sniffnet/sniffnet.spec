@@ -2,7 +2,7 @@
 
 Name: sniffnet
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Application to comfortably monitor your network traffic
 License: Apache-2.0 or MIT
@@ -13,6 +13,8 @@ Vcs: https://github.com/GyulyVGC/sniffnet
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: cargo-vendor-config.py
+
+Patch: %name-%version-alt.patch
 
 Requires(post,preun): libcap-utils
 
@@ -31,6 +33,7 @@ BuildRequires: desktop-file-utils
 
 %prep
 %setup -a1
+%autopatch -p1
 # Disable LTO entirely to avoid LLVM "out of memory" error on 32-bit
 # machines (even thin LTO is too much for the limited address space).
 %SOURCE2 --root "%buildroot%prefix" \
@@ -73,6 +76,10 @@ setcap '' %_bindir/%name
 %doc README.md LICENSE*
 
 %changelog
+* Fri Sep 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.1-alt2
+- Open external links as the invoking user when running elevated via sudo
+  (Closes: #47279).
+
 * Thu Jul 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.1-alt1
 - Updated to 1.5.1.
 
