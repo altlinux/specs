@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-orafce
-Version: 4.16.9
+Version: 4.16.11
 Release: alt1
 
 Summary: The "orafce" project implements in Postgres some of the functions from the Oracle database that are missing
@@ -50,6 +50,9 @@ All functions are fully compatibles with Oracle and respect all known format str
 
 
 %changelog
+* Fri Sep 25 2026 Alexei Takaseev <taf@altlinux.org> 4.16.11-alt1
+- 4.16.11
+
 * Tue Sep 15 2026 Alexei Takaseev <taf@altlinux.org> 4.16.9-alt1
 - 4.16.9
 
