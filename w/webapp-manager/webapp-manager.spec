@@ -1,6 +1,6 @@
 Name:     webapp-manager
 Version:  1.4.6
-Release:  alt1
+Release:  alt2
 
 Summary:  Run websites as if they were apps
 License:  GPLv3
@@ -19,7 +19,6 @@ AutoProv: no
 Requires: xapp-symbolic-icons
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-build-kf6
-BuildRequires: altlinux-menus
 
 %description
 %summary.
@@ -65,6 +64,9 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Fri Sep 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.6-alt2
+- builded without altlinux-menus
+
 * Fri Jan 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.6-alt1
 - 1.4.5 -> 1.4.6
 
