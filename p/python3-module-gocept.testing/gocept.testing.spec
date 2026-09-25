@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0
-Release: alt1.1
+Version: 6.0
+Release: alt1
 
 Summary: A collection of test helpers, additional assertions, and the like
 License: MIT
@@ -45,11 +45,13 @@ This package collects various helpers for writing tests.
 %doc LICENSE.txt *.rst
 %python3_sitelibdir/%mname
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/%mname/*/tests
 
 
 %changelog
+* Fri Sep 25 2026 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 4.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
