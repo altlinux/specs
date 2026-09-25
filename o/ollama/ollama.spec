@@ -16,7 +16,7 @@
 
 Name: ollama
 Version: 0.34.4
-Release: alt1
+Release: alt2
 Summary: Get up and running with large language models
 License: MIT
 Group: Sciences/Computer science
@@ -47,6 +47,8 @@ Source7: tags-list.txt
 # ALT: Do not auto-install third-party agents from the internet; point the
 # user at installation instructions instead.
 Patch: alt-no-autoinstall-agents.patch
+# gcc < 14 does not support the +sme feature modifier in -march (p11 aarch64)
+Patch1: alt-llama-gcc13-no-sme.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
@@ -219,6 +221,10 @@ kill %%?ollama
 %endif
 
 %changelog
+* Fri Sep 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.4-alt2
+- Skip llama.cpp SME CPU backend variants when building with gcc < 14
+  (+sme is not supported there; fixes aarch64 build in p11).
+
 * Thu Sep 24 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.4-alt1
 - Updated to version 0.34.4.
 
