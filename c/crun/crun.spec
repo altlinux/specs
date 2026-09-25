@@ -5,7 +5,7 @@
 
 Summary: OCI runtime written in C
 Name: crun
-Version: 1.29.1
+Version: 1.30.1
 Release: alt1
 Group: Development/Other
 License: GPLv2+
@@ -87,6 +87,10 @@ rm -f %buildroot%python3_sitelibdir/*.{a,la}
 %python3_sitelibdir/python_%name.so
 
 %changelog
+* Fri Sep 25 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.30.1-alt1
+- 1.30.1
+- Fixes: CVE-2026-84042, CVE-2026-88264, CVE-2026-88265
+
 * Fri Aug 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.29.1-alt1
 - 1.29.1 (ALT #60166)
 
