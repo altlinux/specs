@@ -1,7 +1,7 @@
 %define rname ksudoku
 
 Name: %rname
-Version: 26.04.2
+Version: 26.08.1
 Release: alt1
 %K6init
 
@@ -52,6 +52,9 @@ only one instance of each symbol.
 
 
 %changelog
+* Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
+- new version
+
 * Tue Jun 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.2-alt1
 - new version
 
