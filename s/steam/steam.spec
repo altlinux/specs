@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.87
-Release: alt2
+Release: alt3
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -34,6 +34,7 @@ Requires: libnm
 Requires: libnsl1
 Requires: libnss
 Requires: lsof
+Requires: pulseaudio-utils
 Requires: %name-devices = %EVR
 Requires: sysctl-conf-userns
 Requires: xorg-xwayland
@@ -89,6 +90,9 @@ List of devices Steam and SteamVR will want read/write permissions on, to help d
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Sat Sep 26 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt3
+- Add require on pulseaudio-utils (ALT #26115)
+
 * Fri Sep 11 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt2
 - Move rules files in separate package (ALT #60493)
 
