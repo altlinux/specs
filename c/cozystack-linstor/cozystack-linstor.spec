@@ -1,0 +1,191 @@
+# based on https://git.altlinux.org/gitoskop/#/packages/gears/l/linstor.git/-/blob/1.33.3-alt1/linstor.spec
+
+%define GRADLE_TASKS installdist
+%define GRADLE_FLAGS --offline --gradle-user-home .gradlehome --no-daemon --exclude-task generateJava -PjavaHome=/usr/lib/jvm/jre-21
+%define LS_PREFIX %_datadir/linstor-server
+%define FIREWALLD_SERVICES %_usr/lib/firewalld/services
+%define NAME_VERS linstor-server-%version
+
+# Prevent brp-java-repack-jars from being run.
+%define __jar_repack %nil
+
+Name:       cozystack-linstor
+Version:    1.33.3
+Release:    alt1
+Summary:    DRBD replicated volume manager (Cozystack-customized)
+Group:      System/Servers
+License:    GPLv2+
+Url:        https://github.com/LINBIT/linstor-server
+
+Conflicts: linstor
+
+Source0: http://pkg.linbit.com/downloads/linstor/linstor-server-%version.tar.gz
+
+Patch0: allow-toggle-disk-retry.diff
+Patch1: fix-duplicate-tcp-ports.diff
+Patch2: fix-luks-header-size.diff
+Patch3: retry-adjust-after-stale-bitmap.diff
+Patch4: retry-secondary-after-mkfs.diff
+
+%define java_arches x86_64 aarch64 loongarch64 riscv64
+ExclusiveArch: %{java_arches}
+
+BuildRequires(pre): /proc rpm-build-java jpackage-utils
+BuildRequires: java-21-openjdk-headless java-21-openjdk-devel
+BuildRequires: python3
+BuildRequires: unzip
+BuildRequires: gradle
+
+%description
+LINSTOR developed by LINBIT, is a software that manages replicated volumes
+across a group of machines.  With native integration to Kubernetes, LINSTOR
+makes building, running, and controlling block storage simple.
+LINSTOR is open-source software designed to manage block storage devices for
+large Linux server clusters.  It's used to provide persistent Linux block
+storage for cloudnative and hypervisor environments.
+
+%prep
+%setup -n %NAME_VERS
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+%build
+gradle %GRADLE_TASKS %GRADLE_FLAGS
+#for p in server satellite controller; do echo "%%LS_PREFIX/.$p" >> "%%_builddir/%%NAME_VERS/$p/jar.deps"; done
+
+%install
+mkdir -p %buildroot%LS_PREFIX
+cp -r %_builddir/%NAME_VERS/controller/build/install/controller/lib %buildroot/%LS_PREFIX
+cp -r %_builddir/%NAME_VERS/satellite/build/install/satellite/lib %buildroot/%LS_PREFIX
+cp -r %_builddir/%NAME_VERS/server/build/install/server/lib %buildroot/%LS_PREFIX
+
+chmod a-x %buildroot/%LS_PREFIX/lib/*.jar
+mkdir -p %buildroot/%LS_PREFIX/lib/conf
+cp %_builddir/%NAME_VERS/server/logback.xml %buildroot/%LS_PREFIX/lib/conf
+mkdir -p %buildroot%LS_PREFIX/bin
+cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Controller %buildroot%LS_PREFIX/bin
+cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/Satellite %buildroot%LS_PREFIX/bin
+cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-config %buildroot%LS_PREFIX/bin
+cp -r %_builddir/%NAME_VERS/build/install/linstor-server/bin/linstor-database %buildroot/%LS_PREFIX/bin
+cp -r %_builddir/%NAME_VERS/scripts/postinstall.sh %buildroot%LS_PREFIX/bin/controller.postinst.sh
+mkdir -p %buildroot%_unitdir
+sed -i '/\[Service\]/a Environment="JAVA_HOME=/usr/lib/jvm/jre-21-openjdk"' %_builddir/%NAME_VERS/scripts/linstor-*.service
+cp -r %_builddir/%NAME_VERS/scripts/linstor-controller.service %buildroot%_unitdir
+cp -r %_builddir/%NAME_VERS/scripts/linstor-satellite.service %buildroot%_unitdir
+mkdir -p %buildroot%FIREWALLD_SERVICES
+cp %_builddir/%NAME_VERS/scripts/firewalld/drbd.xml %buildroot%FIREWALLD_SERVICES
+cp %_builddir/%NAME_VERS/scripts/firewalld/linstor-controller.xml %buildroot%FIREWALLD_SERVICES
+cp %_builddir/%NAME_VERS/scripts/firewalld/linstor-satellite.xml %buildroot%FIREWALLD_SERVICES
+mkdir -p %buildroot%_sysconfdir/drbd.d/
+cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/drbd.d/
+#touch %%buildroot%%LS_PREFIX/{.server,.satellite,.controller}
+mkdir -p %buildroot%_sysconfdir/linstor
+cp %_builddir/%NAME_VERS/scripts/linstor_satellite-example.toml %buildroot/%_sysconfdir/linstor/
+touch %buildroot%_sysconfdir/linstor/linstor.toml
+mkdir -p %buildroot/var/lib/linstor
+
+### common
+%package common
+Summary: Common files shared between controller and satellite
+Group: System/Servers
+Requires: java-21-openjdk
+
+Conflicts: linstor-common
+
+%description common
+Linstor shared components between linstor-controller and linstor-satellite
+
+%files common -f server/jar.deps
+%dir %LS_PREFIX
+%dir %LS_PREFIX/lib
+%LS_PREFIX/lib/server-%version.jar
+%LS_PREFIX/lib/jclcrypto-%version.jar
+%dir %LS_PREFIX/lib/conf
+%LS_PREFIX/lib/conf/logback.xml
+%dir /var/lib/linstor
+%dir %_sysconfdir/linstor
+
+### controller
+%package controller
+Summary: Linstor controller specific files
+Group: System/Servers
+Requires(post): cozystack-linstor-common = %EVR
+Requires(post): java-common
+Requires: java-21-openjdk
+Requires: java-common
+
+Conflicts: linstor-controller
+
+%description controller
+Linstor controller manages linstor satellites and persistant data storage.
+
+%files controller -f controller/jar.deps
+%dir %LS_PREFIX
+%dir %LS_PREFIX/lib
+%LS_PREFIX/lib/controller-%version.jar
+%exclude %LS_PREFIX/lib/server-%version.jar
+%exclude %LS_PREFIX/lib/jclcrypto-%version.jar
+
+%dir %LS_PREFIX/bin
+%LS_PREFIX/bin/Controller
+%LS_PREFIX/bin/linstor-config
+%LS_PREFIX/bin/linstor-database
+%LS_PREFIX/bin/controller.postinst.sh
+%_unitdir/linstor-controller.service
+%FIREWALLD_SERVICES/linstor-controller.xml
+%ghost %config(noreplace) %_sysconfdir/linstor/linstor.toml
+
+
+%post controller
+alternatives-update
+S="%_sysconfdir/profile.d/javahome.sh"
+source $S
+%LS_PREFIX/bin/controller.postinst.sh
+%post_systemd linstor-controller
+#test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
+
+%preun controller
+%preun_systemd linstor-controller
+
+### satellite
+%package satellite
+Summary: Linstor satellite specific files
+Group: System/Servers
+Requires: cozystack-linstor-common = %EVR
+Requires: lvm2 thin-provisioning-tools
+Requires: drbd-utils >= 9.7.0
+
+Conflicts: linstor-satellite
+
+%description satellite
+Linstor satellite, communicates with linstor-controller
+and creates drbd resource files.
+
+%files satellite -f satellite/jar.deps
+%dir %LS_PREFIX
+%dir %LS_PREFIX/lib
+%LS_PREFIX/lib/satellite-%version.jar
+%exclude %LS_PREFIX/lib/server-%version.jar
+%exclude %LS_PREFIX/lib/jclcrypto-%version.jar
+%dir %LS_PREFIX/bin
+%LS_PREFIX/bin/Satellite
+%_unitdir/linstor-satellite.service
+%FIREWALLD_SERVICES/linstor-satellite.xml
+%FIREWALLD_SERVICES/drbd.xml
+%config(noreplace) %_sysconfdir/drbd.d/linstor-resources.res
+%_sysconfdir/linstor/linstor_satellite-example.toml
+
+%post satellite
+%post_systemd linstor-satellite
+#test -f %%_bindir/firewall-cmd && firewall-cmd --reload --quiet || :
+
+%preun satellite
+%preun_systemd linstor-satellite
+
+%changelog
+* Fri Sep 25 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.33.3-alt1
+- Initial build for ALT.
+
