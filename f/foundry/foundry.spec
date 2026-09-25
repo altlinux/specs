@@ -7,8 +7,8 @@
 %def_with check
 
 Name: foundry
-Version: 1.0.1
-Release: alt5
+Version: 1.2.0
+Release: alt1
 
 Summary: Foundry provides a platform for developer tools in GNOME
 License: LGPL-2.1
@@ -21,33 +21,38 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: pkgconfig(template-glib-1.0)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(gom-1.0)
-BuildRequires: pkgconfig(libdex-1)
-BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libpeas-2)
-BuildRequires: pkgconfig(sysprof-capture-4)
-BuildRequires: pkgconfig(libxml-2.0)
-BuildRequires: pkgconfig(yaml-0.1)
-BuildRequires: pkgconfig(libgit2)
-BuildRequires: pkgconfig(libssh2)
-BuildRequires: pkgconfig(gtksourceview-5)
-BuildRequires: pkgconfig(vte-2.91-gtk4)
-BuildRequires: pkgconfig(libcmark)
-BuildRequires: pkgconfig(webkitgtk-6.0)
-BuildRequires: pkgconfig(flatpak)
 BuildRequires: pkgconfig(editorconfig)
-BuildRequires: pkgconfig(libspelling-1)
+BuildRequires: pkgconfig(flatpak)
+BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gom-1.0)
+BuildRequires: pkgconfig(gtksourceview-5)
+BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(libcmark)
+BuildRequires: pkgconfig(libdex-1)
+BuildRequires: pkgconfig(libgit2)
+BuildRequires: pkgconfig(libpanel-1)
+BuildRequires: pkgconfig(libpeas-2)
+BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: pkgconfig(libspelling-1)
+BuildRequires: pkgconfig(libssh2)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(readline)
+BuildRequires: pkgconfig(sysprof-capture-4)
+BuildRequires: pkgconfig(template-glib-1.0)
+BuildRequires: pkgconfig(vte-2.91-gtk4)
+BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(yaml-0.1)
 
 BuildRequires: gobject-introspection-devel
 
+BuildRequires: gir(Adw)
 BuildRequires: gir(Dex)
-BuildRequires: gir(Peas)
-BuildRequires: gir(Json)
 BuildRequires: gir(Gtk)
 BuildRequires: gir(GtkSource)
+BuildRequires: gir(Json)
+BuildRequires: gir(Peas)
 
 %if_with docs
 BuildRequires: gi-docgen
@@ -123,46 +128,58 @@ This package contains development documentation for lib%name.
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --with-gnome %name
 
 %check
 %__meson_test
 
-%files
+%files -f %name.lang
+%doc README.md NEWS
 %_bindir/%name
 %_datadir/%name/
 %_datadir/bash-completion/completions/%name
-%_datadir/metainfo/app.devsuite.Foundry.metainfo.xml
+%_datadir/metainfo/org.gnome.Foundry.metainfo.xml
+%_man1dir/%name.1.xz
 
 %files -n lib%name
 %_libdir/lib%name-%apiver.so.%{soversion}*
 %_libdir/lib%name-gtk-%apiver.so.%{soversion}*
-%_datadir/glib-2.0/schemas/app.devsuite.foundry*
+%_libdir/lib%name-adw-%apiver.so.%{soversion}*
+%_datadir/glib-2.0/schemas/org.gnome.foundry*
 
 %files -n lib%name-devel
 %_includedir/lib%name-%apiver/
 %_includedir/lib%name-gtk-%apiver/
+%_includedir/lib%name-adw-%apiver/
 %_libdir/lib%name-%apiver.so
 %_libdir/lib%name-%apiver/
 %_libdir/lib%name-gtk-%apiver.so
+%_libdir/lib%name-adw-%apiver.so
 %_pkgconfigdir/lib%name-%apiver.pc
 %_pkgconfigdir/lib%name-gtk-%apiver.pc
+%_pkgconfigdir/lib%name-adw-%apiver.pc
 
 %files -n lib%name-gir
 %_typelibdir/Foundry-%apiver.typelib
 %_typelibdir/FoundryGtk-%apiver.typelib
+%_typelibdir/FoundryAdw-%apiver.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/Foundry-%apiver.gir
 %_girdir/FoundryGtk-%apiver.gir
+%_girdir/FoundryAdw-%apiver.gir
 
 %if_with docs
 %files -n lib%name-devel-doc
 %_docdir/foundry-1/
 %_docdir/foundry-gtk-1/
+%_docdir/foundry-adw-1/
 %endif
 
 %changelog
+* Fri Sep 25 2026 Alexey Volkov <qualimock@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Wed Feb 11 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.1-alt5
 - add documentation package
 
