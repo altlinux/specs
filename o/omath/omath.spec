@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: omath
-Version: 5.5.1
+Version: 5.6.0
 Release: alt1
 
 Summary: OMath is an independent, constexpr template framework.
@@ -57,5 +57,8 @@ using different hardware resources as required.
 %_libexecdir/cmake/%name/
 
 %changelog
+* Fri Sep 25 2026 Pavel Mitrofanov <cobalt@altlinux.org> 5.6.0-alt1
+- New version 5.6.0.
+
 * Tue Aug 04 2026 Pavel Mitrofanov <cobalt@altlinux.org> 5.5.1-alt1
 - Initial build.
