@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define mod_name alterator_backend_source
 
-Name: alterator-backend-source
-Version: 0.1.5
+%define name_ alterator-backend-source 
+
+Name: alterator-backend-source-buildroot
+Version: 0.1.6
 Release: alt1
 
 Summary: System software sources manager for Alterator
@@ -10,36 +12,48 @@ License: GPLv2+
 Group: System/Configuration/Other
 URL: https://altlinux.space/sheriffkorov/alterator-backend-source
 
-BuildArch: noarch
-
 Source0: %name-%version.tar
 
-Requires: python3-module-%{mod_name}
-Requires: python3-module-gnupg
-Requires: python3-module-urllib3
-Requires: alterator-backend-systeminfo-utils
-Requires: alterator-interface-source = %EVR
-Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-entry
-Requires: apt-query
-
-BuildRequires(pre): rpm-build-pyproject rpm-macros-alterator
+BuildRequires(pre): rpm-build-pyproject rpm-macros-alterator rpm-macros-cmake
+BuildRequires: cmake ctest gcc-c++ libapt-devel gettext
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 %{?!_without_check:%{?!_disable_check:
+BuildRequires: apt apt-https apt-rsync
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tomlkit
-BuildRequires: apt-source >= 0.1.1
+BuildRequires: apt-source >= 0.1.2
 BuildRequires: alterator-entry
 BuildRequires: python3-module-gnupg
+BuildRequires: /proc
 }}
 
 %description
 %summary.
 
+%package -n %name_
+Summary: %summary
+Group: System/Configuration/Other
+BuildArch: noarch
+
+Requires: python3-module-%{mod_name}
+Requires: python3-module-gnupg
+Requires: python3-module-urllib3
+Requires: alterator-interface-source = %EVR
+Requires: alterator-module-executor >= 0.1.29
+Requires: alterator-entry
+Requires: apt-query
+Requires: apt-source >= 0.1.2
+Requires: apt-alt-source = %EVR
+
+%description -n %name_
+%summary.
+
+
 %package -n alterator-interface-source
 Summary: Interface of source for Alterator
 Group: System/Configuration/Other
+BuildArch: noarch
 
 %description -n alterator-interface-source
 %summary.
@@ -47,59 +61,111 @@ Group: System/Configuration/Other
 %package -n python3-module-%{mod_name}
 Summary: System software sources manager for Alterator
 Group: Development/Python3
+BuildArch: noarch
 
-Requires: apt-source >= 0.1.1
+Requires: apt-source >= 0.1.2
 Requires: python3-module-gnupg
 Requires: python3-module-tomlkit
+Requires: apt
+Requires: lsblk
+Requires: mount
+Requires: alterator-backend-systeminfo-utils
 
 %description -n python3-module-%{mod_name}
 %summary.
+
+%package -n apt-alt-source
+Summary: Removable source method for APT
+Summary(ru_RU.UTF-8): Метод APT для репозиториев на внешних носителях
+Group: System/Configuration/Packaging
+Requires: apt
+Requires: python3-module-%{mod_name} = %EVR
+
+%description -n apt-alt-source
+The alt-source acquire method for APT reads indexes and packages from
+removable repositories registered by Alterator.
 
 %prep
 %setup
 
 %build
 %pyproject_build
+pushd apt-alt-source
+%cmake
+%cmake_build
+popd
 
 %install
+pushd apt-alt-source
+%cmake_install
+popd
+%find_lang apt-alt-source
 mkdir -p %buildroot%_datadir/polkit-1/actions
 install -v -p -m 664 -D interface/*.policy %buildroot%_datadir/polkit-1/actions
 mkdir -p %buildroot%_datadir/dbus-1/interfaces
 install -v -p -m 664 -D interface/*.xml %buildroot%_datadir/dbus-1/interfaces
 mkdir -p %buildroot%_alterator_libdir/backends/source.d
 install -v -p -m 755 -D scripts/* %buildroot%_alterator_libdir/backends/source.d
-install -v -p -m 755 -D .gear/%{name}.filetrigger %buildroot%_rpmlibdir/10-%{name}.filetrigger
-mkdir -p %buildroot%_localstatedir/%{name}/descriptor-backups
+install -v -p -m 755 -D .gear/%{name_}.filetrigger %buildroot%_rpmlibdir/10-%{name_}.filetrigger
+mkdir -p %buildroot%_localstatedir/%{name_}/descriptor-backups
+mkdir -p %buildroot%_localstatedir/%{name_}/media
 mkdir -p %buildroot%_alterator_datadir/backends
 install -v -p -m 644 -D backend/*.backend %buildroot%_alterator_datadir/backends
 %pyproject_install
+chmod 755 %buildroot%_prefix/libexec/%name_/alterator-source-media-helper
 
 %check
+pushd apt-alt-source
+%ctest
+popd
+
+# apt-source discovers supported protocols when Python imports it. Expose
+# the method built in this SRPM without requiring an installed apt-alt-source.
+test_apt_dir=$(mktemp -d)
+trap 'rm -rf -- "$test_apt_dir"' EXIT
+mkdir -p "$test_apt_dir/methods"
+find %_libdir/apt/methods/ -maxdepth 1 -type f -executable \
+    ! -name alt-source -exec ln -s {} "$test_apt_dir/methods/" \;
+ln -sfn "$PWD/apt-alt-source/%_cmake__builddir/alt-source" \
+    "$test_apt_dir/methods/alt-source"
+printf 'Dir::Bin::methods "%%s";\n' "$test_apt_dir/methods" > "$test_apt_dir/apt.conf"
+export APT_CONFIG="$test_apt_dir/apt.conf"
 %pyproject_run_pytest
 
-%files
+%files -n %name_
 %_alterator_libdir/backends
 %_alterator_datadir/backends
-%_rpmlibdir/10-%{name}.filetrigger
-%dir %_localstatedir/%{name}
-%dir %_localstatedir/%{name}/descriptor-backups
+%_rpmlibdir/10-%{name_}.filetrigger
+%dir %_localstatedir/%{name_}
+%dir %_localstatedir/%{name_}/descriptor-backups
+%dir %_localstatedir/%{name_}/media
 
 %files -n alterator-interface-source
 %_datadir/polkit-1/actions
 %_datadir/dbus-1/interfaces
 
 %files -n python3-module-%{mod_name}
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %mod_name}
+%_prefix/libexec/%name_/alterator-source-media-helper
+%python3_sitelibdir_noarch/%mod_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}
+
+%files -n apt-alt-source -f apt-alt-source.lang
+%doc apt-alt-source/README.md
+%dir %_libdir/apt
+%dir %_libdir/apt/methods
+%_libdir/apt/methods/alt-source
 
 %preun
 if [ $1 = 0 ]; then
     find %_sysconfdir/alterator/backends -name "autogenerated-source-*.backend" -type f -delete
-    find %_localstatedir/%{name}/descriptor-backups -name '*.source' -type f -delete
+    find %_localstatedir/%{name_}/descriptor-backups -name '*.source' -type f -delete
 fi
 
 
 %changelog
+* Mon Sep 21 2026 Andrey Alekseev <parovoz@altlinux.org> 0.1.6-alt1
+- Reworked external sources
+
 * Mon Aug 31 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.5-alt1
 - Added:
   + Support for discovering, registering and removing removable APT-RPM

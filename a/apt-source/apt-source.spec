@@ -2,7 +2,7 @@
 %define mod_name apt_source
 
 Name: apt-source
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: APT sources list manager
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 %{?!_without_check:%{?!_disable_check:
+BuildRequires: apt apt-https apt-rsync
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-faker
 }}
@@ -56,6 +57,9 @@ Requires: python3-module-tabulate
 
 
 %changelog
+* Mon Sep 07 2026 Andrey Alekseev <parovoz@altlinux.org> 0.1.2-alt1
+- Support any existing apt method
+
 * Mon Jun 08 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
 - Added transactional file deletion for source tables.
 - Fixed Repository.get_table() resolves symlinks and non-canonical

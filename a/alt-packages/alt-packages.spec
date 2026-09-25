@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
@@ -31,7 +31,7 @@ BuildRequires: nlohmann-json-devel
 
 Requires: alterator-entry >= 0.4.13-alt1
 Requires: alterator-backend-packages >= 0.2.14-alt1
-Requires: alterator-backend-source >= 0.1.5-alt1
+Requires: alterator-backend-source >= 0.1.6-alt1
 Requires: alterator-backend-categories
 Requires: alt-components >= 0.6.16
 Requires: alterator-manager >= 0.1.25
@@ -66,6 +66,11 @@ and package repositories through apt and rpm.
 %_K6dbus_srv/*.service
 
 %changelog
+* Mon Sep 21 2026 Andrey Alekseev <parovoz@altlinux.org> 0.7.0-alt1
+- Added external sources support
+- Fixed ui blocking issues while package list reloading
+- Conflict check now only applies if components/multiarch are modified
+
 * Mon Aug 24 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.1-alt1
 - Added (thx Oleg Chagaev):
   + management of removable media and additional repositories.

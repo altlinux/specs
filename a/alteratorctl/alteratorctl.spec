@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -24,7 +24,7 @@ Requires: alterator-interface-edition >= 0.4.2
 Requires: alterator-interface-diag >= 0.1.5
 Requires: alterator-backend-systeminfo >= 0.4.3
 Requires: alterator-interface-service >= 0.2.1-alt2
-Requires: alterator-backend-source >= 0.1.5-alt1
+Requires: alterator-backend-source >= 0.1.6-alt1
 Requires: alt-components-base >= 0.10.9
 Requires: libtomlc99 polkit libjson-glib
 
@@ -53,12 +53,20 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/alteratorctl/lang/ru/LC_MESSAGES/%name.mo
 %_datadir/alteratorctl/scripts/completion_wrapper
 %_datadir/alteratorctl/scripts/completion_services
+%_datadir/alteratorctl/scripts/completion_sources
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/bash-completion/completions/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Mon Sep 21 2026 Pavel Khromov <hromovpi@altlinux.org> 0.4.2-alt1
+- Added:
+  + External sources support;
+  + Dynamic auto-completion for the source module.
+- Fixed:
+  + Fixed a check that was causing the services diagnose to crash.
+
 * Mon Aug 31 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.1-alt1
 - Added:
   + Browsing components for services, diag, editions and sources modules
