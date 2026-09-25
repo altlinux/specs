@@ -4,7 +4,7 @@
 %def_with check
 
 Name: tailor-adw
-Version: 1.0.0
+Version: 1.1.2
 Release: alt1
 
 Summary: Create bootable drives
@@ -15,7 +15,6 @@ VCS: https://altlinux.space/qualimock/Tailor
 
 Source0: %name-%version.tar
 Source1: 50-tailor-primary-distro-alt.gschema.override
-Patch0: tailor-0.1.1-alt-add-primary-distro-translation.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
@@ -40,7 +39,6 @@ pick a target drive, and Tailor downloads, verifies, and flashes it.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %meson
@@ -64,6 +62,9 @@ install -pD -m0644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas/
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Fri Sep 25 2026 Alexey Volkov <qualimock@altlinux.org> 1.1.2-alt1
+- new version 1.1.2 (closes: #60626, #60643, #60645)
+
 * Tue Sep 08 2026 Alexey Volkov <qualimock@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 
