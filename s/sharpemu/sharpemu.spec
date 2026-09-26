@@ -1,9 +1,12 @@
 %define ffmpeg_tag 3b502d4
 %define ffmpeg_version 7.1.2
 
-# Upstream release suffix (e.g. .release.4, .hotfix.2, .rc1).
+# ALT release suffix (e.g. .release.4, .hotfix.2, .rc1).
 # Set to %nil when the upstream version has no suffix.
-%define version_suffix %nil
+%define version_suffix .release.2
+# Upstream tag/source-tarball suffix, dash-separated (e.g. -release.4, -hotfix.2, -rc1).
+# Set to %nil when the upstream version has no suffix.
+%define upstream_suffix -release.2
 
 Name: sharpemu
 Version: 0.0.4
@@ -19,8 +22,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64
 
-# https://github.com/sharpemu/sharpemu/archive/v%version/sharpemu-%version.tar.gz
-Source0: %name-%version.tar
+# https://github.com/sharpemu/sharpemu/archive/v%version%{upstream_suffix}/%name-%version%{upstream_suffix}.tar.gz
+Source0: %name-%version%{upstream_suffix}.tar
 # Pre-cached NuGet packages (created on a machine with network access)
 Source1: packages.tar
 # https://ffmpeg.org/releases/ffmpeg-%ffmpeg_version.tar.xz
@@ -40,7 +43,7 @@ It uses AOT compilation and high-level emulation to run PS5 games.
 %add_findreq_skiplist %_libexecdir/%name/plugins/*
 
 %prep
-%setup -n %name-%version -a 1 -b 2
+%setup -n %name-%version%{upstream_suffix} -a 1 -b 2
 %patch0 -p1 -d ../ffmpeg-%ffmpeg_version
 
 %build
@@ -146,6 +149,9 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Sat Sep 26 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt1.release.2
+- Update to v0.0.4-release.2
+
 * Tue Sep 22 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt1
 - Update to v0.0.4
 
