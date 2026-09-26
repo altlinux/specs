@@ -2,7 +2,7 @@
 
 Name:     theme-gnome-windows
 Version:  1.0
-Release:  alt9
+Release:  alt10
 
 Summary:  GNOME theme for Windows-like layout
 License:  GPL-3.0-or-later
@@ -20,7 +20,7 @@ Requires: icon-theme-morewaita
 Requires: nautilus >= %gnome_version
 Requires: gnome-shell-extensions >= %gnome_version
 Requires: gnome-shell-extension-dash-to-panel
-Requires: gnome-shell-extension-arcmenu >= 69.1
+Requires: gnome-shell-extension-arcmenu >= 70.0
 Requires: gnome-shell-extension-gtk4-desktop-icons-ng
 Requires: gnome-shell-extension-clipboard-indicator
 Requires: gnome-shell-extension-appindicator
@@ -46,6 +46,9 @@ install -pm644 *.gschema.override \
 %_datadir/glib-2.0/schemas/*.gschema.override
 
 %changelog
+* Sat Sep 26 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt10
+- 60-windows-like.gschema.override: update for arcmenu >= 0.70.
+
 * Sun May 31 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt9
 - 60-windows-like.gschema.override: update for arcmenu >= 69.1.
 
