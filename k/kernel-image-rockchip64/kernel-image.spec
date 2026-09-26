@@ -2,7 +2,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.53
+%define kernel_sublevel	.54
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -140,101 +140,102 @@ Patch0099: general-rk3588-i2s-mclk-output-gate-5-ignore-unused.patch
 Patch0100: general-rk808-configurable-switch-voltage-steps.patch
 Patch0101: general-rockchip-overlays.patch
 Patch0102: general-rt5651-add-mclk.patch
-Patch0103: general-st7796-driver.patch
-Patch0104: general-v4l2-iep-driver.patch
-Patch0105: general-workaround-broadcom-bt-serdev.patch
-Patch0106: HACK-Ignore-SError-to-enable-rk3399-PCIe-bus-enumera.patch
-Patch0107: kernel-6.8-tools-cgroup-makefile.patch
-Patch0108: media-0001-Add-rkvdec-Support-v5.patch
-Patch0109: media-0002-media-rkvdec-remove-vb2_is_busy-check-in-rkvdec_s_ct.patch
-Patch0110: media-0002-v4l2-core-Initialize-h264-frame_mbs_only_flag-.patch
-Patch0111: media-0003-rk3568-disable-hantro-h264.patch
-Patch0112: media-0007-add-verisilicon-AV1-iommu-driver.patch
-Patch0113: mmc-sdio-skip-cmd11-voltage-switch-when-already-1v8.patch
-Patch0114: net-ethernet-realtek-add-r8169-LED-configuration-from-OF.patch
-Patch0115: net-phy-realtek-add-rtl8211x-LED-configuration-from-OF.patch
-Patch0116: net-usb-r8152-add-LED-configuration-from-OF.patch
-Patch0117: orangepi5-ultra-hdmirx-dts-fix.patch
-Patch0118: regulator-add-fan53200-driver.patch
-Patch0119: rk3308-0001-pinctrl-slew-mux.patch
-Patch0120: rk3308-acodec-vendor-driver.patch
-Patch0121: rk3308-add-gmac-alias.patch
-Patch0122: rk3308-add-missing-i2s-controllers.patch
-Patch0123: rk3308-add-tsadc-driver.patch
-Patch0124: rk3308-dts-legacy-cryptov2.patch
-Patch0125: rk3308-dts-thermal-zones.patch
-Patch0126: rk3308-fix-10mbit-ethernet.patch
-Patch0127: rk3308-fix-uart-dma.patch
-Patch0128: rk3308-internal-rgb-lcdc.patch
-Patch0129: rk3308-vop-output.patch
-Patch0130: rk3328-add-dmc-driver.patch
-Patch0131: rk3328-add-rga-node.patch
-Patch0132: rk3328-dtsi-spdif.patch
-Patch0133: rk3328-dtsi-usb3-reset-properties.patch
-Patch0134: rk3328-inno-usb3phy-driver.patch
-Patch0135: rk3328-roc-cc-add-missing-nodes.patch
-Patch0136: rk3399-add-sclk-i2sout-src-clock.patch
-Patch0137: rk3399-dmc-polling-rate.patch
-Patch0138: rk3399-dts-add-watchdog-reset-line.patch
-Patch0139: rk3399-enable-dwc3-xhci-usb-trb-quirk.patch
-Patch0140: rk3399-fix-pci-phy.patch
-Patch0141: rk3399-fix-usb-phy.patch
-Patch0142: rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch
-Patch0143: rk3399-sd-drive-level-8ma.patch
-Patch0144: rk3399-sd-pwr-pinctrl.patch
-Patch0145: rk3399-unlock-temperature.patch
-Patch0146: rk3399-usbc-notify-typec-dp-hpd-state-through-extcon.patch
-Patch0147: rk3399-usbc-phy-phy-rockchip-inno-usb2-Decrease-delay-between-po.patch
-Patch0148: rk3399-usbc-phy-rockchip-inno-usb2-More-robust-charger-detection.patch
-Patch0149: rk3399-usbc-phy-rockchip-naneng-Add-fallback-for-old-DTs.patch
-Patch0150: rk3399-usbc-Revert-usb-typec-tcpm-unregister-existing-source-cap.patch
-Patch0151: rk3399-usbc-usb-dwc3-Extend-reset-quirk-support-to-include-role-.patch
-Patch0152: rk3399-usbc-usb-dwc3-Track-the-power-state-of-usb3_generic_phy.patch
-Patch0153: rk3399-usbc-usb-typec-altmodes-displayport-Respect-DP_CAP_RECEPT.patch
-Patch0154: rk3399-usbc-usb-typec-tcpm-Fix-PD-devices-capabilities-registrat.patch
-Patch0155: rk3399-usbc-usb-typec-tcpm-Unregister-altmodes-before-registerin.patch
-Patch0156: rk3399-usbc-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch
-Patch0157: rk3528-01-arm64-dts-rockchip-Add-PCIe-Gen2x1-controller-for-RK.patch
-Patch0158: rk3528-02-arm64-dts-rockchip-Add-SFC-node-for-RK3528.patch
-Patch0159: rk3528-10-phy-rockchip-inno-usb2-Add-support-for-RK3528.patch
-Patch0160: rk3528-11-arm64-dts-rockchip-rk3528-Add-USB-controller-and-PHY-nodes.patch
-Patch0161: rk3528-12-arm64-dts-rockchip-nanopi-zero2-Enable-USB.patch
-Patch0162: rk3528-13-phy-rockchip-inno-usb2-fix-otg-timer-cleanup.patch
-Patch0163: rk3528-14-arm64-dts-rockchip-nanopi-zero2-fix-ethernet-phy-reset.patch
-Patch0164: rk3528-net-dsa-realtek-fixes-for-radxa-e24c-switch-chip.patch
-Patch0165: rk356x-add-51.2MHz-PLL-rate-for-HDMI.patch
-Patch0166: rk356x-add-rkvdec2-support.patch
-Patch0167: rk3576-0001-gpio-rockchip-set-input-direction-when-request-irq.patch
-Patch0168: rk3576-0002-mmc-dw_mmc-rockchip-add-v2-tuning-support.patch
-Patch0169: rk3576-0003-pmdomain-rockchip-add-always-on-support.patch
-Patch0170: rk3576-0004-dt-bindings-pwm-rockchip-rk3576-pwm.patch
-Patch0171: rk3576-0005-mfd-rockchip-add-mfpwm-driver.patch
-Patch0172: rk3576-0006-pwm-rockchip-pwmv4-driver.patch
-Patch0173: rk3576-0007-counter-rockchip-pwm-capture-driver.patch
-Patch0174: rk3576-0008-arm64-dts-rk3576-add-pwm-nodes.patch
-Patch0175: rk3576-0009-arm64-dts-rk3576-add-dma-coherent-pcie-gmac.patch
-Patch0176: rk3588-0010-fix-clk-divisions-INLINE-REWORK.patch
-Patch0177: rk3588-0025-add-missing-op-nodes.patch
-Patch0178: rk3588-1010-arm64-dts-rock-5b-Slow-down-emmc-to-hs200.patch
-Patch0179: rk3588-1040-board-khadas-edge2-add-nodes.patch
-Patch0180: rk3588-1041-board-khadas-edge2-mcu.patch
-Patch0181: rk3588-1051-board-nanopc-t6-fan-support.patch
-Patch0182: rk3588-1052-board-nanopc-t6-fix-usb3-a.patch
-Patch0183: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
-Patch0184: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
-Patch0185: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
-Patch0186: rk3588-1102-arm64-dts-rockchip-opi5-compact-fix-bluetooth.patch
-Patch0187: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
-Patch0188: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
-Patch0189: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
-Patch0190: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
-Patch0191: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
-Patch0192: rk3588-1212-arm64-dts-Automatic-fan-speed-and-USB-3.0-Type-A-por.patch
-Patch0193: rk3588-1213-arm64-dts-rk3588s-roc-pc-Enable-USB-type-C-port.patch
-Patch0194: rk3588-1230-can-rockchip-add-rk3588-can-support.patch
-Patch0195: rk35xx-montjoie-crypto-v2-rk35xx.patch
-Patch0196: temporary-workaround-dma-reset.patch
-Patch0197: wifi-4003-add-bcm43342-chip.patch
+Patch0103: general-rtc-pcf8563-pass-driver-data-to-irq-handler.patch
+Patch0104: general-st7796-driver.patch
+Patch0105: general-v4l2-iep-driver.patch
+Patch0106: general-workaround-broadcom-bt-serdev.patch
+Patch0107: HACK-Ignore-SError-to-enable-rk3399-PCIe-bus-enumera.patch
+Patch0108: kernel-6.8-tools-cgroup-makefile.patch
+Patch0109: media-0001-Add-rkvdec-Support-v5.patch
+Patch0110: media-0002-media-rkvdec-remove-vb2_is_busy-check-in-rkvdec_s_ct.patch
+Patch0111: media-0002-v4l2-core-Initialize-h264-frame_mbs_only_flag-.patch
+Patch0112: media-0003-rk3568-disable-hantro-h264.patch
+Patch0113: media-0007-add-verisilicon-AV1-iommu-driver.patch
+Patch0114: mmc-sdio-skip-cmd11-voltage-switch-when-already-1v8.patch
+Patch0115: net-ethernet-realtek-add-r8169-LED-configuration-from-OF.patch
+Patch0116: net-phy-realtek-add-rtl8211x-LED-configuration-from-OF.patch
+Patch0117: net-usb-r8152-add-LED-configuration-from-OF.patch
+Patch0118: orangepi5-ultra-hdmirx-dts-fix.patch
+Patch0119: regulator-add-fan53200-driver.patch
+Patch0120: rk3308-0001-pinctrl-slew-mux.patch
+Patch0121: rk3308-acodec-vendor-driver.patch
+Patch0122: rk3308-add-gmac-alias.patch
+Patch0123: rk3308-add-missing-i2s-controllers.patch
+Patch0124: rk3308-add-tsadc-driver.patch
+Patch0125: rk3308-dts-legacy-cryptov2.patch
+Patch0126: rk3308-dts-thermal-zones.patch
+Patch0127: rk3308-fix-10mbit-ethernet.patch
+Patch0128: rk3308-fix-uart-dma.patch
+Patch0129: rk3308-internal-rgb-lcdc.patch
+Patch0130: rk3308-vop-output.patch
+Patch0131: rk3328-add-dmc-driver.patch
+Patch0132: rk3328-add-rga-node.patch
+Patch0133: rk3328-dtsi-spdif.patch
+Patch0134: rk3328-dtsi-usb3-reset-properties.patch
+Patch0135: rk3328-inno-usb3phy-driver.patch
+Patch0136: rk3328-roc-cc-add-missing-nodes.patch
+Patch0137: rk3399-add-sclk-i2sout-src-clock.patch
+Patch0138: rk3399-dmc-polling-rate.patch
+Patch0139: rk3399-dts-add-watchdog-reset-line.patch
+Patch0140: rk3399-enable-dwc3-xhci-usb-trb-quirk.patch
+Patch0141: rk3399-fix-pci-phy.patch
+Patch0142: rk3399-fix-usb-phy.patch
+Patch0143: rk3399-rp64-pcie-Reimplement-rockchip-PCIe-bus-scan-delay.patch
+Patch0144: rk3399-sd-drive-level-8ma.patch
+Patch0145: rk3399-sd-pwr-pinctrl.patch
+Patch0146: rk3399-unlock-temperature.patch
+Patch0147: rk3399-usbc-notify-typec-dp-hpd-state-through-extcon.patch
+Patch0148: rk3399-usbc-phy-phy-rockchip-inno-usb2-Decrease-delay-between-po.patch
+Patch0149: rk3399-usbc-phy-rockchip-inno-usb2-More-robust-charger-detection.patch
+Patch0150: rk3399-usbc-phy-rockchip-naneng-Add-fallback-for-old-DTs.patch
+Patch0151: rk3399-usbc-Revert-usb-typec-tcpm-unregister-existing-source-cap.patch
+Patch0152: rk3399-usbc-usb-dwc3-Extend-reset-quirk-support-to-include-role-.patch
+Patch0153: rk3399-usbc-usb-dwc3-Track-the-power-state-of-usb3_generic_phy.patch
+Patch0154: rk3399-usbc-usb-typec-altmodes-displayport-Respect-DP_CAP_RECEPT.patch
+Patch0155: rk3399-usbc-usb-typec-tcpm-Fix-PD-devices-capabilities-registrat.patch
+Patch0156: rk3399-usbc-usb-typec-tcpm-Unregister-altmodes-before-registerin.patch
+Patch0157: rk3399-usbc-usb-typec-typec-extcon-Add-typec-extcon-bridge-drive.patch
+Patch0158: rk3528-01-arm64-dts-rockchip-Add-PCIe-Gen2x1-controller-for-RK.patch
+Patch0159: rk3528-02-arm64-dts-rockchip-Add-SFC-node-for-RK3528.patch
+Patch0160: rk3528-10-phy-rockchip-inno-usb2-Add-support-for-RK3528.patch
+Patch0161: rk3528-11-arm64-dts-rockchip-rk3528-Add-USB-controller-and-PHY-nodes.patch
+Patch0162: rk3528-12-arm64-dts-rockchip-nanopi-zero2-Enable-USB.patch
+Patch0163: rk3528-13-phy-rockchip-inno-usb2-fix-otg-timer-cleanup.patch
+Patch0164: rk3528-14-arm64-dts-rockchip-nanopi-zero2-fix-ethernet-phy-reset.patch
+Patch0165: rk3528-net-dsa-realtek-fixes-for-radxa-e24c-switch-chip.patch
+Patch0166: rk356x-add-51.2MHz-PLL-rate-for-HDMI.patch
+Patch0167: rk356x-add-rkvdec2-support.patch
+Patch0168: rk3576-0001-gpio-rockchip-set-input-direction-when-request-irq.patch
+Patch0169: rk3576-0002-mmc-dw_mmc-rockchip-add-v2-tuning-support.patch
+Patch0170: rk3576-0003-pmdomain-rockchip-add-always-on-support.patch
+Patch0171: rk3576-0004-dt-bindings-pwm-rockchip-rk3576-pwm.patch
+Patch0172: rk3576-0005-mfd-rockchip-add-mfpwm-driver.patch
+Patch0173: rk3576-0006-pwm-rockchip-pwmv4-driver.patch
+Patch0174: rk3576-0007-counter-rockchip-pwm-capture-driver.patch
+Patch0175: rk3576-0008-arm64-dts-rk3576-add-pwm-nodes.patch
+Patch0176: rk3576-0009-arm64-dts-rk3576-add-dma-coherent-pcie-gmac.patch
+Patch0177: rk3588-0010-fix-clk-divisions-INLINE-REWORK.patch
+Patch0178: rk3588-0025-add-missing-op-nodes.patch
+Patch0179: rk3588-1010-arm64-dts-rock-5b-Slow-down-emmc-to-hs200.patch
+Patch0180: rk3588-1040-board-khadas-edge2-add-nodes.patch
+Patch0181: rk3588-1041-board-khadas-edge2-mcu.patch
+Patch0182: rk3588-1051-board-nanopc-t6-fan-support.patch
+Patch0183: rk3588-1052-board-nanopc-t6-fix-usb3-a.patch
+Patch0184: rk3588-1064-arm64-dts-rockchip-Add-missing-hym8563-clock-frequen.patch
+Patch0185: rk3588-1100-arm64-dts-rockchip-opi5-max-add-2nd-hdmi.patch
+Patch0186: rk3588-1101-arm64-dts-rockchip-opi5-max-add-hdmi-sound.patch
+Patch0187: rk3588-1102-arm64-dts-rockchip-opi5-compact-fix-bluetooth.patch
+Patch0188: rk3588-1200-arm64-dts-rockchip-Enable-the-NPU-on-NanoPC-T6-LTS.patch
+Patch0189: rk3588-1201-arm64-dts-rockchip-Enable-the-NPU-on-CM3588.patch
+Patch0190: rk3588-1202-arm64-dts-rockchip-Enable-the-NPU-on-Turing-RK1.patch
+Patch0191: rk3588-1210-arm64-dts-rockchip-Enable-HDMI1-and-audio-for-HDMI0and1.patch
+Patch0192: rk3588-1211-arm64-dts-rk3588s-roc-pc-Enable-HDMI-audio.patch
+Patch0193: rk3588-1212-arm64-dts-Automatic-fan-speed-and-USB-3.0-Type-A-por.patch
+Patch0194: rk3588-1213-arm64-dts-rk3588s-roc-pc-Enable-USB-type-C-port.patch
+Patch0195: rk3588-1230-can-rockchip-add-rk3588-can-support.patch
+Patch0196: rk35xx-montjoie-crypto-v2-rk35xx.patch
+Patch0197: temporary-workaround-dma-reset.patch
+Patch0198: wifi-4003-add-bcm43342-chip.patch
 
 # ALT Patches
 Patch1000: 1000-drm_rockchip_dwhdmiqp-rockchip_attach_next_bridge_to_the_HDMI_bridge.patch
@@ -567,6 +568,9 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 %modules_dir/build
 
 %changelog
+* Sat Sep 26 2026 Alexei Takaseev <taf@altlinux.org> 6.18.54-alt1
+- v6.18.54 (2026-09-25).
+
 * Tue Sep 22 2026 Alexei Takaseev <taf@altlinux.org> 6.18.53-alt1
 - v6.18.53 (2026-09-21).
 
