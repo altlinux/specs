@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: neatvnc
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: A liberally licensed VNC server library with a clean interface
@@ -80,6 +80,9 @@ Neat VNC based software.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Fri Jul 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
