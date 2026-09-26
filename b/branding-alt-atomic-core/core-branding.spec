@@ -15,13 +15,13 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-core
-Version: 20260830
+Version: 20260926
 Release: alt1
 
 Group: Graphics
 Summary: System/Base
 License: GPL-3.0-or-later
-URL: https://atomic.alt-gnome.ru/
+URL: https://alt-atomic.org/
 VCS: https://altlinux.space/alt-atomic/core-branding.git
 
 Source: %name-%version.tar
@@ -78,6 +78,9 @@ Conflicts: altlinux-release-%altbranch
 %_prefix/lib/os-release
 
 %changelog
+* Sat Sep 26 2026 Vladimir Romanov <rirusha@altlinux.org> 20260926-alt1
+- Updated URL. (thx x1z53@)
+
 * Sun Aug 30 2026 Vladimir Romanov <rirusha@altlinux.org> 20260830-alt1
 - Updated URLs.
 - Added additional `ID_LIKE`.
