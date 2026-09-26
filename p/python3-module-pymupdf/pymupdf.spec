@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.27.2.2
+Version: 1.28.2
 Release: alt1
 
 Summary: PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents
@@ -35,6 +35,7 @@ BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-fonttools
+BuildRequires: python3-module-pipcl
 %endif
 
 Requires: python3-module-mupdf
@@ -72,6 +73,8 @@ SKIP="$SKIP and not test_3842 and \
              not test_4125 and \
              not test_3050 and \
              not test_3854 and \
+             not test_5001 and \
+             not test_5049 and \
              not test_spikes and \
              not test_4180 and \
              not test_4392"
@@ -105,6 +108,9 @@ SKIP="$SKIP and not test_2246 and \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Sep 26 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.28.2-alt1
+- New version (1.28.2).
+
 * Tue Mar 24 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.27.2.2-alt1
 - New version (1.27.2.2).
 

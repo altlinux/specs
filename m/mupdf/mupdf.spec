@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 27
+%define abiversion 28
 %define python3_name python3-module-mupdf
 
 Name: mupdf
-Version: 1.27.2
-Release: alt2
+Version: 1.28.2
+Release: alt1
 
 Summary: Lightweight framework for viewing and converting PDF, XPS, E-book documents
 License: AGPL-3.0-or-later
@@ -17,6 +17,7 @@ Source0: %name-%version.tar
 Source1: %name-%version-thirdparty-extract.tar
 Source2: %name-%version-thirdparty-lcms2.tar
 Source3: %name-%version-thirdparty-mujs.tar
+Source4: %name-%version-thirdparty-cmark-gfm.tar
 
 Patch0: mupdf-1.25.2-alt1-disable_strip.patch
 Patch1: mupdf-1.25.6-alt1-do-not-require-libclang-and-swig.patch
@@ -34,6 +35,7 @@ BuildRequires: python3-dev
 BuildRequires: tesseract-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libXrandr-devel
+BuildRequires: python3-module-pipcl
 
 Requires: libmupdf%abiversion = %EVR
 
@@ -81,8 +83,10 @@ manipulating PDF, XPS, and E-book documents without graphical interface.
 Ideal for server environments where graphical libraries are not required.
 
 %prep
-%setup -a1 -a2 -a3
+%setup -a1 -a2 -a3 -a4
 %autopatch -p1
+# Use packaged Python dependencies instead of a virtual environment.
+sed -i '/^autovenv\.enter()$/d' scripts/wrap/__main__.py
 
 %build
 # NB: lcms2-art is a fork, mujs is also special to mupdf
@@ -91,6 +95,7 @@ make_mupdf() {
 	%make_build --trace \
 	USE_SYSTEM_LIBS=yes \
 	USE_TESSERACT=yes \
+	VENV_FLAG= \
 	FZ_ENABLE_PDF=1 \
 	XCFLAGS="-I%_includedir/freetype2 \
 		 -I%_includedir/harfbuzz \
@@ -110,6 +115,7 @@ make_mupdf libs python apps
 # Not %%makeinstall as DESTDIR would get doubled then
 %make_install \
 	 USE_SYSTEM_LIBS=yes \
+	 VENV_FLAG= \
 	 DESTDIR=%buildroot \
 	 bindir=%_bindir \
 	 libdir=%_libdir \
@@ -163,6 +169,9 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %_man1dir/mutool.1*
 
 %changelog
+* Sat Sep 26 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.28.2-alt1
+- New version (1.28.2).
+
 * Wed Jul 29 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.27.2-alt2
 - Cleaned up the spec file.
 
