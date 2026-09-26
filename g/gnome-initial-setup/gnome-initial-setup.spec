@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
@@ -29,7 +29,7 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %define session_ver %ver_major
 %define nm_ver 1.2
 %define nma_ver 1.0
-%define glib_ver 2.64.0
+%define glib_ver 2.76.0
 %define gtk4_ver 4.17
 %define adwaita_ver 1.4
 %define secret_ver 0.18.8
@@ -42,6 +42,7 @@ Source1: https://raw.githubusercontent.com/eggert/tz/main/zone.tab
 %define webkit_api_ver 6.0
 %define webkit_ver 2.39.1
 %define goa_ver 3.45.2
+%define accountsservice_ver 26.12.8
 
 #Requires: gnome-shell >= 3.37.92 gdm
 #Requires: gnome-online-accounts >= %goa_ver
@@ -62,7 +63,8 @@ BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: libnm-devel >= %nm_ver pkgconfig(libnma-gtk4) >= %nma_ver
 BuildRequires: libkrb5-devel libpwquality-devel
 BuildRequires: libxkbfile-devel libibus-devel >= %ibus_ver librest-devel
-BuildRequires: libaccountsservice-devel pkgconfig(rest-1.0) pkgconfig(gnome-desktop-4)
+BuildRequires: libaccountsservice-devel >= %accountsservice_ver
+BuildRequires: pkgconfig(rest-1.0) pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(gweather4) libgnome-online-accounts-devel
 BuildRequires: gdm-libs-devel iso-codes-devel libpolkit-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
@@ -119,6 +121,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
