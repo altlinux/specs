@@ -5,7 +5,7 @@
 %define _name mahjongg
 %define xdg_name org.gnome.Mahjongg
 %define __name gnome-%_name
-%define ver_major 49
+%define ver_major 51
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: gnome-games-%_name
-Version: %ver_major.1.1
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Classic Chinese Tile Game
@@ -32,8 +32,8 @@ Source: %__name-%version%beta.tar
 Provides:  %__name = %EVR
 
 %define glib_ver 2.72.0
-%define gtk4_ver 4.20.0
-%define adw_ver 1.8
+%define gtk4_ver 4.22.0
+%define adw_ver 1.9
 %define rsvg_ver 2.46
 
 BuildRequires(pre): rpm-macros-meson
@@ -73,6 +73,9 @@ version of the classic Eastern tile game, Mahjongg.
 %_man6dir/%__name.*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Mon Feb 02 2026 Yuri N. Sedunov <aris@altlinux.org> 49.1.1-alt1
 - 49.1.1
 

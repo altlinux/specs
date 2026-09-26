@@ -10,6 +10,7 @@
 %def_enable xwayland
 %def_enable extensions_tool
 # moved to separate project since 51
+# https://gitlab.gnome.org/GNOME/gnome-extensions-app
 %def_disable extensions_app
 %def_disable gtk_doc
 %def_enable man
@@ -17,7 +18,7 @@
 
 Name: gnome-shell
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -113,6 +114,7 @@ Requires: typelib(Graphene)
 Requires: typelib(Gst)
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Gvc)
+Requires: typelib(GUdev) = 1.0
 Requires: typelib(GWeather) = %gweather_api_ver
 Requires: typelib(IBus)
 Requires: typelib(Malcontent)
@@ -314,6 +316,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1.1
+- added lost "typelib(GUdev)" runtime dependency
+
 * Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 

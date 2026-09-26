@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define ver_major 5.10
-%define ver_minor 2
+%define ver_minor 3
 %define rdn_name fr.free.mdoyen.HomeBank
 
 Name: homebank
@@ -98,6 +98,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10.3-alt1
+- 5.10.3
+
 * Sun Jun 14 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10.2-alt1
 - 5.10.2
 
