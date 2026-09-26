@@ -3,7 +3,7 @@
 %define uuid %_name@basealt.ru
 
 Name: gnome-shell-extension-%_name
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: Weather widget for GNOME panel
@@ -47,6 +47,9 @@ Weather data is provided by ALT Weather service
 %_datadir/metainfo/%_name.metainfo.xml
 
 %changelog
+* Fri Sep 25 2026 Dmitry Udalov <udalov@altlinux.org> 1.0.6-alt1
+- Change weather update interval to 30-60 minutes
+
 * Thu Jun 04 2026 Dmitry Udalov <udalov@altlinux.org> 1.0.5-alt1
 - Add GNOME 50 to shell-version support
 
