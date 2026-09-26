@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 2.4.1
+Version: 2.5.1
 Release: alt1
 
 Summary: Utils for converting between date formats and calculating holidays
@@ -47,6 +47,9 @@ Julian, Mayan and Persian.
 %doc *.rst *.md
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.5.1-alt1
+- 2.5.1
+
 * Sun Feb 08 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.1-alt1
 - 2.4.1
 

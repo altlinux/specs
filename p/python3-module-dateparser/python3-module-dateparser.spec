@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.4.3
 Release: alt1
 
 Summary: Python parser for human readable dates 
@@ -30,7 +30,7 @@ BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
 %{?_enable_check:BuildRequires: python3-module-tox
 BuildRequires: python3-module-flake8 python3-module-pytest
 BuildRequires: python3-module-pytest-cov python3-module-parameterized
-BuildRequires: python3-module-convertdate
+BuildRequires: python3-module-convertdate >= 2.2.1
 BuildRequires: python3-module-ruamel-yaml python3-module-umalqurra
 BuildRequires: python3-module-hijridate python3-module-langdetect
 BuildRequires: python3(fasttext) python3(parsel) python3(git)}
@@ -90,6 +90,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
+- 1.4.3
+
 * Mon Jun 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
