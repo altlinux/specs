@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: capsule
-Version: 0.3.8
+Version: 0.5.3
 Release: alt1
 
 Summary: Tool for creating portable Linux containers from OCI images
@@ -39,6 +39,7 @@ BuildRequires: binutils
 Requires: squashfs-tools
 Requires: shadow-submap
 Requires: fuse-overlayfs
+Requires: oci-runtime
 Requires: containers-common
 Requires: netavark
 
@@ -67,6 +68,9 @@ export GOFLAGS="-mod=vendor"
 
 %files -f %name.lang
 %_bindir/%name
+%_datadir/bash-completion/completions/%name
+%_datadir/zsh/site-functions/_%name
+%_datadir/fish/vendor_completions.d/%name.fish
 %doc README.md
 %doc README.en.md
 %doc README.ru.md
@@ -74,6 +78,12 @@ export GOFLAGS="-mod=vendor"
 %doc examples
 
 %changelog
+* Fri Sep 25 2026 Dmitry Udalov <udalov@altlinux.org> 0.5.3-alt1
+- New commands remove, config, session start/stop; own pid 1 for bwrap.
+- Manifest: bind mounts, on_start, no_overlay/no_nvidia; rootless build.
+- Stop --kill removed; many unmount/reaper fixes.
+- Package shell completions; require oci-runtime.
+
 * Mon Jun 08 2026 Dmitry Udalov <udalov@altlinux.org> 0.3.8-alt1
 - Use private build storage instead of podman shared store.
 
