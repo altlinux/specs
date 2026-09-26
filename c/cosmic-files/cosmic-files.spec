@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name com.system76.CosmicFiles
 
@@ -50,8 +50,7 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
-%rust_build --package %name-applet
+just
 
 %install
 just rootdir=%buildroot install
@@ -62,12 +61,17 @@ just rootdir=%buildroot install
 %files
 %_bindir/%name
 %_bindir/%name-applet
+%_bindir/%name-thumbnailer
 %_desktopdir/%rdn_name.desktop
+%_datadir/thumbnailers/%rdn_name.thumbnailer
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %_iconsdir/hicolor/*/apps/*.svg
 %doc README*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 

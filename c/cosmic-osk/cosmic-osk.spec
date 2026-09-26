@@ -1,21 +1,21 @@
 %def_disable snapshot
 %define ver_major 1.9
 %define beta %nil
-%define rdn_name com.system76.CosmicMonitor
+%define rdn_name com.system76.CosmicOsk
 
 %def_disable bootstrap
 %def_enable check
 
-Name: cosmic-monitor
+Name: cosmic-osk
 Version: %ver_major.0
 Release: alt1%beta
 
-Summary: COSMIC System Monitor
+Summary: COSMIC On-Screen Keyboard
 License: GPL-3.0
 Group: Graphical desktop/Other
-Url: https://github.com/pop-os/cosmic-monitor
+Url: https://github.com/pop-os/cosmic-osk
 
-Vcs: https://github.com/pop-os/cosmic-monitor.git
+Vcs: https://github.com/pop-os/cosmic-osk.git
 
 %define git_ver epoch-%version%(echo %beta|sed 's/^\./-/')
 %if_disabled snapshot
@@ -25,15 +25,15 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
 
-#ExcludeArch: %ix86 armh
-
-Provides: cosmic-system-monitor = %EVR
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(udev)
+
+#ExcludeArch: %ix86 armh
 
 %description
-System Monitor for COSMIC desktop.
+%summary
 
 %prep
 %setup -n %name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver} %{?_disable_bootstrap:-a1}
@@ -43,7 +43,10 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+%rust_build \
+%ifarch %ix86 aarch64
+    --config 'profile.release.lto=false'
+%endif
 
 %install
 just rootdir=%buildroot install
@@ -53,31 +56,9 @@ just rootdir=%buildroot install
 
 %files
 %_bindir/%name
-%_desktopdir/%rdn_name.desktop
-%_iconsdir/hicolor/*x*/apps/%rdn_name.svg
-%_datadir/metainfo/%rdn_name.metainfo.xml
-%doc README*
 
 %changelog
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
-- 1.9.0
-
-* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
-- 1.7.0
-
-* Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
-- 1.5.0
-
-* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
-- 1.4.0
-
-* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
-- 1.3.0
-
-* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
-- 1.2.0
-
-* Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
 

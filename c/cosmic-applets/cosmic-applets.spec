@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name com.system76.CosmicApplets
 
@@ -27,6 +27,7 @@ Source1: %name-%version%beta-cargo.tar
 
 # for battery applet
 Requires: upower
+Requires: cosmic-osk
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
@@ -73,6 +74,7 @@ just rootdir=%buildroot install
 %_bindir/cosmic-applet-minimize
 %_bindir/cosmic-applet-network
 %_bindir/cosmic-applet-notifications
+%_bindir/cosmic-applet-osk
 %_bindir/cosmic-applet-power
 %_bindir/cosmic-applet-status-area
 %_bindir/cosmic-applet-tiling
@@ -89,6 +91,9 @@ just rootdir=%buildroot install
 #%doc README*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 

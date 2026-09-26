@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define binary_name cosmic-app-library
-%define ver_major 1.7
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name com.system76.CosmicAppLibrary
 
@@ -35,6 +35,7 @@ ExcludeArch: %ix86 armh
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: wayland-devel
 
 %description
 Cosmic App Library is an application launcher for the COSMIC desktop
@@ -49,6 +50,7 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
 export APP_NAME=%binary_name APP_ID=%rdn_name
+export LOCKSTEP_XML_PATH="${PWD}/vendor/atspi-common/xml"
 just
 
 %install
@@ -67,6 +69,9 @@ export APP_NAME=%binary_name APP_ID=%rdn_name
 %doc README*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - epoch-1.7.0-3-g5fe2aa8
 

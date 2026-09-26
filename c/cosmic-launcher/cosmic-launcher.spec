@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 1.7
+%def_disable snapshot
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name com.system76.CosmicLauncher
 
@@ -46,6 +46,7 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
 export APP_NAME=%name APP_ID=%rdn_name
+export LOCKSTEP_XML_PATH="${PWD}/vendor/atspi-common/xml"
 just
 
 %install
@@ -64,6 +65,9 @@ export APP_NAME=%name APP_ID=%rdn_name
 %doc README*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - epoch-1.7.0-2-g402103d
 

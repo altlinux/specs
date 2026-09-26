@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name com.system76.CosmicGreeter
 
@@ -24,7 +24,7 @@ Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
-Patch1: %name-1.3.0-alt-no-check-login.defs.patch
+Patch1: %name-1.9.0-alt-no-check-login.defs.patch
 
 Requires: greetd
 Requires: cosmic-comp
@@ -101,6 +101,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 

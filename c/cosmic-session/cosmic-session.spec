@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.7
+%define ver_major 1.9
 %define beta %nil
 %define rdn_name com.system76.CosmicSession
 
@@ -37,6 +37,7 @@ Requires: cosmic-idle
 Requires: cosmic-launcher
 Requires: cosmic-notifications
 Requires: cosmic-osd
+Requires: cosmic-osk
 Requires: cosmic-panel
 Requires: cosmic-randr
 Requires: cosmic-screenshot
@@ -53,6 +54,7 @@ Requires: cosmic-files
 #Requires: cosmic-store
 Requires: cosmic-term
 Requires: cosmic-player
+Requires: cosmic-viewer
 Requires: cosmic-wallpapers
 Requires: orca
 Requires: gnome-keyring
@@ -94,6 +96,9 @@ install -pD -m644 data/dconf/profile/cosmic %buildroot%_datadir/dconf/profile/co
 %_datadir/wayland-sessions/cosmic.desktop
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 

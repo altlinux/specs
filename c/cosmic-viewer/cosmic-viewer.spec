@@ -1,21 +1,21 @@
 %def_disable snapshot
 %define ver_major 1.9
 %define beta %nil
-%define rdn_name com.system76.CosmicMonitor
+%define rdn_name com.system76.CosmicViewer
 
 %def_disable bootstrap
 %def_enable check
 
-Name: cosmic-monitor
+Name: cosmic-viewer
 Version: %ver_major.0
 Release: alt1%beta
 
-Summary: COSMIC System Monitor
+Summary: COSMIC Image Viewer
 License: GPL-3.0
-Group: Graphical desktop/Other
-Url: https://github.com/pop-os/cosmic-monitor
+Group: Graphics
+Url: https://github.com/pop-os/cosmic-viewer
 
-Vcs: https://github.com/pop-os/cosmic-monitor.git
+Vcs: https://github.com/pop-os/cosmic-viewer.git
 
 %define git_ver epoch-%version%(echo %beta|sed 's/^\./-/')
 %if_disabled snapshot
@@ -25,15 +25,19 @@ Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
 
-#ExcludeArch: %ix86 armh
+ExcludeArch: %ix86 armh
 
-Provides: cosmic-system-monitor = %EVR
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
+# for turbojpeg
+BuildRequires: cmake gcc-c++ nasm
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libheif)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: /usr/bin/appstreamcli /usr/bin/desktop-file-validate
 
 %description
-System Monitor for COSMIC desktop.
+%summary
 
 %prep
 %setup -n %name-%{?_enable_snapshot:%version%beta}%{?_disable_snapshot:%git_ver} %{?_disable_bootstrap:-a1}
@@ -43,41 +47,29 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
+export VERGEN_GIT_SHA=%version
+export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %rust_build
 
 %install
+export VERGEN_GIT_SHA=%version
+export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 just rootdir=%buildroot install
 
 %check
+export VERGEN_GIT_SHA=%version
+export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %rust_test
 
 %files
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
-%_iconsdir/hicolor/*x*/apps/%rdn_name.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%_iconsdir/hicolor/*/apps/*.svg
 %doc README*
 
 %changelog
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
-- 1.9.0
-
-* Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
-- 1.7.0
-
-* Wed Jul 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
-- 1.5.0
-
-* Thu Jul 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
-- 1.4.0
-
-* Wed Jul 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
-- 1.3.0
-
-* Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
-- 1.2.0
-
-* Wed Jun 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
 
