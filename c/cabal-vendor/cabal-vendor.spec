@@ -1,7 +1,7 @@
 Name: cabal-vendor
 
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: tool for vendoring dependencies of cabal package
 License: BSD-3-Clause
@@ -36,6 +36,9 @@ cp -t . %SOURCE9 %SOURCE10
 %_bindir/cabal-vendor*
 
 %changelog
+* Sat Sep 26 2026 Anton Zhukharev <ancieg@altlinux.org> 1.1.0-alt2
+- Added --strong-flags option.
+
 * Tue Apr 29 2025 Leonid Znamenok <respublica@altlinux.org> 1.1.0-alt1
 - New version 1.1.0
 

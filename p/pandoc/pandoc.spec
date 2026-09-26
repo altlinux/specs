@@ -1,6 +1,6 @@
 Name: pandoc
-Version: 3.8.2.1
-Release: alt2
+Version: 3.10.2
+Release: alt1
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -10,11 +10,7 @@ Url: http://hackage.haskell.org/package/pandoc
 Source: %name-%version.tar
 Source1: vendor.tar
 
-Patch1: vendored_basement-github-fix_i586.patch
-Patch2: vendored_cborg-github-fix_i586.patch
-Patch3: vendored_memory-github-fix_i586.patch
-
-Patch4: vendored_x509-crypton-system_update-default-CA.patch
+Patch1: vendored_cborg-github-fix_i586.patch
 
 BuildRequires: ghc-devel
 BuildRequires: rpm-build-haskell-vendored
@@ -33,23 +29,15 @@ Slidy HTML slide shows.
 %prep
 %setup -q
 %setup -a 1
-
-%ifarch i586
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%endif
-
-# Set the correct path to the system CA
-# This will no longer be necessary once the following PR is merged:
-# https://github.com/kazu-yamamoto/crypton-certificate/pull/19
-%patch4 -p0
 
 %build
-%cabal_vendor_build --constraint="pandoc +embed_data_files"
+%define constraints --constraint="pandoc +embed_data_files +http" \\\
+                    --constraint="pandoc-cli +lua +server +repl"
+%cabal_vendor_build %constraints
 
 %install
-%cabal_vendor_install --constraint="pandoc +embed_data_files"
+%cabal_vendor_install %constraints
 
 mkdir -p %buildroot%_datadir/bash-completion/completions
 %buildroot%_bindir/pandoc --bash-completion > \
@@ -58,12 +46,19 @@ mkdir -p %buildroot%_datadir/bash-completion/completions
 install -pm 644 -D -t %buildroot%_man1dir \
                       ./man/pandoc*.1
 
+%check
+# check lua support
+%buildroot%_bindir/pandoc lua -e 'os.exit(0)'
+
 %files
 %_bindir/pandoc
 %_datadir/bash-completion/completions/pandoc
 %_man1dir/pandoc*.1.xz
 
 %changelog
+* Thu Sep 24 2026 Anton Zhukharev <ancieg@altlinux.org> 3.10.2-alt1
+- Updated to 3.10.2 (ALT#60690).
+
 * Mon Nov 10 2025 Leonid Znamenok <respublica@altlinux.org> 3.8.2.1-alt2
 - Set the correct path to the system CA (ALT#56775)
 
