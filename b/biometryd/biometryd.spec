@@ -5,8 +5,8 @@
 %def_without check
 
 Name: biometryd
-Version: 0.4.0
-Release: alt2
+Version: 0.4.1
+Release: alt1
 
 Summary: Mediates and multiplexes access to biometric devices
 License: GPL-3.0-only
@@ -102,10 +102,10 @@ biometryd.
 %_qt5_qmldir/Biometryd/libbiometryd-qml.so
 %_qt5_qmldir/Biometryd/plugins.qmltypes
 %_qt5_qmldir/Biometryd/qmldir
-%_sysconfdir/dbus-1/system.d/com.ubports.biometryd.Service.conf
+%_datadir/dbus-1/system.d/com.ubports.biometryd.Service.conf
 
 %files -n lib%{name}
-%_libdir/libbiometry.so.1*
+%_libdir/libbiometry.so.*
 
 %files -n lib%{name}-devel
 %dir %_includedir/biometry
@@ -114,6 +114,9 @@ biometryd.
 %_pkgconfigdir/biometryd.pc
 
 %changelog
+* Sat Sep 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt1
+- New version 0.4.1.
+
 * Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt2
 - Fix build with boost 1.91.
 
