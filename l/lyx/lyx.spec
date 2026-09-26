@@ -17,7 +17,7 @@
 %global unbundle_font_latex_xft       1
 
 Name: lyx
-Version: 2.5.1
+Version: 2.5.3
 Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
@@ -214,6 +214,9 @@ python3 configure.py
 %files -n lyx-tex
 
 %changelog
+* Sat Sep 26 2026 Ilya Mashkin <oddity@altlinux.ru> 2:2.5.3-alt1
+- 2.5.3
+
 * Tue Apr 21 2026 Ilya Mashkin <oddity@altlinux.ru> 2:2.5.1-alt1
 - 2.5.1
 
