@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.13
+%define ver_major 0.14
 %define rdn_name org.freedesktop.Bustle
 
 %def_disable check
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 %endif
 Source1: %name-%version-cargo.tar
 
+%define gtk_ver 4.23
 %define adw_ver 1.8
 
 # /usr/bin/dbus-monitor
@@ -31,6 +32,7 @@ Requires: dbus-tools
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo >= 1.80
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 %{?_enable_check:BuildRequires: dbus-tools /usr/bin/appstreamcli desktop-file-utils clippy}
 
@@ -72,6 +74,9 @@ dbus-run-session %__meson_test
 %doc README*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Mon Sep 15 2025 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
