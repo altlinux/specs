@@ -2,7 +2,7 @@
 %define pypi_name mammoth
 
 Name: python3-module-%pypi_name
-Version: 1.12.2
+Version: 1.13.0
 Release: alt1
 
 Summary: Convert Word documents (.docx files) to HTML
@@ -53,6 +53,9 @@ if you only use styles to semantically mark up your document.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Sep 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.13.0-alt1
+- 1.12.2 -> 1.13.0
+
 * Wed Sep 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.12.2-alt1
 - Initial build for ALT Linux.
 
