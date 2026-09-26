@@ -1,5 +1,5 @@
 %define module_name aic8800
-%define module_version 0.0.95.bef3
+%define module_version 0.0.99.27af
 %define module_release alt1
 
 %define flavour 6.18
@@ -63,6 +63,10 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Sep 22 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.99.27af-alt1
+- New version 0-99-g27af5ad.
+- Built on main branch again (ALT #60517).
 
 * Wed Aug 05 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.95.bef3-alt1
 - New version 0-95-gbef3cc2.
