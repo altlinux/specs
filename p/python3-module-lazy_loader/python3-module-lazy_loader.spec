@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: lazy_loader makes it easy to load subpackages and functions on demand
@@ -41,6 +41,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
+- 0.6
+
 * Sat Mar 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
 - 0.5
 
