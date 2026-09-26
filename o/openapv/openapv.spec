@@ -2,14 +2,14 @@
 
 %define _name openapv
 %define __name oapv
-%define ver_major 0.3
-%define sover 3
+%define ver_major 1.1
+%define sover 1
 
 %def_enable apps
 %def_enable check
 
 Name: %_name
-Version: %ver_major.0.0
+Version: %ver_major.1.0
 Release: alt1
 
 Summary: OpenAPV (Open Advanced Professional Video Codec)
@@ -93,6 +93,9 @@ This package provides OpenAPV encoder and decoder command line apps.
 %_bindir/%{__name}_app_enc
 
 %changelog
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1.0-alt1
+- 1.1.1.0
+
 * Mon Jun 29 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.0.0-alt1
 - 0.3.0.0
 
