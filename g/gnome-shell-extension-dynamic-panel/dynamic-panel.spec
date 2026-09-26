@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-dynamic-panel
 Version: 4.11.1
-Release: alt2
+Release: alt3
 
 Summary: Dynamic top panel
 Summary(ru_RU.UTF-8): Динамическая верхняя панель
@@ -18,7 +18,9 @@ VCS: https://github.com/velade/dynamic-panel.git
 
 Source: %nameU-%version.tar
 
-Requires: gnome-shell >= 47.0
+Patch: 38.patch
+
+Requires: gnome-shell >= 51.0
 
 %description
 The design of the floating panel inspired by KDE Plasma6 presents a translucent floating bar effect 
@@ -32,8 +34,8 @@ dark mode and light mode switching.
 
 %prep
 %setup -n %nameU-%version
-
-subst 's|"49"|"49", "50"|' metadata.json
+%patch -p1
+#subst 's|"49"|"49", "50"|' metadata.json
 
 %build
 %install
@@ -45,14 +47,17 @@ install -D -p -m 0644 \
 cp -r -p icons lib %buildroot%_datadir/gnome-shell/extensions/%exID/
 cp -a *.js *.json LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID/
 
+%find_lang --all-name %nameU
 
-%files
+%files -f %nameU.lang
 %_datadir/gnome-shell/extensions/%exID/*
 %_datadir/glib-2.0/schemas/*.xml
-%_datadir/locale/*/LC_MESSAGES/*.mo
 %doc *.md LICENSE 
 
 %changelog
+* Sat Sep 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.11.1-alt3
+- added support GNOME 51
+
 * Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.11.1-alt2
 - fixed for GNOME 50
 
