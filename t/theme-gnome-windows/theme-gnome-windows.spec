@@ -2,7 +2,7 @@
 
 Name:     theme-gnome-windows
 Version:  1.0
-Release:  alt10
+Release:  alt11
 
 Summary:  GNOME theme for Windows-like layout
 License:  GPL-3.0-or-later
@@ -46,6 +46,10 @@ install -pm644 *.gschema.override \
 %_datadir/glib-2.0/schemas/*.gschema.override
 
 %changelog
+* Sat Sep 26 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt11
+- Always show logout button.
+- Add touchpad settings.
+
 * Sat Sep 26 2026 Anton Midyukov <antohami@altlinux.org> 1.0-alt10
 - 60-windows-like.gschema.override: update for arcmenu >= 0.70.
 
