@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.31.1
+Version: 3.32.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -483,6 +483,7 @@ install -Dpm0644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/freerdp-server
 install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 
 %files
+%_man7dir/freerdp*
 
 %files -n xfreerdp%sover
 %_bindir/xfreerdp
@@ -565,6 +566,29 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sat Sep 26 2026 Andrey Cherepanov <cas@altlinux.org> 3.32.0-alt1
+- New version (fixes: GHSA-xq87-9rrm-6wqw, GHSA-3rvr-qvx8-rj23,
+  GHSA-pvgq-84w2-93ph, GHSA-xm53-352c-57jw, GHSA-3mq5-xh88-9v62,
+  GHSA-mqxv-c882-m8w9, GHSA-q6pp-28g8-xqjc, GHSA-jgw9-wqvx-j495,
+  GHSA-5cgr-vmp8-fmvj, GHSA-m7g5-gw57-cwcr, GHSA-pjxv-5j98-cqx4,
+  GHSA-pw4j-ff39-9vjm, GHSA-87v8-2gwr-ww9j, GHSA-h7fx-22wv-4cg8,
+  GHSA-996j-34w6-5hgm, GHSA-52xc-5973-w5vv, GHSA-qjwp-c855-hc69,
+  GHSA-4ww8-3vqm-jgcf, GHSA-96rv-gf42-7wq9, GHSA-9qr4-rgq4-jfp8,
+  GHSA-cq4m-gwc5-w8rc, GHSA-q9p9-j22r-577p, GHSA-2jfv-j3wx-5cg4,
+  GHSA-g8jw-gv54-r94p, GHSA-7vfc-chg9-q5r8, GHSA-f46f-pxh9-w2rh,
+  GHSA-pg3f-chj4-mrw6, GHSA-f526-rq4j-5ch8, GHSA-8rpr-jjjg-5qv6,
+  GHSA-cmgx-558f-vh67, GHSA-m998-cvfm-9444, GHSA-99p4-8j24-wvj4,
+  GHSA-97pf-pwp3-2wrv, GHSA-27m7-gwhh-6hhf, GHSA-qpfh-m9w6-xf2x,
+  GHSA-q56j-jjh6-38jf, GHSA-f554-v4xw-5j39, GHSA-chh2-527f-x255,
+  GHSA-xf45-j844-588v, GHSA-qq23-mqmv-pc65, GHSA-jhxw-3hj9-9hqh,
+  GHSA-h44v-39x6-9xvg, GHSA-6vjv-4hm3-6698, GHSA-c3rh-2hv6-7hf2,
+  GHSA-jp2r-gm4v-wvq2, GHSA-gvq8-v2fm-ffxv, GHSA-jhv5-m83m-hxhq,
+  GHSA-grvc-qhhp-7h6m, GHSA-26cc-wjh8-hjw6, GHSA-945c-qq5h-jqwp,
+  GHSA-93g7-296p-j77j, GHSA-6rj3-rf6g-3vw5, GHSA-g4wg-67xq-8q53,
+  GHSA-72qv-gcph-rfwf, GHSA-vqxm-9w7c-hvvx, GHSA-hxw3-57rq-3v4m,
+  GHSA-f4pf-pgp4-f2r3, GHSA-4mpr-hmqx-83q8, GHSA-x7v7-9jp5-wqj2,
+  GHSA-83g2-gf92-5c4g).
+
 * Thu Sep 10 2026 Andrey Cherepanov <cas@altlinux.org> 3.31.1-alt1
 - New version (fixes: GHSA-c5gr-hmqp-pwj4, GHSA-h5w2-q35j-443h,
   GHSA-m85m-3qxv-63h5, GHSA-r9pv-ffph-6gg6, GHSA-ffjr-p229-hpch,
