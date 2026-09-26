@@ -19,8 +19,8 @@
 %define mversion 4.7
 
 Name: musescore
-Version: %mversion.4
-Release: alt2
+Version: %mversion.5
+Release: alt1
 
 Summary: Music notation and composition software
 
@@ -178,6 +178,9 @@ rm -rvf %buildroot%_includedir %buildroot%_libdir
 %_iconsdir/hicolor/*/mimetypes/application-x-musescore+xml.*
 
 %changelog
+* Fri Sep 18 2026 Ivan A. Melnikov <iv@altlinux.org> 4.7.5-alt1
+- 4.7.5
+
 * Thu Sep 03 2026 Ivan A. Melnikov <iv@altlinux.org> 4.7.4-alt2
 - Apply patch from https://github.com/musescore/MuseScore/pull/34204
   to fix broken New Score and Preferences dialogs.
