@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.53
+%define kernel_sublevel 	.54
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -518,7 +518,12 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%flavour-%version/
 %check
 banner check
 # First boot-test no matter have KVM or not.
+# i586 TCG -cpu max is fake K7 without MP; init_amd_k7 WARN_ONCE on AP
+# + panic_on_warn panics. Check is only on secondary CPUs — uniprocessor skip.
 timeout 300 vm-run --loglevel=debug --append='earlycon oops=panic panic_on_warn=1' \
+%ifarch %ix86
+	--cpu=1 \
+%endif
 %if "%base_flavour" == "rt"
 	--tcg --mem=1G --cpu=2 --qemu="-rtc clock=vm -icount 0,sleep=off" \
 	'uname -a; rtcheck -v'
@@ -540,9 +545,10 @@ echo mmap22 >> skiplist-alt-vm
 # With %%buildroot modules exposed (below) these tests really run instead of
 # TCONFing, and ltp before 20260529 (p11 has 20220930) still expects pre-6.18
 # behaviour from them: nested hmac, rfc7539 digest size, a TUN flag it does not
-# know, loop block size errno.
+# know, and LOOP_CONFIGURE right after LOOP_CLR_FD (6.18 detaches the loop
+# device lazily, so it gets EBUSY; newer ltp waits for the detach).
 if [ "$(rpm -q --qf '%%{VERSION}' ltp)" -lt 20260529 ]; then
-	printf '%%s\n' af_alg01 af_alg03 ioctl03 ioctl_loop06 >> skiplist-alt-vm
+	printf '%%s\n' af_alg01 af_alg03 ioctl03 ioctl_loop02 ioctl_loop06 ioctl_loop07 >> skiplist-alt-vm
 fi
 # LTP looks for modules in /lib/modules/$(uname -r) and ignores MODPROBE_OPTIONS
 # that vm-run sets, so bind the %%buildroot modules there.  uevent02/03 open
@@ -663,6 +669,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Sep 27 2026 Anton Farygin <rider@altlinux.org> 6.18.54-alt1
+- 6.18.53 -> 6.18.54
+
+* Tue Sep 22 2026 Anton Farygin <rider@altlinux.org> 6.18.53-alt2
+- spec: also skip ioctl_loop02 and ioctl_loop07 with ltp older than 20260529
+  (LOOP_CONFIGURE gets EBUSY from the lazy loop detach in 6.18; p11 task #433825)
+
 * Mon Sep 21 2026 Anton Farygin <rider@altlinux.org> 6.18.53-alt1
 - 6.18.52 -> 6.18.53
 
