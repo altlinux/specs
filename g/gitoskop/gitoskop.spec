@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -78,7 +78,12 @@ rm -rf %buildroot%_datadir/%name/web/test
 %preun_service %name
 
 %check
+%ifarch i586
+# The fixture uses a 2099 timestamp, outside Git's 32-bit time range.
+cargo test --release --locked --offline -- --skip a_cached_head_fallback_follows_a_new_tag
+%else
 cargo test --release --locked --offline
+%endif
 
 %files
 %doc README.md CHANGELOG.md AUTHORS
@@ -93,6 +98,29 @@ cargo test --release --locked --offline
 %_datadir/%name/web
 
 %changelog
+* Sat Sep 26 2026 Anton Farygin <rider@altlinux.org> 1.8.0-alt1
+- 1.7.0 -> 1.8.0
+- hardening: fixed stored XSS via gear/spec links and blob_plain, CSP on HTML
+- hardening: README markdown drops inline styles, forms and the app's ids
+- hardening: mcp refuses a foreign Origin (DNS rebinding)
+- hardening: symlinks, alternates and alias roots stay inside the roots
+- hardening: memory and CPU caps on blobs, messages, diffs, walks, blame
+- hardening: header timeout, bounded request bodies, at most 4096 connections
+- hardening: container port published on loopback by default
+- config: unknown keys, duplicate labels and bad roots stop the start
+- server: SIGTERM drains in-flight requests and saves the snapshot
+- webui: file search in a repository and above the sidebar tree
+- webui: overview card shows the last commit body, bugs link to bugzilla
+- webui: all assets self-hosted
+- log, patch and file lists cut by a budget say so
+- mcp: bad offset/limit/flag values are refused instead of defaulted
+- ref listings and log decorations cached (0.8 s per request at 50k tags)
+- fixed: special characters in paths and refs in links, redirects and feeds
+- fixed: diff lines starting with --/++ and file names containing ' b/'
+- fixed: blame and blob 413 on delta-stored files of gc'd repos
+- fixed: non-UTF-8 file names and commit messages
+- fixed: a dangling ref broke tag listings
+
 * Sat Sep 12 2026 Anton Farygin <rider@altlinux.org> 1.7.0-alt1
 - 1.6.0 -> 1.7.0
 - security: bounded concurrent archive downloads and blames, cut trickle readers
