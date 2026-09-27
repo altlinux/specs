@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-media-controls
 Version: 2.4.5
-Release: alt1
+Release: alt2
 
 Summary: A mpris client for the Gnome shell
 
@@ -18,9 +18,11 @@ VCS: https://github.com/sakithb/media-controls
 ExcludeArch: i586
 
 Source0: %nameU-%version.tar
-Source1: node_modules.tar 
+Source1: node_modules.tar
 
-Requires: gnome-shell >= 48.0
+Patch: gnome51-alt-fixes.patch
+
+Requires: gnome-shell >= 51.0
 
 BuildRequires(Pre): rpm-build-nodejs
 #BuildRequires: blueprint-compiler
@@ -34,7 +36,7 @@ Show controls and information of the currently playing media in the panel.
 %setup -n %nameU-%version -a1
 rm pnpm-lock.yaml
 sed -i 's/pnpm/npm/g' package.json
-
+%patch -p1
 #subst 's|"49"|"49", "50"|' src/metadata.json
 
 %build
@@ -60,6 +62,9 @@ cp -a %nameS.gresource %buildroot%_datadir/gnome-shell/extensions/%exID/
 %doc *.md LICENSE 
 
 %changelog
+* Sun Sep 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.5-alt2
+- added support GNOME 51
+
 * Thu Apr 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.5-alt1
 - 2.4.4 -> 2.4.5
 
