@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: A spell-checking library for GTK+3 applications
@@ -87,6 +87,7 @@ This package contains development documentation for Gspell library.
 Summary: Tests for Gspell library
 Group: Development/Other
 Requires: %name = %EVR
+Requires: hunspell-en
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -137,6 +138,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
+- 1.14.5
+
 * Sat Jun 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.4-alt1
 - 1.14.4
 
