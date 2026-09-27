@@ -2,7 +2,7 @@
 %define so_version 5
 
 Name:    libkrunfw
-Version: 5.6.1
+Version: 5.6.2
 Release: alt1
 
 Summary: A dynamic library bundling the guest payload consumed by libkrun
@@ -55,6 +55,9 @@ cp %SOURCE1 tarballs
 %_libdir/libkrunfw.so
 
 %changelog
+* Sat Sep 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 5.6.2-alt1
+- New version 5.6.2.
+
 * Sat Sep 19 2026 Maxim Slipenko <maks1ms@altlinux.org> 5.6.1-alt1
 - updated from 5.5.0 to 5.6.1
 
