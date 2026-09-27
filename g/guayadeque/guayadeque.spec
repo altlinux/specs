@@ -7,7 +7,7 @@
 %define app_id org.guayadeque.Guayadeque
 
 Name: guayadeque
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 Summary: Music player
 License: GPL-3.0-or-later and BSD and LGPL-2.0-or-later and wxWidgets
@@ -16,6 +16,7 @@ VCS: https://codeberg.org/thothix/guayadeque.git
 Group: Sound
 # Source-url: https://codeberg.org/thothix/guayadeque/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch: xdg-open.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -40,6 +41,7 @@ and uses the Gstreamer media framework.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %cmake \
@@ -60,6 +62,7 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 
 %files -f %name.lang
 %doc LICENSE RADIOS.md README.md
+%_docdir/%name
 %_bindir/guayadeque
 %dir %_datadir/guayadeque
 %_datadir/guayadeque/*.conf
@@ -71,6 +74,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Sun Sep 27 2026 Anton Midyukov <antohami@altlinux.org> 0.7.7-alt1
+- New version 0.7.7.
+
 * Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 0.7.6-alt1
 - New version 0.7.6.
 
