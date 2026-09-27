@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.29
+Version: 1.0.30
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -87,6 +87,7 @@ alt-atomic-kyanite \
 maplekavach \
 maplekavach-server \
 rudraverse \
+alt-atomic-phosphophyllite \
 "
 sed -e "s/@BRANDING_VARIANTS@/$VARIANTS/" -i branding.rpm.macros
 
@@ -98,6 +99,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Sep 25 2026 David Sultaniiazov <x1z53@altlinux.org> 1.0.30-alt1
+- Added alt-atomic-phosphophyllite.
+
 * Fri Aug 07 2026 Anton Midyukov <antohami@altlinux.org> 1.0.29-alt1
 - Added alt-spserver-fsb, alt-spworkstation-fsb.
 
