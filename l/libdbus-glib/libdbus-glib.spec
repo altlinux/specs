@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: libdbus-glib
-Version: 0.114
+Version: 0.116
 Release: alt1
 Epoch: 1
 
@@ -61,9 +61,10 @@ gtkdocize
 
 %files
 %doc AUTHORS NEWS README
-%_sysconfdir/bash_completion.d/*.sh
 %_libdir/lib*.so.*
-%_prefix/libexec/dbus-1/dbus-bash-completion-helper
+# obsolete
+#%_sysconfdir/bash_completion.d/*.sh
+#%_prefix/libexec/dbus-1/dbus-bash-completion-helper
 
 %files devel
 %_includedir/dbus-1.0/dbus/dbus*.h
@@ -76,6 +77,9 @@ gtkdocize
 %_datadir/gtk-doc/html/dbus-glib
 
 %changelog
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.116-alt1
+- 0.116
+
 * Sun Jul 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.114-alt1
 - updated to 0.114-3-g6c42458, added Vcs tag
 - added %%check section

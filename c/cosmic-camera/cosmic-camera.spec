@@ -1,16 +1,17 @@
 %def_disable snapshot
 
 %define _name camera
+%define __name cosmic-ext-%_name
 %define binary_name %_name
 %define rdn_name io.github.cosmic_utils.%_name
-%define ver_major 1.0
+%define ver_major 1.3
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.2
+Version: %ver_major.7
 Release: alt1%beta
 
 Summary: COSMIC Camera
@@ -46,7 +47,7 @@ video, or scan a QR code, Camera provides a clean and intuitive
 interface that stays out of your way.
 
 %prep
-%setup -n %_name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %__name-%version%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -69,6 +70,15 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.7-alt1
+- 1.3.7
+
+* Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
+* Tue Jul 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Sat Jul 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

@@ -4,14 +4,14 @@
 %define _name %__name-applet
 %define binary_name cosmic-ext-applet-%__name
 %define rdn_name io.github.cosmic_utils.%_name
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Minimon COSMIC Applet
@@ -72,6 +72,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jul 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
 - 1.1.2
 - requires cosmic-monitor instead of gnome-system-monitor
