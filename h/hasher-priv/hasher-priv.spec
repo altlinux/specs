@@ -1,6 +1,6 @@
 Name: hasher-priv
 Version: 2.0.14
-Release: alt1
+Release: alt2
 
 Summary: A privileged helper for the hasher project
 License: GPLv2+
@@ -77,6 +77,9 @@ fi
 %doc DESIGN
 
 %changelog
+* Sun Sep 27 2026 Anton Zhukharev <ancieg@altlinux.org> 2.0.14-alt2
+- NMU: Fixed build with the const-correct strchr() in recent glibc.
+
 * Tue Feb 13 2024 Vitaly Chikunov <vt@altlinux.org> 2.0.14-alt1
 - Add the experimental nproc system setting.
 
