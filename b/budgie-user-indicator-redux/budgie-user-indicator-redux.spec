@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: budgie-user-indicator-redux
-Version: 1.1.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Manage your user session from the Budgie panel
 License: GPL-2.0
@@ -27,7 +27,7 @@ BuildRequires: sassc
 
 %description
 This project is born from the changes to the User Indicator applet
-shipped with Budgie. Since it simply opens the Budgie Power Dialog, 
+shipped with Budgie. Since it simply opens the Budgie Power Dialog,
 it was figured out that people might still want the old menu.
 
 This applet gives them that option. The design is largely inspired from
@@ -37,8 +37,6 @@ the menu.
 
 %prep
 %setup
-# Update to budgie-3.0 API
-sed -i "s/budgie-2\.0/budgie-3.0/" meson.build
 
 %build
 %meson
@@ -54,9 +52,12 @@ sed -i "s/budgie-2\.0/budgie-3.0/" meson.build
 %dir %_libdir/budgie-desktop/plugins/com.github.EbonJaeger.user-indicator-redux
 %_libdir/budgie-desktop/plugins/com.github.EbonJaeger.user-indicator-redux/*
 %_datadir/glib-2.0/schemas/*.gschema.xml
-%_datadir/metainfo/*.appdata.xml
+%_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sun Sep 27 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.1-alt1
+- New version 1.1.1.
+
 * Mon Jan 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
 - rebuild with budgie-3.0 API for Budgie 10.10
 - add ExcludeArch: ix86
