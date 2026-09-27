@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: iotas
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 %endif
 
 %define adw_ver 1.8
-%define gtksource_ver 5.6
-%define pandoc_ver 3.8.1
+%define gtksource_ver 5.16
+%define pandoc_ver 3.10.1
 # https://bugzilla.altlinux.org/55825
 Requires: python3-module-mdit-plugins >= 0.5.0
 # https://bugzilla.altlinux.org/55824
@@ -93,6 +93,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.8-alt1
+- 2026.8
+
 * Fri Aug 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.7-alt1
 - 2026.7
 
