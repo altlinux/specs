@@ -1,5 +1,5 @@
 Name: fotocx
-Version: 26.6.1
+Version: 26.8
 Release: alt1
 
 %define app_id kornelix.%name
@@ -32,6 +32,7 @@ BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel
 BuildRequires: liblcms2-devel perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
 BuildRequires: liborigin2-devel
+BuildRequires: pkgconfig(webkit2gtk-4.1)
 BuildRequires: libjxl-devel libbrotli-devel highway-devel
 
 %description
@@ -85,6 +86,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %doc %_datadir/doc/%name
 
 %changelog
+* Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 26.8-alt1
+- 26.8
+
 * Sat Jul 04 2026 Yuri N. Sedunov <aris@altlinux.org> 26.6.1-alt1
 - 26.6.1
 

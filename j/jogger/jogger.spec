@@ -2,7 +2,7 @@
 
 %define _name jogger
 %define __name Jogger
-%define ver_major 1.4
+%define ver_major 2.1
 %define rdn_name xyz.slothlife.%__name
 
 %def_enable check
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- updated to 2.1.0-9-gd3d478b
+
 * Mon Sep 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 

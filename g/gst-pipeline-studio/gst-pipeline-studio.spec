@@ -1,13 +1,13 @@
 %def_enable snapshot
 
 %define _name GstPipelineStudio
-%define ver_major 0.5
+%define ver_major 0.6
 %define rdn_name dev.mooday.%_name
 
 %def_disable bootstrap
 
 Name: gst-pipeline-studio
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Draw your own GStreamer pipeline
@@ -25,8 +25,9 @@ Source: %name-%version.tar
 Source1: %name-%version-cargo.tar
 
 %define glib_ver 2.66
-%define gtk_ver 4.16
-%define gst_ver 1.26
+%define gtk_ver 4.22.3
+%define adw_ver 1.9
+%define gst_ver 1.28.7
 
 Requires: gstreamer1.0-utils gst-devtools
 Requires: gst-plugins-base1.0 >= %gst_ver
@@ -34,6 +35,7 @@ Requires: gst-plugins-base1.0 >= %gst_ver
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson rust-cargo
 BuildRequires: pkgconfig(gtk4) >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0)
 BuildRequires: pkgconfig(gstreamer-video-1.0)
@@ -69,9 +71,12 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
-%doc README*
+%doc README* ChangeLog*
 
 %changelog
+* Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Wed Apr 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 
