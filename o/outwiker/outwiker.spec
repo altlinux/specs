@@ -1,5 +1,5 @@
 Name: outwiker
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: OutWiker is designed to store notes in a tree
@@ -59,11 +59,14 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_desktopdir/%name.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/*/apps/*
-%_man1dir/*
-%_mandir/ru/man1/*
+%_man1dir/*.1.*
+%_mandir/ru/man1/*.1.*
 %_pixmapsdir/*
 
 %changelog
+* Sun Sep 27 2026 Anton Midyukov <antohami@altlinux.org> 4.1.0-alt1
+- New version 4.1.0.
+
 * Sun Jun 07 2026 Anton Midyukov <antohami@altlinux.org> 4.0.0-alt1
 - New version 4.0.0.
 
