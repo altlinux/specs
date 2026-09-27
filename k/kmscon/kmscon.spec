@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 10.0.3
+Version: 10.0.4
 Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
 
-License: MIT and LGPLv2+
-Url: http://www.freedesktop.org/wiki/Software/kmscon/
-Vcs: https://github.com/kmscon/kmscon.git
+License: MIT and LGPL-2.0-or-later
+URL: http://www.freedesktop.org/wiki/Software/kmscon/
+VCS: https://github.com/kmscon/kmscon.git
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 1.1
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: xkeyboard-config
-BuildRequires: pkgconfig(libtsm) >= 4.6.0
+BuildRequires: pkgconfig(libtsm) >= 4.8.0
 BuildRequires: pkgconfig(libudev) >= 172
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: libsystemd-devel pkgconfig(libsystemd)
@@ -72,10 +72,13 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example \
 %dir %_libdir/%name
 %_libdir/%name/mod-*.so
 %_datadir/terminfo/k/kmscon
-%_man1dir/%name.1*
-%_man5dir/%name.conf.5*
+%_man1dir/%name.1.*
+%_man5dir/%name.conf.5.*
 
 %changelog
+* Sun Sep 27 2026 Anton Midyukov <antohami@altlinux.org> 10.0.4-alt1
+- New version 10.0.4.
+
 * Sat Sep 05 2026 Anton Midyukov <antohami@altlinux.org> 10.0.3-alt1
 - New version 10.0.3.
 
