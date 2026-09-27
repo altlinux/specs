@@ -2,7 +2,7 @@
 
 Name:       alerta
 Version:    9.1.0
-Release:    alt1
+Release:    alt2
 Summary:    Alerta monitoring system server
 License:    Apache-2.0
 Group:      System/Servers
@@ -17,6 +17,7 @@ Source2: alertad
 Source3: alertad.service
 
 BuildRequires(pre): rpm-macros-python3
+BuildRequires(pre): rpm-macros-systemd
 BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pip
@@ -42,14 +43,23 @@ install -Dm 644 %SOURCE3 %buildroot%_unitdir/alertad.service
 %pyproject_install --exclude-paths 'tests/*'
 
 %pre
-groupadd -r alertad
-useradd -r -M -g alertad -s /sbin/nologin -c "alerta daemon" alertad
+getent group alertad >/dev/null || groupadd -r alertad
+getent passwd alertad >/dev/null || \
+    useradd -r -g alertad -d /dev/null -s /sbin/nologin \
+    --no-create-home -c "alerta daemon" alertad
 
 %post
+# Replace placeholder with random key
+if grep -q "CHANGE-ME" %_sysconfdir/%name/alertad.conf 2>/dev/null; then
+    sed -i "s/SECRET_KEY = '<CHANGE-ME>'/SECRET_KEY = '$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 32)'/" %_sysconfdir/%name/alertad.conf
+fi
 %systemd_post alertad.service
 
 %preun
 %systemd_preun alertad.service
+
+%postun
+%systemd_postun_with_restart alertad.service
 
 %files
 %doc README.md NOTICE
@@ -59,10 +69,15 @@ useradd -r -M -g alertad -s /sbin/nologin -c "alerta daemon" alertad
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/alertad.conf
 %config(noreplace) %_sysconfdir/sysconfig/alertad
-%config(noreplace) %_unitdir/alertad.service
-%attr(1770,root,alertad) %dir %_logdir/%name
+%_unitdir/alertad.service
+%attr(0750,alertad,alertad) %dir %_logdir/%name
 
 %changelog
+* Sun Sep 27 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 9.1.0-alt2
+- Now the default SECREY_KEY is randomly generated during the installation process.
+- Made user/group creation idempotent.
+- Fixed unit file and logdir attributes.
+
 * Fri Sep 25 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 9.1.0-alt1
 - Initial build for ALT.
 
