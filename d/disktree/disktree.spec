@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: disktree
-Version: 0.9.1
+Version: 0.10.1
 Release: alt1
 
 Summary: GPUI treemap explorer for disk usage, in Omarchy's visual language
@@ -58,5 +58,8 @@ sed -e "s|@BINDIR@|%_bindir|" -e "s|@VERSION@|%version|" \
 %_desktopdir/disktree.desktop
 
 %changelog
+* Sun Sep 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
+- Updated to 0.10.1.
+
 * Fri Sep 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.9.1-alt1
 - Packaged for ALT Sisyphus.
