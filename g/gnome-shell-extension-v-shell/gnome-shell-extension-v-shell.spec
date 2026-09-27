@@ -4,8 +4,8 @@
 %global gettext_domain vertical-workspaces
 
 Name: gnome-shell-extension-v-shell
-Version: 50.8
-Release: alt3
+Version: 51.0
+Release: alt1
 Summary: Customize the GNOME Shell overview and workspaces
 License: GPL-3.0
 Group: Graphical desktop/GNOME
@@ -47,6 +47,9 @@ rm -f %buildroot%_datadir/glib-2.0/schemas/gschemas.compiled
 %_datadir/glib-2.0/schemas/%schema.gschema.xml
 
 %changelog
+* Sun Sep 27 2026 Alexander Makeenkov <amakeenk@altlinux.org> 51.0-alt1
+- Updated to version 51.0.
+
 * Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 50.8-alt3
 - Fixed preferences layout with long Russian labels (closes: #60307).
 - Completed Russian translation (closes: #60308).
