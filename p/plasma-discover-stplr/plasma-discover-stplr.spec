@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: plasma-discover-stplr
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Plasma Discover stplr support
@@ -50,6 +50,9 @@ BuildRequires: libdiscovercommon6
 %_datadir/metainfo/org.kde.discover.stplr.appdata.xml
 
 %changelog
+* Sun Sep 27 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.4-alt1
+- New version 0.1.4.
+
 * Wed Jun 03 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.3-alt1
 - New version 0.1.3 (closes: #59407).
 
