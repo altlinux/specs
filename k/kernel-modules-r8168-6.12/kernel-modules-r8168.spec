@@ -1,6 +1,6 @@
 %define module_name	r8168
 %define module_release	alt1.k
-%define module_version	8.056.02
+%define module_version	8.057.00
 
 %define flavour		6.12
 %define karch %ix86 x86_64 aarch64 ppc64le
@@ -29,6 +29,7 @@ BuildRequires(pre): kernel-headers-modules-6.12
 BuildRequires: module-init-tools
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
+BuildRequires: /proc
 
 Requires(pre): kernel-image-%flavour = %kepoch%kversion-%krelease
 
@@ -61,6 +62,10 @@ install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Sun Sep 27 2026 Nazarov Denis <nenderus@altlinux.org> 8.057.00-alt1
+- Version 8.057.00
+- Require /proc for build (objtool on kernel 7.1)
 
 * Fri Feb 20 2026 Nazarov Denis <nenderus@altlinux.org> 8.056.02-alt1
 - Version 8.056.02
