@@ -2,7 +2,7 @@
 
 Name: gnome-shell-extension-simple-tiling
 Version: 8.3
-Release: alt1
+Release: alt2
 
 Summary: A simple Tiling Window Manager for Gnome
 
@@ -27,7 +27,7 @@ A lightweight, opinionated, and automatic tiling window manager for GNOME Shell.
 %setup
 subst 's|@unzip -q $(UUID)-modern-v$(VERSION).zip -d $(EXTDIR)/$(UUID)|@unzip -q $(UUID)-modern-v$(VERSION).zip -d $(EXTDIR)|' Makefile
 
-#subst 's|"49"|"49", "50"|' metadata_modern.json.in
+subst 's|"50"|"50", "51"|' metadata_modern.json.in
 
 %build
 make build-modern
@@ -41,6 +41,9 @@ make install-modern EXTDIR=%buildroot%_datadir/gnome-shell/extensions
 %doc README.md
 
 %changelog
+* Sun Sep 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 8.3-alt2
+- added support GNOME 51
+
 * Sun Jun 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 8.3-alt1
 - automatic build: 8.2 -> 8.3
 
