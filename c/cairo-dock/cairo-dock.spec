@@ -1,14 +1,15 @@
 #Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+
 %define sover 3
 
 Name: cairo-dock
-Version: 3.6.0
+Version: 3.6.2
 Release: alt1
 
 Summary: A light and eye-candy system panel to launch your programs easily
 Summary(ru_RU.UTF-8): Лёгкая и привлекательная системная панель для удобного запуска программ
-License: GPL-3.0-or-later AND GPL-2.0-or-later AND LGPL-3.0-or-later
+License: GPL-2.0-or-later AND LGPL-2.0-or-later AND LGPL-2.1-or-later AND GPL-3.0-or-later AND LGPL-3.0-only AND MIT
 Group: Graphical desktop/Other
 
 URL: https://github.com/Cairo-Dock/cairo-dock-core
@@ -17,9 +18,9 @@ VCS: https://github.com/Cairo-Dock/cairo-dock-core
 Obsoletes: %name-data < %version
 
 Source: %name-%version.tar
+Patch:  %name-%version-%release.patch
 
 Buildrequires(pre): rpm-macros-cmake
-BuildRequires(pre): /proc
 BuildRequires: cmake
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gthread-2.0)
@@ -36,7 +37,7 @@ BuildRequires: pkgconfig(xtst)
 BuildRequires: pkgconfig(xcomposite)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(gtk+-3.0)
-#BuildRequires: pkgconfig(json-c)
+BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(gtk-layer-shell-0)
@@ -70,7 +71,8 @@ Requires: libgldi%sover = %EVR
 This package provides include files and libraries for cairo-dock functions.
 
 %prep
-%setup -n %name-%version
+%setup
+%patch -p1
 
 %build
 %cmake \
@@ -85,13 +87,14 @@ This package provides include files and libraries for cairo-dock functions.
 %find_lang %name
 
 %files -f %name.lang
+%doc copyright LGPL-2 LICENSE *.md
 %_bindir/%name
-%_desktopdir/*.desktop
+%_desktopdir/%{name}*.desktop
 %_datadir/%name
 %_man1dir/*.1.*
 %_pixmapsdir/*.svg
 %_libdir/%name
-%_user_unitdir/*.service
+%_user_unitdir/%name.service
 
 %files -n libgldi%sover
 %_libdir/libgldi.so.%sover
@@ -103,6 +106,12 @@ This package provides include files and libraries for cairo-dock functions.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 27 2026 Polina Poidenko <polipoki@altlinux.org> 3.6.2-alt1
+- New version 3.6.2.
+- Build with json-c.
+- Add documentation.
+- Update License: LGPL-2.0-or-later, LGPL-2.1-or-later, LGPL-3.0-only, MIT.
+
 * Sat Nov 1 2025 Polina Poidenko <polipoki@altlinux.org> 3.6.0-alt1
 - New version 3.6.0.
 - Update License: GPL-2.0-or-later AND LGPL-3.0-or-later.

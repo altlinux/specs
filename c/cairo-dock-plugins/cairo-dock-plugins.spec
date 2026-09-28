@@ -5,13 +5,13 @@
 %define sover 1
 
 Name: %packagename-plugins
-Version: 3.6.0
+Version: 3.6.2
 Release: alt1
 
 Summary: Plugins for cairo-dock
 Summary(ru_RU.UTF-8): Плагины для cairo-dock
 
-License: GPL-3.0-or-later AND GPL-2.0-or-later AND LGPL-3.0-or-later
+License: LGPL-2.0-or-later AND GPL-3.0-or-later
 Group: Graphical desktop/Other
 
 URL: https://github.com/Cairo-Dock/cairo-dock-plug-ins
@@ -21,7 +21,6 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-
 BuildRequires: rpm-build-python3
 BuildRequires: cmake
 BuildRequires: cairo-dock-devel = %version
@@ -44,6 +43,7 @@ BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(xxf86vm)
 BuildRequires: pkgconfig(webkit2gtk-4.1)
 BuildRequires: libsensors3-devel
+BuildRequires: vala
 
 Requires: %packagename-common = %EVR
 Requires: %packagename-animated-icons = %EVR
@@ -117,6 +117,7 @@ Requires: %packagename-rendering = %EVR
 That common package provides lang files.
 
 %files -n %packagename-common -f %name.lang
+%doc copyright LGPL-2 LICENSE README.md
 %_datadir/%packagename/plug-ins/shared-files
 %_datadir/%packagename/gauges/*
 
@@ -124,7 +125,6 @@ That common package provides lang files.
 %package -n libCDApplet%sover
 Summary: Library for libCDApplet-devel
 Group: System/Libraries
-Requires: vala
 
 %description -n libCDApplet%sover
 This package is a library for Cairo-Dock.
@@ -138,6 +138,7 @@ This package is a library for Cairo-Dock.
 Summary: Development files for Vala binding for Cairo-Dock
 Group: Development/Other
 Requires: libCDApplet%sover = %EVR
+Requires: vala
 
 Obsoletes: %packagename-vala < %version
 Obsoletes: %packagename-vala-devel < %version
@@ -984,6 +985,14 @@ a "text style desklet".
 rm -f  %buildroot%_libdir/%packagename/%packagename-launcher-API-daemon
 
 %changelog
+* Mon Aug 31 2026 Polina Poidenko <polipoki@altlinux.org> 3.6.2-alt1
+- New version 3.6.2.
+- Add documentation.
+- Add buildreq vala.
+- Update License:
+   + Remove: GPL-2.0-or-later, LGPL-3.0-or-later.
+   + Add: LGPL-2.0-or-later.
+
 * Mon Nov 24 2025 Polina Poidenko <polipoki@altlinux.org> 3.6.0-alt1
 - New version 3.6.0.
 - Update build dependencies.
