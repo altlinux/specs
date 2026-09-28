@@ -1,11 +1,12 @@
 Name: kodi-addon-visualization-projectm
-Version: 22.1.0
+Version: 22.2.1
 Release: alt1
 
 Summary: ProjectM visualization for Kodi
 License: GPLv2
 Group: Video
-Url: https://github.com/xbmc/visualization.projectm
+URL: https://github.com/xbmc/visualization.projectm
+VCS: https://github.com/xbmc/visualization.projectm
 
 ExcludeArch: i586
 
@@ -32,6 +33,9 @@ BuildRequires: pkgconfig(gl)
 %_datadir/kodi/addons/visualization.projectm
 
 %changelog
+* Mon Sep 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.2.1-alt1
+- 22.2.1 released
+
 * Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.1.0-alt1
 - 22.1.0 released
 

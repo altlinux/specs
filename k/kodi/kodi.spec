@@ -1,6 +1,6 @@
 Name: kodi
 Version: 22.0
-Release: alt0.5
+Release: alt0.6
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -27,7 +27,7 @@ Source2: commons-lang3-3.20.0-bin.tar.gz
 Source3: commons-text-1.15.0-bin.tar.gz
 
 BuildRequires: cmake gcc-c++
-BuildRequires: /proc swig %javareq
+BuildRequires: /proc swig >= 4.5.0 %javareq
 BuildRequires: libcrossguid-devel libflatbuffers-devel libgif-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bluez)
@@ -169,6 +169,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_libdir/kodi/cmake
 
 %changelog
+* Mon Sep 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0-alt0.6
+- 22.0rc1-Piers
+
 * Thu Sep 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0-alt0.5
 - 22.0b2
 
