@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%modulename
-Version: 6.7.0
+Version: 6.8.2
 Release: alt1
 Summary: A python library to auditing and relabeling cross-distribution Linux wheels
 Group: Development/Python3
@@ -20,6 +20,8 @@ URL: https://pypi.org/project/auditwheel
 VCS: https://github.com/pypa/auditwheel
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
 BuildArch: noarch
 
 Buildrequires(pre): rpm-macros-python3
@@ -30,7 +32,12 @@ Buildrequires: python3-module-setuptools_scm
 %if_with check
 Buildrequires: python3-module-elftools
 Buildrequires: python3-module-pretend
+Buildrequires: python3-module-jsonschema
+Buildrequires: patchelf
+Buildrequires: python3-module-whichprovides
 %endif
+
+Requires: patchelf
 
 %description
 auditwheel is a command line tool to facilitate the creation of Python wheel
@@ -41,6 +48,8 @@ PEP 599 manylinux2014 platform tags.
 
 %prep
 %setup
+%patch -p1
+rm -r src/auditwheel/_vendor/whichprovides
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -55,12 +64,18 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %endif
 
 %files
-%doc CHANGELOG.md LICENSE
+%doc CHANGELOG.md LICENSE README.rst
 %_bindir/%modulename
 %python3_sitelibdir_noarch/%modulename
 %python3_sitelibdir_noarch/%modulename-%version.dist-info
 
 %changelog
+* Fri Sep 18 2026 Polina Poidenko <polipoki@altlinux.org> 6.8.2-alt1
+- New version 6.8.2.
+- Add README.
+- Build with external 'whichprovides' module.
+- Add requires on patchelf.
+
 * Wed Jul 22 2026 Polina Poidenko <polipoki@altlinux.org> 6.7.0-alt1
 - New version 6.7.0.
 
