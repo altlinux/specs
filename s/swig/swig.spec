@@ -13,7 +13,7 @@
 
 # vim:set ft=spec:
 Name: swig
-Version: 4.4.1
+Version: 4.5.1
 Release: alt1
 Epoch: 1
 
@@ -26,11 +26,8 @@ VCS: https://github.com/swig/swig
 # Source-url: https://github.com/swig/swig/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-# Revert https://github.com/swig/swig/commit/5755f399a2e6bd5203eb925a8d525501fec628ab
-Patch1: revert-Eliminate-some-temporary-buffers.patch
-
 # ALT commit 310d524062b544c538977c5e33548889fbb85926
-Patch2: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch
+Patch1: 0001-guile-first-arg-to-scm_error-should-be-symbol-not-st.patch
 
 %ifnarch %ix86
 %def_enable testsuite
@@ -243,6 +240,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Mon Sep 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:4.5.1-alt1
+- 4.5.1
+
 * Thu Jul 23 2026 Anton Midyukov <antohami@altlinux.org> 1:4.4.1-alt1
 - New version 4.4.1.
 
