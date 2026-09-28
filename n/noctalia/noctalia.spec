@@ -3,7 +3,7 @@
 %def_with check
 
 Name: noctalia
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: A sleek, customizable desktop shell crafted for Wayland
@@ -15,6 +15,7 @@ VCS: https://github.com/noctalia-dev/noctalia
 
 Source: %name-%version.tar
 Source1: %name.service
+Source2: %name.pam
 Patch0: %name-%version-alt.patch
 
 # PACKAGING.md#runtime
@@ -73,9 +74,16 @@ BuildRequires: fonts-ttf-dejavu
 %add_findreq_skiplist %_datadir/noctalia/assets/templates/*/*.sh
 
 %description
-Noctalia is a full desktop shell for Wayland: bars, dock, launcher,
-notifications, lock screen, wallpaper, settings and more. No Qt or GTK,
-the UI is rendered with Wayland and OpenGL ES.
+Noctalia  is a  native Wayland  desktop shell  for people  who want  a polished,
+configurable Linux desktop without stitching  together a separate bar, launcher,
+notification daemon, lock screen, wallpaper tool, and settings UI.
+
+It  provides  the shell  layer  around  your  compositor: bars,  widgets,  dock,
+launcher,  control  center,  notifications,   wallpaper,  lock  screen,  session
+actions, clipboard  history, OSDs,  tray integration,  and desktop  widgets. The
+project is built directly on Wayland and OpenGL ES with no Qt or GTK dependency,
+so the UI, rendering, configuration, and  IPC model are designed as one cohesive
+shell instead of a collection of unrelated panels and scripts.
 
 %prep
 %setup
@@ -88,6 +96,7 @@ sed -i "/^    'ical_parser',$/d" meson.build
 
 %build
 %meson -Dtests=enabled \
+       -Dpam_service=%name \
        -Djemalloc=enabled \
        -Db_ndebug=true
 %meson_build
@@ -103,6 +112,7 @@ install -Dm644 _noctalia %buildroot%_datadir/zsh/site-functions/_noctalia
 install -Dm644 noctalia.fish %buildroot%_datadir/fish/vendor_completions.d/noctalia.fish
 
 install -Dm644 %SOURCE1 %buildroot%_userunitdir/noctalia.service
+install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 
 %check
 %meson_test
@@ -110,6 +120,11 @@ install -Dm644 %SOURCE1 %buildroot%_userunitdir/noctalia.service
 %files
 %doc LICENSE README.md
 %_bindir/noctalia
+%dir %_libexecdir/noctalia
+# pam_tcb checks passwords of unprivileged callers via tcb_chkpwd,
+# reachable only by the chkpwd group.
+%attr(2711,root,chkpwd) %_libexecdir/noctalia/noctalia-pam-helper
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/%name
 %_datadir/noctalia
 %_desktopdir/dev.noctalia.Noctalia.desktop
 %_iconsdir/hicolor/scalable/apps/noctalia.svg
@@ -119,5 +134,10 @@ install -Dm644 %SOURCE1 %buildroot%_userunitdir/noctalia.service
 %_userunitdir/noctalia.service
 
 %changelog
+* Mon Sep 28 2026 Egor Ignatov <egori@altlinux.org> 5.2.0-alt1
+- New version 5.2.0.
+- lockscreen: run PAM in a separate setgid chkpwd helper with its own
+  "noctalia" PAM service, so pam_tcb can check the password (fixes unlock).
+
 * Thu Sep 17 2026 Egor Ignatov <egori@altlinux.org> 5.1.0-alt1
 - First build for ALT.
