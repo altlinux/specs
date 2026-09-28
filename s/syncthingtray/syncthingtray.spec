@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: syncthingtray
-Version: 2.1.6
+Version: 2.1.7
 Release: alt1
 
 Summary: Desktop integration for Syncthing
@@ -11,6 +11,8 @@ Group: Networking/File transfer
 Url: https://github.com/Martchus/syncthingtray
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -87,6 +89,7 @@ integration with KDE Plasma when compared to the multidesktop tray applet.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -254,6 +257,9 @@ cat syncthingfileitemaction.lang syncthingplasmoid.lang > %{name}-kde.lang
 %dir %_datadir/syncthingplasmoid/translations
 
 %changelog
+* Mon Sep 28 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.7-alt1
+- New version 2.1.7.
+
 * Mon Sep 21 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.6-alt1
 - New version 2.1.6.
 
