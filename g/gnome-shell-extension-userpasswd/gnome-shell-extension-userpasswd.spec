@@ -1,7 +1,7 @@
 %define uuid userpasswd@altlinux.org
 
 Name:    gnome-shell-extension-userpasswd
-Version: 0.0.1
+Version: 0.1.0
 Release: alt1
 
 Summary: GNOME extension for the userpasswd-gnome package
@@ -36,5 +36,8 @@ Adds a button to the quick settings menu to open an application.
 %lang(ru) %_datadir/locale/ru/LC_MESSAGES/userpasswd-extension.mo
 
 %changelog
+* Mon Sep 28 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.0-alt1
+- Add support for GNOME Shell 48-51.
+
 * Fri Feb 21 2025 Maria Alexeeva <alxvmr@altlinux.org> 0.0.1-alt1
 - Initial build for Sisyphus
