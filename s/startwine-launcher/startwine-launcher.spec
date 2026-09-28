@@ -6,7 +6,7 @@ AutoProv: no
 
 Name: startwine-launcher
 Version: 423
-Release: alt1
+Release: alt2
 
 Summary: Installer StartWine-Launcher for Windows games
 
@@ -15,7 +15,7 @@ Group: Games/Other
 Url: https://github.com/RusNor/StartWine-Launcher
 Vcs: https://github.com/RusNor/StartWine-Launcher
 
-Requires: zenity sysctl-conf-userns yad wget fuse curl
+Requires: zenity sysctl-conf-userns yad wget fuse3 curl
 
 Source: %name-%version.tar
 
@@ -56,6 +56,9 @@ install -Dm644 %nameUP.svg %buildroot%_iconsdir/hicolor/scalable/apps/%nameUP.sv
 %_iconsdir/hicolor/scalable/apps/%nameUP.svg
 
 %changelog
+* Mon Sep 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 423-alt2
+- used fuse3
+
 * Fri Jun 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 423-alt1
 - 422 -> 423:
   + Updated list of Wine versions.
