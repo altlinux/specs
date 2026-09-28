@@ -6,7 +6,7 @@
 
 Name:          gem-rspec-retry
 Version:       0.6.2.11
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       retry intermittently failing rspec examples
 License:       MIT
 Group:         Development/Ruby
@@ -16,21 +16,18 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(appraisal) >= 0
 BuildRequires: gem(byebug) >= 9.0.6
 BuildRequires: gem(pry-byebug) >= 0
 BuildRequires: gem(rspec) >= 0
 BuildRequires: gem(rspec-core) > 3.3
-BuildConflicts: gem(byebug) >= 13
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency byebug >= 12.0,byebug < 13
+%ruby_use_gem_dependency byebug >= 12.0
 Requires:      gem(rspec-core) > 3.3
 Provides:      gem(rspec-retry) = 0.6.2.11
 
@@ -43,7 +40,7 @@ retry intermittently failing rspec examples
 %if_enabled    doc
 %package       -n gem-rspec-retry-doc
 Version:       0.6.2.11
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       retry intermittently failing rspec examples documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rspec-retry
 Group:         Development/Documentation
@@ -64,7 +61,7 @@ retry intermittently failing rspec examples documentation files.
 %if_enabled    devel
 %package       -n gem-rspec-retry-devel
 Version:       0.6.2.11
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       retry intermittently failing rspec examples development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rspec-retry
 Group:         Development/Ruby
@@ -77,7 +74,6 @@ Requires:      gem(appraisal) >= 0
 Requires:      gem(byebug) >= 9.0.6
 Requires:      gem(pry-byebug) >= 0
 Requires:      gem(rspec) >= 0
-Conflicts:     gem(byebug) >= 13
 
 %description   -n gem-rspec-retry-devel
 retry intermittently failing rspec examples development package.
@@ -117,6 +113,9 @@ retry intermittently failing rspec examples development package.
 
 
 %changelog
+* Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.6.2.11-alt0.1.1
+- ! relaxed dep to byebug gem
+
 * Thu Nov 27 2025 Pavel Skrylev <majioa@altlinux.org> 0.6.2.11-alt0.1
 - ^ 0.6.2 -> 0.6.2p11
 
