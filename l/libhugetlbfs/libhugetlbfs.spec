@@ -24,8 +24,8 @@ BuildRequires: perl-podlators
 
 %define my_make_flags V=1 CFLAGS="%{optflags} -fPIC" LDFLAGS="-pie" BUILDTYPE=NATIVEONLY PREFIX=%{_prefix} LIBDIR32=%{_libdir} DESTDIR=%{buildroot}
 Name:           libhugetlbfs
-Version:        2.23.0.g6b126a4
-Release:        alt1_3.4
+Version:        2.24
+Release:        alt1.1
 Summary:        Helper library for the Huge Translation Lookaside Buffer Filesystem
 License:        LGPL-2.1-or-later
 Group:          System/Libraries
@@ -33,10 +33,22 @@ URL:            https://github.com/libhugetlbfs/libhugetlbfs
 Source0:        libhugetlbfs-%{version}.tar.gz
 Source1:        baselibs.conf
 Patch0:         libhugetlbfs.tests-malloc.patch
-Patch1:         libhugetlbfs_ia64_fix_missing_test.patch
-Patch2:         disable-rw-on-non-ldscripts.diff
-Patch3:         zero_filesize_segment.patch
-Patch4:         glibc-2.34-fix.patch
+Patch1:         disable-rw-on-non-ldscripts.diff
+Patch2:         zero_filesize_segment.patch
+
+# E2K specific
+Patch3:         e2k-patch-from-Ilya-Kurdykov.patch
+Patch10: 0001-init-e2k.patch
+Patch11: 0002-sparc_32bit_fix.patch
+Patch12: 0006-sleep-after-test.patch
+Patch13: 0007-skip-test-if-sizeof-ulong-8.patch
+Patch14: 0009-fix-for-sparc-bug-101732.patch
+Patch15: 0010-reduce-running-time.patch
+Patch16: 0011_extra_path_to_lib_in_native.patch
+Patch17: remove-copy-e2k-config-in-makefile.patch
+Patch18: e2k-fix-missing-test.patch
+
+BuildRequires:	autoconf-archive
 BuildRequires:  doxygen
 BuildRequires:  glibc-devel glibc-devel-static
 # bug437293
@@ -44,7 +56,6 @@ BuildRequires:  glibc-devel glibc-devel-static
 Obsoletes:      libhugetlbfs-64bit
 %endif
 Source44: import.info
-Patch33: libhugetlbfs_loongarch64_basic_support.patch
 
 %description
 The libhugetlbfs package interacts with the Linux hugetlbfs to
@@ -96,14 +107,25 @@ The testsuite for libhugetlbfs. Binaries can be found in
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch33 -p1
 
+#E2K Specific
+%patch3 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 %build
 echo %{version} > version
-make %{my_make_flags}
+%autoreconf
+%configure %{my_make_flags}
+
+%make_build %{my_make_flags}
 
 %install
 make %{my_make_flags} PMDIR="%{perl_vendor_privlib}/TLBC" \
@@ -143,6 +165,12 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 %{_libdir}/libhugetlbfs/
 
 %changelog
+* Fri Sep 04 2026 Michael Shigorin <mike@altlinux.org> 2.24-alt1.1
+- E2K: build for sisyphus_e2k (thx Alexander Pankratov)
+
+* Thu Sep 4 2026 Alexander Pankratov <panlkratovar@basealt.ru>
+- Update source to 2.24, add E2K patches, remove unused tests from makefile
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 2.23.0.g6b126a4-alt1_3.4
 - merged basic support of LoongArch (lp64d ABI) architecture
 
