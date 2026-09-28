@@ -6,7 +6,7 @@
 
 Name:          gem-webauthn
 Version:       3.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       WebAuthn ruby server library
 License:       MIT
 Group:         Development/Ruby
@@ -16,9 +16,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(android_key_attestation) >= 0.3.0
 BuildRequires: gem(bindata) >= 2.4
@@ -37,7 +35,6 @@ BuildRequires: gem(tpm-key_attestation) >= 0.14.0
 BuildConflicts: gem(android_key_attestation) >= 0.4
 BuildConflicts: gem(bindata) >= 3
 BuildConflicts: gem(bundler) >= 5.0
-BuildConflicts: gem(byebug) >= 13
 BuildConflicts: gem(cbor) >= 0.6
 BuildConflicts: gem(cose) >= 2
 BuildConflicts: gem(rake) >= 14
@@ -51,7 +48,7 @@ BuildConflicts: gem(tpm-key_attestation) >= 0.15
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency byebug >= 12.0.0,byebug < 13
+%ruby_use_gem_dependency byebug >= 12.0.0
 Requires:      ruby >= 2.5
 Requires:      gem(android_key_attestation) >= 0.3.0
 Requires:      gem(bindata) >= 2.4
@@ -80,7 +77,7 @@ user credential, including the necessary cryptographic checks.
 %if_enabled    doc
 %package       -n gem-webauthn-doc
 Version:       3.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       WebAuthn ruby server library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета webauthn
 Group:         Development/Documentation
@@ -108,7 +105,7 @@ user credential, including the necessary cryptographic checks.
 %if_enabled    devel
 %package       -n gem-webauthn-devel
 Version:       3.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       WebAuthn ruby server library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета webauthn
 Group:         Development/Ruby
@@ -125,7 +122,6 @@ Requires:      gem(rubocop) >= 1
 Requires:      gem(rubocop-rake) >= 0.5
 Requires:      gem(rubocop-rspec) >= 2.2
 Conflicts:     gem(bundler) >= 5.0
-Conflicts:     gem(byebug) >= 13
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rspec) >= 4
 Conflicts:     gem(rubocop) >= 2
@@ -177,6 +173,9 @@ user credential, including the necessary cryptographic checks.
 
 
 %changelog
+* Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1.1
+- ! relaxed dep to byebug gem
+
 * Sun Mar 29 2026 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
 - ^ 2.5.2 -> 3.4.3
 
