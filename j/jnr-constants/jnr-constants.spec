@@ -4,10 +4,10 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-constants
-Version:        0.9.12
-Release:        alt2
+Version:        0.11.0
+Release:        alt1
 Summary:        Java Native Runtime constants 
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
@@ -36,11 +36,10 @@ find ./ -name '*.jar' -delete
 find ./ -name '*.class' -delete
 %mvn_file : %{name}/%{name} %{name} constantine
 
+%pom_xpath_inject pom:project "<groupId>com.github.jnr</groupId>"
+
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
-
-# Unnecessary for RPM builds
-%pom_remove_plugin ":maven-javadoc-plugin"
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -55,6 +54,9 @@ find ./ -name '*.class' -delete
 %doc LICENSE
 
 %changelog
+* Fri Sep 11 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.11.0-alt1
+- new version
+
 * Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 0.9.12-alt2
 - FTBFS fix
 

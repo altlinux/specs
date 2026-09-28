@@ -1,18 +1,19 @@
+%ifarch %ix86 aarch64
+%def_without tests
+%endif
+
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:     jnr-ffi
-Version:  2.1.8
-Release:  alt1_12jpp11
+Version:  2.3.1
+Release:  alt1
 Summary:  Java Abstracted Foreign Function Layer
-License:  ASL 2.0
+License:  Apache-2.0
 URL:      http://github.com/jnr/%{name}/
-Source0:  https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
-
-# Taken from https://github.com/jnr/jnr-ffi/commit/edda8cfe60b77ceeba301d20db0f5c996b958f5a
-Patch1:   0001-Convert-int-to-boolean-like-C-does-nonzero-is-true.patch
+Source:  https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc
 
@@ -20,6 +21,7 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(com.github.jnr:jffi)
 BuildRequires:  mvn(com.github.jnr:jffi::native:)
 BuildRequires:  mvn(com.github.jnr:jnr-x86asm)
+BuildRequires:  mvn(com.github.jnr:jnr-a64asm)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
@@ -46,7 +48,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch1 -p1
 
 # remove all builtin jars
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
@@ -54,6 +55,8 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 # Unnecessary for RPM builds
 %pom_remove_parent
 %pom_remove_plugin ":maven-javadoc-plugin"
+%pom_xpath_inject "pom:project" "<groupId>com.github.jnr</groupId>"
+%pom_remove_plugin ":central-publishing-maven-plugin"
 
 # Port to maven-antrun-plugin 3.0.0
 sed -i s/tasks/target/ pom.xml
@@ -74,6 +77,10 @@ sed -i 's|-Werror||' libtest/GNUmakefile
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Sep 25 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.3.1-alt1
+- new version
+- build with tests on x86_64 only cause architecture dependent target
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.1.8-alt1_12jpp11
 - update
 

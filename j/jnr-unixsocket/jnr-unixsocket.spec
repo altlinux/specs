@@ -4,10 +4,10 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-unixsocket
-Version:        0.21
-Release:        alt2
+Version:        0.39.4
+Release:        alt1
 Summary:        Unix sockets for Java
-License:        ASL 2.0
+License:        Apache-2.0
 URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 BuildArch:      noarch
@@ -47,20 +47,13 @@ find ./ -name '*.class' -delete
 
 # Unnecessary for RPM builds
 %pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin :findbugs-maven-plugin
 %pom_remove_plugin :maven-pmd-plugin
-%pom_remove_plugin :maven-javadoc-plugin
 
 # Can't run integration tests
 %pom_remove_plugin :maven-assembly-plugin
-%pom_remove_plugin :exec-maven-plugin
+%pom_remove_plugin :spotbugs-maven-plugin
 
-# Remove enxio classes to avoid OSGi split-package problems,
-# see https://github.com/jnr/jnr-unixsocket/pull/41
-rm -r src/main/java/jnr/enxio
-
-# Fix jar plugin usage
-%pom_xpath_remove "pom:plugin[pom:artifactId='maven-jar-plugin']/pom:executions"
+%pom_xpath_inject "pom:project" "<groupId>com.github.jnr</groupId>"
 
 %build
 # Tests fails on some arches
@@ -77,6 +70,9 @@ rm -r src/main/java/jnr/enxio
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Sep 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.39.4-alt1
+- new version
+
 * Wed Sep 09 2026 Anton Meleshnikov <alton@altlinux.org> 0.21-alt2
 - FTBFS fix
 

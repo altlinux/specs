@@ -1,15 +1,17 @@
+%def_without tests
+
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-enxio
-Version:        0.19
-Release:        alt1_8jpp11
+Version:        0.33.2
+Release:        alt1
 Summary:        Unix sockets for Java
 # src/main/java/jnr/enxio/channels/PollSelectionKey.java is LGPLv3
 # rest of the source code is ASL 2.0
-License:        ASL 2.0 and LGPLv3
+License:        Apache-2.0 and LGPLv3
 URL:            https://github.com/jnr/%{name}/
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
@@ -50,6 +52,8 @@ find ./ -name '*.class' -delete
 # Unnecessary for RPM builds
 %pom_remove_plugin ":maven-javadoc-plugin"
 
+%pom_xpath_inject "pom:project" "<groupId>com.github.jnr</groupId>"
+
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
@@ -63,6 +67,9 @@ find ./ -name '*.class' -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Sep 25 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.33.2-alt1
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.19-alt1_8jpp11
 - fc34 update
 

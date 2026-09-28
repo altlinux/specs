@@ -4,10 +4,10 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-posix
-Version:        3.0.47
-Release:        alt2
+Version:        3.2.3
+Release:        alt1
 Summary:        Java Posix layer
-License:        CPL or GPLv2+ or LGPLv2+
+License:        EPL-2.0 or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
 Source0:        https://github.com/jnr/%{name}/archive/%{name}-%{version}.tar.gz
 
@@ -51,6 +51,8 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 # Update maven compiler sources versions to build javadoc
 subst "s/1\.5/1\.6/g" ./pom.xml
 
+%pom_xpath_inject "pom:project" "<groupId>com.github.jnr</groupId>"
+
 %build
 %mvn_build -f
 
@@ -65,6 +67,9 @@ subst "s/1\.5/1\.6/g" ./pom.xml
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Sep 25 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.2.3-alt1
+- new version
+
 * Thu Mar 05 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.0.47-alt2
 - fixed FTBFS: update maven.compiler.{source,target} properties
 
