@@ -1,7 +1,11 @@
+%define        _unpackaged_files_terminate_build 1
+%def_enable    check
+%def_enable    doc
+%def_enable    devel
 %define        gemname redis
 
 Name:          gem-redis
-Version:       5.0.6
+Version:       6.0.0
 Release:       alt1
 Summary:       A Ruby client library for Redis
 License:       MIT
@@ -12,26 +16,26 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-%if_with check
-BuildRequires: gem(minitest) >= 0
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(rubocop) >= 1.15.0
-BuildRequires: gem(mocha) >= 0
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+%if_enabled check
 BuildRequires: gem(hiredis-client) >= 0
-BuildRequires: gem(redis-client) >= 0.9.0
-BuildRequires: gem(redis-cluster-client) >= 0.3.7
-BuildConflicts: gem(rubocop) >= 2
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(mocha) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(redis-client) = 0.30.1
+BuildRequires: gem(redis-cluster-client) >= 0.17.0
+BuildRequires: gem(rubocop) >= 1.15.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-Requires:      gem(redis-client) >= 0.9.0
+%ruby_use_gem_dependency rubocop >= 1.15.0
+%ruby_use_gem_dependency redis-cluster-client >= 0.17.0
+Requires:      ruby >= 3.2.0
+Requires:      gem(redis-client) = 0.30.1
 Obsoletes:     ruby-redis < %EVR
 Provides:      ruby-redis = %EVR
-Provides:      gem(redis) = 5.0.6
-
+Provides:      gem(redis) = 6.0.0
 
 %description
 A Ruby client that tries to match Redis' API one-to-one, while still providing
@@ -39,30 +43,37 @@ an idiomatic interface.
 
 
 %package       -n gem-redis-clustering
-Version:       5.0.6
+Version:       6.0.0
 Release:       alt1
 Summary:       A Ruby client library for Redis Cluster
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(redis) = 5.0.6
-Requires:      gem(redis-cluster-client) >= 0.3.7
-Provides:      gem(redis-clustering) = 5.0.6
+Requires:      ruby >= 3.2.0
+Requires:      gem(minitest) >= 0
+Requires:      gem(mocha) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(redis) = 6.0.0
+Requires:      gem(redis-cluster-client) >= 0.17.0
+Requires:      gem(redis-clustering) >= 0
+Requires:      gem(rubocop) >= 1.88.0
+Provides:      gem(redis-clustering) = 6.0.0
 
 %description   -n gem-redis-clustering
 A Ruby client that tries to match Redis' Cluster API one-to-one, while still
 providing an idiomatic interface.
 
 
+%if_enabled    doc
 %package       -n gem-redis-clustering-doc
-Version:       5.0.6
+Version:       6.0.0
 Release:       alt1
 Summary:       A Ruby client library for Redis Cluster documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета redis-clustering
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(redis-clustering) = 5.0.6
+Requires:      gem(redis-clustering) = 6.0.0
 
 %description   -n gem-redis-clustering-doc
 A Ruby client library for Redis Cluster documentation files.
@@ -72,22 +83,20 @@ providing an idiomatic interface.
 
 %description   -n gem-redis-clustering-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета redis-clustering.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-redis-clustering-devel
-Version:       5.0.6
+Version:       6.0.0
 Release:       alt1
 Summary:       A Ruby client library for Redis Cluster development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета redis-clustering
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(redis-clustering) = 5.0.6
-Requires:      gem(minitest) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(mocha) >= 0
-Conflicts:     gem(rubocop) >= 2
+Requires:      gem(redis-clustering) = 6.0.0
+Requires:      gem(hiredis-client) >= 0
 
 %description   -n gem-redis-clustering-devel
 A Ruby client library for Redis Cluster development package.
@@ -97,17 +106,19 @@ providing an idiomatic interface.
 
 %description   -n gem-redis-clustering-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета redis-clustering.
+%endif
 
 
+%if_enabled    doc
 %package       -n gem-redis-doc
-Version:       5.0.6
+Version:       6.0.0
 Release:       alt1
 Summary:       A Ruby client library for Redis documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета redis
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(redis) = 5.0.6
+Requires:      gem(redis) = 6.0.0
 
 %description   -n gem-redis-doc
 A Ruby client library for Redis documentation files.
@@ -117,23 +128,25 @@ an idiomatic interface.
 
 %description   -n gem-redis-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета redis.
+%endif
 
 
+%if_enabled    devel
 %package       -n gem-redis-devel
-Version:       5.0.6
+Version:       6.0.0
 Release:       alt1
 Summary:       A Ruby client library for Redis development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета redis
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(redis) = 5.0.6
-Requires:      gem(minitest) >= 0
-Requires:      gem(rake) >= 0
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(mocha) >= 0
+Requires:      gem(redis) = 6.0.0
 Requires:      gem(hiredis-client) >= 0
-Conflicts:     gem(rubocop) >= 2
+Requires:      gem(minitest) >= 0
+Requires:      gem(mocha) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(redis-client) = 0.30.1
+Requires:      gem(rubocop) >= 1.15.0
 
 %description   -n gem-redis-devel
 A Ruby client library for Redis development package.
@@ -143,6 +156,7 @@ an idiomatic interface.
 
 %description   -n gem-redis-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета redis.
+%endif
 
 
 %prep
@@ -158,31 +172,42 @@ an idiomatic interface.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n gem-redis-clustering
-%doc README.md
-%ruby_gemspecdir/redis-clustering-5.0.6.gemspec
-%ruby_gemslibdir/redis-clustering-5.0.6
+%doc CHANGELOG.md LICENSE README.md
+%ruby_gemspecdir/redis-clustering-6.0.0.gemspec
+%ruby_gemslibdir/redis-clustering-6.0.0
 
+%if_enabled    doc
 %files         -n gem-redis-clustering-doc
-%doc README.md
-%ruby_gemsdocdir/redis-clustering-5.0.6
+%doc CHANGELOG.md LICENSE README.md
+%ruby_gemsdocdir/redis-clustering-6.0.0
+%endif
 
+%if_enabled    devel
 %files         -n gem-redis-clustering-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
+%endif
 
+%if_enabled    doc
 %files         -n gem-redis-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
 %ruby_gemdocdir
+%endif
 
+%if_enabled    devel
 %files         -n gem-redis-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE README.md
+%endif
 
 
 %changelog
+* Mon Sep 28 2026 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt1
+- ^ 5.0.6 -> 6.0.0
+
 * Mon Jan 30 2023 Pavel Skrylev <majioa@altlinux.org> 5.0.6-alt1
 - ^ 4.3.1 -> 5.0.6
 

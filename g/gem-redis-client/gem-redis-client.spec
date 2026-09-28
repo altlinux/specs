@@ -5,41 +5,35 @@
 %define        gemname redis-client
 
 Name:          gem-redis-client
-Version:       0.23.0
+Version:       0.30.1
 Release:       alt1
 Summary:       Simple low-level client for Redis 6+
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/redis-rb/redis-client
 Vcs:           https://github.com/redis-rb/redis-client.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(connection_pool) >= 0
-BuildRequires: libssl-devel
-BuildRequires: gem(rake) >= 13.1.0
-BuildRequires: gem(rake-compiler) >= 0
-BuildConflicts: gem(rake) >= 14
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
+BuildRequires: pkgconfig(ruby)
+BuildRequires: pkgconfig(libssl)
 %if_enabled check
 BuildRequires: gem(benchmark) >= 0
-BuildRequires: gem(benchmark-ips) >= 0
-BuildRequires: gem(hiredis) >= 0
+BuildRequires: gem(connection_pool) >= 0
 BuildRequires: gem(megatest) >= 0
-BuildRequires: gem(redis) >= 4.6
-BuildRequires: gem(rubocop) >= 0
-BuildRequires: gem(rubocop-minitest) >= 0
+BuildRequires: gem(rake) >= 13.1.0
+BuildRequires: gem(rake-compiler) >= 0
 BuildRequires: gem(toxiproxy) >= 0
-BuildConflicts: gem(redis) >= 7
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency redis >= 6.0.0,redis < 7
-%ruby_use_gem_dependency rake >= 13.1.0,rake < 14
+%ruby_use_gem_dependency redis >= 6.0.0
+%ruby_use_gem_dependency rake >= 13.1.0
 Requires:      ruby >= 2.6.0
 Requires:      gem(connection_pool) >= 0
-Provides:      gem(redis-client) = 0.23.0
+Provides:      gem(redis-client) = 0.30.1
 
 %description
 Simple low-level client for Redis 6+
@@ -52,14 +46,15 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 
 %package       -n gem-hiredis-client
-Version:       0.23.0
+Version:       0.30.1
 Release:       alt1
 Summary:       Simple low-level client for Redis 6+
 Group:         Development/Ruby
 
 Requires:      ruby >= 2.6.0
-Requires:      gem(redis-client) = 0.23.0
-Provides:      gem(hiredis-client) = 0.23.0
+Requires:      gem(redis-client) = 0.30.1
+Provides:      hiredis-client = %EVR
+Provides:      gem(hiredis-client) = 0.30.1
 
 %description   -n gem-hiredis-client
 Hiredis binding for redis-client
@@ -73,17 +68,19 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 %if_enabled    doc
 %package       -n gem-hiredis-client-doc
-Version:       0.23.0
+Version:       0.30.1
 Release:       alt1
 Summary:       Simple low-level client for Redis 6+ documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hiredis-client
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(hiredis-client) = 0.23.0
+Requires:      gem(hiredis-client) = 0.30.1
 
 %description   -n gem-hiredis-client-doc
 Simple low-level client for Redis 6+ documentation files.
+
+Hiredis binding for redis-client
 
 redis-client is a simple, low-level, client for Redis 6+, Valkey 7+, KeyDB, and
 several other databases that implement the same RESP3 protocol.
@@ -98,21 +95,21 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 %if_enabled    devel
 %package       -n gem-hiredis-client-devel
-Version:       0.23.0
+Version:       0.30.1
 Release:       alt1
 Summary:       Simple low-level client for Redis 6+ development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hiredis-client
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(hiredis-client) = 0.23.0
-Requires:      gem(redis-client) = 0.23.0
 Requires:      libssl-devel
+Requires:      gem(hiredis-client) = 0.30.1
 
 %description   -n gem-hiredis-client-devel
 Simple low-level client for Redis 6+ development package.
 
 Hiredis binding for redis-client
+
 redis-client is a simple, low-level, client for Redis 6+, Valkey 7+, KeyDB, and
 several other databases that implement the same RESP3 protocol.
 
@@ -126,17 +123,19 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 %if_enabled    doc
 %package       -n gem-redis-client-doc
-Version:       0.23.0
+Version:       0.30.1
 Release:       alt1
 Summary:       Simple low-level client for Redis 6+ documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета redis-client
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(redis-client) = 0.23.0
+Requires:      gem(redis-client) = 0.30.1
 
 %description   -n gem-redis-client-doc
 Simple low-level client for Redis 6+ documentation files.
+
+Simple low-level client for Redis 6+
 
 redis-client is a simple, low-level, client for Redis 6+, Valkey 7+, KeyDB, and
 several other databases that implement the same RESP3 protocol.
@@ -151,7 +150,7 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 %if_enabled    devel
 %package       -n gem-redis-client-devel
-Version:       0.23.0
+Version:       0.30.1
 Release:       alt1
 Summary:       Simple low-level client for Redis 6+ development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета redis-client
@@ -159,23 +158,12 @@ Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      libssl-devel
-Requires:      gem(redis-client) = 0.23.0
-Requires:      gem(benchmark) >= 0
-Requires:      gem(benchmark-ips) >= 0
-Requires:      gem(connection_pool) >= 0
-Requires:      gem(hiredis) >= 0
-Requires:      gem(megatest) >= 0
-Requires:      gem(rake) >= 13.1.0
-Requires:      gem(rake-compiler) >= 0
-Requires:      gem(redis) >= 4.6
-Requires:      gem(rubocop) >= 0
-Requires:      gem(rubocop-minitest) >= 0
-Requires:      gem(toxiproxy) >= 0
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(redis) >= 7
+Requires:      gem(redis-client) = 0.30.1
 
 %description   -n gem-redis-client-devel
 Simple low-level client for Redis 6+ development package.
+
+Simple low-level client for Redis 6+
 
 redis-client is a simple, low-level, client for Redis 6+, Valkey 7+, KeyDB, and
 several other databases that implement the same RESP3 protocol.
@@ -207,14 +195,14 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 %files         -n gem-hiredis-client
 %doc README.md
-%ruby_gemspecdir/hiredis-client-0.23.0.gemspec
-%ruby_gemslibdir/hiredis-client-0.23.0
-%ruby_gemsextdir/hiredis-client-0.23.0
+%ruby_gemspecdir/hiredis-client-0.30.1.gemspec
+%ruby_gemslibdir/hiredis-client-0.30.1
+%ruby_gemsextdir/hiredis-client-0.30.1
 
 %if_enabled    doc
 %files         -n gem-hiredis-client-doc
 %doc README.md
-%ruby_gemsdocdir/hiredis-client-0.23.0
+%ruby_gemsdocdir/hiredis-client-0.30.1
 %endif
 
 %if_enabled    devel
@@ -236,6 +224,9 @@ Ruby constructs, it merely is a thin wrapper on top of the RESP3 protocol.
 
 
 %changelog
+* Mon Sep 28 2026 Pavel Skrylev <majioa@altlinux.org> 0.30.1-alt1
+- ^ 0.23.0 -> 0.30.1
+
 * Thu Dec 12 2024 Pavel Skrylev <majioa@altlinux.org> 0.23.0-alt1
 - ^ 0.22.2 -> 0.23.0
 
