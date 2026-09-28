@@ -5,12 +5,13 @@
 
 Name: alterator-backend-source-buildroot
 Version: 0.1.6
-Release: alt1
+Release: alt2
 
 Summary: System software sources manager for Alterator
 License: GPLv2+
 Group: System/Configuration/Other
-URL: https://altlinux.space/sheriffkorov/alterator-backend-source
+URL: https://altlinux.space/alterator/alterator-backend-source
+VCS: https://altlinux.space/alterator/alterator-backend-source.git
 
 Source0: %name-%version.tar
 
@@ -163,6 +164,9 @@ fi
 
 
 %changelog
+* Mon Sep 28 2026 Andrey Alekseev <parovoz@altlinux.org> 0.1.6-alt2
+- Updated URL/VCS and project metadata
+
 * Mon Sep 21 2026 Andrey Alekseev <parovoz@altlinux.org> 0.1.6-alt1
 - Reworked external sources
 
