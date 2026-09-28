@@ -1,6 +1,5 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
-# The end to end check builds an image and installs a system from it in KVM.
 %if "%_host_cpu" == "x86_64" || "%_host_cpu" == "aarch64"
 %def_with vmcheck
 %else
@@ -11,7 +10,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -27,8 +26,6 @@ Requires: alterator
 Requires: alterator-setup
 Requires: alterator-sh-functions
 Requires: alterator-l10n
-# The progress bar of the CLI counts the width of the bar with bc.
-Requires: bc
 Requires: rsync
 Requires: xz
 Requires: grub-common
@@ -36,18 +33,15 @@ Requires: mtools
 Requires: squashfs-tools
 Requires: make-initrd
 Requires: make-initrd-bootchain
-# The feature of data/initrd.mk that is not in the make-initrd package:
 Requires: make-initrd-plymouth
 Requires: alt-uefi-certs
 
-# The tools called from the shell scripts of the image build:
 Requires: dmsetup
 Requires: dosfstools
 Requires: e2fsprogs
 Requires: parted
 Requires: udev
 
-# Dependencies of the altinst squashfs image:
 Requires: alterator-vm
 Requires: alterator-grub
 Requires: libevms
@@ -70,41 +64,25 @@ BuildRequires: bats
 BuildRequires: /proc
 BuildRequires: /dev
 BuildRequires: shellcheck
-# The backend tests run the real engine headlessly: alterator provides
-# alterator-cmdline and the alteratord they talk to.
 BuildRequires: alterator
-# The check verifies that the features of data/initrd.mk really exist.
 BuildRequires: make-initrd
 BuildRequires: make-initrd-bootchain
 BuildRequires: make-initrd-plymouth
 
 %if_with vmcheck
-# The image build needs the root, the loop devices and the running kernel of
-# a real machine, so it is run in KVM: vm-run boots the build chroot itself.
 BuildRequires(pre): rpm-build-vm
-# Its filetrigger runs as root and makes the /tmp/vm-ext4.img of the whole
-# chroot: the unprivileged builder cannot read the chroot on its own.
 BuildRequires(pre): rpm-build-vm-createimage
 BuildRequires: /dev/kvm
-# The built image is booted to check that a system installs from it.
 %if "%_host_cpu" == "x86_64"
 BuildRequires: qemu-system-x86-core
-# The image is booted twice here, by the legacy BIOS of qemu and by the edk2
-# firmware, which is not a part of qemu.
 BuildRequires: edk2-ovmf
 %endif
 %if "%_host_cpu" == "aarch64"
 BuildRequires: qemu-system-aarch64-core
-# That machine has no legacy BIOS: it boots the image through the edk2
-# firmware, which is not a part of qemu here.
 BuildRequires: edk2-aarch64
 %endif
 BuildRequires: shadow-utils
-# The image build copies the build chroot, hence everything the kopidel calls
-# at the run time has to be inside it. This repeats the Requires above, and
-# the check fails loudly when they diverge.
 BuildRequires: alterator-sh-functions
-BuildRequires: bc
 BuildRequires: rsync
 BuildRequires: xz
 BuildRequires: grub-common
@@ -120,7 +98,6 @@ BuildRequires: dosfstools
 BuildRequires: e2fsprogs
 BuildRequires: parted
 BuildRequires: udev
-# The altinst squashfs image of the installer is built out of these:
 BuildRequires: alterator-vm
 BuildRequires: alterator-grub
 BuildRequires: libevms
@@ -171,9 +148,32 @@ tests/vm/vmcheck.sh
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Mon Sep 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.4-alt1
+- Refuse a build that has no target instead of reporting
+  a finished image (Closes: 56597).
+- Fix the format warning and the compression checkbox describing
+  the previous target after switching tabs (Closes: 56644).
+- Stop the build when the external drive cannot be unmounted or
+  repartitioned, instead of laying the image into its old partitions.
+- Refuse to start a build, or a single step, while another build
+  is running.
+- Fix a running build copying the files it was told to leave out
+  when the ignored-files list is checked or the targets are refreshed.
+- Take the branding of the machine into the installer image
+  instead of the Alt Kworkstation one.
+- Fix partitions of the installed system left too small for their files:
+  a btrfs root listed after /home in fstab, or one du could not measure.
+- Size the targets in the lists the way the image is sized, so a
+  listed target no longer runs out of space halfway through a build.
+- Keep a drive the previous build failed on in the list of targets.
+- Fix the window staying locked on an unusable list of ignored files.
+- Fix the bash completion of kopidel.
+- Fix the bug reference in the 1.1.3-alt1 entry, which girar
+  did not recognise.
+
 * Sun Sep 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.3-alt1
 - Require installer-common-functions explicitly
-  (Closes: 60553, thx antohami@).
+  (thx antohami@; Closes: 60553).
 - Fix the OEM mode leaving the human users and their home directories
   on the machine; a home that cannot be removed without taking
   somebody else's data along now fails the installation.
