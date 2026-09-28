@@ -1,13 +1,14 @@
 Name: upmpdcli
-Version: 1.9.17
+Version: 1.9.18
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
 License: LGPLv2.1
 Group: Sound
-Url: http://www.lesbonscomptes.com/upmpdcli
+URL: http://www.lesbonscomptes.com/upmpdcli
+VCS: https://codeberg.org/medoc/upmpdcli
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++ meson
 BuildRequires: libcurl-devel libmpdclient-devel libupnpp-devel >= 0.21.0
@@ -121,6 +122,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Mon Sep 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.18-alt1
+- 1.9.18 released
+
 * Mon Apr 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.17-alt1
 - 1.9.17 released
 
