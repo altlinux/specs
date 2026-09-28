@@ -3,11 +3,11 @@
 
 %define _dotnet_major 9.0
 #%define preview %nil
-%define _dotnet_coreversion 9.0.19
-%define _dotnet_sdkversion 9.0.317
-%define _dotnet_corerelease 9.0.19
+%define _dotnet_coreversion 9.0.20
+%define _dotnet_sdkversion 9.0.318
+%define _dotnet_corerelease 9.0.20
 # used for build
-%define _dotnet_sdkrelease 9.0.317
+%define _dotnet_sdkrelease 9.0.318
 
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
@@ -397,6 +397,16 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Sat Sep 26 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.20-alt1
+- .NET Runtime 9.0.20
+- fixed CVEs:
+ + CVE-2026-69439: .NET and Visual Studio Elevation of Privilege Vulnerability
+ + CVE-2026-71328: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69522: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69304: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-58649: .NET Information Disclosure Vulnerability
+ + CVE-2026-69806: .NET Elevation of Privilege Vulnerability
+
 * Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.19-alt1
 - .NET Runtime 9.0.19
 - fixed CVEs:

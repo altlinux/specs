@@ -2,9 +2,9 @@
 
 %define _dotnet_major 9.0
 #%define preview %nil
-%define _dotnet_coreversion 9.0.19
-%define _dotnet_corerelease 9.0.19
-%define _dotnet_corerelease1 9.0.19
+%define _dotnet_coreversion 9.0.20
+%define _dotnet_corerelease 9.0.20
+%define _dotnet_corerelease1 9.0.20
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_aspnetcoreapprefrelease %_dotnet_corerelease1
 
@@ -131,6 +131,16 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Sat Sep 26 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.20-alt1
+- ASP.NET Core 9.0.20
+- fixed CVEs:
+ + CVE-2026-69439: .NET and Visual Studio Elevation of Privilege Vulnerability
+ + CVE-2026-71328: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69522: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69304: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-58649: .NET Information Disclosure Vulnerability
+ + CVE-2026-69806: .NET Elevation of Privilege Vulnerability
+
 * Tue Sep 01 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.19-alt1
 - ASP.NET Core 9.0.19
 - fixed CVEs:

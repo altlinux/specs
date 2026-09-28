@@ -2,16 +2,16 @@
 
 %define _dotnet_major 9.0
 #%define preview %nil
-%define _dotnet_coreversion 9.0.19
-%define _dotnet_sdkversion 9.0.317
+%define _dotnet_coreversion 9.0.20
+%define _dotnet_sdkversion 9.0.318
 
-%define _dotnet_corerelease 9.0.19
-%define _dotnet_corerelease1 9.0.19
+%define _dotnet_corerelease 9.0.20
+%define _dotnet_corerelease1 9.0.20
 
 #%define _dotnet_sdkmanifestsrelease0 8.0.100
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 9.0.100
-%define _dotnet_sdkrelease 9.0.317
+%define _dotnet_sdkrelease 9.0.318
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -141,6 +141,16 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Sat Sep 26 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.318-alt1
+- .NET SDK 9.0.318 and runtime 9.0.20
+- fixed CVEs:
+ + CVE-2026-69439: .NET and Visual Studio Elevation of Privilege Vulnerability
+ + CVE-2026-71328: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69522: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69304: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-58649: .NET Information Disclosure Vulnerability
+ + CVE-2026-69806: .NET Elevation of Privilege Vulnerability
+
 * Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.317-alt1
 - .NET SDK 9.0.317 and runtime 9.0.19
 - fixed CVEs:
