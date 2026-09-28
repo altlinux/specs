@@ -2,8 +2,8 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-plv8
-Version: 3.2.4
-Release: alt2
+Version: 3.2.5
+Release: alt1
 
 Summary: PLV8 - A Procedural Language in Javascript powered by V8
 License: PostgreSQL
@@ -45,6 +45,9 @@ tar -xf %SOURCE101 -C deps/v8-cmake
 %_datadir/pgsql/extension/*
 
 %changelog
+* Sat Sep 26 2026 Alexei Takaseev <taf@altlinux.org> 3.2.5-alt1
+- 3.2.5
+
 * Wed Mar 18 2026 Alexei Takaseev <taf@altlinux.org> 3.2.4-alt2
 - Use LLVM if it used in PostgreSQL
 
