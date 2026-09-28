@@ -33,7 +33,7 @@
 
 Name: qt6-webengine
 Version: 6.11.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -56,6 +56,8 @@ Patch15: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
+# SuSE
+Patch300: Fix-renderer-crash-when-registering-ICU-encoding-names.patch
 # LoongArch
 Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 
@@ -86,7 +88,7 @@ BuildRequires: libxslt-devel libva-devel libvdpau-devel
 BuildRequires: libhunspell-devel
 BuildRequires: ninja-build gn
 BuildRequires: libopenjpeg2.0-devel
-BuildRequires: node-yargs node-terser
+BuildRequires: node
 BuildRequires: python3(json) python3(html5lib)
 BuildRequires: qt6-multimedia-devel qt6-svg-devel qt6-tools-devel
 BuildRequires: qt6-declarative-devel
@@ -217,6 +219,8 @@ Obsoletes: %name < %EVR
 #%patch200 -p1
 #%patch201 -p1
 %patch202 -p1
+#
+%patch300 -p1
 %ifarch loongarch64
 %patch3500 -p2
 %endif
@@ -289,7 +293,7 @@ MEM_PER_PROC=10000000
 MAX_MEM=`grep ^MemTotal: /proc/meminfo | sed -e 's|^\(.*\)[[:space:]].*|\1|' -e 's|.*[[:space:]]||'`
 #NUM_PROCS="$(($MAX_MEM / $MEM_PER_PROC))"
 [ "$NUM_PROCS" -ge 2  ] || NUM_PROCS=2
-[ "$NUM_PROCS" -le 16  ] || NUM_PROCS=16
+[ "$NUM_PROCS" -le 32  ] || NUM_PROCS=32
 
 export NPROCS=$NUM_PROCS
 export STRIP=strip
@@ -434,6 +438,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Mon Sep 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt3
+- add fix against QTBUG-149435, QTBUG-149946
+
 * Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
 - using bundled libre2 with old system libre2
 
