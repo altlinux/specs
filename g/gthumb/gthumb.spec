@@ -1,19 +1,15 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_base 3.12
-%define ver_major 3.12
-%define gst_api_ver 1.0
-%define xdg_name org.gnome.gThumb
+%define ver_major 4.0
+%define xdg_name org.gnome.gthumb
 
 %def_enable libbrasero
 %def_disable libchamplain
 # enabled by default
-%def_enable clutter
 %def_enable libraw
 %def_enable libheif
 %def_enable colord
-%def_enable gstreamer
 %ifarch armh
 %def_disable libjxl
 %else
@@ -23,7 +19,7 @@
 %def_enable check
 
 Name: gthumb
-Version: %ver_major.12
+Version: %ver_major
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -41,47 +37,33 @@ Source: %name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-%define glib_ver 2.54.0
-%define gtk_ver 3.16.0
-%define clutter_gtk_ver 1.0.0
-%define gst_ver 1.0
+%define glib_ver 2.84.0
+%define gtk_ver 4.18.0
+%define adw_ver 1.8
+%define portal_ver 0.9
+%define gst_api_ver 1.0
+%define gst_ver 1.26
 %define exiv2_ver 0.20
 %define libraw_ver 0.16
 %define heif_ver 1.11
-%define brasero_ver 3.2.0
-%define soup_ver 2.42
-%define gnome_common_ver 2.8.0
 %define webp_ver 0.2.0
-%define webkit_ver 2.6.0
-%define champlain_ver 0.12.0
-%define desktop_file_utils_ver 0.8
-%define appstream_ver 0.14.6
 
 Requires: %name-data = %EVR
 
-BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson gcc-c++ yelp-tools
-BuildRequires: pkgconfig(appstream) >= %appstream_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-vala
+BuildRequires: meson vala-tools gcc-c++ yelp-tools
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(gtk4) >= %gtk_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
+BuildRequires: pkgconfig(libportal-gtk4) >= %portal_ver
 BuildRequires: libexiv2-devel >= %exiv2_ver
-%{?_enable_clutter:BuildRequires: libclutter-devel libclutter-gtk3-devel >= %clutter_gtk_ver}
-%{?_enable_gstreamer:BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel librsvg-devel
-BuildRequires: libwebp-devel >= %webp_ver libjson-glib-devel
-BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: libsoup-devel >= %soup_ver  pkgconfig(webkit2gtk-4.0) >= %webkit_ver
+BuildRequires: libwebp-devel >= %webp_ver libgif-devel
+BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel >= %gst_ver}
 %{?_enable_libraw:BuildRequires: libraw-devel >= %libraw_ver libgomp-devel}
 %{?_enable_libheif:BuildRequires: libheif-devel >= %heif_ver}
-%{?_enable_libbrasero:BuildRequires: libbrasero-devel >= %brasero_ver}
-%{?_enable_libchamplain:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_colord:BuildRequires: libcolord-devel}
 %{?_enable_libjxl:BuildRequires: libjxl-devel}
-# while gtk supports x11
-BuildRequires: libX11-devel
-
-BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: gnome-common >= %gnome_common_ver
 %{?_enable_check:BuildRequires: %_bindir/appstreamcli desktop-file-utils}
 
 %description
@@ -106,29 +88,15 @@ BuildArch: noarch
 %description data
 This package provides noarch data needed for gThumb to work.
 
-%package devel
-Summary: gThumb development files
-Group: Development/C
-Requires: %name = %EVR
-
-%description devel
-This package contains headers needed to build extensions for gThumb.
-
 %prep
 %setup
-sed -i 's/#include "rotation-utils.h"/&\n#include <stdbool.h>/' \
-    extensions/image_rotation/rotation-utils.c
 
 %build
 %meson \
     -Dlibtiff=true \
-    %{subst_enable_meson_bool libbrasero libbrasero} \
-    %{subst_enable_meson_bool libchamplain libchamplain} \
     %{subst_enable_meson_bool libraw libraw} \
     %{subst_enable_meson_bool libheif libheif} \
     %{subst_enable_meson_bool colord colord} \
-    %{subst_enable_meson_bool gstreamer gstreamer} \
-    %{subst_enable_meson_bool clutter clutter} \
     %{subst_enable_meson_bool libjxl libjxl}
 %nil
 %meson_build
@@ -142,47 +110,24 @@ sed -i 's/#include "rotation-utils.h"/&\n#include <stdbool.h>/' \
 
 %files
 %_bindir/*
-%dir %_libdir/%name/extensions
-%_libdir/%name/extensions/*
 %dir %_libexecdir/%name
 %_libexecdir/%name/video-thumbnailer
 %_desktopdir/*
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %files data  -f %name.lang
-%_datadir/%name/
+#%_datadir/%name/
 %_iconsdir/hicolor/*/*/*
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.change-date.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.catalogs.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.comments.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.contact-sheet.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.convert-format.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.crop.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.enums.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.file-manager.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gthumb.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.gstreamer-tools.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.image-print.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.image-viewer.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.importer.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.photo-importer.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.pixbuf-savers.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.rename-series.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.resize.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.resize-images.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.rotate.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.slideshow.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.terminal.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.webalbums.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.savers.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.gthumb.viewers.gschema.xml
 %_man1dir/gthumb.1.*
-%doc AUTHORS NEWS README*
-
-%files devel
-%_includedir/%name/
-%_datadir/aclocal/gthumb.m4
-%_pkgconfigdir/*
+%doc NEWS README*
 
 %changelog
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
+- 4.0 (ported to GTK4/Libadwaita, rewritten in Vala)
+
 * Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.12-alt1
 - 3.12.12
 
