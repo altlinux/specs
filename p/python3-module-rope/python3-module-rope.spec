@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name rope
-%define import_name rope
+%define mod_name rope
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 
 Summary: A python refactoring library
-License: LGPL-3.0+
+License: LGPL-3.0-or-later
 Group: Development/Python3
 Url: https://pypi.org/project/rope/
 Vcs: https://github.com/python-rope/rope
@@ -20,6 +20,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -52,11 +54,13 @@ BuildRequires: python3-module-pip
 %pyproject_run_pytest -vra -k 'not test_search_submodule'
 
 %files
-%doc README.rst CHANGELOG.md
-%python3_sitelibdir/%import_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 28 2026 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
+- Updated to 1.15.0.
+
 * Tue Jul 15 2025 Anton Zhukharev <ancieg@altlinux.org> 1.14.0-alt1
 - Updated to 1.14.0.
 
