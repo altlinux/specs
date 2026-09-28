@@ -1,7 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name blur-my-shell
-%define ver_major 72
+%define ver_major 73
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: GNOME Shell Extension - Blur my Shell
 Group: Graphical desktop/GNOME
@@ -74,6 +74,9 @@ popd
 %doc README.md
 
 %changelog
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 73-alt1
+- 73
+
 * Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 72-alt2
 - updated to v72-116-gf787135 (GNOME 51 supported)
 
