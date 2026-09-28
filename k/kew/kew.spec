@@ -1,5 +1,5 @@
 Name: kew
-Version: 4.3.6
+Version: 4.3.8
 Release: alt1
 
 Summary: A terminal music player
@@ -50,8 +50,14 @@ Features:
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.png
 %_man1dir/kew.1*
+%_man5dir/kew.5*
+%_man5dir/kewrc.5*
+%_man5dir/kewstaterc.5*
 
 %changelog
+* Mon Sep 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.8-alt1
+- 4.3.8 released
+
 * Wed Sep 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.6-alt1
 - 4.3.6 released
 
