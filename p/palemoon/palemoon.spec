@@ -1,10 +1,10 @@
-# git commit 0d869b85feca1409f5aadb55e6eaabb08db134ad
+# git commit ce387e806b59ed5174b3c21ced4563314962eb05
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 34.3.1
+Version: 35.0.1
 
 Release: alt1
 
@@ -94,7 +94,6 @@ BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel
 # Automatically added by buildreq on Sun Jun 21 2026
 # optimized out: alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libfreetype-devel libgcc15-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel openssl-config perl pkg-config python-modules python2-base python3 python3-base python3-module-setuptools sh5 xorg-proto-devel zlib-devel
 BuildRequires: alt-os-release doxygen gcc-c++ libXt-devel libalsa-devel libdbus-devel libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket nasm python3-dev unzip zip libgtk+2-devel yasm
-
 
 #BuildRequires: libgtk+3-devel libhunspell-devel libpulseaudio-devel libsocket
 #BuildRequires: python-devel python-modules-json python-modules-wsgiref python3-module-setuptools
@@ -453,8 +452,6 @@ printf '%_bindir/x-www-browser\t%_bindir/%bname\t99\n' >> ./%_altdir/%bname
 #%_bindir/x-www-browser	%_bindir/%bname	99
 #EOF
 
-
-
 # Add real RPATH
 (set -x
  	rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
@@ -514,6 +511,9 @@ install -D -m 644 %SOURCE12 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Mon Sep 28 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:35.0.1-alt1
+- Version 35.0.1 (CVE-2026-92016 , CVE-2026-92044, CVE-2026-92049, CVE-2026-92030 , CVE-2026-92012, CVE-2026-74982, CVE-2026-74969, CVE-2026-74977, CVE-2026-74945, CVE-2026-74964, CVE-2026-74971, CVE-2026-74943)
+
 * Thu Jul 02 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:34.3.1-alt1
 - Version 34.3.1 (CVE-2026-12318, CVE-2026-12322, CVE-2026-12292)
 
