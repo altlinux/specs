@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt27
+Release: alt28
 %K6init no_altplace
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Mon Sep 28 2026 Sergey V Turchin <zerg@altlinux.org> 0.6-alt28
+- fix OnlyShowIn desktop-entry (closes: 60713)
+
 * Fri Feb 27 2026 Ilya Mukhamadeev <nicourced@altlinux.org> 0.6-alt27
 - Fix segfault.
 
