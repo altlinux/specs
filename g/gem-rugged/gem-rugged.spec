@@ -5,7 +5,7 @@
 %define        gemname rugged
 
 Name:          gem-rugged
-Version:       1.9.0
+Version:       1.9.6
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library
 License:       MIT
@@ -15,20 +15,22 @@ Vcs:           https://github.com/libgit2/rugged.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         system_git2.patch
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake libruby-devel
 BuildRequires: libgit2-devel
 %if_enabled check
-BuildRequires: gem(rake-compiler) >= 0.9.0
-BuildRequires: gem(pry) >= 0
+BuildRequires: gem(base64) >= 0
 BuildRequires: gem(minitest) >= 5.0
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(rake-compiler) >= 0.9.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(rugged) = %version
+%ruby_use_gem_dependency minitest >= 6.0
+Requires:      ruby >= 1.9.3
+Provides:      gem(rugged) = 1.9.6
 
+%ruby_use_gem_version rugged:1.9.6
 
 %description
 Rugged is a Ruby bindings to the libgit2 linkable C Git library. This is for
@@ -37,14 +39,14 @@ testing and using the libgit2 library in a language that is awesome.
 
 %if_enabled    doc
 %package       -n gem-rugged-doc
-Version:       %version
+Version:       1.9.6
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rugged
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rugged) = %version
+Requires:      gem(rugged) = 1.9.6
 
 %description   -n gem-rugged-doc
 Rugged is a Ruby binding to the libgit2 linkable library documentation
@@ -60,19 +62,19 @@ testing and using the libgit2 library in a language that is awesome.
 
 %if_enabled    devel
 %package       -n gem-rugged-devel
-Version:       %version
+Version:       1.9.6
 Release:       alt1
 Summary:       Rugged is a Ruby binding to the libgit2 linkable library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rugged
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rugged) = %version
-Requires:      gem(rake-compiler) >= 0.9.0
-Requires:      gem(pry) >= 0
-Requires:      gem(minitest) >= 5.0
 Requires:      libgit2-devel
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(rugged) = 1.9.6
+Requires:      gem(base64) >= 0
+Requires:      gem(minitest) >= 5.0
+Requires:      gem(pry) >= 0
+Requires:      gem(rake-compiler) >= 0.9.0
 
 %description   -n gem-rugged-devel
 Rugged is a Ruby binding to the libgit2 linkable library development
@@ -88,9 +90,6 @@ testing and using the libgit2 library in a language that is awesome.
 
 %prep
 %setup
-%autopatch
-sed -i 's/LIBGIT2_VER_/LIBGIT2_VERSION_/g
-    s|^#include <git2/version.h>|#include <git2/common.h>\n&|' ext/rugged/extconf.rb
 
 %build
 %ruby_build
@@ -102,25 +101,29 @@ sed -i 's/LIBGIT2_VER_/LIBGIT2_VERSION_/g
 %ruby_test
 
 %files
-%doc README.md
+%doc LICENSE README.md CHANGELOG.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %if_enabled    doc
 %files         -n gem-rugged-doc
-%doc README.md
+%doc LICENSE README.md CHANGELOG.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-rugged-devel
-%doc README.md
+%doc LICENSE README.md CHANGELOG.md
 %ruby_includedir/*
 %endif
 
 
 %changelog
+* Sun Aug 30 2026 Pavel Skrylev <majioa@altlinux.org> 1.9.6-alt1
+- ^ 1.9.0 -> 1.9.6
+- ! fixed dep to minitest gem
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0 (ALT #52635)
 
