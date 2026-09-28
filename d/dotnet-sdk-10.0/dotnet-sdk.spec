@@ -4,15 +4,15 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.11
-%define _dotnet_sdkversion 10.0.400
+%define _dotnet_coreversion 10.0.12
+%define _dotnet_sdkversion 10.0.401
 
-%define _dotnet_corerelease 10.0.11
-%define _dotnet_corerelease1 10.0.11
+%define _dotnet_corerelease 10.0.12
+%define _dotnet_corerelease1 10.0.12
 
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 10.0.100
-%define _dotnet_sdkrelease 10.0.400
+%define _dotnet_sdkrelease 10.0.401
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -186,6 +186,16 @@ done
 %endif
 
 %changelog
+* Sat Sep 26 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.401-alt1
+- .NET SDK 10.0.401
+- fixed CVEs:
+ + CVE-2026-69439: .NET and Visual Studio Elevation of Privilege Vulnerability
+ + CVE-2026-71328: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69522: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69304: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-58649: .NET Information Disclosure Vulnerability
+ + CVE-2026-69806: .NET Elevation of Privilege Vulnerability
+
 * Mon Aug 31 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.400-alt1
 - .NET SDK 10.0.400
 - fixed CVEs:
