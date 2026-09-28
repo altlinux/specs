@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: A Python module for decorators, wrappers and monkey patching
 
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-mypy
+BuildRequires: python3-modules-sqlite3
 %endif
 %if_with docs
 BuildRequires: rpm-macros-sphinx3
@@ -98,6 +99,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Fri Sep 25 2026 Alexander Burmatov <thatman@altlinux.org> 2.4.1-alt2
+- Add required dependency for tests.
+
 * Fri Sep 11 2026 Anton Vyatkin <toni@altlinux.org> 2.4.1-alt1
 - New version 2.4.1.
 
