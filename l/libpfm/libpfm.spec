@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: libpfm
-Version: 4.13.0
-Release: alt2
+Version: 4.14.1
+Release: alt1
 Summary: Library to encode performance events for use by perf tool
 License: MIT
 Group: System/Libraries
@@ -69,6 +69,9 @@ tests/validate -A
 %_man3dir/*pfm*.3*
 
 %changelog
+* Mon Sep 28 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.14.1-alt1
+- Update to v4.14.1 (2026-09-20).
+
 * Sun Sep 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.13.0-alt2
 - NMU: fix FTBFS with gcc 15.
 
