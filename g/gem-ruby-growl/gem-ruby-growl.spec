@@ -6,7 +6,7 @@
 
 Name:          gem-ruby-growl
 Version:       4.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols
 License:       BSD 3-clause
 Group:         Development/Ruby
@@ -23,15 +23,14 @@ BuildRequires: gem(minitest) >= 5.17.0
 BuildRequires: gem(rdoc) >= 4.0
 BuildRequires: gem(hoe) >= 4.2
 BuildConflicts: gem(uuid) >= 3
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(rdoc) >= 7
 BuildConflicts: gem(hoe) >= 5
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,(?-mix:mongrel_),fastthread,(?-mix:project)
+%ruby_use_gem_dependency minitest >= 5.17.0
+%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,mongrel/,fastthread,/project
 Requires:      gem(uuid) >= 2.3.5
 Conflicts:     gem(uuid) >= 3
 Provides:      gem(ruby-growl) = 4.1
@@ -58,7 +57,7 @@ supported, use --priority instead.)
 
 %package       -n growl
 Version:       4.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ruby-growl
 Group:         Other
@@ -93,7 +92,7 @@ supported, use --priority instead.)
 %if_enabled    doc
 %package       -n gem-ruby-growl-doc
 Version:       4.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-growl
 Group:         Development/Documentation
@@ -130,7 +129,7 @@ supported, use --priority instead.)
 %if_enabled    devel
 %package       -n gem-ruby-growl-devel
 Version:       4.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       A pure-ruby growl notifier for UDP and GNTP growl protocols development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-growl
 Group:         Development/Ruby
@@ -140,7 +139,6 @@ Requires:      gem(ruby-growl) = 4.1
 Requires:      gem(minitest) >= 5.17.0
 Requires:      gem(rdoc) >= 4.0
 Requires:      gem(hoe) >= 4.2
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rdoc) >= 7
 Conflicts:     gem(hoe) >= 5
 
@@ -204,6 +202,9 @@ supported, use --priority instead.)
 
 
 %changelog
+* Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 4.1-alt1.2
+- ! relaxed dep to minitest gem
+
 * Fri Sep 27 2024 Pavel Skrylev <majioa@altlinux.org> 4.1-alt1.1
 - ! spec and deps
 
