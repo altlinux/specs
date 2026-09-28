@@ -1,5 +1,5 @@
 Name:     wayvnc
-Version:  0.10.1
+Version:  0.10.2
 Release:  alt1
 Summary:  A VNC server for wlroots based Wayland compositors
 Group:    Graphical desktop/Other
@@ -52,6 +52,9 @@ physical display attached.
 %_man1dir/%{name}ctl.1.*
 
 %changelog
+* Mon Sep 28 2026 Anton Midyukov <antohami@altlinux.org> 0.10.2-alt1
+- New version 0.10.2.
+
 * Fri Jul 10 2026 Anton Midyukov <antohami@altlinux.org> 0.10.1-alt1
 - New version 0.10.1.
 
