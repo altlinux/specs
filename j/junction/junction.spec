@@ -2,7 +2,7 @@
 %def_enable snapshot
 
 %define _name Junction
-%define ver_major 1.12
+%define ver_major 1.13
 %define beta %nil
 %define rdn_name re.sonny.Junction
 
@@ -70,6 +70,9 @@ Junction lets you choose the application to open files and links.
 
 
 %changelog
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.13-alt1
+- 1.13
+
 * Mon May 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12-alt1
 - 1.12
 
