@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-pg_cron
 Version: 1.6.8
-Release: alt1
+Release: alt2
 
 Summary: The pg_cron is a simple cron-based job scheduler for PostgreSQL
 License: PostgreSQL
@@ -26,6 +26,9 @@ the database.
 %prep
 %setup
 %patch0 -p1
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' Makefile
+%endif
 
 %build
 %make_build PG_CONFIG=/usr/bin/pg_server_config
@@ -42,6 +45,9 @@ the database.
 %_datadir/pgsql/extension/*
 
 %changelog
+* Mon Sep 28 2026 Alexei Takaseev <taf@altlinux.org> 1.6.8-alt2
+- Fix build in e2k (ilyakurdyukov@)
+
 * Thu Sep 10 2026 Alexei Takaseev <taf@altlinux.org> 1.6.8-alt1
 - 1.6.8
 
