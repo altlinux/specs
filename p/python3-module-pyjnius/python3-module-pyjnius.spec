@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pyjnius
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: A Python module to access Java classes as Python classes using JNI
@@ -58,10 +58,12 @@ py.test-3 -v
 %doc README.md
 %python3_sitelibdir/jnius/
 %python3_sitelibdir/%{pyproject_distinfo %oname}
-%python3_sitelibdir/jnius_config.py
-%python3_sitelibdir/__pycache__/jnius_config.*
+%python3_sitelibdir/jnius_config/
 
 %changelog
+* Mon Sep 28 2026 Anton Vyatkin <toni@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Mon Sep 07 2026 Anton Vyatkin <toni@altlinux.org> 1.7.0-alt1
 - New version 1.7.0.
 
