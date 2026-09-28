@@ -1,4 +1,15 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define _stripped_files_terminate_build 1
+
+%define python_ver %{get_version python3-dev}
+%if "%python_ver" == ""
+%define python_ver %{get_version libpython3}
+%endif
+%if "%python_ver" == ""
+%define python_ver 3.12
+%endif
 
 %define rname kdev-python
 %define sover 6
@@ -8,7 +19,7 @@
 
 Name: kdevelop-python
 Version: 26.04.3
-Release: alt4
+Release: alt5
 
 Group: Development/Other
 Summary: Python 3 language plugin for KDevelop
@@ -23,8 +34,9 @@ Source: %rname-%version.tar
 Patch1: alt-python-version.patch
 Patch2: alt-soname.patch
 Patch3: alt-remove-ziptarget.patch
+Patch4: alt-remove-executabletarget.patch
 
-BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
+BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine rpm-build-ubt rpm-macros-ifver
 BuildRequires: rpm-build-python3
 BuildRequires: extra-cmake-modules cmake
 BuildRequires: qt6-tools-devel
@@ -78,6 +90,9 @@ Requires: %name-common >= %EVR
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%ifver_lt %python_ver 3.13
+%patch4 -p1
+%endif
 
 sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/env python3|" documentation_src/pyqt/sip_to_xml5.py \
                                                            documentation_src/numpy/generate_numpy_doc.py \
@@ -123,6 +138,9 @@ rm -v %buildroot%_datadir/kdevappwizard/templates/django_project.tar.bz2
 %_K6lib/libkdevpythonparser.so.*
 
 %changelog
+* Mon Sep 28 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt5
+- add fix for old python
+
 * Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt4
 - remove unexistent _ZipTarget
 
