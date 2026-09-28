@@ -13,7 +13,7 @@
 %endif
 
 Name: opencode
-Version: 1.18.32
+Version: 1.18.33
 Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
@@ -118,5 +118,8 @@ test -d %buildroot%_datadir/%name/tree-sitter
 %_datadir/%name/tree-sitter
 
 %changelog
+* Mon Sep 28 2026 Nazarov Denis <nenderus@altlinux.org> 1.18.33-alt1
+- Update to 1.18.33
+
 * Thu Sep 24 2026 Nazarov Denis <nenderus@altlinux.org> 1.18.32-alt1
 - Initial build
