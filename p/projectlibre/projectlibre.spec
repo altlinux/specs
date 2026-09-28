@@ -2,7 +2,7 @@
 
 Name:    projectlibre
 Version: 1.9.8
-Release: alt2
+Release: alt3
 
 Summary: ProjectLibre - The open source replacement of Microsoft Project
 License: CPAL
@@ -14,6 +14,7 @@ ExclusiveArch: %java_arches
 Source:  %name-%version.tar
 Source1: %name.watch
 Patch0: %name-%version-alt-patch.patch
+Patch1: projectlibre-1.9.8-alt-fix-vendor-itext.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: ant
@@ -28,10 +29,8 @@ BuildRequires: apache-commons-digester
 BuildRequires: apache-commons-lang
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-pool
-BuildRequires: apache-poi
 BuildRequires: bsf
 BuildRequires: bsh
-BuildRequires: itext
 BuildRequires: ivy-local
 BuildRequires: jakarta-activation
 BuildRequires: jasperreports
@@ -121,6 +120,9 @@ install -Dm0644 projectlibre_build/resources/%name.png %buildroot%_pixmapsdir/%n
 %_pixmapsdir/*
 
 %changelog
+* Fri Sep 25 2026 Anton Meleshnikov <alton@altlinux.org> 1.9.8-alt3
+- Fixed build with vendor itext and jakarta-poi.
+
 * Thu Jul 23 2026 Ivan Khanas <xeno@altlinux.org> 1.9.8-alt2
 - Fixed startup with Java 25 by avoiding the unsupported Security Manager reset
   when no Security Manager is active (closes: #59392).
