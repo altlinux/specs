@@ -5,20 +5,17 @@
 %define        gemname socksify
 
 Name:          gem-socksify
-Version:       1.8.1
-Release:       alt1
+Version:       1.8.1.2
+Release:       alt0.1
 Summary:       Redirect all TCPSockets through a SOCKS5 proxy
 License:       Ruby or GPL-3.0-only
 Group:         Development/Ruby
 Url:           https://github.com/astro/socksify-ruby
 Vcs:           https://github.com/astro/socksify-ruby.git
-Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.25
 BuildRequires: gem(rake) >= 13.3
@@ -26,7 +23,6 @@ BuildRequires: gem(rubocop) >= 1.78
 BuildRequires: gem(rubocop-minitest) >= 0.38
 BuildRequires: gem(rubocop-performance) >= 1.25
 BuildRequires: gem(rubocop-rake) >= 0.7
-BuildConflicts: gem(minitest) >= 6
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-minitest) >= 1
@@ -36,24 +32,25 @@ BuildConflicts: gem(rubocop-rake) >= 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency minitest >= 5.25
 Requires:      ruby >= 2.7
-Provides:      gem(socksify) = 1.8.1
+Provides:      gem(socksify) = 1.8.1.2
+
+%ruby_use_gem_version socksify:1.8.1.2
 
 %description
 Redirect all TCPSockets through a SOCKS5 proxy
 
 
 %package       -n socksify-ruby
-Version:       1.8.1
-Release:       alt1
+Version:       1.8.1.2
+Release:       alt0.1
 Summary:       Redirect all TCPSockets through a SOCKS5 proxy executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета socksify
 Group:         Other
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(socksify) = 1.8.1
+Requires:      gem(socksify) = 1.8.1.2
 
 %description   -n socksify-ruby
 Redirect all TCPSockets through a SOCKS5 proxy executable(s).
@@ -64,16 +61,14 @@ Redirect all TCPSockets through a SOCKS5 proxy executable(s).
 
 %if_enabled    doc
 %package       -n gem-socksify-doc
-Version:       1.8.1
-Release:       alt1
+Version:       1.8.1.2
+Release:       alt0.1
 Summary:       Redirect all TCPSockets through a SOCKS5 proxy documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета socksify
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(socksify) = 1.8.1
+Requires:      gem(socksify) = 1.8.1.2
 
 %description   -n gem-socksify-doc
 Redirect all TCPSockets through a SOCKS5 proxy documentation files.
@@ -85,23 +80,20 @@ Redirect all TCPSockets through a SOCKS5 proxy documentation files.
 
 %if_enabled    devel
 %package       -n gem-socksify-devel
-Version:       1.8.1
-Release:       alt1
+Version:       1.8.1.2
+Release:       alt0.1
 Summary:       Redirect all TCPSockets through a SOCKS5 proxy development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета socksify
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Autoprov:      yes,noruby
-Autoreq:       yes,noruby
-Requires:      gem(socksify) = 1.8.1
+Requires:      gem(socksify) = 1.8.1.2
 Requires:      gem(minitest) >= 5.25
 Requires:      gem(rake) >= 13.3
 Requires:      gem(rubocop) >= 1.78
 Requires:      gem(rubocop-minitest) >= 0.38
 Requires:      gem(rubocop-performance) >= 1.25
 Requires:      gem(rubocop-rake) >= 0.7
-Conflicts:     gem(minitest) >= 6
 Conflicts:     gem(rake) >= 14
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-minitest) >= 1
@@ -150,6 +142,10 @@ Redirect all TCPSockets through a SOCKS5 proxy development package.
 
 
 %changelog
+* Mon Aug 31 2026 Pavel Skrylev <majioa@altlinux.org> 1.8.1.2-alt0.1
+- ^ 1.8.1 -> 1.8.1p2
+- ! fixed dep to minitest gem
+
 * Sun Nov 23 2025 Pavel Skrylev <majioa@altlinux.org> 1.8.1-alt1
 - + packaged gem with Ruby Policy 2.0
 - * define explicit dependencies
