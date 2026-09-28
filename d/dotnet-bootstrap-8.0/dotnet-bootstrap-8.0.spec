@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_coreversion 8.0.30
-%define _dotnet_sdkversion 8.0.130
-%define _dotnet_corerelease 8.0.30
-%define _dotnet_corerelease1 8.0.30
+%define _dotnet_coreversion 8.0.31
+%define _dotnet_sdkversion 8.0.131
+%define _dotnet_corerelease 8.0.31
+%define _dotnet_corerelease1 8.0.31
 
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.130
+%define _dotnet_sdkrelease 8.0.131
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -134,6 +134,15 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Fri Sep 25 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.131-alt1
+- .NET SDK 8.0.131 and runtime 8.0.31
+- fixed CVEs:
+ + CVE-2026-69439: .NET and Visual Studio Elevation of Privilege Vulnerability
+ + CVE-2026-71328: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69522: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69304: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-58649: .NET Information Disclosure Vulnerability
+
 * Sun Aug 30 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.130-alt1
 - fixed CVEs:
  + CVE-2026-62898: .NET Information Disclosure Vulnerability

@@ -5,14 +5,14 @@
 
 %define _dotnet_major 8.0
 
-%define _dotnet_coreversion 8.0.30
-%define _dotnet_sdkversion 8.0.130
+%define _dotnet_coreversion 8.0.31
+%define _dotnet_sdkversion 8.0.131
 
-%define _dotnet_corerelease 8.0.30
+%define _dotnet_corerelease 8.0.31
 #define _dotnet_sdkmanifestsrelease1 %nil
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.130
-%define _dotnet_corerelease1 8.0.30
+%define _dotnet_sdkrelease 8.0.131
+%define _dotnet_corerelease1 8.0.31
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
 %define _dotnet_netstandartrelease 2.1.0
@@ -78,7 +78,7 @@ Just copying managed code now.
 # Note: one for all versions
 %package -n netstandard-targeting-pack-2.1
 Version: %_dotnet_netstandartrelease
-Release: alt4
+Release: alt5
 Group: Development/Other
 Summary: NETStandard.Library.Ref 2.1
 
@@ -166,6 +166,15 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Sep 25 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.131-alt1
+- .NET SDK 8.0.131
+- fixed CVEs:
+ + CVE-2026-69439: .NET and Visual Studio Elevation of Privilege Vulnerability
+ + CVE-2026-71328: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69522: .NET and Visual Studio Remote Code Execution Vulnerability
+ + CVE-2026-69304: ASP.NET Core Denial of Service Vulnerability
+ + CVE-2026-58649: .NET Information Disclosure Vulnerability
+
 * Sun Aug 30 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.130-alt1
 - fixed CVEs:
  + CVE-2026-62898: .NET Information Disclosure Vulnerability
