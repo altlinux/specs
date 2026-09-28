@@ -5,57 +5,63 @@
 %define        gemname sidekiq
 
 Name:          gem-sidekiq
-Version:       7.3.8
+Version:       7.3.10
 Release:       alt1
 Summary:       Simple, efficient background processing for Ruby
 License:       LGPL-3.0
 Group:         Development/Ruby
 Url:           http://sidekiq.org
 Vcs:           https://github.com/mperham/sidekiq.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
+BuildRequires: gem(actionmailer) >= 7.1
+BuildRequires: gem(actionpack) >= 7.1
+BuildRequires: gem(activejob) >= 7.1
+BuildRequires: gem(activerecord) >= 7.1
 BuildRequires: gem(after_commit_everywhere) >= 0
-BuildRequires: gem(connection_pool) >= 2.3.0
-BuildRequires: gem(rack) >= 2.2.4
-BuildRequires: gem(rake) >= 0
-BuildRequires: gem(redis-client) >= 0.22.2
-BuildRequires: gem(simplecov) >= 0
-BuildRequires: gem(sqlite3) >= 1.4
-BuildRequires: gem(standard) >= 0
-BuildRequires: gem(actionmailer) >= 7.1.0
-BuildRequires: gem(actionpack) >= 7.1.0
-BuildRequires: gem(activejob) >= 7.1.0
-BuildRequires: gem(activerecord) >= 7.1.0
 BuildRequires: gem(base64) >= 0
+BuildRequires: gem(connection_pool) >= 2.3.0
 BuildRequires: gem(csv) >= 0
-BuildRequires: gem(json) >= 0
+BuildRequires: gem(debug) >= 0
 BuildRequires: gem(logger) >= 0
 BuildRequires: gem(maxitest) >= 0
-BuildRequires: gem(puma) >= 0
-BuildRequires: gem(railties) >= 7.1.0
+BuildRequires: gem(rack) >= 2.2.4
+BuildRequires: gem(railties) >= 7.1
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(redis-client) >= 0.23.0
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(sqlite3) >= 2.2
+BuildRequires: gem(standard) >= 0
+BuildRequires: gem(vernier) >= 0
+BuildRequires: gem(webrick) >= 0
 BuildRequires: gem(yard) >= 0
-BuildConflicts: gem(actionmailer) >= 7.2
-BuildConflicts: gem(actionpack) >= 7.2
-BuildConflicts: gem(activejob) >= 7.2
-BuildConflicts: gem(activerecord) >= 7.2
-BuildConflicts: gem(railties) >= 7.2
-BuildConflicts: gem(sqlite3) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_ignore_names bare
-Requires:      ruby >= 2.7.0
+%ruby_use_gem_dependency rack >= 3.1.7
+%ruby_use_gem_dependency railties >= 7.1
+%ruby_use_gem_dependency activejob >= 7.1
+%ruby_use_gem_dependency activerecord >= 7.1
+%ruby_use_gem_dependency actionmailer >= 7.1
+%ruby_use_gem_dependency actionpack >= 7.1
+%ruby_use_gem_dependency redis-client >= 0.23
+%ruby_use_gem_dependency sqlite3 >= 2.2
+%ruby_use_gem_dependency connection_pool >= 2.3.0
+Requires:      ruby >= 3.2.0
 Requires:      gem(base64) >= 0
 Requires:      gem(connection_pool) >= 2.3.0
 Requires:      gem(logger) >= 0
 Requires:      gem(rack) >= 2.2.4
-Requires:      gem(redis-client) >= 0.22.2
-Provides:      gem(sidekiq) = 7.3.8
+Requires:      gem(redis-client) >= 0.23.0
+Requires:      gem(vernier) >= 0
+Requires:      gem(webrick) >= 0
+Provides:      gem(sidekiq) = 7.3.10
 
 %description
 Sidekiq uses threads to handle many jobs at the same time in the same process.
@@ -64,14 +70,17 @@ background processing dead simple.
 
 
 %package       -n sidekiq
-Version:       7.3.8
+Version:       7.3.10
 Release:       alt1
 Summary:       Simple, efficient background processing for Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета sidekiq
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(sidekiq) = 7.3.8
+Requires:      gem(sidekiq) = 7.3.10
+Requires:      gem(redis-client) >= 0.23.0
+Requires:      gem(vernier) >= 0
+Requires:      gem(webrick) >= 0
 
 %description   -n sidekiq
 Simple, efficient background processing for Ruby executable(s).
@@ -86,14 +95,14 @@ background processing dead simple.
 
 %if_enabled    doc
 %package       -n gem-sidekiq-doc
-Version:       7.3.8
+Version:       7.3.10
 Release:       alt1
 Summary:       Simple, efficient background processing for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sidekiq
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sidekiq) = 7.3.8
+Requires:      gem(sidekiq) = 7.3.10
 
 %description   -n gem-sidekiq-doc
 Simple, efficient background processing for Ruby documentation files.
@@ -109,33 +118,35 @@ background processing dead simple.
 
 %if_enabled    devel
 %package       -n gem-sidekiq-devel
-Version:       7.3.8
+Version:       7.3.10
 Release:       alt1
 Summary:       Simple, efficient background processing for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sidekiq
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(sidekiq) = 7.3.8
-Requires:      gem(maxitest) >= 0
-Requires:      gem(simplecov) >= 0
-Requires:      gem(standard) >= 0
+Requires:      gem(sidekiq) = 7.3.10
 Requires:      gem(actionmailer) >= 7.1
 Requires:      gem(actionpack) >= 7.1
 Requires:      gem(activejob) >= 7.1
 Requires:      gem(activerecord) >= 7.1
 Requires:      gem(after_commit_everywhere) >= 0
+Requires:      gem(base64) >= 0
+Requires:      gem(connection_pool) >= 2.3.0
 Requires:      gem(csv) >= 0
+Requires:      gem(debug) >= 0
+Requires:      gem(logger) >= 0
+Requires:      gem(maxitest) >= 0
+Requires:      gem(rack) >= 2.2.4
 Requires:      gem(railties) >= 7.1
 Requires:      gem(rake) >= 0
-Requires:      gem(sqlite3) >= 1.7
+Requires:      gem(redis-client) >= 0.23.0
+Requires:      gem(simplecov) >= 0
+Requires:      gem(sqlite3) >= 2.2
+Requires:      gem(standard) >= 0
+Requires:      gem(vernier) >= 0
+Requires:      gem(webrick) >= 0
 Requires:      gem(yard) >= 0
-Conflicts:     gem(actionmailer) >= 8
-Conflicts:     gem(actionpack) >= 8
-Conflicts:     gem(activejob) >= 8
-Conflicts:     gem(activerecord) >= 8
-Conflicts:     gem(railties) >= 8
-Conflicts:     gem(sqlite3) >= 2
 
 %description   -n gem-sidekiq-devel
 Simple, efficient background processing for Ruby development package.
@@ -184,6 +195,14 @@ background processing dead simple.
 
 
 %changelog
+* Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 7.3.10-alt1
+- ^ 7.3.9 -> 7.3.10
+- ! relaxed deps to rails, and to rack gems
+- v downgraded gem reqs for some rails' ones
+
+* Fri Oct 31 2025 Pavel Skrylev <majioa@altlinux.org> 7.3.9-alt1
+- ^ 7.3.8 -> 7.3.9
+
 * Wed Jan 22 2025 Pavel Skrylev <majioa@altlinux.org> 7.3.8-alt1
 - ^ 6.5.12 -> 7.3.8
 
