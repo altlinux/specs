@@ -3,39 +3,41 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.5.0
+Version: 9.2.0
 Release: alt1
 
-Summary: Retrying library
+Summary: Retrying library for Python
 
 Group: Development/Python3
 License: Apache-2.0
-Url: https://pypi.org/project/tenacity
+Url: https://tenacity.readthedocs.io
+VCS: https://github.com/jd/tenacity
 
-# Cant be build from github=(
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tornado
-BuildRequires: python3-module-typeguard
+# optional in tests/test_asyncio.py, but exercises the trio support of 9.x
+BuildRequires: python3-module-trio
 %endif
 
 %description
-Tenacity is an Apache 2.0 licensed general-purpose
-retrying library, written in Python, to simplify the task
-of adding retry behavior to just about anything.
-It originates from a fork of Retrying
+Tenacity is an Apache 2.0  licensed general-purpose retrying library, written in
+Python, to simplify the task of adding retry behavior to just about anything. It
+originates from a fork of retrying which is sadly no longer maintained. Tenacity
+isn't api  compatible with retrying  but adds significant new  functionality and
+fixes a number of longstanding bugs.
 
 %prep
 %setup
+%pyproject_scm_init
 
 %build
 %pyproject_build
@@ -51,6 +53,11 @@ It originates from a fork of Retrying
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Sep 28 2026 Egor Ignatov <egori@altlinux.org> 9.2.0-alt1
+- New version 9.2.0.
+- Switched to building from upstream git.
+- Fixes FTBFS under python3 3.14 (closes: #60618).
+
 * Sun Jul 28 2024 Grigory Ustinov <grenka@altlinux.org> 8.5.0-alt1
 - Build new version.
 
