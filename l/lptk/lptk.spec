@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Stateless password manager
@@ -80,6 +80,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README*
 
 %changelog
+* Tue Sep 29 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.1-alt1
+- 0.11.1
+
 * Tue Apr 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.11.0-alt1
 - 0.11.0
 
