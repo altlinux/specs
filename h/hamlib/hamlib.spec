@@ -3,7 +3,7 @@
 
 Name:           hamlib
 Version:        4.7.2
-Release:        alt1
+Release:        alt2
 Summary:        Run-time library to control radio transceivers and receivers
 
 Group:          System/Libraries
@@ -13,6 +13,7 @@ Source0:        %name-%version.tar
 
 # Install python and perl bindings into proper dirs
 Patch0:         hamlib-3.2-bindings.patch
+Patch1:         hamlib-4.7.2-py-long.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  gcc-c++
 BuildRequires:  python3-dev swig libgd-devel zlib-devel libxml2-devel tcl-devel
@@ -217,6 +218,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make check
 %_libdir/tcl*/Hamlib/hamlibtcl*
 
 %changelog
+* Tue Sep 29 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.7.2-alt2
+- Fix FTBFS with new SWIG.
+
 * Mon Jun 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.7.2-alt1
 - New version 4.7.2.
 
