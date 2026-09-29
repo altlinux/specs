@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: tailscale
-Version: 1.82.5
-Release: alt2
+Version: 1.102.5
+Release: alt1
 
 Summary: A mesh VPN that makes it easy to connect your devices, wherever they are.
 License: BSD-3-Clause
@@ -40,11 +40,10 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export TAGS="netgo,builtinassets"
-    
-export LDFLAGS="-X github.com/tailscale/common/version.Version=%version  \
-         -X github.com/prometheus/common/version.Revision=%release \
-         -X github.com/prometheus/common/version.Branch=main      \
-         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+
+# See build_dist.sh
+export LDFLAGS="-X tailscale.com/version.shortStamp=%version \
+         -X tailscale.com/version.longStamp=%version-%release"
 
 %golang_prepare
 %golang_build ./cmd/tailscale
@@ -71,9 +70,12 @@ install -Dm644 cmd/tailscaled/tailscaled.defaults %buildroot%_sysconfdir/sysconf
 %_sbindir/tailscaled
 %_unitdir/tailscaled.service
 %_sysconfdir/sysconfig/tailscaled
-%doc README.md AUTHORS LICENSE PATENTS
+%doc README.md LICENSE PATENTS
 
 %changelog
+* Tue Sep 29 2026 Egor Ignatov <egori@altlinux.org> 1.102.5-alt1
+- New version 1.102.5.
+
 * Thu May 08 2025 Semen Fomchenkov <armatik@altlinux.org> 1.82.5-alt2
 - spec: fix Vcs URL
 

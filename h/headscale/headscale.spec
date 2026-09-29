@@ -3,20 +3,21 @@
 %global import_path github.com/juanfont/headscale
 
 Name: headscale
-Version: 0.28.0
+Version: 0.29.4
 Release: alt1
 
 Summary: An open source, self-hosted implementation of the Tailscale control server
 License: BSD-3-Clause
-Group: Other
+Group: System/Servers
 Url: https://headscale.net/stable
 Vcs: https://github.com/juanfont/headscale
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.26
+BuildRequires: rpm-build-golang golang >= 1.26.5
 
 %description
 Tailscale is a modern VPN built on top of Wireguard.
@@ -36,13 +37,20 @@ to a user in terms of private users or an organisation.
 
 %prep
 %setup -a 1
+%patch0 -p1
+
+# disable autoupdate
+sed -i 's/^disable_check_updates: false$/disable_check_updates: true/' \
+    config-example.yaml
+grep -qx 'disable_check_updates: true' config-example.yaml
 
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-export LDFLAGS="-X main.version=v%version"
+export LDFLAGS="-X %import_path/hscontrol/types.version=v%version"
+export CGO_ENABLED=0
 
 %golang_prepare
 
@@ -77,13 +85,16 @@ useradd --system \
 %preun_systemd headscale.service
 
 %files
-%doc README.md CHANGELOG.md
+%doc LICENSE README.md CHANGELOG.md
 %_bindir/headscale
 %_unitdir/headscale.service
 %dir %_sysconfdir/headscale
-%config(noreplace) %_sysconfdir/headscale/config.yaml
-%attr(775, headscale, headscale) %dir %_localstatedir/headscale
+%attr(640, root, headscale) %config(noreplace) %_sysconfdir/headscale/config.yaml
+%attr(750, headscale, headscale) %dir %_localstatedir/headscale
 
 %changelog
+* Tue Sep 29 2026 Egor Ignatov <egori@altlinux.org> 0.29.4-alt1
+- New version 0.29.4.
+
 * Sun Mar 01 2026 Alexander Stepchenko <geochip@altlinux.org> 0.28.0-alt1
 - Initial build.
