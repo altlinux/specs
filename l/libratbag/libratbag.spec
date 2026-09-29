@@ -1,10 +1,11 @@
-%define git %nil
+%define git b8d4d3c
+%define lur_soname 3
 %def_enable tests
 %def_enable systemd
 
 Name: libratbag
 Version: 0.18
-Release: alt1
+Release: alt3.g%{git}
 Summary: Programmable input device library
 Group: System/Libraries
 License: MIT
@@ -26,11 +27,12 @@ BuildRequires: libelogind-devel
 libratbag is a library that allows to configure programmable
 mice.
 
-%package -n liblur
+%package -n liblur%lur_soname
 Summary: Logitech Unifying Receiver library
 Group: System/Libraries
+Provides: liblur = %EVR
 
-%description -n liblur
+%description -n liblur%lur_soname
 The liblur package contains libraries and tools to access and
 configure the Logitech Unifying Receivers. The functionality
 are mainly listing, pairing and un-pairing Logitech devices
@@ -96,7 +98,7 @@ Libratbag mice configuration data.
 %install
 %meson_install
 
-%files -n liblur
+%files -n liblur%lur_soname
 %_libdir/liblur.so.*
 
 %files -n liblur-devel
@@ -125,6 +127,13 @@ Libratbag mice configuration data.
 %_datadir/libratbag
 
 %changelog
+* Tue Sep 29 2026 L.A. Kostis <lakostis@altlinux.ru> 0.18-alt3.gb8d4d3c
+- v0.18-24-gb8d4d3c.
+
+* Wed Jun 25 2025 L.A. Kostis <lakostis@altlinux.ru> 0.18-alt2.g78d1124
+- v0.18-7-g78d1124.
+- liblur: rename according some policy somewhere.
+
 * Thu Oct 17 2024 L.A. Kostis <lakostis@altlinux.ru> 0.18-alt1
 - 0.18.
 
