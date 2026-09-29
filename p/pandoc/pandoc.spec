@@ -1,5 +1,5 @@
 Name: pandoc
-Version: 3.10.2
+Version: 3.12
 Release: alt1
 Summary: Markup conversion tool for markdown
 
@@ -56,6 +56,9 @@ install -pm 644 -D -t %buildroot%_man1dir \
 %_man1dir/pandoc*.1.xz
 
 %changelog
+* Tue Sep 29 2026 Anton Zhukharev <ancieg@altlinux.org> 3.12-alt1
+- Updated to 3.12.
+
 * Thu Sep 24 2026 Anton Zhukharev <ancieg@altlinux.org> 3.10.2-alt1
 - Updated to 3.10.2 (ALT#60690).
 
