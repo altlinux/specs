@@ -10,7 +10,7 @@
 
 Name: spdk
 Version: 26.01
-Release: alt1
+Release: alt2
 
 Summary: Storage Performance Development Kit
 
@@ -473,6 +473,9 @@ patchelf %buildroot%_libexecdir/spdk/examples/* --add-rpath %_libdir/spdk/lib
 %python3_sitelibdir_noarch/%{name}-*
 
 %changelog
+* Tue Sep 29 2026 Leontiy Volodin <lvol@altlinux.org> 26.01-alt2
+- Fixed compatibility with dpdk (ALT #60721).
+
 * Tue Mar 24 2026 Leontiy Volodin <lvol@altlinux.org> 26.01-alt1
 - New version 26.01.
 - Built on built-in dpdk (ALT #58136).
