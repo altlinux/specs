@@ -3,7 +3,7 @@
 %define nautilus_extdir %_datadir/nautilus-python/extensions
 
 Name: packet
-Version: 0.5.4
+Version: 0.7.1
 Release: alt1
 
 # Fails to link under aarch64
@@ -66,6 +66,7 @@ rm -r %buildroot%_datadir/locale/zh_Han*
 %_datadir/metainfo/%app_id.metainfo.xml
 %_datadir/metainfo/%app_id.releases.xml
 %_datadir/dbus-1/services/%app_id.service
+%_datadir/dbus-1/services/%app_id.Api.service
 %_datadir/packet/resources.gresource
 %_datadir/glib-2.0/schemas/%app_id.gschema.xml
 %doc README.md
@@ -75,6 +76,9 @@ rm -r %buildroot%_datadir/locale/zh_Han*
 %nautilus_extdir/__pycache__/*
 
 %changelog
+* Tue Sep 29 2026 Alexander Davydzik <paladindev@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Tue Aug 26 2025 Alexander Davydzik <paladindev@altlinux.org> 0.5.4-alt1
 - 0.5.4
 
