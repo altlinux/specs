@@ -8,7 +8,7 @@
 
 Name: github-mcp-server
 Version: 1.12.2
-Release: alt1
+Release: alt2
 
 Summary: GitHub's official MCP server
 License: MIT
@@ -22,7 +22,7 @@ ExclusiveArch: %go_arches
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: ui-dist.tar
-Source3: %name-http.user.service
+Source3: %name.user.service
 Source4: 50-%name.preset
 Patch: %name-%version-alt.patch
 
@@ -54,16 +54,21 @@ CGO_ENABLED=0 %golang_build $cmd_dir
 export BUILDDIR="$PWD/.build"
 install -Dm755 $BUILDDIR/bin/%name %buildroot%_bindir/%name
 install -Dm644 %SOURCE3 \
-	%buildroot%_userunitdir/%name-http.service
+	%buildroot%_userunitdir/%name.service
 install -Dm644 %SOURCE4 \
 	%buildroot%_userpresetdir/50-%name.preset
 
 %files
 %doc README.md LICENSE
 %_bindir/github-mcp-server
-%_userunitdir/github-mcp-server-http.service
+%_userunitdir/github-mcp-server.service
 %_userpresetdir/50-github-mcp-server.preset
 
 %changelog
+* Tue Sep 29 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.12.2-alt2
+- Renamed the user unit to github-mcp-server.service.
+- The gateway port can now be changed via GITHUB_PORT in
+  ~/.config/github-mcp-server.conf.
+
 * Mon Sep 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.12.2-alt1
 - Initial build for ALT Sisyphus.
