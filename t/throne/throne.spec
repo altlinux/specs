@@ -2,7 +2,7 @@
 %define _cmake__builddir build
 
 Name: throne
-Version: 1.1.6
+Version: 1.3.1
 Release: alt1
 Summary: Qt based cross-platform GUI proxy configuration manager
 License: GPLv3
@@ -34,6 +34,7 @@ BuildRequires: libyaml-cpp-devel
 BuildRequires: libzxing-cpp-devel
 BuildRequires: libcpr-devel
 BuildRequires: protobuf-go
+BuildRequires: protoc-gen-go-grpc
 
 ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
 
@@ -66,12 +67,16 @@ Geoip Database for sing-box
 %cmake
 %cmake_build
 
-pushd core/server
+pushd core/gen
+protoc -I . --go_out=. --go-grpc_out=. libcore.proto
+popd
+
+pushd core
 export GOFLAGS="-buildmode=pie -trimpath -modcacherw -mod=vendor"
 export VERSION_SINGBOX=$(go list -m -f '{{.Version}}' github.com/sagernet/sing-box)
-export TAGS="with_clash_api,with_gvisor,with_quic,with_wireguard,with_utls,with_dhcp,with_tailscale"
-go build -o "../../%_cmake__builddir" \
-    -ldflags="-linkmode=external -w -s -X 'github.com/sagernet/sing-box/constant.Version=${VERSION_SINGBOX}'" \
+export TAGS="with_clash_api,with_gvisor,with_quic,with_wireguard,with_utls,with_dhcp,with_tailscale,with_openvpn,with_openconnect,badlinkname,tfogo_checklinkname0"
+go build -o "../%_cmake__builddir" \
+    -ldflags="-linkmode=external -w -s -X 'github.com/sagernet/sing-box/constant.Version=${VERSION_SINGBOX}' -X 'internal/godebug.defaultGODEBUG=multipathtcp=0' -checklinkname=0" \
     -tags="${TAGS}"
 popd
 
@@ -109,6 +114,12 @@ install -Dm755 ./sing-box/rule-set/*.srs %buildroot%_datadir/sing-box/rule-set
 %_datadir/sing-box/rule-set/geoip-*.srs
 
 %changelog
+* Tue Sep 29 2026 Andrey Kovalev <ded@altlinux.org> 1.3.1-alt1
+- Updated to upstream version 1.3.1.
+- Fixed DNS resolution in TUN mode with HTTP and SSH profiles: the default
+  remote DNS is now DoH (https://8.8.8.8/dns-query) instead of plain UDP
+  (closes: #60720).
+
 * Wed Jul 22 2026 Andrey Kovalev <ded@altlinux.org> 1.1.6-alt1
 - Updated to upstream version 1.1.6.
 
