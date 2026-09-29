@@ -31,7 +31,7 @@
 
 Name: branding-%flavour
 Version: 11.0
-Release: alt4
+Release: alt5
 Epoch: 1
 URL: https://altsp.su
 
@@ -290,19 +290,15 @@ install -pDm644 menu/50-applications.menu %buildroot%_sysconfdir/xdg/menus/appli
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
 . shell-config
-shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
-#shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
-# deprecated
-shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 %post indexhtml
 %_sbindir/indexhtml-update
 
 %files bootloader
-/boot/grub/themes/%theme
+%exclude /boot/grub/themes/%theme
 
 #bootsplash
 %post bootsplash
@@ -386,6 +382,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Sep 28 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt5
+- bootloader: remove theme for grub.
+
 * Tue Sep 22 2026 Anton Midyukov <antohami@altlinux.org> 1:11.0-alt4
 - os-release: add missing @BRAND@ to BUILD_ID.
 

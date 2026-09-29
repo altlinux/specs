@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: icon-theme-alt-sp-workstation
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: ALT SP Workstation icon theme
@@ -12,8 +12,7 @@ Source: icon-theme-alt-sp-workstation-%version.tar
 
 BuildArch: noarch
 
-Requires: icon-theme-morewaita
-Requires: icon-theme-adwaita
+Requires: icon-theme-Papirus-Light
 
 %description
 ALT Workstation icon for Alterator and other ALT app icons.
@@ -29,6 +28,9 @@ cp -r index.theme scalable %buildroot/%_iconsdir/ALT_SP_Workstation/
 %_iconsdir/ALT_SP_Workstation/
 
 %changelog
+* Mon Sep 28 2026 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
+- Replace Morewaita with Papirus-Light.
+
 * Mon Jul 14 2025 Anton Midyukov <antohami@altlinux.org> 0.2-alt1
 - Update alt-distro-logo.
 
