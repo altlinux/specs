@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.11
+Version: 0.10.12
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -183,6 +183,12 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Sep 29 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.12-alt1
+- Update components:
+  + add redis, valkey, kafka, rabbitmq (thx Andrey Limachko).
+- Update editions:
+  + add redis, valkey, kafka, rabbitmq to edition_server (thx Andrey Limachko).
+
 * Tue Sep 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.11-alt1
 - Drop alterator-ulogd from education-server-apps (Closes: 59622).
 
