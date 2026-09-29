@@ -1,5 +1,5 @@
 Name: neovim-qt
-Version: 0.2.19
+Version: 0.2.20
 Release: alt1
 
 Summary: Neovim client library and GUI, in Qt6
@@ -60,6 +60,9 @@ Runtime files for Neovim Qt.
 %_datadir/nvim-qt/runtime/plugin/nvim_gui_shim.vim
 
 %changelog
+* Tue Sep 29 2026 Aleksandr Dovydenkov <asd@altlinux.org> 0.2.20-alt1
+- New version (0.2.20 release)
+
 * Thu Jan 23 2025 Vladimir Didenko <cow@altlinux.org> 0.2.19-alt1
 - New version (0.2.19 release)
 
