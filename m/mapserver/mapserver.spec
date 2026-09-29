@@ -10,7 +10,7 @@
 %define libname libmapserver2
 
 Name: mapserver
-Version: 8.6.4
+Version: 8.6.6
 Release: alt1
 
 Summary: Environment for building spatially-enabled internet applications
@@ -326,6 +326,9 @@ rm %buildroot%_usr/%_sysconfdir/mapserver-sample.conf
 %endif
 
 %changelog
+* Tue Sep 29 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.6-alt1
+- new version 8.6.6
+
 * Mon Jun 15 2026 Andrey Cherepanov <cas@altlinux.org> 8.6.4-alt1
 - New version.
 
