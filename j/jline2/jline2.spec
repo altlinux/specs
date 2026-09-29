@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jline2
 Version:        2.14.6
-Release:        alt2
+Release:        alt3
 Summary:        Java library for handling console input
 License:        BSD
 URL:            http://jline.github.io/jline2/
@@ -90,6 +90,9 @@ find -name TerminalFactoryTest.java -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Sep 28 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.14.6-alt3
+- Fix FTBFS: used java17 (ALT #60611).
+
 * Mon Feb 02 2026 Ivan Khanas <xeno@altlinux.org> 0:2.14.6-alt2
 - Fix FTBFS: terminal-dependent HistorySearchTest fails in buildroot (no supported TTY).
 
