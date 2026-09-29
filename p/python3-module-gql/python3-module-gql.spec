@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 4.0.0
-Release: alt3
+Version: 4.4.0
+Release: alt1
 Summary: A GraphQL client in Python
 License: MIT
 Group: Development/Python3
@@ -27,6 +27,7 @@ BuildRequires: python3-module-backoff
 BuildRequires: python3-module-botocore
 BuildRequires: python3-module-graphql-core
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-tenacity
 BuildRequires: python3-module-parse
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-asyncio
@@ -64,6 +65,9 @@ compatible with the spec.
 %doc LICENSE
 
 %changelog
+* Tue Sep 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.0-alt1
+- Updated to version 4.4.0.
+
 * Sat Jul 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.0.0-alt3
 - Fixed tests with graphql-core 3.2.11.
 
