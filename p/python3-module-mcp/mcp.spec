@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.1
+Version: 2.2.0
 Release: alt1
 Summary: The official Python SDK for Model Context Protocol servers and clients.
 License: MIT
@@ -62,6 +62,7 @@ Requires: python3-module-pydantic-settings
 Requires: python3(websockets)
 Requires: python3-module-inline-snapshot
 Requires: python3-module-dirty-equals
+Requires: python3-module-python-multipart
 
 %py3_provides %pypi_name
 
@@ -88,10 +89,12 @@ Standalone MCP protocol wire types used by python3-module-mcp.
 %prep
 %setup
 %autopatch -p1
-sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' pyproject.toml
 sed -ri 's/^dynamic = \[.*"version".*\]/version = "%{version}"/' src/mcp-types/pyproject.toml
 
 %build
+# Version and dependencies come from the uv-dynamic-versioning hook;
+# there is no git in hasher, so pass the version explicitly.
+export UV_DYNAMIC_VERSIONING_BYPASS=%version
 pushd src/mcp-types
 %pyproject_build
 popd
@@ -117,6 +120,10 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo mcp-types}/
 
 %changelog
+* Tue Sep 29 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.0-alt1
+- 2.1.1 -> 2.2.0.
+- Fixed missing runtime dependencies (closes: ALT #60733).
+
 * Thu Aug 27 2026 Pavel Shilov <zerospirit@altlinux.org> 2.1.1-alt1
 - updated from 2.0.0 to 2.1.1
 
