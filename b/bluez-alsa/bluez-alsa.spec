@@ -17,7 +17,7 @@
 
 Name: bluez-alsa
 Version: 5.0.0
-Release: alt1
+Release: alt1.1
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -100,7 +100,7 @@ by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 	%{?_enable_aptx:--with-libfreeaptx --enable-aptx --enable-aptx-hd} \
 	%{subst_enable opus} \
 	%{subst_enable asha} \
-	--with-alsaconfdir=%_datadir/alsa/alsa.conf.d \
+	--with-alsaconfdir=%_sysconfdir/alsa/alsa.conf.d \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-bash-completion \
 	--with-bluealsaduser=%b_user \
@@ -134,6 +134,7 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_bindir/*
 %exclude %_bindir/hcitop
 %_libdir/alsa-lib/*.so
+%config %_sysconfdir/alsa/alsa.conf.d/*.conf
 %_datadir/alsa/alsa.conf.d/*.conf
 %_datadir/dbus-1/system.d/*.conf
 %_datadir/dbus-1/interfaces/org.bluealsa.xml
@@ -152,6 +153,9 @@ install -m0700 -d %buildroot%_localstatedir/%b_user
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Sep 29 2026 L.A. Kostis <lakostis@altlinux.ru> 5:5.0.0-alt1.1
+- Fix alsa config dir (closes #60731).
+
 * Thu Sep 10 2026 L.A. Kostis <lakostis@altlinux.ru> 5:5.0.0-alt1
 - 5.0.0.
 
