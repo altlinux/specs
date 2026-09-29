@@ -1,10 +1,10 @@
 # If you want to suggest changes, please send PR on
-# https://altlinux.space/rirusha/libapi-base to altlinux branch 
+# https://altlinux.space/rirusha/libapi-base to altlinux branch
 
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 10
+%define minor_version 11
 %define gir_name ApiBase
 
 %define yaml_api_version 0.1
@@ -168,6 +168,14 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%yaml_gir_name-%yaml_api_version.gir
 
 %changelog
+* Tue Sep 29 2026 Vladimir Romanov <rirusha@altlinux.org> 7.11-alt1
+- New version: 7.11.
+- Property nick now taken as is without any conversion.
+- Add support for map without objects.
+- Finished `ini` deprecation.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.11
+
 * Tue Aug 25 2026 Vladimir Romanov <rirusha@altlinux.org> 7.10-alt1
 - New version: 7.10.
 - Added `simple_` methods to session for simplification of working with API.
