@@ -2,7 +2,7 @@
 %define import_path github.com/bjarneo/cliamp
 
 Name: cliamp
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 License: MIT
@@ -93,6 +93,9 @@ export LDFLAGS="$LDFLAGS -X main.version=%version"
 %_iconsdir/hicolor/512x512/apps/%name.png
 
 %changelog
+* Tue Sep 29 2026 Sergey Savelev <medovi@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Tue Sep 15 2026 Sergey Savelev <medovi@altlinux.org> 2.2.0-alt1
 - New version 2.2.0.
 
