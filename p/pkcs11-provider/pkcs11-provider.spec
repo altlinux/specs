@@ -4,8 +4,8 @@
 %def_with check
 
 Name: pkcs11-provider
-Version: 1.2.0
-Release: alt3
+Version: 1.3.0
+Release: alt1
 Summary: A PKCS#11 provider for OpenSSL 3.0+
 License: Apache-2.0
 Group: System/Libraries
@@ -28,6 +28,7 @@ BuildRequires: opensc
 BuildRequires: openssl
 BuildRequires: expect
 BuildRequires: kryoptic
+BuildRequires: xxd
 %endif
 
 %description
@@ -56,6 +57,9 @@ compatible to previous versions as well.
 %modulesdir/pkcs11.so
 
 %changelog
+* Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.0 -> 1.3.0
+
 * Fri Jun 05 2026 Stanislav Levin <slev@altlinux.org> 1.2.0-alt3
 - Fixed FTBFS (kryoptic 1.5.1).
 

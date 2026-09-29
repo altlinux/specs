@@ -4,10 +4,10 @@
 %define extra_features kryoptic-lib/nssdb,kryoptic-lib/pqc,profiles
 
 Name: kryoptic
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: PKCS #11 software token written in Rust
-License: GPL-3.0-or-later
+License: Apache-2.0
 Group: System/Libraries
 Url: https://github.com/latchset/kryoptic
 Vcs: https://github.com/latchset/kryoptic
@@ -74,6 +74,9 @@ export TEST_PKCS11_MODULE=%buildroot%_libdir/pkcs11/libkryoptic_pkcs11.so
 %_man1dir/softhsm_migrate.1*
 
 %changelog
+* Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 1.5.3-alt1
+- 1.5.2 -> 1.5.3
+
 * Tue Jun 30 2026 Stanislav Levin <slev@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2
 
