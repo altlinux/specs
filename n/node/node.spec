@@ -16,7 +16,7 @@
 
 
 # check deps/npm/package.json for it
-%define npm_version 10.9.8
+%define npm_version 10.9.9
 # separate build npm
 %def_with npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -83,7 +83,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -519,6 +519,11 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Tue Sep 29 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.3-alt1
+- new version 22.23.3
+- sync npm package version with bundled 10.9.9
+- bundled undici 6.28.1, root certificates updated to NSS 3.125
+
 * Wed Sep 02 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.2-alt1
 - new version 22.23.2
 - sync npm package version with bundled 10.9.8
