@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,19 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Sep 29 2026 Ivan Savin <svn17@altlinux.org> 0.7.0-alt1
+- Restrictions for users when using PTY. Now, if a PTY and a "password-agent
+  d-bus name" are specified when establishing a connection, only the initiator
+  (the process that established the connection) can use that connection. And
+  when the initiating process terminates, the corresponding connection is
+  closed. Thus, other processes will not be able to invoke methods of this
+  subtree, and remote-polkit-agent requests for these methods will not be sent
+  to the specified PTY.
+- Remove unnecessary GDBusConnection. Instead, it uses the GDBusConnection
+  from the method handler. Additionally, retrieving the PID by unique bus name
+  has been moved to a separate function.
+- Add missing mutex and remove unnecessary ones.
+
 * Mon Sep 14 2026 Ivan Savin <svn17@altlinux.org> 0.6.2-alt1
 - Add missing 'g_free' to prevent memory leak (shishkovna@).
 - Make 'register_subtree' return zero if handlers_data is NULL (shishkovna@).
