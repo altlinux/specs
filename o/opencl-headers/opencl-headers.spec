@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: opencl-headers
-Version: 2025.07.22
+Version: 2026.05.29
 Release: alt1
 Epoch: 1
 
@@ -48,6 +48,9 @@ rm -vf CL/{cl_dx9_media_sharing*.h,cl_d3d10.h,cl_d3d11.h}
 %_datadir/pkgconfig/OpenCL-Headers.pc
 
 %changelog
+* Tue Sep 29 2026 Artem Krasovskiy <aibure@altlinux.org> 1:2026.05.29-alt1
+- v2026.05.29.
+
 * Mon Feb 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1:2025.07.22-alt1
 - v2025.07.22 (OpenCL 3.0.19).
 - BR: added c++ and libva to satisfy builddeps checks.
