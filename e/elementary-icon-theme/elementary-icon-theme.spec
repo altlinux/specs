@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 8.2
+%define ver_major 9.0
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -15,6 +15,7 @@ Url: https://github.com/elementary/icons
 Vcs: https://github.com/elementary/icons.git
 
 Source: %url/archive/%version/icons-%version.tar.gz
+Patch: icons-9.0.0-up-broken-symlinks.patch
 
 BuildArch: noarch
 
@@ -29,6 +30,7 @@ and its desktop environment: Pantheon.
 
 %prep
 %setup -n icons-%version
+%patch -p1
 
 %build
 %meson %{subst_enable_meson_bool palettes palettes}
@@ -47,6 +49,9 @@ and its desktop environment: Pantheon.
 %doc README*
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.0-alt1
+- 9.0.0
+
 * Sat Nov 01 2025 Yuri N. Sedunov <aris@altlinux.org> 8.2.0-alt1
 - 8.2.0
 
