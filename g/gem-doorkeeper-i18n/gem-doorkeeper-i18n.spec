@@ -2,7 +2,7 @@
 %define  pkgname doorkeeper-i18n
 
 Name: gem-%pkgname
-Version: 5.2.6
+Version: 5.2.9
 Release: alt1
 
 Summary: Translation files for Doorkeeper OAuth 2 provider  
@@ -13,6 +13,7 @@ VCS: https://github.com/doorkeeper-gem/doorkeeper-i18n
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
+Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-ruby
 BuildRequires: rpm-build-ruby
@@ -30,6 +31,7 @@ Documentation files for %{name}.
 
 %prep
 %setup -n %pkgname-%version
+%autopatch -p1 
 
 %build
 %ruby_build
@@ -50,5 +52,8 @@ Documentation files for %{name}.
 %ruby_gemdocdir
 
 %changelog
+* Tue Sep 29 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.2.9-alt1
+- New version 5.2.9. 
+
 * Tue Apr 28 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.2.6-alt1
 - Initial build for ALT Linux.

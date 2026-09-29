@@ -2,7 +2,7 @@
 %define  pkgname doorkeeper
 
 Name: gem-%pkgname
-Version: 5.8.2
+Version: 5.9.9
 Release: alt1
 
 Summary: Doorkeeper is an OAuth 2 provider for Ruby on Rails / Grape 
@@ -51,5 +51,8 @@ Documentation files for %{name}.
 %ruby_gemdocdir
 
 %changelog
+* Tue Sep 29 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.9.9-alt1
+- New version 5.9.9.
+
 * Tue Apr 28 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.8.2-alt1
 - Initial build for ALT Linux.
