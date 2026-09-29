@@ -3,7 +3,7 @@
 
 %define _name casilda
 %define namespace Casilda
-%define ver_major 1.4
+%define ver_major 1.6
 %define api_ver_major 1
 %define api_ver 1.0
 %define sover 0
@@ -32,7 +32,7 @@ Source: https://gitlab.gnome.org/jpu/casilda/-/archive/%version/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-%define gtk_ver 4.22.2
+%define gtk_ver 4.24.0
 %define epoxy_ver 1.5
 %define wlr_api_ver 0.20
 %define wp_ver 1.22
@@ -158,6 +158,9 @@ install -pD -m755  %__sourcedir/examples/*.{py,js} \
 %endif
 
 %changelog
+* Wed Sep 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sat May 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
