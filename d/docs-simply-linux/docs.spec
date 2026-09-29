@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Sep 29 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt3
+- small improvements (closes: #60746)
+- fix typo (closes: #60744)
+- fix prepare boot-disk
+
 * Thu Sep 24 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt2
 - update to latest public distr
 - fix some typos (closes: #60080, #60081, #60082)
