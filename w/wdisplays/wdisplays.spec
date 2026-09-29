@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: wdisplays
-Version: 1.1.3
+Version: 1.3.0
 Release: alt1
 
 Summary: graphical application for configuring displays in Wayland compositors
@@ -45,8 +45,12 @@ elaborate multi-monitor setups.
 %_bindir/*
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
+%_datadir/glib-2.0/schemas/network.cycles.wdisplays.gschema.xml
 
 %changelog
+* Tue Sep 29 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.0-alt1
+- New version 1.3.0.
+
 * Thu Jul 31 2025 Nikolay Strelkov <snk@altlinux.org> 1.1.3-alt1
 - New version 1.1.3.
 
