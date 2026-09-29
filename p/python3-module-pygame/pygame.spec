@@ -4,7 +4,7 @@
 
 Name: python3-module-pygame
 Version: 2.6.1
-Release: alt4
+Release: alt5
 
 Summary: A Python module for interfacing with the SDL multimedia library
 Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой SDL
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Patch: pygame-2.1.0-docs.patch
 Patch1: pygame-fix-setuptools82-dry-run.patch
 Patch2: pygame-2.6.1-upstream-test-python3.14.patch
+Patch3: pygame-2.6.1-cython3.3-dict.patch
 
 %define python3_includedir %_includedir/python%_python3_version
 
@@ -90,6 +91,7 @@ Pygame documentation and example programs (Python3 version)
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i '811a\ \ \ \ @unittest.skip("https://github.com/pygame/pygame/issues/4274")' test/mixer_test.py
 
 %build
@@ -129,6 +131,9 @@ rm -rv %buildroot%python3_sitelibdir/%oname/tests
 %python3_includedir/%oname
 
 %changelog
+* Tue Sep 29 2026 Vitaly Lipatov <lav@altlinux.ru> 2.6.1-alt5
+- fix build with Cython 3.3 (drop explicit __dict__ assignment in _sprite.pyx)
+
 * Tue Jul 07 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1-alt4
 - Backported upstream test fix to add support for Python 3.14.
 
