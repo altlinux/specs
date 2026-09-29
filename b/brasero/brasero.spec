@@ -3,25 +3,28 @@
 %define ver_major 3.12
 %define brasero_api_ver 3
 %define namespace Brasero
+%define xdg_name org.gnome.Brasero
 %define gi_ver 3.1
 %define nau_api_ver 3.0
 %define gst_api_ver 1.0
 
 %def_enable gtk_doc
+%def_enable help
 # Make use of Tracker
 %def_enable search
 # Embed a playlist functionality based on libtotem
 %def_enable playlist
+%def_enable preview
 %def_enable cdrkit
 %def_disable cdrtools
 %def_enable cdrdao
-%def_enable libburnia
+%def_enable libburn
 %def_disable nautilus
 %def_enable introspection
 
 Name: brasero
-Version: %ver_major.3
-Release: alt6
+Version: %ver_major.4
+Release: alt1
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -47,29 +50,27 @@ Requires: dconf
 Requires: dvd+rw-tools
 Requires: cdrkit
 Requires: mkisofs
-%{?_enable_libburnia:Requires: libburn >= %burn_ver libisofs >= %isofs_ver}
+%{?_enable_libburn:Requires: libburn >= %burn_ver libisofs >= %isofs_ver}
 %{?_enable_cdrdao:Requires: cdrdao}
 
 # to make vcd or video dvd
 Requires: dvdauthor vcdimager gst-plugins-bad%gst_api_ver
 
-BuildRequires(pre): gnome-common rpm-build-gnome rpm-build-licenses rpm-build-gir
-
-# From configure.ac
+BuildRequires(pre): rpm-build-gir
 BuildRequires: libgio-devel >= 2.30.0
 BuildRequires: libgtk+3-devel >= 3.0.0
 BuildRequires: gstreamer%gst_api_ver-devel >= 0.11.99
 BuildRequires: gst-plugins%gst_api_ver-devel >= 0.11.99
 BuildRequires: libxml2-devel >= 2.6.0
-%{?_enable_libburnia:BuildRequires: libburn-devel >= %burn_ver libisofs-devel >= %isofs_ver}
+%{?_enable_libburn:BuildRequires: libburn-devel >= %burn_ver libisofs-devel >= %isofs_ver}
 BuildRequires: libnotify-devel >= 0.7
 %{?_enable_search:BuildRequires: pkgconfig(tracker-sparql-3.0)}
 %{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel >= 2.30.2}
 BuildRequires: intltool >= 0.35.0
 BuildRequires: libcanberra-gtk3-devel
 BuildRequires: gtk-doc >= 1.11
-BuildRequires: yelp-tools
 BuildRequires: libSM-devel
+%{?_enable_help:BuildRequires: yelp-tools}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 # GObject introspection support
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
@@ -167,8 +168,8 @@ GObject introspection devel data for the Brasero.
     --disable-caches \
     --disable-static \
     --disable-schemas-compile
-# SMP-incompatible build
-%make
+%nil
+%make_build
 
 %install
 %makeinstall_std
@@ -183,8 +184,8 @@ GObject introspection devel data for the Brasero.
 %_libdir/%name%brasero_api_ver/plugins/lib%name-dvdrwformat.so
 %_libdir/%name%brasero_api_ver/plugins/lib%name-genisoimage.so
 %_libdir/%name%brasero_api_ver/plugins/lib%name-growisofs.so
-%{?_enable_libburnia:%_libdir/%name%brasero_api_ver/plugins/lib%name-libburn.so}
-%{?_enable_libburnia:%_libdir/%name%brasero_api_ver/plugins/lib%name-libisofs.so}
+%{?_enable_libburn:%_libdir/%name%brasero_api_ver/plugins/lib%name-libburn.so}
+%{?_enable_libburn:%_libdir/%name%brasero_api_ver/plugins/lib%name-libisofs.so}
 %_libdir/%name%brasero_api_ver/plugins/lib%name-local-track.so
 %_libdir/%name%brasero_api_ver/plugins/lib%name-checksum.so
 %_libdir/%name%brasero_api_ver/plugins/lib%name-checksum-file.so
@@ -213,7 +214,7 @@ GObject introspection devel data for the Brasero.
 %_datadir/mime/packages/%name.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.brasero.gschema.xml
 %_datadir/GConf/gsettings/brasero.convert
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %{?_enable_nautilus:%exclude %_datadir/applications/brasero-nautilus.desktop}
 %exclude %_libdir/%name%brasero_api_ver/plugins/lib%name-*.la
@@ -248,6 +249,9 @@ GObject introspection devel data for the Brasero.
 %{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Tue Sep 29 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.4-alt1
+- updated to 3.12.4-8-gc8764441
+
 * Fri Jul 25 2025 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt6
 - updated to 3.12.3-43-g5f615357
   (upstreamed -*fix-{cd-mime-type-detection,app-version-check}.patch)
