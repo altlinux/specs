@@ -4,7 +4,7 @@
 %def_enable    python
 
 Name:          libcaca
-Version:       0.99.20.3
+Version:       0.99.20.3.1
 Release:       alt0.1
 Summary:       Text mode graphics library
 Group:         System/Libraries
@@ -179,6 +179,10 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %endif
 
 %changelog
+* Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.99.20.3.1-alt0.1
+- ^ 0.99rc20p3 -> 0.99rc20p3.1
+- ! fixed CVE-2026-42046
+
 * Thu Nov 07 2024 Pavel Skrylev <majioa@altlinux.org> 0.99.20.3-alt0.1
 - ^ 0.99.rc19 -> 0.99rc20p3
 - ! fixed build for gcc14
