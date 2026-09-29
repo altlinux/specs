@@ -1,6 +1,6 @@
 Name:		libbox2d
 Version:	2.4.1
-Release:	alt1.2
+Release:	alt1.3
 Summary:	A 2D physics engine for games
 Group:		System/Libraries
 License:	MIT
@@ -37,6 +37,20 @@ Development files for %name, %summary
 
 %install
 %cmake_install
+# Install pkgconfig file
+mkdir %buildroot%_libdir/pkgconfig
+cat > %buildroot%_libdir/pkgconfig/box2d.pc << 'EOF'
+prefix=%{_prefix}
+exec_prefix=${prefix}
+libdir=%{_libdir}
+includedir=%{_includedir}
+ 
+Name: box2d
+Description: 2D physics engine
+Version: %{version}
+Libs: -L${libdir} -lbox2d
+Cflags: -I${includedir}/box2d
+EOF
 
 %files
 %doc *.md
@@ -47,8 +61,12 @@ Development files for %name, %summary
 %_libdir/lib*.so
 %_includedir/*
 %_libdir/cmake/*
+%_libdir/pkgconfig/box2d.pc
 
 %changelog
+* Sun Sep 06 2026 Andrey Cherepanov <cas@altlinux.org> 2.4.1-alt1.3
+- NMU: packaged file for pkgconfig.
+
 * Mon Jan 17 2022 Alexander Danilov <admsasha@altlinux.org> 2.4.1-alt1.2
 - FTBFS: fix build
 

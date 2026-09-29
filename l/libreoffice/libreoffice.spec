@@ -50,10 +50,10 @@
 %define optflags_debug -g1
 
 Name: libreoffice
-%define hversion 26.2
-%define urelease 4.2
+%define hversion 26.8
+%define urelease 0.3
 Version: %hversion.%urelease
-Release: alt2
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
@@ -82,7 +82,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-#Source4: libreoffice-%version-ru.tar
+Source4: libreoffice-%version-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -98,26 +98,24 @@ Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 
-Patch101: 0001-tdf-170236-sw-import-comment-anchored-inside-a-math-.patch
+#Patch101: 0001-tdf-170236-sw-import-comment-anchored-inside-a-math-.patch
 Patch102: 0001-tdf-170642-FILEOPEN-DOC-Incorrect-first-line-indent-.patch
-Patch103: 0002-tdf-170902-sc-don-t-show-autofilter-buttons-in-ODS-w.patch
+#Patch103: 0002-tdf-170902-sc-don-t-show-autofilter-buttons-in-ODS-w.patch
 Patch104: 0003-tdf-172746-sc-show-align-bottom-as-active-for-Standa.patch
-Patch105: tablestyles-backport-26.2.patch
-Patch106: alt-tdf159264-stage1-grandtotal-dep-full-with-tests.patch
-Patch107: alt-tdf159264-stage2-pivot-styles-full-with-tests.patch
-Patch108: alt-tdf171002-endnote-docx-save-full-with-tests.patch
+#Patch105: tablestyles-backport-26.2.patch
+#Patch106: alt-tdf159264-stage1-grandtotal-dep-full-with-tests.patch
+#Patch107: alt-tdf159264-stage2-pivot-styles-full-with-tests.patch
 Patch110: alt-tdf171176-docx-tight-wrap-distance-full-with-tests.patch
-Patch112: alt-tdf172156-file-hang-issue-full-with-tests.patch
-Patch113: footnote-web-crash-fix-26.2.4.2-backport.patch
-Patch114: 0004-tdf-172748-oox-export-Basic-macros-from-documents-cr.patch
-Patch115: tdf-146973-sw-keep-date-field-locale-over-DOCX-round.patch
+#Patch112: alt-tdf172156-file-hang-issue-full-with-tests.patch
+#Patch113: footnote-web-crash-fix-26.2.4.2-backport.patch
+#Patch114: 0004-tdf-172748-oox-export-Basic-macros-from-documents-cr.patch
+#Patch115: tdf-146973-sw-keep-date-field-locale-over-DOCX-round.patch
 Patch116: tdf-163391-DOCX-import-linked-VML-images.patch
-Patch117: tdf170898-tablestyle-precedence.patch
-Patch118: tdf172540-uitest.patch
-Patch119: tdf172776-xlsx-cell-font-language-26.2.4.2-backport.patch
-Patch120: tdf172898-docx-image-hairline-border.patch
-Patch121: all-fixes.patch
-Patch122: extra-patch.patch
+#Patch117: tdf170898-tablestyle-precedence.patch
+#Patch119: tdf172776-xlsx-cell-font-language-26.2.4.2-backport.patch
+#Patch120: tdf172898-docx-image-hairline-border.patch
+#Patch121: all-fixes.patch
+#Patch122: extra-patch.patch
 
 ## ALT patches
 Patch401: alt-001-MOZILLA_CERTIFICATE_FOLDER.patch
@@ -478,33 +476,31 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-#tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
+tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
-git apply %PATCH101
+#git apply %PATCH101
 git apply %PATCH102
-git apply %PATCH103
+#git apply %PATCH103
 git apply %PATCH104
-git apply %PATCH105
-git apply %PATCH106
-git apply %PATCH107
-git apply %PATCH108
+#git apply %PATCH105
+#git apply %PATCH106
+#git apply %PATCH107
 git apply %PATCH110
-git apply %PATCH112
-git apply %PATCH113
-git apply %PATCH114
-git apply %PATCH115
+#git apply %PATCH112
+#git apply %PATCH113
+#git apply %PATCH114
+#git apply %PATCH115
 git apply %PATCH116
-git apply %PATCH117
-git apply %PATCH118
-git apply %PATCH119
-git apply %PATCH120
-git apply %PATCH121
-git apply %PATCH122
+#git apply %PATCH117
+#git apply %PATCH119
+#git apply %PATCH120
+#git apply %PATCH121
+#git apply %PATCH122
 
 ## ALT apply patches
 %patch401 -p0
@@ -937,6 +933,10 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Sep 06 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.0.3-alt1
+- New version.
+- Impress: fixed insert sound file (ALT #57028).
+
 * Fri Jul 31 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.4.2-alt2
 - Added fixes submitted to upstream.
 - libreoffice needed libreoffice-core.
