@@ -22,8 +22,8 @@ Extra "%1" for %%pypi_name. \
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
-Release: alt2
+Version: 2.8.0
+Release: alt1
 Epoch: 2
 Summary: HTTP library with thread-safe connection pooling, file post, and more
 License: MIT
@@ -39,8 +39,6 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter pytest-memray
-%add_pyproject_deps_check_filter towncrier
 %pyproject_builddeps_metadata_extra socks
 %pyproject_builddeps_metadata_extra brotli
 %pyproject_builddeps_metadata_extra zstd
@@ -63,7 +61,7 @@ urllib3 is a powerful, user-friendly HTTP client for Python.
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_depgroup dev
+%pyproject_deps_resync_check_depgroup test
 %endif
 
 %build
@@ -76,14 +74,16 @@ urllib3 is a powerful, user-friendly HTTP client for Python.
 # to adjust timeouts: test.LONG_TIMEOUT
 export CI=yes
 export NO_VENDORED_HYPERCORN=yes
-%pyproject_run_pytest -ra \
-	--deselect 'test/with_dummyserver/test_socketlevel.py::TestProxyManager::test_tunnel_sets_http_11_alpn'
+%pyproject_run_pytest -ra
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 28 2026 Stanislav Levin <slev@altlinux.org> 2:2.8.0-alt1
+- 2.7.0 -> 2.8.0
+
 * Mon Jul 13 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.7.0-alt2
 - Worked around and disabled tests failing with Python 3.14.
 
