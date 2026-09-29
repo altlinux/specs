@@ -1,5 +1,6 @@
 %def_disable snapshot
 %define api_ver 1.0
+%define beta -rc1
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 %define xdg_name org.freedesktop.IBus
@@ -23,8 +24,8 @@
 %def_enable gtk_doc
 
 Name: ibus
-Version: 1.5.34
-Release: alt1
+Version: 1.5.35
+Release: alt0.5%(echo %beta|sed 's/-/./')
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPL-2.1 and Unicode
@@ -33,7 +34,7 @@ Url: https://github.com/ibus/ibus/wiki
 
 %if_disabled snapshot
 #Source: https://github.com/%name/%name/releases/download/%version/%name-%version.tar.gz
-Source: https://github.com/%name/%name/archive/%version/%name-%version.tar.gz
+Source: https://github.com/%name/%name/archive/%version%beta/%name-%version%beta.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -212,7 +213,7 @@ This package provides tests programs that can be used to verify
 the functionality of the installed Intelligent Input Bus.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch10 -p1
 touch ChangeLog
 
@@ -366,6 +367,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Tue Sep 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.35-alt0.5.rc1
+- 1.5.35-rc1
+
 * Thu Apr 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.34-alt1
 - 1.5.34
 
