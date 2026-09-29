@@ -10,7 +10,7 @@
 %endif
 
 Name: frei0r-plugins
-Version: 3.5.0
+Version: 3.6.0
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -27,6 +27,7 @@ BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: doxygen
 BuildRequires: libcairo-devel
+BuildRequires: libglvnd-devel
 %{?_with_opencv:BuildRequires: libopencv-devel}
 %{?_with_gavl:BuildRequires: libgavl-devel}
 
@@ -97,6 +98,9 @@ sed -i 's/defined(__SSE4_1__)/0/' src/filter/tint0r/tint0r.c
 %endif
 
 %changelog
+* Tue Sep 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.6.0-alt1
+- updated from 3.5.0 to 3.6.0
+
 * Tue Aug 25 2026 Anton Farygin <rider@altlinux.org> 3.5.0-alt1
 - 3.4.0 -> 3.5.0
 
