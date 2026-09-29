@@ -1,8 +1,8 @@
-%define dotnetver 9.0
+%define dotnetver 10.0
 %define OutputPath64 server
 
 Name:    jellyfin
-Version: 10.11.9
+Version: 12.1
 Release: alt1
 
 Summary: The Free Software Media System - Server Backend & API
@@ -89,6 +89,9 @@ fi
 %dir %attr(2770,%name,%name) %_sharedstatedir/%name
 
 %changelog
+* Tue Sep 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.1-alt1
+- SDK version update.
+
 * Fri May 22 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 10.11.9-alt1
 - New version.
 - Ignored ProtectHome setting removed from unit file (Closes: #58945).

@@ -1,11 +1,11 @@
 %define _dotnet_major 8.0
-%define _dotnet_sdkrelease 8.0.130
-%define _dotnet_corerelease 8.0.30
+%define _dotnet_sdkrelease 8.0.131
+%define _dotnet_corerelease 8.0.31
 %define llvmver 18.1
 
 Name:    dotnet-diagnostics
 Version: %_dotnet_major.505301
-Release: alt2
+Release: alt2.1
 
 Summary: Various .NET Core runtime diagnostic tools
 License: MIT
@@ -212,6 +212,9 @@ fi
 %_libdir/dotnet/tools/dotnet-dump/libdbgshim.so
 
 %changelog
+* Tue Sep 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt2.1
+- SDK version update.
+
 * Thu Sep 24 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt2
 - Moved -dump and -sos components to subpackages (Closes: #60506).
 

@@ -1,7 +1,7 @@
 %define bname jellyfin
 
 Name:    %bname-web
-Version: 10.11.9
+Version: 12.1
 Release: alt1
 
 Summary: The Free Software Media System - Official Web Client
@@ -15,6 +15,7 @@ Source1: node_modules.tar
 
 BuildRequires: /proc
 BuildRequires: npm
+BuildRequires: jq
 
 ExclusiveArch: x86_64
 
@@ -23,6 +24,8 @@ ExclusiveArch: x86_64
 
 %prep
 %setup -a1
+#XXX: Relax build tools version check
+tee <<< $(jq 'del(.["engines"])' package.json) > package.json
 
 %build
 npm_config_offline=true \
@@ -37,6 +40,9 @@ cp -Rfv dist/* %buildroot%_libexecdir/%bname/%name
 %_libexecdir/%bname/%name
 
 %changelog
+* Tue Sep 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.1-alt1
+- New version.
+
 * Thu May 21 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 10.11.9-alt1
 - New version.
 
