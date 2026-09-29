@@ -3,7 +3,7 @@
 %def_without clang
 
 Name: deepin-qt5platform-plugins
-Version: 6.7.49
+Version: 6.7.50
 Release: alt1
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
@@ -32,10 +32,10 @@ BuildRequires: gcc-c++
 BuildRequires(pre): rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5EdidSupport.a
 BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel libdqt5-quickshapes libdqt5-widgets
-# BuildRequires: extra-cmake-modules kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libwayland-cursor-devel
+BuildRequires: extra-cmake-modules kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libdqt5-waylandclient libwayland-cursor-devel deepin-wayland-protocols-devel deepin-wayland-protocols
 
 Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
-# Requires: libdqt5-waylandclient = %%_dqt5_version
+Requires: libdqt5-waylandclient = %_dqt5_version
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
@@ -57,8 +57,6 @@ Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-ope
 %patch0 -p1
 %patch1 -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
-# Unsupported by upstream.
-sed -i '/wayland/d' CMakeLists.txt
 
 %build
 %if_with clang
@@ -102,6 +100,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %doc CHANGELOG.md README.md
 %doc LICENSE
 %_dqt5_plugindir/platforms/libdxcb.so
+%_dqt5_plugindir/platforms/libdwayland.so
+%_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
 
 %files -n deepin-qt6platform-plugins
 %doc CHANGELOG.md README.md
@@ -109,6 +109,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt6_plugindir/platforms/libdxcb.so
 
 %changelog
+* Tue Sep 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.50-alt1
+- New version 6.7.50.
+- Reverted wayland support on deepin-qt5platform-plugins.
+
 * Thu Sep 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.49-alt1
 - New version 6.7.49.
 
