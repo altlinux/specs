@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: vitastor
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -22,7 +22,7 @@ BuildRequires: cmake gcc-c++ ninja-build
 
 BuildRequires: pkgconfig(liburing) >= 2.11
 BuildRequires: pkgconfig(libnl-3.0) pkgconfig(libnl-genl-3.0)
-BuildRequires: pkgconfig(libcares) pkgconfig(openssl)
+BuildRequires: pkgconfig(libcares) libssl-devel
 BuildRequires: libgperftools-devel
 BuildRequires: node >= 10
 BuildRequires: libjerasure-devel libisal-devel
@@ -291,6 +291,10 @@ fi
 %endif
 
 %changelog
+* Wed Sep 30 2026 Alexey Shabalin <shaba@altlinux.org> 3.2.2-alt1
+- 3.2.2
+- Add patch for allow building with OpenSSL 1.1.1.
+
 * Thu Sep 24 2026 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
