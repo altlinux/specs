@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        154.0.8037.57
+Version:        154.0.8037.92
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -743,6 +743,42 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Sep 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 154.0.8037.92-alt1
+- New version (154.0.8037.92).
+- Fixes:
+  + CVE-2026-102299: Type confusion in V8
+  + CVE-2026-102300: Uninitialized resource in WebGPU
+  + CVE-2026-102301: Out of bounds write in GPU
+  + CVE-2026-102302: Buffer overflow in V8
+  + CVE-2026-102303: Uninitialized resource in GPU
+  + CVE-2026-102304: Use after free in Passwords
+  + CVE-2026-102305: UI misrepresentation in SignIn
+  + CVE-2026-102306: Use after free in Bluetooth
+  + CVE-2026-102307: Uninitialized resource in Dawn
+  + CVE-2026-102308: Use after free in Views
+  + CVE-2026-102309: Use after free in FullScreen
+  + CVE-2026-102310: Missing authorization in Payments
+  + CVE-2026-102311: Uninitialized resource in GPU
+  + CVE-2026-102312: UI misrepresentation in Omnibox
+  + CVE-2026-102313: Uninitialized resource in ANGLE
+  + CVE-2026-102314: UI misrepresentation in TabStrip
+  + CVE-2026-102315: Uninitialized resource in Media
+  + CVE-2026-102316: Use after free in Views
+  + CVE-2026-102317: Improper privilege management in Mojo
+  + CVE-2026-102318: Out of bounds read in WebGL
+  + CVE-2026-102319: Uninitialized resource in GPU
+  + CVE-2026-102320: Missing authorization in CORS
+  + CVE-2026-102321: Type confusion in V8
+  + CVE-2026-102323: Type confusion in V8
+  + CVE-2026-102324: Use after free in PictureInPicture
+  + CVE-2026-102325: Uninitialized resource in Skia
+  + CVE-2026-102326: Type confusion in V8
+  + CVE-2026-102327: Incorrect authorization in WebView
+  + CVE-2026-102328: Type confusion in V8
+  + CVE-2026-102329: Cross-site scripting in WebUI
+  + CVE-2026-102330: Incorrect authorization in SiteIsolation
+  + CVE-2026-102331: Buffer overflow in ANGLE
+
 * Thu Sep 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 154.0.8037.57-alt1
 - New version (154.0.8037.57).
 - Fixes:
