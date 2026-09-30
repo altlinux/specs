@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.65b0
-Release: alt3
+Release: alt4
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -135,6 +135,18 @@ Group: Development/Python3
 %description -n python3-module-%mod_name-instrumentation-system-metrics
 Instrumentation to collect system performance metrics.
 
+%package -n python3-module-%mod_name-instrumentation-fastapi
+Summary: OpenTelemetry FastAPI Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-fastapi
+This library provides automatic and manual instrumentation of FastAPI web
+frameworks, instrumenting http requests served by applications utilizing the
+framework.
+
+auto-instrumentation using the opentelemetry-instrumentation package is also
+supported.
+
 %package -n python3-module-%mod_name-propagator-aws-xray
 Summary: OpenTelemetry Propagator for AWS X-Ray Service
 Group: Development/Python3
@@ -183,7 +195,7 @@ pushd ./%mod_name-distro
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics,fastapi}; do
     pushd $idir
         %pyproject_build
     popd
@@ -210,7 +222,7 @@ pushd ./%mod_name-distro
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics}; do
+for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics,fastapi}; do
     pushd $idir
         %pyproject_install
     popd
@@ -334,6 +346,11 @@ done
 %python3_sitelibdir/%mod_name/instrumentation/system_metrics
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-system-metrics}
 
+%files -n python3-module-%mod_name-instrumentation-fastapi
+%doc instrumentation/%mod_name-instrumentation-fastapi/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/fastapi
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-fastapi}
+
 %files -n python3-module-%mod_name-propagator-aws-xray
 %doc propagator/%mod_name-propagator-aws-xray/{LICENSE,README.rst}
 %python3_sitelibdir/%mod_name/propagators/aws
@@ -355,6 +372,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-distro}
 
 %changelog
+* Wed Sep 30 2026 Anton Zhukharev <ancieg@altlinux.org> 0.65b0-alt4
+- NMU: Package instrumentation for fastapi.
+
 * Thu Aug 20 2026 Anton Zhukharev <ancieg@altlinux.org> 0.65b0-alt3
 - NMU: Package distro and instrumentation for logging, redis and system-metrics.
 
