@@ -1,16 +1,17 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%define shver 2.1
+%define shver 2.2
+%define liblavplay liblavplay2.2_0
 
 Name: mjpegtools
 Version: 2.2.1
-Release: alt3
+Release: alt4
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPLv2
 Group: Video
-Url: http://mjpeg.sourceforge.net
+Url: https://mjpeg.sourceforge.io/
 
-Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar
+Source: https://prdownloads.sourceforge.net/mjpeg/%name-%version.tar
 Patch0: mjpegtools-2.1.0-debian-disable-sse2.patch
 Patch1: mjpegtools-2.2.0-debian-mplex-ftbfs.patch
 Patch2: mjpegtools-2.2.0-lavtools-ftbfs.patch
@@ -18,7 +19,8 @@ Patch3: mjpegtools-2.2.1-alt-gcc15-template-body.patch
 
 %define libdv_ver 0.9
 
-Requires: lib%name%shver = %version-%release 
+Requires: lib%name%shver = %EVR
+Requires: %liblavplay = %EVR
 Requires: libdv >= %libdv_ver
 
 BuildPreReq: libdv-devel >= %libdv_ver
@@ -47,7 +49,10 @@ This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
 Summary: Shared libraries for the mjpegtools
 Group: System/Libraries
 Obsoletes: %name-libs
-Provides: %name-libs = %version-%release
+Provides: %name-libs = %EVR
+# libmjpegtools2.1 with lib*-2.2.so.*: 2.2.0-alt1 .. 2.2.1-alt3
+Obsoletes: libmjpegtools2.1 >= 2.2.0-alt1
+Conflicts: libmjpegtools2.1 >= 2.2.0
 
 %description -n lib%name%shver
 This package contains shared libraries needed to run mjpegtools.
@@ -58,12 +63,22 @@ This binaries does ***NOT*** compatible with a K5/K6 or Pentium CPU
 (due to the lack of SSE instructions).
 %endif
 
+%package -n %liblavplay
+Summary: lavplay shared library from mjpegtools
+Group: System/Libraries
+Conflicts: libmjpegtools2.1 >= 2.2.0
+
+%description -n %liblavplay
+This package contains the liblavplay shared library from mjpegtools
+(SDL-based playback).
+
 %package -n lib%name-devel
 Summary: Development headers and libraries for the mjpegtools
 Group: Development/C
 Obsoletes: %name-devel
-Provides: %name-devel = %version-%release
-Requires: lib%name%shver = %version-%release
+Provides: %name-devel = %EVR
+Requires: lib%name%shver = %EVR
+Requires: %liblavplay = %EVR
 
 %description -n lib%name-devel
 This package contains libraries and header files needed to compile
@@ -73,8 +88,8 @@ applications that use part of the libraries of the mjpegtools package.
 Summary: Static libraries for the mjpegtools
 Group: Development/C
 Obsoletes: %name-static-libs
-Provides: %name-static-libs = %version-%release
-Requires: lib%name-devel = %version-%release
+Provides: %name-static-libs = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-devel-static
 This package contains static libraries needed to compile applications
@@ -128,8 +143,15 @@ rm -f %buildroot%_bindir/lavtc.sh
 %_infodir/*.info*
 %doc AUTHORS BUGS CHANGES HINTS PLANS README TODO
 
+%files -n %liblavplay
+%_libdir/liblavplay-%shver.so.*
+
 %files -n lib%name%shver
-%_libdir/*.so.*
+%_libdir/liblavfile-%shver.so.*
+%_libdir/liblavjpeg-%shver.so.*
+%_libdir/libmjpegutils-%shver.so.*
+%_libdir/libmpeg2encpp-%shver.so.*
+%_libdir/libmplex2-%shver.so.*
 
 %files -n lib%name-devel
 %_includedir/*
@@ -141,6 +163,10 @@ rm -f %buildroot%_bindir/lavtc.sh
 %_libdir/*.a
 
 %changelog
+* Wed Sep 30 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt4
+- packaged liblavplay as liblavplay2.2_0 (closes: #60761)
+- renamed libmjpegtools2.1 to libmjpegtools2.2
+
 * Mon Jun 15 2026 Anton Farygin <rider@altlinux.org> 2.2.1-alt3
 - fixed build with gcc 15
 
