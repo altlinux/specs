@@ -2,7 +2,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.12
+Version:       5.999.13
 Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -76,6 +76,10 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.13-alt1
+- * relaxed dep requirement for specified gem
+- ! fixed hoe spec parser extras data evaluation
+
 * Fri Sep 11 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.12-alt1
 - ^ 5.999.11 -> 5.999.12
 - + added feature to run rake tasks indirectly via command line,

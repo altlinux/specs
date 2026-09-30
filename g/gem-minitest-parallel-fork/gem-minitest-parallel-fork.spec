@@ -5,7 +5,7 @@
 %define        gemname minitest-parallel_fork
 
 Name:          gem-minitest-parallel-fork
-Version:       2.1.0
+Version:       2.1.1
 Release:       alt1
 Summary:       Fork-based parallelization for minitest
 License:       MIT
@@ -16,7 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb
 %if_enabled check
 BuildRequires: gem(minitest) >= 5.15.0
 BuildRequires: gem(minitest-global_expectations) >= 0
@@ -28,8 +28,7 @@ BuildRequires: gem(minitest-hooks) >= 0
 %ruby_alias_names minitest-parallel_fork,minitest-parallel-fork
 Requires:      ruby >= 2.2
 Requires:      gem(minitest) >= 5.15.0
-Provides:      minitest-parallel_fork = %EVR
-Provides:      gem(minitest-parallel_fork) = 2.1.0
+Provides:      gem(minitest-parallel_fork) = 2.1.1
 
 %description
 minitest-parallel_fork adds fork-based parallelization to Minitest. Each
@@ -42,14 +41,14 @@ parallelism do not work, such as when specs modify the constant namespace.
 
 %if_enabled    doc
 %package       -n gem-minitest-parallel-fork-doc
-Version:       2.1.0
+Version:       2.1.1
 Release:       alt1
 Summary:       Fork-based parallelization for minitest documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета minitest-parallel_fork
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(minitest-parallel_fork) = 2.1.0
+Requires:      gem(minitest-parallel_fork) = 2.1.1
 
 %description   -n gem-minitest-parallel-fork-doc
 Fork-based parallelization for minitest documentation
@@ -69,14 +68,14 @@ parallelism do not work, such as when specs modify the constant namespace.
 
 %if_enabled    devel
 %package       -n gem-minitest-parallel-fork-devel
-Version:       2.1.0
+Version:       2.1.1
 Release:       alt1
 Summary:       Fork-based parallelization for minitest development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета minitest-parallel_fork
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(minitest-parallel_fork) = 2.1.0
+Requires:      gem(minitest-parallel_fork) = 2.1.1
 Requires:      gem(minitest-global_expectations) >= 0
 Requires:      gem(minitest-hooks) >= 0
 
@@ -126,6 +125,9 @@ parallelism do not work, such as when specs modify the constant namespace.
 
 
 %changelog
+* Sun May 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.1.1-alt1
+- ^ 2.1.0 -> 2.1.1
+
 * Tue Aug 12 2025 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - ^ 2.0.0 -> 2.1.0
 

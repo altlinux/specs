@@ -5,7 +5,7 @@
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.18.9
+Version:       1.19.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -15,16 +15,15 @@ Vcs:           https://github.com/sparklemotion/nokogiri.git
 Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby rake setup-rb libruby-devel
 BuildRequires: libxml2-devel
 BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
 BuildRequires: gem(mini_portile2) >= 2.8.2
-BuildConflicts: gem(mini_portile2) >= 2.9
 %if_enabled check
-BuildRequires: gem(bundler) >= 2.1.4
-BuildRequires: gem(minitest) >= 5.17.0
-BuildRequires: gem(minitest-parallel_fork) >= 2.1.0
+BuildRequires: gem(minitest) >= 6.0
+BuildRequires: gem(minitest-mock) >= 5.27.0
+BuildRequires: gem(minitest-parallel_fork) >= 2.1.1
 BuildRequires: gem(racc) >= 1.4
 BuildRequires: gem(rake) >= 13.1.0
 BuildRequires: gem(rake-compiler) >= 1.1.2
@@ -36,48 +35,34 @@ BuildRequires: gem(rubocop-rake) >= 0.6.0
 BuildRequires: gem(ruby_memcheck) >= 2.2.1
 BuildRequires: gem(rubyzip) >= 2.3.2
 BuildRequires: gem(simplecov) >= 0.17
-BuildRequires: gem(standard) >= 1.50.0
-BuildConflicts: gem(bundler) >= 3
-BuildConflicts: gem(minitest) >= 6
-BuildConflicts: gem(racc) >= 2
-BuildConflicts: gem(rake) >= 14
-BuildConflicts: gem(rake-compiler) >= 2
-BuildConflicts: gem(rake-compiler-dock) >= 2
-BuildConflicts: gem(rubocop-minitest) >= 1
-BuildConflicts: gem(rubocop-packaging) >= 1
-BuildConflicts: gem(rubocop-rake) >= 1
-BuildConflicts: gem(ruby_memcheck) >= 4
-BuildConflicts: gem(rubyzip) >= 3
-BuildConflicts: gem(simplecov) >= 1
+BuildRequires: gem(standard) >= 1.56.0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_use_gem_dependency rake >= 13.1.0,rake < 14
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
-%ruby_use_gem_dependency ruby_memcheck >= 3.0.0,ruby_memcheck < 4
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency minitest-parallel_fork >= 2.1.0,minitest-parallel_fork < 3
-%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
-%ruby_use_gem_dependency rubocop-minitest >= 0.13.0,rubocop-minitest < 1
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
-%ruby_use_gem_dependency rexical >= 1.0.8,rexical < 2
-%ruby_use_gem_dependency rubocop-rake >= 0.6.0,rubocop-rake < 1
-%ruby_use_gem_dependency rubocop-packaging >= 0.5.2,rubocop-packaging < 1
-%ruby_use_gem_dependency ruby_memcheck >= 2.2.1,ruby_memcheck < 3
-%ruby_use_gem_dependency rubyzip >= 2.3.2,rubyzip < 3
-%ruby_use_gem_dependency standard >= 1.50.0,standard < 2
+%ruby_use_gem_dependency standard >= 1.43.0
+%ruby_use_gem_dependency rexical >= 1.0.8
+%ruby_use_gem_dependency rake >= 13.1.0
+%ruby_use_gem_dependency rdoc >= 6.1.1
+%ruby_use_gem_dependency mini_portile2 >= 2.8.2
+%ruby_use_gem_dependency minitest >= 5.17.0
+%ruby_use_gem_dependency minitest-mock >= 5.27.0
+%ruby_use_gem_dependency minitest-parallel_fork >= 2.1.1
+%ruby_use_gem_dependency simplecov >= 0.17
+%ruby_use_gem_dependency rubocop-minitest >= 0.13.0
+%ruby_use_gem_dependency rake-compiler >= 1.1.2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1
+%ruby_use_gem_dependency rubocop-rake >= 0.6.0
+%ruby_use_gem_dependency rubocop-packaging >= 0.5.2
+%ruby_use_gem_dependency ruby_memcheck >= 2.2.1
+%ruby_use_gem_dependency rubyzip >= 2.3.2
 Requires:      rexical
-Requires:      ruby >= 3.1.0
+Requires:      ruby >= 3.2
 Requires:      gem(mini_portile2) >= 2.8.2
 Requires:      gem(racc) >= 1.4
-Conflicts:     gem(mini_portile2) >= 2.9
-Conflicts:     gem(racc) >= 2
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.18.9
+Provides:      gem(nokogiri) = 1.19.4
 
 %description
 Nokogiri parses and searches XML/HTML very quickly, and also has correctly
@@ -86,14 +71,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.18.9
+Version:       1.19.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.18.9
+Requires:      gem(nokogiri) = 1.19.4
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -109,14 +94,14 @@ contanis Ruby libraries for Nokogiri.
 
 %if_enabled    doc
 %package       -n gem-nokogiri-doc
-Version:       1.18.9
+Version:       1.19.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.18.9
+Requires:      gem(nokogiri) = 1.19.4
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -133,48 +118,33 @@ contanis Ruby libraries for Nokogiri.
 
 %if_enabled    devel
 %package       -n gem-nokogiri-devel
-Version:       1.18.9
+Version:       1.19.4
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.18.9
-Requires:      gem(bundler) >= 2.1.4
+Requires:      libxml2-devel
+Requires:      libxslt-devel
+Requires:      zlib-devel
+Requires:      gem(nokogiri) = 1.19.4
+Requires:      gem(minitest) >= 6.0
+Requires:      gem(minitest-mock) >= 5.27.0
+Requires:      gem(minitest-parallel_fork) >= 2.1.1
+Requires:      gem(mini_portile2) >= 2.8.2
+Requires:      gem(racc) >= 1.4
 Requires:      gem(rake) >= 13.1.0
 Requires:      gem(rake-compiler) >= 1.1.2
 Requires:      gem(rake-compiler-dock) >= 1.2.1
 Requires:      gem(rexical) >= 1.0.8
-Requires:      gem(minitest) >= 5.17.0
-Requires:      gem(minitest-parallel_fork) >= 2.0.0
+Requires:      gem(rubocop-minitest) >= 0.13.0
+Requires:      gem(rubocop-packaging) >= 0.5.2
+Requires:      gem(rubocop-rake) >= 0.6.0
 Requires:      gem(ruby_memcheck) >= 2.2.1
 Requires:      gem(rubyzip) >= 2.3.2
 Requires:      gem(simplecov) >= 0.17
-Requires:      gem(standard) >= 1.39.2
-Requires:      gem(rubocop) >= 1.15.0
-Requires:      gem(rubocop-minitest) >= 0.13.0
-Requires:      gem(rubocop-packaging) >= 0.5.2
-Requires:      gem(rubocop-performance) >= 1.11.3
-Requires:      gem(rubocop-rake) >= 0.6.0
-Requires:      gem(rdoc) >= 6.1.1
-Requires:      libxml2-devel
-Requires:      libxslt-devel
-Requires:      zlib-devel
-Conflicts:     gem(bundler) >= 3
-Conflicts:     gem(rake) >= 14
-Conflicts:     gem(rake-compiler) >= 2
-Conflicts:     gem(rake-compiler-dock) >= 2
-Conflicts:     gem(minitest) >= 6
-Conflicts:     gem(ruby_memcheck) >= 4
-Conflicts:     gem(rubyzip) >= 3
-Conflicts:     gem(simplecov) >= 1
-Conflicts:     gem(rubocop) >= 2
-Conflicts:     gem(rubocop-minitest) >= 1
-Conflicts:     gem(rubocop-packaging) >= 1
-Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(rubocop-rake) >= 1
-Conflicts:     gem(rdoc) >= 7
+Requires:      gem(standard) >= 1.56.0
 
 %description   -n gem-nokogiri-devel
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development
@@ -225,6 +195,9 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Sun May 31 2026 Pavel Skrylev <majioa@altlinux.org> 1.19.4-alt1
+- ^ 1.18.9 -> 1.19.4
+
 * Tue Aug 12 2025 Pavel Skrylev <majioa@altlinux.org> 1.18.9-alt1
 - ^ 1.16.7p371 -> 1.18.9
 
