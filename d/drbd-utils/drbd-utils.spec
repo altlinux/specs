@@ -1,4 +1,4 @@
-%define githash 7fe34d56a7264cfc92fc5270471827bb3f7773e6
+%define githash e1e02e77e6d068f626cef7c3998ed08b0fde7669
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -6,7 +6,7 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.34.0
+Version: 9.35.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -31,6 +31,7 @@ BuildRequires: gcc-c++ po4a udev libudev-devel libsystemd-devel
 BuildRequires: asciidoctor resource-agents
 BuildRequires: libkeyutils-devel
 BuildRequires: jq
+BuildRequires: rpm-build-python3
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc clitest}}
 
 Requires: linux-ha-common
@@ -64,7 +65,7 @@ Pacemaker High Availability cluster manager.
 %prep
 %setup -a1
 tar -xf %SOURCE1 -C drbd-headers
-%patch0 -p1
+%autopatch -p1
 (echo -e "#define GITHASH \"%githash\""; \
  echo -e "#define GITDIFF \"%gitdiff\"") > user/shared/drbd_buildtag.h
 %ifarch %e2k
@@ -104,24 +105,27 @@ rmdir -v %buildroot%_sysconfdir/init.d
 popd
 
 %post
-%post_service drbd
+%systemd_post drbd.service drbd-configured.target
 
 %preun
-%preun_service drbd
+%systemd_preun drbd.service drbd-configured.target
 
 %check
 make test
 
 %files
-%doc scripts/drbd.conf.example COPYING ChangeLog README.md
+%doc scripts/drbd.conf.example COPYING ChangeLog README.md scripts/fence-peer
 %config(noreplace) %_sysconfdir/drbd.conf
 %dir %_sysconfdir/drbd.d
 %config(noreplace) %_sysconfdir/drbd.d/global_common.conf
+%dir %_sysconfdir/drbd.d/fence-peer
+%dir %_sysconfdir/drbd.d/fence-peer/peers
 %config(noreplace) %_sysconfdir/multipath/conf.d/drbd.conf
 %_initdir/drbd
 %_presetdir/50-drbd.preset
 %_unitdir/drbd.service
-%_unitdir/drbd-graceful-shutdown.service
+%_unitdir/drbd-graceful-disconnect.service
+%_unitdir/drbd-graceful-down.service
 %_unitdir/drbd-lvchange@.service
 %_unitdir/drbd-promote@.service
 %_unitdir/drbd-reconfigure-suspend-or-error@.service
@@ -148,6 +152,7 @@ make test
 %exclude /usr/lib/drbd/crm-*fence-peer.sh
 %exclude /usr/lib/drbd/stonith_admin-fence-peer.sh
 /usr/lib/drbd/*.sh
+/usr/lib/drbd/tnf-drbd-fence.py
 %dir %_var/lib/drbd
 %_man8dir/drbd*
 %_man7dir/*
@@ -167,6 +172,9 @@ make test
 %_man7dir/ocf_linbit_drbd-attr.*
 
 %changelog
+* Wed Sep 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.35.0-alt1
+- 9.35.0
+
 * Fri Mar 20 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.34.0-alt1
 - 9.34.0
 
