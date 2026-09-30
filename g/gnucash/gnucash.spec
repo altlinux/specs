@@ -5,7 +5,7 @@
 %def_with aqbanking
 
 Name: 	 gnucash
-Version: 5.16
+Version: 5.17
 Release: alt1
 
 Summary: GnuCash is an application to keep track of your finances
@@ -155,6 +155,9 @@ cp %SOURCE9 gnucash/gnome
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %endif
+%ifarch %ix86
+sed -i 's/-Werror/& -Wno-error=sign-compare/g' CMakeLists.txt
+%endif
 
 %build
 %cmake -GNinja \
@@ -220,6 +223,9 @@ rm -rf %buildroot%_datadir/guile/site/*/tests \
 %files quotes
 
 %changelog
+* Wed Sep 30 2026 Andrey Cherepanov <cas@altlinux.org> 5.17-alt1
+- New version.
+
 * Sun Jun 28 2026 Andrey Cherepanov <cas@altlinux.org> 5.16-alt1
 - New version.
 
