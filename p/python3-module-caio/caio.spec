@@ -4,7 +4,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.12.4
+Version: 0.12.9
 Release: alt1
 
 Summary: Linux AIO c python bindings
@@ -51,6 +51,9 @@ sed -i '/^version /s/= .*$/= "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.9-alt1
+- Updated to 0.12.9.
+
 * Fri Sep 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.4-alt1
 - Updated to 0.12.4.
 
