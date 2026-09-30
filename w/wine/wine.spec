@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.7
+%define major 11.8
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -367,7 +367,7 @@ BuildRequires: libudev-devel udev libdbus-devel
 BuildRequires: libxcb-devel
 BuildRequires: libICE-devel libSM-devel
 BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
-BuildRequires: libXext-devel libXfixes-devel libXfont-devel libXft-devel libXi-devel
+BuildRequires: libXext-devel libXfixes-devel libXft-devel libXi-devel
 BuildRequires: libXmu-devel libXpm-devel libXrender-devel
 BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
 BuildRequires: libXxf86dga-devel libXcomposite-devel
@@ -953,6 +953,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.8.1-alt1
+- new version 11.8.1
+
 * Thu Apr 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.7.1-alt1
 - new version (11.7.1)
 - update patches to staging wine-11.7
