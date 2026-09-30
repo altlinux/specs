@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 4.2.2
+Version: 4.3
 Release: alt1
 
 Summary: A collection manager for KDE
@@ -70,9 +70,9 @@ video games, coins, stamps, trading cards, comic books, and wines.
 
 %prep
 %setup
+subst 's|!/bin/sh|!%__python3|' src/fetch/scripts/dark_horse_comics.py
 
 %build
-
 %K6init no_altplace
 %K6build -DUSE_KHTML:BOOL=%use_khtml
 
@@ -101,6 +101,9 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Tue Sep 29 2026 Andrey Cherepanov <cas@altlinux.org> 4.3-alt1
+- New version.
+
 * Sat Aug 22 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.2-alt1
 - New version.
 
