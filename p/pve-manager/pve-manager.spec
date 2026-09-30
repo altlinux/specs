@@ -8,7 +8,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt5
+Release: alt6
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -124,7 +124,6 @@ rm -f  %buildroot%_man1dir/pve7to8.1*
 if test ! -e /var/lib/pve-manager/apl-info/download.proxmox.com; then
     mkdir -p /var/lib/pve-manager/apl-info
     cp /usr/share/doc/pve-manager/aplinfo.dat /var/lib/pve-manager/apl-info/download.proxmox.com
-    pveam update ||:
 fi
 
 %triggerun -- %name < 9.0.0
@@ -175,6 +174,9 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Wed Sep 30 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt6
+- Avoid running pveam update before pve-ha-manager is installed (Closes: 60268)
+
 * Sun Aug 30 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt5
 - Preserve locale for web shell sessions (Closes: 60261)
 
