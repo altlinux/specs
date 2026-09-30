@@ -6,8 +6,6 @@
 %def_with libjemalloc
 %def_with check
 %def_without system_tests
-# skip enginepkcs11 tests
-# https://github.com/openssl/openssl/issues/22508
 %def_with enginepkcs11
 
 # common directory for documentation
@@ -27,16 +25,12 @@
 
 Name: bind
 Version: 9.18.50
-%define src_version 9.18.50
-Release: alt1
-
+Release: alt2.bfc6e000ae
 Summary: ISC BIND - DNS server
 License: MPL-2.0
 Group: System/Servers
 Url: https://www.isc.org/bind/
 VCS: https://gitlab.isc.org/isc-projects/bind9.git
-
-# ftp://ftp.isc.org/isc/bind9/%src_version/bind-%src_version.tar.xz
 Source0: %name-%version.tar
 %if_with check
 Source1: %pyproject_deps_config_name
@@ -66,6 +60,7 @@ Source50: bind.service
 Source51: bind.tmpfiles.conf
 
 # NB: there must be at least one patch :)
+Patch0000: %name-%version-alt.patch
 Patch0001: 0001-ALT-defaults-Reintroduce-chrooted-named-by-default.patch
 Patch0002: 0002-ALT-Minimize-linux-capabilities.patch
 Patch0003: 0003-ALT-Make-it-possible-to-retain-Linux-capabilities-of.patch
@@ -74,7 +69,6 @@ Patch0005: 0005-ALT-tests-Unchroot-named-for-tests.patch
 Patch0007: 0007-ALT-tests-Raise-expected-delta-time-for-cds.patch
 Patch0009: 0009-ALT-tests-Avoid-socket-creation-on-9pfs.patch
 Patch0010: 0010-ALT-tests-Handle-unset-TSAN_OPTIONS.patch
-Patch0011: 0011-tests-allow-to-run-tests-in-dnspython-2.7.0-environm.patch
 
 %if_with check
 BuildRequires(pre): rpm-build-pyproject
@@ -127,6 +121,8 @@ BuildRequires: libuv-devel
 BuildRequires: libidn2-devel
 # doh support
 BuildRequires: libnghttp2-devel
+# build man pages
+BuildRequires: python3-module-sphinx
 
 %package utils
 Summary: Utilities provided by ISC BIND
@@ -155,30 +151,26 @@ The Berkeley Internet Name Domain (BIND) implements an Internet domain
 name server.  BIND is the most widely-used name server software on the
 Internet, and is supported by the Internet Software Consortium (ISC).
 
-This package provides the %src_version server and related
-configuration files.
+This package provides the server and related configuration files.
 
 %description utils
 This package contains various utilities related to DNS that are derived
-from the BIND %src_version source tree, including dig, host,
-nslookup and nsupdate.
+from the BIND source tree, including dig, host, nslookup and nsupdate.
 
 %description -n libbind
-This package contains shared libraries used by BIND's %src_version
-daemons and clients.
+This package contains shared libraries used by BIND's daemons and clients.
 
 %description devel
 This package contains development libraries, header files, and API man
 pages for libdns, libisc, libisccc, libisccfg. These are
-only needed if you want to compile packages that need more BIND
-%src_version nameserver API than the resolver code provided by
-glibc.
+only needed if you want to compile packages that need more BIND nameserver API
+than the resolver code provided by glibc.
 
 %prep
 %setup
 
 # NB: there must be at least one patch :)
-%autopatch -p2
+%autopatch -p1
 
 mkdir addon
 install -pm644 \
@@ -216,6 +208,9 @@ s,@LOG_DIR@,%log_dir,g;
 %endif
 
 %build
+# build man pages
+export SPHINX_BUILD=/usr/bin/sphinx-build-3
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=2122841#c30
 %add_optflags -DOPENSSL_API_COMPAT=10100
 
@@ -598,6 +593,13 @@ fi
 %_man1dir/nsupdate.*
 
 %changelog
+* Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 9.18.50-alt2.bfc6e000ae
+- Synced to bfc6e000ae (fixes: CVE-2026-10723, CVE-2026-10822, CVE-2026-11331,
+  CVE-2026-11622, CVE-2026-11721, CVE-2026-12617, CVE-2026-13204,
+  CVE-2026-13321, CVE-2026-19033, CVE-2026-19662, CVE-2026-19666,
+  CVE-2026-19667, CVE-2026-19941, CVE-2026-75029, CVE-2026-78301,
+  CVE-2026-80274, CVE-2026-81563, CVE-2026-81736).
+
 * Wed Jun 17 2026 Stanislav Levin <slev@altlinux.org> 9.18.50-alt1
 - 9.18.49 -> 9.18.50.
 
