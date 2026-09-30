@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 3.4
+%define ver_major 3.5
 %define rev %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Rhythmbox3
@@ -8,7 +8,7 @@
 
 %def_enable gudev
 %def_enable vala
-%def_enable doc
+%def_enable docs
 %def_enable daap
 %def_enable grilo
 %def_enable mtp
@@ -23,7 +23,7 @@
 %def_disable context
 
 Name: rhythmbox
-Version: %ver_major.9
+Version: %ver_major.1
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -55,6 +55,7 @@ Source: %name-%version.tar
 %define secret_ver 0.18
 %define dmapsharing_ver 3.9.11
 %define grilo_ver 0.3
+%define peas_ver 1.38
 
 Requires: lib%name = %EVR
 
@@ -77,8 +78,10 @@ Provides: %name-plugins-generic-player
 
 # python bindings are linked into rhythmbox statically
 Provides: python%__python3_version(rb)
+Provides: python%__python3_version(rbconfig)
 Provides: python%__python3_version(rhythmdb)
 Provides: python3(rb)
+Provides: python3(rbconfig)
 Provides: python3(rhythmdb)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
@@ -99,9 +102,10 @@ BuildRequires: libICE-devel libSM-devel libsecret-devel >= %secret_ver
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libxml2-devel libjson-glib-devel libpng-devel
-BuildRequires: libpeas-devel libtdb-devel zlib-devel
+BuildRequires: libpeas-devel >= %peas_ver libtdb-devel zlib-devel
+BuildRequires: python3(gpodder)
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_doc:BuildRequires: gi-docgen}
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_mtp:BuildRequires: libmtp-devel >= %mtp_ver}
 %{?_enable_grilo:BuildRequires: libgrilo-devel >= %grilo_ver}
 BuildRequires: libavahi-glib-devel
@@ -280,6 +284,16 @@ Requires: gvfs-backend-mtp
 %description plugins-android
 A plugin that supports Android 4.0+ devices (via MTP).
 
+%package plugins-gpodder
+Summary: Android plugin for Rhythmbox
+Group: Sound
+Requires: %name = %EVR
+Requires: gpodder
+
+%description plugins-gpodder
+A plugin that supports podcast syncing using the gpodder.net API.
+
+
 %package plugins-python
 Summary: Python plugins for Rhythmbox
 Group: Sound
@@ -333,6 +347,7 @@ Requires: %name-plugins-media-server = %EVR
 Requires: %name-plugins-mpris = %EVR
 %{?_enable_grilo:Requires: %name-plugins-grilo = %EVR}
 Requires: %name-plugins-android = %EVR
+Requires: %name-plugins-gpodder = %EVR
 Requires: %name-plugins-python = %EVR
 
 %description plugins
@@ -344,7 +359,7 @@ This virtual package installs all Rhythmbox plugins
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %meson \
-    %{subst_enable_meson_bool doc apidoc} \
+    %{subst_enable_meson_bool docs apidoc} \
     %{subst_enable_meson_feature gudev gudev} \
     %{subst_enable_meson_feature lirc lirc} \
     %{subst_enable_meson_feature brasero brasero} \
@@ -378,7 +393,7 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_datadir/icons/hicolor/*/*/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %dir %pkgdocdir
 %doc %pkgdocdir/AUTHORS
 %doc %pkgdocdir/DOCUMENTERS
@@ -455,6 +470,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %files plugins-android
 %_libdir/%name/plugins/android/
 
+%files plugins-gpodder
+%_libdir/%name/plugins/gpodder/
+
 %files -n lib%name-gir
 %_libdir/girepository-1.0/MPID-%api_ver.typelib
 %_libdir/girepository-1.0/RB-%api_ver.typelib
@@ -477,12 +495,15 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 
 %files plugins
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
-%_datadir/doc/%name-%version/
+%_datadir/doc/%name/
 %endif
 
 %changelog
+* Wed Sep 30 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
+- updated to 3.5.1-9-gbd3c6980f
+
 * Mon Oct 13 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4.9-alt1
 - 3.4.9
 
