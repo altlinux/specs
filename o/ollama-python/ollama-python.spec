@@ -2,13 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ollama-python
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 Summary: Ollama Python library
 License: MIT
 Group: Sciences/Computer science
-Url: https://ollama.com
-Vcs: https://github.com/ollama/ollama-python
+URL: https://ollama.com
+VCS: https://github.com/ollama/ollama-python
 
 Source: %name-%version.tar
 
@@ -20,7 +20,6 @@ BuildRequires: python3(anyio)
 BuildRequires: python3(httpx)
 BuildRequires: python3(PIL)
 BuildRequires: python3(pydantic)
-BuildRequires: python3(pytest_asyncio)
 BuildRequires: python3(pytest_httpserver)
 }}
 
@@ -51,7 +50,6 @@ Requires(post): ollama-cpu
 
 %prep
 %setup
-sed -Ei '/^version\s*=/s/"[0.]+"/"%version"/' pyproject.toml
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -65,6 +63,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 %post checkinstall
 set -xe
+export PYTHONDONTWRITEBYTECODE=1
 %__python3 -c 'import ollama'
 %__python3 -c 'import ollama; ollama.list()' |& grep 'ConnectionError'
 type ollama || exit 0
@@ -84,6 +83,15 @@ rm -rf /root/.ollama
 %files checkinstall
 
 %changelog
+* Tue Sep 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.3-alt1
+- Updated to version 0.6.3.
+- spec: Removed no-op sed for static version in pyproject.toml (upstream uses
+  dynamic version via hatch-vcs).
+- spec: Dropped unneeded BuildRequires on pytest-asyncio (tests use the anyio
+  pytest plugin).
+- spec: Set PYTHONDONTWRITEBYTECODE=1 in checkinstall %%post to avoid creating
+  unowned __pycache__ files of dependency packages during install check.
+
 * Fri May 15 2026 Vitaly Chikunov <vt@altlinux.org> 0.6.2-alt1
 - Update to v0.6.2 (2026-01-23).
 
