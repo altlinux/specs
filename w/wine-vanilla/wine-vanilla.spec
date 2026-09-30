@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.13
+%define major 11.14
 %define rel %nil
 
 # the packages will conflict with that
@@ -943,6 +943,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.14-alt1
+- new version 11.14
+
 * Tue Sep 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.13-alt1
 - new version 11.13
 - drop libXfont-devel from BuildRequires (unused, removed from Sisyphus)
