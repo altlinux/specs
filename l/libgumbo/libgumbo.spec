@@ -5,7 +5,7 @@
 %define soname 4
 
 Name: libgumbo
-Version: 0.14.0
+Version: 0.14.1
 Release: alt1
 
 Summary: An HTML5 parsing library
@@ -138,6 +138,10 @@ install -m 644 docs/man/man3/*.3 %buildroot%_man3dir/
 %endif
 
 %changelog
+* Wed Sep 30 2026 Mikhail Efremov <sem@altlinux.org> 0.14.1-alt1
+- Dropped obsoleted patch.
+- Updated to 0.14.1.
+
 * Wed Aug 26 2026 Mikhail Efremov <sem@altlinux.org> 0.14.0-alt1
 - Bumped libgumbo soname version.
 - Dropped obsoleted patches.
