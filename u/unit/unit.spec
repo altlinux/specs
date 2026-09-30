@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.35.0
-Release: alt4
+Release: alt5
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -184,7 +184,7 @@ build/tests
 %pre checkinstall
 set -ex
 # systemd-analyze better works in non-'/'.
-cd
+cd /
 systemd-analyze verify unit.service
 logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 
@@ -247,6 +247,9 @@ logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Wed Sep 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.35.0-alt5
+- Fix %%pre checkinstall without HOME var (Closes: #60494).
+
 * Wed Apr 22 2026 Vitaly Chikunov <vt@altlinux.org> 1.35.0-alt4
 - Fix FTBFS with gcc15
 
