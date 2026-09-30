@@ -5,37 +5,36 @@
 %define        gemname librarianp
 
 Name:          gem-librarianp
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       A Framework for Bundlers. Fork to support librarian-puppet
 License:       MIT
 Group:         Development/Ruby
 Url:           https://github.com/voxpupuli/librarian
 Vcs:           https://github.com/voxpupuli/librarian.git
-Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
+Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
+BuildRequires: gem(fakefs) >= 1.0
+BuildRequires: gem(json) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 3.0
-BuildRequires: gem(json) >= 0
-BuildRequires: gem(fakefs) >= 1.0
-BuildRequires: gem(github_changelog_generator) >= 1.16.4
 BuildRequires: gem(thor) >= 1.0
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(fakefs) >= 3
 BuildConflicts: gem(thor) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency fakefs >= 2.5.0,fakefs < 3
+%ruby_use_gem_dependency fakefs >= 2.5.0
+Requires:      ruby >= 2.4
 Requires:      gem(thor) >= 1.0
+Conflicts:     ruby >= 5
 Conflicts:     gem(thor) >= 2
-Provides:      gem(librarianp) = 1.1.2
-
+Provides:      gem(librarianp) = 1.2.0
 
 %description
 Librarian is a framework for writing bundlers, which are tools that resolve,
@@ -53,14 +52,14 @@ for Ruby gems that many modern Rails applications use.
 
 %if_enabled    doc
 %package       -n gem-librarianp-doc
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       A Framework for Bundlers. Fork to support librarian-puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета librarianp
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(librarianp) = 1.1.2
+Requires:      gem(librarianp) = 1.2.0
 
 %description   -n gem-librarianp-doc
 A Framework for Bundlers. Fork to support librarian-puppet documentation
@@ -85,21 +84,21 @@ for Ruby gems that many modern Rails applications use.
 
 %if_enabled    devel
 %package       -n gem-librarianp-devel
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       A Framework for Bundlers. Fork to support librarian-puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета librarianp
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(librarianp) = 1.1.2
+Requires:      gem(librarianp) = 1.2.0
+Requires:      gem(fakefs) >= 1.0
+Requires:      gem(json) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 3.0
-Requires:      gem(json) >= 0
-Requires:      gem(fakefs) >= 1.0
-Requires:      gem(github_changelog_generator) >= 1.16.4
+Requires:      gem(thor) >= 1.0
 Conflicts:     gem(rspec) >= 4
-Conflicts:     gem(fakefs) >= 3
+Conflicts:     gem(thor) >= 2
 
 %description   -n gem-librarianp-devel
 A Framework for Bundlers. Fork to support librarian-puppet development
@@ -135,23 +134,26 @@ for Ruby gems that many modern Rails applications use.
 %ruby_test
 
 %files
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
 %if_enabled    doc
 %files         -n gem-librarianp-doc
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %ruby_gemdocdir
 %endif
 
 %if_enabled    devel
 %files         -n gem-librarianp-devel
-%doc README.md
+%doc CHANGELOG.md LICENSE.txt README.md
 %endif
 
 
 %changelog
+* Wed Sep 30 2026 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
+- ^ 1.1.2 -> 1.2.0
+
 * Sat Aug 03 2024 Pavel Skrylev <majioa@altlinux.org> 1.1.2-alt1
 - ^ 1.1.1 -> 1.1.2
 
