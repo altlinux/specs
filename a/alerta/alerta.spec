@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name %{name}_server
 
 Name:       alerta
 Version:    9.1.0
-Release:    alt2
+Release:    alt3
 Summary:    Alerta monitoring system server
 License:    Apache-2.0
 Group:      System/Servers
@@ -15,6 +16,8 @@ Source: %name-%version.tar
 Source1: alertad.conf
 Source2: alertad
 Source3: alertad.service
+
+Patch0: fix-close-mongo-client.diff
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires(pre): rpm-macros-systemd
@@ -31,6 +34,7 @@ provides visualization and drill-down to detail.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -65,7 +69,7 @@ fi
 %doc README.md NOTICE
 %_bindir/alertad
 %python3_sitelibdir_noarch/%name
-%python3_sitelibdir_noarch/%{name}_server-%version.dist-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/alertad.conf
 %config(noreplace) %_sysconfdir/sysconfig/alertad
@@ -73,6 +77,9 @@ fi
 %attr(0750,alertad,alertad) %dir %_logdir/%name
 
 %changelog
+* Wed Sep 30 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 9.1.0-alt3
+- Fix mongodb client closing.
+
 * Sun Sep 27 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 9.1.0-alt2
 - Now the default SECREY_KEY is randomly generated during the installation process.
 - Made user/group creation idempotent.
