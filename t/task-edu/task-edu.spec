@@ -188,6 +188,7 @@ Requires: alterator-kopidel \
 Requires: alterator-update-kernel \
 Requires: alterator-net-iptables \
 Requires: alterator-limits \
+Requires: alterator-secsetup \
 %{nil}
 
 %define edu_games_reqs \
@@ -409,7 +410,7 @@ Requires: OpenBoard \
 %{nil}
 
 Name: task-edu
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -721,6 +722,9 @@ Group: Education
 %files school
 
 %changelog
+* Wed Sep 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.9.3-alt1
+- Require alterator-secsetup.
+
 * Thu Sep 24 2026 Pavel Petrykin <silverducks@altlinux.org> 1.9.2-alt1
 - Add udev-rules-nvidia-sleep hardware quirk to all installation recipes.
 
