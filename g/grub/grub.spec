@@ -24,7 +24,7 @@
 
 Name: grub
 Version: 2.14
-Release: alt8
+Release: alt9
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -64,6 +64,8 @@ Source18: grub-sysconfig-migrate
 
 Source19: grub-pc-autoupdate.filetrigger
 Source20: grub-ieee1275-autoupdate.filetrigger
+
+Source21: grub-efi-sh-functions
 
 Patch0: %name-%version-alt.patch
 
@@ -421,6 +423,7 @@ install -pDm755 %SOURCE20 %buildroot%_rpmlibdir/grub-ieee1275-autoupdate.filetri
 %ifarch %efi_arches
 install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
 install -pDm755 %SOURCE15 %buildroot%_sbindir/grub-efi-install
+install -pDm644 %SOURCE21 %buildroot%_libexecdir/grub/grub-efi-sh-functions
 install -pDm755 %SOURCE14 %buildroot%_rpmlibdir/grub-efi-autoupdate.filetrigger
 install -pDm644 sbat.csv %buildroot%_datadir/grub/sbat.csv
 %endif
@@ -582,11 +585,22 @@ fi
 %_libdir/grub/%grubefiarch
 %_rpmlibdir/grub-efi-autoupdate.filetrigger
 %_datadir/grub/sbat.csv
+%dir %_libexecdir/grub
+%_libexecdir/grub/grub-efi-sh-functions
 
 %files efi-checkinstall
 %endif
 
 %changelog
+* Tue Sep 29 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt9
+- backport upstream fix for dualboot in Secure Boot
+- grub-efi-install, grub-efi-autoupdate:
+  + adopt the existing on-disk case of ESP file names (closes: #59632)
+  + move ESP discovery, architecture mapping and sysconfig defaults
+    into the shared grub-efi-sh-functions library
+  + keep --dry-run from creating directories on the ESP and marker files
+- grub-dumpsbat: harden the PE parser against crafted images on the ESP
+
 * Mon Aug 24 2026 Egor Ignatov <egori@altlinux.org> 2.14-alt8
 - fix ESP partition number detection (closes: #59896)
 - backport upstream fix for "cannot load image" error (closes: #59100)
