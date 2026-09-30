@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.12
+%define major 11.13
 %define rel %nil
 
 # the packages will conflict with that
@@ -359,7 +359,7 @@ BuildRequires: libudev-devel udev libdbus-devel
 BuildRequires: libxcb-devel
 BuildRequires: libICE-devel libSM-devel
 BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
-BuildRequires: libXext-devel libXfixes-devel libXfont-devel libXft-devel libXi-devel
+BuildRequires: libXext-devel libXfixes-devel libXft-devel libXi-devel
 BuildRequires: libXmu-devel libXpm-devel libXrender-devel
 BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
 BuildRequires: libXxf86dga-devel libXcomposite-devel
@@ -943,6 +943,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Tue Sep 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.13-alt1
+- new version 11.13
+- drop libXfont-devel from BuildRequires (unused, removed from Sisyphus)
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.12-alt1
 - new version 11.12
 - set strict require wine-mono 11.2.0
