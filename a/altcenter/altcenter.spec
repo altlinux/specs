@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.43
+Release: alt0.44
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,12 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Wed Sep 30 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.44
+- Added SSH settings plugin.
+- Added plugin menu groups.
+- Report: added FSTEC option to report.
+- Report: fixed policy report states (ALT #60342).
+
 * Tue Aug 18 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.43
 - Report: added localization.
 - Settings: moved report to separate plugin.
