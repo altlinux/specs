@@ -8,7 +8,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
@@ -95,6 +95,9 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Wed Sep 30 2026 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
+- 4.0.2 -> 4.1.0
+
 * Mon Aug 24 2026 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
 - 3.12.0 -> 4.0.2
 
