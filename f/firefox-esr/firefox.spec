@@ -18,7 +18,7 @@
 %define llvm_version  17.0
 
 Name: firefox-esr
-Version: 140.16.0
+Version: 140.17.0
 Release: alt1
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
@@ -37,7 +37,7 @@ Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
 Patch005: 0005-firefox-140-glslopt-once-flag-libc.patch
 Patch006: 0006-firefox-140-fix-sys-seccomp-glibc.patch
-Patch007: 0007-MOZ-bug-2053518-Rust-target-detection-fails-to-translate-1.98.patch
+#Patch007: 0007-MOZ-bug-2053518-Rust-target-detection-fails-to-translate-1.98.patch
 Patch100: 0100-firefox-140.13.0-python3.14-mach-ast.patch
 Patch101: 0101-firefox-140-python3.14-mozbuild-reader.patch
 Patch102: 0102-firefox-140-python3.14-jsonschema.patch
@@ -473,6 +473,53 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Sep 29 2026 Pavel Vasenkov <pav@altlinux.org> 140.17.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2026-100756 Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-100757 Use-after-free in the Widget component
+  + CVE-2026-100758 Sandbox escape in the DOM: Navigation component
+  + CVE-2026-100759 Uninitialized memory in the Storage: Quota Manager component
+  + CVE-2026-100762 Sandbox escape due to use-after-free in the DOM: Content Processes component
+  + CVE-2026-92035 Sandbox escape due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-100766 Information disclosure in the Networking: JAR component
+  + CVE-2026-100767 Use-after-free in the Networking: Cache component
+  + CVE-2026-100769 Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-100770 Sandbox escape due to use-after-free in the DOM: Content Processes component
+  + CVE-2026-100771 Undefined behavior in the DOM: Streams component
+  + CVE-2026-100772 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100773 Use-after-free in the Storage: IndexedDB component
+  + CVE-2026-100774 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100775 Sandbox escape in the Graphics component
+  + CVE-2026-100776 Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-100777 Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-100778 Sandbox escape due to use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100779 Use-after-free in the XSLT component
+  + CVE-2026-100780 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100781 Sandbox escape due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-100782 Privilege escalation due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-100783 Uninitialized memory in the Audio/Video component
+  + CVE-2026-100784 Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-100785 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100786 Sandbox escape due to use-after-free in the Graphics component
+  + CVE-2026-100788 Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-100789 Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-100790 Use-after-free in the XSLT component
+  + CVE-2026-100791 Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100832 Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-100792 JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-100794 Sandbox escape due to incorrect boundary conditions in the Internationalization component
+  + CVE-2026-96869 Information disclosure in the Networking component
+  + CVE-2026-100797 Privilege escalation due to use-after-free in the Graphics: WebRender component
+  + CVE-2026-100801 Privilege escalation in the DLL Services component
+  + CVE-2026-100803 Same-origin policy bypass in the WebExtensions component
+  + CVE-2026-100807 Privilege escalation in the DOM: Service Workers component
+  + CVE-2026-100811 Sandbox escape due to use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100818 Sandbox escape due to use-after-free in the Widget: Gtk component
+  + CVE-2026-100819 Sandbox escape due to incorrect boundary conditions in the XPCOM component
+  + CVE-2026-100820 Privilege escalation in the Address Bar component
+  + CVE-2026-100821 Site isolation issue in the Panning and Zooming component
+
 * Thu Sep 17 2026 Pavel Vasenkov <pav@altlinux.org> 140.16.0-alt1
 - New ESR version.
 - Security fixes:
