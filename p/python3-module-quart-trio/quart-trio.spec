@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: A Quart extension to provide trio support
 License: MIT
@@ -49,11 +49,13 @@ library and supported by default in Quart.
 %pyproject_run_pytest -vra -o=addopts=-Wignore
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 30 2026 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
+- 0.12.0 -> 0.13.0
+
 * Fri Jan 10 2025 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
 - 0.11.1 -> 0.12.0.
 
