@@ -9,12 +9,12 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 11.0.0
+%define mono_version 11.2.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.8
+%define major 11.12
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -769,7 +769,6 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %libwinedir/%winesodir/ctapi32.so
 %libwinedir/%winesodir/dnsapi.so
 %libwinedir/%winesodir/dwrite.so
-%libwinedir/%winesodir/bcrypt.so
 %libwinedir/%winesodir/qcap.so
 %libwinedir/%winesodir/odbc32.so
 %libwinedir/%winesodir/crypt32.so
@@ -953,6 +952,21 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.12.1-alt1
+- new version 11.12.1
+- use Wine Mono 11.2.0
+
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.11.1-alt1
+- new version 11.11.1
+- drop bcrypt.so (bcrypt has no unix library since 11.11)
+
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.10.1-alt1
+- new version 11.10.1
+
+* Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.9.1-alt1
+- new version 11.9.1
+- use Wine Mono 11.1.0
+
 * Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.8.1-alt1
 - new version 11.8.1
 
