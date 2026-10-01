@@ -1,11 +1,12 @@
 %define libmajor 5
 %define libname libwget%libmajor
 %define devname	libwget-devel
+%set_autoconf_version 2.71
 
 Name: wget2
 Summary: The successor of GNU Wget, a file and recursive website downloader
 Version: 2.3.0
-Release: alt1
+Release: alt2
 License: %gpl3plus
 Group: Networking/WWW
 Url: https://gitlab.com/gnuwget/wget2
@@ -94,6 +95,10 @@ rm -rf %buildroot%_bindir/wget2_noinstall
 %_mandir/man3/libwget-*.3*
 
 %changelog
+* Tue Sep 29 2026 Alexander Danilov <admsasha@altlinux.org> 2.3.0-alt2
+- Set the version of autoconf to 2.71 to simplify the build
+  into the old branches.
+
 * Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt1
 - 2.2.1 -> 2.3.0
 - soname bumped: libwget4 -> libwget5
