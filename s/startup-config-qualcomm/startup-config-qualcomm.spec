@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: startup-config-qualcomm
-Version: 4
+Version: 5
 Release: alt1
 Summary: Startup script for qualcomm
 License: MIT
@@ -32,15 +32,20 @@ install -m 0755 configure-q6voiced.sh %buildroot%_sbindir/configure-q6voiced
 install -m 0644 configure-firmware-path.service %buildroot%_unitdir
 install -m 0644 configure-q6voiced.service %buildroot%_unitdir
 install -m 0644 90-setup-userdata-subparts.rules %buildroot%_udevdir/initramfs-rules.d
+install -Dm 0644 wait-for-mm.override.conf %buildroot%_unitdir/NetworkManager.service.d/wait-for-mm.override.conf
 
 %files
 %_sbindir/configure-firmware-path
 %_sbindir/configure-q6voiced
 %_unitdir/configure-firmware-path.service
 %_unitdir/configure-q6voiced.service
+%_unitdir/NetworkManager.service.d/wait-for-mm.override.conf
 %_udevdir/initramfs-rules.d/90-setup-userdata-subparts.rules
 
 %changelog
+* Wed Sep 30 2026 Vasiliy Doylov <neko@altlinux.org> 5-alt1
+- Add ModemManager -> NetworkManager order sort.
+
 * Sat Aug 15 2026 Vasiliy Doylov <neko@altlinux.org> 4-alt1
 - Change q6voiced config path.
 
