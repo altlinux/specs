@@ -8,18 +8,18 @@
 %def_enable test
 
 Name: libnss-role
-Version: 0.5.6
-Release: alt4
+Version: 0.6.0
+Release: alt1
 
 Summary: NSS API library and admin tools for roles and privilegies
 
 License: LGPLv2.1
-URL: https://github.com/altlinux/libnss-role
+URL: https://github.com/Etersoft/libnss-role
 Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# https://github.com/altlinux/libnss-role.git
+# https://github.com/Etersoft/libnss-role.git
 Source: %name-%version.tar
 
 BuildRequires: glibc-devel
@@ -105,6 +105,7 @@ fi
 %_sbindir/roledel
 %_bindir/rolelst
 %_libdir/*.so.*
+%_man5dir/*
 %_man8dir/*
 %config %_controldir/%name
 
@@ -113,6 +114,19 @@ fi
 %_includedir/role/
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0
+- fix double free in NSS module when winbind is not running yet (closes: #60776)
+- skip groups from unavailable group database (winbind) in NSS module,
+  don't rewrite role files with such groups in roleadd/roledel
+- treat missing /etc/role as empty configuration
+- roledel: show the file in /etc/role.d defining the role
+- fix memory errors: buffer overflow in librole_get_group_name(),
+  realloc() handling, long options, short role file names
+- fix /etc/role locking, replace role files atomically
+- add role(5) manpage, update documentation and help
+- extend unit tests, run them with ctest
+
 * Thu Sep 19 2024 Evgeny Sinelnikov <sin@altlinux.org> 0.5.6-alt4
 - Fix control support with various role module using.
 - Fix not standart setup of libnss-role during upgrade (closes #50704).
