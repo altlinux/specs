@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 1.32.0
+Version: 1.32.4
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -46,6 +46,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 01 2026 Stanislav Levin <slev@altlinux.org> 1.32.4-alt1
+- 1.32.0 -> 1.32.4
+
 * Tue Aug 18 2026 Stanislav Levin <slev@altlinux.org> 1.32.0-alt1
 - 1.31.0 -> 1.32.0
 
