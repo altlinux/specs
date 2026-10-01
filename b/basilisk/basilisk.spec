@@ -1,16 +1,16 @@
-%define git_commit a1b5fdf
+%define git_commit b0aa524
 
 Summary: The Basilisk web browser
 Summary(ru_RU.UTF-8): Интернет-браузер Baselisk - неофициальная сборка браузера palemoon
 
-%define vendor_version 2026.06.12
+%define vendor_version 2026.09.24
 
 Name: basilisk
 Version:  %vendor_version
 Epoch:  1
 
 #Release: alt1_%git_commit.1
-Release: alt3
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -335,7 +335,7 @@ printf '%_bindir/x-www-browser\t%_bindir/%name\t170\n' >> ./%_altdir/%name
 install -d  %buildroot/%_docdir/%name-%version/
 # Add Doc
 install -D -m 644 %_builddir/basilisk-%version/AUTHORS %buildroot/%_docdir/%name-%version/
-install -D -m 644 %_builddir/basilisk-%version/LICENSE %buildroot/%_docdir/%name-%version/
+install -D -m 644 %_builddir/basilisk-%version/LICENSE.md %buildroot/%_docdir/%name-%version/
 install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%name-%version/
 
 %files -n %name
@@ -347,7 +347,7 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
-%doc AUTHORS LICENSE README.md
+%doc AUTHORS LICENSE.md README.md
 %_altdir/%name
 %_bindir/%name
 
@@ -359,6 +359,9 @@ install -D -m 644 %_builddir/basilisk-%version/README.md %buildroot/%_docdir/%na
 %exclude %_includedir/*
 
 %changelog
+* Tue Sep 29 2026 Hihin Ruslan <ruslandh@altlinux.ru> 1:2026.09.24-alt1
+- Update to v2026.09.24
+
 * Wed Sep 09 2026 Hihin Ruslan <ruslandh@altlinux.ru> 1:2026.06.12-alt3
 - Add mozilaconfs/linux in souurce
 
