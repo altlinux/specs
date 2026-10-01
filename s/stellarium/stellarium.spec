@@ -35,7 +35,7 @@
 %def_with    telescopecontrol
 
 Name: stellarium
-Version: 26.2
+Version: 26.3
 Release: alt1
 
 Summary: Astronomical Sky Simulator
@@ -171,6 +171,9 @@ xvfb-run %ctest -E testCalendars
 %_datadir/%name
 
 %changelog
+* Thu Oct 01 2026 Grigory Ustinov <grenka@altlinux.org> 26.3-alt1
+- New version 26.3.
+
 * Tue Jul 07 2026 Grigory Ustinov <grenka@altlinux.org> 26.2-alt1
 - New version 26.2.
 
