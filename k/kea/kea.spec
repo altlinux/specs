@@ -6,7 +6,7 @@
 %define _runstatedir /run
 
 Name: kea
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -365,6 +365,9 @@ useradd -M -r -d %_sharedstatedir/%name -s /bin/false -c "Kea DHCP service user"
 %python3_sitelibdir_noarch/%name
 
 %changelog
+* Thu Oct 01 2026 Anton Farygin <rider@altlinux.org> 3.2.1-alt1
+- 3.2.0 -> 3.2.1
+
 * Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 3.2.0-alt1
 - 3.0.3 -> 3.2.0
 - drop ctrl-agent subpackage (Control Agent removed upstream,

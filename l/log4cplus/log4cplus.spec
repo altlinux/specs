@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-%define soname 9
+%define soname 11
 %def_without python
 
 Name: log4cplus
-Version: 2.1.2
-Release: alt2
+Version: 2.2.0.1
+Release: alt1
 Summary: Logging library to C++
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/C++
@@ -122,6 +122,9 @@ sed -i 's|^\(SWIG =.*\)|\1 -py3|' $(find ./ -name Makefile)
 %endif
 
 %changelog
+* Thu Oct 01 2026 Anton Farygin <rider@altlinux.org> 2.2.0.1-alt1
+- 2.1.2 -> 2.2.0.1
+
 * Thu Aug 07 2025 Anton Farygin <rider@altlinux.com> 2.1.2-alt2
 - fix FTBFS: built without python
 
