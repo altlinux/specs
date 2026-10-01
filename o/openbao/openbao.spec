@@ -2,7 +2,7 @@
 %define import_path github.com/openbao/openbao
 
 Name: openbao
-Version: 2.5.5
+Version: 2.6.3
 Release: alt1
 
 Summary: Secure secrets and encryption management system
@@ -89,6 +89,46 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Thu Oct 01 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.6.3-alt1
+- Updated to new version 2.6.3.
+- Fixes:
+  + GHSA-444v-8vxr-p36h: ensure previously rendered secrets do not appear in
+    stdout on agent template rendering failures (command/agent)
+  + GHSA-34fc-gh42-pj53: use constant-time token comparison in recovery mode
+    (core/recovery)
+  + GHSA-xp3c-3jw3-4vcr: prevent LIST operations from bypassing a
+    capabilities = ["deny"] rule via a more specific wildcard ACL grant
+    (core/policies)
+  + GHSA-59w7-v8rr-pr4p: reject unescaped +, *, / and , characters in
+    identity template substitutions by default, preventing ACL/PKI/SSH path
+    injection (core/policies, secret/pki, secret/ssh)
+  + GHSA-rh46-vc3j-w2w3: ensure internal operation types cannot be dispatched
+    from inline authentication and workflows, preventing token creation (core)
+  + GHSA-g892-p242-8g86: also enforce allowed_ip_sans_cidr on IP SANs from
+    CSRs (secrets/pki)
+  + GHSA-8gmq-wv9h-fcwp: ensure the quit endpoint requires the
+    X-Vault-Request header when specified by listener configuration
+    (agent, proxy)
+  + GHSA-fg5x-7whg-6c28: use ResolvePathOperation to define canonical URLs
+    for canonicalized resources (auth/cert, auth/kubernetes, auth/userpass,
+    secrets/pki, core/policies, core/workflows)
+  + GHSA-j6wc-jpvg-xfxq: ensure plugin command name is relative to
+    plugin_directory prior to executing (core/plugins)
+  + GHSA-cg72-x35g-xfp8: restrict writes to sys/plugins/catalog/* endpoints
+    to the root namespace (core/plugins)
+  + GHSA-hr5j-3j78-4vh2: ensure denied ACL policy template evaluation returns
+    an error and is not silently dropped (core/policies)
+  + GHSA-mjch-vcw3-hhmf: prevent cross-namespace policy resolution traversal
+    in the LRU policy cache (core/policies)
+  + GHSA-8xxq-mq9m-xmhw: prevent TypeKVPair, TypeHeader from leaking
+    malformed request data into audit logs in plaintext (sdk)
+  + GHSA-x8fg-h69x-p28f: forbid issuance of non-validated SANs through ACME
+    (secrets/pki)
+  + GHSA-2cjw-94fw-wqjx: remove support for prompt=none redirection in the
+    OIDC provider (ui)
+- Package now switches the UI build from yarn to pnpm, following upstream's
+  migration in 2.6.0.
+
 * Wed Jul 08 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.5-alt1
 - Updated to new version 2.5.5.
 - Fixes:
