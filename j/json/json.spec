@@ -39,7 +39,7 @@ Name:		json
 Summary:	JavaScript Object Notation
 Url:		http://www.json.org/java/index.html
 Version:	20080425
-Release:	alt7_2jpp6
+Release:	alt8
 Epoch:		0
 License:	Open Source
 Group:		Development/Java
@@ -81,7 +81,7 @@ mv org src
 
 %build
 mkdir -p target/classes
-%{_jvmdir}/java/bin/javac  -target 1.6 -source 1.6 -d target/classes $(find src -name "*.java")
+%{_jvmdir}/java/bin/javac  -target 1.8 -source 1.8 -d target/classes $(find src -name "*.java")
 %{_jvmdir}/java/bin/jar cf target/%{name}.jar -C target/classes org
 #mkdir -p target/site/apidocs
 #%{_jvmdir}/java/bin/javadoc -d target/site/apidocs $(find src -name "*.java")
@@ -103,6 +103,9 @@ mkdir -p target/classes
 #%doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Oct 01 2026 Anton Meleshnikov <alton@altlinux.org> 0:20080425-alt8
+- fixed FTBFS
+
 * Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 0:20080425-alt7_2jpp6
 - migrated to %%mvn_artifact
 
