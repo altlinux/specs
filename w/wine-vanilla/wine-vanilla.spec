@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.16
+%define major 11.17
 %define rel %nil
 
 # the packages will conflict with that
@@ -944,6 +944,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.17-alt1
+- new version 11.17
+
 * Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.16-alt1
 - new version 11.16
 - requires Wine Mono 11.3.0
