@@ -1,5 +1,5 @@
 Name:    jacktrip
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: JackTrip: multi-machine audio network performance over the Internet
@@ -60,6 +60,9 @@ subst 's/qmake6/qmake-qt6/g' ./meson.build
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Sep 25 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.0.1-alt1
+- 3.0.0 -> 3.0.1
+
 * Mon Apr 27 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.0.0-alt1
 - 2.7.2 -> 3.0.0
 
