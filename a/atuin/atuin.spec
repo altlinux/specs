@@ -3,7 +3,7 @@
 %def_with check
 
 Name: atuin
-Version: 18.19.0
+Version: 18.23.0
 Release: alt1
 
 Summary: Magical shell history
@@ -34,6 +34,7 @@ ExcludeArch: i586
 BuildRequires: postgresql15
 BuildRequires: postgresql15-server
 BuildRequires: postgresql15-contrib
+BuildRequires: git-core
 BuildRequires: /dev/pts
 %endif
 
@@ -140,6 +141,9 @@ export ATUIN_DB_URI="postgres:///atuin?host=${PG_DATA}&port=${PG_PORT}"
 %doc LICENSE
 
 %changelog
+* Wed Sep 30 2026 Boris Yumankulov <boria138@altlinux.org> 18.23.0-alt1
+- new version 18.23.0
+
 * Thu Aug 20 2026 Boris Yumankulov <boria138@altlinux.org> 18.19.0-alt1
 - new version 18.19.0 (ALT bug: 60179)
 - build with system sqlite
