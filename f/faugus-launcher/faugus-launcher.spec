@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: faugus-launcher
-Version: 1.22.7
+Version: 2.4.2
 Release: alt1
 
 Summary: A simple and lightweight app for running Windows games using UMU-Launcher
@@ -20,10 +20,19 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: gtk-update-icon-cache
 
+# find-requires scans Python imports (including function-local imports), but
+# cannot infer GI typelibs selected by gi.require_version() or commands launched
+# from Python (gamemoderun, mangohud, xdg-open, icoextract); keep these in sync.
 Requires: gamemode
-Requires: convert
-Requires: typelib(AyatanaAppIndicator3)
-Requires: typelib(Gtk) = 3.0
+Requires: mangohud
+Requires: python3(dbus)
+Requires: python3(psutil)
+Requires: python3(PIL)
+Requires: typelib(Gtk) = 4.0
+Requires: typelib(Adw)
+Requires: typelib(Manette)
+Requires: xdg-utils
+Requires: /usr/bin/icoextract
 
 %description
 %summary.
@@ -37,21 +46,23 @@ Requires: typelib(Gtk) = 3.0
 
 %install
 %meson_install
-%find_lang --output=%name.lang faugus-proton-manager faugus-run %name
+%find_lang --output=%name.lang %name
 
 %files -f %name.lang
 %doc %_datadir/licenses/faugus-launcher/LICENSE
 %_bindir/faugus-launcher
-%_bindir/faugus-run
-%_desktopdir/faugus-launcher.desktop
-%_desktopdir/faugus-shortcut.desktop
+%_desktopdir/io.github.Faugus.faugus-launcher.desktop
+%_desktopdir/io.github.Faugus.faugus-launcher.shortcut.desktop
 %python3_sitelibdir/faugus/
 %_datadir/faugus-launcher/
 %_iconsdir/hicolor/scalable/actions/*.svg
 %_iconsdir/hicolor/scalable/apps/*.svg
-%_datadir/metainfo/faugus-launcher.metainfo.xml
+%_datadir/metainfo/io.github.Faugus.faugus-launcher.metainfo.xml
 
 %changelog
+* Wed Sep 30 2026 Boris Yumankulov <boria138@altlinux.org> 2.4.2-alt1
+- new version 2.4.2
+
 * Mon Jul 06 2026 Boris Yumankulov <boria138@altlinux.org> 1.22.7-alt1
 - new version 1.22.7
 
@@ -78,6 +89,3 @@ Requires: typelib(Gtk) = 3.0
 
 * Mon Feb 02 2026 Boris Yumankulov <boria138@altlinux.org> 1.13.11-alt1
 - initial build for ALT Sisyphus
-
-
-
