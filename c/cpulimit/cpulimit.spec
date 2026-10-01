@@ -1,18 +1,19 @@
 Name: cpulimit
 Epoch: 1
-Version: 0.2
+Version: 3.2
 Release: alt1
 
 Summary: CPU Usage Limiter
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Url: https://github.com/opsengine/cpulimit
-License: GPL-2.0-or-later
+Url: https://limitcpu.sourceforge.net
+License: GPL-2.0-only
 Group: Monitoring
 
-# Source-url: https://github.com/opsengine/cpulimit/archive/refs/tags/v%version.tar.gz
+# Source-url: https://downloads.sourceforge.net/limitcpu/cpulimit-%version.tar.gz
 Source: %name-%version.tar
+Patch0: cpulimit-0.2-compat.patch
 
 %description
 cpulimit is a tool which limits the CPU usage of a process (expressed in
@@ -25,17 +26,28 @@ POSIX signals to processes.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
-%make_build
+%make_build CFLAGS="%optflags"
 
 %install
-install -Dp -m 755 src/%name %buildroot%_bindir/%name
+install -Dp -m 755 %name %buildroot%_bindir/%name
+install -Dp -m 644 %name.1 %buildroot%_man1dir/%name.1
 
 %files
+%doc README CHANGELOG
 %_bindir/%name
+%_man1dir/%name.1*
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:3.2-alt1
+- new version 3.2
+- switch upstream to limitcpu (continuation of the original cpulimit 1.x),
+  opsengine/cpulimit is abandoned since 2015
+- add compatibility with opsengine cpulimit 0.2 command line:
+  -i/--include-children as alias for -m, stop option parsing at the command
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.2-alt1
 - new version 0.2, switched upstream to GitHub (opsengine/cpulimit)
 - applied Fedora patches for modern Linux kernel compatibility
