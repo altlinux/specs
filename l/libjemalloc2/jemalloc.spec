@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define title jemalloc
 %define sorev 2
 
 %def_with check
 
 Name: libjemalloc2
-Version: 5.3.0
-Release: alt2.1
+Version: 5.4.0
+Release: alt1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
-Group: System/Libraries
 License: BSD
+Group: System/Libraries
 Url: http://jemalloc.net/
 VCS: https://github.com/jemalloc/jemalloc
 
@@ -18,7 +19,6 @@ Patch: %name-%version-alt.patch
 # Automatically added by buildreq on Mon May 14 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel python-base
 BuildRequires: gcc-c++
-BuildRequires: xsltproc docbook-style-xsl
 
 %if_with check
 BuildRequires: /proc
@@ -68,32 +68,27 @@ Development files of %title
 
 %configure \
     --with-version='%version-0-g0' \
-    --with-xslroot=/usr/share/xml/docbook/xsl-stylesheets \
+    --disable-static \
 %ifarch %e2k
     --with-lg-quantum=4 \
 %endif
     %nil
 
 %make_build
-%make doc
 
 %install
 %makeinstall_std
-
-mv %buildroot%_defaultdocdir/jemalloc{,%sorev}
+# don't ship html docs
+rm -r %buildroot%_defaultdocdir/jemalloc/
 
 # add so.2 -> so.2.0
 mv %buildroot%_libdir/libjemalloc.so.%sorev{,.0}
 ln -s libjemalloc.so.%sorev.0 %buildroot%_libdir/libjemalloc.so.%sorev
 
-rm -r %buildroot%_libdir/*.a
-
 %check
 %make_build VERBOSE=1 check
 
 %files
-%doc %_defaultdocdir/jemalloc2
-%doc COPYING README TUNING* VERSION
 %_libdir/libjemalloc.so.%sorev
 %_libdir/libjemalloc.so.%sorev.0
 
@@ -109,6 +104,9 @@ rm -r %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 5.4.0-alt1
+- 5.3.0 -> 5.4.0
+
 * Fri Nov 28 2025 Paul Wolneykien <manowar@altlinux.org> 5.3.0-alt2.1
 - Added a note about CWE-489 fixed in 5.3.0.
 
