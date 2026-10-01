@@ -3,7 +3,7 @@
 
 Name: mysql-workbench-community
 Version: 8.0.47
-Release: alt8
+Release: alt9
 
 Summary: A MySQL visual database modeling tool
 
@@ -24,13 +24,12 @@ Patch1: %name-8.0.20-alt-boost-1.73.0-compat.patch
 Patch2: %name-8.0.33-alt-fix-finding-odbc.patch
 Patch3: %name-8.0.33-alt-arm-fix.patch
 Patch4: %name-8.0.40-alt-fix-gcc14-build.patch
-Patch5: %name-8.0.43-swig-4.3.patch
+Patch5: %name-8.0.47-python-long-swig-4.5.patch
 Patch6: %name-8.0.47-alt-boost-1.91.patch
 Patch7: %name-8.0.47-alt-python-int.patch
 Patch8: %name-8.0.47-alt-python-importlib.patch
 Patch9: %name-8.0.47-arch-C++20.patch
-Patch10: %name-8.0.47-arch-python-long-types.patch
-Patch11: %name-8.0.47-arch-replace-deprecated-python-modules-pipes-with-shlex.patch
+Patch10: %name-8.0.47-arch-replace-deprecated-python-modules-pipes-with-shlex.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -267,6 +266,9 @@ rm -f %buildroot%_datadir/mysql-workbench/extras/build_freetds.sh
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Thu Oct 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 8.0.47-alt9
+- NMU: fix FTBFS with swig 4.5.
+
 * Tue Sep 22 2026 Andrey Cherepanov <cas@altlinux.org> 8.0.47-alt8
 - Did not require versioning libgdal.
 
