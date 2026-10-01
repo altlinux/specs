@@ -10,7 +10,7 @@
 %def_without vendored
 
 Name: python3-module-%pypi_name
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 Summary: Poetry Core
 License: MIT
@@ -37,7 +37,6 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps -- vendored
 %endif
 %if_with check
-%add_pyproject_deps_check_filter vendoring
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 # required to build C extension, e.g. test_build_wheel_extended
@@ -86,6 +85,9 @@ rm -r ./src/%vendor_path/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 01 2026 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.4.1 -> 2.5.0
+
 * Mon May 25 2026 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
 - 2.4.0 -> 2.4.1.
 
