@@ -2,13 +2,13 @@
 
 %global freecadlibdir %_libdir/freecad
 
-%global package_wcref 145529fe74
-%global package_wcdate 2026/07/25
+%global package_wcref 4fd3bf320d
+%global package_wcdate 2026/09/25
 
 %add_python3_path %freecadlibdir/Mod %freecadlibdir/Ext/*
 
 Name: freecad
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Epoch: 1
 
@@ -31,16 +31,18 @@ Patch5: freecad-1.0.0-alt-print-attributes.patch
 Patch6: freecad-1.1.1-alt-revert-github-pr-25825.patch
 Patch7: freecad-1.1.1-alt-fix-cmake-helpers.patch
 
-BuildRequires(pre): rpm-build-cmake
-BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-build-xdg
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires(pre): rpm-macros-qt6-webengine
+BuildRequires: rpm-build-xdg
+BuildRequires: rpm-build-ninja
 
 # Development tools
 BuildRequires: doxygen graphviz
 BuildRequires: gcc-c++ gcc-fortran
 BuildRequires: swig
-BuildRequires: ninja-build
 
 # To generate man page
 BuildRequires: help2man
@@ -282,6 +284,9 @@ install -Dpm 0644 %name.1 %buildroot/%_man1dir/%name.1
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Thu Oct 01 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.4-alt1
+- New version.
+
 * Tue Aug 11 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.3-alt1
 - New version.
 - Fix FTBFS.
