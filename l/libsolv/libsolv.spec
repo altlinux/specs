@@ -1,6 +1,6 @@
 Name: libsolv
 Version: 0.7.39
-Release: alt1.2
+Release: alt1.3
 
 Summary: Library for solving packages and reading repositories
 License: BSD
@@ -11,6 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: libsolv-rpmset.patch
+Patch1: libsolv-alt-rpmlib-unversioned.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -44,6 +45,7 @@ Group: System/Configuration/Packaging
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 %cmake -GNinja \
@@ -81,6 +83,10 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.3
+- Let the system provide unknown unversioned rpmlib() requires, as it does
+  for versioned ones (fixes dnf5 install of local ALT rpm files).
+
 * Mon Aug 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.2
 - Add RPM set-version support.
 
