@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cinderward
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: A simple, no-nonsense, init-agnostic, Wayland-friendly GUI for firewalld
@@ -53,6 +53,9 @@ sed -i "s/REQUIRED_MAUIKIT_VERSION 4.0.4/REQUIRED_MAUIKIT_VERSION 4.0.2/" CMakeL
 %_desktopdir/org.nitrux.cinderward.desktop
 
 %changelog
+* Thu Oct 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.6-alt1
+- New version 0.0.6.
+
 * Sat Jul 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.5-alt1
 - New version 0.0.5.
 
