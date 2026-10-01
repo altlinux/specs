@@ -2,7 +2,7 @@
 %def_disable snapshot
 
 %define _name libsoup
-%define ver_major 3.6
+%define ver_major 3.8
 %define api_ver 3.0
 %define namespace Soup
 
@@ -12,6 +12,7 @@
 %def_enable vala
 %def_with gssapi
 %def_enable brotli
+%def_enable zstd
 %def_disable debug
 %def_disable sysprof
 # moved to PyGobject since 3.0.1
@@ -19,7 +20,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.6
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -40,6 +41,7 @@ Requires: glib-networking >= 2.70
 %define glib_ver 2.70
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
+%define zstd_ver 1.4.0
 
 BuildRequires(pre): rpm-macros-meson
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
@@ -57,6 +59,7 @@ BuildRequires: gobject-introspection-devel >= %gi_ver}
 BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
 %{?_enable_brotli:BuildRequires: libbrotli-devel}
+%{?_enable_zstd:BuildRequires: pkgconfig(libzstd) > %zstd_ver}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: /proc curl}
@@ -146,6 +149,7 @@ This package provides PyGObject overrides for SoupMessageHeaders.
     %{subst_enable_meson_feature introspection introspection} \
     %{subst_enable_meson_feature gssapi gssapi} \
     %{subst_enable_meson_feature brotli brotli} \
+    %{subst_enable_meson_feature zstd zstd} \
     %{subst_enable_meson_feature sysprof sysprof}
 %nil
 %meson_build
@@ -193,6 +197,10 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %endif
 
 %changelog
+* Thu Oct 01 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
+- 3.8.0 (fixed CVE-2026-85534, CVE-2026-3633, CVE-2026-15709,
+  CVE-2026-15711, CVE-2026-3099)
+
 * Sun Feb 15 2026 Yuri N. Sedunov <aris@altlinux.org> 3.6.6-alt1
 - 3.6.6
 

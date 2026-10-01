@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: %_name
-Version: 0.15.7
+Version: 0.15.8
 Release: alt1
 
 Summary: A fast high compression read-only file system
@@ -133,6 +133,9 @@ ln -sf ../../sbin/%{_name}extract %buildroot%_bindir/%{_name}extract
 %exclude %_libdir/cmake/%_name/
 
 %changelog
+* Thu Oct 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.8-alt1
+- 0.15.8
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.7-alt1
 - 0.15.7
 
