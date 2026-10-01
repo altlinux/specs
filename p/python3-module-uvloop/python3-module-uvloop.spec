@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.22.1
-Release: alt3.11.ga308f75
+Version: 0.23.0
+Release: alt1
 
 Summary: Ultra fast asyncio event loop
 License: MIT and Apache-2.0
@@ -59,6 +59,9 @@ rm -rf %mod_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 01 2026 Anton Zhukharev <ancieg@altlinux.org> 0.23.0-alt1
+- Updated to 0.23.0.
+
 * Wed Mar 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.22.1-alt3.11.ga308f75
 - Fixed FTBFS (python>=3.13).
 
