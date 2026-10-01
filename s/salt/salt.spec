@@ -2,8 +2,8 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3008.1
-Release: alt2
+Version: 3008.3
+Release: alt1
 Epoch: 1
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -25,7 +25,6 @@ Source10: altpkg.py
 Source11: alt.py
 
 Patch1: salt-alt-supported-names.patch
-Patch2: salt-alt-minion-KillMode.patch
 
 AutoReq: yes, noshell
 
@@ -266,6 +265,12 @@ install -D -m 0644 %SOURCE11 %buildroot%python3_sitelibdir/%name/utils/pkg
 %_bindir/salt-proxy
 
 %changelog
+* Thu Oct 01 2026 Andrey Cherepanov <cas@altlinux.org> 1:3008.3-alt1
+- New version.
+
+* Wed Sep 30 2026 Andrey Cherepanov <cas@altlinux.org> 1:3008.2-alt1
+- New version.
+
 * Tue Aug 18 2026 Grigory Ustinov <grenka@altlinux.org> 1:3008.1-alt2
 - NMU: added support for ALT Linux.
 
