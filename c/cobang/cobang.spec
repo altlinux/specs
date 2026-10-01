@@ -1,6 +1,6 @@
 %define __name CoBang
 %define _name cobang
-%define ver_major 2.8
+%define ver_major 2.9
 %define rdn_name vn.hoabinh.quan.%__name
 
 %def_enable check
@@ -69,6 +69,9 @@ remote.
 %doc README.*
 
 %changelog
+* Thu Oct 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.9.0-alt1
+- 2.9.0
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
