@@ -1,6 +1,6 @@
 Name:     createrepo_c
 Version:  1.2.4
-Release:  alt2
+Release:  alt3
 Summary:  Creates a common metadata repository
 License:  GPL-2.0+
 Group:    System/Configuration/Packaging
@@ -11,6 +11,7 @@ Source0:  %name-%version.tar
 Patch0:   %name-set-versions.patch
 Patch1:   %name-disttag.patch
 Patch2:   %name-alt-gcc14.patch
+Patch3:   %name-alt-primary-files.patch
 
 ExcludeArch: ppc64le
 
@@ -73,6 +74,7 @@ Python 3 bindings for the createrepo_c library.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export CMAKE_CXX_FLAGS="%optflags"
@@ -102,6 +104,11 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt3
+- List in primary.xml the same files as genpkglist keeps in APT indexes:
+  shared libraries, jars, fonts, /usr/games and --primary-files paths
+  (file dependencies of the repository).
+
 * Wed Aug 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt2
 - Preserve disttags in dependency versions in RPM-MD metadata.
 
