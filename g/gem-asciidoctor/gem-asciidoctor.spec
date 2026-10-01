@@ -6,7 +6,7 @@
 
 Name:          gem-asciidoctor
 Version:       2.0.26
-Release:       alt1
+Release:       alt1.1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats
 License:       MIT
 Group:         Documentation
@@ -62,12 +62,13 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 
 %package       -n asciidoctor
 Version:       2.0.26
-Release:       alt1
+Release:       alt1.1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета asciidoctor
 Group:         Other
 BuildArch:     noarch
 
+Requires:      ruby
 Requires:      gem(asciidoctor) = 2.0.26
 
 %description   -n asciidoctor
@@ -84,7 +85,7 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 %if_enabled    doc
 %package       -n gem-asciidoctor-doc
 Version:       2.0.26
-Release:       alt1
+Release:       alt1.1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета asciidoctor
 Group:         Development/Documentation
@@ -109,7 +110,7 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 %if_enabled    devel
 %package       -n gem-asciidoctor-devel
 Version:       2.0.26
-Release:       alt1
+Release:       alt1.1
 Summary:       A fast text processor and publishing toolchain for converting AsciiDoc content to different formats development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета asciidoctor
 Group:         Development/Ruby
@@ -182,6 +183,9 @@ AsciiDoc content to HTML5, DocBook 5 (or 4.5) and other formats.
 
 
 %changelog
+* Thu Oct 01 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.26-alt1.1
+- ! fixed lost deps to ruby binary
+
 * Sun May 31 2026 Pavel Skrylev <majioa@altlinux.org> 2.0.26-alt1
 - ^ 2.0.20 -> 2.0.26
 
