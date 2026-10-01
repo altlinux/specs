@@ -2,7 +2,7 @@
 
 Name: pi
 Epoch:1 
-Version: 0.87.1
+Version: 0.99.2
 Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
@@ -13,15 +13,16 @@ Vcs: https://github.com/earendil-works/pi.git
 
 Source0: %name-%version.tar
 Source1: %name-%version-node_modules.tar
-Source2: %name-%version-model-data.tar
-Source3: copy-production-tree.mjs
-Patch0: pi-0.84.3-alt-tsconfig-es2024.patch
+Source2: %name-%version-ai-node_modules.tar
+Source3: %name-%version-coding-agent-node_modules.tar
+Source4: %name-%version-model-data.tar
+Source5: copy-production-tree.mjs
 # pi is managed by RPM: no online version check, no self-update.
-Patch1: pi-0.84.3-alt-disable-update-check.patch
+Patch0: pi-0.84.3-alt-disable-update-check.patch
 # The esbuild bundle is only for npm distribution; we ship the unbundled
 # dist + node_modules. Vendored esbuild is linux-x64 only and breaks the
 # noarch rebuild on other arches.
-Patch2: pi-0.86.0-alt-no-esbuild-bundle.patch
+Patch1: pi-0.86.0-alt-no-esbuild-bundle.patch
 
 BuildArch: noarch
 
@@ -59,21 +60,23 @@ tag and ships the production JavaScript tree plus vendored npm dependencies.
 It needs only a Node.js runtime at install time.
 
 %prep
-%setup -a1 -a2
+%setup -a1 -a2 -a3 -a4
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 export HUSKY=0
 export npm_config_ignore_scripts=true
-# npm puts node_modules/.bin first; the vendored tsgo is host-only native-preview.
+# npm puts node_modules/.bin first. Vendored typescript@7 is a launcher for
+# @typescript/typescript-linux-${arch}; npm ci only fetched the build host.
+# System typescript-go is the same compiler, built per arch. Scripts call tsc.
+ln -sfn /usr/bin/tsgo node_modules/.bin/tsc
 ln -sfn /usr/bin/tsgo node_modules/.bin/tsgo
 npm run build:offline
 
 %install
 install -d %buildroot%nodejs_sitelib/%name
-node %SOURCE3 . %buildroot%nodejs_sitelib/%name
+node %SOURCE5 . %buildroot%nodejs_sitelib/%name
 chmod 0755 %buildroot%nodejs_sitelib/%name/dist/cli.js
 
 # Drop native addons so the noarch package does not ship arch-specific ELF.
@@ -102,6 +105,13 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Oct 01 2026 Anton Farygin <rider@altlinux.org> 1:0.99.2-alt1
+- 0.87.1 -> 0.99.2
+- Dropped the ES2024 tsconfig patch: upstream already targets ES2024.
+- Refreshed the no-esbuild patch for the codemode/mcp build:offline chain.
+- Vendor unhoisted workspace node_modules so the offline build resolves the same copies as npm ci.
+- Build with system tsgo: vendored tsc is a host-only native launcher.
+
 * Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 1:0.87.1-alt1
 - 0.87.0 -> 0.87.1
 
