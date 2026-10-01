@@ -10,7 +10,7 @@
 
 Name: freeipmi
 Version: 1.6.19
-Release: alt1
+Release: alt2
 
 Summary: GNU FreeIPMI - Intelligent Platform Management System
 Group: Monitoring
@@ -25,6 +25,9 @@ Source1: %name.watch
 Patch: %name-%version-%release.patch
 
 BuildRequires: libgcrypt-devel texinfo
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 %description
 This project provides "Remote-Console" (out-of-band) and
@@ -86,6 +89,10 @@ GNU FreeIPMI documentation.
 %setup
 %add_optflags -D_GNU_SOURCE
 %patch -p1
+%ifarch %e2k
+# error: unrecognized preprocessing directive
+sed -i 's/$(CPP_FOR_BUILD)/clang-cpp/' man/Makefile.am
+%endif
 
 %build
 %autoreconf
@@ -192,6 +199,9 @@ touch %_localstatedir/%name/ipckey
 %_infodir/%name-faq.info*
 
 %changelog
+* Thu Oct 01 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.19-alt2
+- e2k build fix
+
 * Mon Sep 07 2026 Anton Farygin <rider@altlinux.org> 1.6.19-alt1
 - 1.6.18 -> 1.6.19
 
