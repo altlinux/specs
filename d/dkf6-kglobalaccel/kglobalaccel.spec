@@ -1,36 +1,38 @@
-%define rname kdoctools
+%define rname kglobalaccel
+%ifndef _userunitdir
+%define _userunitdir %prefix/lib/systemd/user
+%endif
+%define service_name plasma-kglobalaccel
 
 Name: dkf6-%rname
 Version: 6.28.0
-Release: alt0.dde.2
-%DK6init altplace
+Release: alt0.dde.1
+%DK6init
 
 Group: System/Libraries
-Summary: KDE Frameworks 6 creating documentation from DocBook
+Summary: KDE Frameworks 6 global desktop keyboard shortcuts
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
-
-Requires: docbook-style-xsl
+License: LGPL-2.0-or-later
 
 Source: %name-%version.tar
-Patch1: alt-find-docbookxml.patch
-Patch2: alt-doc-dirs-fallback.patch
 
-# Automatically added by buildreq on Wed Feb 11 2015 (-bi)
-# optimized out: cmake cmake-modules docbook-dtds elfutils libcloog-isl4 libgpg-error libqt6-core libstdc++-devel libxml2-devel pkg-config python-base xml-common xml-utils
-#BuildRequires: docbook-style-xsl extra-cmake-modules gcc-c++ kf6-karchive-devel kf6-ki18n-devel libxslt-devel python-module-google qt6-base-devel ruby ruby-stdlibs xsltproc
 BuildRequires(pre): rpm-build-dkf6
 BuildRequires: deepin-extra-cmake-modules dqt6-tools-devel
-BuildRequires: dkf6-karchive-devel dkf6-ki18n-devel
-BuildRequires: libxslt-devel xsltproc
-BuildRequires: docbook-style-xsl xml-utils
-BuildRequires: perl-URI
+BuildRequires: vulkan-headers libdqt6-widgets
+BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
+BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel
+BuildRequires: libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel
+BuildRequires: libXxf86vm-devel libxcbutil-keysyms-devel libxkbfile-devel
+#BuildRequires: dkf6-kconfig-devel dkf6-kcoreaddons-devel dkf6-kcrash-devel dkf6-kdbusaddons-devel
+#BuildRequires: dkf6-ki18n-devel dkf6-kwindowsystem-devel dkf6-kservice-devel
 
 # find libraries
 %add_findprov_lib_path %_DK6lib
 
 %description
-Provides tools to generate documentation in various format from DocBook files.
+KGlobalAccel allows you to have global accelerators that are independent of
+the focused window.  Unlike regular shortcuts, the application's window does not
+need focus for them to be activated.
 
 %package common
 Summary: %name common package
@@ -43,69 +45,65 @@ BuildArch: noarch
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %version-%release
-Requires: %name
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package devel-static
-Group: Development/KDE and QT
-Summary: Development files for %name
-BuildArch: noarch
-Requires: %name-devel
-%description devel-static
-Static libraries for %name.
-
-%package -n libdkf6doctools
+%package -n libdkf6globalaccel
 Group: System/Libraries
 Summary: KF6 library
-Requires: %name-common = %version-%release
-%description -n libdkf6doctools
+Requires: %name-common
+%description -n libdkf6globalaccel
+KF6 library
+
+%package -n libdkf6globalaccelprivate
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n libdkf6globalaccelprivate
 KF6 library
 
 
 %prep
 %setup -n %name-%version
-%patch1 -p1
-%patch2 -p1
 
 %build
 %DK6build
 
 %install
 %DK6install
-%find_lang %name --with-kde --all-name
+%DK6install_move data locale
+mkdir -p %buildroot/%_DK6data/kglobalaccel/
+%find_lang %name --all-name
 %DK6find_qtlang %name --all-name
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
-%dir %_DK6data/man/
-%_DK6data/man/*
+%_DK6data/qlogging-categories6/*.*categories
+%dir %_DK6data/kglobalaccel/
 
-%files
-%exclude %_bindir/*6
-%_DK6bin/checkXML6
-%_DK6bin/meinproc6
-%_DK6data/kdoctools/
+#%files
+#%exclude %_bindir/*6
+#%_DK6bin/kglobalaccel6
+#%_DK6srv/kglobalaccel6.desktop
+#%_DK6dbus_srv/org.kde.kglobalaccel.service
+#%_DK6plug/org.kde.kglobalaccel6*/
+#exclude %_userunitdir/%service_name.service
 
 %files devel
-%_DK6inc/KDocTools/
+%_DK6inc/KGlobalAccel/
 %_DK6link/lib*.so
-%_DK6lib/cmake/KF6DocTools
+%_DK6lib/cmake/KF6GlobalAccel/
+%_DK6dbus_iface/kf6_org.kde.??lobal?ccel*
 
-%files devel-static
-#%_DK6lib/lib*.a
-
-%files -n libdkf6doctools
-%_DK6lib/libKF6DocTools.so.*
+%files -n libdkf6globalaccel
+%_DK6lib/libKF6GlobalAccel.so.*
+#%files -n libdkf6globalaccelprivate
+#%_DK6lib/libKF6GlobalAccelPrivate.so.*
 
 
 %changelog
-* Thu Oct 01 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.2
-- fix detection of doctools dirs
-
-* Thu Aug 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.1
+* Thu Oct 01 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.1
 - fork for independent deepin build
 
 * Tue Jul 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.28.0-alt1

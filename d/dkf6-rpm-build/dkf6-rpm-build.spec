@@ -11,7 +11,7 @@
 
 Name: dkf6-rpm-build
 Version: 6.1.1
-Release: alt0.dde.1
+Release: alt0.dde.2
 
 Group: Development/KDE and QT
 Summary: Fork from kf6-rpm-build
@@ -46,6 +46,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-dkf6-find-qtlang
 %_bindir/rpm-build-dkf6-*
 
 %changelog
+* Thu Oct 01 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.1-alt0.dde.2
+- fix _DK6dbus location
+
 * Thu Aug 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.1-alt0.dde.1
 - fork kf6 for separate deepin buildings (ALT #48138)
 

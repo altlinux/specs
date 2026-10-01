@@ -1,0 +1,278 @@
+%define rname breeze-icons
+
+Name: dkf6-%rname
+Version: 6.28.0
+Release: alt0.dde.1
+%DK6init altplace
+
+Group: Graphical desktop/KDE
+Summary: Breeze icons theme
+Url: http://www.kde.org
+License: LGPL-3.0-only
+
+Source: %name-%version.tar
+Patch10: alt-icons-defaults.patch
+Patch11: alt-breeze-icons-generate-dark.patch
+
+BuildRequires(pre): rpm-build-dkf6
+BuildRequires: deepin-extra-cmake-modules gcc-c++ dqt6-base-devel
+BuildRequires: libdqt6-gui
+BuildRequires: libvulkan-devel
+BuildRequires: icon-naming-utils xml-utils python3-module-lxml
+BuildRequires: hardlink
+
+# find libraries
+%add_findprov_lib_path %_DK6lib
+
+%description
+%summary
+
+%package common
+Summary: %name common package
+Group: System/Configuration/Other
+BuildArch: noarch
+# Requires: kde-common
+%description common
+%name common package
+
+%package -n icon-theme-deepin-breeze
+Summary: Breeze icons theme
+Group: Graphics
+BuildArch: noarch
+# Provides: kde4-icon-theme = %%version-%%release
+# Provides: kde-icon-theme = %%version-%%release
+%description -n icon-theme-deepin-breeze
+%summary
+
+%package devel
+Group: Development/KDE and QT
+Summary: Development files for %name
+%description devel
+The %name-devel package files for developing applications that use %name.
+
+%package -n libdkf6breezeicons
+Group: System/Libraries
+Summary: KF6 library
+Requires: %name-common
+%description -n libdkf6breezeicons
+KF6 library
+
+%prep
+%setup -n %name-%version
+%patch10 -p1
+#%patch11 -p1
+
+chmod a+x *.sh
+
+# remove some icons
+for n in 'yandex-browser.*' ; do
+    find ./ -type f -name $n | while read f; do rm -f $f;  done
+done
+
+# kiconthemes5 compatibility
+find . -type f -name '*.svg' | xargs sed -i 's/ColorScheme-Accent/ColorScheme-Highlight/'
+
+%build
+%DK6build \
+    -DBINARY_ICONS_RESOURCE:BOOL=ON \
+    -DWITH_ICON_GENERATION:BOOL=OFF \
+    #
+
+%install
+%DK6install
+
+# 5858 7498
+for t in %buildroot/%_DK6icon/* ; do
+    [ -d $t ] || continue
+    theme_subdir=`basename $t`
+    mkdir %buildroot/%_DK6icon/tmp-$theme_subdir
+    pushd $t
+    ls -1d */* | \
+    while read subdir ; do
+	[ -d $subdir ] || continue
+	ctx=`dirname $subdir`
+	sz=`basename $subdir`
+	mkdir -p %buildroot/%_DK6icon/tmp-$theme_subdir/$sz
+	ln -s $t/$ctx/$sz %buildroot/%_DK6icon/tmp-$theme_subdir/$sz/$ctx
+    done
+    popd
+done
+
+for t in %buildroot/%_DK6icon/tmp-* ; do
+    [ -d $t ] || continue
+    pushd $t
+	ls -1d * | \
+	while read sz ; do
+	    [ -d $sz ] || continue
+	    pushd $sz
+	    ls -1d * | \
+	    while read ctx ; do
+		[ -d $ctx ] || continue
+		%_libexecdir/icon-name-mapping -c $ctx
+	    done
+	    popd
+	done
+    popd
+done
+
+rm -rf %buildroot/%_DK6icon/tmp-*
+
+# remove unappropriate icons symlinks
+for i in calc
+do
+    find %buildroot/%_DK6icon -type l \( -name ${i}.png -o -name ${i}.svg \) | \
+	while read f; do rm -f ${f} ||: ; done
+done
+
+# fix broken symlinks
+find %buildroot/%_DK6icon -type l | \
+while read l ; do
+    [ -e $l ] || rm -f $l
+done
+
+# create custom icons
+for e in \
+    "inode-directory application-x-smb-share" \
+    #
+do
+    icon_from=`echo "$e"| cut -d\  -f1`
+    icon_to=`echo "$e"| cut -d\  -f2`
+    find %buildroot/%_DK6icon/ -name ${icon_from}.svg | \
+    while read p; do
+	icon_dir=`dirname $p`
+	ln -s ${icon_from}.svg $icon_dir/${icon_to}.svg ||:
+    done
+done
+
+# optimize disk space
+hardlink -c -v %buildroot/%_DK6icon/
+
+%find_lang %name --all-name
+%DK6find_qtlang %name --all-name
+
+%files common -f %name.lang
+%doc COPYING* README.md
+
+%files -n icon-theme-deepin-breeze
+%_DK6icon/breeze*/
+
+%files devel
+%_DK6lib/cmake/KF6BreezeIcons/
+%_DK6link/lib*.so
+%_DK6inc/BreezeIcons/
+
+%files -n libdkf6breezeicons
+%_DK6lib/libKF6BreezeIcons.so.*
+
+%changelog
+* Thu Oct 01 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.1
+- fork for independent deepin build
+
+* Tue Jul 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.28.0-alt1
+- new version
+
+* Tue Jun 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.27.0-alt1
+- new version
+
+* Mon May 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.26.0-alt1
+- new version
+
+* Mon Apr 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.25.0-alt1
+- new version
+
+* Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 6.24.0-alt1
+- new version
+
+* Mon Feb 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.23.0-alt1
+- new version
+
+* Wed Jan 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.22.0-alt1
+- new version
+
+* Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 6.21.0-alt1
+- new version
+
+* Fri Nov 21 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt2
+- fix breeze-dark icons too dark
+
+* Thu Nov 20 2025 Sergey V Turchin <zerg@altlinux.org> 6.20.0-alt1
+- new version
+
+* Sat Nov 01 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt2
+- fix breeze-dark icons too dark
+
+* Fri Oct 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.19.0-alt1
+- new version
+
+* Wed Sep 24 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt2
+- fix breeze-dark icons too dark
+
+* Mon Sep 15 2025 Sergey V Turchin <zerg@altlinux.org> 6.18.0-alt1
+- new version
+
+* Mon Aug 25 2025 Sergey V Turchin <zerg@altlinux.org> 6.17.0-alt1
+- new version
+
+* Mon Aug 04 2025 Sergey V Turchin <zerg@altlinux.org> 6.16.0-alt1
+- new version
+
+* Thu Jul 10 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt3
+- disable icon generation at build
+
+* Wed Jul 09 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt2
+- reduce memory usage when build on ix86
+
+* Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 6.15.0-alt1
+- new version
+
+* Wed May 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.14.0-alt1
+- new version
+
+* Mon Apr 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.13.0-alt1
+- new version
+
+* Mon Mar 17 2025 Sergey V Turchin <zerg@altlinux.org> 6.12.0-alt1
+- new version
+
+* Fri Feb 14 2025 Sergey V Turchin <zerg@altlinux.org> 6.11.0-alt1
+- new version
+
+* Mon Jan 13 2025 Sergey V Turchin <zerg@altlinux.org> 6.10.0-alt1
+- new version
+
+* Mon Dec 16 2024 Sergey V Turchin <zerg@altlinux.org> 6.9.0-alt1
+- new version
+
+* Mon Nov 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.8.0-alt1
+- new version
+
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.0-alt1
+- new version
+
+* Fri Oct 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.6.0-alt1
+- new version
+
+* Wed Sep 10 2024 Sergey V Turchin <zerg@altlinux.org> 6.5.0-alt1
+- new version
+
+* Mon Sep 09 2024 Oleg Solovyov <mcpain@altlinux.org> 6.4.0-alt2
+- revert commit 931fc452 fot Qt5 compatibility
+
+* Tue Aug 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.4.0-alt1
+- new version
+
+* Tue Jun 25 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt2
+- package binary icons resource file
+
+* Tue Jun 11 2024 Sergey V Turchin <zerg@altlinux.org> 6.3.0-alt1
+- new version
+
+* Mon May 13 2024 Sergey V Turchin <zerg@altlinux.org> 6.2.0-alt1
+- new version
+
+* Mon Apr 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt1
+- bump release
+
+* Mon Apr 15 2024 Sergey V Turchin <zerg@altlinux.org> 6.1.0-alt0
+- initial build
+
