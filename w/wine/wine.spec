@@ -9,12 +9,12 @@
 %def_with devel
 %def_without vanilla
 %define gecko_version 2.47.4
-%define mono_version 11.2.0
+%define mono_version 11.3.0
 %define winetricks_version 20250102
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.15
+%define major 11.16
 %define rel %nil
 %define stagingrel %rel
 # the packages will conflict with that
@@ -794,6 +794,7 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %libwinedir/%winesodir/winealsa.so
 %libwinedir/%winesodir/winevulkan.so
 %libwinedir/%winesodir/opengl32.so
+%libwinedir/%winesodir/wined3d.so
 %if_with pcap
 %libwinedir/%winesodir/wpcap.so
 %endif
@@ -952,6 +953,11 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.16.1-alt1
+- new version 11.16.1
+- use Wine Mono 11.3.0
+- pack new wined3d.so unix library
+
 * Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.15.1-alt1
 - new version 11.15.1
 

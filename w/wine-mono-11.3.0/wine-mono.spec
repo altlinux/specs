@@ -1,7 +1,7 @@
 %define winemonodir %_datadir/wine/mono
 
-Name: wine-mono-11.2.0
-Version: 11.2.0
+Name: wine-mono-11.3.0
+Version: 11.3.0
 Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
@@ -45,5 +45,5 @@ cp -a * %buildroot%winemonodir/%name/
 
 
 %changelog
-* Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 11.2.0-alt1
-- new version (11.2.0)
+* Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 11.3.0-alt1
+- new version (11.3.0)
