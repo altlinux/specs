@@ -2,14 +2,15 @@
 %def_without docs
 
 %define sover 5
-%define sover_compose 0
+%define sover_compose 1
 %define sover_qt 3
 %define libappstream libappstream%sover
 %define libappstream_compose libappstream-compose%sover_compose
 %define libappstreamqt6 libappstreamqt6_%sover_qt
+%define _libexecdir %_libdir/ascompose%sover_compose
 
 Name:    appstream
-Version: 1.1.6
+Version: 1.2.1
 Release: alt1
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
@@ -59,6 +60,7 @@ BuildRequires: libfyaml-devel
 BuildRequires: libblake3-devel
 BuildRequires: bash-completion
 BuildRequires: docbook5-style-xsl
+BuildRequires: libvips-devel
 
 #Requires: appstream-data
 
@@ -78,6 +80,8 @@ Summary: Library for generating AppStream data
 Group: System/Libraries
 Provides: libappstream-compose = %EVR
 Obsoletes: libappstream-compose < %EVR
+Provides: org.freedesktop.appstream.compose = %EVR
+Obsoletes: org.freedesktop.appstream.compose < %EVR
 %description -n %libappstream_compose
 %summary.
 
@@ -169,6 +173,7 @@ sed -i "s|'AppStreamQt'|'AppStreamQt6'|" qt/meson.build
 	-Ddocs=false \
 %endif
 	-Dstemming=true \
+	-Dmediaworker-dir=libexecdir \
 	-Dcompose=true
 %ifarch %e2k
 export LD_LIBRARY_PATH=$(pwd)/%__builddir/src
@@ -246,6 +251,7 @@ ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 
 %files compose
 %_libexecdir/appstreamcli-compose
+%_libexecdir/asc-mediaworker
 %_man1dir/appstreamcli-compose.1*
 %_datadir/metainfo/org.freedesktop.appstream.compose.metainfo.xml
 
@@ -263,6 +269,9 @@ ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Wed Sep 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
+- NMU: new version
+
 * Wed Sep 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.1.6-alt1
 - NMU: new version
 
