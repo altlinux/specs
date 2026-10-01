@@ -3,7 +3,7 @@
 
 Name: alterator-backend-%{shortname}
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: Alterator backend for browsing components and applications
 License: GPLv2+
@@ -19,6 +19,7 @@ BuildRequires: python3-devel
 BuildRequires: python3-module-hatchling
 
 Requires: alterator-interface-%{shortname} = %EVR
+Requires: alterator-interface-application >= 0.1.1-alt3
 Requires: python3-module-alterator-backend-browsing = %EVR
 Requires: alterator-module-executor >= 0.1.29
 Requires: alt-components-base >= 0.10.9
@@ -80,6 +81,10 @@ install -p -m 644 interface/org.altlinux.alterator.*.policy \
 
 
 %changelog
+* Wed Sep 30 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt2
+- Add missing dependency on alterator-interface-application required by
+  ResolveLaunchers.
+
 * Thu Sep 17 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.1-alt1
 - Return handled interface for providers (thx Evgenii Sozonov).
 

@@ -2,7 +2,7 @@
 
 Name: alt-components
 Version: 0.6.16
-Release: alt2
+Release: alt3
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -31,7 +31,7 @@ Requires: alterator-backend-component >= 0.3.5-alt1
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-backend-systeminfo >= 0.4.3-alt1
 Requires: alterator-backend-edition >= 0.4.1
-Requires: alterator-backend-browsing
+Requires: alterator-backend-browsing >= 0.1.1-alt2
 Requires: libqbase
 Requires: alt-components-base >= 0.10.10
 
@@ -65,6 +65,9 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Wed Sep 30 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.16-alt3
+- Add missing dependency required by ResolveLaunchers.
+
 * Wed Sep 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.16-alt2
 - Bump the alt-components-base version (to support the handled_interface
   flag in applications that use it).
