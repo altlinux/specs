@@ -1,7 +1,7 @@
 %def_without bootstrap
 
 Name:    opensearch
-Version: 3.8.0
+Version: 3.9.0
 Release: alt1
 
 Summary: Open source distributed and RESTful search engine
@@ -15,11 +15,9 @@ ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 Source2: gradle-cache.tar
-Source3: m2.tar
 Patch0: opensearch-disable-test-reporting.patch
 Patch1: opensearch-disable-network.patch
 Patch2: opensearch-system-java.patch
-Patch3: opensearch-gradle-9.7.patch
 
 BuildRequires(pre): /proc rpm-build-java
 BuildRequires: java-21-openjdk-devel
@@ -40,10 +38,8 @@ Requires(post): java-21-openjdk-headless
 %setup
 %autopatch -p1
 test -d ~/.gradle && rm -rf ~/.gradle
-test -d ~/.m2 && rm -rf ~/.m2
 %if_without bootstrap
 tar xf %SOURCE2 -C ~
-tar xf %SOURCE3 -C ~
 subst 's|\.*/gradlew|gradle --offline --no-daemon|g' scripts/build.sh
 %else
 subst 's|\.*/gradlew|gradle --no-daemon|g' scripts/build.sh
@@ -136,6 +132,9 @@ fi
 %config(noreplace) %_tmpfilesdir/%name.conf
 
 %changelog
+* Wed Sep 30 2026 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version (fixes: CVE-2026-63136).
+
 * Fri Sep 11 2026 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt1
 - New version (fixes: CVE-2026-8149, CVE-2026-54515, CVE-2026-2332).
 
