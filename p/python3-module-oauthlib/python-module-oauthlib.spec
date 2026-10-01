@@ -1,7 +1,7 @@
 %global oname oauthlib
 
 Name: python3-module-oauthlib
-Version: 3.3.1
+Version: 4.0.0
 Release: alt1
 
 Summary: An implementation of the OAuth request-signing logic
@@ -19,7 +19,11 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-jwt
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-blinker
 
 %py3_use Crypto >= 2.6
 
@@ -41,8 +45,8 @@ very little effort.
 %python3_install
 %python3_prune
 
-# %check
-# python setup.py test
+%check
+%__python3 -m pytest tests
 
 %files
 %doc README.rst LICENSE
@@ -50,6 +54,14 @@ very little effort.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+- (GHSA-hj66-6f7g-4r5v, CVE-2026-49264) SECURITY: unsafe JSONP callback
+  injection in RevocationEndpoint (JSONP support removed)
+- (GHSA-xpv3-w29h-x7cv, CVE-2026-49265) SECURITY: timing attack in PKCE
+  code_verifier comparison
+- enable %%check
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.1-alt1
 - new version 3.3.1
 
