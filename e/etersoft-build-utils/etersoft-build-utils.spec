@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.4
+Version: 3.3.8
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -72,6 +72,30 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.8-alt1
+- hasher: add aarch64 cross-build support in set_hasherdir and print_tmp_sourceslist
+- myhsh: pass --with-qemu for aarch64 cross-builds
+- spec: add_changelog_helper: clarify messages when editing is skipped
+- rpmgs: add -C option to skip adding changelog entry
+
+* Thu Sep 03 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.7-alt1
+- rpmgs: test merge commit on source update
+- gita: replace existing repo subtasks by package name
+- rpmlog: update multiple spec files together
+- docs: describe multi-spec rpmlog usage
+
+* Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.6-alt1
+- rpmgs: leave spec changes uncommitted
+- rpmgs: restore upstream tree when merging tags
+
+* Sat Aug 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.5-alt1
+- rpmgs: skip merge-message editor when no controlling terminal
+- gammit: add --amend to rewrite the last commit from the changelog
+- rpmbsh: reach rpmbs when -a TASK/-A is given
+- rpmgs: use 'ours' merge for source-git packages built from version tag
+- rpmgp: clone over public HTTPS when available, no password prompt
+- rpmbs: do not leak subtask into gita show/task run/task rm
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.4-alt1
 - gitask: add bash/fish/zsh completions for gita and gitask
 - gammit: skip commit-message editor when no controlling terminal
