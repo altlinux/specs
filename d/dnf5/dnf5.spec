@@ -4,7 +4,7 @@
 
 Name: dnf5
 Version: 5.4.3.0
-Release: alt3
+Release: alt4
 
 Summary: Command-line package manager
 
@@ -378,6 +378,9 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt4
+- Fix reinstall assertion with RPM 4.13 (eterbug #19326).
+
 * Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt3
 - Fix RPM 4.13 transaction callback crash (eterbug #19326).
 
