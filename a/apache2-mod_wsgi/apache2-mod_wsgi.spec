@@ -3,7 +3,7 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 6.0.6
+Version: 6.1.0
 Release: alt1
 
 Summary: Python WSGI module for Apache2
@@ -74,6 +74,9 @@ export MOD_WSGI_SO="%buildroot%apache2_moduledir/mod_wsgi-py3.so"
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 6.1.0-alt1
+- 6.0.6 -> 6.1.0
+
 * Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 6.0.6-alt1
 - 5.0.2 -> 6.0.6
 
