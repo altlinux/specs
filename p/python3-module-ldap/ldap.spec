@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.4.7
+Version: 3.4.8
 Release: alt1
 Summary: Python modules for implementing LDAP clients
 License: Python-style or MIT
@@ -67,6 +67,9 @@ export BIN="$PATH:%_sbindir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 01 2026 Stanislav Levin <slev@altlinux.org> 3.4.8-alt1
+- 3.4.7 -> 3.4.8
+
 * Thu May 21 2026 Stanislav Levin <slev@altlinux.org> 3.4.7-alt1
 - 3.4.6 -> 3.4.7.
 
