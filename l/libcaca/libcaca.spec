@@ -5,7 +5,7 @@
 
 Name:          libcaca
 Version:       0.99.20.3.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Text mode graphics library
 Group:         System/Libraries
 License:       WTFPL
@@ -73,10 +73,9 @@ such as line and ellipses drawing, triangle filling and sprite blitting.
 %package       -n ruby-caca
 Summary:       Ruby bindings for libcaca
 Group:         Graphics
-Requires:      %name = %version-%release
 Provides:      ruby-libcaca = %EVR, ruby-module-libcaca = %EVR
 Obsoletes:     ruby-module-libcaca < %EVR, ruby-libcaca < %EVR
-BuildRequires: rpm-build-ruby
+BuildRequires: rpm-macros-ruby libruby-devel ruby
 
 %description   -n ruby-caca
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -120,7 +119,7 @@ export PYTHON=%__python3
 	--enable-x11 \
 	--enable-imlib2 \
 	--x-libraries=%_x11libdir \
-	--disable-debug \
+	--enable-debug \
 	%{subst_enable python} \
 	%{subst_enable ruby} \
 	%{subst_enable doc} \
@@ -179,6 +178,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %endif
 
 %changelog
+* Wed Sep 30 2026 Pavel Skrylev <majioa@altlinux.org> 0.99.20.3.1-alt0.2
+- ! fixed some bugs, closing ALT #60764
+
 * Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 0.99.20.3.1-alt0.1
 - ^ 0.99rc20p3 -> 0.99rc20p3.1
 - ! fixed CVE-2026-42046

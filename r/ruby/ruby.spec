@@ -9,7 +9,7 @@
 
 Name:          ruby
 Version:       %ruby_version
-Release:       alt5.1
+Release:       alt5.2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -298,7 +298,7 @@ DESTDIR=%buildroot INSTALL=/bin/install rvm reinstall . \
    --with-rubysitearchprefix=%_usr/local/%_lib/%name \
    --with-vendordir=%_libexecdir/%name/vendor_ruby \
    --with-vendorlibdir=%_libexecdir/%name/vendor_ruby \
-   --with-vendorarchdir=%_libexecdir/%name/vendor_ruby \
+   --with-vendorarchdir=%_libdir/%name/vendor_ruby \
    --with-rdoc=ri%{?_enable_html:,html} \
    -C --prefix=%_prefix \
 
@@ -373,6 +373,9 @@ rm -rf %buildroot%_libexecdir/%name/gemie/gems/*
 %_rpmmacrosdir/ruby.env
 
 %changelog
+* Wed Sep 30 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt5.2
+- ! moved ruby arch vendor dir to %%_libdir/%%name/vendor_ruby
+
 * Tue Sep 22 2026 Pavel Skrylev <majioa@altlinux.org> 3.3.12-alt5.1
 - * updated rubygems dep
 
