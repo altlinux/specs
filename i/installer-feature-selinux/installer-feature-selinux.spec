@@ -1,5 +1,5 @@
 Name: installer-feature-selinux
-Version: 0.14.2
+Version: 0.14.3
 Release: alt1
 
 Summary: Installer selinux hooks
@@ -29,6 +29,9 @@ install -pm755 postinstall.sh %buildroot%hookdir/postinstall.d/90-selinux.sh
 %hookdir/postinstall.d/*
 
 %changelog
+* Thu Oct 01 2026 Anton Midyukov <antohami@altlinux.org> 0.14.3-alt1
+- postinstall.sh: add /etc/profile.d/webkit-disable-sandbox.sh.
+
 * Thu Jun 25 2026 Anton Midyukov <antohami@altlinux.org> 0.14.2-alt1
 - preinstall.sh: fix sed.
 
