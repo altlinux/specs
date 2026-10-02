@@ -5,8 +5,8 @@
 %define sover 0
 
 Name: sentencepiece
-Version: 0.2.1
-Release: alt2
+Version: 0.2.2
+Release: alt1
 
 Summary: Unsupervised text tokenizer for neural network-based text generation
 License: Apache-2.0
@@ -14,6 +14,7 @@ Group: Sciences/Computer science
 Url: https://github.com/google/sentencepiece
 
 Source: %name-%version.tar
+Patch: %name-%version-alt-python-system-libs.patch
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -24,6 +25,8 @@ BuildRequires: libabseil-cpp-devel
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-pybind11
+BuildRequires: python3-module-protobuf
 
 %description
 SentencePiece is an unsupervised text tokenizer and detokenizer mainly
@@ -68,6 +71,7 @@ decoding and training of Sentencepiece.
 
 %prep
 %setup
+%patch -p1
 
 # init_test calls ParseCommandLineFlags() after test_main already parsed flags.
 sed -i '/init_test\.cc/d' src/CMakeLists.txt
@@ -85,7 +89,7 @@ sed -i '/init_test\.cc/d' src/CMakeLists.txt
 %cmake_build
 
 cd python
-export CPATH=../src # Points to headers dir
+export CPATH=..:../src:../%_cmake__builddir/src # Source root (third_party/absl symlink), headers and generated *.pb.h dirs
 export PKG_CONFIG_PATH=../%_cmake__builddir # Points to dir with pkg-conf file
 export LIBRARY_PATH=../%_cmake__builddir/src # Points to library dir
 %pyproject_build
@@ -134,6 +138,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 02 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.2-alt1
+- NMU: Updated to 0.2.2.
+
 * Fri Jul 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.1-alt2
 - NMU: Packaged python bindings.
 
