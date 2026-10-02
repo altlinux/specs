@@ -24,8 +24,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 20.0.1
-Release: alt2
+Version: 20.0.2
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -236,6 +236,9 @@ subst '/<releases>/i \ <pkgname>qt-creator</pkgname>' %buildroot%_datadir/metain
 %_datadir/qtcreator/*
 
 %changelog
+* Fri Oct 02 2026 Andrey Cherepanov <cas@altlinux.org> 20.0.2-alt1
+- New version.
+
 * Mon Aug 17 2026 Michael Shigorin <mike@altlinux.org> 20.0.1-alt2
 - E2K: build with clang (update adaptations by ilyakurdyukov@).
 
