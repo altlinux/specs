@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: nwipe
-Version: 0.42
+Version: 0.43
 Release: alt1
 
 Summary: Utility to securely erase disks
@@ -16,6 +16,7 @@ BuildRequires: pkgconfig(ncurses)
 BuildRequires: pkgconfig(libconfig)
 BuildRequires: pkgconfig(libparted)
 BuildRequires: gcc-c++
+BuildRequires: pkgconfig(libnvme)
 
 Requires: /bin/readlink
 Requires: /usr/sbin/smartctl
@@ -65,6 +66,9 @@ export CFLAGS="$CFLAGS -Wno-unused-function"
 %doc README.md ssd-guide.md images/
 
 %changelog
+* Fri Oct 02 2026 Nikolay Strelkov <snk@altlinux.org> 0.43-alt1
+- New version 0.43.
+
 * Fri Jul 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.42-alt1
 - New version 0.42.
 
