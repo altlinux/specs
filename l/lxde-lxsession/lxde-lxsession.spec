@@ -1,7 +1,7 @@
 %define upstreamname lxsession
 %define gtkver 3
 Name: lxde-%upstreamname
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 
 Summary: LXSession is the default X11 session manager of LXDE
@@ -122,6 +122,9 @@ mkdir -p -m 755 %buildroot%_sysconfdir/xdg/%name
 %_datadir/%upstreamname/ui/lxpolkit.ui
 
 %changelog
+* Thu Oct 01 2026 Anton Midyukov <antohami@altlinux.org> 0.5.7-alt1
+- New version 0.5.7.
+
 * Fri Apr 11 2025 Anton Midyukov <antohami@altlinux.org> 0.5.6-alt1
 - new version 0.5.6
 
