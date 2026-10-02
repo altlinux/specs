@@ -14,7 +14,7 @@
 %endif
 
 Name: sechooser
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Selinux user range chooser
@@ -34,7 +34,9 @@ BuildRequires: qt%{qtmajor}-base-devel qt%{qtmajor}-tools
 
 %prep
 %setup -q -n %name-%version
-%qmake_qt CONFIG+=nostrip
+%qmake_qt CONFIG+=nostrip \
+	DEFINES+=DONT_IGNORE_LOWEST_LEVEL \
+	DEFINES+=SKIP_OFFICER
 
 %build
 %make
@@ -52,6 +54,10 @@ install -m644 translations/sechooser_??.qm %buildroot/%qt_translationdir/
 %_bindir/*
 
 %changelog
+* Thu Oct 01 2026 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
+- Add define SKIP_OFFICER to do not run sechooser for officer.
+- Build with define DONT_IGNORE_LOWEST_LEVEL and DONT_IGNORE_LOWEST_LEVEL.
+
 * Wed Oct 30 2024 Sergey V Turchin <zerg at altlinux dot org> 0.3.3-alt1
 - build with Qt6
 
