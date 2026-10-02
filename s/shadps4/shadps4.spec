@@ -1,7 +1,7 @@
-%define sirit_commit 282083a595dcca86814dedab2f2b0363ef38f1ec
+%define sirit_commit c58f4d441cfdb6905d011a906704716833485486
 %define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
-%define dear_imgui_commit f4d9359095eff3eb03f685921edc1cf0e37b1687
+%define imgui_commit 7e1b65d26d52e9dd199d889c148c72184de647b4
 %define discord_rpc_commit 19f66e6dcabb2268965f453db9e5774ede43238f
 %define libatrac9_commit 946e05a9212976626a9f5e52f29c0a7202871f29
 %define zarchive_commit 965b66c8d67b6b7e30fd63b3b75aa91a99ff303b
@@ -13,11 +13,11 @@
 %define aac_commit ee76460efbdb147e26d804c798949c23f174460b
 %define spdlog_commit b8944a4bcd478ee03375c9c50dc8d6c741f43f7b
 %define libressl_commit b0504086dbbc186724b0cc92e6ba1832c245de0b
-%define imguifiledialog_commit 6e3ddeb485e8804beefae6e6d690b7709084bacd
+%define imguifiledialog_commit 57a1c6a6d44bd99e844e3642d27851f6c065af62
 %define minimp3_commit 7b590fdcfa5a79c033e76eacc05d0c3e4c79f536
 
 Name: shadps4
-Version: 0.18.0
+Version: 0.19.0
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -38,8 +38,8 @@ Source1: sirit-%sirit_commit.tar
 Source2: tracy-%tracy_commit.tar
 # https://github.com/zyantific/zydis/archive/%zydis_commit/zydis-%zydis_commit.tar.gz
 Source3: zydis-%zydis_commit.tar
-# https://github.com/%name-emu/ext-imgui/archive/%dear_imgui_commit/ext-imgui-%dear_imgui_commit.tar.gz
-Source4: ext-imgui-%dear_imgui_commit.tar
+# https://github.com/shadexternals/imgui/archive/%imgui_commit/imgui-%imgui_commit.tar.gz
+Source4: imgui-%imgui_commit.tar
 # https://github.com/%name-emu/ext-discord-rpc/archive/%discord_rpc_commit/ext-discord-rpc-%discord_rpc_commit.tar.gz
 Source5: ext-discord-rpc-%discord_rpc_commit.tar
 # https://github.com/%name-emu/ext-LibAtrac9/archive/%libatrac9_commit/ext-LibAtrac9-%libatrac9_commit.tar.gz
@@ -74,8 +74,10 @@ BuildRequires: cli11-devel
 BuildRequires: cmake
 BuildRequires: glslang-devel
 BuildRequires: libSDL3-devel
+BuildRequires: libavcodec-devel
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
+BuildRequires: libavutil-devel
 BuildRequires: libcpp-httplib-devel
 BuildRequires: libfmt-devel
 BuildRequires: libfreetype-devel
@@ -119,7 +121,7 @@ shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written 
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../tracy-%tracy_commit externals/tracy
 %__mv -Tf ../zydis-%zydis_commit externals/zydis
-%__mv -Tf ../ext-imgui-%dear_imgui_commit externals/dear_imgui
+%__mv -Tf ../imgui-%imgui_commit externals/imgui
 %__mv -Tf ../ext-discord-rpc-%discord_rpc_commit externals/discord-rpc
 %__mv -Tf ../ext-LibAtrac9-%libatrac9_commit externals/LibAtrac9
 %__mv -Tf ../libusb-%libusb_commit externals/libusb
@@ -134,8 +136,9 @@ shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written 
 %__mv -Tf ../protobuf-%protobuf_commit externals/protobuf
 %__mv -Tf ../abseil-cpp-%abseil_version externals/abseil-cpp
 
-sed -i 's/find_package(glslang 15 CONFIG)/find_package(glslang 16 CONFIG)/g' CMakeLists.txt
-sed -i '/^# protobuf$/i add_subdirectory(abseil-cpp)' externals/CMakeLists.txt
+sed -i 's/find_package(glslang 15 CONFIG)/find_package(glslang CONFIG)/g' CMakeLists.txt
+sed -i '/^#include "video_core\/amdgpu\/regs.h"$/a #include <cstring>' src/video_core/amdgpu/regs.cpp
+sed -i '/^#include "video_core\/amdgpu\/tiling.h"$/a #include <cstring>' src/video_core/amdgpu/resource.h
 sed -i 's|add_subdirectory(zstd/build/cmake)|add_library(libzstd_static SHARED IMPORTED)\n    set_target_properties(libzstd_static PROPERTIES IMPORTED_LOCATION "%_libdir/libzstd.so" INTERFACE_INCLUDE_DIRECTORIES "%_includedir")|' externals/CMakeLists.txt
 sed -i '/target_include_directories(zarchive PRIVATE zstd\/lib)/d' externals/CMakeLists.txt
 sed -i 's|target_include_directories(Cpp_Httplib INTERFACE cpp-httplib/)|target_include_directories(Cpp_Httplib INTERFACE "%_includedir")\ntarget_link_libraries(Cpp_Httplib INTERFACE cpp-httplib)|' externals/CMakeLists.txt
@@ -147,6 +150,8 @@ export RANLIB="llvm-ranlib"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
+
+%add_optflags -DFMT_DEPRECATED_HEAVY_CORE
 
 %cmake \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
@@ -165,6 +170,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 
 %changelog
+* Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.19.0-alt1
+- Version 0.19.0
+
 * Tue Aug 18 2026 Nazarov Denis <nenderus@altlinux.org> 0.18.0-alt1
 - Version 0.18.0
 
