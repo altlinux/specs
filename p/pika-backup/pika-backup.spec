@@ -8,7 +8,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Keep your data safe
@@ -82,6 +82,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Oct 02 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.4-alt1
+- 0.8.4-29-g95bfcb96
+
 * Mon Jun 29 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
 - 0.8.3
 

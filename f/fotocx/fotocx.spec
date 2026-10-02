@@ -1,5 +1,5 @@
 Name: fotocx
-Version: 26.8
+Version: 26.8.1
 Release: alt1
 
 %define app_id kornelix.%name
@@ -86,6 +86,9 @@ install -pD %_sourcedir/%{name}16.png %buildroot%_miconsdir/%name.png
 %doc %_datadir/doc/%name
 
 %changelog
+* Fri Oct 02 2026 Yuri N. Sedunov <aris@altlinux.org> 26.8.1-alt1
+- 26.8.1
+
 * Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 26.8-alt1
 - 26.8
 
