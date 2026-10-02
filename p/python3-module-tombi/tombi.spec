@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.4
+Version: 1.7.0
 Release: alt1
 Summary: TOML Toolkit
 License: MIT
@@ -46,23 +46,28 @@ Group: Development/Python3
 cat < vendor_cargoconf.toml >> .cargo/config.toml
 %autopatch -p1
 # upstream uses GHA to set version based on git tag
-sed -i 's/@VERSION@/%version/' pyproject.toml Cargo.toml
+sed -i 's/@VERSION@/%version/' python/tombi/pyproject.toml Cargo.toml
+pushd python/tombi
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+popd
 %if_with check
 %pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
+pushd python/tombi
 export CARGO_TERM_VERBOSE=true
 export RUSTFLAGS="${RUSTFLAGS} -g"
 export CARGO_PROFILE_RELEASE_STRIP='none'
 %pyproject_build
 
 %install
+pushd python/tombi
 %pyproject_install
 
 %check
+pushd python/tombi
 %pyproject_run_pytest -vra
 
 %files
@@ -73,6 +78,9 @@ export CARGO_PROFILE_RELEASE_STRIP='none'
 %_bindir/tombi
 
 %changelog
+* Fri Oct 02 2026 Stanislav Levin <slev@altlinux.org> 1.7.0-alt1
+- 1.5.4 -> 1.7.0
+
 * Thu Sep 10 2026 Stanislav Levin <slev@altlinux.org> 1.5.4-alt1
 - 1.5.2 -> 1.5.4
 
