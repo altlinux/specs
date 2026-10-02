@@ -15,8 +15,8 @@
 %def_with vulkan
 
 Name: ollama
-Version: 0.34.4
-Release: alt2
+Version: 0.35.0
+Release: alt1
 Summary: Get up and running with large language models
 License: MIT
 Group: Sciences/Computer science
@@ -221,6 +221,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Thu Oct 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.35.0-alt1
+- Updated to version 0.35.0.
+
 * Fri Sep 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.34.4-alt2
 - Skip llama.cpp SME CPU backend variants when building with gcc < 14
   (+sme is not supported there; fixes aarch64 build in p11).
