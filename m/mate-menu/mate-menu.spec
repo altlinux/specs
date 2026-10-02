@@ -1,6 +1,6 @@
 Name:    mate-menu
-Version: 22.04.2
-Release: alt10
+Version: 26.10.1
+Release: alt1
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -28,16 +28,13 @@ Requires: python3-module-pygobject3
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch1: alt-applet-name-l10n.patch
-Patch2: alt-menubutton-label-l10n.patch
-Patch3: alt-use-themed-app-list.patch
-Patch4: alt-set-start-button-gsettings.patch
-Patch5: alt-desktop-place-fix.patch
-Patch6: fix-version.patch
-Patch7: alt-category-without-icon.patch
-Patch8: alt-set-menubutton-tooltip-as-label.patch
-Patch9: alt-fix-memory-leak-applications.patch
-Patch10: alt-fix-tooltips-and-make-them-optional.patch
+Patch0: alt-applet-name-l10n.patch
+Patch1: alt-menubutton-label-l10n.patch
+Patch2: alt-use-themed-app-list.patch
+Patch3: alt-set-start-button-gsettings.patch
+Patch4: alt-desktop-place-fix.patch
+Patch5: alt-set-menubutton-tooltip-as-label.patch
+Patch6: alt-fix-tooltips-and-make-them-optional.patch
 
 %description
 This is MATE Menu, a fork of MintMenu. An advanced menu for MATE.
@@ -67,6 +64,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Wed Sep 23 2026 Andrey Cherepanov <cas@altlinux.org> 26.10.1-alt1
+- New version.
+
 * Wed Feb 12 2025 Maria Alexeeva <alxvmr@altlinux.org> 22.04.2-alt10
 - Fix tooltips
 
