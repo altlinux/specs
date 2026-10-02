@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.1.0
 Release: alt1
 
 Summary: Bibtex parser for Python 3
@@ -57,6 +57,9 @@ such as books and journal articles.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 02 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.0-alt1
+- New version 2.1.0.
+
 * Sat Sep 12 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.1-alt1
 - New version 2.0.1.
 
