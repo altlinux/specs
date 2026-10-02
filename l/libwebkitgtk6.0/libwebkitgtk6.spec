@@ -60,7 +60,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Web browser engine
@@ -262,7 +262,8 @@ Requires: libjavascriptcoregtk%api_ver-devel = %EVR
 GObject introspection devel data for the JavaScriptCore library
 
 %prep
-%setup -n %_name-%version
+%setup -cT -n %_name-%version/%api_ver
+tar Jxf %SOURCE0 --strip-components=1
 %patch10 -p1
 #%%patch11 -p1
 
@@ -427,6 +428,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Oct 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.54.1-alt1
+- 2.54.1
+
 * Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2.54.0-alt1
 - 2.54.0
 
