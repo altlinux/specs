@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Summary: The official Python SDK for Model Context Protocol servers and clients.
 License: MIT
 Group:  Development/Python3
@@ -37,8 +37,6 @@ BuildRequires: python3(typer)
 BuildRequires: python3(uv)
 BuildRequires: python3-module-uv-build
 BuildRequires: python3(websockets)
-BuildRequires: python3-module-inline-snapshot
-BuildRequires: python3-module-dirty-equals
 BuildRequires: python3-module-pydantic-core
 BuildRequires: python3-module-ruff
 BuildRequires: python3(httpcore)
@@ -48,20 +46,17 @@ BuildRequires: python3-module-typing_extensions
 BuildRequires: python3(pytest)
 BuildRequires: python3-module-pytest-xdist
 BuildRequires: python3-module-pytest-examples
+BuildRequires: python3-module-inline-snapshot
+BuildRequires: python3-module-dirty-equals
 BuildRequires: python3(uvicorn)
 BuildRequires: python3(requests)
 %endif
 
 Requires: python3-module-mcp-types = %{version}-%{release}
 Requires: python3(anyio)
-Requires: python3(httpx)
 Requires: python3(uvicorn)
 Requires: python3(typer)
 Requires: python3-module-sse-starlette
-Requires: python3-module-pydantic-settings
-Requires: python3(websockets)
-Requires: python3-module-inline-snapshot
-Requires: python3-module-dirty-equals
 Requires: python3-module-python-multipart
 
 %py3_provides %pypi_name
@@ -120,6 +115,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo mcp-types}/
 
 %changelog
+* Fri Oct 02 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.0-alt2
+- Dropped test-only and unused runtime dependencies (ALT #60782).
+
 * Tue Sep 29 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.0-alt1
 - 2.1.1 -> 2.2.0.
 - Fixed missing runtime dependencies (closes: ALT #60733).

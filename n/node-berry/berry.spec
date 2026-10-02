@@ -2,7 +2,7 @@
 %define pname berry
 
 Name: node-berry
-Version: 4.14.1
+Version: 4.18.1
 Release: alt1
 Summary: active development trunk for Yarn.
 License: BSD-2-Clause
@@ -47,6 +47,9 @@ ln -s yarn %buildroot%_bindir/yarnpkg
 %nodejs_sitelib/%pname
 
 %changelog
+* Thu Oct 01 2026 Pavel Shilov <zerospirit@altlinux.org> 4.18.1-alt1
+- updated from 4.14.1 to 4.18.1
+
 * Wed Sep 30 2026 Pavel Shilov <zerospirit@altlinux.org> 4.14.1-alt1
 - Initial build for Sisyphus.
 
