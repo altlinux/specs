@@ -10,10 +10,10 @@
 
 # TODO: build docs
 
-%define soname 2.5
+%define soname 2.6
 
 Name: opencolorio
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: Enables color transforms and image display across graphics apps
@@ -27,7 +27,6 @@ Source: %name-%version.tar
 
 Patch1: %name-alt-install.patch
 Patch2: %name-alt-armh-multiple-definition.patch
-Patch3: opencolorio-2.5.1-alt-fix-yaml-cpp-0.9-compat.patch
 
 # Utilities
 BuildRequires: cmake gcc-c++
@@ -79,8 +78,10 @@ Summary: Command line tools for %name
 Group: Other
 Provides: opencolorio2.0-tools = %EVR
 Provides: opencolorio2.2-tools = %EVR
+Provides: opencolorio2.5-tools = %EVR
 Obsoletes: opencolorio2.0-tools < %EVR
 Obsoletes: opencolorio2.2-tools < %EVR
+Obsoletes: opencolorio2.5-tools < %EVR
 
 %description tools
 Command line tools for %name.
@@ -90,8 +91,10 @@ Summary: Development libraries and headers for %name
 Group: Development/Other
 Provides: libopencolorio2.0-devel = %EVR
 Provides: libopencolorio2.2-devel = %EVR
+Provides: libopencolorio2.5-devel = %EVR
 Obsoletes: libopencolorio2.0-devel < %EVR
 Obsoletes: libopencolorio2.2-devel < %EVR
+Obsoletes: libopencolorio2.5-devel < %EVR
 
 %description -n lib%name-devel
 Development libraries and headers for %name.
@@ -107,7 +110,6 @@ Group: Development/Python3
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %ifarch %e2k
 # ld: multiple definition of LoadLutFile
 sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
@@ -129,15 +131,13 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 	-DOCIO_BUILD_TESTS=ON \
 	-DOCIO_BUILD_GPU_TESTS=OFF \
 	-DOCIO_WARNING_AS_ERROR:BOOL=OFF \
-%ifnarch x86_64 %e2k
-	-DOCIO_USE_SSE=OFF \
-	-DOCIO_USE_SSE2=OFF \
+%ifarch %ix86
+	-DOCIO_USE_SIMD=OFF \
 %endif
 %ifnarch %e2k
 	-DOCIO_USE_GLVND:BOOL=ON \
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
-	-DCMAKE_CXX_STANDARD=14 \
 	-Dminizip-ng_INCLUDE_DIR=%_includedir/minizip \
 	-DPYTHON_VARIANT_PATH=%python3_sitelibdir \
 	%nil
@@ -203,6 +203,10 @@ popd
 %python3_sitelibdir/PyOpenColorIO
 
 %changelog
+* Thu Oct 01 2026 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1
+- 2.5.2 -> 2.6.0
+- New soname 2.6
+
 * Thu Jun 18 2026 Anton Farygin <rider@altlinux.org> 2.5.2-alt1
 - 2.5.1 -> 2.5.2
 
