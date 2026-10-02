@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.32.0
+Version: 3.32.1
 Release: alt1
 
 Group: Networking/Remote access
@@ -566,6 +566,11 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Oct 02 2026 Andrey Cherepanov <cas@altlinux.org> 3.32.1-alt1
+- New version (fixes: GHSA-9qqc-m43j-g4r2, GHSA-3m9q-g533-rqjq,
+  GHSA-262p-h989-vmpv, GHSA-5xjc-c64q-m8r6, GHSA-f3vg-h45x-6wgf,
+  GHSA-c49c-xm94-5qf3).
+
 * Sat Sep 26 2026 Andrey Cherepanov <cas@altlinux.org> 3.32.0-alt1
 - New version (fixes: GHSA-xq87-9rrm-6wqw, GHSA-3rvr-qvx8-rj23,
   GHSA-pvgq-84w2-93ph, GHSA-xm53-352c-57jw, GHSA-3mq5-xh88-9v62,
