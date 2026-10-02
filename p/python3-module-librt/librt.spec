@@ -9,7 +9,7 @@
 %none_python3_modules_rename
 
 Name: python3-module-%pypi_name
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: Mypyc runtime library
 License: MIT
@@ -54,6 +54,9 @@ cp -r lib-rt/* .
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 02 2026 Stanislav Levin <slev@altlinux.org> 0.16.0-alt1
+- 0.15.0 -> 0.16.0
+
 * Mon Aug 24 2026 Stanislav Levin <slev@altlinux.org> 0.15.0-alt1
 - 0.13.0 -> 0.15.0
 
