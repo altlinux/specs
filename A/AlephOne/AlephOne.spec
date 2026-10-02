@@ -1,6 +1,6 @@
 Name: AlephOne
-Version: 1.11
-%define uversion 20250829
+Version: 1.11.1
+#%%define uversion 20250829
 
 Release: alt1
 
@@ -8,6 +8,7 @@ Summary: 3D first-person shooter game
 License: %gpl2plus
 Group: Games/Arcade
 Url: https://alephone.lhowon.org
+Vcs: https://github.com/Aleph-One-Marathon/alephone
 # Url git  https://github.com/Aleph-One-Marathon/alephone
 
 # https://github.com/Aleph-One-Marathon/alephone/releases/download/release-20220115/AlephOne-20220115.tar.bz2
@@ -99,8 +100,10 @@ alephone "~/Marathon Infinity"
 #_desktopdir/*
 #_man6dir/*
 
-
 %changelog
+* Fri Oct 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.11.1-alt1
+- 1.11 -> 1.11.1
+
 * Wed Mar 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.11-alt1
 - 1.10 -> 1.11
 
