@@ -9,6 +9,8 @@
 %def_with debuginfo
 %endif
 
+%define patched_rust_crates comm/third_party/rust/ews
+
 %define tbird_cid        \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
 %define tbird_prefix     %_libdir/thunderbird
 %define tbird_datadir    %_datadir/thunderbird
@@ -17,7 +19,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 156.0.1
+Version: 157.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -28,6 +30,7 @@ ExclusiveArch: %thunderbird_arches
 
 Source0: %name-%version.tar.zst
 Source1: thunderbird.cpp
+Source2: recompute-cargo-checksums.py
 Source3: thunderbird.desktop
 Source4: thunderbird-mozconfig
 Source5: thunderbird-default-prefs.js
@@ -47,6 +50,7 @@ Patch009: 0009-Apply-chat-message-style-changes-to-already-open-con.patch
 Patch010: 0010-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
 Patch011: 0011-Enable-cut-and-copy-in-the-calendar-view-context-men.patch
 Patch012: 0012-Restore-the-task-tree-observers-when-its-frame-is-re.patch
+Patch013: 0013-Add-patch-taking-EWS-well-known-folder-names-from-th.patch
 ### End Patches
 
 Provides: mailclient
@@ -195,6 +199,9 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
+%patch13 -p2
+
+python3 %SOURCE2 %patched_rust_crates
 
 cp -fv %SOURCE4 .mozconfig
 cat >> .mozconfig <<'EOF'
@@ -397,6 +404,88 @@ xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Oct 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 157.0-alt1
+- New version.
+- Fix an EWS account showing no folders when the server rejects
+  one of the requested well-known folder IDs (Closes: 60098).
+- Fixes:
+  + CVE-2026-103500: Heap buffer overflow opening large email
+  + CVE-2026-100756: Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-100757: Use-after-free in the Widget component
+  + CVE-2026-100758: Sandbox escape in the DOM: Navigation component
+  + CVE-2026-100759: Uninitialized memory in the Storage: Quota Manager component
+  + CVE-2026-100760: Sandbox escape in the Security: Process Sandboxing component
+  + CVE-2026-100761: Privilege escalation due to use-after-free in the Graphics: WebGPU component
+  + CVE-2026-100762: Sandbox escape due to use-after-free in the DOM: Content Processes component
+  + CVE-2026-100763: Incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-100764: Privilege escalation due to incorrect boundary conditions in the Graphics: WebGPU component
+  + CVE-2026-100765: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-100766: Information disclosure in the Networking: JAR component
+  + CVE-2026-100767: Use-after-free in the Networking: Cache component
+  + CVE-2026-100768: Use-after-free in the Graphics: WebGPU component
+  + CVE-2026-100769: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-100770: Sandbox escape due to use-after-free in the DOM: Content Processes component
+  + CVE-2026-100771: Undefined behavior in the DOM: Streams component
+  + CVE-2026-100772: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100773: Use-after-free in the Storage: IndexedDB component
+  + CVE-2026-100774: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100775: Sandbox escape in the Graphics component
+  + CVE-2026-100776: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-100777: Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-100778: Sandbox escape due to use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100779: Use-after-free in the XSLT component
+  + CVE-2026-100780: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100781: Sandbox escape due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-100782: Privilege escalation due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-100783: Uninitialized memory in the Audio/Video component
+  + CVE-2026-100784: Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-100785: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100786: Sandbox escape due to use-after-free in the Graphics component
+  + CVE-2026-100787: Sandbox escape in the XUL component
+  + CVE-2026-100788: Invalid pointer in the JavaScript: WebAssembly component
+  + CVE-2026-100789: Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-100790: Use-after-free in the XSLT component
+  + CVE-2026-100791: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100792: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-100793: JIT miscompilation in the JavaScript Engine component
+  + CVE-2026-100794: Sandbox escape due to incorrect boundary conditions in the Internationalization component
+  + CVE-2026-96869: Information disclosure in the Networking component
+  + CVE-2026-100795: Denial-of-service in the Networking component
+  + CVE-2026-100796: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-100797: Privilege escalation due to use-after-free in the Graphics: WebRender component
+  + CVE-2026-100798: Cryptography misuse in Storage: Quota Manager component
+  + CVE-2026-100799: Uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-100800: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-100801: Privilege escalation in the DLL Services component
+  + CVE-2026-100802: Uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-100803: Same-origin policy bypass in the WebExtensions component
+  + CVE-2026-100804: Sandbox escape due to use-after-free in the Preferences: Backend component
+  + CVE-2026-100805: Race condition, use-after-free in the Audio/Video component
+  + CVE-2026-100806: Uninitialized memory in the Graphics: WebGPU component
+  + CVE-2026-100807: Privilege escalation in the DOM: Service Workers component
+  + CVE-2026-100808: Mitigation bypass in the DOM: Service Workers component
+  + CVE-2026-100809: Same-origin policy bypass in the DevTools component
+  + CVE-2026-100810: Other issue in the DevTools component
+  + CVE-2026-100811: Sandbox escape due to use-after-free in the DOM: Core & HTML component
+  + CVE-2026-100812: Denial-of-service in the Graphics component
+  + CVE-2026-100813: Invalid pointer in the JavaScript Engine: JIT component
+  + CVE-2026-100814: Incorrect boundary conditions in the JavaScript Engine: JIT component
+  + CVE-2026-100815: Use-after-free in the CSS Parsing and Computation component
+  + CVE-2026-100816: Site isolation issue in the DOM: Networking component
+  + CVE-2026-100817: Other issue in the JavaScript: WebAssembly component
+  + CVE-2026-100818: Sandbox escape due to use-after-free in the Widget: Gtk component
+  + CVE-2026-100819: Sandbox escape due to incorrect boundary conditions in the XPCOM component
+  + CVE-2026-100820: Privilege escalation in the Address Bar component
+  + CVE-2026-100821: Site isolation issue in the Panning and Zooming component
+  + CVE-2026-100822: Spoofing issue in the Networking: HTTP component
+  + CVE-2026-100824: Privilege escalation in the Places component
+  + CVE-2026-100825: Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-100826: Denial-of-service in the Storage: StorageManager component
+  + CVE-2026-100828: Mitigation bypass in the Bookmarks & History component
+  + CVE-2026-100829: Mitigation bypass in the DOM: Security component
+  + CVE-2026-100830: Mitigation bypass in the DOM: Navigation component
+  + CVE-2026-100831: Use-after-free in the DOM: UI Events & Focus Handling component
+
 * Wed Sep 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 156.0.1-alt1
 - New version.
 - Drop the new-mail sound patch rejected upstream: the Xfce
