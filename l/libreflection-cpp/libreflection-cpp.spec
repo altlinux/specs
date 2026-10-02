@@ -3,7 +3,7 @@
 %def_with check
 
 Name: libreflection-cpp
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: C++ static reflection support library
@@ -58,5 +58,8 @@ The %{name}-devel package contains development files for %{name}.
 %_libdir/cmake/reflection-cpp/*
 
 %changelog
+* Fri Oct 02 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Mon Aug 24 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus
