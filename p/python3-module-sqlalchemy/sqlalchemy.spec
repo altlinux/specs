@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.52
+Version: 2.1.2
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -68,6 +68,9 @@ simple and Pythonic domain language.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 02 2026 Stanislav Levin <slev@altlinux.org> 2.1.2-alt1
+- 2.0.52 -> 2.1.2
+
 * Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 2.0.52-alt1
 - 2.0.51 -> 2.0.52
 
