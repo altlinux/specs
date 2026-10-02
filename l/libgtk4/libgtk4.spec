@@ -19,7 +19,6 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudproviders
-# 4.8.0: tracker disabled by default
 %def_disable tracker
 # enabled by default since 4.13.5
 # since 4.16.0 -- default renderer on Wayland
@@ -32,7 +31,7 @@
 %def_enable cups
 %def_disable accesskit
 
-%def_disable sysprof
+%def_enable sysprof
 %def_enable tests
 # fatal: posix_spawn: Resource temporarily unavailable on basalt
 %def_disable testsuite
@@ -41,7 +40,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -118,7 +117,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
-%{?_enable_tracker:BuildRequires: tracker3-devel}
+%{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0)}
 %{?_enable_vulkan:BuildRequires: /usr/bin/glslc vulkan-devel >= %vulkan_ver}
 %{?_enable_cups:BuildRequires: libcups-devel >= %cups_ver}
 %{?_enable_accesskit:BuildRequires: pkgconfig(accesskit-c-%accesskit_api_ver)}
@@ -432,6 +431,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Fri Oct 02 2026 Yuri N. Sedunov <aris@altlinux.org> 4.24.1-alt1
+- 4.24.1
+
 * Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 4.24.0-alt1
 - 4.24.0
 
