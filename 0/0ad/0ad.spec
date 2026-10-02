@@ -1,6 +1,6 @@
 Name: 0ad
 Epoch: 1
-Version: 0.27.1
+Version: 0.28.0
 Release: alt1
 
 Summary: Libre realtime strategy game of ancient warfare
@@ -19,8 +19,6 @@ Source1: cxxtest.tar
 Source2: fcollada.tar
 
 Patch1: 0ad-0.27-alt-loongarch64-and-riscv64.patch
-Patch2: 0ad-0.27.1-upstream-mozjs128.patch
-Patch3: 0ad-0.27-alt-mozjs128-strict-mode.patch
 
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-flyweight-devel
@@ -114,7 +112,9 @@ build/workspaces/update-workspaces.sh \
   --with-system-premake5 \
   #
 
-%make_build -C build/workspaces/gcc verbose=1
+# Build only the installed targets; skip the 'test' target which does not
+# link with system premake5 (generated cxxtest sources aren't compiled).
+%make_build -C build/workspaces/gcc verbose=1 pyrogenesis AtlasUI
 
 %install
 install -Dm 0755 binaries/system/libAtlasUI.so %buildroot%_libdir/0ad/libAtlasUI.so
@@ -141,6 +141,9 @@ cp -a binaries/data/l10n %buildroot%_datadir/0ad/
 %_pixmapsdir/0ad.png
 
 %changelog
+* Mon Jun 08 2026 Anton Farygin <rider@altlinux.org> 1:0.28.0-alt1
+- 0.27.1 -> 0.28.0
+
 * Tue Oct 14 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.1-alt1
 - New version.
 

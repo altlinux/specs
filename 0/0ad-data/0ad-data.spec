@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 0ad-data
-Version: 0.27.1
+Version: 0.28.0
 Release: alt1
 Epoch: 1
 
@@ -13,6 +13,7 @@ BuildArch: noarch
 
 # https://releases.wildfiregames.com/0ad-%version-unix-data.tar.gz
 Source: %name-%version.tar
+Source999: watch
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free software, cross-platform
@@ -32,9 +33,6 @@ educational celebration of game development and ancient history.
 %prep
 %setup
 # remove bundled fonts because used system
-rm -f binaries/data/tools/fontbuilder/fonts/*
-rmdir  binaries/data/tools/fontbuilder/fonts/
-rmdir  binaries/data/tools/fontbuilder/
 
 %install
 mkdir -p %buildroot%_datadir/0ad
@@ -44,6 +42,9 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Wed Jun 10 2026 Anton Farygin <rider@altlinux.org> 1:0.28.0-alt1
+- 0.27.1 -> 0.28.0
+
 * Tue Oct 14 2025 Constantin Sunzow <protvin@altlinux.org> 1:0.27.1-alt1
 - New version.
 
