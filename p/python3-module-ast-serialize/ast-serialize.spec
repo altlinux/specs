@@ -8,7 +8,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 Summary: Python bindings for mypy AST serialization
 License: MIT
@@ -55,6 +55,9 @@ export CARGO_PROFILE_RELEASE_STRIP='none'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 01 2026 Stanislav Levin <slev@altlinux.org> 0.11.2-alt1
+- 0.11.1 -> 0.11.2
+
 * Thu Sep 10 2026 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1
 - 0.11.0 -> 0.11.1
 
