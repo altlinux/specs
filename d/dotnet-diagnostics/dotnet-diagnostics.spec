@@ -1,11 +1,15 @@
 %define _dotnet_major 8.0
 %define _dotnet_sdkrelease 8.0.131
 %define _dotnet_corerelease 8.0.31
+
+%def_with native
+%if_with native
 %define llvmver 18.1
+%endif
 
 Name:    dotnet-diagnostics
 Version: %_dotnet_major.505301
-Release: alt2.1
+Release: alt3
 
 Summary: Various .NET Core runtime diagnostic tools
 License: MIT
@@ -25,15 +29,17 @@ Patch2:  fix-nontrivial-memcall.patch
 ExclusiveArch: x86_64
 
 BuildRequires(pre): rpm-macros-dotnet
-BuildRequires: cmake
 BuildRequires: /proc
+%if_with native
+BuildRequires: cmake
 BuildRequires: clang%{llvmver}
-BuildRequires: pkgconfig(icu-io)
 BuildRequires: liblldb%llvmver-devel
-BuildRequires: pkgconfig(libunwind)
 BuildRequires: llvm-common
 BuildRequires: llvm%llvmver
 BuildRequires: libcxx-devel
+%endif
+BuildRequires: pkgconfig(icu-io)
+BuildRequires: pkgconfig(libunwind)
 BuildRequires: dotnet-%_dotnet_major
 BuildRequires: dotnet-sdk-%_dotnet_major
 BuildRequires: dotnet-aspnetcore-runtime-%_dotnet_major
@@ -55,6 +61,7 @@ lldb isn't available. The dotnet-dump tool allows you to run SOS commands to
 analyze crashes and the garbage collector (GC), but it isn't a native debugger
 so things like displaying native stack frames aren't supported.
 
+%if_with native
 %package -n dotnet-sos
 Summary:  SOS (Son of Strike) plugin for LLDB by .NET Global Tools
 Group:    Development/Tools
@@ -64,6 +71,7 @@ Requires: python3-module-lldb%llvmver
 %description -n dotnet-sos
 This extension lets you inspect managed .NET Core state from native debuggers
 like LLDB.
+%endif
 
 %prep
 %setup
@@ -100,7 +108,9 @@ for dotnetfile in $(ls %_libdir/dotnet); do
     %__ln_s %_libdir/dotnet/$dotnetfile .dotnet/$dotnetfile
 done
 
+%if_with native
 %autopatch
+%endif
 
 %build
 # Make use the vendored cache and do not try to update
@@ -111,6 +121,7 @@ export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 export DOTNET_NUGET_SIGNATURE_VERIFICATION=false
 # Needs to be used during cache update
 export CheckEolTargetFramework=false
+%if_with native
 # Common preset to use llvm for native parts
 export CC="clang"
 export CXX="clang++"
@@ -118,12 +129,16 @@ export CFLAGS="$CFLAGS -stdlib=libc++ -Wno-macro-redefined -Wno-unused-command-l
 export CXXFLAGS="$CXXFLAGS -stdlib=libc++ -Wno-unused-command-line-argument -Wno-macro-redefined"
 export LDFLAGS="$LDFLAGS -stdlib=libc++ -L%_libdir -lc++ -lc++abi"
 export LLDB_INCLUDE_DIR=/usr/lib/llvm-%llvmver/include
+%endif
 # Another wichcraft to use system toolset instead of attempts to download and
 # install from cloud
 export DOTNET_ROOT="%_libdir/dotnet"
 export DOTNET_INSTALL_DIR=$DOTNET_ROOT
 export PATH="$DOTNET_ROOT:$PATH"
-bash -x ./build.sh /p:NoCache=true -c Release
+bash -x ./build.sh /p:NoCache=true -c Release \
+%if_without native
+-skipnative
+%endif
 
 %install
 %__mkdir_p %buildroot%_bindir
@@ -182,6 +197,7 @@ fi
 exec \$DOTNET_HOST "%_libdir/dotnet/tools/dotnet-dump/dotnet-dump.dll" \$@
 EOF
 
+%if_with native
 %pre -n dotnet-sos
 if [ $1 -eq 1 ]; then
     echo "To load the native plugin for LLDB, you need to add the following line"
@@ -189,6 +205,7 @@ if [ $1 -eq 1 ]; then
     echo "debugger's command line: "
     echo "plugin load %_libdir/dotnet/tools/dotnet-dump/libsosplugin.so"
 fi
+%endif
 
 %files
 %doc README.md LICENSE.TXT
@@ -203,15 +220,22 @@ fi
 %files -n dotnet-dump
 %attr(755, root, root) %_bindir/dotnet-dump
 %_libdir/dotnet/tools/dotnet-dump
+%if_with native
 %exclude %_libdir/dotnet/tools/dotnet-dump/libsos*.so
 %exclude %_libdir/dotnet/tools/dotnet-dump/libdbgshim.so
+%endif
 
+%if_with native
 %files -n dotnet-sos
 %doc artifacts/bin/linux.x64.Release/sosdocsunix.txt
 %_libdir/dotnet/tools/dotnet-dump/libsos*.so
 %_libdir/dotnet/tools/dotnet-dump/libdbgshim.so
+%endif
 
 %changelog
+* Fri Oct 02 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt3
+- Added the option to build the native part.
+
 * Tue Sep 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt2.1
 - SDK version update.
 
