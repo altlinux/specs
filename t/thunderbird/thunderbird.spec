@@ -19,7 +19,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 157.0
+Version: 157.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -404,6 +404,9 @@ xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Fri Oct 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 157.0.1-alt1
+- New version.
+
 * Thu Oct 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 157.0-alt1
 - New version.
 - Fix an EWS account showing no folders when the server rejects
