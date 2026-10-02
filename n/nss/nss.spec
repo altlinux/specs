@@ -7,7 +7,7 @@
 %define optflags_lto %nil
 
 Name: nss
-Version: 3.129
+Version: 3.130
 Release: alt1
 
 Summary: Netscape Network Security Services(NSS)
@@ -278,6 +278,9 @@ popd
 %files -n libnss-nssckbi-checkinstall
 
 %changelog
+* Wed Sep 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.130-alt1
+- New version.
+
 * Thu Sep 17 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.129-alt1
 - New version.
 - Certificate Authority Changes:
