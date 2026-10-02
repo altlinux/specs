@@ -1,44 +1,30 @@
 Name: kvmd
-Version: 3.313
-Release: alt2
+Version: 4.217
+Release: alt1
 
 Summary: The PiKVM daemon
 License: GPLv3
 Group: System/Servers
-Url: https://pikvm.org/
+URL: https://pikvm.org/
+VCS: https://github.com/pikvm/kvmd
 
+Requires: python3-module-kvmd = %version
+Requires: ipmitool
 Requires: libxkbcommon
-Requires: kvmd-janus
 Requires: ustreamer
 Requires: ustreamer-plugin-janus
-Requires: nginx
-Requires: openssl
-Requires: ipmitool
-Requires: iptables
-Requires: dnsmasq
-Requires: v4l-utils
-Requires: sudo
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
 
 %description
 %summary
 
-%define _sysusersdir /lib/sysusers.d
-
 %prep
 %setup
 
-%build
-%pyproject_build
-
 %install
-%pyproject_install
-
 mkdir -p %buildroot%_udevrulesdir %buildroot%_sysconfdir
 
 install -pm0644 -D configs/os/sysctl.conf %buildroot%_sysctldir/kvmd.conf
@@ -47,43 +33,59 @@ install -pm0644 -D configs/os/tmpfiles.conf %buildroot%_tmpfilesdir/kvmd.conf
 install -pm0644 -D configs/os/services/kvmd.service %buildroot%_unitdir/kvmd.service
 install -pm0644 configs/os/services/kvmd-*.service %buildroot%_unitdir
 
-cp -at %buildroot%_udevrulesdir  configs/os/udev/*.rules
-
+cp -at %buildroot%_udevrulesdir configs/os/udev/*.rules
 cp -at %buildroot%_sysconfdir configs/kvmd
 cp -at %buildroot%_sysconfdir/kvmd configs/janus configs/nginx
+
+install -pm0600 -D configs/os/sudoers/v4mini-hdmi \
+    %buildroot%_sysconfdir/sudoers.d/kvmd
+
 mkdir -p %buildroot%_sysconfdir/kvmd/override.d
 mkdir -p %buildroot%_sysconfdir/kvmd/vnc/ssl
-touch %buildroot%_sysconfdir/kvmd/main.yaml
 
-mkdir -p %buildroot%_datadir/kvmd
+install -pm0755 -D -t %buildroot%_bindir \
+    scripts/kvmd-{gencert,update-switch}
+
+install -pm0755 -D -t %buildroot%_libexecdir/kvmd \
+    scripts/kvmd-{udev-flash-pico,ucamera-prepare}
+
+touch %buildroot%_sysconfdir/kvmd/platform
+ln -srv %buildroot%_sysconfdir/kvmd/platform \
+    %buildroot%_libexecdir/kvmd/platform
+
+mkdir -p %buildroot%_datadir/kvmd/configs.default
 cp -at %buildroot%_datadir/kvmd extras hid contrib/keymaps web
+cp -at %buildroot%_datadir/kvmd/configs.default configs/*
 
-install -pm0755 scripts/kvmd-gencert %buildroot%_bindir
-
-install -pm0600 -D configs/os/sudoers/v4mini-hdmi %buildroot%_sysconfdir/sudoers.d/kvmd
 rm -v %buildroot%_unitdir/kvmd-bootconfig.service
 rm -v %buildroot%_unitdir/kvmd-certbot.service
+rm -v %buildroot%_unitdir/kvmd-camera@.service
 
 %files
 %_sysctldir/*.conf
 %_sysusersdir/*.conf
 %_tmpfilesdir/*.conf
-%_unitdir/*.service
-%_udevrulesdir/*.rules
 
-%_sysconfdir/sudoers.d/kvmd
+%_udevrulesdir/*.rules
+%_unitdir/*.service
 
 %_sysconfdir/kvmd
-%ghost %config(noreplace) %attr(0640,root,kvmd) %_sysconfdir/kvmd/main.yaml
+%config(noreplace) %_sysconfdir/kvmd/platform
+%_sysconfdir/sudoers.d/kvmd
 
-%_bindir/kvmd*
+%_bindir/kvmd-gencert
+%_bindir/kvmd-update-switch
+
+%_libexecdir/kvmd/platform
+%_libexecdir/kvmd/kvmd-ucamera-prepare
+%_libexecdir/kvmd/kvmd-udev-flash-pico
 
 %_datadir/kvmd
 
-%python3_sitelibdir/kvmd
-%python3_sitelibdir/kvmd-%version.dist-info
-
 %changelog
+* Tue Sep 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.217-alt1
+- 4.217 released
+
 * Thu Mar 06 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.313-alt2
 - fixed breakage with recent v4l-utils
 

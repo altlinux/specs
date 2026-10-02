@@ -1,22 +1,21 @@
 Name: kvmd-webterm
-Version: 0.48
+Version: 0.52
 Release: alt1
 
 Summary: Web terminal for the PiKVM daemon
 License: GPLv3
 Group: System/Servers
-Url: https://pikvm.org/
+URL: https://pikvm.org/
+VCS: https://github.com/pikvm/packages
 
 Requires: ttyd
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 %description
 %summary
-
-%define _sysusersdir /lib/sysusers.d
 
 %prep
 %setup
@@ -38,6 +37,9 @@ install -pm0644    nginx.*.conf %buildroot%_datadir/kvmd/extras/webterm/
 %_datadir/kvmd/web/extras/webterm
 
 %changelog
+* Tue Sep 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.52-alt1
+- 0.52 released
+
 * Thu Mar 07 2024 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.48-alt1
 - 0.48 released
 

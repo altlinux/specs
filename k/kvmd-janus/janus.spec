@@ -1,13 +1,13 @@
 Name: kvmd-janus
-Version: 0.14.0
+Version: 1.4.1
 Release: alt1
 
 Summary: PiKVM -- WebRTC server
 License: GPLv3
 Group: System/Servers
-Url: https://github.com/meetecho/janus-gateway
+VCS: https://github.com/meetecho/janus-gateway
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gengetopt
 BuildRequires: pkgconfig(glib-2.0)
@@ -33,8 +33,6 @@ Group: Development/C
 
 %prep
 %setup
-sed -ri -e '1s,^,import "./adapter.js"\n,' \
-	-e '/^function Janus/ s,^,export ,' html/janus.js
 
 %build
 %autoreconf
@@ -56,7 +54,9 @@ sed -ri -e '1s,^,import "./adapter.js"\n,' \
 %makeinstall_std
 # https://webrtc.github.io/adapter/adapter-latest.js
 install -pm0644 .gear/adapter.js %buildroot%_datadir/kvmd-janus/javascript/
+mv %buildroot%_pkgconfigdir/janus-gateway.pc %buildroot%_pkgconfigdir/kvmd-janus.pc
 find %buildroot%_libdir -type f -name \*.la -delete
+rm -rf %buildroot%_datadir/janus
 
 %files
 %_bindir/*
@@ -66,8 +66,12 @@ find %buildroot%_libdir -type f -name \*.la -delete
 
 %files devel
 %_includedir/kvmd-janus
+%_pkgconfigdir/kvmd-janus.pc
 
 %changelog
+* Tue Sep 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt1
+- 1.4.1 released
+
 * Mon Sep 18 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.0-alt1
 - 0.14.0 released
 

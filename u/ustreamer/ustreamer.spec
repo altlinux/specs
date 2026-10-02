@@ -1,13 +1,14 @@
 Name: ustreamer
-Version: 6.4
+Version: 6.67
 Release: alt1
 
 Summary: Lightweight MJPEG stream server
 License: GPLv3
 Group: Video
-Url: https://github.com/pikvm/ustreamer
+URL: https://github.com/pikvm/ustreamer
+VCS: https://github.com/pikvm/ustreamer
 
-Source0: %name-%version-%release.tar
+Source: %name-%version.tar
 
 %package plugin-janus
 Summary: Ustreamer plugin for Janus
@@ -53,9 +54,6 @@ This package contains Python bindings.
 %prep
 %setup
 grep -Elr '^#include\s+<janus' janus/ |xargs sed -i 's,<janus/,<kvmd-janus/,'
-sed -ri -e '/^_CFLAGS/ s,$, -I/usr/include/kvmd-janus,' \
-        -e 's,/lib/ustreamer/janus,/%_lib/kvmd-janus/plugins,' \
-janus/Makefile
 
 %build
 make %defs
@@ -74,13 +72,16 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %_man1dir/ustreamer-dump.1*
 
 %files plugin-janus
-%_libdir/kvmd-janus/plugins/*.so
+%_libexecdir/ustreamer/janus/*.so
 
 %files -n python3-module-ustreamer
 %python3_sitelibdir/ustreamer-%version.dist-info
 %python3_sitelibdir/ustreamer.*.so
 
 %changelog
+* Tue Sep 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 6.67-alt1
+- 6.67 released
+
 * Mon Mar 18 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 6.4-alt1
 - 6.4 released
 
