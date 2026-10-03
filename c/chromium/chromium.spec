@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        154.0.8037.92
+Version:        154.0.8037.97
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -743,6 +743,21 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Sat Oct 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 154.0.8037.97-alt1
+- New version (154.0.8037.97).
+- Fixes:
+  + CVE-2026-103621: Integer overflow in Compositing
+  + CVE-2026-103622: Use after free in SVG
+  + CVE-2026-103623: Use after free in MediaStream
+  + CVE-2026-103624: Use after free in Contextual Tasks
+  + CVE-2026-103625: Type confusion in V8
+  + CVE-2026-103626: Incorrect authorization in FileSystem
+  + CVE-2026-103627: Information leak in SVG
+  + CVE-2026-103628: Out of bounds write in WebGL
+  + CVE-2026-103629: Integer overflow in Skia
+  + CVE-2026-103630: Use after free in FedCM
+  + CVE-2026-103631: Buffer overflow in WebRTC
+
 * Wed Sep 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 154.0.8037.92-alt1
 - New version (154.0.8037.92).
 - Fixes:
