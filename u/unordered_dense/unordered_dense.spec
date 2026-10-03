@@ -1,5 +1,5 @@
 Name: unordered_dense
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Summary: A fast & densely stored hashmap and hashset based on robin-hood backward shift deletion for C++17 and later.
@@ -50,6 +50,9 @@ Additionally, there are ankerl::unordered_dense::segmented_map and ankerl::unord
 %_cmakedir/%name
 
 %changelog
+* Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 5.3.0-alt1
+- New version 5.3.0.
+
 * Sun Sep 27 2026 Nazarov Denis <nenderus@altlinux.org> 5.2.0-alt1
 - New version 5.2.0.
 
