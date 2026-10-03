@@ -1,13 +1,13 @@
 Name: noctalia-shell
 Version: 4.7.7
-Release: alt2
+Release: alt3
 
 Summary: A sleek and minimal desktop shell thoughtfully crafted for Wayland
 License: MIT
 Group:   Graphical desktop/Other
 
 URL: https://docs.noctalia.dev
-VCS: https://github.com/noctalia-dev/noctalia-shell.git
+VCS: https://github.com/noctalia-dev/noctalia.git
 
 Source0: %name-%version.tar
 Source1: README-quickstart.md
@@ -20,7 +20,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-python3
 
-# https://docs.noctalia.dev/getting-started/installation/#dependencies-explained
+# https://docs.noctalia.dev/noctalia-shell-legacy/getting-started/installation/?section=dependencies-explained#dependencies-explained
 Requires: noctalia-qs
 Requires: brightnessctl
 Requires: ImageMagick-tools
@@ -45,6 +45,10 @@ Requires: xdg-desktop-portal
 %filter_from_requires /python3(lib.scheme)/d
 
 %description
+This package contains Noctalia v4, a legacy and unmaintained version. It is no
+longer developed, supported, or receiving fixes. Do not use v4 for new
+installations.
+
 A beautiful, minimal desktop shell for Wayland that actually gets out of your
 way. Built on Quickshell with a warm lavender aesthetic that you can easily
 customize to match your vibe.
@@ -65,6 +69,11 @@ install -DT %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/%name
 
 %changelog
+* Sat Oct 03 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.7-alt3
+- Add project status to description (legacy, unmaintained version).
+- Update VCS tag and gear-remotes.
+- Update docs links (spec, README-quickstart).
+
 * Tue May 19 2026 Ilya Sorochan <k0tran@altlinux.org> 4.7.7-alt2
 - Fix lockscreen: add pam.d file and set it as default.
 
