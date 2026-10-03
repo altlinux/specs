@@ -1,20 +1,21 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.10.5
+Version: 1.12.0
 Release: alt1
 
 Summary: Pipe Viewer
 
 License: %gpl3plus
 Group: Text tools
+# VCS: https://codeberg.org/ivarch/pv.git
 URL: http://www.ivarch.com/programs/pv.shtml
-
-Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
+
+BuildRequires: glib2-devel
 
 %description
 pv - Pipe Viewer - is a terminal-based tool for monitoring the
@@ -32,7 +33,7 @@ in a complex pipeline.
 %setup -q
 
 %build
-%autoreconf
+%autoreconf -I /usr/share/gettext/m4
 
 %configure
 %make_build
@@ -54,6 +55,9 @@ popd
 %exclude %_datadir/doc
 
 %changelog
+* Sat Oct 03 2026 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt1
+- 1.12.0 (Fix FTBS)
+
 * Mon Apr 06 2026 Nikolay A. Fetisov <naf@altlinux.org> 1.10.5-alt1
 - New version
 
