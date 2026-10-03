@@ -3,20 +3,20 @@
 
 # ALT release suffix (e.g. .release.4, .hotfix.2, .rc1).
 # Set to %nil when the upstream version has no suffix.
-%define version_suffix .release.2
+%define version_suffix .nexus
 # Upstream tag/source-tarball suffix, dash-separated (e.g. -release.4, -hotfix.2, -rc1).
 # Set to %nil when the upstream version has no suffix.
-%define upstream_suffix -release.2
+%define upstream_suffix -nexus
 
 Name: sharpemu
-Version: 0.0.4
+Version: 0.0.5
 Release: alt1%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
 Group: Emulators
 
-Url: https://github.com/sharpemu/sharpemu
+Url: https://%name.app
 Vcs: https://github.com/sharpemu/sharpemu
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
@@ -35,6 +35,17 @@ Patch0: bink2.patch
 BuildRequires: /proc
 BuildRequires: dotnet-sdk-10.0
 BuildRequires: zip
+# libSkiaSharp (bundled into the single-file binary since v0.0.5-nexus) links
+# against system fontconfig and harfbuzz; the test suite loads it and renders
+# system fonts, so a fontconfig setup with a real font is needed as well.
+BuildRequires: libfontconfig1
+BuildRequires: fontconfig
+BuildRequires: fonts-ttf-dejavu
+BuildRequires: libharfbuzz
+# Auto-requires cannot see the NEEDED of the libraries embedded into the
+# single-file bundle, so the runtime deps must be listed explicitly.
+Requires: libfontconfig1
+Requires: libharfbuzz
 
 %description
 SharpEmu is a PlayStation 5 emulator for Windows, Linux and macOS written in C#.
@@ -149,6 +160,11 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.5-alt1.nexus
+- Update to v0.0.5-nexus
+- Fix Url tag (point to sharpemu.app)
+- Add missing fontconfig and harfbuzz dependencies (new SkiaSharp runtime)
+
 * Sat Sep 26 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.4-alt1.release.2
 - Update to v0.0.4-release.2
 
