@@ -2,7 +2,7 @@
 
 Name: pi
 Epoch:1 
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
@@ -105,6 +105,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:1.0.1-alt1
+- 1.0.0 -> 1.0.1
+
 * Fri Oct 02 2026 Anton Farygin <rider@altlinux.org> 1:1.0.0-alt1
 - 0.99.2 -> 1.0.0
 - Refreshed the no-esbuild patch: upstream dropped session-backends/sqlite-node from the build chain.
