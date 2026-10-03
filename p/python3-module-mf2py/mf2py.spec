@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.0.1
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: Python Microformats2 parser
 License: MIT
@@ -52,6 +52,9 @@ microformats1.
 
 
 %changelog
+* Sat Oct 03 2026 Anton Vyatkin <toni@altlinux.org> 2.0.2-alt1
+- New version 2.0.2.
+
 * Tue Oct 21 2025 Stanislav Levin <slev@altlinux.org> 2.0.1-alt2
 - Fixed FTBFS (new beautifulsoup4).
 
