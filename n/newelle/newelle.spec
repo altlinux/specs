@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: newelle
-Version: 1.5.0
+Version: 1.5.2.1
 Release: alt1
 
 Summary: Ultimate Virtual Assistant
-License: GPL-3.0-or-later
+License: GPL-3.0-or-later AND MIT
 Group: Office
 URL: https://github.com/qwersyk/Newelle
 
@@ -52,6 +52,8 @@ Requires: python3(gtts)
 Requires: python3(numpy)
 Requires: python3(six)
 Requires: python3(tldextract)
+Requires: python3-devel
+Requires: gcc
 
 Requires: git
 Requires: libportaudio2
@@ -129,10 +131,14 @@ echo "         Please note that application can't work without these files."
 %_datadir/glib-2.0/schemas/io.github.qwersyk.Newelle.gschema.xml
 %_iconsdir/hicolor/scalable/apps/io.github.qwersyk.Newelle.svg
 %_iconsdir/hicolor/symbolic/apps/*.svg
+%_datadir/licenses/newelle/lobehub-icons.LICENSE
 %dir %_datadir/newelle/
 %_datadir/newelle/*
 
 %changelog
+* Sat Oct 03 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.2.1-alt1
+- New version 1.5.2.1.
+
 * Thu Aug 20 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
 - New version 1.5.0.
 
