@@ -1,5 +1,6 @@
 %def_enable snapshot
 %define _name farstream
+%define namespace Farstream
 %define api_ver 0.2
 %define gst_api_ver 1.0
 %define gupnp_api_ver 1.2
@@ -12,21 +13,20 @@
 
 Name: %_name%api_ver
 Version: 0.2.9.1
-Release: alt0.4
+Release: alt0.5
 
 Summary: A audio/video conferencing framework (0.2)
 Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: http://www.freedesktop.org/wiki/Software/Farstream
 
+Vcs: https://gitlab.freedesktop.org/farstream/farstream.git
+
 %if_disabled snapshot
 Source: http://freedesktop.org/software/%_name/releases/%_name/%_name-%version.tar.gz
 %else
-Vcs: https://gitlab.freedesktop.org/farstream/farstream.git
 Source: %_name-%version.tar
 %endif
-#https://gitlab.freedesktop.org/farstream/farstream/-/merge_requests/7
-Patch: farstream-0.2.9-up-drop_volatile_qualifiers.patch
 
 %define nice_ver 0.1.8
 %define gst_ver 1.4
@@ -35,7 +35,7 @@ Patch: farstream-0.2.9-up-drop_volatile_qualifiers.patch
 #Obsoletes: farsight2
 Conflicts: farsight2
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
 BuildRequires(pre): rpm-build-python3
@@ -66,7 +66,7 @@ This package provides shared Farstream (0.2 API version) library.
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 The Farstream (formerly Farsight) is a collection of GStreamer modules
@@ -78,7 +78,7 @@ developing applications that use Farstream.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Farstream
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Farstream library.
@@ -87,8 +87,8 @@ GObject introspection data for the Farstream library.
 Summary: GObject introspection devel data for the Farstream
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Farstream library.
@@ -107,16 +107,15 @@ This package provides development documentation for the Farstream library.
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -Wno-error=discarded-qualifiers
 %autoreconf
 %configure \
-	--disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable gupnp} \
-	PYTHON=%__python3
+    --disable-static \
+    %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{subst_enable gupnp} \
+    PYTHON=%__python3
 %nil
 #SMP-incomaptible build
 %make
@@ -149,10 +148,10 @@ This package provides development documentation for the Farstream library.
 %_pkgconfigdir/*
 
 %files -n lib%name-gir
-%_typelibdir/Farstream-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Farstream-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -164,6 +163,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.5
+- updated to 0.2.9-8-g7aef1465
+
 * Mon Jul 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.2.9.1-alt0.4
 - disabled gupnp support
 
