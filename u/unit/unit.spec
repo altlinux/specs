@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.35.0
-Release: alt5
+Release: alt6
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -102,7 +102,10 @@ sed -i "/NXT_PHP_LIB=/s/\"-lphp.*\"/$LIBPHP_LDFLAGS/" auto/modules/php
 #   %%add_optflags -fanalyzer -Wno-analyzer-null-argument -Wno-analyzer-null-dereference -Wno-analyzer-malloc-leak -Wno-analyzer-use-of-uninitialized-value
 # Last one is certainly worrisome.
 
+# unterminated-string-initialization warning exists only in gcc >= 15
+%if 0%__gcc_version_major > 14
 %add_optflags -Wno-error=unterminated-string-initialization
+%endif
 
 %ifarch %e2k
 # lcc 1.25.12 found some perl/php interpreter header glitches missed by gcc
@@ -247,6 +250,9 @@ logrotate --state /dev/null %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Sat Oct 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.35.0-alt6
+- Added -Wno-error=unterminated-string-initialization only with gcc >= 15.
+
 * Wed Sep 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.35.0-alt5
 - Fix %%pre checkinstall without HOME var (Closes: #60494).
 
