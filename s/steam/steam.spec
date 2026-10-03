@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.87
-Release: alt3
+Release: alt4
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -24,6 +24,7 @@ Patch3: %name-steamvr-alt.patch
 BuildRequires(Pre): rpm-build-python3
 
 Requires: bash >= 4.4
+Requires: bzlib-compat
 Requires: curl
 Requires: glibc-pthread >= 2.15
 Requires: glibc-nss >= 2.15
@@ -90,6 +91,9 @@ List of devices Steam and SteamVR will want read/write permissions on, to help d
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Sun Oct 04 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt4
+- Add require on bzlib-compat (ALT #56814)
+
 * Sat Sep 26 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt3
 - Add require on pulseaudio-utils (ALT #26115)
 
