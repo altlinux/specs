@@ -1,13 +1,13 @@
-%define git_commit_hash 7d4f3e0f
-%define git_commit_date 1787323381
+%define git_commit_hash de93650a
+%define git_commit_date 1789711154
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
 %define amnezia_xray_bindings_version 1.4.0
 
 Name: amnezia-vpn
-Version: 5.0.1.5
-Release: alt3
+Version: 5.0.3.0
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -182,6 +182,9 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.3.0-alt1
+- Version 5.0.3.0
+
 * Mon Aug 31 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.1.5-alt3
 - Update AGW public keys and endpoints for work VPN from Amnezia
 - Use the commit timestamp for reproducible __DATE__ and CMake timestamps
