@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.28.0
-Release: alt1
+Release: alt2
 
 Summary: Libre realtime strategy game of ancient warfare
 License: GPL-2.0-or-later and MIT
@@ -17,8 +17,14 @@ Source1: cxxtest.tar
 # https://svn.wildfiregames.com/public/source-libs/trunk/fcollada/src/
 # libraries/source/fcollada/build.sh
 Source2: fcollada.tar
+# Materialized upstream Git LFS object; sha256 matches build/resources/0ad.png.
+Source3: 0ad.png
 
 Patch1: 0ad-0.27-alt-loongarch64-and-riscv64.patch
+Patch2: 0ad-0.28.0-alt-mozjs140-port.patch
+Patch3: 0ad-0.28.0-alt-component-gc-fixes.patch
+Patch4: 0ad-0.28.0-alt-secondary-simulation-lifetime-fixes.patch
+Patch5: 0ad-0.28.0-alt-headless-replay-log-fixes.patch
 
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-flyweight-devel
@@ -38,7 +44,7 @@ BuildRequires: libgloox-devel
 BuildRequires: libicu-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libmozjs128-devel
+BuildRequires: libmozjs140-devel
 BuildRequires: libnspr-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
@@ -75,6 +81,9 @@ educational celebration of game development and ancient history.
 %prep
 %setup -a1 -a2
 %autopatch -p1
+
+# The upstream git archive contains an LFS pointer, not a PNG.
+cp %SOURCE3 build/resources/0ad.png
 
 # specify build version for GUI
 echo \
@@ -141,6 +150,13 @@ cp -a binaries/data/l10n %buildroot%_datadir/0ad/
 %_pixmapsdir/0ad.png
 
 %changelog
+* Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:0.28.0-alt2
+- Port to system mozjs140 (ALT #59894).
+- Install the actual upstream icon instead of its Git LFS pointer (ALT #56837).
+- Keep native-interface GC roots alive during component deinitialization.
+- Destroy secondary simulation components before their context and terrain.
+- Initialize writable logs and crash-report hooks for headless replays.
+
 * Mon Jun 08 2026 Anton Farygin <rider@altlinux.org> 1:0.28.0-alt1
 - 0.27.1 -> 0.28.0
 
