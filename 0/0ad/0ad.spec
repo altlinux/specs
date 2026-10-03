@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.28.0
-Release: alt2
+Release: alt3
 
 Summary: Libre realtime strategy game of ancient warfare
 License: GPL-2.0-or-later and MIT
@@ -21,7 +21,7 @@ Source2: fcollada.tar
 Source3: 0ad.png
 
 Patch1: 0ad-0.27-alt-loongarch64-and-riscv64.patch
-Patch2: 0ad-0.28.0-alt-mozjs140-port.patch
+Patch2: 0ad-0.28.0-alt-mozjs153-port.patch
 Patch3: 0ad-0.28.0-alt-component-gc-fixes.patch
 Patch4: 0ad-0.28.0-alt-secondary-simulation-lifetime-fixes.patch
 Patch5: 0ad-0.28.0-alt-headless-replay-log-fixes.patch
@@ -44,7 +44,7 @@ BuildRequires: libgloox-devel
 BuildRequires: libicu-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: libmozjs140-devel
+BuildRequires: libmozjs153-devel
 BuildRequires: libnspr-devel
 BuildRequires: libopenal-devel
 BuildRequires: libpng-devel
@@ -150,6 +150,9 @@ cp -a binaries/data/l10n %buildroot%_datadir/0ad/
 %_pixmapsdir/0ad.png
 
 %changelog
+* Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:0.28.0-alt3
+- Port to system mozjs153.
+
 * Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:0.28.0-alt2
 - Port to system mozjs140 (ALT #59894).
 - Install the actual upstream icon instead of its Git LFS pointer (ALT #56837).
