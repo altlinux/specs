@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define php_version %php_defver
+#define php_version %php_defver
+# ALT #60799
+%define php_version 8.4
 %def_without pam
 
 Name: moodle
-Version: 5.2.3
+Version: 5.3.0
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -254,11 +256,17 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Sat Oct 03 2026 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
+- New version.
+
 * Mon Sep 14 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
 - New version.
 
 * Sun Aug 09 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.2-alt1
-- New version.
+- New version (fixes: CVE-2026-102588, CVE-2026-102587, CVE-2026-102586,
+  CVE-2026-102585, CVE-2026-102584, CVE-2026-102583, CVE-2026-102582,
+  CVE-2026-102581, CVE-2026-102580, CVE-2026-102579, CVE-2026-102578,
+  CVE-2026-102577).
 
 * Sat Jun 06 2026 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1
 - New version (fixes: CVE-2026-58348, CVE-2026-58347, CVE-2026-58346,
