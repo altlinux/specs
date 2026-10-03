@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.54
+%define kernel_sublevel	.55
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -617,6 +617,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Oct 03 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.55-alt1
+- v6.18.55 (2026-10-03).
+
 * Fri Sep 25 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.54-alt1
 - v6.18.54 (2026-09-25).
 - arm64: dts: Enable the PCIe controller for the Repka Pi5 board
