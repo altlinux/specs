@@ -1,5 +1,5 @@
 Name: xwayland-satellite
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Xwayland outside your Wayland
@@ -44,6 +44,9 @@ install -Dpm0644 xwayland-satellite.man %buildroot%_man1dir/xwayland-satellite.1
 %_man1dir/xwayland-satellite.1.*
 
 %changelog
+* Sat Oct 03 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8.3-alt1
+- Update version.
+
 * Mon Aug 03 2026 Ilya Sorochan <k0tran@altlinux.org> 0.8.2-alt1
 - Update version.
 
