@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.2
-Release: alt2
+Version: 4.1.3
+Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
 Group: Development/Python3
@@ -54,6 +54,9 @@ and not test_pre_v3_4_df_decoding" tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 03 2026 Anton Vyatkin <toni@altlinux.org> 4.1.3-alt1
+- New version 4.1.3.
+
 * Wed Jun 03 2026 Anton Vyatkin <toni@altlinux.org> 4.1.2-alt2
 - Fix FTBFS (pandas 3).
 
