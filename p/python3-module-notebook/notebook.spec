@@ -6,15 +6,13 @@
 
 Name: python3-module-%oname
 Version: 7.6.3
-Release: alt1
+Release: alt2
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/notebook
 BuildArch: noarch
 Source: %name-%version.tar
-
-Requires: python3-module-nest-asyncio
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
@@ -114,6 +112,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/notebook.json \
 %endif
 
 %changelog
+* Sat Oct 03 2026 Anton Vyatkin <toni@altlinux.org> 7.6.3-alt2
+- delete unnecessary require (nest-asyncio)
+
 * Tue Sep 22 2026 Anton Vyatkin <toni@altlinux.org> 7.6.3-alt1
 - new version 7.6.3
 
