@@ -4,7 +4,7 @@
 
 Name: dnf5
 Version: 5.4.3.0
-Release: alt4
+Release: alt6
 
 Summary: Command-line package manager
 
@@ -20,6 +20,8 @@ Source: %name-%version.tar
 Patch1: %name-5.4.0.0-rpm-4.13-compat.patch
 Patch2: %name-cstring.patch
 Patch3: %name-rpm-4.13-elem-progress.patch
+Patch4: %name-rpm-4.13-signature-check.patch
+Patch5: %name-alt-rpmdb-autoinstalled.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.21
@@ -164,6 +166,8 @@ Libdnf5 plugin that allows loading Python plugins.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 %cmake \
@@ -378,6 +382,12 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Sat Oct 03 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt6
+- Store package install reason in RPMTAG_AUTOINSTALLED shared with apt-rpm.
+
+* Fri Oct 02 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt5
+- Fix package signature check results with RPM 4.13 (eterbug #19644).
+
 * Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt4
 - Fix reinstall assertion with RPM 4.13 (eterbug #19326).
 
