@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0
-Release: alt1.1
+Version: 6.1
+Release: alt1
 
 Summary: ZODB undo support for Zope2
 License: ZPL-2.1
@@ -71,6 +71,9 @@ This package contains tests for ZopeUndo.
 
 
 %changelog
+* Sat Oct 03 2026 Anton Vyatkin <toni@altlinux.org> 6.1-alt1
+- New version 6.1.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 6.0-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
