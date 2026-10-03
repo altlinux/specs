@@ -1,5 +1,5 @@
 Name: kernel-image-qualcomm-sdm845
-Release: alt0.rc1
+Release: alt1.rc1
 %define kernel_src_version	7.0
 %define kernel_base_version	7.1
 %define kernel_sublevel	.0
@@ -358,5 +358,8 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 %modules_dir/build
 
 %changelog
+* Wed Sep 30 2026 Vasiliy Doylov <neko@altlinux.org> 7.1.0-alt1.rc1
+- Add USB OTG for oneplus-enchilada and oneplus-fajita
+
 * Sun Jun 28 2026 Vasiliy Doylov <neko@altlinux.org> 7.1.0-alt0.rc1
 - Initial build for ALT

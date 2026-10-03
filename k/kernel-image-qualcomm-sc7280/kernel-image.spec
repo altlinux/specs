@@ -2,7 +2,7 @@ Name: kernel-image-qualcomm-sc7280
 Release: alt1
 %define kernel_src_version	7.1
 %define kernel_base_version	7.2
-%define kernel_sublevel	.0
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 Version: %kversion
@@ -343,5 +343,9 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 %modules_dir/build
 
 %changelog
+* Tue Sep 29 2026 Vasiliy Doylov <neko@altlinux.org> 7.2.2-alt1
+- New base verison.
+- Fix speaker volume on nothing-spacewar.
+
 * Wed Aug 26 2026 Vasiliy Doylov <neko@altlinux.org> 7.2.0-alt1
 - Initial build for ALT.
