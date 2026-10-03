@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major.0
+Version: %ver_major.0.1
 Release: alt1%beta
 
 Summary: Default wallpapers for GNOME
@@ -41,6 +41,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0.1-alt1
+- 51.0.1
+
 * Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 

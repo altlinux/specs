@@ -1,7 +1,7 @@
 %def_disable snapshot
 
-%define ver_major 0.5
-%define git_tag 5e134cf06e0801c0c7c6bec3bf07267ae27e925d
+%define ver_major 0.6
+%define git_tag f2495d35be437a9c9f2a80019a2f608a42c59da9
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
@@ -29,7 +29,6 @@ Source: %name-%version.tar
 
 Requires: gst-plugins-base1.0 >= %gst_ver
 Requires: gst-libav
-# since 0.2.0 "Allow to use gtk4paintablesink instead of in-tree sink"
 Requires: gst-plugin-gtk4
 Requires: dconf
 Requires: yt-dlp
@@ -70,6 +69,9 @@ simple.
 %doc README* NEWS
 
 %changelog
+* Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sun Jun 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
