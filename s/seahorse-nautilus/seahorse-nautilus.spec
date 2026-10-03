@@ -8,7 +8,7 @@
 
 Name: %_name-nautilus
 Version: %ver_major.92
-Release: alt4.1
+Release: alt4.2
 
 Summary: PGP encryption and signing for Nautilus
 License: LGPLv2+
@@ -22,7 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-3.11.92-alt-gnupg-2.4.patch
+Patch: %name-3.11.92-alt-gnupg-2.4-2.5.patch
 # based on:
 # https://src.fedoraproject.org/rpms/seahorse-nautilus/raw/rawhide/f/seahorse-fix-building-w-gpgme2.patch
 Patch1: %name-3.11.92-alt-gpgme2.patch
@@ -40,7 +40,7 @@ and decryption of OpenPGP files using GnuPG.
 
 %prep
 %setup
-%patch -b .gnupg
+%patch -b .gnupg2.4-2.5
 %patch1 -b .gpgme
 
 %build
@@ -65,6 +65,9 @@ and decryption of OpenPGP files using GnuPG.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt4.2
+- fixed build with GnuPG-2.5.x
+
 * Tue Jul 14 2026 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt4.1
 - fixed build with gpgme >= 2.0.0
 
