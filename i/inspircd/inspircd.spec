@@ -4,7 +4,7 @@ ExcludeArch: %ix86
 
 Name: inspircd
 Version: 4.12.0
-Release: alt1
+Release: alt2
 
 Summary: InspIRCd is a modular Internet Relay Chat (IRC) server 
 Group: Networking/IRC
@@ -105,6 +105,9 @@ rm -f %buildroot%_bindir/%name-testssl \
 %doc README.md
 
 %changelog
+* Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 4.12.0-alt2
+- Removed obsolete --logfile option from systemd unit (Closes: #60621).
+
 * Fri Sep 11 2026 Anton Farygin <rider@altlinux.org> 4.12.0-alt1
 - 2.0.29 -> 4.12.0
 
