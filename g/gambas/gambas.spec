@@ -16,7 +16,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name: gambas
-Version: 3.22.1
+Version: 3.22.2
 Release: alt1
 
 Summary: IDE based on a basic interpreter with object extensions
@@ -1972,6 +1972,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.highlight.list
 
 %changelog
+* Sat Oct 03 2026 Andrey Cherepanov <cas@altlinux.org> 3.22.2-alt1
+- New version.
+
 * Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 3.22.1-alt1
 - New version.
 
