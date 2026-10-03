@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.35.0
-Release: alt1
+Release: alt2
 
 Summary: Slack Developer Kit for Python
 License: MIT
@@ -31,6 +31,7 @@ BuildRequires: python3-module-moto
 BuildRequires: python3-module-websocket-client
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-aiosqlite
+BuildRequires: python3-module-greenlet
 %endif
 
 %description
@@ -60,6 +61,9 @@ seamlessly when used together, too.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 04 2026 Anton Vyatkin <toni@altlinux.org> 3.35.0-alt2
+- Fixed FTBFS.
+
 * Wed Jun 04 2025 Anton Vyatkin <toni@altlinux.org> 3.35.0-alt1
 - New version 3.35.0.
 
