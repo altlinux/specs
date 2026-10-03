@@ -1,10 +1,10 @@
-%define pypi_name Twisted
-%define major 24.11
+%define pypi_name twisted
+%define major 26.4
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: An asynchronous networking framework written in Python
 
@@ -12,8 +12,11 @@ Group: Development/Python3
 License: MIT
 URL: https://pypi.org/project/Twisted
 
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
+# https://github.com/twisted/twisted/pull/12788 (GHSA-8pqf-f4m5-798g)
+Patch1: twisted-imap-wildcard-redos.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-zope.interface
@@ -283,6 +286,7 @@ Unit tests for Twisted Core.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -513,6 +517,11 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Sat Oct 03 2026 Vitaly Lipatov <lav@altlinux.ru> 26.4.0-alt1
+- new version 26.4.0 (with rpmrb script)
+- (CVE-2026-42304) SECURITY: fix DoS in twisted.names via DNS compression pointer chains
+- (GHSA-8pqf-f4m5-798g) SECURITY: fix ReDoS in IMAP wildcardToRegexp() (upstream PR #12788)
+
 * Sat Mar 01 2025 Vitaly Lipatov <lav@altlinux.ru> 24.11.0-alt2
 - cleanup interpackage requires
 - move bin/tkconch to conch-gui subpackage
