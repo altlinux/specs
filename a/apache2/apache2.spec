@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.68
+Version: 2.4.69
 Release: alt1
 Epoch: 1
 
@@ -1434,6 +1434,30 @@ exit 0
 %_mandir/man8/suexec*
 
 %changelog
+* Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:2.4.69-alt1
+- 2.4.68 -> 2.4.69
+- Fixes:
+  * CVE-2026-93546: mod_dav_fs namespace overflow
+  * CVE-2026-79768: mod_userdir information disclosure
+  * CVE-2026-73637: mod_auth_digest DoS attack
+  * CVE-2026-73636: mod_auth_digest one-time-nonce replay attack
+  * CVE-2026-63718: mod_proxy_uwsgi Transfer-Encoding response smuggling
+  * CVE-2026-63686: mod_xml2enc crash on charset conversion failure
+  * CVE-2026-63292: mod_vhost_alias stack overflow
+  * CVE-2026-63045: mod_proxy_ftp PASV address handling
+  * CVE-2026-59797: mod_ssl SSLRequire allows .htaccess ap_expr file-function
+  * CVE-2026-59685: Out-of-Bounds Write in ap_directory_walk() Canonical-Name Rewrite on CASE_BLIND_FILESYSTEM
+  * CVE-2026-58415: mod_dav_fs property database read access
+  * CVE-2026-57941: mod_http2 use-after-free / wild write via shared session->bbtmp re-entrancy
+  * CVE-2026-56449: mod_proxy_html: crash in dump_content
+  * CVE-2026-56154: mod_rewrite use-after-free via %%{LA-U:HTTP:...}
+  * CVE-2026-56153: mod_charset_lite: Heap overflow in finish_partial_char
+  * CVE-2026-48005: mod_auth_digest reauthentication attack
+  * CVE-2026-47360: mod_session: Session cookie not removed during internal redirect
+  * CVE-2026-46729: mod_heartmonitor denial of service
+  * CVE-2026-42528: mod_dav shared lock overflow
+  * CVE-2026-42356: limited RCE for some internal redirects to non-CGI files in CGI directories
+
 * Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 1:2.4.68-alt1
 - 2.4.67 -> 2.4.68
 - Fixes:
