@@ -1,6 +1,6 @@
 Name: livecd-rescue-base-utils
 Version: 1.1
-Release: alt6
+Release: alt7
 
 Summary: Base utils for Live Rescue
 License: GPL-2.0-or-later
@@ -24,6 +24,7 @@ Requires: usbutils
 Requires: apt-repo
 
 # Disk utils
+Requires: bcache-tools
 Requires: dc3dd
 Requires: dcfldd
 Requires: ddrescue
@@ -100,6 +101,9 @@ Requires: mokutil
 %files
 
 %changelog
+* Sun Oct 04 2026 Anton Midyukov <antohami@altlinux.org> 1.1-alt7
+- Add dependency on bcache-tools (Closes: 34255).
+
 * Tue Sep 23 2025 Anton Midyukov <antohami@altlinux.org> 1.1-alt6
 - Add dependency on base utilities.
 
