@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.9.6
-Release: alt1
+Release: alt2
 Summary: An alternative plugin for pytest to make it support async tests and fixtures
 License: MIT
 Group: Development/Python3
@@ -19,6 +19,7 @@ Source1: %pyproject_deps_config_name
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
+%add_pyproject_deps_check_filter nest-asyncio
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata
@@ -66,6 +67,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 04 2026 Anton Vyatkin <toni@altlinux.org> 0.9.6-alt2
+- NMU: remove unused dep (nest-asyncio).
+
 * Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 0.9.6-alt1
 - 0.9.5 -> 0.9.6
 
