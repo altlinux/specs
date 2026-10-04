@@ -1,5 +1,5 @@
 Name: gotify-tray++
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: A tray notification application for receiving messages from a Gotify server.
@@ -18,7 +18,7 @@ Source1: %name.png
 Source2: %name.desktop
 
 
-Patch0: fix_server_path.patch
+##Patch0: fix_server_path.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-qt6
 
@@ -49,7 +49,7 @@ A tray notification application for receiving messages from a Gotify server.
 
 %prep
 %setup
-%patch0 -p1
+##%patch0 -p1
 
 %build
 %cmake 
@@ -72,6 +72,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Oct 04 2026 Alexei Mezin <alexvm@altlinux.org> 0.1.4-alt1
+- New version
+
 * Sun May 10 2026 Alexei Mezin <alexvm@altlinux.org> 0.1.3-alt1
 - Initial build
 
