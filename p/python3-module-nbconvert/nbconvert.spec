@@ -10,7 +10,7 @@
 
 Name: python3-module-%oname
 Version: 7.17.1
-Release: alt1
+Release: alt2
 
 Summary: Converting Jupyter Notebooks
 
@@ -54,7 +54,6 @@ BuildRequires: /usr/bin/inkscape
 BuildRequires: python3(pandocfilters)
 BuildRequires: python3(defusedxml)
 BuildRequires: python3(jupyterlab_pygments)
-BuildRequires: python3(nest_asyncio)
 BuildRequires: python3-module-ipykernel
 BuildRequires: python3-module-ipywidgets
 BuildRequires: python3-module-traitlets-tests
@@ -109,6 +108,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Sun Oct 04 2026 Anton Vyatkin <toni@altlinux.org> 7.17.1-alt2
+- Fixed FTBFS (nest-asyncio).
+
 * Wed Apr 08 2026 Anton Vyatkin <toni@altlinux.org> 7.17.1-alt1
 - New version 7.17.1 (fixes: CVE-2026-39377, CVE-2026-39378).
 

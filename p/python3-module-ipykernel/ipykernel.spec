@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 7.4.0
-Release: alt1
+Release: alt2
 
 Summary: IPython Kernel for Jupyter
 License: BSD-3-Clause
@@ -28,7 +28,6 @@ BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-ipython
 BuildRequires: python3-module-flaky
-BuildRequires: python3-module-nest-asyncio
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-zmq
 BuildRequires: python3-module-traitlets
@@ -87,6 +86,9 @@ cp -r tests/ %buildroot%python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sun Oct 04 2026 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt2
+- Fixed FTBFS (nest-asyncio).
+
 * Fri Oct 02 2026 Anton Vyatkin <toni@altlinux.org> 7.4.0-alt1
 - New version 7.4.0.
 
