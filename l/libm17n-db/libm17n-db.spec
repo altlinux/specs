@@ -1,11 +1,11 @@
 Name: libm17n-db
-Version: 1.8.6
+Version: 1.8.14
 Release: alt1
 
 Summary: Multilingualization datafiles for m17n-lib
 
 Group: System/Libraries
-License: LGPL-2.1-or-later
+License: LGPL-2.1-or-later and GPL-2.0-or-later and MIT
 Url: http://www.nongnu.org/m17n/
 
 # repacked http://download.savannah.gnu.org/releases/m17n/m17n-db-%version.tar.gz
@@ -48,8 +48,11 @@ This package contains development files for m17n-db.
 %_bindir/m17n-db
 %_datadir/pkgconfig/*
 
-
 %changelog
+* Sun Oct 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.14-alt1
+- 1.8.6 -> 1.8.14
+- changed license
+
 * Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.8.6-alt1
 - 1.8.0 -> 1.8.6
 - change license
