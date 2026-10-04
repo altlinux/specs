@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: pseudo
-Version: 1.9.8
+Version: 1.9.11
 Release: alt1
 Summary: An analogue to sudo and an alternative to fakeroot (experimental)
 License: LGPL-2.1-only
@@ -81,6 +81,9 @@ grep -Px "$failed/\d+ test\(s\) failed\." test.log
 %_man1dir/fakeroot-pseudo*.1*
 
 %changelog
+* Sun Oct 04 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.9.11-alt1
+- 1.9.11
+
 * Thu Jul 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.9.8-alt1
 - 1.9.8
 
