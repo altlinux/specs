@@ -1,6 +1,6 @@
 Name: mate
-Version: 1.26.0
-Release: alt3
+Version: 1.28.0
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -49,6 +49,7 @@ Requires: mate-document-viewer-djvu mate-document-viewer-dvi mate-document-viewe
 Requires: mate-file-manager-image-converter mate-file-manager-open-terminal
 Requires: mate-file-manager-sendto mate-file-manager-share mate-file-manager-wallpaper mate-system-log
 Requires: python3-module-caja
+Requires: pam_gnome-keyring
 
 %description maxi
 This virtual package installs full MATE Desktop.
@@ -58,6 +59,9 @@ This virtual package installs full MATE Desktop.
 %files maxi
 
 %changelog
+* Sat Oct 03 2026 Anton Midyukov <antohami@altlinux.org> 1.28.0-alt1
+- maxi: add runtime dependency on pam_gnome-keyring
+
 * Wed May 14 2025 Anton Midyukov <antohami@altlinux.org> 1.26.0-alt3
 - removed mate-file-manager-beesu
 

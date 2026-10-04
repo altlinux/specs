@@ -2,15 +2,13 @@
 
 Name: mate-screensaver
 Version: 1.28.1
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: MATE Screensaver
 License: GPLv2+ and LGPLv2+
 Group: Graphical desktop/MATE
 Url: http://mate-desktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
-Requires: pam_gnome-keyring
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -85,6 +83,9 @@ install -m644 -pD doc/mate-screensaver.html %buildroot%_datadir/doc/mate-screens
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sat Oct 03 2026 Anton Midyukov <antohami@altlinux.org> 2:1.28.1-alt2
+- NMU: remove runtime dependency on pam_gnome-keyring.
+
 * Tue May 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.1-alt1
 - 1.28.1
 

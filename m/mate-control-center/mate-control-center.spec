@@ -1,6 +1,6 @@
 Name: mate-control-center
 Version: 1.28.2
-Release: alt2
+Release: alt3
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Provides: %name-filesystem = %version-%release
-Requires: gsettings-desktop-schemas mate-settings-daemon gnome-keyring
+Requires: gsettings-desktop-schemas mate-settings-daemon
 
 BuildRequires: mate-common libSM-devel libXScrnSaver-devel libXcursor-devel libXi-devel libXxf86misc-devel libcanberra-gtk3-devel
 BuildRequires: libdconf-devel mate-desktop-devel libmatekbd-devel librsvg-devel libxml2-devel mate-menus-devel mate-settings-daemon-devel
@@ -71,6 +71,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Oct 03 2026 Anton Midyukov <antohami@altlinux.org> 2:1.28.2-alt3
+- NMU: remove runtime dependency on gnome-keyring.
+
 * Wed Sep 16 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.2-alt2
 - fixed mate-time-admin (closes: #60557)
 
