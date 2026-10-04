@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.18
+%define major 11.19
 %define rel %nil
 
 # the packages will conflict with that
@@ -944,6 +944,9 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Sun Oct 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.19-alt1
+- new version 11.19
+
 * Wed Sep 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.18-alt1
 - new version 11.18
 
