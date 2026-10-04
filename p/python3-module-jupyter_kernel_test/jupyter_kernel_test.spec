@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: A tool for testing Jupyter kernels
 
@@ -24,7 +24,6 @@ BuildRequires: python3-module-hatchling
 BuildRequires: /proc
 BuildRequires: python3-module-jupyter_client
 BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-nest-asyncio
 BuildRequires: python3-module-ipykernel
 %endif
 
@@ -54,6 +53,9 @@ successful code execution and conformance with the Jupyter Messaging Protocol.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 04 2026 Anton Vyatkin <toni@altlinux.org> 0.7.0-alt2
+- Fixed FTBFS (nest-asyncio).
+
 * Mon Mar 18 2024 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
 - Automatically updated to 0.7.0.
 
