@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
-Release: alt3
+Version: 2.6.1
+Release: alt1
 
 Summary: A wrapper around gitpython to produce pandas dataframes for analysis
 License: BSD-3-Clause
@@ -78,9 +78,12 @@ git config --global user.name "Your Name"
 %endif
 %doc README.md LICENSE.md
 %python3_sitelibdir_noarch/%mod_name
-%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir_noarch/git_pandas*
 
 %changelog
+* Sun Oct 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.6.1-alt1
+- 2.5.0 -> 2.6.1
+
 * Sat Sep 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt3
 - fixed FTBFS: updated to git.e75870c8d3
 - builed without docs
