@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pinit
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Pin portable apps to the launcher
@@ -56,6 +56,9 @@ rm -fv %buildroot%_datadir/locale/zh_Hans/LC_MESSAGES/*.mo
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Oct 04 2026 Nikolay Strelkov <snk@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Sun Feb 08 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.1-alt1
 - New version 2.2.1.
 

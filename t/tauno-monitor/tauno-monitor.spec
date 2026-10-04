@@ -3,7 +3,7 @@
 %def_without check
 
 Name: tauno-monitor
-Version: 0.2.25
+Version: 0.3.0
 Release: alt1
 
 Summary: Simple serial port monitor
@@ -74,6 +74,9 @@ chmod a+x %buildroot%_bindir/tauno-monitor
 %_datadir/tauno-monitor/*
 
 %changelog
+* Sun Oct 04 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.0-alt1
+- New version 0.3.0.
+
 * Fri Oct 02 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.25-alt1
 - New version 0.2.25.
 

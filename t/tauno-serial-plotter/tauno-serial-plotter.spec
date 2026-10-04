@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tauno-serial-plotter
-Version: 1.21.4
+Version: 1.21.6
 Release: alt1
 
 Summary: Serial Plotter for Arduino and other embedded devices
@@ -74,6 +74,9 @@ install -Dm644 art.taunoerik.tauno-serial-plotter.appdata.xml %buildroot%_datadi
 %_datadir/appdata/art.taunoerik.tauno-serial-plotter.appdata.xml
 
 %changelog
+* Sun Oct 04 2026 Nikolay Strelkov <snk@altlinux.org> 1.21.6-alt1
+- New version 1.21.6.
+
 * Sun Sep 13 2026 Nikolay Strelkov <snk@altlinux.org> 1.21.4-alt1
 - New version 1.21.4.
 

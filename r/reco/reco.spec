@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: reco
-Version: 5.2.1
+Version: 5.2.2
 Release: alt1
 
 Summary: An audio recorder focused on being concise and simple to use
@@ -74,6 +74,9 @@ sed -i 's|^Categories=Audio;AudioVideo;Utility;Recorder;|Categories=GNOME;GTK;Au
 %_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Sun Oct 04 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.2-alt1
+- New version 5.2.2.
+
 * Tue May 26 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.1-alt1
 - New version 5.2.1.
 
