@@ -8,7 +8,7 @@
 %endif
 
 Name: orc
-Version: %ver_major.43
+Version: %ver_major.44
 Release: alt1
 
 Summary: The Oil Runtime Compiler
@@ -111,10 +111,7 @@ This package contains documentation for Orc.
 
 %build
 %meson \
-    %{subst_enable_meson_feature doc hotdoc} \
-%ifarch %ix86
-    -Dorc-target="['sse', 'mmx']"
-%endif
+    %{subst_enable_meson_feature doc hotdoc}
 %nil
 %meson_build
 
@@ -153,6 +150,9 @@ rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 %endif
 
 %changelog
+* Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.44-alt1
+- 0.4.44
+
 * Tue Sep 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.43-alt1
 - 0.4.43
 

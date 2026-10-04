@@ -1,13 +1,13 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.20
+%define ver_major 2.23
 %define rdn_name io.github.plrigaux.%name
 %define bus_name io.github.plrigaux.SysDManager
 
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GUI to manage systemd units
@@ -67,6 +67,8 @@ install -v -Dm644 data/schemas/%rdn_name.gschema.xml \
     -t %buildroot%_datadir/glib-2.0/schemas
 install -v -Dm644 data/metainfo/%rdn_name.metainfo.xml \
     -t %buildroot%_datadir/metainfo
+install -v -Dm644 data/metainfo/%rdn_name.releases.xml \
+    -t %buildroot%_datadir/metainfo/releases
 cp -r target/locale %buildroot/%_datadir/
 
 install -vDm644 sysd-manager-proxy/data/%bus_name.conf -T  %buildroot/%_datadir/dbus-1/system.d/%bus_name.conf
@@ -74,7 +76,7 @@ sed -i 's/{BUS_NAME}/%bus_name/
          s/{DESTINATION}/%bus_name/
          s/{ENVIRONMENT}//
          s/{INTERFACE}/%bus_name/' %buildroot/%_datadir/dbus-1/system.d/%bus_name.conf
-install -vDm644 sysd-manager-proxy/data/%bus_name.policy -t %buildroot/%_datadir/polkit-1/actions
+install -vDm644 target/loc/%bus_name.policy -t %buildroot/%_datadir/polkit-1/actions
 install -vDm644 sysd-manager-proxy/data/sysd-manager-proxy.service -T %buildroot%_unitdir/%name-proxy.service
 sed -i  's/{BUS_NAME}/%bus_name/
          s/{DESTINATION}/%bus_name/
@@ -82,7 +84,6 @@ sed -i  's/{BUS_NAME}/%bus_name/
          s|{EXECUTABLE}|%_bindir/%name-proxy|
          s/{INTERFACE}/%bus_name/
          s/{SERVICE_ID}/sysd-manager-proxy/' %buildroot%_unitdir/%name-proxy.service
-
 
 %find_lang %name
 
@@ -96,9 +97,13 @@ sed -i  's/{BUS_NAME}/%bus_name/
 %_datadir/polkit-1/actions/%bus_name.policy
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_datadir/metainfo/%rdn_name.metainfo.xml
+%_datadir/metainfo/releases/%rdn_name.releases.xml
 %doc CHANGELOG* README*
 
 %changelog
+* Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 2.23.0-alt1
+- 2.23.0
+
 * Mon Jun 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.20.4-alt1
 - 2.20.4
 

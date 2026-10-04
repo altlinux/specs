@@ -2,14 +2,14 @@
 
 %define __name RustConn
 %define _name rustconn
-%define ver_major 0.19
+%define ver_major 0.22
 %define rdn_name io.github.totoshko88.%__name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.3
+Version: %ver_major.15
 Release: alt1
 
 Summary: Remote connections manager
@@ -47,7 +47,7 @@ BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(openssl)
 BuildRequires: pkgconfig(liblzma)
 BuildRequires: pkgconfig(webkitgtk-6.0)
-%{?_enable_check:BuildRequires: clippy}
+%{?_enable_check:BuildRequires: clippy /proc /dev/pts /usr/bin/ssh}
 
 %description
 RustConn is a connection orchestrator for Linux with a
@@ -60,7 +60,7 @@ possible and seamless integration with external tools where needed.
 %prep
 %setup -n %__name-%version %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
-mkdir .cargo
+[ -d .cargo ] || mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%__name-%version-cargo.tar .cargo/ vendor/}
 
@@ -111,6 +111,9 @@ done
 %doc *.md docs/*.md
 
 %changelog
+* Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.22.15-alt1
+- 0.22.15
+
 * Fri Jul 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.19.3-alt1
 - 0.19.3
 
