@@ -2,7 +2,7 @@
 
 Name: pi
 Epoch:1 
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
@@ -105,6 +105,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Sun Oct 04 2026 Anton Farygin <rider@altlinux.org> 1:1.0.2-alt1
+- 1.0.1 -> 1.0.2
+
 * Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:1.0.1-alt1
 - 1.0.0 -> 1.0.1
 
