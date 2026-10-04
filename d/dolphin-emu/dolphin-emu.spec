@@ -1,17 +1,18 @@
-%define git_commit c77bbaa0f372c3f72281602a8b087206706542cb
+%define git_commit f84df02055ab9610feec48e65648cac5a3c098fa
 
+%define glslang_version 16
 %define enet_version 1.3.18
 %define implot_commit 3da8bd34299965d3b0ab124df743fe3e076fa222
 %define rcheevos_version 12.2.0
 %define tinygltf_commit c5641f2c22d117da7971504591a8f6a41ece488b
 %define watcher_version 0.13.6
-%define cpp_ipc_version 1.4.0
+%define cpp_ipc_commit b6cbbc940e25ff898f09a40b107781cef6027b13
 %define imgui_version 1.92.2b
 %define cpp_optparse_commit 2265d647232249a53a03b411099863ceca35f0d3
 %define mgba_commit 0b40863f64d0940f333fa1c638e75f86f8a26a33
 
 Name: dolphin-emu
-Version: 2606a
+Version: 2609
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -19,6 +20,7 @@ License: GPLv2
 Group: Emulators
 
 Url: https://%name.org/
+Vcs: https://github.com/dolphin-emu/dolphin
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 ExclusiveArch: x86_64 aarch64
@@ -35,16 +37,14 @@ Source3: rcheevos-%rcheevos_version.tar
 Source4: tinygltf-%tinygltf_commit.tar
 # https://github.com/e-dant/watcher/archive/%watcher_version/watcher-%watcher_version.tar.gz
 Source5: watcher-%watcher_version.tar
-# https://github.com/mutouyun/cpp-ipc/archive/v%cpp_ipc_version/cpp-ipc-%cpp_ipc_version.tar.gz
-Source6: cpp-ipc-%cpp_ipc_version.tar
+# https://github.com/mutouyun/cpp-ipc/archive/%cpp_ipc_commit/cpp-ipc-%cpp_ipc_commit.tar.gz
+Source6: cpp-ipc-%cpp_ipc_commit.tar
 # https://github.com/ocornut/imgui/archive/v%imgui_version/imgui-%imgui_version.tar.gz
 Source7: imgui-%imgui_version.tar
 # https://github.com/weisslj/cpp-optparse/archive/%cpp_optparse_commit/cpp-optparse-%cpp_optparse_commit.tar.gz
 Source8: cpp-optparse-%cpp_optparse_commit.tar
 # https://github.com/mgba-emu/mgba/archive/%mgba_commit/mgba-%mgba_commit.tar.gz
 Source9: mgba-%mgba_commit.tar
-
-Patch0: %name-2512-glslang-16-alt.patch
 
 BuildRequires: alt-os-release
 BuildRequires: bzlib-devel
@@ -97,14 +97,16 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %prep
 %setup -n dolphin-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
 
-%patch0 -p1
+# Try only the glslang version that is actually available
+%__sed -i -E 's|dolphin_find_optional_system_library\(glslang Externals/glslang DOLPHIN_TRY_VERSIONS [0-9. ]*\)|dolphin_find_optional_system_library(glslang Externals/glslang DOLPHIN_TRY_VERSIONS %glslang_version)|' CMakeLists.txt
+%__grep -qE 'dolphin_find_optional_system_library\(glslang Externals/glslang DOLPHIN_TRY_VERSIONS %glslang_version\)' CMakeLists.txt
 
 %__mv -Tf ../enet-%enet_version Externals/enet/enet
 %__mv -Tf ../implot-%implot_commit Externals/implot/implot
 %__mv -Tf ../rcheevos-%rcheevos_version Externals/rcheevos/rcheevos
 %__mv -Tf ../tinygltf-%tinygltf_commit Externals/tinygltf/tinygltf
 %__mv -Tf ../watcher-%watcher_version Externals/watcher/watcher
-%__mv -Tf ../cpp-ipc-%cpp_ipc_version Externals/cpp-ipc/cpp-ipc
+%__mv -Tf ../cpp-ipc-%cpp_ipc_commit Externals/cpp-ipc/cpp-ipc
 %__mv -Tf ../imgui-%imgui_version Externals/imgui/imgui
 %__mv -Tf ../cpp-optparse-%cpp_optparse_commit Externals/cpp-optparse/cpp-optparse
 %__mv -Tf ../mgba-%mgba_commit Externals/mGBA/mgba
@@ -147,6 +149,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sun Oct 04 2026 Nazarov Denis <nenderus@altlinux.org> 2609-alt1
+- Version 2609
+
 * Sat Sep 19 2026 Nazarov Denis <nenderus@altlinux.org> 2606a-alt1
 - Version 2606a
 
