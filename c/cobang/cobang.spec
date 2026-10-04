@@ -1,12 +1,12 @@
 %define __name CoBang
 %define _name cobang
-%define ver_major 2.9
+%define ver_major 2.10
 %define rdn_name vn.hoabinh.quan.%__name
 
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A native QR Code and barcode scanner application for Linux desktop
@@ -69,6 +69,9 @@ remote.
 %doc README.*
 
 %changelog
+* Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 2.9.1-alt1
 - 2.9.1
 
