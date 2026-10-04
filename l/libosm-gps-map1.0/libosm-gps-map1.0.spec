@@ -1,21 +1,29 @@
+%def_enable snapshot
 %define _name osm-gps-map
+%define libname osmgpsmap
+%define namespace OsmGpsMap
 %define api_ver 1.0
 
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Gtk+3 widget for displaying map tiles
 Group: System/Libraries
-License: GPLv2+
-Url: https://github.com/nzjrs/%_name/
+License: GPL-2.0-or-later
+Url: https://github.com/nzjrs/osm-gps-map/
 
 Vcs: https://github.com/nzjrs/osm-gps-map.git
+%if_disabled snapshot
 Source: %url/releases/download/%version/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
 
-BuildRequires: gtk-doc libgtk+3-devel libcairo-devel libsoup-devel
+BuildRequires: autoconf-archive gtk-doc
+BuildRequires: libgtk+3-devel libcairo-devel pkgconfig(libsoup-3.0)
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 
 %description
@@ -29,7 +37,7 @@ desktop mapping or geolocation applications.
 %package devel
 Summary: Development files for the %_name Gtk+3 widget
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides development files for the %_name Gtk+3 widget
@@ -37,7 +45,7 @@ This package provides development files for the %_name Gtk+3 widget
 %package gir
 Summary: GObject introspection data for the %_name library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the %_name library.
@@ -46,8 +54,8 @@ GObject introspection data for the %_name library.
 Summary: GObject introspection devel data for the %_name library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the %_name library.
@@ -67,7 +75,10 @@ This package provides development documentation for %_name library.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure \
+    --disable-static \
+    %{subst_enable gtk_doc}
+%nil
 %make_build
 
 %install
@@ -75,33 +86,36 @@ This package provides development documentation for %_name library.
 
 %if_enabled gtk_doc
 # move documentation to avoid conflict with gtk+2 version
-mv %buildroot%_datadir/gtk-doc/html/libosmgpsmap{,-%api_ver}
+mv %buildroot%_datadir/gtk-doc/html/lib%libname{,-%api_ver}
 %endif
 
 %files
 %doc AUTHORS README NEWS
-%_libdir/libosmgpsmap-%api_ver.so.*
+%_libdir/lib%libname-%api_ver.so.*
 
 %files devel
-%_includedir/osmgpsmap-%api_ver/
-%_libdir/libosmgpsmap-%api_ver.so
-%_pkgconfigdir/osmgpsmap-%api_ver.pc
+%_includedir/%libname-%api_ver/
+%_libdir/lib%libname-%api_ver.so
+%_pkgconfigdir/%libname-%api_ver.pc
 
 %files gir
-%_typelibdir/OsmGpsMap-%api_ver.typelib
+%_typelibdir/%namespace-%api_ver.typelib
 
 %files gir-devel
-%_girdir/OsmGpsMap-%api_ver.gir
+%_girdir/%namespace-%api_ver.gir
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/libosmgpsmap-%api_ver/
+%_datadir/gtk-doc/html/lib%libname-%api_ver/
 %endif
 
 %exclude %_datadir/doc/%_name
 
 
 %changelog
+* Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- updated to 1.2.1-47-gd4f2b75 (ported to libsoup-3.0)
+
 * Mon Feb 08 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
