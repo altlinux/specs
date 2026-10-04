@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  4
-%define _php_release_version 24
+%define _php_release_version 26
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -34,6 +34,7 @@ Source3: php.ini
 Source4: phpinfo.tar
 Source5: php-tmpfiles.conf
 
+Patch0: %name-%version-alt.patch
 Patch1: php-8.4.3-alt-always-link-extension-with-libphp.patch
 Patch2: php-8.4.6-shared-1.patch
 Patch3: php-8.4.21-cli-build.patch
@@ -53,9 +54,9 @@ Patch16: php-7.2-alt-phar-manfile-suffix.patch
 Patch17: php8-8.4-phpize-php-config-name.patch
 Patch18: php8-8.0-alt-tests-fix.patch
 Patch19: php7-7.4-XFAIL-openssl-tests-with-internet-requires.patch
-Patch22: php-8.2-altlinux-mbstring-test.patch
 # Support for loading extensions before the run of tests in addition to tested modules
 Patch23: php-8.3-alt-preload-extensions-during-tests.patch
+Patch22: php-8.2-altlinux-mbstring-test.patch
 
 Patch2000: php-8.1-e2k.patch
 
@@ -175,6 +176,7 @@ in use by other PHP-related packages.
 %prep
 %setup -q -n php-source
 %setup -q -n php-source -T -D -a4
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -298,7 +300,7 @@ mkdir -p \
         %buildroot/%_runtimedir/php \
         %buildroot/%_tmpfilesdir
 
-install -m 644 %SOURCE5 %buildroot/%_tmpfilesdir/php.conf
+install -m 644 %SOURCE5 %buildroot/%_tmpfilesdir/php-%_php_suffix.conf
 install -m 644 %SOURCE3                      %buildroot/%php_sysconfdir/%php_sapi/php.ini
 
 for f in \
@@ -475,7 +477,7 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %dir %_localstatedir/php
 %attr(1733,root,root) %dir %_localstatedir/php/sessions
 %ghost %dir %_runtimedir/php
-%_tmpfilesdir/php.conf
+%_tmpfilesdir/php-%_php_suffix.conf
 
 
 %files mysqlnd
@@ -499,6 +501,15 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 8.4.26-alt1
+- 8.4.25 -> 8.4.26 (Fixes: CVE-2026-91768, CVE-2025-1218, CVE-2026-91769,
+  CVE-2026-91767, CVE-2026-6103, CVE-2026-91765, CVE-2025-14181, CVE-2026-93682,
+  CVE-2026-92842, CVE-2026-91766, CVE-2026-17545)
+- renamed config for tmpfiles
+
+* Wed Sep 02 2026 Anton Farygin <rider@altlinux.org> 8.4.25-alt1
+- 8.4.24 -> 8.4.25
+
 * Tue Aug 04 2026 Anton Farygin <rider@altlinux.org> 8.4.24-alt1
 - 8.4.23 -> 8.4.24 (Fixes: CVE-2026-17544, CVE-2026-9672, CVE-2026-17543,
 - CVE-2026-7260)
