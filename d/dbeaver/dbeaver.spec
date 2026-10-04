@@ -1,6 +1,6 @@
-%define dbeaver_common_commit d11df22413e9c48278ee22afbfa9f00f0d54e776
+%define dbeaver_common_commit 5658d5409f14f6d99aa76d42692960666029ede9
 %define equinox_commit 12022c26e62ce76e376f6f9b22001b9aa0f969a7
-%define datadam_api_commit 3a5981e58e130909df93aa9b0c8b3e406d46812b
+%define datadam_api_commit afb5477ab9ab6f90ba8aad27fb0231c6e1727ca3
 
 %ifarch x86_64
 %define jna_arch linux-x86-64
@@ -10,7 +10,7 @@
 %endif
 
 Name: dbeaver
-Version: 26.2.1
+Version: 26.2.2
 Release: alt1
 
 Summary: Universal Database Manager
@@ -140,6 +140,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Sun Oct 04 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.2-alt1
+- Version 26.2.2
+
 * Mon Sep 21 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.1-alt1
 - Version 26.2.1
 - Build Eclipse launcher from source, exclude precompiled binaries (Closes: #41062)
