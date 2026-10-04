@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 65.19.5
+Version: 65.19.7
 Release: alt1
 Summary: Integrated set of Django applications for account authentication
 License: MIT
@@ -65,6 +65,9 @@ export DJANGO_SETTINGS_MODULE=tests.projects.account_only.settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 03 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 65.19.7-alt1
+- New version (65.19.7).
+
 * Tue Sep 29 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 65.19.5-alt1
 - New version (65.19.5).
 
