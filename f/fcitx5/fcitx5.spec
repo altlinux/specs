@@ -10,7 +10,9 @@
 
 Name: fcitx5
 Version: 5.1.23
-Release: alt1
+Release: alt2
+
+Patch: fcitx5-diagnose-alt-fixes.patch
 
 Summary: Next generation of fcitx
 License: LGPLv2+
@@ -133,9 +135,8 @@ This package will setup autostart and environment needed for fcitx5 to work prop
 
 %prep
 %setup -a1
+%patch -p0
 cp -a %SOURCE2 src/modules/spell/
-# bash4
-sed -i '1s,env bash,env bash4,' data/fcitx5-diagnose.sh
 
 %build
 %fedora_v2_cmake -G"Unix Makefiles"
@@ -211,6 +212,9 @@ EOF
 %config %_sysconfdir/profile.d/fcitx5.sh
 
 %changelog
+* Mon Oct 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.1.23-alt2
+- unlinked from bash4
+
 * Thu Oct 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.1.23-alt1
 - 5.1.2 -> 5.1.23 (ALT #52978)
 - dropped old patches
