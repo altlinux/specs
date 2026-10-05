@@ -1,5 +1,5 @@
 Name: fuzzel
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 
 Summary: Application launcher for wlroots based Wayland compositors
@@ -65,6 +65,9 @@ Features:
 %_sysconfdir/xdg/%name/
 
 %changelog
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 1.15.0-alt1
+- New version 1.15.0 (closes: #54764).
+
 * Tue Mar 10 2026 Aleksandr Dovydenkov <asd@altlinux.org> 1.14.1-alt1
 - new version 1.14.1
 
