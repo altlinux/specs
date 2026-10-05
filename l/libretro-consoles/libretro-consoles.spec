@@ -1,12 +1,7 @@
-%global __find_debuginfo_files %nil
-%ifnarch %e2k
-%set_gcc_version 13
-%endif
-
-Summary:	An interface for emulator and game ports
 Name:		libretro-consoles
-Version:	20260127
-Release:	alt2
+Summary:	An interface for emulator and game ports
+Version:	20260928
+Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
 Group:		Emulators
@@ -15,9 +10,6 @@ Url:		http://www.libretro.com
 Source0:	%{name}-%{version}.tar
 Patch1: libretro-consoles-20240813-alt1-Fix-build-blastem-on-ALT.patch
 
-%ifnarch %e2k
-BuildRequires: nasm gcc13 gcc13-c++ cmake
-%endif
 BuildRequires:	nasm gcc gcc-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
@@ -28,6 +20,7 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(sdl)
 BuildRequires:	pkgconfig(sdl2)
+BuildRequires:	python3-devel
 
 Conflicts: libretro
 Obsoletes: libretro
@@ -53,7 +46,7 @@ libretro API and that's it - we take care of the rest.
 
 This is set of cores of game consoles emulators.
 
-%define consoles a5200 chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar
+%define consoles a5200 blastem chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar
 %{expand:%(\
     for console in %{consoles}; do \
         echo -e "%%package $console\n"; \
@@ -65,8 +58,8 @@ This is set of cores of game consoles emulators.
     done\
 )}
 
-%ifnarch aarch64 loongarch64
-%define consoles kronos yabause
+%ifnarch loongarch64
+%define consoles kronos yabause mupen64plus_next pcsx_rearmed
 %{expand:%(\
     for console in %{consoles}; do \
         echo -e "%%package $console\n"; \
@@ -79,37 +72,8 @@ This is set of cores of game consoles emulators.
 )}
 %endif
 
-%ifnarch aarch64 loongarch64 %e2k
+%ifnarch loongarch64 %e2k
 %define consoles parallel_n64 yabasanshiro
-%{expand:%(\
-    for console in %{consoles}; do \
-        echo -e "%%package $console\n"; \
-        echo -e "Summary: $console libretro core\nGroup: Emulators\n"; \
-        echo -e "Conflicts: libretro-$console\n";\
-        echo -e "Obsoletes: libretro-$console\n";\
-        echo -e "%description ${console}\n${console} libretro core\n"; \
-        echo -e "%files $console\n%_libexecdir/libretro/${console}_libretro.so\n"; \
-    done\
-)}
-%endif
-
-
-%ifarch %ix86 x86_64
-%define consoles blastem
-%{expand:%(\
-    for console in %{consoles}; do \
-        echo -e "%%package $console\n"; \
-        echo -e "Summary: $console libretro core\nGroup: Emulators\n"; \
-        echo -e "Conflicts: libretro-$console\n";\
-        echo -e "Obsoletes: libretro-$console\n";\
-        echo -e "%description ${console}\n${console} libretro core\n"; \
-        echo -e "%files $console\n%_libexecdir/libretro/${console}_libretro.so\n"; \
-    done\
-)}
-%endif
-
-%ifnarch %e2k loongarch64
-%define consoles mupen64plus_next pcsx_rearmed
 %{expand:%(\
     for console in %{consoles}; do \
         echo -e "%%package $console\n"; \
@@ -124,7 +88,7 @@ This is set of cores of game consoles emulators.
 
 %prep
 %setup -q
-%patch1 -p1
+#patch1 -p1
 
 %ifarch riscv64
 sed -ie 's/HAVE_SSE = 1/HAVE_SSE = 0/' \
@@ -146,11 +110,11 @@ export CXX=%__cxx
 %set_verify_elf_method textrel=relaxed
 %endif
 
-for core in a5200 chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 pcsx_rearmed picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar yabasanshiro yabause; do
+for core in a5200 blastem chimerasnes ep128emu_core fceumm fixnes freechaf freeintv gearcoleco gearsystem genesis_plus_gx genesis_plus_gx_wide lowresnx mesen mesens meteor mu neocd nestopia o2em opera pcsx1 pcsx_rearmed picodrive prosystem quicknes retro8 smsplus stella stella2014 tgbdual uw8 vecx virtualjaguar yabasanshiro yabause; do
 ./libretro-build.sh $core
 done
 
-%ifnarch aarch64 loongarch64
+%ifnarch loongarch64
 for core in kronos parallel_n64 yabasanshiro yabause; do
 ./libretro-build.sh $core
 done
@@ -158,12 +122,6 @@ done
 
 %ifnarch %e2k loongarch64
 for core in mupen64plus_next; do
-./libretro-build.sh $core
-done
-%endif
-
-%ifarch %ix86 x86_64
-for core in blastem; do
 ./libretro-build.sh $core
 done
 %endif
@@ -176,6 +134,10 @@ mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Thu Oct  1 2026 Artyom Bystrov <arbars@altlinux.org> 20260928-alt1
+- Update sources
+- All cores are avalable for main architectures
+
 * Thu Feb 26 2026 Artyom Bystrov <arbars@altlinux.org> 20260127-alt2
 - Disable some cores for E2K
 
