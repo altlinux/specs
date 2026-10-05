@@ -11,7 +11,7 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt31
+Release: alt32
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
@@ -41,7 +41,7 @@ BuildRequires(pre): rpm-build-xdg rpm-build-ubt rpm-macros-ifver
 BuildRequires: rpm-build-kf%qtver
 BuildRequires: desktop-file-utils
 BuildRequires: libkrb5-devel libkeyutils-devel
-BuildRequires: cmake libcom_err-devel qt%qtver-base-devel qt%qtver-tools kf%kfver-kwidgetsaddons-devel
+BuildRequires: cmake libcom_err-devel qt%qtver-base-devel qt%qtver-tools kf%kfver-kwallet-devel kf%kfver-kwidgetsaddons-devel
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -100,6 +100,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Mon Oct 05 2026 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt32
+- add only kwallet support for change keyring password
+
 * Wed Sep 30 2026 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt31
 - allow to change local keyring password
 
