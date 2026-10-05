@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Phosh Session Services
@@ -77,6 +77,7 @@ export GETTEXT_SYSTEM=1
 # os-updater
 %_libexecdir/phosh-os-updater
 %_userunitdir/phosh-os-updater.service
+%_desktopdir/%rdn_name.desktop
 %_desktopdir/mobi.phosh.OsUpdater.desktop
 %_iconsdir/hicolor/symbolic/apps/mobi.phosh.OsUpdater-symbolic.svg
 %doc README* NEWS
@@ -86,6 +87,9 @@ export GETTEXT_SYSTEM=1
 %_libexecdir/phosh-%name-demo}
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - updated to v0.2.0-8-g07444dd
 

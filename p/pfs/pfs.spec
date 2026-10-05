@@ -5,7 +5,7 @@
 # package `libpfs' version `0.0.2-alt0.5' is less than its version `2.2.0-alt2' in `p10'
 # from pfstools
 %define pkg_libname libphosh-file-selector
-%define ver_major 0.1
+%define ver_major 0.2
 %define beta %nil
 %define api_ver 0
 %define namespace Pfs
@@ -20,7 +20,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Phosh File Selector Library
@@ -160,6 +160,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
+- 0.2.0
+
 * Sun Jun 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - 0.1.1
 

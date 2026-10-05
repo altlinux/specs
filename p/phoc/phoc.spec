@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.56
+%define ver_major 0.58
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -9,7 +9,7 @@
 
 %define dev_uid 500
 %define wlroots_ver_major 0.20
-%define wlroots_ver %wlroots_ver_major.1
+%define wlroots_ver %wlroots_ver_major.2
 # since 0.48 system 0.19.1 may be used but patched version required
 %def_enable embed_wlroots
 %{?_enable_embed_wlroots:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
@@ -104,7 +104,7 @@ compositor.
 %{?_enable_embed_gmobile:mv gmobile-%gmobile_ver subprojects/gmobile}
 %{?_enable_embed_wlroots:mv wlroots-%wlroots_ver subprojects/wlroots-%wlroots_ver_major.x
 pushd subprojects/wlroots-%wlroots_ver_major.x
-for p in ../packagefiles/wlroots/*.patch; do
+for p in ../packagefiles/wlroots/{,*/}*.patch; do
     patch -p1 -i $p
 done
 popd}
@@ -154,6 +154,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
+- 0.58.0
+
 * Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
 - 0.56.0
 

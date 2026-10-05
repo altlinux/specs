@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name phosh-first-boot
-%define ver_major 0.1
+%define ver_major 0.2
 %define rdn_name mobi.phosh.FirstBoot
 %define gettext_domain PhoshFirstBoot
 %define greetd_user _greeter
@@ -77,6 +77,8 @@ export GETTEXT_SYSTEM=1
 %_desktopdir/%rdn_name.desktop
 %_userunitdir/%{_name}-importer.service
 %_tmpfilesdir/%_name.conf
+%dir %_datadir/%name
+%_datadir/%name/defaults.conf
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
 %_datadir/glib-2.0/schemas/00_%rdn_name.gschema.override
 %_datadir/polkit-1/rules.d/20-%_name.rules
@@ -85,6 +87,9 @@ export GETTEXT_SYSTEM=1
 %doc README* NEWS
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.1
+- 0.2.0
+
 * Tue Jul 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt0.1
 - first build for Sisyphus
 

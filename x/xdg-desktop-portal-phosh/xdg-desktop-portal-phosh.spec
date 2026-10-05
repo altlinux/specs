@@ -2,9 +2,9 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.56
+%define ver_major 0.58
 %define beta %nil
-%define pfs_ver 0.1.1
+%define pfs_ver 0.2.0
 
 %define _name phosh
 # phrosh portal
@@ -16,7 +16,7 @@
 %def_disable bootstrap
 
 Name: xdg-desktop-portal-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Phosh Desktop Portal
@@ -100,6 +100,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %exclude %_datadir/locale/*/*/pfs.mo
 
 %changelog
+* Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
+- 0.58.0
+
 * Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.1-alt1
 - 0.56.1
 

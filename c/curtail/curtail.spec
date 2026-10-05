@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define _name Curtail
-%define ver_major 1.16
+%define ver_major 1.17
 %define xdg_name com.github.huluti.%_name
 
 %def_enable check
 
 Name: curtail
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: An Image Compressor for GNOME
@@ -27,7 +27,7 @@ BuildArch: noarch
 %add_python3_path %_datadir/%name
 
 %define adwaita_ver 1.8
-%define oxipng_ver 10.1.1
+%define oxipng_ver 10.2.1
 
 Requires: python3-module-pygobject3
 Requires: typelib(Adw) = 1
@@ -71,10 +71,13 @@ whether keep or not metadata of images.
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
 %doc README* CHANGELOG*
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.17.0-alt1
+- 1.17.0
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.16.2-alt1
 - 1.16.2
 

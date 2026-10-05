@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.56
+%define ver_major 0.58
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -339,6 +339,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
+- 0.58.0
+
 * Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
 - 0.56.0
 

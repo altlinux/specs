@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.56
+%define ver_major 0.58
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -12,11 +12,15 @@
 %def_disable embed_gmobile
 %def_enable introspection
 %def_enable man
-%def_enable examples
+%def_disable examples
+# bluetooth, online accounts, wwan and wi-fi panels from g-c-c
+%def_disable gcc_panels
 # Linux dmabuf support unavailable
 %def_disable check
 
 %define gvc_ver d2442f45
+%define gcc_ver_major 50
+%define gcc_ver %gcc_ver_major.4
 
 Name: phosh-mobile-settings
 Version: %ver_major.0
@@ -37,6 +41,7 @@ Source: %name-%version%beta.tar
 # https://gitlab.gnome.org/GNOME/libgnome-volume-control.git
 Source10: gvc-%gvc_ver.tar
 %{?_enable_embed_gmobile:Source11: gmobile-%gmobile_ver.tar}
+%{?_enable_gcc_panels:Source12: ftp://ftp.gnome.org/pub/gnome/sources/gnome-control-center/%gcc_ver_major/gnome-control-center-%gcc_ver.tar.xz}
 
 %define phoc_ver %ver_major
 %define phosh_ver %ver_major
@@ -51,7 +56,7 @@ Requires: cellbroadcastd
 Requires: sysfsutils
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-BuildRequires: gcc-c++ meson
+BuildRequires: gcc-c++ meson blueprint-compiler
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.84
 BuildRequires: pkgconfig(gtk4) >= 4.12.5
@@ -74,6 +79,31 @@ BuildRequires: pkgconfig(yaml-0.1)
 # since 0.55
 BuildRequires: pkgconfig(accountsservice) >= 23.13
 BuildRequires: pkgconfig(polkit-gobject-1)
+# since 0.57
+BuildRequires: pkgconfig(libnm) >= 1.52.0
+# for g-c-c
+%{?_enable_gcc_panels:
+BuildRequires: pkgconfig(mm-glib)
+BuildRequires: pkgconfig(libnma-gtk4)
+BuildRequires: pkgconfig(tecla)
+BuildRequires: pkgconfig(goa-1.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(upower-glib)
+BuildRequires: pkgconfig(gudev-1.0)
+BuildRequires: pkgconfig(epoxy)
+BuildRequires: pkgconfig(gcr-4)
+BuildRequires: pkgconfig(pwquality)
+BuildRequires: pkgconfig(cups)
+BuildRequires: pkgconfig(gnome-bluetooth-ui-3.0)
+BuildRequires: pkgconfig(libwacom)
+BuildRequires: pkgconfig(colord-gtk4)
+BuildRequires: pkgconfig(smbclient)
+BuildRequires: pkgconfig(libgtop-2.0)
+BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(udisks2)
+BuildRequires: pkgconfig(krb5)
+BuildRequires: gnome-settings-daemon-devel}
 # for gvc
 BuildRequires: pkgconfig(libpulse)
 %if_enabled embed_gmobile
@@ -137,19 +167,29 @@ This provides example program that uses %libname.
 
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version%beta -a10 %{?_enable_embed_gmobile:-a11
-mv gmobile-%gmobile_ver subprojects/gmobile}
+mv gmobile-%gmobile_ver subprojects/gmobile} %{?_enable_gcc_panels:-a12}
 
 mv gvc-%gvc_ver subprojects/gvc
 pushd subprojects/gvc
 # not needed with latest gvc
 #for p in ../packagefiles/gvc/*.patch; do
-#    patch -p1 -i $p; done
+#    patch -p1 -i $p ; done
 popd
+
+%{?_enable_gcc_panels:
+mv gnome-control-center-%gcc_ver subprojects/g-c-c
+pushd subprojects/g-c-c
+for p in ../packagefiles/g-c-c/*.patch; do
+    patch -p1 -i $p; done
+popd
+}
 
 %build
 %meson \
     %{subst_enable_meson_bool man man} \
     %{subst_enable_meson_bool examples examples} \
+    %{subst_enable_meson_bool gcc_panels gcc-panels} \
+    %{?_enable_gcc_panels:-Dgcc-po=true} \
     -Dpolkit-group=wheel
 %nil
 %meson_build
@@ -201,6 +241,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
+- 0.58.0
+
 * Sun Jul 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
 - updated to v0.56.0-2-g2b98cc7
 
