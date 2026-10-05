@@ -1,7 +1,7 @@
 %define soversion 2
 
 Name: faad
-Version: 2.11.3
+Version: 2.11.4
 Release: alt1
 
 Summary: FAAD is a Freeware Advanced Audio Decoder
@@ -70,6 +70,9 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/faad2.pc
 
 %changelog
+* Mon Oct 05 2026 Anton Farygin <rider@altlinux.org> 2.11.4-alt1
+- 2.11.3 -> 2.11.4
+
 * Sun Aug 23 2026 Anton Farygin <rider@altlinux.org> 2.11.3-alt1
 - 2.11.2 -> 2.11.3
 
