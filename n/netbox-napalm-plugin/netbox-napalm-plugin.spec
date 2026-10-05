@@ -1,7 +1,7 @@
 %define pname netbox_napalm_plugin
 
 Name:    netbox-napalm-plugin
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: NetBox Napalm plugin
@@ -46,6 +46,9 @@ install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/%name/README
 %python3_sitelibdir/%{pyproject_distinfo %pname}
 
 %changelog
+* Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 0.3.7-alt1
+- New 0.3.7 version.
+
 * Tue Sep 22 2026 Alexander Burmatov <thatman@altlinux.org> 0.3.6-alt1
 - New 0.3.6 version.
 

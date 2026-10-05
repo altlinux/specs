@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name zensical
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.63
+Version: 0.0.67
 Release: alt1
 
 Summary: A modern static site generator by the Material for MkDocs team
@@ -34,6 +35,9 @@ BuildRequires: python3-module-pandas
 BuildRequires: python3-module-tabulate
 BuildRequires: python3-module-click
 BuildRequires: python3-module-lxml
+BuildRequires: python3-module-pathspec
+BuildRequires: python3-module-mkdocstrings
+BuildRequires: python3-module-mkdocstrings-python
 %endif
 
 %description
@@ -61,6 +65,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 01 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.67-alt1
+- Updated to 0.0.67.
+
 * Mon Sep 21 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.63-alt1
 - Updated to 0.0.63.
 

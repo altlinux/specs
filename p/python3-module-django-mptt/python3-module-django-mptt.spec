@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.18
-Release: alt1
+Release: alt2
 
 Summary: Utilities for implementing a modified pre-order traversal tree in django
 License: MIT
@@ -25,12 +25,14 @@ BuildRequires: python3-module-model-bakery
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: django61-blank-choice-label.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -53,6 +55,9 @@ python3 -m django test
 %python3_sitelibdir/django_mptt-%version.0.dist-info/
 
 %changelog
+* Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 0.18-alt2
+- Fixed FTBFS (Django 6.1 changed the default blank choice label).
+
 * Wed Feb 18 2026 Alexander Burmatov <thatman@altlinux.org> 0.18-alt1
 - New 0.18 version.
 

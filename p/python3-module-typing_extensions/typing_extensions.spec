@@ -4,7 +4,7 @@
 
 Name: python3-module-%modname
 Version: 4.16.0
-Release: alt1
+Release: alt2
 
 Summary: Python Typing Extensions
 
@@ -14,6 +14,7 @@ URL: https://pypi.org/project/typing-extensions
 VCS: https://github.com/python/typing_extensions
 
 Source: %name-%version.tar
+Patch: literal-dedup-assertion.patch
 
 BuildArch: noarch
 Provides: python3-module-typing-extensions = %EVR
@@ -45,6 +46,7 @@ must be compatible with multiple Python versions or requires experimental types.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -62,6 +64,9 @@ must be compatible with multiple Python versions or requires experimental types.
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 4.16.0-alt2
+- Fixed FTBFS (Python 3.13 deduplicates unhashable Literal arguments).
+
 * Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 4.16.0-alt1
 - Updated to 4.16.0.
 

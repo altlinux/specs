@@ -5,42 +5,34 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.21.2
+Version: 12.1
 Release: alt1
 
 Summary: Extensions for Python Markdown
 License: MIT and BSD
 Group: Development/Python3
-Url: https://pypi.org/project/pymdown-extensions/
-Vcs: https://github.com/facelessuser/pymdown-extensions
+URL: https://pypi.org/project/pymdown-extensions/
+VCS: https://github.com/facelessuser/pymdown-extensions
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
+BuildRequires: python3-module-hatchling
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-markdown
+BuildRequires: python3-module-yaml
+%endif
 
 BuildArch: noarch
 
-Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Patch0: %name-%version-alt.patch
-
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+Source: %name-%version.tar
 
 %description
 %summary.
 
 %prep
-%setup
-%autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements/test.txt
-%endif
+%setup -n %name-%version
 
 %build
 %pyproject_build
@@ -52,10 +44,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
+%doc *.md
 %python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 12.1-alt1
+- New 12.1 version.
+
 * Tue Mar 31 2026 Anton Zhukharev <ancieg@altlinux.org> 10.21.2-alt1
 - Updated to 10.21.2.
 

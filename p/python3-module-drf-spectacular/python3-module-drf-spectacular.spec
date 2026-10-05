@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.30.0
-Release: alt1
+Release: alt2
 
 Summary: Sane and flexible OpenAPI 3 schema generation for Django REST framework
 License: BSD-3-Clause
@@ -33,12 +33,15 @@ BuildRequires: python3-module-yaml
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch1: django61-check-databases.patch
+Patch2: drf318-ip-protocol.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -57,6 +60,9 @@ python3 runtests.py --fast
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 0.30.0-alt2
+- Fixed FTBFS (Django 6.1 system checks, DRF 3.18.1 IP protocol propagation).
+
 * Fri Jul 24 2026 Alexander Burmatov <thatman@altlinux.org> 0.30.0-alt1
 - New version 0.30.0.
 
