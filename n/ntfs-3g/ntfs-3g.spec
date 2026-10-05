@@ -1,5 +1,5 @@
 Name: ntfs-3g
-Version: 2026.7.7
+Version: 2026.9.28
 Release: alt1
 Epoch: 2
 Summary: third generation Linux NTFS driver
@@ -100,6 +100,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 05 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:2026.9.28-alt1
+- 2026.9.28
+
 * Wed Aug 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:2026.7.7-alt1
 - 2026.7.7
 
