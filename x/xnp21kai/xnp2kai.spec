@@ -1,7 +1,6 @@
-%set_gcc_version 13
 Name: xnp21kai
 Version: rev.22
-Release: alt1.git4b109ea
+Release: alt1.git253ef65
 Summary: PC-9801 series emulator	
 Group: Emulators
 License: BSD3
@@ -10,18 +9,18 @@ Url: http://domisan.sakura.ne.jp/article/np2kai/np2kai.html
 Source: %name-%version.tar
 Patch0: delete-git-CMakefiles.patch
 
-BuildRequires: gcc13-c++
+BuildRequires: gcc-c++
 BuildRequires: zlib-devel
-BuildRequires: libSDL2-devel
-BuildRequires: libSDL2_ttf-devel
-BuildRequires: libSDL2_mixer-devel
+BuildRequires: libSDL3-devel
+BuildRequires: libSDL3_ttf-devel
+BuildRequires: libSDL3_mixer-devel
 BuildRequires: libopenal-devel
 BuildRequires: libalsa-devel
 BuildRequires: cmake rpm-macros-cmake
 BuildRequires: libusb-devel
 BuildRequires: libfreetype-devel
 BuildRequires: fontconfig-devel
-BuildRequires: libpcre-devel bzlib-devel libpng-devel libbrotli-devel libuuid-devel libX11-devel libexpat-devel libgtk+2-devel libssl-devel
+BuildRequires: libpcre-devel bzlib-devel libpng-devel libbrotli-devel libuuid-devel libX11-devel libexpat-devel libgtk+2-devel libssl-devel libcdio-devel
 
 ExcludeArch: armh
 
@@ -79,8 +78,12 @@ cp x/resources/* %buildroot%_datadir/%name
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Oct  5 2026 Artyom Bystrov <arbars@altlinux.org> rev.22-alt1.git253ef65
+- Update to new version
+- Switch to stock GCC version
+
 * Wed Nov  6 2024 Artyom Bystrov <arbars@altlinux.org> rev.22-alt1.git4b109ea
-- update to new version
+- Update to new version
 
 * Thu Aug 4 2022 Artyom Bystrov <arbars@altlinux.org> rev.22-alt1
  - initial release
