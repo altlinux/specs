@@ -2,7 +2,7 @@
 
 Name: perftest
 Summary: IB Performance tests
-Version: 26.07.7
+Version: 26.07.8
 Release: alt1
 License: %gpl2only
 Group: Monitoring
@@ -43,6 +43,9 @@ install -m 0755 raw_ethernet_{bw,lat} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Mon Oct 05 2026 Anton Farygin <rider@altlinux.org> 26.07.8-alt1
+- 26.07.7 -> 26.07.8
+
 * Tue Sep 15 2026 Anton Farygin <rider@altlinux.org> 26.07.7-alt1
 - 26.04.17 -> 26.07.7
 
