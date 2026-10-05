@@ -2,7 +2,7 @@
 %def_with gui
 
 Name: ansifilter
-Version: 2.23
+Version: 2.24
 Release: alt1
 Summary: ANSI terminal escape code converter
 Group: Text tools
@@ -67,5 +67,8 @@ popd
 %endif
 
 %changelog
+* Thu Oct 01 2026 Valery Zabrovsky <brow@altlinux.org> 2.24-alt1
+- New version 2.24.
+
 * Thu Aug 20 2026 Valery Zabrovsky <brow@altlinux.org> 2.23-alt1
 - Initial build for ALT Sisyphus.
