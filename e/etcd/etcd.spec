@@ -10,7 +10,7 @@
 
 Name: etcd
 Version: 3.5.32
-Release: alt1
+Release: alt2
 Summary: A highly-available key value store for shared configuration
 License: Apache-2.0
 Group: System/Servers
@@ -72,6 +72,7 @@ mkdir -p -- \
     %buildroot%_sbindir \
     %buildroot%_unitdir \
     %buildroot%_sysconfdir/%name \
+    %buildroot%_sysconfdir/sysconfig/%name.conf.d \
     %buildroot%_sharedstatedir/%name \
 #
 
@@ -101,6 +102,7 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %doc README-*.md READMEv2-etcdctl.md
 %dir %attr(770,%etcd_user,%etcd_group) %_sharedstatedir/%name
 %dir %_sysconfdir/%name
+%dir %_sysconfdir/sysconfig/%name.conf.d
 %config(noreplace) %_sysconfdir/%name/%name.conf
 %_bindir/etcdctl
 %_bindir/etcdutl
@@ -111,6 +113,9 @@ useradd -r -g %etcd_group -d /dev/null -s /dev/null -n %etcd_user >/dev/null 2>&
 %_unitdir/%name.service
 
 %changelog
+* Mon Oct 05 2026 Alexey Shabalin <shaba@altlinux.org> 3.5.32-alt2
+- Allow etcd environment overrides from sysconfig drop-ins.
+
 * Fri Jul 10 2026 Alexander Stepchenko <geochip@altlinux.org> 3.5.32-alt1
 - 3.5.28 -> 3.5.32.
 - Fixes:
