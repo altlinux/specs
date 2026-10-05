@@ -17,7 +17,7 @@
 
 Name: squid
 Version: 7.7
-Release: alt1
+Release: alt2
 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -118,6 +118,8 @@ Group: System/Servers
 Requires: %name = %version-%release
 Provides: %name-helpers-perl = %version-%release
 Obsoletes: %name-helpers-perl < %EVR
+# wbinfo is used only by optional wbinfo helpers; don't pull in Samba (ALT #35554)
+%filter_from_requires /^\/usr\/bin\/wbinfo$/d
 
 %description helpers
 This package contains Squid helpers for different kinds of authentication.
@@ -331,6 +333,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 7.7-alt2
+- helpers: don't pull in Samba via /usr/bin/wbinfo (closes: #35554)
+
 * Mon Aug 24 2026 Egor Ignatov <egori@altlinux.org> 7.7-alt1
 - 7.7
 
