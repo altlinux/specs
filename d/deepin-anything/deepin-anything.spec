@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-anything
-Version: 7.0.39
+Version: 7.0.60
 Release: alt1
 
 Summary: The lightning-fast filename search for Deepin
@@ -74,6 +74,9 @@ rm -rf %name-0.0/
 %_usrsrc/kernel/*
 
 %changelog
+* Mon Oct 05 2026 Leontiy Volodin <lvol@altlinux.org> 7.0.60-alt1
+- New version 7.0.60.
+
 * Mon May 04 2026 Leontiy Volodin <lvol@altlinux.org> 7.0.39-alt1
 - New version 7.0.39.
 - Fixed build on gcc15.
