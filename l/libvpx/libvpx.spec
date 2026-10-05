@@ -22,7 +22,7 @@
 %endif
 
 Name: libvpx
-Version: 1.16.0
+Version: 1.17.0
 Release: alt1
 Summary: VP8 video codec
 Group: Video
@@ -118,6 +118,9 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 %_bindir/*
 
 %changelog
+* Mon Oct 05 2026 Anton Farygin <rider@altlinux.org> 1.17.0-alt1
+- 1.16.0 -> 1.17.0
+
 * Wed Apr 08 2026 Anton Farygin <rider@altlinux.org> 1.16.0-alt1
 - 1.15.2 -> 1.16.0
 - enabled multi-res encoding support (VP8 only)
