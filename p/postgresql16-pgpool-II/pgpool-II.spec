@@ -6,7 +6,7 @@ ExcludeArch: %ix86
 
 Name: postgresql%pg_ver-%prog_name
 Version: 4.7.3
-Release: alt2
+Release: alt3
 Summary: Pgpool is a connection pooling/replication server for PostgreSQL
 License: BSD
 Group: Databases
@@ -137,6 +137,9 @@ fi
 %attr(1775,root,postgres) %dir %_logdir/%sname
 
 %changelog
+* Mon Oct 05 2026 Alexei Takaseev <taf@altlinux.org> 4.7.3-alt3
+- Fix start in SysV-init (ALT #36161)
+
 * Fri Oct 02 2026 Alexei Takaseev <taf@altlinux.org> 4.7.3-alt2
 - (Fixes: CVE-2026-92867, CVE-2026-92868, CVE-2026-92869, CVE-2026-92870, CVE-2026-92871)
 
