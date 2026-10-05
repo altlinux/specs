@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: libimobiledevice-glue
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: libimobiledevice common library
@@ -63,6 +63,9 @@ This package provides files for development using %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.3.3-alt1
+- 1.3.3
+
 * Mon Jun 16 2025 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
