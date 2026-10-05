@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.7.2
+Version: 1.8.0
 Release: alt1
 
 Summary: A rich help formatter for argparse
@@ -26,14 +26,11 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-Patch: 1b4430d1d56fb1b1e6246925d651b4202da55ed1.patch
-
 %description
 %summary
 
 %prep
 %setup
-%patch -p1
 
 %build
 %pyproject_build
@@ -50,5 +47,8 @@ Patch: 1b4430d1d56fb1b1e6246925d651b4202da55ed1.patch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 05 2026 Anton Vyatkin <toni@altlinux.org> 1.8.0-alt1
+- New version 1.8.0.
+
 * Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
 - Initial build for Sisyphus.
