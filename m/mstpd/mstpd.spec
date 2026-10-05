@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mstpd
-Version: 0.1.0
-Release: alt5
+Version: 0.2.0
+Release: alt1
 
 Summary: STP/RSTP/PVST+/MSTP Spanning Tree Protocol Daemon
 License: GPLv2+
 Group: Development/Other
-URL: https://github.com/mstpd/mstpd.git
+Url: https://github.com/mstpd/mstpd
+Vcs: https://github.com/mstpd/mstpd.git
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -57,6 +58,9 @@ rm -fr %buildroot%_libexecdir/mstpctl-utils/mstp_config_bridge
 %_libexecdir/mstpctl-utils
 
 %changelog
+* Mon Oct 05 2026 Alexey Shabalin <shaba@altlinux.org> 0.2.0-alt1
+- 0.2.0.
+
 * Fri Nov 22 2024 Alexey Shabalin <shaba@altlinux.org> 0.1.0-alt5
 - Replace brctl with ip in bash_completion
 - Remove requires bridge-utils
