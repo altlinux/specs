@@ -11,13 +11,14 @@ BuildRequires: libgio-devel libgtk+3-gir-devel libjson-glib-gir-devel
 
 Summary: Timezone map widget for GTK 3
 Name: libtimezonemap
-Version: 0.4.5.3
+Version: 0.4.5.4
 Epoch: 1
 Release: alt1
 Source0: %name-%version.tar
 License: GPLv3+
 Group:   System/Libraries
-Url:   https://github.com/dashea/timezonemap
+Url: https://codeberg.org/dashea/timezonemap
+VCS: https://codeberg.org/dashea/timezonemap.git
 BuildRequires:  gnome-common
 BuildRequires:	intltool
 BuildRequires:	pkgconfig(cairo)
@@ -108,6 +109,9 @@ This package contains the data files needed by the timezonemap library.
 %{_datadir}/libtimezonemap/*.svg
 
 %changelog
+* Mon Oct 05 2026 Anton Farygin <rider@altlinux.org> 1:0.4.5.4-alt1
+- 0.4.5.3 -> 0.4.5.4
+
 * Thu Sep 17 2026 Anton Farygin <rider@altlinux.org> 1:0.4.5.3-alt1
 - 0.4.5.2 -> 0.4.5.3
 
