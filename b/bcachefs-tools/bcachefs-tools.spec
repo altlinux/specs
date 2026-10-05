@@ -1,5 +1,5 @@
 Name: bcachefs-tools
-Version: 1.39.6
+Version: 1.39.7
 Release: alt1
 
 Summary: Userspace tools and docs for bcachefs
@@ -26,6 +26,7 @@ BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libkeyutils)
 BuildRequires: pkgconfig(libunwind)
 BuildRequires: pkgconfig(systemd)
+BuildRequires: pkgconfig(dracut)
 BuildRequires: libaio-devel
 
 %description
@@ -47,23 +48,38 @@ echo %version > .version
 
 %install
 %make_install PREFIX=%_prefix ROOT_SBINDIR=%_sbindir DESTDIR=%buildroot install
-rm -f  %buildroot%_sbindir/*.fuse.bcachefs
 rm -rf %buildroot%_datadir/initramfs-tools
 rm -rf %buildroot%_usrsrc/bcachefs-%version
 
 %files
 %doc COPYING README*
+
 %_udevrulesdir/*.rules
 %_unitdir/bcachefs-wait-devices@.service
 %_systemdgeneratordir/bcachefs-mount-generator
+
+%_libexecdir/dracut/modules.d/90bcachefs
+
 %_sbindir/bcachefs
 %_sbindir/fsck.bcachefs
 %_sbindir/mkfs.bcachefs
 %_sbindir/mount.bcachefs
+
+%_sbindir/fsck.fuse.bcachefs
+%_sbindir/mkfs.fuse.bcachefs
+%_sbindir/mount.fuse.bcachefs
+%_sbindir/fsck.fuseblk.bcachefs
+%_sbindir/mkfs.fuseblk.bcachefs
+%_sbindir/mount.fuseblk.bcachefs
+
 %_datadir/bash-completion/completions/bcachefs
+
 %_man8dir/bcachefs.8*
 
 %changelog
+* Mon Oct 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.39.7-alt1
+- 1.39.7 released
+
 * Mon Sep 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.39.6-alt1
 - 1.39.6 released
 
