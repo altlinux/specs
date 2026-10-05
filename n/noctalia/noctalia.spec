@@ -3,7 +3,7 @@
 %def_with check
 
 Name: noctalia
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Summary: A sleek, customizable desktop shell crafted for Wayland
@@ -63,6 +63,7 @@ BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-scanner)
+BuildRequires: pkgconfig(wayland-server)
 BuildRequires: pkgconfig(wireplumber-0.5)
 BuildRequires: pkgconfig(xkbcommon)
 
@@ -88,6 +89,7 @@ shell instead of a collection of unrelated panels and scripts.
 %prep
 %setup
 %patch0 -p1
+
 %ifarch %ix86 armh
 # libical 3.0 reads only the 32-bit TZif v1 block when time_t is 32-bit,
 # and slim tzdata leaves that block empty: every TZID resolves as UTC.
@@ -96,7 +98,7 @@ sed -i "/^    'ical_parser',$/d" meson.build
 
 %build
 %meson -Dtests=enabled \
-       -Dpam_service=%name \
+       -Dpam_service=noctalia \
        -Djemalloc=enabled \
        -Db_ndebug=true
 %meson_build
@@ -112,7 +114,7 @@ install -Dm644 _noctalia %buildroot%_datadir/zsh/site-functions/_noctalia
 install -Dm644 noctalia.fish %buildroot%_datadir/fish/vendor_completions.d/noctalia.fish
 
 install -Dm644 %SOURCE1 %buildroot%_userunitdir/noctalia.service
-install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
+install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/noctalia
 
 %check
 %meson_test
@@ -121,10 +123,8 @@ install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 %doc LICENSE README.md
 %_bindir/noctalia
 %dir %_libexecdir/noctalia
-# pam_tcb checks passwords of unprivileged callers via tcb_chkpwd,
-# reachable only by the chkpwd group.
 %attr(2711,root,chkpwd) %_libexecdir/noctalia/noctalia-pam-helper
-%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/%name
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/noctalia
 %_datadir/noctalia
 %_desktopdir/dev.noctalia.Noctalia.desktop
 %_iconsdir/hicolor/scalable/apps/noctalia.svg
@@ -134,6 +134,9 @@ install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 %_userunitdir/noctalia.service
 
 %changelog
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 5.2.1-alt1
+- New version 5.2.1.
+
 * Mon Sep 28 2026 Egor Ignatov <egori@altlinux.org> 5.2.0-alt1
 - New version 5.2.0.
 - lockscreen: run PAM in a separate setgid chkpwd helper with its own
