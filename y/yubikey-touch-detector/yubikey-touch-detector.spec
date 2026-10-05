@@ -4,7 +4,7 @@
 %define import_path github.com/maximbaz/yubikey-touch-detector
 
 Name:yubikey-touch-detector
-Version: 1.13.0
+Version: 1.15.0
 Release: alt1
 
 Summary: A tool to detect when your YubiKey is waiting for a touch
@@ -73,5 +73,8 @@ install -vDm 644 yubikey-touch-detector.1 \
 %_man1dir/yubikey-touch-detector.1.*
 
 %changelog
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 1.15.0-alt1
+- New version 1.15.0.
+
 * Sun Dec 07 2025 Egor Ignatov <egori@altlinux.org> 1.13.0-alt1
 - Initila build for ALT.
