@@ -12,7 +12,7 @@
 
 Name: cmake
 Version: 4.3.4
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, open-source make system
 
@@ -29,6 +29,7 @@ Source2: CMakeCache.txt
 Patch1: alt-fallback-modules-dir.patch
 Patch2: 696d16ae6c5214e314cfc7cb809c2e574bcff651.patch
 Patch3: alt-find-mpi.patch
+Patch4: alt-findpkgconfig-quiet-static.patch
 
 %if_disabled bootstrap
 BuildRequires(pre): rpm-macros-cmake
@@ -148,6 +149,7 @@ bash completion for CMake
 %setup
 %patch1 -p1
 %patch3 -p1
+%patch4 -p1
 %ifarch %e2k
 # workaround for SUNPro compiler also helps EDG
 sed -i 's/__SUNPRO_CC/__EDG__/' Source/cmArgumentParserTypes.h
@@ -329,6 +331,11 @@ popd
 
 
 %changelog
+* Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.4-alt2
+- FindPkgConfig: do not print pkg-config errors from --static queries
+  (--static libs queries fail on a missing Requires.private module,
+  e.g. libpcre2-8 for glib-2.0)
+
 * Thu Jul 02 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.4-alt1
 - new version 4.3.4
 - use bundled librhash (system 1.3.5 lacks rhash_get_version required since 4.3)
