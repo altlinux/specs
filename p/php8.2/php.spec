@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 33
+%define _php_release_version 34
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -302,7 +302,7 @@ mkdir -p \
 	%buildroot/%_runtimedir/php \
 	%buildroot/%_tmpfilesdir
 
-install -m 644 %SOURCE5 %buildroot/%_tmpfilesdir/php.conf
+install -m 644 %SOURCE5 %buildroot/%_tmpfilesdir/php-%_php_suffix.conf
 install -m 644 %SOURCE3                      %buildroot/%php_sysconfdir/%php_sapi/php.ini
 
 for f in \
@@ -477,7 +477,7 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %dir %_localstatedir/php
 %attr(1733,root,root) %dir %_localstatedir/php/sessions
 %ghost %dir %_runtimedir/php
-%_tmpfilesdir/php.conf
+%_tmpfilesdir/php-%_php_suffix.conf
 
 %files mysqlnd
 %php_extdir/mysqlnd*.so
@@ -500,6 +500,12 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Sun Oct 04 2026 Anton Farygin <rider@altlinux.org> 8.2.34-alt1
+- 8.2.33 -> 8.2.34 (Fixes: CVE-2026-91768, CVE-2025-1218, CVE-2026-91769,
+  CVE-2026-91767, CVE-2026-6103, CVE-2026-91765, CVE-2025-14181, CVE-2026-92842,
+  CVE-2026-91766, CVE-2026-93682, CVE-2026-17545)
+- renamed config for tmpfiles
+
 * Wed Aug 05 2026 Anton Farygin <rider@altlinux.org> 8.2.33-alt1
 - 8.2.32 -> 8.2.33 (Fixes: CVE-2026-9672, CVE-2026-17543, CVE-2026-7260)
 
