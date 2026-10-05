@@ -1,25 +1,22 @@
-
-%define _unpackaged_files_terminate_build 1
-
 Name: hydrogen
-Version: 1.2.6
+Version: 1.2.7
 Release: alt1
 
 Summary: Hydrogen Drum Machine
 License: GPLv2
 Group: Sound
 URL: http://www.hydrogen-music.org
+VCS: https://github.com/hydrogen-music/hydrogen
 
-# https://github.com/hydrogen-music/hydrogen.git
-Source0: %name-%version.tar
-Patch0: %name-%version-%release.patch
+Source: %name-%version.tar
 
-BuildRequires: ccmake ctest doxygen gcc-c++ graphviz ladspa_sdk libalsa-devel
-BuildRequires: libarchive-devel libjack-devel liblo-devel liblrdf-devel
-BuildRequires: librubberband-devel libsndfile-devel libtar-devel cppunit-devel
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel qt5-xmlpatterns-devel
-BuildRequires: zlib-devel
+BuildRequires: cmake gcc-c++ 
 BuildRequires: desktop-file-utils
+BuildRequires: ladspa_sdk libalsa-devel
+BuildRequires: libarchive-devel libjack-devel liblo-devel liblrdf-devel
+BuildRequires: librubberband-devel libsndfile-devel cppunit-devel
+BuildRequires: qt6-base-devel qt6-svg-devel qt6-tools-devel
+BuildRequires: zlib-devel
 
 %description
 Hydrogen is an advanced sample-based drum machine. Its main
@@ -43,10 +40,10 @@ pattern-based drum programming. Its features include:
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %cmake '-DVERSION_SUFFIX:STRING=%release' \
+    -DWANT_QT6=ON \
     -DWANT_LRDF=ON \
     -DWANT_RUBBERBAND=ON \
     -DWANT_PULSEAUDIO=OFF
@@ -73,6 +70,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude /usr/include/%name
 
 %changelog
+* Mon Oct 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.7-alt1
+- 1.2.7 released
+
 * Wed Jul 30 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.6-alt1
 - 1.2.6 released
 
