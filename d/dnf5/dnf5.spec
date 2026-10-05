@@ -4,7 +4,7 @@
 
 Name: dnf5
 Version: 5.4.3.0
-Release: alt6
+Release: alt7
 
 Summary: Command-line package manager
 
@@ -22,13 +22,17 @@ Patch2: %name-cstring.patch
 Patch3: %name-rpm-4.13-elem-progress.patch
 Patch4: %name-rpm-4.13-signature-check.patch
 Patch5: %name-alt-rpmdb-autoinstalled.patch
+Patch6: %name-alt-apt-rpm-repo.patch
+Patch7: %name-alt-upgrade-keep-packages.patch
+Patch8: %name-alt-apt-plugin.patch
+Patch9: %name-alt-config-manager-plugin-repos.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.21
 BuildRequires: gcc-c++ >= 10.1
 BuildRequires: gettext-tools
 BuildRequires: librpm-devel
-BuildRequires: libsolv-devel >= 0.7.39-alt1.1
+BuildRequires: libsolv-devel >= 0.7.39-alt1.4
 BuildRequires: librepo-devel >= 1.20.0
 BuildRequires: libfmt-devel
 BuildRequires: libjson-c-devel
@@ -153,12 +157,31 @@ Libdnf5 plugin that maintains a local RPM repository. Packages can be
 dropped into the local repository directory and they will be available
 for installation via dnf5.
 
-%package -n python3-libdnf5-python-plugins-loader
+%package -n libdnf5-plugin-apt
+Summary: Libdnf5 plugin using the APT-RPM configuration
+Group: System/Libraries
+License: LGPL-2.1-or-later
+# libdnf5 runs gpg to verify base/release of [vendor] sources
+Requires: /usr/bin/gpg
+
+%description -n libdnf5-plugin-apt
+Libdnf5 plugin that makes dnf5 work as apt-get: it creates APT-RPM
+repositories from /etc/apt/sources.list and /etc/apt/sources.list.d/*.list,
+treats RPM::Allow-Duplicated packages (kernels) as installonly, keeps
+kernels and RPM::Hold packages on upgrade and distro-sync without arguments
+(as apt-get dist-upgrade) and protects Essential, Important and Required
+packages of /etc/apt/pkgpriorities.
+
+%package -n libdnf5-plugin-python-plugins-loader
 Summary: Libdnf5 plugin that allows loading Python plugins
 Group: System/Libraries
 License: LGPL-2.1-or-later
+Provides: python3-libdnf5-python-plugins-loader = %EVR
+Obsoletes: python3-libdnf5-python-plugins-loader < %EVR
+# the loader passes libdnf5 objects to Python plugins via the libdnf5 bindings
+Requires: python3-module-libdnf5 = %EVR
 
-%description -n python3-libdnf5-python-plugins-loader
+%description -n libdnf5-plugin-python-plugins-loader
 Libdnf5 plugin that allows loading Python plugins.
 
 %prep
@@ -168,6 +191,10 @@ Libdnf5 plugin that allows loading Python plugins.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 %build
 %cmake \
@@ -183,6 +210,7 @@ Libdnf5 plugin that allows loading Python plugins.
     -DWITH_PLUGIN_APPSTREAM=OFF \
     -DWITH_PLUGIN_EXPIRED_PGP_KEYS=OFF \
     -DWITH_PLUGIN_LOCAL=ON \
+    -DWITH_PLUGIN_APT=ON \
     -DWITH_PLUGIN_RHSM=OFF \
     -DWITH_PLUGIN_MANIFEST=OFF \
     -DWITH_PYTHON_PLUGINS_LOADER=ON \
@@ -374,7 +402,11 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %config %_sysconfdir/dnf/libdnf5-plugins/local.conf
 %dir %_sharedstatedir/dnf/plugins/local
 
-%files -n python3-libdnf5-python-plugins-loader
+%files -n libdnf5-plugin-apt
+%_libdir/libdnf5/plugins/apt.*
+%config %_sysconfdir/dnf/libdnf5-plugins/apt.conf
+
+%files -n libdnf5-plugin-python-plugins-loader
 %_libdir/libdnf5/plugins/python_plugins_loader.*
 %config %_sysconfdir/dnf/libdnf5-plugins/python_plugins_loader.conf
 %dir %_sysconfdir/dnf/libdnf5-plugins/python_plugins_loader.d
@@ -382,6 +414,24 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Sun Oct 04 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt7
+- Add "apt-rpm" repository type: base/release verified by the vendor keys
+  from /etc/apt/vendors.list, base/pkglist.COMPONENT checked by MD5.
+- Add libdnf5-plugin-apt using the APT-RPM configuration: repositories
+  from /etc/apt/sources.list and /etc/apt/sources.list.d/*.list (rpm-src
+  lines give ID-source repositories), packages of [vendor] sources are
+  checked by the vendor keys from alt-gpgkeys, RPM::Allow-Duplicated
+  packages (kernels) are installonly, kernels and RPM::Hold packages are
+  kept by upgrade and distro-sync without arguments, Essential, Important
+  and Required packages of pkgpriorities are protected.
+- Add upgrade_keep_packages option: packages kept by upgrade and
+  distro-sync without arguments.
+- Rename python3-libdnf5-python-plugins-loader to
+  libdnf5-plugin-python-plugins-loader, as the other libdnf5 plugins;
+  require python3-module-libdnf5 (as upstream does).
+- config-manager: allow setopt for repositories created by libdnf5 plugins
+  (_dnf_local, apt), not only for repositories of repo files.
+
 * Sat Oct 03 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt6
 - Store package install reason in RPMTAG_AUTOINSTALLED shared with apt-rpm.
 

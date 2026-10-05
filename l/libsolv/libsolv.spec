@@ -1,6 +1,6 @@
 Name: libsolv
 Version: 0.7.39
-Release: alt1.3
+Release: alt1.4
 
 Summary: Library for solving packages and reading repositories
 License: BSD
@@ -12,6 +12,11 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Patch0: libsolv-rpmset.patch
 Patch1: libsolv-alt-rpmlib-unversioned.patch
+Patch2: libsolv-alt-vercmp.patch
+Patch3: libsolv-aptpkglist.patch
+Patch4: libsolv-xz-concatenated.patch
+Patch5: libsolv-alt-upgrade-order.patch
+Patch6: libsolv-alt-promote-epoch.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -46,6 +51,11 @@ Group: System/Configuration/Packaging
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %build
 %cmake -GNinja \
@@ -83,6 +93,18 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Sun Oct 04 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.4
+- Compare versions as ALT rpmvercmp does: an alpha segment is newer
+  than a numeric one (alt3_5 > 5).
+- Add repo_add_aptpkglist() and aptpkglist2solv tool to read APT-RPM
+  indexes (base/pkglist.*, base/srclist.*).
+- Read all streams of concatenated xz files (ALT base/pkglist.*.xz).
+- Order packages with the same EVR by the disttag branch and the build
+  time, as ALT rpm does (rebuilds without a release bump are upgrades).
+- Ignore the provide epoch for a dependency without epoch, as ALT rpm
+  does (POOL_FLAG_PROMOTEEPOCH on by default), only when matching
+  dependencies, not in the package order.
+
 * Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.3
 - Let the system provide unknown unversioned rpmlib() requires, as it does
   for versioned ones (fixes dnf5 install of local ALT rpm files).
