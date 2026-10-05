@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name Levenshtein
-%define mod_name %pypi_name
+%define mod_name Levenshtein
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.27.3
+Version: 0.27.5
 Release: alt1
 
 Summary: Python extension for computing string edit distances and similarities
@@ -18,6 +18,8 @@ Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-pyproject
@@ -74,11 +76,13 @@ bash src/Levenshtein/generate.sh
 %pyproject_run_pytest -vra
 
 %files
-%doc HISTORY.md README.md SECURITY.md
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.27.5-alt1
+- Updated to 0.27.5.
+
 * Thu Dec 18 2025 Anton Zhukharev <ancieg@altlinux.org> 0.27.3-alt1
 - Updated to 0.27.3.
 
@@ -131,4 +135,3 @@ bash src/Levenshtein/generate.sh
 
 * Mon Oct 20 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.2-alt1.git20140923
 - Initial build for Sisyphus
-
