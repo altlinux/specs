@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -14,9 +14,16 @@ ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: crates.tar
+Source2: npm-cache.tar
 
 BuildRequires: rust-cargo /proc
 BuildRequires: /usr/bin/asciidoctor
+BuildRequires: npm
+
+%package -n radicle-web
+Summary: Radicle HTTP webapp
+Group: System/Servers
+BuildArch: noarch
 
 %description
 Heartwood is the third iteration of the Radicle Protocol, a powerful
@@ -24,22 +31,36 @@ peer-to-peer code collaboration and publishing stack.
 This package contains daemon providing JSON HTTP API to a running
 radicle seed node.
 
+%description -n radicle-web
+Heartwood is the third iteration of the Radicle Protocol, a powerful
+peer-to-peer code collaboration and publishing stack.
+This package contains webapp used with radicle-httpd daemon.
+
 %prep
-%setup -a1
+%setup -a1 -a2
 %ifdef bootstrap
 cargo vendor
 tar cf %SOURCE1 .cargo vendor
+rm -rf npm-cache/*
+npm ci --cache npm-cache --cpu=arm64 --os=linux --libc=glibc
+npm ci --cache npm-cache --cpu=x64   --os=linux --libc=glibc
+tar cf %SOURCE2 npm-cache
 %endif
+npm ci --offline --cache npm-cache
+
+%build
+export GIT_HEAD=7acf0739
+cargo build %_smp_mflags --release --offline --manifest-path crates/radicle-httpd/Cargo.toml
+cargo build %_smp_mflags --release --offline --manifest-path crates/radicle-search/Cargo.toml
+VITE_RUNTIME_CONFIG=true npm run build
 
 %install
-export GIT_HEAD=60fd9a12
-cargo install %_smp_mflags --frozen --no-track --path crates/radicle-httpd --root=%buildroot%_prefix
-cargo install %_smp_mflags --frozen --no-track --path crates/radicle-search --root=%buildroot%_prefix
-
-mkdir -p %buildroot{%_man1dir,%_localstatedir/radicle}
+mkdir -p %buildroot{%_bindir,%_man1dir}
+install -pm0755 -t %buildroot%_bindir target/release/radicle-{httpd,search}
 install -pm0644 -D crates/radicle-httpd/systemd/radicle-httpd.service %buildroot%_unitdir/radicle-httpd.service
 asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_man1dir crates/radicle-httpd/radicle-httpd.1.adoc
-cp crates/radicle-search/README.md README.radicle-search.md
+cp -p crates/radicle-search/README.md README.radicle-search.md
+cp -a build %buildroot%_datadir/radicle-web
 
 %files
 %doc CHANGELOG* LICENSE* README*
@@ -48,7 +69,13 @@ cp crates/radicle-search/README.md README.radicle-search.md
 %_man1dir/radicle-httpd.1*
 %_unitdir/radicle-httpd.service
 
+%files -n radicle-web
+%_datadir/radicle-web
+
 %changelog
+* Sun Oct 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.29.0-alt1
+- 0.29.0 released
+
 * Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.28.0-alt1
 - 0.28.0 released
 
