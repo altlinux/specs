@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: meld
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -76,6 +76,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS README*
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 3.24.1-alt1
+- 3.24.1
+
 * Sat Jun 20 2026 Yuri N. Sedunov <aris@altlinux.org> 3.24.0-alt1
 - 3.24.0
 
