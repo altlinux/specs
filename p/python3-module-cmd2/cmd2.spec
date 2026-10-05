@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.2.0
+Version: 4.2.4
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -12,10 +12,9 @@ Summary: A toolkit for simple interactive command-line applications
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/cmd2/
+Vcs: https://github.com/python-cmd2/cmd2
 
-# https://github.com/python-cmd2/cmd2
-Source0: %oname-%version.tar.gz
-Source1: cmd2.watch
+Source0: %name-%version.tar
 
 BuildArch: noarch
 
@@ -35,13 +34,11 @@ BuildRequires: python3-module-pyperclip
 %endif
 
 %if_with check
-BuildRequires: pytest3
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-wcwidth
-BuildRequires: python3-module-pyperclip
 BuildRequires: python3-module-rich
 BuildRequires: python3-module-rich-argparse
+BuildRequires: python3-module-prompt_toolkit
 %endif
 
 %description
@@ -72,7 +69,7 @@ module.
 This package contains pickles for cmd2.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %if_with docs
 %prepare_sphinx3 .
@@ -80,6 +77,7 @@ ln -s ../objects.inv docs/
 %endif
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %if_with docs
@@ -101,10 +99,10 @@ cp -fR build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
 export TERM=xterm-256color
-%pyproject_run_pytest
+%pyproject_run_pytest -o addopts=''
 
 %files
-%doc LICENSE PKG-INFO *.md
+%doc LICENSE *.md
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 %if_with docs
@@ -119,6 +117,9 @@ export TERM=xterm-256color
 %endif
 
 %changelog
+* Mon Oct 05 2026 Anton Vyatkin <toni@altlinux.org> 4.2.4-alt1
+- New version 4.2.4.
+
 * Thu Feb 05 2026 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Automatically updated to 3.2.0.
 
