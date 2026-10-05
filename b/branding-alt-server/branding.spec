@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt4
+Release: alt5
 Epoch: 1
 Url: https://basealt.ru
 
@@ -399,6 +399,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Oct 05 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt5
+- Add ALT in BUILD_ID field of os-release
+
 * Fri Sep 25 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt4
 - Fix BUILD_ID field in os-release (Closes: 60699)
 - Fix link to English version of page (Closes: 60698)
