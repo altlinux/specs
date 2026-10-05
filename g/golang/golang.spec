@@ -52,7 +52,7 @@
 %def_enable fail_on_tests
 
 Name:    golang
-Version: 1.26.8
+Version: 1.27.1
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -66,7 +66,6 @@ Patch2:  golang-alt-certs-path.patch
 Patch3:  go-never-download-newer-toolchains.patch
 Patch4:  go-env-nodwarf5.patch
 Patch101: 0001-avoid-requires-libselinux-utils.patch
-Patch102: 0001-internalruntimegcscan-require-popcnt-for-x86.patch
 
 ExclusiveArch: %go_arches
 
@@ -184,7 +183,6 @@ AutoReq: noshell, noshebang, nocpp
 %patch3 -p1
 %patch4 -p1
 %patch101 -p1
-%patch102 -p1
 
 %build
 # go1.5 bootstrapping. The compiler is written in golang.
@@ -408,6 +406,9 @@ popd
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Mon Oct 05 2026 Alexey Shabalin <shaba@altlinux.org> 1.27.1-alt1
+- Updated from 1.26.8 to 1.27.1.
+
 * Thu Sep 03 2026 Alexey Shabalin <shaba@altlinux.org> 1.26.8-alt1
 - Updated from 1.26.7 to 1.26.8.
 
