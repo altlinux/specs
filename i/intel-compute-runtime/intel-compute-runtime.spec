@@ -8,7 +8,7 @@
 
 Name: intel-compute-runtime
 Version: 26.31.39395.13
-Release: alt1
+Release: alt2
 Summary: Intel(R) Graphics Compute Runtime for OpenCL(TM)
 License: MIT
 Group: System/Libraries
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 
 Patch1: intel-compute-runtime-26.05.37020.3-alt-build.patch
 Patch2: intel-compute-runtime-alt-system-sse2neon.patch
+Patch3: intel-compute-runtime-26.31.39395.13-alt-remove-mcl-exp-callbacks.patch
 
 BuildRequires(pre): rpm-build-cmake ninja-build
 BuildRequires: gcc-c++ libstdc++-devel
@@ -133,6 +134,11 @@ Devel files (headers and libraries) for developing against libze-intel-gpu.
 %_includedir/ocloc_api.h
 
 %changelog
+* Mon Oct 05 2026 Anton Zhukharev <ancieg@altlinux.org> 26.31.39395.13-alt2
+- NMU: Fixed build with level-zero 1.32 headers: removed mcl_exp callback
+  typedefs conflicting with tracing callbacks in zel_tracing_register_cb.h
+  (upstream commit 52c115c8).
+
 * Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 26.31.39395.13-alt1
 - 26.31.39395.13.
 - aarch64: disable for now (stuck during build).
