@@ -1,6 +1,6 @@
 Name: blackbox
-Version: 0.76
-Release: alt3
+Version: 0.77
+Release: alt1
 
 Summary: A Window Manager for the X Window System
 License: BSD-style
@@ -147,6 +147,9 @@ EOF
 %_pkgconfigdir/libbt.pc
 
 %changelog
+* Mon Oct 05 2026 Anton Farygin <rider@altlinux.org> 0.77-alt1
+- 0.76 -> 0.77
+
 * Tue May 16 2023 Artyom Bystrov <arbars@altlinux.org>  0.76-alt3
 - Fix build on modern Sisyphus base
 
