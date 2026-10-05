@@ -1,17 +1,17 @@
 Name: stlink
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 Epoch: 1
 
 Summary: STM32 microcontrolles programmer and debuger, using STLINKv1/v2/v2-1/v3
 License: BSD-3-Clause
 Group: Development/Other
-Url: https://github.com/stlink-org/stlink
+URL: https://github.com/stlink-org/stlink
+VCS: https://github.com/stlink-org/stlink
 
 Conflicts: stlink-gui < 1.8.0
 
 Source0: %name-%version.tar
-Patch0: Post-release-patch-for-v1.8.0.patch
 
 BuildRequires: cmake
 BuildRequires: libgtk+3-devel
@@ -69,7 +69,6 @@ GUI for stlink
 
 %prep
 %setup
-%patch0 -p1
 # no need to set it explicitly
 sed -i '/("-D_FORTIFY_SOURCE=2")/d' cmake/modules/c_flags.cmake
 echo %version > .version
@@ -127,6 +126,9 @@ E_O_F
 %_pkgconfigdir/stlink.pc
 
 %changelog
+* Mon Oct 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.9.0-alt1
+- 1.9.0 released
+
 * Tue Feb 04 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.8.0-alt1
 - 1.8.0 released
 
