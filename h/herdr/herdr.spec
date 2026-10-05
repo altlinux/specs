@@ -3,7 +3,7 @@
 %def_with check
 
 Name: herdr
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Terminal workspace manager for AI coding agents
@@ -108,15 +108,28 @@ export ZIG_LOCAL_CACHE_DIR="$PWD/.zig-local-cache"
 export LIBGHOSTTY_VT_OPTIMIZE=ReleaseFast
 export LIBGHOSTTY_VT_SIMD=true
 
-isolated=workspace::tests::generated_workspace_ids_are_short_base32_handles
-headless=server::headless::
-pty_actor=pty::actor::unix::
-cargo test --release --offline %{?_smp_mflags} --bins -- \
-	--test-threads=1 --skip "$isolated" --skip "$headless" --skip "$pty_actor"
-cargo test --release --offline %{?_smp_mflags} --bins -- \
-	--test-threads=1 "$headless" "$pty_actor"
-cargo test --release --offline %{?_smp_mflags} --bins -- \
-	--exact "$isolated"
+herdr_test()
+{
+	cargo test --release --offline %{?_smp_mflags} --bins -- \
+		--test-threads=1 "$@"
+}
+
+# Workspace ids come from a process-wide counter, and the headless server and
+# PTY actor tests only pass in a process of their own.  The shared SSH control
+# socket tests need a root-owned sticky /tmp, which the hasher chroot lacks.
+herdr_test \
+	--skip workspace::tests::generated_workspace_ids_are_short_base32_handles \
+	--skip server::headless:: \
+	--skip pty::actor::unix:: \
+	--skip platform::unix_common::shared_ssh_tests:: \
+	--skip authentication_command_uses_shared_transport_without_askpass_or_host_key_relaxation \
+	--skip bridge_options_keep_temporary_config_alive_after_helper_drop \
+	--skip endpoint_probe_preserves_setup_ssh_options \
+	--skip managed_ssh_config_includes_user_config_then_fallback \
+	--skip remote_ssh_command_uses_managed_config_when_present \
+	--skip shared_ssh_transport_survives_helper_config_drop
+herdr_test server::headless:: pty::actor::unix::
+herdr_test --exact workspace::tests::generated_workspace_ids_are_short_base32_handles
 
 %files
 %doc LICENSE README.md CHANGELOG.md config.toml.example distribution/agent-guide.md
@@ -128,6 +141,9 @@ cargo test --release --offline %{?_smp_mflags} --bins -- \
 %_datadir/herdr
 
 %changelog
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 0.9.3-alt1
+- New version 0.9.3.
+
 * Mon Sep 21 2026 Egor Ignatov <egori@altlinux.org> 0.9.1-alt1
 - Updated to v0.9.1.
 
