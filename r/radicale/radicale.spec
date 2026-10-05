@@ -4,7 +4,7 @@
 
 Name: radicale
 Version: 3.8.1
-Release: alt1
+Release: alt2
 
 Summary: CalDAV and CardDAV server
 
@@ -14,6 +14,7 @@ Url: https://radicale.org/
 
 # Source-url: https://github.com/Kozea/Radicale/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Source1: %name.sysusers.conf
 
 BuildArch: noarch
 
@@ -72,15 +73,14 @@ rm -rv %buildroot%python3_sitelibdir/%pypi_name/tests/
 install -Dpm0640 config %buildroot%_sysconfdir/%name/config
 install -Dpm0640 rights %buildroot%_sysconfdir/%name/rights
 install -Dpm0644 contrib/systemd/radicale.service %buildroot%_unitdir/%name.service
+install -Dpm0644 %SOURCE1 %buildroot%_sysusersdir/%name.conf
 mkdir -p %buildroot%_localstatedir/%name/collections %buildroot%_cachedir/%name
 
 %check
 %pyproject_run_pytest -v radicale/tests
 
 %pre
-%_sbindir/groupadd -r -f %name 2>/dev/null ||:
-%_sbindir/useradd -r -g %name -d %_localstatedir/%name -s /dev/null \
-	-c "Radicale CalDAV/CardDAV server" %name 2>/dev/null ||:
+%sysusers_create_package %name %SOURCE1
 
 %post
 %post_service %name
@@ -95,6 +95,7 @@ mkdir -p %buildroot%_localstatedir/%name/collections %buildroot%_cachedir/%name
 %config(noreplace) %attr(0640,root,%name) %_sysconfdir/%name/config
 %config(noreplace) %attr(0640,root,%name) %_sysconfdir/%name/rights
 %_unitdir/%name.service
+%_sysusersdir/%name.conf
 %dir %attr(0750,%name,%name) %_localstatedir/%name/
 %dir %attr(0750,%name,%name) %_localstatedir/%name/collections/
 %dir %attr(0750,%name,%name) %_cachedir/%name/
@@ -105,6 +106,9 @@ mkdir -p %buildroot%_localstatedir/%name/collections %buildroot%_cachedir/%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt2
+- create the radicale user and group via sysusers.d
+
 * Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.8.1-alt1
 - initial build for Sisyphus
 
