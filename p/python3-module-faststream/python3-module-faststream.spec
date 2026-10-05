@@ -4,7 +4,7 @@
 %global pypi_name faststream
 
 Name: python3-module-%pypi_name
-Version: 0.7.5
+Version: 0.7.7
 Release: alt1
 
 Summary: Effortless event stream integration for your services
@@ -23,6 +23,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-coverage
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %pyproject_builddeps_metadata_extra cli
@@ -63,6 +64,9 @@ automatically.
 %python3_sitelibdir_noarch/%{pep427_name %pypi_name}
 
 %changelog
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 0.7.7-alt1
+- New version 0.7.7.
+
 * Thu Aug 27 2026 Egor Ignatov <egori@altlinux.org> 0.7.5-alt1
 - New version 0.7.5.
 
