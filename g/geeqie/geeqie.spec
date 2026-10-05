@@ -5,10 +5,11 @@
 %def_enable map
 %def_enable ffmpegthumbnailer
 %def_enable lua
-%def_disable check
+%def_enable videometadata
+%def_enable check
 
 Name: geeqie
-Version: 3.2
+Version: 3.3
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -55,7 +56,10 @@ BuildRequires: pkgconfig(libspelling-1)
 %{?_enable_lua:BuildRequires: liblua%lua_ver-devel}
 %{?_enable_map:BuildRequires: pkgconfig(shumate-1.0)}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
-%{?_enable_check:BuildRequires: xvfb-run shellcheck}
+%{?_enable_videometadata:BuildRequires: pkgconfig(libavformat) pkgconfig(libavutil)}
+%{?_enable_check:BuildRequires: xvfb-run python3 shellcheck mdl
+BuildRequires: /usr/bin/appstreamcli desktop-file-utils
+BuildRequires: fonts-ttf-adwaita}
 
 %description
 Geeqie is a lightweight image viewer. It was forked from GQview. The development
@@ -73,6 +77,7 @@ ExifTool.
     -Dgq_bindir='%_lib/%name' \
     -Dgq_helpdir='share/%name' \
     %{subst_enable_meson_feature ffmpegthumbnailer videothumbnailer} \
+    %{subst_enable_meson_feature videometadata videometadata} \
     %{subst_enable_meson_feature lua lua} \
     %{subst_enable_meson_feature map gps_map}
 %nil
@@ -80,12 +85,10 @@ ExifTool.
 
 %install
 %meson_install
-#install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
-
 %find_lang %name
 
 %check
-%__meson_test
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -114,6 +117,9 @@ ExifTool.
 %doc NEWS README.*
 
 %changelog
+* Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
+- 3.3
+
 * Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2-alt1
 - 3.2
 
