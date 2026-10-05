@@ -2,17 +2,19 @@
 %define pypi_name wcwidth
 %define mod_name %pypi_name
 
+# see setup.py
+%python3_set_limited_api 3.10
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.3
+Version: 0.9.2
 Release: alt1
 Summary: Measures number of Terminal column cells of wide-character codes
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/wcwidth/
 Vcs: https://github.com/jquast/wcwidth
-BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
@@ -48,6 +50,9 @@ Terminal. It is implemented in python (no C library calls) and has no
 %pyproject_install
 
 %check
+# emulate editable install via symlink
+rm -r %mod_name
+ln -s "$(%pyproject_run -- python -P -c 'from pathlib import Path; import %mod_name; print(Path(%mod_name.__file__).parent)')"
 %pyproject_run_pytest -vra -o=addopts=-Wignore tests
 
 %files
@@ -55,6 +60,9 @@ Terminal. It is implemented in python (no C library calls) and has no
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 05 2026 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
+- 0.8.3 -> 0.9.2
+
 * Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 0.8.3-alt1
 - 0.8.2 -> 0.8.3
 
