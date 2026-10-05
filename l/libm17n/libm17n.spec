@@ -1,7 +1,7 @@
 %define oname m17n-lib
 Name: libm17n
 Version: 1.8.6
-Release: alt1
+Release: alt2
 
 Summary: Multilingual text processing library
 
@@ -20,7 +20,7 @@ BuildRequires: zlib-devel
 # Automatically added by buildreq on Mon Dec 28 2009
 BuildRequires: glibc-devel-static imake libXaw-devel libXft-devel libxml2-devel xorg-cf-files
 BuildRequires: fontconfig-devel libfreetype-devel
-BuildRequires: libm17n-db = %version
+BuildRequires: libm17n-db
 
 %description
 The m17n library is a multilingual text processing library for the C
@@ -83,6 +83,9 @@ Libraries/include files for development with %name.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Oct 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.6-alt2
+- fixed FTBFS
+
 * Mon Jul 21 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.8.6-alt1
 - 1.8.0 -> 1.8.6
 - fixed FTBFS
