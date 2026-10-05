@@ -1,5 +1,5 @@
 Name: libintelrdfpmath
-Version: 2.0u4
+Version: 2.0u5
 Release: alt1
 Summary: The Intel(R) Decimal Floating-Point Math Library
 License: BSD-3-Clause
@@ -78,6 +78,10 @@ cp -a LIBRARY/src/{bid_conf.h,bid_functions.h} %buildroot%_includedir
 %_libdir/*.a
 
 %changelog
+* Mon Oct 05 2026 Alexei Takaseev <taf@altlinux.org> 2.0u5-alt1
+- 2.0u5
+- Update mongo-inteldfp-s390x.patch
+
 * Thu Feb 26 2026 Alexei Takaseev <taf@altlinux.org> 2.0u4-alt1
 - 2.0u4
 - Build with -fPIC
