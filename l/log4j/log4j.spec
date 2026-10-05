@@ -1,6 +1,6 @@
 Name:           log4j
 Version:        2.25.4
-Release:        alt1
+Release:        alt2
 
 Summary:        Java logging package
 License:        Apache-2.0
@@ -13,7 +13,7 @@ Source0:        %name-%version.tar
 Patch0:         0001-Remove-InlineMe-annotations.patch
 
 BuildRequires(pre):  rpm-macros-java
-BuildRequires:  jpackage-default
+BuildRequires:  jpackage-17-compat
 BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
@@ -200,6 +200,9 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadCo
 %files bom -f .mfiles-bom
 
 %changelog
+* Wed Sep 30 2026 Evgeniy Serov <scala@altlinux.org> 2.25.4-alt2
+- Swithed to jpackage-17-compat.
+
 * Thu Sep 24 2026 Evgeniy Serov <scala@altlinux.org> 2.25.4-alt1
 - Updated to 2.25.4.
 - Disabled javadoc.
