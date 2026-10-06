@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rootfs-put
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Tool for copying files with ELF dependencies to a root filesystem and storing package metadata
@@ -44,6 +44,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 %_bindir/*
 %changelog
+* Tue Oct 06 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.1-alt1
+- New version 0.1.1.
+
 * Wed Feb 04 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.0-alt1
 - Initial build.
 
