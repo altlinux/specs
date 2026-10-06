@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: igt-gpu-tools
-Version: 2.5
+Version: 2.6
 Release: alt1
 
 Summary: IGT gpu tools and tests
@@ -130,6 +130,9 @@ sed -i -e 's/_FORTIFY_SOURCE=2/_FORTIFY_SOURCE=3/' meson.build
 %_pkgconfigdir/intel-gen4asm.pc
 
 %changelog
+* Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2.6-alt1
+- 2.5 -> 2.6
+
 * Tue Jun 30 2026 Anton Farygin <rider@altlinux.org> 2.5-alt1
 - 2.4 -> 2.5
 
