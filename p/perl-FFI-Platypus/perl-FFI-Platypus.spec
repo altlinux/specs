@@ -1,7 +1,7 @@
 %define real_name FFI-Platypus
 
 Name: perl-%real_name
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: Write Perl bindings to non-Perl libraries with FFI. No XS required.
@@ -43,5 +43,8 @@ export ALIEN_INSTALL_TYPE=system
 %perl_vendor_archlib/auto/share/dist/FFI-Platypus
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12-alt1
+- new version 2.12
+
 * Sun Jul 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2.11-alt1
 - initial build for Sisyphus
