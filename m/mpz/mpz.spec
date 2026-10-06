@@ -1,7 +1,7 @@
 %def_without qt5
 
 Name: mpz
-Version: 2.0.17
+Version: 2.1.7
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -31,6 +31,10 @@ BuildRequires: pkgconfig(Qt6Svg)
 
 BuildRequires: pkgconfig(yaml-cpp)
 BuildRequires: pkgconfig(taglib)
+BuildRequires: pkgconfig(libebur128)
+BuildRequires: pkgconfig(libmpdclient)
+BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(qhotkey) cmake(cpptrace)
 
 %description
 Music player for big local collections. Treats your folders with music as a library.
@@ -39,12 +43,17 @@ Similar to "album list" in Foobar2000.
 
 %prep
 %setup
-rm -rv 3rdparty/{yaml-cpp,taglib}-*
+rm -rv 3rdparty/{yaml-cpp,taglib,libebur128,libmpdclient,sqlite-amalgamation,QHotkey,cpptrace}-*
 
 %build
 %cmake \
     -DUSE_SYSTEM_YAMLCPP=TRUE \
     -DUSE_SYSTEM_TAGLIB=TRUE \
+    -DUSE_SYSTEM_LIBEBUR128=TRUE \
+    -DUSE_SYSTEM_LIBMPDCLIENT=TRUE \
+    -DUSE_SYSTEM_SQLITE3=TRUE \
+    -DUSE_SYSTEM_QHOTKEY=TRUE \
+    -DUSE_SYSTEM_CPPTRACE=TRUE \
     %nil
 %cmake_build
 
@@ -55,11 +64,18 @@ rm -v %buildroot/usr/share/licenses/mpz/license.txt
 %files
 %doc license.txt
 %_bindir/%name
-%_desktopdir/%name.desktop
-%_iconsdir/hicolor/*x*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_desktopdir/org.mpz_player.mpz.desktop
+%_datadir/metainfo/org.mpz_player.mpz.metainfo.xml
+%_iconsdir/hicolor/*x*/apps/org.mpz_player.mpz.png
+%_iconsdir/hicolor/scalable/apps/org.mpz_player.mpz.svg
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.7-alt1
+- new version 2.1.7
+- use upstream reverse-DNS desktop/icon names, pack AppStream metainfo
+- build with system libebur128, libmpdclient and sqlite3
+- build with system QHotkey and cpptrace
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.17-alt1
 - new version 2.0.17
 - add BR: Qt6Svg (new upstream dependency)
