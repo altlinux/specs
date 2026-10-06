@@ -4,7 +4,7 @@
 %def_with prebuild
 
 Name:    naps2
-Version: 8.3.2
+Version: 8.4.1
 Release: alt1
 
 Summary: Scan documents to PDF and more, as simply as possible
@@ -75,6 +75,9 @@ ln -sf %_appdir/%name %buildroot%_bindir/%name
 %_appdir
 
 %changelog
+* Mon Oct 05 2026 Nikolay Burykin <bne@altlinux.org> 8.4.1-alt1
+- 8.4.1
+
 * Mon Sep 07 2026 Nikolay Burykin <bne@altlinux.org> 8.3.2-alt1
 - 8.3.2
 
