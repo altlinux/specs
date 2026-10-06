@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.15.1
-Release: alt1.1
+Version: 3.16.0
+Release: alt1
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
 Group: Development/Python3
@@ -14,20 +14,17 @@ Url: https://pypi.org/project/pytest-mock/
 Vcs: https://github.com/pytest-dev/pytest-mock/
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 %py3_provides %pypi_name
-
-BuildRequires: git
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools-scm
-BuildRequires: python3-module-setuptools
-
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-pytest-asyncio
-
-BuildRequires: python3-module-pytest
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -40,14 +37,12 @@ to worry about undoing patches at the end of a test
 %prep
 %setup
 %patch -p1
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m "release"
-    git tag "%version"
-fi
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
 %pyproject_build
@@ -59,13 +54,12 @@ fi
 %pyproject_run_pytest -ra -Wignore tests
 
 %files
-%doc CHANGELOG.rst README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.15.1-alt1.1
-- Demodernized packaging.
+* Tue Oct 06 2026 Stanislav Levin <slev@altlinux.org> 3.16.0-alt1
+- 3.15.1 -> 3.16.0
 
 * Wed Dec 03 2025 Stanislav Levin <slev@altlinux.org> 3.15.1-alt1
 - 3.15.0 -> 3.15.1.
