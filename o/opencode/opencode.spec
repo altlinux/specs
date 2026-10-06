@@ -16,8 +16,8 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 1.18.34
-Release: alt2
+Version: 1.18.35
+Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
 # %%__strip at the top), so the binary is deliberately without debuginfo: keep
@@ -289,6 +289,9 @@ grep -q '"desktopName": "%name-desktop.desktop"' \
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Wed Oct 07 2026 Nazarov Denis <nenderus@altlinux.org> 1.18.35-alt1
+- Update to 1.18.35
+
 * Mon Oct 05 2026 Nazarov Denis <nenderus@altlinux.org> 1.18.34-alt2
 - Add opencode-desktop subpackage built from the same sources; split the
   shared tree-sitter grammars and tools into opencode-common
