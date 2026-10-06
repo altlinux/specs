@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Test python asyncio-based code with ease
 
@@ -27,6 +27,7 @@ BuildRequires: python3-module-wrapt
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: py314.patch
 
 %description
 The aiounittest is a helper library to ease of your pain (and boilerplate), when
@@ -39,6 +40,7 @@ unittest.IsolatedAsyncioTestCase. Builtin unittest module is now asyncio-feature
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -55,6 +57,9 @@ unittest.IsolatedAsyncioTestCase. Builtin unittest module is now asyncio-feature
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 06 2026 Anton Vyatkin <toni@altlinux.org> 1.5.0-alt2
+- Fixed FTBFS.
+
 * Wed May 07 2025 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
 - Automatically updated to 1.5.0.
 
