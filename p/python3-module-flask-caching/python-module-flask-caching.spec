@@ -1,28 +1,35 @@
-%define oname Flask-Caching
-%def_disable check
+%define pypi_name flask_caching
 
 Name: python3-module-flask-caching
-Version: 1.11.1
+Version: 2.5.1
 Release: alt1
 
 Summary: Cache support for Flask
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 
-URL: https://github.com/sh4nks/flask-caching
+URL: https://github.com/pallets-eco/flask-caching
 BuildArch: noarch
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-flit-core
+
+%if_disabled check
+%else
 BuildRequires: python3-module-flask
-BuildRequires: python3-module-werkzeug
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-cachelib >= 0.17.0
+BuildRequires: python3-module-asgiref
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-xprocess
 BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-pylibmc
+BuildRequires: redis
+BuildRequires: memcached
+%endif
 
 %description
 Adds easy cache support to Flask.
@@ -33,17 +40,26 @@ This is a fork of the Flask-Cache extension.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
+
+%check
+# redis-server is in /usr/sbin
+export PATH=$PATH:%_sbindir
+%pyproject_run_pytest -v
 
 %files
-%doc LICENSE
-%python3_sitelibdir/*
+%doc LICENSE README.md
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
+- new version 2.5.1
+- build with pyproject (flit-core), enable tests
+
 * Thu May 22 2025 Alexander Danilov <admsasha@altlinux.org> 1.11.1-alt1
 - new version 1.11.1 (Fixes: CVE-2021-33026).
 
