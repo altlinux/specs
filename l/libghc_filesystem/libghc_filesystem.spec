@@ -1,7 +1,7 @@
 %def_with test
 
 Name: libghc_filesystem
-Version: 1.5.14
+Version: 1.5.16
 Release: alt1
 
 Summary: An implementation of C++17 std::filesystem for C++11 /C++14/C++17/C++20
@@ -56,5 +56,8 @@ ctest
 %_libdir/cmake/ghc_filesystem
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.16-alt1
+- new version 1.5.16
+
 * Sat Mar 18 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.14-alt1
 - initial build for ALT Sisyphus

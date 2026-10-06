@@ -2,8 +2,8 @@
 %define oname nicotine+
 
 Name: nicotine-plus
-Version: 3.3.10
-Release: alt2
+Version: 3.3.11
+Release: alt1
 
 Summary: The client program for the SoulSeek filesharing system
 Summary(ru_RU.UTF-8): Клиент для файлообменной сети SoulSeek
@@ -100,6 +100,9 @@ mv %buildroot%python3_sitelibdir/pynicotine/locale %buildroot%_datadir/locale
 %_datadir/metainfo/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.11-alt1
+- new version 3.3.11
+
 * Sun Mar 16 2025 Vitaly Lipatov <lav@altlinux.ru> 3.3.10-alt2
 - use locale dir without links
 

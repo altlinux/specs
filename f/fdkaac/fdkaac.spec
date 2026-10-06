@@ -1,5 +1,5 @@
 Name: fdkaac
-Version: 1.0.6
+Version: 1.0.9
 Release: alt1
 
 Summary: command line encoder frontend for libfdk-aac
@@ -36,6 +36,9 @@ fdkaac - command line frontend for libfdk-aac encoder.
 %doc README COPYING
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.9-alt1
+- new version 1.0.9
+
 * Mon Dec 02 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - new version 1.0.6 (with rpmrb script)
 

@@ -1,7 +1,7 @@
 %define gobuild go build
 
 Name: dnsx
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: A fast and multi-purpose DNS toolkit
@@ -38,6 +38,9 @@ install -Dpm 0755 dnsx %buildroot%_bindir/dnsx
 %_bindir/dnsx
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - new version 1.3.0
 
