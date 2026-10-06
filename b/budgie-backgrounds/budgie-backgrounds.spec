@@ -1,5 +1,5 @@
 Name: budgie-backgrounds
-Version: 3.0
+Version: 4.1
 Release: alt1
 
 Summary: Default set of background images for the Budgie Desktop
@@ -13,10 +13,11 @@ Source0: %name-%version.tar
 
 BuildArch: noarch
 
+# gdk-pixbuf loader for jxl backgrounds, not detected by autoreq
+Requires: libjxl-pixbuf-loader
+
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: ImageMagick-tools
-BuildRequires: gnupg2
-BuildRequires: jhead
 BuildRequires: meson
 
 %description
@@ -38,10 +39,15 @@ Default set of background images for the Budgie Desktop.
 %dir %_datadir/backgrounds/
 %dir %_datadir/backgrounds/budgie
 %dir %_datadir/gnome-background-properties
-%_datadir/backgrounds/budgie/*.jpg
+%_datadir/backgrounds/budgie/*.jxl
 %_datadir/gnome-background-properties/%name.xml
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
+- new version 4.1
+- update %%files for jxl backgrounds, add Requires: libjxl-pixbuf-loader
+- drop unused BuildRequires: gnupg2, jhead
+
 * Sun Mar 09 2025 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
 - initial build for ALT Sisyphus
 

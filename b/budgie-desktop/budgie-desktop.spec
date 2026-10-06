@@ -7,7 +7,7 @@
 %global vala_version 0.52.5
 
 Name: budgie-desktop
-Version: 10.10.2
+Version: 10.10.3
 Release: alt1
 
 Summary: A feature-rich, modern desktop designed to keep out the way of the user
@@ -25,13 +25,13 @@ Source0: %name-%version.tar
 Patch1: add-libxfce4windowing-vapi.patch
 
 BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-build-python3
 BuildRequires: pkgconfig(accountsservice) >= 0.6.55
 BuildRequires: pkgconfig(alsa) >= 1.2.6
 BuildRequires: pkgconfig(gee-0.8) >= 0.20.0
 BuildRequires: pkgconfig(gnome-desktop-3.0) >= %gnome_desktop_version
 BuildRequires: pkgconfig(gnome-settings-daemon) >= %gnome_settings_daemon_version
 BuildRequires: pkgconfig(gstreamer-1.0) >= 1.20.0
-BuildRequires: pkgconfig(ibus-1.0) >= 1.5.10
 BuildRequires: pkgconfig(libcanberra) >= 0.30
 BuildRequires: libcanberra-vala
 BuildRequires: pkgconfig(libcanberra-gtk3)
@@ -39,7 +39,7 @@ BuildRequires: pkgconfig(libnotify) >= 0.7
 BuildRequires: pkgconfig(libpeas-2)
 BuildRequires: libpeas2-gir-devel
 BuildRequires: pkgconfig(libpulse)
-BuildRequires: pkgconfig(libwnck-3.0) >= 3.36.0
+BuildRequires: pkgconfig(libgtop-2.0)
 BuildRequires: pkgconfig(libxfce4windowing-0)
 BuildRequires: libxfce4windowing-gir-devel
 BuildRequires: pkgconfig(gtk-layer-shell-0)
@@ -57,7 +57,6 @@ BuildRequires: desktop-file-utils
 #BuildRequires: gnupg2
 BuildRequires: gsettings-desktop-schemas >= %gsettings_desktop_schemas_version
 BuildRequires: gtk-doc >= 1.33.0
-BuildRequires: intltool
 BuildRequires: meson
 BuildRequires: rpm-build-cmake
 BuildRequires: sassc
@@ -71,6 +70,9 @@ BuildRequires: swaylock
 BuildRequires: gammastep
 BuildRequires: /usr/bin/eglinfo
 BuildRequires: gir(Gtk) = 3.0
+# meson checks labwc bridge runtime python modules and typelibs
+BuildRequires: python3(dbus) python3(gi) python3(psutil)
+BuildRequires: typelib(Pango) = 1.0
 
 Requires: budgie-control-center
 Requires: budgie-desktop-view
@@ -83,11 +85,17 @@ Requires: PAM(pam_gnome_keyring.so)
 Requires: hicolor-icon-theme
 Requires: %_bindir/nm-applet
 Requires: labwc
+# labwc-bridge reads org.gnome.mutter and org.gnome.mutter.keybindings
+# GSettings schemas at runtime (aborts without them)
+Requires: mutter-gnome
 Requires: materia-gtk-theme
 Requires: papirus-icon-theme
 Requires: switcheroo-control
 Requires: zenity
 #Suggests:       slick-greeter
+
+%add_python3_path %_prefix/lib/%name
+%add_python3_self_prov_path %_prefix/lib/%name
 
 %description
 A feature-rich, modern desktop designed to keep out the way of the user.
@@ -115,12 +123,9 @@ Documentation for budgie-desktop
 %prep
 %setup
 %patch1 -p1
-# Fix missing wnck dependency for appsys vapi consumers
-sed -i '/link_with: libappsys,/a \    dependencies: [dep_wnck],' src/appsys/meson.build
 
 %build
-subst 's|@libexecdirroot@/xdg-desktop-portal|/usr/libexec/xdg-desktop-portal|' src/session/budgie-desktop.in
-%meson -Dwith-hibernate=false
+%meson -Dwith-hibernate=false -Dxdp-libexecdir=/usr/libexec
 %meson_build
 
 %install
@@ -151,6 +156,7 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %dir %_datadir/%name/labwc/
 %_datadir/%name/labwc/menu.xml
 %_datadir/%name/labwc/rc.xml
+%_datadir/%name/labwc/keybinds.xml.example
 %_datadir/%name/labwc/themerc-*
 %_datadir/glib-2.0/schemas/20_buddiesofbudgie.%name.notifications.gschema.override
 %_datadir/glib-2.0/schemas/20_solus-project.budgie.wm.gschema.override
@@ -171,7 +177,8 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_libdir/girepository-1.0/BudgieRaven-3.0.typelib
 %_libdir/%name/libgvc.so
 %_prefix/lib/%name/budgie-screenshot-dialog
-%_prefix/lib/%name/labwc_bridge.py
+%_prefix/lib/%name/labwc-bridge
+%_prefix/lib/%name/labwc_bridge/
 %_libdir/%name/plugins/*/*.plugin
 %_libdir/%name/plugins/*/*.so*
 %dir %_libdir/%name/raven-plugins/
@@ -216,6 +223,14 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.3-alt1
+- new version 10.10.3
+- update BuildRequires: add libgtop and labwc bridge python modules, drop libwnck, ibus and intltool
+- package the labwc bridge python module (python3 autodeps)
+- set xdg-desktop-portal path via the new xdp-libexecdir meson option
+- require mutter-gnome: labwc-bridge needs org.gnome.mutter.keybindings schema
+  (without it the bridge aborts and labwc keybindings stay undefined)
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.2-alt1
 - new version 10.10.2
 - fix xdg-desktop-portal path
