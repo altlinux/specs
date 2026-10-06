@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.12
+Version: 0.10.13
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -183,6 +183,12 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Oct 06 2026 Andrey Limachko <liannnix@altlinux.org> 0.10.13-alt1
+- Update components:
+  + add opensearch
+- Update editions:
+  + add opensearch to edition_server
+
 * Tue Sep 29 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.12-alt1
 - Update components:
   + add redis, valkey, kafka, rabbitmq (thx Andrey Limachko).
