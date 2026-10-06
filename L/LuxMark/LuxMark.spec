@@ -2,7 +2,7 @@
 
 Name: LuxMark
 Version: 4.0
-Release: alt3.alpha1
+Release: alt4.alpha1
 License: GPLv3
 Group: Graphics
 Summary: LuxMark is OpenCL benchmark based on LuxCoreRender
@@ -18,6 +18,7 @@ Patch4: LuxCore-extra-deps.patch
 Patch5: LuxMark-alt-scenes-dir.patch
 Patch6: LuxMark-use-cxx-standard-17.patch
 Patch7: LuxMark-alt-unbundle-libcpuid.patch
+Patch8: %name-boost-initial-path.patch
 
 BuildRequires(pre): cmake ninja-build /proc
 BuildRequires: gcc-c++ libopenimageio-devel libjpeg-devel openexr-devel libblosc-devel
@@ -75,6 +76,10 @@ cp -pr scenes-dist/* %buildroot%_datadir/%name/scenes/
 %_datadir/%name
 
 %changelog
+* Tue Oct 06 2026 Nazarov Denis <nenderus@altlinux.org> 4.0-alt4.alpha1
+- Fix FTBFS: boost::filesystem::initial_path<Path>() was removed in boost 1.92.
+- Drop stale LuxMark/.gear directory from sources (leftover of pre-srpm layout).
+
 * Mon Jul 21 2025 L.A. Kostis <lakostis@altlinux.ru> 4.0-alt3.alpha1
 - x86_64: employ SSE4.2.
 
