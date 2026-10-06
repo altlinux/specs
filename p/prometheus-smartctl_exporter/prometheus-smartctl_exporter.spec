@@ -2,8 +2,8 @@
 %define mod smartctl_exporter
 
 Name:    prometheus-smartctl_exporter
-Version: 0.14.0
-Release: alt3
+Version: 0.15.0
+Release: alt1
 
 Summary: Export smartctl statistics to prometheus
 License: Apache-2.0
@@ -64,6 +64,9 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/smartctl-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Oct 06 2026 Andrey Cherepanov <cas@altlinux.org> 0.15.0-alt1
+- New version.
+
 * Wed Nov 05 2025 Andrey Cherepanov <cas@altlinux.org> 0.14.0-alt3
 - Remove PrivateDevices=true from service file (ALT #56728).
 
