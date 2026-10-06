@@ -2,7 +2,7 @@
 # test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
 
 Name:    mdfried
-Version: 0.22.5
+Version: 0.22.6
 Release: alt1
 
 Summary: A markdown viewer for the terminal that renders images and Big Headers
@@ -48,6 +48,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Oct 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.22.6-alt1
+- New version.
+
 * Tue Aug 18 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.22.5-alt1
 - New version.
 

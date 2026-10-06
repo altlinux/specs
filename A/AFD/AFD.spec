@@ -1,7 +1,7 @@
 %define oname afd
 
 Name:    AFD
-Version: 1.4.20
+Version: 1.4.21
 Release: alt1
 
 Summary: A tool to distribute data
@@ -28,6 +28,7 @@ ftp://user:password@host URL conventions).
 Summary: %summary
 License: GPL-2.0
 Group:   Networking/File transfer
+Conflicts: fd
 
 %description -n %oname
 AFD has many small programs that can be used to view, control or configure it
@@ -171,6 +172,7 @@ fi
 %_bindir/raftp
 %_bindir/rasftp
 %_bindir/receive_log
+%_bindir/set_ls_data
 %_bindir/set_pw
 %_bindir/sf_exec
 %_bindir/sf_ftp
@@ -203,6 +205,7 @@ fi
 %_bindir/udc
 %_bindir/uhc
 %_bindir/view_dc
+%_bindir/view_ls_data
 %_bindir/xsend_file
 %_bindir/xshow_stat
 %_sbindir/cache_spy
@@ -217,8 +220,6 @@ fi
 %_sbindir/queue_spy
 %_sbindir/rm_job
 %_sbindir/set_counter
-%_sbindir/set_ls_data
-%_sbindir/view_ls_data
 %_man1dir/*
 %_man5dir/*
 %_defaultdocdir/%oname
@@ -251,5 +252,8 @@ fi
 %_tmpfilesdir/afdmon.conf
 
 %changelog
+* Tue Oct 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.4.21-alt1
+- New version.
+
 * Wed Jun 03 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.4.20-alt1
 - Initial build for Sisyphus.
