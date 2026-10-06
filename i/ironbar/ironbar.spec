@@ -1,5 +1,5 @@
 Name: ironbar
-Version: 0.19.0
+Version: 0.19.1
 Release: alt1
 License: MIT
 
@@ -49,6 +49,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.19.1-alt1
+- new version 0.19.1
+
 * Thu Jul 16 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.19.0-alt1
 - new version 0.19.0
 
