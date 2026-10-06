@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    timoni
-Version: 0.32.0
+Version: 0.35.0
 Release: alt1
 
 Summary: Package manager for Kubernetes, powered by CUE and inspired by Helm
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.26
+BuildRequires: golang >= 1.27.0
 # Test requires
 BuildRequires: git
 
@@ -57,6 +57,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Oct 06 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.35.0-alt1
+- New version 0.35.0.
+
 * Thu Aug 20 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 0.32.0-alt1
 - Initial build for ALT.
 
