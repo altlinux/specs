@@ -1,3 +1,6 @@
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
 %define rname kquickimageeditor
 
 %define sover 1
@@ -5,7 +8,7 @@
 
 Name: kde6-%rname
 Version: 0.7.0.1
-Release: alt1
+Release: alt2
 %K6init altplace
 
 Group: System/Libraries
@@ -16,10 +19,16 @@ License: GPL-2.0-or-later
 Requires: kf6-kirigami
 
 Source: %rname-%version.tar
+Patch1: alt-gcc13.patch
 
 BuildRequires(pre): rpm-build-kf6
+BuildRequires(pre): rpm-build-ubt rpm-macros-ifver
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-shadertools-devel
+%ifver_gteq %ubt_id M120
 BuildRequires: highway1.3-devel
+%else
+BuildRequires: highway-devel
+%endif
 BuildRequires: kf6-kconfig-devel
 
 %description
@@ -52,6 +61,7 @@ Obsoletes: %name < %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build \
@@ -78,6 +88,9 @@ Obsoletes: %name < %EVR
 %_K6archdata/mkspecs/modules/*KQuickImageEditor*.pri
 
 %changelog
+* Tue Oct 06 2026 Sergey V Turchin <zerg@altlinux.org> 0.7.0.1-alt2
+- fix compile with gcc-13
+
 * Thu Sep 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.7.0.1-alt1
 - new version
 
