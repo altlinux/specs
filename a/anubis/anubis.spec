@@ -2,8 +2,8 @@
 %define import_path github.com/TecharoHQ/anubis.git
 
 Name: anubis
-Version: 1.25.0
-Release: alt2
+Version: 1.27.0
+Release: alt1
 
 Group: Networking/WWW
 Summary: Weighs the soul of incoming HTTP requests using proof-of-work to stop AI crawlers
@@ -18,7 +18,7 @@ Patch: %name-%version.patch
 ExclusiveArch: x86_64 aarch64 ppc64le riscv64 loongarch64
 
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
-BuildRequires: rpm-build-golang golang >= 1.24.2
+BuildRequires: rpm-build-golang golang >= 1.26.3
 BuildRequires: npm
 BuildRequires: node >= 18 node-devel
 BuildRequires: esbuild brotli gzip zstd
@@ -46,6 +46,9 @@ export LDFLAGS="-X github.com/TecharoHQ/anubis.Version=%version"
 export NODE_OPTIONS=--max_old_space_size=2048
 export PATH="$PATH:$PWD/node_modules/.bin"
 pushd lib/challenge/preact
+./build.sh
+popd
+pushd lib/challenge/proofofwork
 ./build.sh
 popd
 go generate
@@ -86,6 +89,9 @@ rm -f data/embed.go
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Tue Oct 06 2026 Alexey Shabalin <shaba@altlinux.org> 1.27.0-alt1
+- New version 1.27.0.
+
 * Wed Feb 25 2026 Alexey Shabalin <shaba@altlinux.org> 1.25.0-alt2
 - Update IPs for chatgpt and mistralai user.
 
