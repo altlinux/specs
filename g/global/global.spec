@@ -1,6 +1,6 @@
 # TODO: see spec from PLD with separate packages
 Name: global
-Version: 6.6.15
+Version: 6.7
 Release: alt1
 
 Summary: Source code tag system
@@ -60,6 +60,8 @@ the Web.
 rm -fr %buildroot%_datadir/emacs
 rm -f %buildroot%_infodir/dir
 rm -f %buildroot%_libdir/gtags/*.la
+# upstream 6.7 ships a maintainer test script as INSTALL (bogus sh/make/sudo requires)
+rm -v %buildroot%_datadir/gtags/INSTALL
 
 %files
 %doc README THANKS LICENSE AUTHORS COPYING FAQ gtags.el
@@ -82,6 +84,10 @@ rm -f %buildroot%_libdir/gtags/*.la
 %_man1dir/gozilla*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 6.7-alt1
+- new version 6.7
+- drop bogus /usr/share/gtags/INSTALL (shell script, pulled sudo and make requires)
+
 * Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 6.6.15-alt1
 - new version 6.6.15
 
