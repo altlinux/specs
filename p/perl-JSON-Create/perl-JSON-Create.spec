@@ -2,7 +2,7 @@
 %define module_name JSON-Create
 
 Name: perl-JSON-Create
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: Create JSON
@@ -41,5 +41,8 @@ This module converts Perl data structures to JSON.
 %perl_vendor_autolib/JSON/Create
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.36-alt1
+- new version 0.36
+
 * Thu Dec 25 2025 Vitaly Lipatov <lav@altlinux.ru> 0.35-alt1
 - initial build for ALT Sisyphus (Closes: #57040)

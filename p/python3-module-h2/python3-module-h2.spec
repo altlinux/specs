@@ -1,7 +1,7 @@
 %define oname h2
 
 Name: python3-module-h2
-Version: 4.3.0
+Version: 4.4.1
 Release: alt1
 
 Summary: HTTP/2 State-Machine based protocol implementation
@@ -38,6 +38,9 @@ programming paradigm.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.1-alt1
+- new version 4.4.1
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
 - new version 4.3.0 (with rpmrb script)
 - switch to pyproject build

@@ -4,7 +4,7 @@
 
 %define modulename regex
 Name: python3-module-regex
-Version: 2026.6.28
+Version: 2026.9.10
 Release: alt1
 
 Summary: Alternative regular expression module, to replace re
@@ -36,6 +36,9 @@ This regex implementation is backwards-compatible with the standard 're' module,
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.9.10-alt1
+- new version 2026.9.10
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.6.28-alt1
 - new version 2026.6.28
 
