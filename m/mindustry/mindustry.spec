@@ -1,8 +1,8 @@
-%define gradle_version 8.14.3
+%define gradle_version 9.3.1
 %define xdg_name com.github.Anuken.Mindustry
 
 Name: mindustry
-Version: 159.7
+Version: 160.5
 Release: alt1
 License: GPL-3.0
 
@@ -98,6 +98,9 @@ done
 %_javadir/%name/%name-server.jar
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 160.5-alt1
+- new version 160.5
+
 * Thu Jul 23 2026 Kirill Unitsaev <fiersik@altlinux.org> 159.7-alt1
 - new version 159.7
 
