@@ -1,7 +1,7 @@
-%define oname PyQt5_sip
+%define pypi_name pyqt5_sip
 
 Name: python3-module-PyQt5-sip
-Version: 12.17.0
+Version: 12.20.0
 Release: alt1
 
 Summary: The sip module support for PyQt5
@@ -10,7 +10,7 @@ License: GPL-3.0-only
 Url: http://www.riverbankcomputing.co.uk/software/pyqt
 Group: Development/Python
 
-# Source0-url: %__pypi_url %oname
+# Source0-url: %__pypi_url %pypi_name
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-python3
@@ -38,6 +38,9 @@ The sip extension module provides support for the PyQt5 package.
 %python3_sitelibdir/%{pyproject_distinfo PyQt5-sip}/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 12.20.0-alt1
+- NMU: new version 12.20.0 (sip ABI 12.20, needed for bindings built with sip6 >= 6.16)
+
 * Sun Aug 17 2025 Andrey Cherepanov <cas@altlinux.org> 12.17.0-alt1
 - New version (ALT #55628).
 

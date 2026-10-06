@@ -1,8 +1,8 @@
-%define oname PyQt6_sip
+%define pypi_name pyqt6_sip
 
 Name: python3-module-PyQt6-sip
-Version: 13.10.2
-Release: alt0.2
+Version: 13.13.0
+Release: alt1
 
 Summary: The sip module support for PyQt6
 
@@ -10,7 +10,7 @@ License: GPLv3
 Url: http://www.riverbankcomputing.co.uk/software/pyqt
 Group: Development/Python3
 
-# Source0-url: %__pypi_url %oname
+# Source0-url: %__pypi_url %pypi_name
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -37,6 +37,9 @@ The sip extension module provides support for the PyQt6 package.
 %python3_sitelibdir/*_sip-*.dist-info
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 13.13.0-alt1
+- NMU: new version 13.13.0 (sip ABI 13.13, needed for bindings built with sip6 >= 6.16)
+
 * Thu Jul 03 2025 Sergey V Turchin <zerg@altlinux.org> 13.10.2-alt0.2
 - NMU: fix package with old python
 

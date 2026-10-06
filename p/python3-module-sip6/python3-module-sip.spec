@@ -1,7 +1,7 @@
 %define oname sip
 
 Name: python3-module-sip6
-Version: 6.16.1
+Version: 6.17.0
 Release: alt1
 
 Summary: Python3 bindings generator for C/C++ libraries
@@ -13,7 +13,7 @@ URL: http://www.riverbankcomputing.com/software/sip/
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 Patch1: remove-distutils-for-python-3.12.patch
-Patch2: sip6-restore-legacy-abi.patch
+Patch2: sip6-limited-abi-version-str.patch
 
 BuildArch: noarch
 
@@ -101,6 +101,11 @@ rm -f sipbuild/distutils_builder.py
 %python3_sitelibdir/sipbuild/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 6.17.0-alt1
+- NMU: new version 6.17.0
+- drop sip6-restore-legacy-abi.patch (in upstream)
+- add sip6-limited-abi-version-str.patch (fix 6.17.0 regression)
+
 * Thu Sep 10 2026 Evgeniy Serov <scala@altlinux.org> 6.16.1-alt1
 - new version 6.16.1
 

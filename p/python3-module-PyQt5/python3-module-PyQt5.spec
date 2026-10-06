@@ -8,8 +8,8 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 5.15.10
-Release: alt3
+Version: 5.15.11
+Release: alt1
 
 Summary: Python 3 bindings for Qt 5
 
@@ -182,6 +182,9 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.15.11-alt1
+- new version 5.15.11
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt3
 - NMU: fix package with Qt-6.9
 
