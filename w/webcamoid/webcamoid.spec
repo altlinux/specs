@@ -1,10 +1,10 @@
 %define subname		avkys
-%define major	9.3
+%define major	9.4
 %define libname lib%name
 
 Name: webcamoid
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: A webcam funny video tool
 
@@ -26,17 +26,13 @@ BuildRequires: cmake
 
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-svg-devel
-BuildRequires: qt6-charts-devel
+BuildRequires: qt6-multimedia-devel
 
-BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
-BuildRequires: pkgconfig(gstreamer-app-1.0)
-BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(libavdevice)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libv4l2)
 BuildRequires: pkgconfig(libffi)
-BuildRequires: pkgconfig(libvlc)
 BuildRequires: pkgconfig(libuvc)
 BuildRequires: pkgconfig(libpulse-simple)
 BuildRequires: pkgconfig(libkmod)
@@ -45,8 +41,7 @@ BuildRequires: pkgconfig(libswscale)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(libpostproc)
-BuildRequires: pkgconfig(libswresample)
-BuildRequires: pipewire-libs-devel libjack-devel liborc-devel pipewire-libs-devel libalsa-devel
+BuildRequires: pipewire-libs-devel liborc-devel libalsa-devel
 
 Requires: %libname = %EVR
 # QML modules are imported from qrc resources, so autodep can't detect them
@@ -113,6 +108,12 @@ sed -i -e 's|/qt/qml|/qt6/qml|' -e 's|/qt/plugins|/qt6/plugins|' CMakeLists.txt 
 %_libdir/*.so
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 9.4.0-alt1
+- new version 9.4.0
+- add BR: qt6-multimedia-devel (new qtcamera/qtscreen plugins)
+- upstream moved most video effects to the OpenGL ES pipeline and dropped
+  AudioGen, GStreamer, VLC and JACK backends: drop their BuildRequires
+
 * Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 9.3.0-alt2
 - add missing QML module deps libqt6-qmlcore, libqt6-labssettings (ALT bug 59028)
 

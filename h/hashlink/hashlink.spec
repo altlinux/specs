@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hashlink
-Version: 1.15
-Release: alt2
+Version: 1.16
+Release: alt1
 
 Summary: HashLink is a virtual machine for Haxe
 License: MIT
@@ -14,15 +14,14 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/HaxeFoundation/hashlink/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-Patch1: hashlink-1.15-upstream-more-architectures-support.patch
-Patch2: hashlink-1.15-alt-x86-context-workaround.patch
 
 ExcludeArch: armh
 ExcludeArch: ppc64le aarch64
 
+BuildRequires: gcc-c++
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
-BuildRequires: libSDL2-devel libGLU-devel libopenal-devel
+BuildRequires: libSDL3-devel libGLU-devel libopenal-devel
 BuildRequires: libmbedtls-compat-devel
 BuildRequires: libpng-devel libjpeg-devel libvorbis-devel
 BuildRequires: libuv-devel zlib-devel
@@ -44,7 +43,6 @@ Group: %group
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %cmake_insource -D BUILD_TESTING=OFF \
@@ -75,9 +73,15 @@ install -m644 src/hlc_main.c %buildroot%_includedir/hlc_main.c
 %_libdir/libhl.so
 %_includedir/hl.h
 %_includedir/hlc.h
+%_includedir/hl_ffi.h
 %_includedir/hlc_main.c
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
+- new version 1.16
+- drop patches applied upstream
+- build with SDL3
+
 * Sun Sep 28 2025 Ivan A. Melnikov <iv@altlinux.org> 1.15-alt2
 - NMU: portability fixes (fixes FTBFS on aarch64, loongarch64,
   and riscv64):
