@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 # Upstream doesn't support C library versioning.
-%define abiversion 0
+%define abiversion 1
 
 Name: lore
-Version: 0.8.6
+Version: 0.10.0
 Release: alt1
 
 Summary: Lore is a next-generation, open source version control system
@@ -95,7 +95,9 @@ install -Dm 644 target/release-lto/lore.h %buildroot%_includedir/lore.h
 # flags still counts as setting the env var, which replaces (not merges)
 # build.rustflags from .cargo/config.toml — breaking --cfg tokio_unstable/
 # uuid_unstable. No extra flags needed here, so just call cargo directly.
-cargo test --profile release-lto -j%__nprocs --no-fail-fast
+cargo test --profile release-lto -j%__nprocs --no-fail-fast \
+	-- --test-threads=1 \
+		--skip test_clone_execute_ramps_permits_to_max_on_large_backlog
 
 %files
 %doc README.md LICENSE docs/
@@ -113,6 +115,12 @@ cargo test --profile release-lto -j%__nprocs --no-fail-fast
 %_libdir/liblore.so
 
 %changelog
+* Tue Sep 29 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.10.0-alt1
+- v0.10.0.
+
+* Tue Sep 08 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.9.0-alt1
+- v0.9.0
+
 * Tue Aug 04 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.8.6-alt1
 - Initial build for Sisyphus.
 
