@@ -14,16 +14,22 @@
 %define libkf6textspeechtotext libkf6textspeechtotext%sover
 %define libkf6textautogeneratetext libkf6textautogeneratetext%sover
 %define libtextautogenerategenericnetwork libtextautogenerategenericnetwork
-
 %define libtextautogenerateollamacloud libtextautogenerateollamacloud%sover
 %define libtextautogenerateollamacommon libtextautogenerateollamacommon%sover
 %define libtextautogenerateollamaonline libtextautogenerateollamaonline%sover
-
 %define rccopy_sover 0
 %define libtextutils_cmark_rc_copy libtextutils-cmark-rc-copy%rccopy_sover
+%define mcp_sover 0
+%define libkf6textautogeneratetextmcpprotocolcore  libkf6textautogeneratetextmcpprotocolcore%sover
+%define libkf6textautogeneratetextmcpprotocolwidgets libkf6textautogeneratetextmcpprotocolwidgets%sover
+%define libmcpprotocolclientplugin libmcpprotocolclientplugin%mcp_sover
+%define libmcpprotocolserverplugin libmcpprotocolserverplugin%mcp_sover
+%define libtextautogeneratellamacpp libtextautogeneratellamacpp%sover
+%define libtextautogeneratelmstudio libtextautogeneratelmstudio%sover
+%define libtextautogenerateplugincommon libtextautogenerateplugincommon%sover
 
 Name: kf6-%rname
-Version: 2.0.2
+Version: 2.1.2
 Release: alt1
 %K6init no_altplace
 
@@ -178,6 +184,55 @@ Requires: %name-common >= %EVR
 %description -n %libtextautogenerateollamaonline
 %name library
 
+%package -n %libtextautogenerateplugincommon
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libtextautogenerateplugincommon
+%name library
+
+%package -n %libtextautogeneratelmstudio
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libtextautogeneratelmstudio
+%name library
+
+%package -n %libtextautogeneratellamacpp
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libtextautogeneratellamacpp
+%name library
+
+%package -n %libmcpprotocolserverplugin
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libmcpprotocolserverplugin
+%name library
+
+%package -n %libmcpprotocolclientplugin
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libmcpprotocolclientplugin
+%name library
+
+%package -n %libkf6textautogeneratetextmcpprotocolwidgets
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libkf6textautogeneratetextmcpprotocolwidgets
+%name library
+
+%package -n %libkf6textautogeneratetextmcpprotocolcore
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common >= %EVR
+%description -n %libkf6textautogeneratetextmcpprotocolcore
+%name library
+
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
@@ -211,11 +266,32 @@ done
 %_datadir/qlogging-categories6/*.*categories
 
 %files
-%dir %_K6plug/kf6/translator/
-%_K6plug/kf6/translator/translator_*.so
-%_K6plug/kf6/speechtotext/speechtotext_*.so
-%_K6plug/kf6/textautogeneratetext/autogeneratetext_*.so
+%_K6plug/kf6/translator/
+%_K6plug/kf6/speechtotext/
+%_K6plug/kf6/textautogeneratetext/
+%_K6cfg/*text*
 
+%files -n %libkf6textautogeneratetextmcpprotocolcore
+%_K6lib/libKF6TextAutoGenerateTextMcpProtocolCore.so.%sover
+%_K6lib/libKF6TextAutoGenerateTextMcpProtocolCore.so.*
+%files -n %libkf6textautogeneratetextmcpprotocolwidgets
+%_K6lib/libKF6TextAutoGenerateTextMcpProtocolWidgets.so.%sover
+%_K6lib/libKF6TextAutoGenerateTextMcpProtocolWidgets.so.*
+%files -n %libmcpprotocolclientplugin
+%_K6lib/libmcpprotocolclientplugin.so.%mcp_sover
+%_K6lib/libmcpprotocolclientplugin.so.*
+%files -n %libmcpprotocolserverplugin
+%_K6lib/libmcpprotocolserverplugin.so.%mcp_sover
+%_K6lib/libmcpprotocolserverplugin.so.*
+%files -n %libtextautogeneratellamacpp
+%_K6lib/libtextautogeneratellamacpp.so.%sover
+%_K6lib/libtextautogeneratellamacpp.so.*
+%files -n %libtextautogeneratelmstudio
+%_K6lib/libtextautogeneratelmstudio.so.%sover
+%_K6lib/libtextautogeneratelmstudio.so.*
+%files -n %libtextautogenerateplugincommon
+%_K6lib/libtextautogenerateplugincommon.so.%sover
+%_K6lib/libtextautogenerateplugincommon.so.*
 %files -n %libtextutils_cmark_rc_copy
 %_K6lib/libtextutils-cmark-rc-copy.so.*
 %_K6lib/libtextutils-cmark-rc-copy.so.%rccopy_sover
@@ -279,6 +355,9 @@ done
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Wed Sep 30 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt1
+- new version
+
 * Wed Jul 01 2026 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt1
 - new version
 
