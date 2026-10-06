@@ -10,14 +10,15 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
 %%description -n %%name+%1' \
 Extra "%1" for %%pypi_name. \
 %%files -n %%name+%1 \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.3.2
-Release: alt1.1
+Version: 3.3.3
+Release: alt1
 Summary: Python parsing module
 License: MIT
 Group: Development/Python3
@@ -25,17 +26,15 @@ Url: https://pypi.org/project/pyparsing
 Vcs: https://github.com/pyparsing/pyparsing
 BuildArch: noarch
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit-core
-
+Source1: %pyproject_deps_config_name
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-matplotlib
-BuildRequires: python3-module-pytest
-
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-railroad-diagrams
-
+%pyproject_builddeps_metadata_extra diagrams
+%pyproject_builddeps_check
 # to generate deps
 BuildRequires: python3-module-tox
 %endif
@@ -50,7 +49,12 @@ that client code uses to construct the grammar directly in Python code.
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 %_tox_bin config -e unit -k deps > tox_.ini
+%if_with check
+%pyproject_deps_resync_check_tox tox_.ini 'testenv:unit'
+%endif
 
 %build
 %pyproject_build
@@ -62,13 +66,12 @@ that client code uses to construct the grammar directly in Python code.
 %pyproject_run_pytest -ra -Wignore tests
 
 %files
-%doc CHANGES README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.2-alt1.1
-- Demodernized packaging.
+* Mon Oct 05 2026 Stanislav Levin <slev@altlinux.org> 3.3.3-alt1
+- 3.3.2 -> 3.3.3
 
 * Thu Jan 29 2026 Stanislav Levin <slev@altlinux.org> 3.3.2-alt1
 - 3.3.1 -> 3.3.2.
