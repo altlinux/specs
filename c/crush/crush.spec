@@ -2,12 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
+%def_without check
 
 %define import_path github.com/charmbracelet/crush
 %define go_builddir .build
 
 Name: crush
-Version: 0.92.0
+Version: 0.97.1
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
@@ -76,6 +77,24 @@ cd %go_builddir/src/%import_path/
 %_man1dir/%name.1*
 
 %changelog
+* Tue Sep 29 2026 Ivan A. Melnikov <iv@altlinux.org> 0.97.1-alt1
+- 0.97.1
+
+* Tue Sep 22 2026 Ivan A. Melnikov <iv@altlinux.org> 0.96.1-alt1
+- 0.96.1
+
+* Mon Sep 21 2026 Ivan A. Melnikov <iv@altlinux.org> 0.96.0-alt1
+- 0.96.0
+
+* Thu Sep 17 2026 Ivan A. Melnikov <iv@altlinux.org> 0.95.0-alt1
+- 0.95.0
+
+* Tue Sep 15 2026 Ivan A. Melnikov <iv@altlinux.org> 0.94.2-alt1
+- 0.94.2
+
+* Mon Sep 14 2026 Ivan A. Melnikov <iv@altlinux.org> 0.94.1-alt1
+- 0.94.1
+
 * Wed Sep 02 2026 Ivan A. Melnikov <iv@altlinux.org> 0.92.0-alt1
 - 0.92.0
 
