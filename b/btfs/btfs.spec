@@ -1,5 +1,5 @@
 Name: btfs
-Version: 3.1
+Version: 3.3
 Release: alt1
 
 Summary: A bittorrent filesystem based on FUSE
@@ -43,6 +43,9 @@ Applications like vlc and mplayer can also work without changes.
 %_man1dir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3
+
 * Sat Jan 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
 - new version 3.1
 - switch to FUSE 3
