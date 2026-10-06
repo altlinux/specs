@@ -1,5 +1,5 @@
 Name:     kdiskmark
-Version:  3.2.0
+Version:  3.3.0
 Release:  alt1
 
 Summary:  A simple open-source disk benchmark tool for Linux distros
@@ -61,6 +61,9 @@ comprehensive benchmark result.
 %dir %_iconsdir/hicolor/64x64/apps
 
 %changelog
+* Tue Oct 06 2026 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Build new version.
+
 * Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
 - Build new version.
 
