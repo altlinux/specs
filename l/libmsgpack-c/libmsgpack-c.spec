@@ -1,7 +1,7 @@
 %define oname msgpack-c
 %define oldname libmsgpack
 Name: libmsgpack-c
-Version: 7.0.1
+Version: 7.0.2
 Release: alt1
 
 Summary: Binary-based efficient object serialization library for C
@@ -65,6 +65,9 @@ export LD_LIBRARY_PATH=$(pwd)
 %_libdir/cmake/msgpack-c/
 
 %changelog
+* Tue Oct 6 2026 Vladimir Didenko <cow@altlinux.ru> 7.0.2-alt1
+- new version 7.0.2
+
 * Thu Jun 11 2026 Vladimir Didenko <cow@altlinux.ru> 7.0.1-alt1
 - new version 7.0.1
 
