@@ -1,5 +1,5 @@
 Name: postsrsd
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Sender Rewriting Scheme daemon for Postfix
@@ -33,7 +33,7 @@ integrates with Postfix through a socketmap lookup table or a milter interface.
     -DBUILD_TESTING=OFF \
     -DPOSTSRSD_USER=postsrsd \
     -DSYSTEMD_UNITDIR=%_unitdir \
-    -DSYSTEMD_SYSUSERSDIR=/usr/lib/sysusers.d \
+    -DSYSTEMD_SYSUSERSDIR=%_sysusersdir \
     -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
@@ -50,11 +50,14 @@ fi
 %files
 %_sbindir/postsrsd
 %_unitdir/postsrsd.service
-/usr/lib/sysusers.d/postsrsd.conf
+%_sysusersdir/%name.conf
 %doc %_datadir/doc/%name/%name.conf
 /var/lib/postsrsd
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
+- new version 2.4.0
+
 * Mon Jul 20 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0
 
