@@ -1,5 +1,5 @@
 Name: python3-module-pybravia
-Version: 0.5.1
+Version: 0.5.3
 Release: alt1
 
 Summary: Async interface for controlling Sony Bravia TVs
@@ -28,6 +28,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %pyproject_deps_resync_check_depgroup test
+sed -ri '/^version\s*=/ s,"[^"]+","%version",' pyproject.toml
 
 %build
 %pyproject_build
@@ -43,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/pybravia-%version.dist-info
 
 %changelog
+* Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.3-alt1
+- 0.5.3 released
+
 * Fri Jul 31 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.5.1-alt1
 - 0.5.1 released
 
