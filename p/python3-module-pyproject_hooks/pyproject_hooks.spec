@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.3
 Release: alt1
 Summary: Wrappers to call pyproject.toml-based build backend hooks
 License: MIT
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 # mapping from PyPI name
 # https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
@@ -50,11 +51,13 @@ generates distribution files from Python projects.
 %pyproject_run_pytest -vra
 
 %files
-%doc README.rst
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 06 2026 Stanislav Levin <slev@altlinux.org> 1.3.3-alt1
+- 1.2.0 -> 1.3.3
+
 * Fri Jun 06 2025 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
