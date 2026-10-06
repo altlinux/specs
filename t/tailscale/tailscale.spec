@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: tailscale
-Version: 1.102.5
+Version: 1.104.0
 Release: alt1
 
 Summary: A mesh VPN that makes it easy to connect your devices, wherever they are.
@@ -73,6 +73,9 @@ install -Dm644 cmd/tailscaled/tailscaled.defaults %buildroot%_sysconfdir/sysconf
 %doc README.md LICENSE PATENTS
 
 %changelog
+* Tue Oct 06 2026 Egor Ignatov <egori@altlinux.org> 1.104.0-alt1
+- New version 1.104.0.
+
 * Tue Sep 29 2026 Egor Ignatov <egori@altlinux.org> 1.102.5-alt1
 - New version 1.102.5.
 
