@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 2026.3.post1
+Version: 2026.5
 Release: alt1
 Epoch: 1
 Summary: World timezone definitions, modern and historical
@@ -54,6 +54,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 05 2026 Stanislav Levin <slev@altlinux.org> 1:2026.5-alt1
+- 2026.3.post1 -> 2026.5.
+
 * Thu Jul 30 2026 Stanislav Levin <slev@altlinux.org> 1:2026.3.post1-alt1
 - 2026.2 -> 2026.3.post1.
 
