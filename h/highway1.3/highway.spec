@@ -11,7 +11,7 @@
 
 Name: %rname%sover
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Efficient and performance-portable SIMD wrapper libraries
@@ -61,8 +61,9 @@ Development files for Highway libraries.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-# force soname
+# force soname and version
 sed -i '/LIBRARY_SOVERSION/s/${hwy_VERSION_MAJOR}/%sover/' CMakeLists.txt
+sed -i '/LIBRARY_VERSION/s/${hwy_VERSION}/${hwy_VERSION}.0/' CMakeLists.txt
 
 %build
 %cmake \
@@ -118,6 +119,9 @@ __EOF__
 %_libdir/cmake/hwy/
 
 %changelog
+* Tue Oct 06 2026 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
+- fix file conflict with highway-1.3.0
+
 * Thu Sep 03 2026 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
 - alternate package
 
