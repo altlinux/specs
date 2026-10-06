@@ -2,7 +2,7 @@
 
 Name: taplo
 Version: 0.10.0
-Release: alt1
+Release: alt2
 
 Summary: A TOML toolkit written in Rust
 License: MIT
@@ -14,8 +14,6 @@ Source0: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: rust-cargo
-BuildRequires: /proc
 
 ExcludeArch: i586 ppc64le armh
 
@@ -26,14 +24,7 @@ querying TOML documents with a jq-like fashion.
 
 %prep
 %setup -a1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+%rust_prep
 
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/pprof/.cargo-checksum.json
@@ -46,14 +37,28 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 # Note that during the build, a libtaplo_lsp.so is also built,
 # which does not seem to be used anywhere and cannot be linked through stable API.
 
+pushd %buildroot
+mkdir -pv .%_datadir/bash-completion/completions/ .%_datadir/zsh/site-functions/ .%_datadir/fish/vendor_completions.d/
+
+.%_bindir/taplo completions bash > .%_datadir/bash-completion/completions/taplo
+.%_bindir/taplo completions zsh > .%_datadir/zsh/site-functions/_taplo
+.%_bindir/taplo completions fish > .%_datadir/fish/vendor_completions.d/taplo.fish
+popd
+
 %check
 %rust_test
 
 %files
 %doc LICENSE README.md
-%_bindir/%name
+%_bindir/taplo
+%_datadir/bash-completion/completions/taplo
+%_datadir/zsh/site-functions/_taplo
+%_datadir/fish/vendor_completions.d/taplo.fish
 
 %changelog
+* Tue Oct 06 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.10.0-alt2
+- Add shell completions (Closes: 60275).
+
 * Tue Sep 09 2025 Sergey Zhidkih <rx1513@altlinux.org> 0.10.0-alt1
 - New version (0.10.0).
 
