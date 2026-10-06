@@ -1,7 +1,7 @@
 %define oname repoze.who
 
 Name:           python3-module-%oname
-Version:        3.1.0
+Version:        3.2.0
 Release:        alt1
 
 Summary:        Identification and authentication framework for WSGI
@@ -21,6 +21,7 @@ BuildRequires: python3-module-paste python3-module-setuptools python3-module-zop
 %python3_req_hier
 %py3_requires paste zope.interface
 Requires: python3-module-repoze = %EVR
+Obsoletes: %name-tests < %EVR
 
 %description
 repoze.who is an identification and authentication framework for
@@ -39,25 +40,6 @@ Group: Development/Python3
 
 %description -n python3-module-repoze
 Root files for repoze.
-
-%package tests
-Summary: Tests for repoze.who
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-repoze.who is an identification and authentication framework for
-arbitrary WSGI applications. It acts as WSGI middleware.
-
-repoze.who is inspired by Zope 2's Pluggable Authentication Service
-(PAS) (but repoze.who is not dependent on Zope in any way; it is useful
-for any WSGI application). It provides no facility for authorization
-(ensuring whether a user can or cannot perform the operation implied by
-the request). This is considered to be the domain of the WSGI
-application.
-
-This package contains tests for repoze.who.
-
 
 %prep
 %setup
@@ -78,7 +60,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 	%buildroot%python3_sitelibdir/
 %endif
 
-install -p -m644 repoze/__init__.py %buildroot%python3_sitelibdir/repoze
+# upstream dropped repoze/__init__.py (PEP 420 namespace), keep the shared root file
+install -d %buildroot%python3_sitelibdir/repoze
+echo "__path__ = __import__('pkgutil').extend_path(__path__, __name__)" > %buildroot%python3_sitelibdir/repoze/__init__.py
 for i in $(find %buildroot%python3_sitelibdir/repoze -type d \! -name '__*')
 do
 	touch $i/__init__.py
@@ -90,8 +74,6 @@ done
 %python3_sitelibdir/repoze/*
 %exclude %python3_sitelibdir/repoze/__init__.py*
 %exclude %python3_sitelibdir/repoze/__pycache__/__init__.*.py*
-%exclude %python3_sitelibdir/repoze/who/tests
-%exclude %python3_sitelibdir/repoze/who/plugins/tests
 
 %files -n python3-module-repoze
 %dir %python3_sitelibdir/repoze
@@ -99,12 +81,14 @@ done
 %dir %python3_sitelibdir/repoze/__pycache__
 %python3_sitelibdir/repoze/__pycache__/__init__.*.py*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/repoze/who/tests
-%python3_sitelibdir/repoze/who/plugins/tests
-
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
+- new version 3.2.0
+- fix install for the namespace package layout (no repoze/__init__.py upstream)
+- drop tests subpackage (tests are no longer installed)
+- obsolete the tests subpackage
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version 3.1.0
 
