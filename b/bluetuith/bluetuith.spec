@@ -1,5 +1,5 @@
 Name: bluetuith
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 License: MIT
 
@@ -34,6 +34,9 @@ install -D -m 0755 ./%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.7-alt1
+- new version 0.2.7
+
 * Fri Feb 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.6-alt1
 - new version (0.2.6) with rpmgs script
 
