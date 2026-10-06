@@ -3,7 +3,7 @@
 %def_with check
 
 Name: swarmotter
-Version: 2.0.3
+Version: 2.2.0
 Release: alt1
 
 Summary: BitTorrent daemon with Web UI and network containment
@@ -65,6 +65,7 @@ install -dm750 \
 %preun_systemd %binname.service
 
 %check
+export RUST_TEST_THREADS=1
 %rust_test
 
 %files
@@ -79,5 +80,8 @@ install -dm750 \
 %attr(0750,_%name,_%name) %dir %_localstatedir/%name/incomplete
 
 %changelog
+* Sun Oct 04 2026 Vladislav Eliseev <general@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Thu Aug 13 2026 Vladislav Eliseev <general@altlinux.org> 2.0.3-alt1
 - Initial build for ALT.
