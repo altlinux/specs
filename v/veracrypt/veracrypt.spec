@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veracrypt
-Version: 1.26.24
+Version: 1.26.29
 Release: alt1
 
 Summary: Disk encryption software
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 ExcludeArch: %ix86 ppc64le
 
 BuildRequires: pkgconfig(fuse)
-BuildRequires: /usr/bin/convert
 BuildRequires: libpcsclite-devel
 #BuildRequires: makeself
 BuildRequires: libwxGTK3.2-devel
@@ -33,19 +32,11 @@ Free disk encryption software based on TrueCrypt.
 %build
 %make_build NOSTRIP=1 DEBUGGER=1 -C src
 
-pushd src/Resources/Icons
-magick VeraCrypt-16x16.xpm VeraCrypt-16x16.png
-magick VeraCrypt-48x48.xpm VeraCrypt-48x48.png
-magick VeraCrypt-128x128.xpm VeraCrypt-128x128.png
-popd
-
 %install
 %makeinstall_std -C src
 
-for png in 128x128 48x48 16x16; do
-	mkdir -p %buildroot%_iconsdir/hicolor/${png}/apps/
-	install -m 0644 src/Resources/Icons/VeraCrypt-${png}.png %buildroot%_iconsdir/hicolor/${png}/apps/%name.png
-done
+# upstream install skips 128x128
+install -Dm0644 src/Resources/Icons/VeraCrypt-128x128.png %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
 
 rm -rv %buildroot%_bindir/%name-uninstall.sh
 
@@ -62,6 +53,9 @@ rm -rv %buildroot%_bindir/%name-uninstall.sh
 
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26.29-alt1
+- new version 1.26.29
+
 * Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 1.26.24-alt1
 - new version 1.26.24 (with rpmrb script)
 - switch to libwxGTK3.2-devel

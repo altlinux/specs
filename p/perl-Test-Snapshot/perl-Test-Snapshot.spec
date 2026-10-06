@@ -2,7 +2,7 @@
 %define module_name Test-Snapshot
 
 Name: perl-%module_name
-Version: 0.06
+Version: 0.061
 Release: alt1
 
 Summary: Test against data stored in automatically-named files
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-devel perl-Text-Diff perl-Capture-Tiny
+BuildRequires: perl-devel perl-Text-Diff perl-Capture-Tiny perl-Test2-Suite
 
 %description
 Test::Snapshot provides a simple way to test code by comparing its output
@@ -36,5 +36,8 @@ when run in a special mode.
 %perl_vendor_privlib/Test/Snapshot.pm
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.061-alt1
+- new version 0.061
+
 * Sun Jul 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0.06-alt1
 - initial build for ALT Sisyphus

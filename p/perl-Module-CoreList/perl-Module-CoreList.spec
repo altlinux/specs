@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Module-CoreList
-Version: 5.20260119
+Version: 5.20260924
 Release: alt1
 
 Summary: Module-CoreList - what modules shipped with versions of perl
@@ -63,10 +63,14 @@ the perl sources are kept.
 
 %files
 %_bindir/corelist
+%_man1dir/corelist.1*
 %doc Changes README
 %perl_vendor_privlib/Module/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.20260924-alt1
+- new version 5.20260924
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.20260119-alt1
 - new version 5.20260119
 

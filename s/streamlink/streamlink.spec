@@ -1,7 +1,7 @@
 %define srcname streamlink
 
 Name: streamlink
-Version: 8.4.0
+Version: 8.6.1
 Release: alt1
 
 Summary: Python library for extracting streams from various websites
@@ -120,9 +120,12 @@ Zsh command line completion support for %srcname.
 install -Dpm 0644 docs/_build/man/%srcname.1 %buildroot%_man1dir/%srcname.1
 
 # Build and install shell completion files
-PYTHONPATH=%buildroot%python3_sitelibdir ./script/build-shell-completions.sh
+PYTHONPATH=%buildroot%python3_sitelibdir python3 ./script/build-shell-completions.py bash zsh
 install -Dm644 completions/bash/%srcname %buildroot%_datadir/bash-completion/completions/%srcname
 install -Dm644 completions/zsh/_%srcname %buildroot%_datadir/zsh/site-functions/_%srcname
+
+# fish completions are installed by the upstream wheel, not packaged
+rm -rv %buildroot%_datadir/fish
 
 %files
 %doc README.md
@@ -144,6 +147,9 @@ install -Dm644 completions/zsh/_%srcname %buildroot%_datadir/zsh/site-functions/
 #%license LICENSE
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.1-alt1
+- new version 8.6.1
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 8.4.0-alt1
 - new version 8.4.0
 - (CVE-2026-44353) SECURITY: fix arbitrary local file read via file:// URI in HLS and DASH
