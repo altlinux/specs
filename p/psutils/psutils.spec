@@ -2,7 +2,7 @@
 %def_with check
 
 Name: psutils
-Version: 3.3.16
+Version: 3.3.17
 Release: alt1
 Epoch: 2
 
@@ -14,7 +14,6 @@ Url: https://github.com/rrthomas/psutils
 VCS: https://github.com/rrthomas/psutils
 Source: %name-%version.tar
 Patch1: %name-3.3.14-alt-version-fallback.patch
-Patch2: %name-3.3.16-alt-version-bump.patch
 
 BuildArch: noarch
 
@@ -45,7 +44,6 @@ for n-up printing, and resize, flip and rotate pages.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %pyproject_build
@@ -72,6 +70,9 @@ for n-up printing, and resize, flip and rotate pages.
 %_man1dir/*
 
 %changelog
+* Mon Oct 05 2026 Anton Farygin <rider@altlinux.org> 2:3.3.17-alt1
+- 3.3.16 -> 3.3.17
+
 * Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 2:3.3.16-alt1
 - 3.3.15 -> 3.3.16
 
