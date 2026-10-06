@@ -13,7 +13,7 @@
 %endif
 
 Name:           lib%oname
-Version: 3.1.17.0
+Version: 3.1.18.1
 Release: alt1
 Summary:        Library for reading and writing images
 Group:          System/Libraries
@@ -29,6 +29,7 @@ Source0:        %name-%version.tar
 Source2: %oname.watch
 Patch1: openimageio-3.1.15.0-alt-jxl-icc.patch
 Patch2: openimageio-3.1.16.0-alt-fmt-target-dependency.patch
+Patch3: openimageio-3.1.18.1-alt-texture-device-cuda-guard.patch
 
 Patch2000: %oname-e2k.patch
 
@@ -148,6 +149,7 @@ Development files for package %name
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 # simplifies the patch
@@ -249,6 +251,9 @@ mkdir -p %buildroot%_libdir/OpenImageIO-%soname
 %_libdir/cmake/*
 
 %changelog
+* Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 3.1.18.1-alt1
+- 3.1.17.0 -> 3.1.18.1
+
 * Thu Sep 10 2026 Anton Farygin <rider@altlinux.org> 3.1.17.0-alt1
 - 3.1.16.0 -> 3.1.17.0
 
