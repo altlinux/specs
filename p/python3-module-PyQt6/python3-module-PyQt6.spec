@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 6.11.0
-Release: alt1
+Release: alt2
 
 Summary: Python 3 bindings for Qt 6
 License: GPL-3.0
@@ -25,6 +25,7 @@ Source: %name-%version.tar
 Patch2: alt-touint128.patch
 
 BuildRequires(pre): rpm-build-intro
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
 
 BuildRequires: python3-devel
@@ -45,6 +46,9 @@ BuildRequires: qt6-connectivity-devel qt6-location-devel qt6-multimedia-devel qt
 BuildRequires: qt6-serialport-devel qt6-speech-devel
 BuildRequires: qt6-svg-devel qt6-tools-devel qt6-websockets-devel
 BuildRequires: qt6-declarative-devel qt6-webchannel-devel
+%ifarch %qt6_qtwebengine_arches
+BuildRequires: pkgconfig(Qt6Pdf) pkgconfig(Qt6PdfWidgets)
+%endif
 
 #if_with dbus
 # https://bugzilla.altlinux.org/show_bug.cgi?id=33873
@@ -147,6 +151,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 6.11.0-alt2
+- Build QtPdf and QtPdfWidgets bindings on supported architectures.
+
 * Wed Sep 09 2026 Evgeniy Serov <scala@altlinux.org> 6.11.0-alt1
 - new version (6.11.0)
 
