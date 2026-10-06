@@ -1,5 +1,5 @@
 Name: mozangle
-Version: 0.5.5
+Version: 0.7.1
 Release: alt1
 
 Summary: Mozilla's fork of Google ANGLE shader translator
@@ -72,6 +72,9 @@ install -m 0644 src/shaders/glslang-c.cpp %buildroot%_includedir/mozangle/shader
 %_includedir/mozangle/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
+- new version 0.7.1
+
 * Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.5-alt1
 - initial build for ALT Sisyphus
 
