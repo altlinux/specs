@@ -1,7 +1,7 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2025.12.16
+Version: 2026.09.26
 Release: alt1
 
 Summary: C++ Library Manager
@@ -18,6 +18,7 @@ Source1: %name.sh
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: catch2-devel
 BuildRequires: libfmt-devel >= 9.1.0
+BuildRequires: libcurl-devel
 BuildRequires: cmake
 BuildRequires: cmrc >= 2.0.1
 BuildRequires: gcc-c++
@@ -34,8 +35,6 @@ or unset the VCPKG_DISABLE_METRICS environment variable.
 
 %prep
 %setup
-# https://github.com/microsoft/vcpkg-tool/pull/634
-subst 's|inline namespace v11|inline namespace v12|' include/vcpkg/base/fwd/fmt.h
 
 
 # Fixing line endings...
@@ -58,6 +57,7 @@ ln -svf %_includedir/catch2/ include/
     -DVCPKG_EMBED_GIT_SHA:BOOL=OFF \
     -DVCPKG_BUILD_BENCHMARKING:BOOL=OFF \
     -DVCPKG_ADD_SOURCELINK:BOOL=OFF \
+    -DVCPKG_LIBCURL_DLSYM:BOOL=OFF \
     -DVCPKG_DEPENDENCY_CMAKERC:BOOL=ON \
     -DVCPKG_DEPENDENCY_EXTERNAL_FMT:BOOL=ON
 %cmake_build
@@ -75,6 +75,11 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.09.26-alt1
+- new version 2026.09.26
+- drop fmt 12 workaround (fixed upstream)
+- link system libcurl (upstream fetches curl headers at configure time), add libcurl-devel BR
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2025.12.16-alt1
 - new version 2025.12.16
 
