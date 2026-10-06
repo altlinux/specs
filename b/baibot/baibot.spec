@@ -5,7 +5,7 @@
 %define group_name _baibot
 
 Name:    baibot
-Version: 1.24.0
+Version: 1.28.0
 Release: alt1
 Summary: Matrix bot for AI LLM capabilities (text-generation, TTS, STT, image-generation)
 License: AGPL-3.0-or-later
@@ -77,6 +77,9 @@ useradd -r -M -g %group_name -c 'baibot Matrix AI bot' -d %_localstatedir/%name 
 %dir %attr(750,%user_name,%group_name) %_localstatedir/%name
 
 %changelog
+* Tue Oct 06 2026 Alexey Shabalin <shaba@altlinux.org> 1.28.0-alt1
+- updated from 1.24.0 to 1.28.0
+
 * Fri Jun 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.24.0-alt1
 - updated from 1.21.1 to 1.24.0
 
