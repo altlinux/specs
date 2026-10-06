@@ -1,11 +1,11 @@
 Name: python3-module-esphome-dashboard-api
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Python package to interact with the ESPHome dashboard
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/esphome-dashboard-api
+URL: https://pypi.org/project/esphome-dashboard-api
 VCS: https://github.com/esphome/dashboard-api
 
 Source0: %name-%version.tar
@@ -39,6 +39,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/esphome_dashboard_api-%version.dist-info
 
 %changelog
+* Wed Aug 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
+- 1.4.0 released
+
 * Wed Dec 10 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
 - 1.3.0 released
 
