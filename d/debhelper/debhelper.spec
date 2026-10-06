@@ -1,5 +1,5 @@
 Name: debhelper
-Version: 14.3
+Version: 14.5
 Release: alt1
 
 Summary: Tools for Debian Packages
@@ -64,6 +64,9 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 14.5-alt1
+- new version 14.5
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 14.3-alt1
 - new version 14.3
 
