@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define up_name DisplayCAL
+%define pypi_name displaycal
 
 Name: displaycal
-Version: 3.9.17
-Release: alt2
+Version: 3.9.19
+Release: alt1
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -13,7 +14,7 @@ Url: https://pypi.org/project/displaycal/
 Vcs: https://github.com/eoyilmaz/displaycal-py3
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
-# Source-url: https://github.com/eoyilmaz/displaycal-py3/releases/download/%version/DisplayCAL-%version.tar.gz
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 Patch1: displaycal-3.9.11-udev-dir.patch
@@ -23,6 +24,8 @@ Patch3: displaycal-3.9.8-fix-autostart-location.patch
 BuildRequires(pre): rpm-build-python3 rpm-build-intro
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
+# build-system requires numpy (imported by setup.py)
+BuildRequires: python3-module-numpy
 BuildRequires: xdg-user-dirs
 
 Requires: argyllcms
@@ -32,7 +35,7 @@ AutoProv: no
 Provides: %up_name = %version-%release
 Provides: dispcalGUI = %version-%release
 
-%add_python3_req_skip pywintypes win32comext.shell win32api win32com.shell win32con win32gui win32process winerror winreg comtypes comtypes.client comtypes.gen.TaskbarLib
+%add_python3_req_skip pywintypes win32comext.shell win32api win32com.shell win32con win32gui win32process winerror winreg comtypes comtypes.client comtypes.gen comtypes.gen.TaskbarLib
 %add_python3_req_skip distutils.filelist distutils.util py2exe
 
 # internal
@@ -89,12 +92,17 @@ rm -vf %buildroot%python3_sitelibdir/%up_name/cacert.pem
 %exclude %_docdir/%up_name-%version/
 # https://github.com/eoyilmaz/displaycal-py3/issues/500
 %exclude %python3_sitelibdir/%up_name/dev/
-%exclude %python3_sitelibdir/misc/
-%exclude %python3_sitelibdir/util/
-%exclude %python3_sitelibdir/tests/
 %exclude %_datadir/doc-base/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.19-alt1
+- new version 3.9.19
+- switch Source-url to PyPI sdist (no tarball in GitHub release)
+- rebase skip-update-check and fix-autostart-location patches
+- add BR: python3-module-numpy (required by build-system)
+- drop excludes for misc/util/tests (not installed anymore)
+- skip Windows-only python3(comtypes.gen) requirement
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.17-alt2
 - fix build: use rm -f for cacert.pem
 
