@@ -1,5 +1,5 @@
 Name: tui-journal
-Version: 0.17.0
+Version: 0.18.0
 Release: alt1
 License: MIT
 
@@ -40,6 +40,9 @@ install -Dm 755 target/release/tjournal %buildroot%_bindir/tjournal
 %_bindir/tjournal
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.18.0-alt1
+- new version 0.18.0
+
 * Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.17.0-alt1
 - new version 0.17.0
 
