@@ -1,9 +1,9 @@
 %define oname rasterio
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.5.0
+Version: 1.5.2
 Release: alt1
 
 License: BSD-3-Clause
@@ -32,15 +32,12 @@ BuildRequires: python3-module-affine
 BuildRequires: python3-module-attrs
 BuildRequires: python3-module-boto3
 BuildRequires: python3-module-click
-BuildRequires: python3-module-click-plugins
-BuildRequires: python3-module-cligj
 BuildRequires: python3-module-fsspec
 BuildRequires: python3-module-hypothesis
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-pyparsing
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-snuggs
 %endif
 
 %py3_provides %oname
@@ -84,6 +81,11 @@ rm -rf %oname # Don't try unbuilt copy.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.2-alt1
+- new version 1.5.2 (fixes compatibility with affine 3)
+- enable %%check (tests pass with current GDAL)
+- drop test BuildRequires on modules no longer used upstream
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
 - new version 1.5.0
 

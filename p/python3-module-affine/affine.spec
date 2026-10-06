@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Affine transformation matrices
@@ -22,8 +22,9 @@ BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flit-core
 %if_with check
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-responses
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
@@ -45,7 +46,7 @@ Matrices describing affine transformation of the plane.
 %python3_prune
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc *.txt *.rst
@@ -53,6 +54,10 @@ Matrices describing affine transformation of the plane.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
+- new version 3.0.1
+- use pytest directly in %%check, update test BuildRequires
+
 * Fri Apr 07 2023 Anton Vyatkin <toni@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 
