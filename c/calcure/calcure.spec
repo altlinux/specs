@@ -1,5 +1,5 @@
 Name: calcure
-Version: 3.3
+Version: 3.4
 Release: alt1
 License: MIT
 
@@ -41,6 +41,9 @@ Requires: python3(holidays)
 %_man1dir/*.1.*
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 3.4-alt1
+- new version 3.4
+
 * Thu Jul 16 2026 Kirill Unitsaev <fiersik@altlinux.org> 3.3-alt1
 - new version 3.3
 
