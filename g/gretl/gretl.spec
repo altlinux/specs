@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2026a
+Version: 2026b
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -168,6 +168,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026b-alt1
+- new version 2026b
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026a-alt1
 - new version 2026a
 
