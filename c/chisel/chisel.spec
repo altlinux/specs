@@ -2,7 +2,7 @@
 %def_without check
 
 Name: chisel
-Version: 1.11.6
+Version: 1.12.1
 Release: alt1
 
 Summary: TCP tunnel over HTTP
@@ -31,6 +31,7 @@ A fast TCP tunnel over HTTP.
 %build
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
+export LDFLAGS="-X %import_path/share.BuildVersion=%version"
 export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
@@ -50,6 +51,10 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
+- new version 1.12.1
+- set the program version at build time (chisel --version printed 0.0.0-src)
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.11.6-alt1
 - new version 1.11.6
 
