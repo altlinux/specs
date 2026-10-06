@@ -11,7 +11,7 @@
 
 Name: gnome-shell-extension-%_name
 Version: %ver_major
-Release: alt1
+Release: alt2
 
 Summary: Enable/Disable auto suspend with quick setting toggle.
 Group: Graphical desktop/GNOME
@@ -63,6 +63,9 @@ popd
 %doc README.md
 
 %changelog
+* Tue Oct 06 2026 Yuri N. Sedunov <aris@altlinux.org> 60-alt2
+- v60-6-gbe18b35 (GNOME 51 supported)
+
 * Mon Apr 13 2026 Yuri N. Sedunov <aris@altlinux.org> 60-alt1
 - 60
 
