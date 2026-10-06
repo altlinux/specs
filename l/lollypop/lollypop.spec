@@ -1,4 +1,4 @@
-# https://gitlab.gnome.org/gnumdk/lollypop-po & lollypop-help
+# https://gitlab.gnome.org/gnumdk/lollypop-po
 %def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lollypop
-Version: %ver_major.45
+Version: %ver_major.46
 Release: alt1
 
 Summary: Lollypop music player
@@ -82,6 +82,9 @@ Lollypop is a new GNOME music playing application.
 %doc README*
 
 %changelog
+* Tue Oct 06 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.46-alt1
+- 1.4.46
+
 * Wed Dec 10 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.45-alt1
 - 1.4.45
 
