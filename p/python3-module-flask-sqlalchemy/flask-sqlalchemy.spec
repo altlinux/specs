@@ -4,7 +4,7 @@
 
 Name: python3-module-flask-sqlalchemy
 Version: 3.1.1
-Release: alt3
+Release: alt3.1
 
 Summary: Adds SQLAlchemy support to your Flask application
 
@@ -18,6 +18,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 Patch: stop-using-utcnow.patch
+Patch1: sqlalchemy-2.1-dataclass.patch
 
 BuildArch: noarch
 
@@ -59,6 +60,7 @@ This package contains documentation for %oname.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %if_with docs
 %prepare_sphinx3 .
@@ -80,7 +82,9 @@ export PYTHONPATH=$PWD
 %check
 # skip tests that are broken with SQLAlchemy 2.0.36
 # https://github.com/pallets-eco/flask-sqlalchemy/issues/1378
-%pyproject_run_pytest -k 'not test_model_bind' -W ignore::pytest.PytestUnraisableExceptionWarning
+# SQLAlchemy 2.1 warns about the per-bind metadata set by BindMixin
+%pyproject_run_pytest -k 'not test_model_bind' -W ignore::pytest.PytestUnraisableExceptionWarning \
+    -W "ignore:Attribute name 'metadata' should be left reserved:sqlalchemy.exc.SAWarning"
 
 %files
 %doc README.rst
@@ -92,6 +96,10 @@ export PYTHONPATH=$PWD
 %endif
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt3.1
+- NMU: fix MappedAsDataclass model_class with SQLAlchemy 2.1 (fix FTBFS)
+- ignore SQLAlchemy 2.1 SAWarning about per-bind metadata in tests
+
 * Fri Oct 17 2025 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt3
 - Fixed FTBFS.
 
