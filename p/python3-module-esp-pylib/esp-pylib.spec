@@ -1,5 +1,5 @@
 Name: python3-module-esp-pylib
-Version: 1.1.4
+Version: 1.2.0
 Release: alt1
 
 Summary: Espressif Systems pythol library
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/esp_pylib-%version.dist-info
 
 %changelog
+* Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
+- 1.2.0 released
+
 * Fri Sep 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.4-alt1
 - 1.1.4 released
 
