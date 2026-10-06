@@ -2,7 +2,7 @@
 %define onameLC plasma_applet_%oname 
 
 Name: plasma-applet-advanced-weather-widget
-Version: 1.7.3
+Version: 1.8.0
 Release: alt1
 
 Summary: Modern weather widget for KDE
@@ -46,6 +46,9 @@ done
 %_datadir/plasma/plasmoids/%oname
 
 %changelog
+* Tue Oct 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt1
+- 1.7.3 -> 1.8.0
+
 * Tue Sep 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.3-alt1
 - 1.7.2 -> 1.7.3
 
