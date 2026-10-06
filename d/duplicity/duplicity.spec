@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 3.0.7
+Version: 3.2.1
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -17,6 +17,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(setuptools_scm)
+BuildRequires: python3-module-setuptools-gettext
 BuildRequires: python3-module-pexpect
 BuildRequires: librsync-devel
 
@@ -63,7 +64,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %buildroot%_bindir/duplicity -V | grep "%version"
 
 %files -f %name.lang
-%doc CHANGELOG.md README*
+%doc %_docdir/%name/
 #%_bindir/rdiffdir
 %_bindir/duplicity
 %_man1dir/*
@@ -71,6 +72,11 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1
+- pack docs from upstream-installed %%_docdir/%%name/
+- add BR: python3-module-setuptools-gettext (translations are built by it now)
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt1
 - new version 3.0.7
 
