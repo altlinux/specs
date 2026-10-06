@@ -3,7 +3,7 @@ ExcludeArch: %ix86
 %define soversion 2.12.0
 Name: labplot
 Version: 2.12.1
-Release: alt4
+Release: alt5
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -15,6 +15,7 @@ Requires: ImageMagick-tools gsl pstoedit cantor
 
 VCS: https://invent.kde.org/education/labplot.git
 Source: %name-%version.tar
+Patch1: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake gcc-c++ extra-cmake-modules
@@ -72,6 +73,7 @@ This package provides the shared library for LabPlot.
 
 %prep
 %setup
+%patch1 -p1
 
 # fix missing QElapsedTimer include (qt6 >= 6.10)
 sed -i '/#include <QIcon>/a #include <QElapsedTimer>' \
@@ -122,6 +124,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_K6link/liblabplot.so
 
 %changelog
+* Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2.12.1-alt5
+- package and apply gear-generated source patch (ALT #60818, ALT #42687)
+
 * Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2.12.1-alt4
 - fixed histogram plotting crash with empty columns (ALT #60818)
 - fixed Matrix copy/cut/paste with Unicode locale separators (ALT #42687)
