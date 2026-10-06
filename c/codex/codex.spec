@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.156.1
+Version: 0.160.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -46,7 +46,7 @@ Codex CLI is a coding agent from OpenAI that runs locally on your computer.
 # .gear/ is excluded from the source tarball/diff, so bring the ALT readme in.
 cp -p %SOURCE2 README.alt
 set -C
-cat > .cargo/config.toml <<EOF
+cat >> .cargo/config.toml <<EOF
 [term]
 verbose = true
 quiet = false
@@ -87,9 +87,15 @@ cargo build \
 	-p codex-cli -p %name-code-mode-host
 
 %install
-install -Dp %name-rs/target/release/%name -t %buildroot%_bindir
-# Code Mode runs in this helper process; InstallContext looks for it next to codex.
-install -Dp %name-rs/target/release/%name-code-mode-host -t %buildroot%_bindir
+%define codex_package_dir %_libexecdir/%name
+install -Dpm755 %name-rs/target/release/%name %buildroot%codex_package_dir/bin/%name
+install -Dpm755 %name-rs/target/release/%name-code-mode-host %buildroot%codex_package_dir/bin/%name-code-mode-host
+cat > %buildroot%codex_package_dir/codex-package.json <<EOF
+{"layoutVersion":1,"version":"%version","target":"%{_target_cpu}-unknown-linux-gnu","variant":"codex","entrypoint":"bin/codex","systemDependencies":["rg","bwrap"]}
+EOF
+mkdir -p %buildroot%_bindir
+ln -srf %buildroot%codex_package_dir/bin/%name %buildroot%_bindir/%name
+ln -srf %buildroot%codex_package_dir/bin/%name-code-mode-host %buildroot%_bindir/%name-code-mode-host
 mkdir -p %buildroot%_datadir/bash-completion/completions \
 	 %buildroot%_datadir/fish/vendor_completions.d \
 	 %buildroot%_datadir/zsh/site-functions
@@ -111,6 +117,7 @@ codex --version | grep -Fx '%name-cli %version'
 %files
 %define _customdocdir %_docdir/%name
 %doc CHANGELOG.md LICENSE README.md docs README.alt
+%codex_package_dir
 %_bindir/codex
 %_bindir/codex-code-mode-host
 %_datadir/bash-completion/completions/%name
@@ -119,6 +126,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Tue Oct 06 2026 Alexey Shabalin <shaba@altlinux.org> 0.160.0-alt1
+- updated from 0.156.1 to 0.160.0
+
 * Wed Sep 23 2026 Alexey Shabalin <shaba@altlinux.org> 0.156.1-alt1
 - Update to rust-v0.156.1.
 
