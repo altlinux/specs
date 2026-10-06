@@ -1,5 +1,5 @@
 Name: libresprite
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Animated sprite editor and pixel art tool
@@ -83,5 +83,8 @@ subst 's|^#!/usr/bin/sh|#!/bin/sh|' %buildroot%_bindir/libresprite-thumbnailer
 %_datadir/thumbnailers/libresprite.thumbnailer
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3-alt1
+- new version 1.3
+
 * Fri Jun 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt1
 - initial build for ALT Sisyphus (the free GPLv2 fork of Aseprite)
