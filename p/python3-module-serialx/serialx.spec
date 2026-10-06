@@ -1,5 +1,5 @@
 Name: python3-module-serialx
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Serial communication library
@@ -53,6 +53,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/serialx-%version.dist-info
 
 %changelog
+* Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.11.0-alt1
+- 1.11.0 released
+
 * Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.10.0-alt1
 - 1.10.0 released
 
