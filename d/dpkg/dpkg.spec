@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.23.5
+Version: 1.23.7
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -12,7 +12,9 @@ Group: System/Configuration/Packaging
 Url: http://packages.debian.org/unstable/base/dpkg
 
 Source0: http://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.xz
-Patch: dpkg-ALT-e2k-cputable.patch
+Patch0: dpkg-ALT-e2k-cputable.patch
+# check hardening flags against the actual -march (i586 has no -fcf-protection)
+Patch1: dpkg-ALT-compiler-flag-check-with-cflags.patch
 
 # boostrap notes:
 # 1) build dep loop via perl-Dpkg (just add noarch package);
@@ -42,7 +44,8 @@ This module provides dpkg functionalities.
 %set_perl_req_method relaxed
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -114,6 +117,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.7-alt1
+- new version 1.23.7
+- fix i586 build: check compiler flags together with the configured CFLAGS
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.5-alt1
 - new version 1.23.5
 - update e2k cputable patch
