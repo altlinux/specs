@@ -1,4 +1,4 @@
-%define oname html5-parser
+%define pypi_name html5_parser
 
 # obsoleted tests
 %def_without check
@@ -6,8 +6,8 @@
 %def_without packaged_gumbo
 
 Name: python3-module-html5-parser
-Version: 0.4.12
-Release: alt1.1
+Version: 0.5.0
+Release: alt1
 
 Summary: Fast C based HTML 5 parsing for python
 
@@ -18,12 +18,12 @@ Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 
 %if_with packaged_gumbo
 BuildRequires: libgumbo-devel
@@ -55,10 +55,10 @@ sed -i "s|'gumbo/gumbo.h',||" build.py
 %endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %check
@@ -69,6 +69,10 @@ sed -i "s|'gumbo/gumbo.h',||" build.py
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt1
+- new version 0.5.0
+- build with pyproject macros (upstream switched to pyproject.toml)
+
 * Fri Feb 20 2026 Grigory Ustinov <grenka@altlinux.org> 0.4.12-alt1.1
 - rebuilt with new libxml (Closes: #57806, #57730, #57877).
 
