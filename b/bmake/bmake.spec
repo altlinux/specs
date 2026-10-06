@@ -1,5 +1,5 @@
 Name: bmake
-Version: 20251111
+Version: 20260824
 Release: alt1
 
 Summary: The NetBSD make(1) tool
@@ -51,6 +51,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 20260824-alt1
+- new version 20260824
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 20251111-alt1
 - new version 20251111
 - use boot-strap op=build instead of op=all to avoid flaky test on i586
