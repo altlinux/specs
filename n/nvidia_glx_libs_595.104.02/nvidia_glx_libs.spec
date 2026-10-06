@@ -19,7 +19,7 @@
 %endif
 
 %define nv_version 595
-%define nv_release 99
+%define nv_release 104
 %define nv_minor   02
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
@@ -203,9 +203,9 @@ mkdir -p %buildroot/%_libdir/
 # install libraries
 install -m 0644 %subd/libcuda.so.%version %buildroot/%_libdir/
 ln -s libcuda.so.%version %buildroot/%_libdir/libcuda.so
-%ifarch %ix86
-ln -s libnvidianull.so %buildroot/%_libdir/libnvcuvid.so
-%endif
+#%ifarch %ix86
+#ln -s libnvidianull.so %buildroot/%_libdir/libnvcuvid.so
+#%endif
 # all 64-bit
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
@@ -234,9 +234,9 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %_libdir/libcuda.so.%version
 %files -n libnvidia-ml
 %files -n libnvcuvid
-%ifarch %ix86
-%_libdir/libnvcuvid.so
-%endif
+#%ifarch %ix86
+#%_libdir/libnvcuvid.so
+#%endif
 %ifarch x86_64
 %files -n libnvidia-sandboxutils
 %endif
@@ -255,6 +255,9 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %endif
 
 %changelog
+* Mon Oct 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt1
+- new version
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 595.99.02-alt1
 - new version
 
