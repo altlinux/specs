@@ -3,7 +3,7 @@ ExcludeArch: %ix86
 %define soversion 2.12.0
 Name: labplot
 Version: 2.12.1
-Release: alt3
+Release: alt4
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -122,6 +122,10 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_K6link/liblabplot.so
 
 %changelog
+* Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2.12.1-alt4
+- fixed histogram plotting crash with empty columns (ALT #60818)
+- fixed Matrix copy/cut/paste with Unicode locale separators (ALT #42687)
+
 * Wed Mar 18 2026 Sergey V Turchin <zerg@altlinux.org> 2.12.1-alt3
 - fix requires (closes: 58267)
 
