@@ -3,7 +3,7 @@
 %define cargo_install %rust_install
 
 Name: minidump-stackwalk
-Version: 0.26.1
+Version: 0.27.0
 Release: alt1
 
 Summary: Analyzes minidumps and produces a report (human-readable or JSON)
@@ -55,6 +55,9 @@ EOF
 %_bindir/minidump-stackwalk
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.27.0-alt1
+- new version 0.27.0
+
 * Mon May 18 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26.1-alt1
 - initial build for ALT Sisyphus
 
