@@ -1,9 +1,9 @@
 %define defphp php%php_defver
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.45
+%define major 1.46
 
 Name: mediawiki
-Version: %major.3
+Version: %major.2
 Release: alt1
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
@@ -63,7 +63,7 @@ Summary: Mediawiki's requires for %defphp
 Group: Networking/WWW
 Requires: webserver-common
 # https://www.mediawiki.org/wiki/Compatibility
-Requires: %defphp-libs >= 8.0.0
+Requires: %defphp-libs >= 8.3.0
 # inside %defphp-libs
 # Requires: %defphp-ctype %defphp-iconv %defphp-json %defphp-xml
 Requires: %defphp-dom %defphp-fileinfo %defphp-intl %defphp-mbstring
@@ -511,6 +511,17 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt1
+- new version 1.46.2
+- build with php8.5 (new default): mediawiki-php8.4 -> mediawiki-php8.5
+- require PHP >= 8.3 (MediaWiki 1.46)
+- refresh config path patch for 1.46
+- install_php_config.sh, README.ALT: drop apache2-mod_php7 references
+- mediawiki.ini: raise memory_limit, drop obsolete safe_mode, allow proc_open
+- fix installation with MariaDB 12: read_only is detected correctly
+  (upstream T401570, since 1.43.4) (closes: #60573)
+- CLI installer writes LocalSettings.php to the config dir
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.45.3-alt1
 - new version 1.45.3
 
