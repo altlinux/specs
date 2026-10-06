@@ -2,7 +2,7 @@
 
 %define oname boxfort
 Name: libboxfort
-Version: 0.1.5
+Version: 0.1.8
 Release: alt1
 
 Summary: Convenient & cross-platform sandboxing C library
@@ -13,7 +13,6 @@ Url: https://github.com/Snaipe/BoxFort
 
 # Source-url: https://github.com/Snaipe/BoxFort/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Patch3500: 0001-Support-LoongArch-architecture-lp64-ABIs.patch
 
 ExcludeArch: armh ppc64le
 
@@ -34,7 +33,6 @@ Header files for %name library.
 
 %prep
 %setup
-%patch3500 -p1
 
 %build
 %meson
@@ -49,6 +47,9 @@ Header files for %name library.
 %_includedir/*.h
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1.8-alt1
+- new version 0.1.8
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1.5-alt1
 - new version 0.1.5
 
