@@ -1,5 +1,5 @@
 Name: python3-module-watchfiles
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Simple, modern file watching and code reload in python.
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 
-%python3_set_limited_api
+%python3_set_limited_api 3.10
 
 %description
 %summary
@@ -51,6 +51,9 @@ rm -rf watchfiles
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.0-alt1
+- 1.3.0 released
+
 * Mon May 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
 - 1.2.0 released
 
