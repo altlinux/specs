@@ -2,7 +2,7 @@
 
 Name: rift
 Version: 2.9.0
-Release: alt1
+Release: alt2
 Summary: Terminal coding agent for local and cloud language models
 License: MIT
 Group: Development/Tools
@@ -39,6 +39,7 @@ OpenAI-compatible servers, with optional cloud providers.
 Summary: Desktop interface for Rift
 Group: Graphical desktop/Other
 Requires: %name = %version-%release
+Requires: fonts-otf-google-noto-cjk-common
 
 %description desktop
 Rift Desktop is a native graphical interface for Rift. It manages sessions
@@ -95,6 +96,9 @@ desktop-file-validate %SOURCE3
 %_iconsdir/hicolor/256x256/apps/rift-desktop.png
 
 %changelog
+* Wed Oct 07 2026 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt2
+- Add support built-in Kimi Code provider.
+
 * Tue Oct 06 2026 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt1
 - Initial build for Sisyphus with terminal and desktop interfaces.
 
