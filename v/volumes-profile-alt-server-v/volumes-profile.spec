@@ -1,5 +1,5 @@
 Name: volumes-profile-alt-server-v
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Volumes description for ALT Server-V distribution
@@ -26,6 +26,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 %hook1dir/*
 
 %changelog
+* Wed Oct 07 2026 Alexander Burmatov <thatman@altlinux.org> 1.2-alt1
+- don't use RAIDs anyway by default
+
 * Mon May 13 2024 Andrew A. Vasilyev <andy@altlinux.org> 1.1-alt1
 - change root size to fit swap into limit
 
