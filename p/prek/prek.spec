@@ -4,7 +4,7 @@
 %def_with check
 
 Name: prek
-Version: 0.4.13
+Version: 0.5.5
 Release: alt1
 
 Summary: Better pre-commit, re-engineered in Rust
@@ -61,13 +61,15 @@ install -Dm 644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.f
 install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 
 %check
+# most tests require network access, run only unit tests
 # snapshot test fails on i586 due to hash map ordering
 %ifarch %ix86
-%define skip_ix86_tests --skip hook_builder_build_fills_and_merges_attributes
+%rust_test --bin prek -- --skip http \
+    --skip hook_builder_build_fills_and_merges_attributes \
+    --skip hook_from_spec_fills_and_merges_attributes
+%else
+%rust_test --bin prek -- --skip http
 %endif
-
-# most tests require network access, run only unit tests
-%rust_test --bin prek -- --skip http %{?skip_ix86_tests}
 
 %files
 %doc CHANGELOG.md CONTRIBUTING.md README.md
@@ -81,6 +83,9 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 07 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.5.5-alt1
+- Updated to version 0.5.5.
+
 * Thu Aug 13 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.4.13-alt1
 - Updated to version 0.4.13.
 
