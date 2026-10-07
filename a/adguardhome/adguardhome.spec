@@ -3,7 +3,7 @@
 
 Name: adguardhome
 Version: 0.108.0.b.90
-Release: alt1
+Release: alt2
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
@@ -15,6 +15,7 @@ Source1: vendor.tar
 Source2: node_modules.tar
 Source3: .twosky.json
 Source4: %name.service
+Source5: %name.sysusers
 Patch: alt-drop-unused-import.patch
 
 # idle time limit exceeded
@@ -61,25 +62,61 @@ go build --ldflags "\
 %install
 mkdir -p %buildroot%_bindir \
          %buildroot%_unitdir \
-         %buildroot%_sysconfdir \
+         %buildroot%_sysusersdir \
          %buildroot%_localstatedir/%name
 install -m 0755 .gopath/src/%import_path/%name %buildroot%_bindir/%name
 install -m 0644 %SOURCE4 %buildroot%_unitdir/%name.service
-touch %buildroot%_sysconfdir/%name.yaml
+install -m 0644 %SOURCE5 %buildroot%_sysusersdir/%name.conf
+touch %buildroot%_localstatedir/%name/AdGuardHome.yaml
+
+%pre
+groupadd -r -f _%name
+useradd -r -M -g _%name -c 'AdGuard Home' -d %_localstatedir/%name \
+        -s /dev/null _%name >/dev/null 2>&1 ||:
+
+# Before 0.108.0.b.90-alt2 the service ran as root with /etc/adguardhome.yaml:
+# stop it so it creates no more root-owned files, then move the config
+# and hand the state over to the user.
+SYSTEMCTL=systemctl
+if [ -d %_localstatedir/%name ] && [ "$(stat -c %%U %_localstatedir/%name)" = root ]; then
+    if "$SYSTEMCTL" -q is-active %name 2>/dev/null; then
+        "$SYSTEMCTL" stop %name
+        touch /run/%name.rpm-start
+    fi
+    if [ -f %_sysconfdir/%name.yaml ] && [ ! -e %_localstatedir/%name/AdGuardHome.yaml ]; then
+        mv %_sysconfdir/%name.yaml %_localstatedir/%name/AdGuardHome.yaml
+        chmod 0600 %_localstatedir/%name/AdGuardHome.yaml
+    fi
+    chown -R _%name:_%name %_localstatedir/%name
+fi
 
 %post
 %post_service %name
+# Start the service stopped for the migration in %%pre:
+# try-restart above leaves inactive units alone.
+SYSTEMCTL=systemctl
+if [ -e /run/%name.rpm-start ]; then
+    rm -f /run/%name.rpm-start
+    "$SYSTEMCTL" start %name ||:
+fi
 
 %preun
 %preun_service %name
 
 %files
 %_bindir/%name
-%_localstatedir/%name
+%dir %attr(0700,_%name,_%name) %_localstatedir/%name
 %_unitdir/%name.service
-%ghost %config(noreplace) %_sysconfdir/%name.yaml
+%_sysusersdir/%name.conf
+%ghost %attr(0600,_%name,_%name) %_localstatedir/%name/AdGuardHome.yaml
 
 %changelog
+* Wed Sep 30 2026 Egor Ignatov <egori@altlinux.org> 0.108.0.b.90-alt2
+- Run the service as the unprivileged _adguardhome user.
+- Moved the config to /var/lib/adguardhome/AdGuardHome.yaml:
+  + /etc/adguardhome.yaml is migrated on upgrade.
+- Hardened the systemd unit.
+
 * Sat Aug 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.108.0.b.90-alt1
 - Updated to version 0.108.0.b.90.
 
