@@ -6,7 +6,7 @@
 %def_with check
 
 Name: xmake
-Version: 3.0.9
+Version: 3.1.1
 Release: alt1
 
 Summary: A cross-platform build utility based on Lua
@@ -94,6 +94,7 @@ export XMAKE_PROGRAM_DIR="%buildroot%_datadir/%name"
 
 # remove tests that require network access
 rm -r \
+    tests/actions/addon \
     tests/actions/install \
     tests/actions/package/localpkg \
     tests/apis/namespace/package \
@@ -115,9 +116,11 @@ xmake l tests/run.lua
 %_datadir/%name
 
 %changelog
+* Wed Oct 07 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.1.1-alt1
+- Updated to version 3.1.1.
+
 * Mon Jun 22 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.0.9-alt1
 - Updated to version 3.0.9.
 
 * Tue Apr 14 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.0.8-alt1
 - Initial build for ALT.
-

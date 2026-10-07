@@ -5,7 +5,7 @@
 %define abiversion 1
 
 Name: tbox
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: A glib-like multi-platform c library
@@ -119,6 +119,9 @@ install -Dm 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Oct 07 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.2-alt1
+- Updated to version 1.8.2.
+
 * Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.1-alt1
 - Updated to version 1.8.1.
 
