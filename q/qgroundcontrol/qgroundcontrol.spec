@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qgroundcontrol
-Version: 5.0.8
-Release: alt7
+Version: 5.1.4
+Release: alt1
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -11,19 +11,20 @@ URL: https://qgroundcontrol.com
 VCS: https://github.com/mavlink/qgroundcontrol.git
 
 Source: %name-%version.tar
-Source1: fix-qml-plugins.cmake
+Source1: %name-%version-vendor-mavlink.tar
+Source2: %name-%version-vendor-c_library_v2.tar
+Source3: %name-%version-vendor-PX4-GPSDrivers.tar
+Source4: %name-%version-vendor-ParameterRepository.tar
+Source5: %name-%version-vendor-earcut.hpp.tar
 
 Patch1: alt-build-with-system-libs.patch
 Patch2: alt-general-build.patch
-Patch3: alt-source.patch
-Patch4: alt-add-find-locationprivate.patch
-Patch5: alt-add-elapsedtimer.patch
-Patch6: alt-add-types-workaround.patch
-Patch7: alt-esri-stadia-maptiler.patch
-Patch8: alt-libcurl-tile-download.patch
+Patch3: alt-esri-stadia-maptiler.patch
+Patch4: alt-libcurl-tile-download.patch
 
 Requires: qt6-charts
 Requires: libOpenGL
+Requires: libqt6-quickvectorimage
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -47,21 +48,33 @@ BuildRequires: qt6-connectivity-devel
 BuildRequires: qt6-quick3d-devel
 BuildRequires: qt6-positioning-devel
 BuildRequires: qt6-shadertools-devel
+BuildRequires: qt6-httpserver-devel
+BuildRequires: qt6-scxml-devel
+BuildRequires: libqtgraphs-qt6-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
 BuildRequires: gst-plugins-good1.0-qt6
 BuildRequires: zlib-devel
-BuildRequires: libSDL2-devel
+BuildRequires: libSDL3-devel
 BuildRequires: libshape-devel
 BuildRequires: libgeographiclib-devel geographiclib
 BuildRequires: libulog_cpp-devel
 BuildRequires: libevents-devel
 BuildRequires: libxz-embedded-devel
-BuildRequires: parameterrepository
 BuildRequires: gamecontrollerdb
-BuildRequires: gpsdrivers
-BuildRequires: c_library_v2
 BuildRequires: libcurl-devel
+BuildRequires: libffi-devel
+BuildRequires: liblzma-devel
+BuildRequires: libzstd-devel
+BuildRequires: libarchive-devel
+BuildRequires: libexif-devel
+BuildRequires: valijson-devel
+BuildRequires: libexpat-devel
+BuildRequires: libosmium-devel
+BuildRequires: protozero-devel
+BuildRequires: python3-dev
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-defusedxml
 BuildRequires: /proc
 
 %description
@@ -71,16 +84,10 @@ professional, QGC provides a seamless user experience for flight control and
 mission planning, making it the go-to solution for any MAVLink-enabled drone.
 
 %prep
-%setup
+%setup -a 1 -a 2 -a 3 -a 4 -a 5
 %autopatch -p1
 # disable QML plugins deploy
-sed -i '/install(SCRIPT ${deploy_script})/d' cmake/Install.cmake
-
-# disable Qt maximum version restriction
-sed -i '/QGC_QT_MAXIMUM_VERSION/d' CMakeLists.txt
-
-# Copy prebuilt parameters where QGC expects them to be.
-cp -r %_datadir/ParameterRepository/* src/FirmwarePlugin/APM/ArduPilot-Parameter-Repository/
+sed -i '/install(SCRIPT ${deploy_script})/d' cmake/install/Install.cmake
 
 %build
 export LC_ALL=C.UTF-8
@@ -93,9 +100,9 @@ export PATH="%{_qt6_bindir}:$PATH"
 	-DCMAKE_INSTALL_RPATH="%_libdir/gstreamer-1.0" \
 	-DCMAKE_SKIP_INSTALL_RPATH=OFF \
 %endif
+	-DQGC_STABLE_BUILD=ON \
 	-DCMAKE_AUTOGEN_PARALLEL=%__nprocs \
 	-DCMAKE_BUILD_TYPE=Release \
-	-DCMAKE_PROJECT_INCLUDE=%SOURCE1 \
 	-DCMAKE_PREFIX_PATH=%_libdir/cmake/ \
 	-DBUILD_SHARED_LIBS=ON \
 	-DLIB_PREFIX=%_libdir \
@@ -112,6 +119,10 @@ export PATH="%{_qt6_bindir}:$PATH"
 	-DUSE_SYSTEM_GEOGRAPHICLIB=ON \
 	-DUSE_SYSTEM_SHAPE=ON \
 	-DUSE_SYSTEM_GSTQML6=ON \
+    -DQGC_SYSTEM_LIBS_ONLY=ON \
+    -DQGC_AUTO_PYTHON_VENV=OFF \
+    -DQGC_CREATE_APPIMAGE=OFF \
+    -DQGC_CPACK_GENERATOR= \
 	#
 
 %cmake_build
@@ -125,11 +136,15 @@ export PATH="%{_qt6_bindir}:$PATH"
 %_bindir/QGroundControl
 %_desktopdir/org.mavlink.qgroundcontrol.desktop
 %_iconsdir/hicolor/*/apps/QGroundControl.png
-%exclude %_datadir/metainfo/org.mavlink.qgroundcontrol.metainfo.xml
-# Install.cmake attempts to copy this file to the build directory.
-%exclude %_builddir/%name-%version/%_cmake__builddir/AppRun
+%_iconsdir/hicolor/scalable/apps/QGroundControl.svg
+%exclude %_datadir/metainfo/org.mavlink.qgroundcontrol.appdata.xml
 
 %changelog
+* Tue Sep 22 2026 Ilya Mukhamadeev <nicourced@altlinux.org> 5.1.4-alt1
+- Vendor mavlink, c_library_v2, PX4-GPSDrivers, ParameterRepository and
+  earcut.hpp.
+- New version.
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 5.0.8-alt7
 - NMU: disable Qt version restriction
 
