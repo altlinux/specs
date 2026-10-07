@@ -1,6 +1,6 @@
 Name: siege
-Version: 4.1.7
-Release: alt2
+Version: 4.2.0
+Release: alt1
 
 Summary: An HTTP regression testing/benchmarking utility
 
@@ -59,6 +59,9 @@ mkdir -p %buildroot/%_sysconfdir/siege
 %_man1dir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version 4.2.0
+
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.7-alt2
 - fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
 

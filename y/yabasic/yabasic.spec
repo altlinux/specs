@@ -1,5 +1,5 @@
 Name: yabasic
-Version: 2.91.4
+Version: 2.92.1
 Release: alt1
 Epoch: 1
 
@@ -44,6 +44,9 @@ no extra effort. Yabasic runs under Unix and Windows; it is small
 %_man1dir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.92.1-alt1
+- new version 2.92.1
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.91.4-alt1
 - new version 2.91.4
 
