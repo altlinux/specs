@@ -1,5 +1,5 @@
 Name: python3-module-mashumaro
-Version: 3.22
+Version: 3.23
 Release: alt1
 
 Summary: Fast and well tested serialization library
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/mashumaro-%version.dist-info
 
 %changelog
+* Wed Oct 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.23-alt1
+- 3.23 released
+
 * Wed May 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.22-alt1
 - 3.22 released
 
