@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		sweethome3d
 Version:	7.5
-Release:	alt1.1
+Release:	alt2
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
 Group:		Graphics
@@ -50,7 +50,6 @@ BuildRequires:	dos2unix
 BuildRequires:	gnu-regexp
 #BuildRequires:	java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
 BuildRequires:	ImageMagick-tools
-BuildRequires:	itext-core
 BuildRequires:	java-javadoc
 BuildRequires:	java3d
 BuildRequires:	java3d-javadoc
@@ -67,7 +66,6 @@ BuildRequires:	xml-commons-apis
 Requires: java-1.8.0-openjdk
 Requires: batik
 Requires: bouncycastle-pkix
-Requires: itext-core
 Requires: java3d
 Requires: jpackage-utils
 Requires: sunflow-sweethome3d
@@ -163,6 +161,7 @@ pushd lib
    mv jmf.jar.no jmf.jar
    mv freehep-vectorgraphics-svg-2.1.1c.jar.no freehep-vectorgraphics-svg-2.1.1c.jar
    mv jeksparser-calculator.jar.no jeksparser-calculator.jar
+   mv iText-2.1.7.jar.no iText-2.1.7.jar
 popd
 
 # Abbot is not building in mga and sweethome3d build without so do add in mageia only if it builds OK
@@ -276,7 +275,6 @@ for i in Furniture Textures Help; do
     install -pm 644 build/$i.jar %{buildroot}%{_javadir}/%{name}
 done
 
-rm -rf lib/iText-2.1.7.jar
 rm -rf lib/j3dcore.jar
 rm -rf lib/j3dutils.jar
 rm -rf lib/sunflow-0.07.3i.jar
@@ -287,6 +285,8 @@ rm -rf lib/Loader3DS1_2u.jar
 install -pm 644 lib/jmf.jar %{buildroot}%{_javadir}/%{name}
 install -pm 644 lib/freehep-vectorgraphics-svg-2.1.1c.jar %{buildroot}%{_javadir}/%{name}
 install -pm 644 lib/jeksparser-calculator.jar %{buildroot}%{_javadir}/%{name}
+install -pm 644 lib/iText-2.1.7.jar %{buildroot}%{_javadir}/%{name}
+
 # FIXME for display the sweethome3d splash screen
 install -pm 644 libtest/jnlp.jar.no %{buildroot}%{_javadir}/%{name}/jnlp.jar
 
@@ -379,6 +379,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_javadir}/%{name}/jmf.jar
 %{_javadir}/%{name}/freehep-vectorgraphics-svg-2.1.1c.jar
 %{_javadir}/%{name}/jeksparser-calculator.jar
+%{_javadir}/%{name}/iText-2.1.7.jar
 # FIXME for display the sweethome3d splash screen
 %{_javadir}/%{name}/jnlp.jar
 #
@@ -408,6 +409,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
 %changelog
+* Mon Oct 05 2026 Anton Meleshnikov <alton@altlinux.org> 7.5-alt2
+- Used vendor itext.
+
 * Fri Nov 28 2025 Aleksandr Shamaraev <shad@altlinux.org> 7.5-alt1.1
 - NMU: ExcludeArch: %%ix86.
 
