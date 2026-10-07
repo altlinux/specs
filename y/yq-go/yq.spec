@@ -5,7 +5,7 @@
 %define import_path github.com/mikefarah/yq/v4
 
 Name: yq-go
-Version: 4.53.3
+Version: 4.54.1
 Release: alt1
 
 Summary: A portable command-line YAML, JSON, XML, CSV, TOML and properties processor
@@ -63,6 +63,9 @@ install -Dpm644 yq.zsh  -T %buildroot%_datadir/zsh/site-functions/_yq
 %_datadir/zsh/site-functions/_yq
 
 %changelog
+* Wed Sep 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.54.1-alt1
+- Updated to version 4.54.1.
+
 * Fri Jul 17 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.53.3-alt1
 - Updated to version 4.53.3.
 
