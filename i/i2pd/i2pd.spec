@@ -2,7 +2,7 @@
 %define _i2pd_root %_sharedstatedir/%name
 
 Name: i2pd
-Version: 2.60.0
+Version: 2.61.0
 Release: alt1
 
 Summary: Full C++ implementation of I2P router
@@ -19,7 +19,6 @@ ExcludeArch: %ix86
 
 Source1: %name.service
 Source2: %name.logrotate
-Source3: i2p.conf
 Source4: tunnels.conf
 Source5: %name.sysconfig
 
@@ -71,7 +70,7 @@ install -pDm 644 contrib/subscriptions.txt %buildroot%_sysconfdir/%name/subscrip
 install -pDm 644 debian/%name.1 %buildroot%_man1dir/%name.1
 install -pDm 644 %SOURCE1 %buildroot%_unitdir/%name.service
 install -pDm 644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
-install -pDm 644 %SOURCE3 %buildroot%_sysconfdir/%name/i2p.conf
+install -pDm 644 contrib/i2pd.conf %buildroot%_sysconfdir/%name/i2p.conf
 install -pDm 644 %SOURCE4 %buildroot%_sysconfdir/%name/tunnels.conf
 install -pDm 644 %SOURCE5 %buildroot%_sysconfigdir/%name
 
@@ -82,6 +81,8 @@ pushd %buildroot%_i2pd_root
 ln -s $(relative %_sysconfdir/%name/i2p.conf %_i2pd_root/i2p.conf) i2p.conf
 ln -s $(relative %_sysconfdir/%name/tunnels.conf %_i2pd_root/tunnels.conf) tunnels.conf
 ln -s $(relative %_sysconfdir/%name/subscriptions.txt %_i2pd_root/subscriptions.txt) subscriptions.txt
+# i2pd looks for reseed and family certificates in the data dir
+ln -s $(relative %_datadir/%name/certificates %_i2pd_root/certificates) certificates
 popd
 
 mkdir -p %buildroot%_logdir/%name/
@@ -119,6 +120,15 @@ mkdir -p %buildroot%_logdir/%name/
 %dir %_logdir/%name/
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2.61.0-alt1
+- new version 2.61.0
+- restore upstream files reverted in 2.59.0-alt1 and 2.60.0-alt1
+  by an empty merge of upstream tags (see ALT bug 60117)
+- use upstream contrib/i2pd.conf as /etc/i2pd/i2p.conf: the old one in
+  the obsolete format made i2pd refuse to start (unrecognised option 'v6')
+- add certificates symlink to the data dir: reseed certificates were
+  not found, so reseed could not verify su3 files
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 2.60.0-alt1
 - new version 2.60.0
 
