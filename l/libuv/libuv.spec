@@ -1,7 +1,7 @@
 %def_without asserts
 Name: libuv
-Version: 1.52.1
-Release: alt2
+Version: 1.53.0
+Release: alt1
 
 Summary: Evented I/O for NodeJS
 
@@ -16,6 +16,8 @@ Patch1: libuv-fix-tests-ipv6.patch
 Patch2: libuv-fix-test-thread-affinity.patch
 Patch3: libuv-fix-test-tcp-connect6-error.patch
 Patch4: libuv-fix-test-thread-priority.patch
+# https://github.com/libuv/libuv/commit/ae6475b807818a35d88ff09ad0a949489415d222
+Patch5: libuv-1.53.0-fix-i386-sizeof-test.patch
 
 BuildRequires: /proc
 BuildRequires: gcc-c++ openssl-devel zlib-devel
@@ -39,6 +41,7 @@ libuv header and build tools.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p1
 
 # udp_reuseport requires SO_REUSEPORT which is not available in hasher
 sed -i '/udp_reuseport/d' test/test-list.h
@@ -77,6 +80,10 @@ rm -f %buildroot%_libdir/%name.a
 
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.53.0-alt1
+- new version 1.53.0
+- add upstream patch: fix sizeof test on i386 (uv_timespec64_t is 12 bytes there)
+
 * Wed Apr 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.52.1-alt2
 - skip udp_reuseport test (not available in hasher)
 
