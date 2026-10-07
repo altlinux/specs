@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.8
+Version: 3.3.9
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -72,6 +72,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.9-alt1
+- rpmrb: add -U option to build without uploading to girar
+- rpmgs: warn if merging an upstream tag left the tree unchanged (ALT bug 60117)
+- gitask: show who must approve EPERM subtasks, rework ls colors
+- gitask: ls: show approval status before each package
+- gitask: add 'groups' command to show acl groups of a user
+- fix(web): use browser User-Agent for downloads
+- rpmgs: ignore upstream vendor directory
+
 * Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.8-alt1
 - hasher: add aarch64 cross-build support in set_hasherdir and print_tmp_sourceslist
 - myhsh: pass --with-qemu for aarch64 cross-builds
