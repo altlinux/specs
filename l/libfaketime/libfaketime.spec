@@ -1,6 +1,6 @@
 Name: libfaketime
-Version: 0.9.12
-Release: alt2
+Version: 0.9.13
+Release: alt1
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -10,13 +10,17 @@ Url: https://github.com/wolfcw/libfaketime
 # Source-url: https://github.com/wolfcw/libfaketime/archive/refs/tags/v%version.tar.gz
 Source: libfaketime-%version.tar
 Patch: libfaketime-symver.patch
-Patch1: libfaketime-gcc15.patch
+# https://github.com/wolfcw/libfaketime/issues/554
+# https://github.com/wolfcw/libfaketime/commit/79aaa421ff8a6beb339ddc4e8c0e1dec65c27f9a
+Patch1: libfaketime-remove-null-tests.patch
 
 #Provides: faketime
 Conflicts: faketime
 
 BuildRequires: perl-Time-HiRes
 BuildRequires: libuthash-devel >= 2.0.2
+# tests read /proc/self/fd and /proc/self/fdinfo
+BuildRequires: /proc
 
 %description
 libfaketime intercepts various system calls which programs use to
@@ -77,7 +81,8 @@ export CFLAGS="%optflags -Wno-nonnull-compare -Wno-strict-aliasing"
 
 %check
 %ifnarch armh %ix86 mipsel
-%make_build -C test
+# upstream test target races under -j (functest runs before abi_info_test is built)
+%make -C test -j1
 %endif
 
 %install
@@ -95,6 +100,14 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.13-alt1
+- new version 0.9.13
+- rebase symver patch
+- drop gcc15 patch (merged upstream)
+- run tests serially (parallel make races in test target)
+- drop upstream tests passing NULL to nonnull glibc functions (upstream issue #554)
+- add BuildRequires: /proc for tests (fd and timerfd checks)
+
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.12-alt2
 - fixed FTBFS with gcc 15 (const-qualified strchr/strstr results)
 
