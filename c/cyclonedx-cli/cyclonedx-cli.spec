@@ -3,7 +3,7 @@
 
 Name: cyclonedx-cli
 Version: 0.33.1
-Release: alt1
+Release: alt1.1
 
 Summary: Tool for CycloneDX Software Bill of Materials (SBOM) analysis and modification.
 Group: Development/Tools
@@ -35,8 +35,9 @@ format conversion, signing and verification.
 %build
 export DOTNET_CLI_TELEMETRY_OPTOUT="true"
 
+cp %SOURCE2 .
 dotnet restore \
-    --configfile %SOURCE2 \
+    --configfile NuGet.Config \
 	--packages vendor \
 	--ignore-failed-sources \
 	--use-current-runtime
@@ -70,6 +71,9 @@ ln -srvf %_libdir/%name/cyclonedx %buildroot%_bindir/cyclonedx
 %_libdir/%name/
 
 %changelog
+* Wed Oct 07 2026 Andrey Cherepanov <cas@altlinux.org> 0.33.1-alt1.1
+- FTBFS: update vendoring libraries for dotnet-runtime 10.0.12.
+
 * Fri Jul 24 2026 Alexander Kuznetsov <kuznetsovam@altlinux.org> 0.33.1-alt1
 - Update to version 0.33.1.
 - Fix version in dotnet publish (Closes: #59404).
