@@ -30,7 +30,7 @@
 
 Name: kf6-%rname
 Version: 2.1.2
-Release: alt1
+Release: alt3
 %K6init no_altplace
 
 Group: System/Libraries
@@ -237,6 +237,7 @@ Requires: %name-common >= %EVR
 Summary: Development files for %name
 Group: Development/KDE and QT
 Requires: libgcrypt-devel libqca-qt6-devel qt6-speech-devel
+Requires: kf6-syntax-highlighting-devel kf6-sonnet-devel
 %description devel
 This package contains the development files for %name.
 
@@ -355,6 +356,12 @@ done
 #%_K6archdata/mkspecs/modules/qt_?ext*.pri
 
 %changelog
+* Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt3
+- update requires
+
+* Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt2
+- update requires
+
 * Wed Sep 30 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt1
 - new version
 
