@@ -2,7 +2,7 @@
 %def_with tests
 
 Name: strawberry
-Version: 1.2.30
+Version: 1.2.31
 Release: alt1
 
 Summary: Audio player and music collection organizer
@@ -25,7 +25,7 @@ Requires: gst-plugins-good1.0 vlc-mini
 BuildRequires(pre): rpm-build-ninja
 # Automatically added by buildreq on Tue Oct 24 2023
 # optimized out: boost-devel-headers cmake-modules gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gstreamer1.0-devel icu-utils libX11-devel libdouble-conversion3 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmock-devel libgpg-error libgst-plugins1.0 libicu-devel libimobiledevice-devel libp11-kit libplist-devel libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-common qt6-base-devel qt6-tools sh5 shared-mime-info xorg-proto-devel zlib-devel
-BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel taglib-devel libvlc-devel protobuf-compiler sparsehash-devel rapidjson-devel
+BuildRequires: boost-devel cmake gst-plugins1.0-devel libalsa-devel libcdio-devel libchromaprint-devel libdbus-devel libebur128-devel libfftw3-devel libgpod-devel libgtest-devel libmtp-devel libprotobuf-devel libpulseaudio-devel libsqlite3-devel taglib-devel libvlc-devel protobuf-compiler sparsehash-devel rapidjson-devel libuchardet-devel libsecret-devel
 BuildRequires: qt6-base-devel qt6-tools-devel qt6-sql-interbase qt6-sql-mysql qt6-sql-odbc qt6-sql-postgresql libkdsingleapplication-qt6-devel
 BuildRequires: libicu-devel
 
@@ -83,6 +83,7 @@ export LC_ALL=C.UTF-8
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DBUILD_WERROR=OFF \
+  -DENABLE_LIBSECRET=ON \
 #
 
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -109,6 +110,10 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry.1.*
 
 %changelog
+* Wed Oct 07 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.31-alt1
+- New version 1.2.31.
+- Built with libsecret (default by upstream).
+
 * Mon Sep 14 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.30-alt1
 - New version 1.2.30.
 
