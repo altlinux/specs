@@ -6,7 +6,7 @@
 %endif
 
 Name: hw-test
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Hardware compatibility testing tool for ALT Linux
@@ -215,10 +215,20 @@ sed -i -E "s|$a|$b|g" /etc/sudoers
 %doc img html CHANGELOG.md LICENSE README.md
 
 %changelog
+* Wed Oct 07 2026 Pavel Shilov <zerospirit@altlinux.org> 2.3.0-alt1
+- Fixed (ALT #58367): no password prompt for dmesg during express sleep checks.
+- Fixed (ALT #53470): wait for confirmation of manual express checks (up to 5 min).
+- Implemented test plan options as methodology steps (ALT #53400):
+  network 10.2, NUMA 10.8, IPMI 10.9, console power 10.6.2, sound 10.4,
+  webcam 10.10.3, Bluetooth 10.10.10, fingerprint 10.10.7, smart cards 10.10.12.
+- Aligned steps 6, 9, 10.1, 10.11 and 11.2 with the methodology.
+- Added protocol draft (protocol.md/html) and fio summary table (11.1.8).
+- updated from 2.2.1 to 2.3.0
+
 * Wed Aug 26 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.1-alt1
 - Fixed (ALT #60241): dialog ESCDELAY so arrow keys do not cancel TUI test plan.
 - Fixed (ALT #60237): skip graphics-only express on headless Server; do not pause on SKIPPED.
-- updated from 2.2.1 to 2.2.1
+- updated from 2.2.0 to 2.2.1
 
 * Fri Jun 06 2026 Pavel Shilov <zerospirit@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus
