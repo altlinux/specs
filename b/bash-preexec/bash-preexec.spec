@@ -3,7 +3,7 @@
 %def_with check
 
 Name: bash-preexec
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: preexec and precmd functions for Bash just like Zsh
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 
 %if_with check
 BuildRequires: bats
+BuildRequires: git
 # /dev/fd/63: No such file or directory
 BuildRequires: /proc
 %endif
@@ -59,6 +60,9 @@ bats test
 %doc README.md
 
 %changelog
+* Wed Oct 07 2026 Boris Yumankulov <boria138@altlinux.org> 0.7.0-alt1
+- new version 0.7.0
+
 * Sun Oct 26 2025 Boris Yumankulov <boria138@altlinux.org> 0.6.0-alt1
 - initial build for ALT Sisyphus
 
