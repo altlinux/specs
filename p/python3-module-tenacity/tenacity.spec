@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 9.2.0
+Version: 9.2.1
 Release: alt1
 
 Summary: Retrying library for Python
@@ -53,6 +53,9 @@ fixes a number of longstanding bugs.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Oct 07 2026 Egor Ignatov <egori@altlinux.org> 9.2.1-alt1
+- New version 9.2.1.
+
 * Mon Sep 28 2026 Egor Ignatov <egori@altlinux.org> 9.2.0-alt1
 - New version 9.2.0.
 - Switched to building from upstream git.
