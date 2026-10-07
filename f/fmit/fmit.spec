@@ -1,5 +1,5 @@
 Name: fmit
-Version: 1.2.14
+Version: 1.4.6
 Release: alt1
 
 Summary: Free Music Instrument Tuner
@@ -14,8 +14,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires: itstool libalsa-devel libfftw3-devel libportaudio2-devel
-# core gui opengl multimedia svg
-BuildRequires: qt5-base-devel qt5-multimedia-devel qt5-svg-devel
+# core gui opengl openglwidgets multimedia svg widgets
+BuildRequires: qt6-base-devel qt6-multimedia-devel qt6-svg-devel qt6-tools
 
 BuildRequires: desktop-file-utils
 
@@ -41,9 +41,11 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
+# translations are installed from tr/*.qm, generate them before qmake
+%_qt6_bindir/lrelease fmit.pro
 mkdir BUILD
 cd BUILD
-qmake-qt5 "CONFIG+=acs_qt acs_alsa acs_portaudio" "PREFIX=%prefix" ../fmit.pro
+%_qt6_qmake "CONFIG+=acs_qt acs_alsa acs_portaudio nostrip" "PREFIX=%prefix" ../fmit.pro
 
 %make_build
 
@@ -53,6 +55,9 @@ cd BUILD
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Music \
 	%buildroot%_desktopdir/fmit.desktop
+cd ..
+install -D -m644 distrib/fmit.1 %buildroot%_man1dir/fmit.1
+install -D -m644 distrib/fmit.fr.1 %buildroot%_mandir/fr/man1/fmit.1
 
 %files
 %doc README.txt
@@ -63,8 +68,17 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/*/apps/fmit.*
 %_iconsdir/hicolor/symbolic/apps/fmit-symbolic.svg
 %_desktopdir/%name.desktop
+%_man1dir/fmit.1*
+%_mandir/fr/man1/fmit.1*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt1
+- new version 1.4.6
+- Port to Qt6 (upstream switched to Qt6).
+- Build and package translations.
+- Package man pages.
+- Do not strip the binary (get debuginfo).
+
 * Tue Jun 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1.2.14-alt1
 - new version 1.2.14 (with rpmrb script)
 
