@@ -2,7 +2,7 @@
 %def_disable static
 
 Name:    ftxui
-Version: %abiversion.0.2
+Version: %abiversion.0.3
 Release: alt1
 
 Summary: Functional Terminal (X) User interface
@@ -93,6 +93,9 @@ Requires: lib%name-devel = %version-%release
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Oct 07 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 7.0.3-alt1
+- 7.0.2 -> 7.0.3.
+
 * Tue Aug 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 7.0.2-alt1
 - 7.0.1 -> 7.0.2.
 

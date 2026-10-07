@@ -1,8 +1,8 @@
 # XXX: Actual commit hash of build tag(git log -1 --format=%%h %%version)
-%define tag_hash 53bd21a
+%define tag_hash d3c1277
 
 Name:    pciex
-Version: 0.0.2.0.11.git%tag_hash
+Version: 0.0.2.0.13.git%tag_hash
 Release: alt1
 
 Summary: PCI topology EXplorer
@@ -63,6 +63,9 @@ sed -i 's/devices\.emplace_back(/&DeviceDesc{/;T;:a;s/);$/}&/;t;n;ba' \
 %_bindir/%name
 
 %changelog
+* Wed Oct 07 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.0.2.0.13.gitd3c1277-alt1
+- Merge ref 0.0.2-13-gd3c1277
+
 * Wed Jun 17 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.0.2.0.11.git53bd21a-alt1
 - Fix compatibility with FTXUI v7.0.0.
 
