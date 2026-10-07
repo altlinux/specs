@@ -11,7 +11,7 @@
 
 Name: %rname%sover
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Efficient and performance-portable SIMD wrapper libraries
@@ -52,6 +52,7 @@ Group: System/Libraries
 %package devel
 Summary: Development files for Highway
 Group: Development/C++
+Provides: highway-devel = %version
 Conflicts: highway-devel
 %description devel
 Development files for Highway libraries.
@@ -119,6 +120,9 @@ __EOF__
 %_libdir/cmake/hwy/
 
 %changelog
+* Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt3
+- update provides
+
 * Tue Oct 06 2026 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt2
 - fix file conflict with highway-1.3.0
 
