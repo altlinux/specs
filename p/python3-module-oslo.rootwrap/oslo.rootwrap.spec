@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.7.0
+Version: 7.10.0
 Release: alt1
 
 Summary: OpenStack Oslo Rootwrap
@@ -12,12 +12,16 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/oslo.rootwrap
 
+# Source-url: https://tarballs.openstack.org/%oname/oslo_rootwrap-%version.tar.gz
 Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
 
 Provides: python3-module-oslo-rootwrap = %EVR
+
+# upstream no longer installs the tests since 7.10.0
+Obsoletes: python3-module-oslo.rootwrap-tests < %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -45,14 +49,6 @@ BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %description
 The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
 from OpenStack services.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
 
 %if_with docs
 %package doc
@@ -104,10 +100,6 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %_bindir/oslo-rootwrap-daemon
 %python3_sitelibdir/oslo_rootwrap
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
-%exclude %python3_sitelibdir/oslo_rootwrap/tests
-
-%files tests
-%python3_sitelibdir/oslo_rootwrap/tests
 
 %if_with docs
 %files doc
@@ -116,6 +108,10 @@ TEST_EVENTLET=1 %__python3 -m stestr run tests.test_functional_eventlet
 %endif
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 7.10.0-alt1
+- new version 7.10.0 (fix FTBFS with testtools 2.8: TestCase.skip removed)
+- drop tests subpackage: upstream no longer installs the tests
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 7.7.0-alt1
 - Automatically updated to 7.7.0.
 
