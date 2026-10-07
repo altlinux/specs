@@ -4,7 +4,7 @@
 
 Name: partio
 Version: 1.20.0
-Release: alt1
+Release: alt2
 Summary: A library for particle IO and manipulation
 Group: Development/Other
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 
 Patch1: partio-fedora-version-libraries.patch
 Patch2: partio-alt-install-tests.patch
+Patch3: partio-1.20.0-alt-python3-api.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake gcc-c++
@@ -90,6 +91,7 @@ This package contains tests for Partio.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 sed -i \
 	-e "s:@PROJECT_VERSION_FULL@:%version:g" \
@@ -140,6 +142,9 @@ find . -name '*.py' | xargs sed -i \
 %_libdir/partio/test
 
 %changelog
+* Wed Oct 07 2026 Anton Farygin <rider@altlinux.org> 1.20.0-alt2
+- fixed Python bindings build with SWIG 4.5.1
+
 * Wed Jan 28 2026 Anton Farygin <rider@altlinux.org> 1.20.0-alt1
 - 1.19.2 -> 1.20.0
 - removed googletest patch (merged upstream)
