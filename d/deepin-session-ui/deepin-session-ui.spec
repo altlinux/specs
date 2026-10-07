@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.48
+Version: 6.0.50
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -23,7 +23,7 @@ Patch: %name-%version-%release.patch
 Conflicts: notify-osd
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 rpm-macros-systemd rpm-build-xdg
-BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel libwayland-client-devel
+BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libXext-devel libdeepin-pw-check-devel libdtk6widget-devel libgio-devel libgtest-devel libsystemd-devel libxcbutil-icccm-devel libwayland-client-devel libXrandr-devel
 BuildRequires: libdqt6-concurrent libdqt6-test vulkan-headers libcups-devel
 %if_with clang
 BuildRequires: clang-devel
@@ -92,7 +92,7 @@ export READELF="llvm-readelf"
 %_libexecdir/deepin-daemon/dde-welcome
 %dir %_libexecdir/dde-control-center/
 %_libexecdir/dde-control-center/reset-password-dialog
-%_userunitdir/dde-blackwidget.service
+%_userunitdir/dde-blackwidget*.service
 %_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
 %_desktopdir/org.deepin.dde*.desktop
@@ -106,8 +106,13 @@ export READELF="llvm-readelf"
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.login-reminder/
 %_datadir/dsg/configs/org.deepin.login-reminder/org.deepin.login-reminder.json
+%dir %_datadir/dsg/configs/org.deepin.dde.session.ui/
+%_datadir/dsg/configs/org.deepin.dde.session.ui/org.deepin.dde.session.ui.json
 
 %changelog
+* Wed Oct 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.50-alt1
+- New version 6.0.50.
+
 * Tue Aug 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.48-alt1
 - New version 6.0.48.
 
