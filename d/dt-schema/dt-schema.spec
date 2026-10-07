@@ -3,7 +3,7 @@
 %define py_name dtschema
 
 Name: dt-schema
-Version: 2026.06
+Version: 2026.09
 Release: alt1
 
 Summary: Devicetree Schema Tools
@@ -76,5 +76,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir_noarch/%{py_name}*
 
 %changelog
+* Wed Oct 07 2026 Ivan A. Melnikov <iv@altlinux.org> 2026.09-alt1
+- new version
+
 * Tue Aug 04 2026 Ivan A. Melnikov <iv@altlinux.org> 2026.06-alt1
 - build for Sisyphus
