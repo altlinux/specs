@@ -1,5 +1,5 @@
 Name:    urdfdom
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 
 Summary: URDF parser
@@ -67,6 +67,9 @@ Group: Development/C++
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Wed Oct 07 2026 Andrey Cherepanov <cas@altlinux.org> 6.0.1-alt1
+- New version.
+
 * Tue Apr 21 2026 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
 - New version.
 
