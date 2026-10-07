@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.13.0
-Release: alt1.1
+Version: 0.14.0
+Release: alt1
 
 Summary: Django-environ allows you to utilize 12factor inspired environment variables to configure your Django application
 License: MIT
@@ -51,6 +51,9 @@ setdefault method, to avoid to overwrite the real environ.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 07 2026 Dmitry Lyalyaev <fruktime@altlinux.org> 0.14.0-alt1
+- updated from 0.13.0 to 0.14.0
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt1.1
 - Demodernized packaging.
 
