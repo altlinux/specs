@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.08.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -27,8 +27,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kf6-filesystem
-Provides: pimlibs-common = %EVR
-Obsoletes: pimlibs-common < %EVR
+Provides: kde5-akonadi-mime-common = %EVR
+Obsoletes: kde5-akonadi-mime-common < %EVR
 %description common
 %name common package
 
@@ -43,6 +43,7 @@ developing applications that use %name.
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common
+Obsoletes: libkf5akonadimime < %version
 %description -n libkpim6akonadimime
 %name library
 
@@ -76,6 +77,9 @@ Requires: %name-common
 
 
 %changelog
+* Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt2
+- obsolete kde5-akonadi-mime-common
+
 * Thu Sep 17 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
 - new version
 
