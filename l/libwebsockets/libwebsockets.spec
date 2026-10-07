@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%define abiversion 21
+%define abiversion 22
 
-%def_without evlib_plugins
+%def_with evlib_plugins
 %if_with evlib_plugins
 %define _evlib_plugins ON
 %else
@@ -9,7 +9,7 @@
 %endif
 
 Name: libwebsockets
-Version: 4.5.8
+Version: 5.0.0
 Release: alt1
 
 Summary: A lightweight C library for Websockets
@@ -23,6 +23,7 @@ Source: %name-%version.tar
 
 Patch: libwebsockets-4.3.2-alt-upstream-gcc13.patch
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
@@ -74,6 +75,9 @@ This package contains the tests for %name applications.
 %build
 %cmake \
     -DLWS_LINK_TESTAPPS_DYNAMIC=ON \
+    -DLWS_IPV6=ON \
+    -DLWS_WITH_HTTP3=OFF \
+    -DLWS_WITH_SOCKS5=ON \
     -DLWS_WITH_EVLIB_PLUGINS=%_evlib_plugins \
     -DLWS_WITH_LIBUV=%_evlib_plugins \
     -DLWS_WITH_LIBEV=%_evlib_plugins \
@@ -119,6 +123,13 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (soname libwebsockets.so.22, binary subpackage libwebsockets22)
+- build with IPv6 support (closes: #60770)
+- build with SOCKS5 proxy support (LWS_WITH_SOCKS5) for client connections
+- build with event loop plugins again (closes: #60751)
+- build without HTTP/3 (it requires GnuTLS instead of OpenSSL)
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.8-alt1
 - new version 4.5.8
 
