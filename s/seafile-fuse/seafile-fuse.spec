@@ -1,5 +1,5 @@
 Name: seafile-fuse
-Version: 3.0.23
+Version: 3.0.26
 Release: alt1
 
 Summary: SeaDrive daemon with FUSE interface
@@ -69,6 +69,9 @@ The python3 module with Seafile fuse.
 
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.26-alt1
+- new version 3.0.26
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.23-alt1
 - new version 3.0.23
 - add BR: pkgconfig(libargon2)

@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 9.0.18
+Version: 9.0.21
 Release: alt1
 
 Summary: Seafile client GUI (Qt-based)
@@ -90,6 +90,9 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.21-alt1
+- new version 9.0.21
+
 * Wed Apr 08 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.18-alt1
 - new version 9.0.18
 
