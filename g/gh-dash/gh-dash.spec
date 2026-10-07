@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/dlvhdr/gh-dash/v4
-%global commit_hash a613ef7
-%global build_date 20260717
+%global commit_hash c6dfbc1
+%global build_date 20261007
 
 Name: gh-dash
-Version: 4.25.2
+Version: 4.26.0
 Release: alt1
 
 Summary: A rich terminal UI for GitHub that doesn't break your flow
@@ -15,6 +15,7 @@ VCS: https://github.com/dlvhdr/gh-dash
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: gh-dash-4.26.0-alt-fix-lipgloss-i586.patch
 
 Requires: github-cli
 
@@ -27,6 +28,9 @@ BuildRequires: rpm-build-golang
 
 %prep
 %setup -a1
+%ifarch %ix86
+%patch -p1
+%endif
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -53,6 +57,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Oct 07 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.26.0-alt1
+- Updated to version 4.26.0.
+
 * Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.25.2-alt1
 - Updated to version 4.25.2.
 
