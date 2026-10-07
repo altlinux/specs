@@ -3,7 +3,7 @@
 %define soversion 12
 
 Name: libmirage
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -140,6 +140,9 @@ This package contains files needed to develop with libMirage.
 %_datadir/gir-1.0/*
 
 %changelog
+* Wed Oct 07 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.3-alt1
+- New version 3.3.3.
+
 * Fri Jun 19 2026 Nazarov Denis <nenderus@altlinux.org> 3.3.2-alt1
 - New version 3.3.2.
 
