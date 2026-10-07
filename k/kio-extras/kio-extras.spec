@@ -7,7 +7,7 @@
 
 Name: %rname
 Version: 26.08.1
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -63,6 +63,8 @@ Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
 Requires: kde-common
+Provides: kde5-kio-extras-common = %EVR
+Obsoletes: kde5-kio-extras-common < %EVR
 %description common
 %name common package
 
@@ -136,6 +138,9 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 
 
 %changelog
+* Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt2
+- obsolete kde5-kio-extras-common
+
 * Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
 - new version
 
