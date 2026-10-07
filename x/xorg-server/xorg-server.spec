@@ -25,8 +25,8 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 21.1.24
-Release: alt2
+Version: 21.1.25
+Release: alt1
 Epoch: 2
 License: MIT X11
 Summary: Xserver - X Window System display server
@@ -43,8 +43,8 @@ Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoc
 Provides: xorg-glamor = %epoch:%version-%release
 Obsoletes: xorg-glamor < %epoch:%version-%release
 %endif
-PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release xorg-dri-swrast >= %mesaversion
-Requires: xset iceauth xdpyinfo xorg-drv-fbdev xorg-drv-evdev
+Requires(pre,postun): xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release xorg-dri-swrast >= %mesaversion
+Requires: xset iceauth xdpyinfo xorg-drv-fbdev xorg-drv-libinput
 %ifarch %ix86 x86_64
 Requires: xorg-drv-vesa
 %endif
@@ -58,12 +58,8 @@ BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel
 BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libxcvt-devel libudev-devel libSM-devel
 BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-proto-devel xorg-font-utils xorg-xtrans-devel xkbcomp
 BuildRequires: xorg-util-macros libselinux-devel libaudit-devel xmlto xorg-sgml-doctools libxshmfence-devel libdrm-devel libXfont2-devel
-%if_enabled glamor
-BuildRequires: libEGL-devel libgbm-devel libepoxy-devel
-%endif
-%if_enabled xephyr
-BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxcb-render-util-devel
-%endif
+%{?_enable_glamor:BuildRequires: libEGL-devel libgbm-devel libepoxy-devel}
+%{?_enable_xephyr:BuildRequires: libxcbutil-devel libxcbutil-image-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxcb-render-util-devel}
 %{?_enable_systemd:BuildRequires: libdbus-devel libudev-devel}
 
 %description
@@ -260,6 +256,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Oct 07 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.25-alt1
+- 21.1.25
+
 * Sat Aug 01 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.24-alt2
 - update build dependensies
 
