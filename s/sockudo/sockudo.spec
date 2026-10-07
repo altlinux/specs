@@ -5,7 +5,7 @@
 %define _pseudouser_home     %_localstatedir/sockudo
 
 Name: sockudo
-Version: 4.7.0
+Version: 5.1.0
 Release: alt1
 
 Summary: A self-hosted realtime platform
@@ -22,7 +22,8 @@ BuildRequires: rpm-build-rust
 BuildRequires: rpm-build-systemd
 BuildRequires: libssl-devel
 BuildRequires: libprotobuf-devel
-BuildRequires: make
+BuildRequires: redis
+BuildRequires: /proc
 
 Source: %name-%version.tar
 Source1: vendor.tar
@@ -57,6 +58,29 @@ install -dm0750 %buildroot%_pseudouser_home
 
 %check
 export RUSTFLAGS="--cfg tokio_unstable"
+export PROTOC_INCLUDE=%_includedir
+export REDIS_URL=redis://127.0.0.1:6379/
+
+redis_dir=$(mktemp -d)
+%_sbindir/redis-server --bind 127.0.0.1 --port 6379 \
+    --dir "$redis_dir" --unixsocket "$redis_dir/redis.sock" \
+    --save "" --appendonly no --daemonize no &
+redis_pid=$!
+
+trap '
+    kill "$redis_pid" 2>/dev/null ||:
+    wait "$redis_pid" 2>/dev/null ||:
+    rm -rf "$redis_dir"
+' EXIT
+trap 'exit 1' HUP INT TERM
+
+for i in $(seq 1 100); do
+    kill -0 "$redis_pid"
+    [ "$(redis-cli -s "$redis_dir/redis.sock" ping 2>/dev/null)" = PONG ] && break
+    sleep 0.1
+done
+[ "$(redis-cli -s "$redis_dir/redis.sock" ping)" = PONG ]
+
 %rust_test
 
 %pre
@@ -83,5 +107,8 @@ export RUSTFLAGS="--cfg tokio_unstable"
 %dir %attr(0750,%_pseudouser_user,%_pseudouser_group) %_pseudouser_home
 
 %changelog
+* Tue Oct 06 2026 Mikhail Nogin <joycap@altlinux.org> 5.1.0-alt1
+- Update to v5.1.0.
+
 * Tue Jul 28 2026 Mikhail Nogin <joycap@altlinux.org> 4.7.0-alt1
 - Initial build for Sisyphus.
