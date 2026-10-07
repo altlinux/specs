@@ -1,61 +1,67 @@
+%define pypi_name dogtail
+
 Name: dogtail
-Version: 0.9.11
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: GUI test tool and automation framework
 
-License: GPL
+License: GPL-2.0
 Group: Development/Other
-Url: https://fedorahosted.org/dogtail/
+Url: https://gitlab.com/dogtail/dogtail
+
+# Source-url: %__pypi_url %pypi_name
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-Source: https://fedorahosted.org/released/dogtail/dogtail-%version.tar
-Patch0: py2-to-py3.patch
+# gir-python.req ignores gi.require_version(): dogtail needs Gtk/Gdk 3.0
+# (utils.py, rawinput.py), unversioned typelib(Gtk) is also provided by GTK4
+Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gdk) = 3.0
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: desktop-file-utils
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-setuptools_scm
 
-# %%py_requires gconf
-
-# Hack for build
-%add_python3_req_skip Accessibility
-
+# optional distro-specific package backends in dogtail.distro
+%add_python3_req_skip apt_pkg conaryclient portage
+# pytest fixture for dogtail.hermetic, used only from within pytest
+%add_python3_req_skip pytest
 
 %description
-GUI test tool and automation framework that uses assistive technologies to
-communicate with desktop applications.
-
-Before using enable accessibility via
-$ gconftool-2 -s -t boolean /desktop/gnome/interface/accessibility true
+GUI test tool and automation framework that uses assistive technologies
+(AT-SPI) to communicate with desktop applications. Works in both X11 and
+Wayland sessions (the latter via gnome-ponytail-daemon).
 
 %prep
 %setup
-%patch0 -p2
 
 %build
-sed -i 's|^#!/usr/bin/env python$|#!/usr/bin/env python3|' \
-    $(find ./ -type f)
-
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-rm -rf %buildroot%_docdir/dogtail/
-find examples -type f -exec chmod 0644 \{\} \;
-%__subst "s|\.svg||g" %buildroot%_desktopdir/*
+%pyproject_install
+# upstream ships its unit tests as a top-level "tests" package
+rm -rv %buildroot%python3_sitelibdir/tests/
+find examples -type f -exec chmod 0644 {} \;
 
 %files
-%doc README examples/
-%_bindir/*
+%doc README.md NEWS CHANGES FAQ.md HERMETIC.md examples/
+%_bindir/dogtail-create-config
+%_bindir/dogtail-get-config
+%_bindir/dogtail-headless
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%name-*.egg-info
-%_desktopdir/*
-%_datadir/%name/
-#_liconsdir/*
-%_iconsdir/hicolor/scalable/*
-
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- new version 2.1.0
+- build with pyproject from the PyPI tarball, drop obsolete py2-to-py3 patch
+- upstream dropped sniff, dogtail-run-headless* and pyatspi (uses Atspi via gi)
+- new dogtail-headless, dogtail-create-config, dogtail-get-config scripts
+- generate typelib requires with rpm-build-gir
+- require typelib(Gtk) = 3.0 and typelib(Gdk) = 3.0 (not detected by gir-python.req)
+
 * Mon Oct 21 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.11-alt2
 - python2 -> python3
 
