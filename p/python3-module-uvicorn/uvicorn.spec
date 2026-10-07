@@ -1,5 +1,5 @@
 Name: python3-module-uvicorn
-Version: 0.52.4
+Version: 0.54.0
 Release: alt1
 
 Summary: An ASGI web server, for Python
@@ -53,6 +53,9 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %python3_sitelibdir/uvicorn-%version.dist-info
 
 %changelog
+* Wed Oct 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.54.0-alt1
+- 0.54.0 released
+
 * Tue Sep 01 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.52.4-alt1
 - 0.52.4 released
 
