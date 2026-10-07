@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2026.06
+Version: 2026.08
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -26,6 +26,7 @@ Source1: global.config.json
 Source2: testnet-global.config.json
 
 Source3: rldp-http-proxy.service
+Source10: rldp-http-proxy.sysusers.conf
 
 # instead of .gitmodules
 # Source4-url: https://github.com/google/crc32c/archive/refs/tags/1.1.2.tar.gz
@@ -155,9 +156,11 @@ storage-daemon-cli
 %__subst 's|add_subdirectory(third-party/abseil-cpp EXCLUDE_FROM_ALL)|find_package(absl REQUIRED)|' CMakeLists.txt
 
 # disambiguate co_return {} for Task<Unit> with newer GCC
-find adnl http metrics overlay quic tdactor validator \( -name '*.cpp' -o -name '*.h' \) | xargs -r %__subst 's|co_return {};|co_return td::Unit{};|'
+find adnl http metrics overlay quic rldp2 tdactor validator \( -name '*.cpp' -o -name '*.h' \) | xargs -r %__subst 's|co_return {};|co_return td::Unit{};|'
 
 %build
+# there is no git checkout, so set the version for the build information
+export GIT_REVISION=v%version
 %cmake -DTON_USE_ROCKSDB=ON -DTON_USE_ABSEIL=ON -DUSE_QUIC=OFF
 %cmake_build --target rldp-http-proxy
 %cmake_build --target generate-random-id
@@ -170,6 +173,8 @@ find adnl http metrics overlay quic tdactor validator \( -name '*.cpp' -o -name 
 install -m0644 -D %SOURCE1 %buildroot%_sysconfdir/%name/global.config.json
 install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/%name/testnet-global.config.json
 install -m0644 -D %SOURCE3 %buildroot%_unitdir/rldp-http-proxy.service
+install -m0644 -D %SOURCE10 %buildroot%_sysusersdir/rldp-http-proxy.conf
+mkdir -p %buildroot%_var/lib/rldp-http-proxy/
 
 cd %_cmake__builddir
 mkdir -p %buildroot%_bindir/
@@ -183,8 +188,7 @@ install -m0755 storage/storage-daemon/storage-daemon %buildroot%_bindir/
 install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 %pre rldp-http-proxy
-%_sbindir/groupadd -r -f %userrldp &>/dev/null
-%_sbindir/useradd -r -n -g %userrldp -d /var/empty -s /bin/false -c "%userrldp pseudo user" %userrldp >/dev/null 2>&1 ||:
+%sysusers_create_package rldp-http-proxy %SOURCE10
 
 %post rldp-http-proxy
 %post_service rldp-http-proxy
@@ -200,6 +204,8 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 %files rldp-http-proxy
 %_bindir/rldp-http-proxy
 %_unitdir/rldp-http-proxy.service
+%_sysusersdir/rldp-http-proxy.conf
+%dir %attr(0750,%userrldp,%userrldp) %_var/lib/rldp-http-proxy/
 
 %files crypto
 %_bindir/fift
@@ -220,6 +226,13 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.08-alt1
+- new version 2026.08
+- extend co_return disambiguation to rldp2
+- rldp-http-proxy.service: use /var/lib/rldp-http-proxy as db root (fix crash on start)
+- set GIT_REVISION so that -V shows the release tag
+- create _rldp-http-proxy user via sysusers.d instead of useradd
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.06-alt1
 - new version 2026.06
 - extend co_return disambiguation to http/metrics/quic/validator
