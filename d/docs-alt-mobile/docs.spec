@@ -5,8 +5,8 @@
 %define _docsinstalldir %_defaultdocdir/%variant
 
 Name: docs-%variant
-Version: 11.0
-Release: alt4
+Version: 11.0.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Oct 07 2026 Elena Mishina <lepata@altlinux.org> 11.0.1-alt1
+- update to ALT Mobile 11.0.1
+
 * Fri Mar 13 2026 Elena Mishina <lepata@altlinux.org> 11.0-alt4
 - update to ALT Mobile 11.0RC3
 
