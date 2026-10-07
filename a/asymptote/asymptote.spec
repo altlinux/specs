@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 3.09
+Version: 3.15
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -16,11 +16,17 @@ Source: %name-%version.tar
 Patch: asymptote-1.91-alt-DSO.patch
 Patch1: asymptote-1.91-alt-glibc-2.16.patch
 Patch2: asymptote-2.28-alt-gsl1.16.patch
+# drop static glslang companion libs (merged into libglslang since glslang 15)
+Patch3: asymptote-3.15-alt-glslang-libs.patch
+# VkBuffer is a 64-bit integer handle on 32-bit platforms
+Patch4: asymptote-3.15-alt-vkbuffer-32bit.patch
 
 BuildRequires: flex gcc-c++ libfftw3-devel libgsl-devel libreadline-devel libtirpc-devel zlib-devel
 BuildRequires: libglm-devel
 BuildRequires: cmake
 BuildRequires: libfreeglut-devel
+# Vulkan renderer (3.10+), glfw is required for both Vulkan and OpenGL
+BuildRequires: libglfw3-devel vulkan-headers libvulkan-devel glslang-devel libspirv-tools-devel
 BuildRequires: libcurl-devel
 
 BuildRequires: libgc-devel >= 7.4.2
@@ -30,6 +36,8 @@ BuildRequires: /proc
 BuildRequires: texlive-collection-latexrecommended
 BuildRequires: ghostscript-utils >= 9.53
 BuildRequires: python3-module-pyside6-devel
+# pyside6-uic/pyside6-rcc need uic/rcc from qt6-base-devel to generate xasy UI
+BuildRequires: qt6-base-devel
 #BuildRequires: python3-module-mpl_toolkits python3-module-yieldfrom
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -58,11 +66,16 @@ Documentation and examples for %name.
 
 %prep
 %setup
+%patch3 -p1
+%patch4 -p1
 %__subst "s|/lib |/%_lib |" configure.ac
 # some incompatibilities?
 sed -i "s|@printindex cp||g" doc/%name.texi
 
 %build
+# vkrender.cc relies on implicit VkImage <-> vk::Image conversion,
+# vulkan.hpp enables it only on 64-bit platforms by default
+%add_optflags -DVULKAN_HPP_TYPESAFE_CONVERSION=1
 %autoreconf
 %configure --with-docdir=%_docdir/%name-doc-%version \
 	--with-latex=%_texmfmain/tex/latex \
@@ -79,16 +92,28 @@ sed -i 's|reverse(v.begin|std::reverse(v.begin|' knot.h
 # generate keywords.h first to fix parallel build race condition
 make keywords.h
 %make_build
+# info pages are not built by default since 3.10
+%make_build info
 
 %install
 %makeinstall_std
+%makeinstall_std install-info
 # TODO: conflicts with  texlive-collection-basic-2018-alt1_5.noarch
 mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
+
+# renderer plugins are dlopen'ed from the asy search path (asydir):
+# keep the ELF objects in libdir and leave symlinks in asydir
+mkdir -p %buildroot%_libdir/%name/
+for i in libasyvulkan.so libasyopengl.so ; do
+    mv -v %buildroot%_datadir/%name/$i %buildroot%_libdir/%name/
+    ln -s %_libdir/%name/$i %buildroot%_datadir/%name/$i
+done
 
 %files
 %doc BUGS LICENSE README TODO
 %_bindir/asy
 %_bindir/xasy
+%_libdir/%name/
 %_datadir/%name/
 %_texmfmain/tex/latex/%name/
 %_texmfmain/tex/context/third/%name/
@@ -100,6 +125,16 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.15-alt1
+- new version 3.15
+- build with Vulkan renderer (add glfw, vulkan, glslang, spirv-tools to BR)
+- add qt6-base-devel to BR to generate xasy Qt UI and icons modules
+- don't link removed glslang companion libraries
+- move renderer plugins to libdir
+- build and install info pages explicitly
+- fix build on 32-bit platforms (enable VULKAN_HPP_TYPESAFE_CONVERSION,
+  don't cast VkBuffer handle to pointer)
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.09-alt1
 - new version 3.09
 - skip self-deps on xasyqtui auto-generated modules
