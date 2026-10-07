@@ -16,7 +16,7 @@
 
 Name: audiofile
 Version: 0.3.6
-Release: alt5
+Release: alt6
 
 Summary: Library to handle various audio file formats
 License: LGPL-2.1-or-later
@@ -39,6 +39,9 @@ Patch9: 09_Actually-fail-when-error-occurs-in-parseFormat.patch
 Patch10: 10_Check-for-division-by-zero-in-BlockCodec-runPull.patch
 Patch11: 11_CVE-2018-13440.patch
 Patch12: 12_CVE-2018-17095.patch
+Patch13: 13_CVE-2022-24599.patch
+Patch14: 14_Partial-fix-of-CVE-2019-13147.patch
+Patch15: 15_Partial-fix-of-CVE-2019-13147.patch
 
 Requires: lib%name%sover = %EVR
 
@@ -119,6 +122,9 @@ Static libraries you can use to develop
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
 
 %build
 %autoreconf
@@ -159,6 +165,9 @@ Static libraries you can use to develop
 %endif
 
 %changelog
+* Wed Oct 07 2026 Alexander Danilov <admsasha@altlinux.org> 0.3.6-alt6
+- Applied debian patchset (fixes: CVE-2022-24599, CVE-2019-13147).
+
 * Thu Sep 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.3.6-alt5
 - Fixed build with LTO.
 
