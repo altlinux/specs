@@ -7,8 +7,8 @@
 # https://github.com/AcademySoftwareFoundation/OpenShadingLanguage/issues/1810
 %define optflags_lto %nil
 
-# the required range is 11.0...20.1
-%define llvm_ver 21.1
+# Clang 22 is needed to compile CUDA 13 headers.
+%define llvm_ver 22.1
 
 %ifarch x86_64 aarch64
 %def_with optix
@@ -18,8 +18,8 @@
 %endif
 
 Name: openshadinglanguage
-Version: 1.15.5.0
-Release: alt2
+Version: 1.15.7.0
+Release: alt1
 
 Summary: Advanced shading language for production GI renderers
 License: BSD-3-Clause
@@ -51,9 +51,8 @@ BuildRequires: partio-devel
 BuildRequires: librobin-map-devel
 %if_with optix
 BuildRequires: optix-devel
-# CUDA 12.x nvcc cannot parse libstdc++-15 headers (new __is_pointer,
-# __is_volatile, __array_rank builtins). Force g++-14 as nvcc host compiler.
-BuildRequires: gcc14-c++
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq
 %endif
 
 %define oiio_major_minor_ver %(rpm -q --queryformat='%%{VERSION}' libopenimageio-devel | cut -d . -f 1-2)
@@ -173,7 +172,8 @@ export ALTWRAP_LLVM_VERSION=%llvm_ver
 %if_with optix
 	-DOSL_USE_OPTIX:BOOL=ON \
 	-DOSL_PTX_INSTALL_DIR:PATH=%_datadir/%name/ptx/ \
-	-DOSL_EXTRA_NVCC_ARGS="-ccbin=/usr/bin/g++-14" \
+	-DCUDA_TARGET_ARCH:STRING=sm_%cuda_arch_min \
+	-DOSL_EXTRA_NVCC_ARGS="-ccbin=%cuda_host_cxx" \
 %endif
 	%nil
 
@@ -224,6 +224,9 @@ rm -f %buildroot%_prefix/cmake/llvm_macros.cmake
 %python3_sitelibdir/oslquery
 
 %changelog
+* Wed Oct 07 2026 Anton Farygin <rider@altlinux.org> 1.15.7.0-alt1
+- 1.15.5.0 -> 1.15.7.0
+
 * Sat Jun 20 2026 Michael Shigorin <mike@altlinux.org> 1.15.5.0-alt2
 - E2K: no need for an older llvm version
 
