@@ -1,6 +1,6 @@
 Name: lanmessenger
-Version: 1.2.39
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: LAN Messenger for Windows, Mac, Linux
 License: GPLv3+
@@ -55,6 +55,9 @@ rm -f %buildroot%_libdir/liblmcapp.so %buildroot%_qt5_libdatadir/liblmcapp.so
 %_libdir/liblmcapp.so.*
 
 %changelog
+* Wed Oct 07 2026 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- New version.
+
 * Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 1.2.39-alt2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 - Minor spec cleanup.
