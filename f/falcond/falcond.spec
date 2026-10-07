@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: falcond
-Version: 2.0.1
+Version: 2.0.14
 Release: alt1
 
 Summary: Advanced Linux Gaming Performance Daemon
@@ -30,7 +30,13 @@ falcond is a powerful system daemon designed to automatically optimize your Linu
 
 %build
 cd %name
-cp -r ../zig-cache ./
+mkdir -p zig-pkg
+for archive in ../zig-cache/*.tar.gz; do
+    tar -xzf "$archive" -C zig-pkg
+done
+# Although falcond sets enable_pipewire = false, Zig 0.16 --system still
+# processes the local PipeWire dependency and hangs before compilation.
+sed -i '/^[[:space:]]*\.pipewire = \.{/,/^[[:space:]]*},/d' zig-pkg/otter_desktop-*/build.zig.zon
 %zig_build
 
 %install
@@ -47,6 +53,9 @@ install -Dm644 debian/falcond.service %buildroot%_unitdir
 
 
 %changelog
+* Wed Oct 07 2026 Boris Yumankulov <boria138@altlinux.org> 2.0.14-alt1
+- new version 2.0.14
+
 * Sat Mar 28 2026 Boris Yumankulov <boria138@altlinux.org> 2.0.1-alt1
 - new version 2.0.1
 - replace power-profiles-daemon to ppd-service
