@@ -1,25 +1,23 @@
+%def_without mysql
+%def_with pgsql
+
 Name: flow-tools-ng
-Version: 0.68.5
-Release: alt6
+Version: 0.68.6
+Release: alt1
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
 Group: Monitoring
-
-Url: http://code.google.com/p/flow-tools/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Url: https://github.com/5u623l20/flow-tools
 
 Source: %name-%version.tar
-Patch1: %name-%version-gcc-10-extern.patch
+Patch1: flow-tools-ng-0.68.5-gcc-10-extern.patch
 Patch2: aclyacc-0.68.5-alt-build.patch
 
 Provides: flow-tools
 Conflicts: flow-tools
 
-BuildPreReq: flex zlib-devel %{?_with_mysql: libMySQL-devel} %{?_with_pgsql: postgresql-devel}
-
-BuildRequires: docbook-utils flex postgresql-devel
+BuildRequires: docbook-utils flex zlib-devel docbook-to-man %{?_with_mysql: libmysqlclient-devel} %{?_with_pgsql: libpq-devel}
 
 Requires: lib%name = %version-%release
 
@@ -71,16 +69,17 @@ This package contains scripts to provide ASCII, HTML, RRD output
 %patch1 -p1
 %patch2 -p0
 # fix broken env path
-find -type f | xargs subst "s|#!/bin/env|#/!/usr/bin/env|g"
+find -type f | xargs subst "s|#!/usr/bin/env python|#/!/usr/bin/python|g"
+find -type f | xargs subst "s|#!/usr/bin/env perl|#/!/usr/bin/perl|g"
 
 %build
 %autoreconf
 %configure --sysconfdir=%_sysconfdir/%name/ \
 		--disable-static \
 		%{?_with_mysql:--with-mysql} \
-		%{?_with_pgsql:--with-pgsql}
+		%{?_with_pgsql:--with-postgresql=yes}
 
-%make_build
+%make_build CFLAGS="$CFLAGS -std=gnu11"
 
 %install
 %makeinstall_std
@@ -91,12 +90,9 @@ install -pm644 configs/flow.acl %buildroot/%_sysconfdir/%name/
 rm -f %buildroot%_libdir/*.la
 
 %files
-%doc  AUTHORS README SECURITY TODO contrib docs/*.html
+%doc  AUTHORS README SECURITY TODO contrib
 %dir %_sysconfdir/%name/
-%dir %_sysconfdir/%name/cfg/
-%dir %_sysconfdir/%name/sym/
-%config(noreplace) %_sysconfdir/%name/cfg/*
-%config(noreplace) %_sysconfdir/%name/sym/*
+%_sysconfdir/%name/flow-tools
 %config(noreplace) %_sysconfdir/%name/filter-acl
 %config(noreplace) %_sysconfdir/%name/flow.acl
 %_datadir/flow-tools/
@@ -119,6 +115,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Wed Oct 07 2026 Alexei Takaseev <taf@altlinux.org> 0.68.6-alt1
+- 0.68.6
+
 * Tue Dec 02 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.68.5-alt6
 - NMU:FTBFS: Fix error of yyerror() (thnx FreeBSD fix)
 
