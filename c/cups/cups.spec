@@ -1,6 +1,6 @@
 Name: cups
 Version: 2.4.20
-Release: alt1
+Release: alt2
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -405,6 +405,9 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Wed Oct 07 2026 Anton Farygin <rider@altlinux.org> 2.4.20-alt2
+- dropped preset cleanup loop duplicated with upstream (ALT#60860)
+
 * Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2.4.20-alt1
 - 2.4.19 -> 2.4.20 (Fixes: CVE-2026-55480, CVE-2026-61702, CVE-2026-87875,
 - CVE-2026-55453, CVE-2026-87876, CVE-2026-55467, CVE-2026-105326,
