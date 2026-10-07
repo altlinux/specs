@@ -8,7 +8,7 @@
 
 Name: NetworkManager-applet-gtk
 Version: 1.36.0
-Release: alt3
+Release: alt4
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Summary: Panel applet for use with NetworkManager
@@ -92,8 +92,13 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Wed Oct 07 2026 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt4
+- Fixed Russian translation.
+- Updated changelog for 1.36.0-alt3.
+
 * Wed Jun 18 2025 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt3
-- Show a different notification when a connection attempt fails.
+- Show a different notification when a connection attempt fails
+  (fixes: OVE-20250625-0006).
 
 * Wed Nov 27 2024 Mikhail Efremov <sem@altlinux.org> 1.36.0-alt2
 - Fixed Russian translation.
