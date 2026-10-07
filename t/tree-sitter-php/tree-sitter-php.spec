@@ -1,11 +1,12 @@
 Name: tree-sitter-php
-Version: 0.25.0
+Version: 0.25.1
 Release: alt1
 
 Summary: PHP grammar for tree-sitter
 License: MIT
 Group: Development/Other
-Url: https://github.com/tree-sitter/tree-sitter-php
+URL: https://github.com/tree-sitter/tree-sitter-php
+VCS: https://github.com/tree-sitter/tree-sitter-php
 
 Source: %name-%version.tar
 
@@ -30,6 +31,9 @@ cp -a queries %buildroot%_libdir/tree-sitter-php
 %_libdir/tree-sitter-php
 
 %changelog
+* Wed Oct 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.1-alt1
+- 0.25.1 released
+
 * Fri Sep 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.0-alt1
 - 0.25.0 released
 
