@@ -2,7 +2,7 @@
 %define oname space.shad.minivi
 
 Name: minivi
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 
 Summary: A small application for viewing images
@@ -51,6 +51,9 @@ make install
 %_datadir/metainfo/%oname.metainfo.xml
 
 %changelog
+* Wed Oct 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.18.1-alt1
+- 0.18.0 -> 0.18.1
+
 * Mon Sep 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.18.0-alt1
 - 0.17.4 -> 0.18.0
 
