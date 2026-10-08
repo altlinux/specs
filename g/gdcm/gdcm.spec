@@ -2,6 +2,12 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
+
 %define abiversion 3.2
 %define socketxxsoname 1.2
 
@@ -19,8 +25,8 @@
 %define libgdcm_vtk libgdcmvtk%{vtk_version}_%vtk_soname
 
 Name: gdcm
-Version: 3.2.5
-Release: alt2
+Version: 3.2.11
+Release: alt1
 
 Summary: Cross-platform DICOM implementation
 License: BSD-3-Clause
@@ -30,7 +36,6 @@ VCS: https://git.code.sf.net/p/gdcm/gdcm.git
 
 Source0: %name-%version.tar
 Source1: gdcmData.tar
-Patch0: gdcm-3.0.1-unknown-use-copyright.patch
 Patch1: %name-%version-%release.patch
 Patch3: gdcm-3.0.24-alt-export-variables.patch
 
@@ -262,7 +267,7 @@ rm -rf \
 %add_optflags -D_FILE_OFFSET_BITS=64
 %endif
 # vtk module require using relative path from prefix
-%cmake -Wno-dev -Wno-unused-variable \
+%cmake -Wno-dev \
   -DCMAKE_BUILD_TYPE:STRING=Release \
   -DCMAKE_CXX_STANDARD=20 \
   -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
@@ -326,7 +331,16 @@ cp -rv Examples/* %buildroot%_datadir/%name/Examples
 %check
 export LD_LIBRARY_PATH="%buildroot%_libdir:$PWD/%_arch-alt-linux/bin"
 export PYTHONPATH="%buildroot%python3_sitelibdir"
-%ctest ||:
+# Six integration tests require the public dicomserver.co.uk PACS.
+excluded_tests='TestSCUValidation|TestEcho|TestFind|gdcmscu-(echo|store|find)-dicomserver'
+# DCMTK oracle: unavailable dcmdjp2k and incompatible YBR/malformed-JPEG MD5s.
+excluded_tests="$excluded_tests|TestDCMTKMD5Python"
+# Quarantine: reader2 heap corruption on the full corpus (e.g. SC16BitsAllocated_8BitsStoredJ2K).
+excluded_tests="$excluded_tests|TestvtkGDCMImageReader2_[12]|TestvtkGDCMMetaImageWriter2"
+# Quarantine: writer1 round-trip mismatches (MR16BitsAllocated_8BitsStored.dcm),
+# MetaImageWriter RAW mismatches and obsolete MHD baselines. Not fixed here.
+excluded_tests="$excluded_tests|TestvtkGDCMImageWriter1|TestvtkGDCMMetaImageWriter"
+%ctest -E "^($excluded_tests)$"
 
 %files
 %nil
@@ -395,6 +409,10 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/vtkgdcm/
 
 %changelog
+* Wed Oct 07 2026 Anton Farygin <rider@altlinux.org> 3.2.11-alt1
+- 3.2.5 -> 3.2.11
+- disabled checks on %%ix86: the platform is only supported in relaxed mode.
+
 * Wed Apr 22 2026 Anton Farygin <rider@altlinux.org> 3.2.5-alt2
 - disabled PVRG JPEG codec: unbuildable with gcc-15 (C23 default),
   upstream is abandoned and declares it broken; IJG codec covers
