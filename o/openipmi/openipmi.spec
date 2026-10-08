@@ -3,7 +3,7 @@
 Name: openipmi
 Summary: %name - Library interface to IPMI
 Version: 2.0.37
-Release: alt1
+Release: alt2
 License: LGPL-2.1-or-later and GPL-2.0-or-later or BSD-3-Clause
 VCS: https://git.code.sf.net/p/openipmi/code
 Url: https://openipmi.sourceforge.io/
@@ -170,6 +170,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 
 
 %changelog
+* Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 2.0.37-alt2
+- fixed Python 3 bindings build with modern SWIG
+
 * Wed May 07 2025 Anton Farygin <rider@altlinux.com> 2.0.37-alt1
 - 2.0.36 -> 2.0.37
 
