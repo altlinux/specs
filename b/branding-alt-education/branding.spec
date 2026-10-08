@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt2
+Release: alt3
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -288,7 +288,6 @@ BuildArch: noarch
 Summary: Some system settings for %distro_name
 License: GPL-2.0
 Group: System/Base
-Requires(post): lightdm
 %branding_add_conflicts %flavour system-settings
 Conflicts: branding-xalt-kworkstation-graphics
 # Dropped with nothing to replace them, and this package is what cleans the
@@ -308,7 +307,8 @@ cp -a /usr/share/distro-licenses/ALT_Product_License/license.all.html.in notes/l
 %ifarch %e2k %ix86
 # 2021: no chromium port available
 grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel \
-		xfce-settings/xdg/xfce4/whiskermenu |
+		xfce-settings/xdg/xfce4/whiskermenu \
+		xfce-settings/xdg/xfce4/helpers.rc |
 	xargs -r -- sed -i 's,chromium,firefox,g;s,Chromium,Firefox,g'
 %endif
 %ifarch %e2k
@@ -343,12 +343,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 
 %post indexhtml
 %_sbindir/indexhtml-update
-
-%post system-settings
-sed -i '/pam_env\.so/ {
-		/user_readenv/ b
-		s/pam_env\.so/pam_env.so user_readenv=1/ }
-' %_sysconfdir/pam.d/lightdm-greeter
 
 %files bootloader
 /boot/grub/themes/%theme
@@ -469,6 +463,34 @@ fi
 %_datadir/branding-%flavour/xdg-data/
 
 %changelog
+* Thu Oct 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt3
+- Fix the "from simple to complex" typo on a Russian slide (Closes: 59611).
+- Spell the company name BaseALT on the English slides
+  and the welcome page (Closes: 60203).
+- Keep installer section contents below their titles after Font+ in Help:
+  drop the border rule from group boxes (Closes: 45989, 57876).
+- menu:
+  + Show lightdm-settings under Settings in Xfce (Closes: 46682).
+  + Keep only the rules the Xfce menu adds to the ALT one, and drop the
+    medit and codeblocks overrides that no longer change anything.
+- Name what our defaults refer to by the ids the programs look up:
+  + Open pictures in ristretto under Xfce: it now installs
+    org.xfce.ristretto.desktop, so the old id was skipped.
+  + Name the KRunner plugins by their Plasma 6 ids. Only AppStream
+    differs from ALT's defaults, and it stays off.
+  + Point the preferred browser at firefox where chromium is missing.
+- Stop handing out xfce4-power-manager runtime state, which made it
+  write 1 into the kernel's brightness_switch_enabled on exit.
+- Drop more settings that equal the defaults of the programs reading them:
+  + Xfce: the Whisker properties defaults.rc already holds, the panel
+    properties nothing reads, double click time, workspace names, the
+    toolbar icon size, desktop icon positions, the thunar-volman
+    commands and every preferred application except the browser.
+  + GTK: the theme includes and the options GTK sets or ignores itself.
+  + KDE: the widget style, the Konsole defaults, the lock screen
+    wallpaper and what Plasma writes into the applet layout by itself.
+- Drop the greeter cursor workaround, not installed since 2019.
+
 * Mon Sep 21 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt2
 - Ship the desktop defaults system-wide instead of /etc/skel, which is
   copied once at account creation and so never reaches an account that
