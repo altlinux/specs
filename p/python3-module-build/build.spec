@@ -18,7 +18,7 @@ Extra "%1" for %%pypi_name. \
 
 Name: python3-module-%pypi_name
 Version: 1.6.1
-Release: alt1
+Release: alt2
 Summary: A simple, correct Python build frontend
 License: MIT
 Group: Development/Python3
@@ -89,6 +89,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Thu Oct 08 2026 Stanislav Levin <slev@altlinux.org> 1.6.1-alt2
+- Fixed FTBFS (pyproject-hooks 1.3.3).
+
 * Thu Sep 10 2026 Stanislav Levin <slev@altlinux.org> 1.6.1-alt1
 - 1.6.0 -> 1.6.1
 
