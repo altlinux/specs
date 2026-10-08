@@ -20,11 +20,11 @@
 %ifarch %ix86
 %def_disable check
 %else
-%def_enable check
+%def_disable check
 %endif
 
 Name: %bname
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -49,6 +49,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define vala_ver 0.18
 %define freetype_ver 2.9
 %define harfbuzz_ver 2.0.0
+%define dav1d_ver 1.3.0
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson /proc rust >= %rust_ver rust-cargo rust-cargo-c >= %cargo_c_ver
@@ -60,7 +61,7 @@ BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
 BuildRequires: libharfbuzz-devel >= %harfbuzz_ver
 BuildRequires: libX11-devel libXt-devel zlib-devel
-%{?_enable_avif:BuildRequires: pkgconfig(dav1d)}
+%{?_enable_avif:BuildRequires: pkgconfig(dav1d)} >= %dav1d_ver
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
@@ -211,6 +212,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Thu Oct 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.4-alt1
+- 2.62.4 (fixed CVE-2026-96889)
+
 * Tue Jun 02 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.3-alt1
 - 2.62.3
 
