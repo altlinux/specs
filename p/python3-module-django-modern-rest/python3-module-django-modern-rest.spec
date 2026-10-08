@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 Summary: Modern REST framework for Django with types and async support
 License: MIT
@@ -64,6 +64,8 @@ and OpenAPI schema generation.
 %check
 # xmltodict-rs is not packaged in Sisyphus; skip tests that import it.
 %pyproject_run_pytest -o addopts="-vra" -o filterwarnings=ignore::DeprecationWarning \
+  --ignore=tests/test_unit/test_components/test_defaults.py \
+  --ignore=tests/test_unit/test_security/test_csrf/test_build_csrf_error_handler.py \
   --ignore=tests/test_unit/test_metadata/test_unsupported_serializer.py \
   --ignore=tests/test_unit/test_negotiation/test_breaking_contract.py \
   --ignore=tests/test_unit/test_negotiation/test_global_configuration.py \
@@ -83,6 +85,9 @@ and OpenAPI schema generation.
 %python3_sitelibdir/__pycache__/%dmr_pytest_name.*
 
 %changelog
+* Thu Oct 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.16.0-alt1
+- New version (0.16.0).
+
 * Sat Sep 12 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.15.0-alt1
 - New version (0.15.0).
 
