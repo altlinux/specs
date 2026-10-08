@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.85
+Version: 1.1.86
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -20,7 +20,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: cmake dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6gui-devel libgsettings-dqt6-devel kf6-kconfig-devel kf6-kwindowsystem-devel kf6-kglobalaccel-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
+BuildRequires: cmake dqt6-tools-devel dqt6-declarative-devel dtk6-common-devel libdtk6gui-devel libgsettings-dqt6-devel dkf6-kconfig-devel dkf6-kwindowsystem-devel dkf6-kglobalaccel-devel libgio-devel libXcursor-devel libXfixes-devel libgtk+3-devel libxcbutil-cursor-devel libsystemd-devel
 BuildRequires: libdqt6-concurrent libdqt6-widgets
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -34,6 +34,9 @@ BuildRequires(pre): gcc-c++
 %prep
 %setup -n %repo-%version
 %patch -p1
+
+sed 's|include <KF6/|include <DKF6/|g' \
+  -i fakewm/dbus/deepinwmfaker.cpp
 
 %build
 %if_enabled clang
@@ -73,6 +76,10 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Thu Oct 08 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.86-alt1
+- New version 1.1.86.
+- Built on separate kf6 libs.
+
 * Mon Aug 24 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.85-alt1
 - New version 1.1.85.
 
