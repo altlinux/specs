@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define rdn_name com.system76.CosmicViewer
 
@@ -32,6 +32,7 @@ BuildRequires: just
 # for turbojpeg
 BuildRequires: cmake gcc-c++ nasm
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(libturbojpeg)
 BuildRequires: pkgconfig(libheif)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: /usr/bin/appstreamcli /usr/bin/desktop-file-validate
@@ -46,9 +47,13 @@ BuildRequires: /usr/bin/appstreamcli /usr/bin/desktop-file-validate
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
+# Disable feature that enforces vendored libheif use:
+sed -i '/"embedded-libheif",/d' Cargo.toml
+
 %build
 export VERGEN_GIT_SHA=%version
 export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
+export TURBOJPEG_SOURCE=pkg-config
 %rust_build
 
 %install
@@ -69,6 +74,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Oct 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - first build for Sisyphus
 

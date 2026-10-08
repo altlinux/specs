@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define rdn_name com.system76.Cosmic
 
@@ -28,7 +28,7 @@ Source1: %name-%version%beta-cargo.tar
 ExcludeArch: %ix86 armh ppc64le
 
 BuildRequires(pre): rpm-build-rust
-BuildRequires: make
+BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libseat)
@@ -48,10 +48,10 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+just
 
 %install
-%makeinstall_std prefix=%_prefix
+just rootdir=%buildroot install
 
 %check
 %rust_test
@@ -62,6 +62,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %_datadir/cosmic/com.system76.CosmicSettings.WindowRules/v1/tiling_exception_defaults
 
 %changelog
+* Wed Oct 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 

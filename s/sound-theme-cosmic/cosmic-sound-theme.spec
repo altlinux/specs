@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name cosmic-sound-theme
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 
 %def_enable check
@@ -51,6 +51,9 @@ BuildRequires: meson
 %doc README*
 
 %changelog
+* Wed Oct 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 

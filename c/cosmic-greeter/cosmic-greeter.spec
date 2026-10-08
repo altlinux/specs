@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define rdn_name com.system76.CosmicGreeter
 
@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: cosmic-greeter
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Greeter
@@ -101,6 +101,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Oct 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
 - 1.9.1
 

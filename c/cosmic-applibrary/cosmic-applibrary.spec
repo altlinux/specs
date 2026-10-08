@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define binary_name cosmic-app-library
-%define ver_major 1.9
+%define ver_major 1.10
 %define beta %nil
 %define rdn_name com.system76.CosmicAppLibrary
 
@@ -69,6 +69,9 @@ export APP_NAME=%binary_name APP_ID=%rdn_name
 %doc README*
 
 %changelog
+* Wed Oct 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
+- 1.10.0
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
