@@ -1,7 +1,6 @@
-%set_gcc_version 13
 Name: gsplus
 Version: 0.14
-Release: alt2
+Release: alt3
 
 Summary: Modern cross-platform Apple IIgs emulator and tools based on KEGS
 License: GPL-2.0
@@ -13,9 +12,6 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
 BuildRequires(Pre): rpm-macros-cmake
 BuildRequires: gcc-c++ cmake re2c libSDL2-devel libSDL2_image-devel libfreetype-devel libpcap-devel libreadline-devel
-%ifnarch %e2k
-BuildRequires: gcc13-c++
-%endif
 
 %description
 %summary
@@ -72,6 +68,10 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Oct  8 2026 Artyom Bystrov <arbars@altlinux.org> 0.14-alt3
+- Add missing header
+- Switch to stock GCC
+
 * Tue Nov  5 2024 Artyom Bystrov <arbars@altlinux.org> 0.14-alt2
 - Fix FTBFS (stay on GCC13)
 
