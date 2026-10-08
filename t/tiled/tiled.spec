@@ -1,7 +1,5 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: tiled
-Version: 1.8.4
+Version: 1.12.2
 Release: alt1
 Summary: Tiled is a general purpose tile map editor
 License: GPLv2
@@ -11,8 +9,10 @@ Url: http://www.mapeditor.org
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-xdg
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools zlib-devel
-BuildRequires: qt5-declarative-devel
+BuildRequires: gcc-c++ qt6-base-devel qt6-tools zlib-devel
+BuildRequires: qt6-declarative-devel
+BuildRequires: qbs
+BuildRequires: chrpath
 
 %description
 Tiled is a general purpose tile map editor. It is meant to be used for
@@ -23,6 +23,14 @@ Also, it allows arbitrary properties to be set on the map, its layers,
 the tiles or on the objects. Its map format (TMX) is relatively easy to
 understand and allows a map to use multiple tilesets while also
 allowing each tileset to grow or shrink as necessary later.
+
+
+%package plugin-rpmap
+Summary: MapTool plugin for Tiled
+Group: Graphics
+Requires: %name = %EVR
+%description plugin-rpmap
+A plugin for tiled which allows to save maps as rpmap MapTool maps.
 
 %package plugin-tbin
 Summary: tBIN plugin for Tiled
@@ -73,15 +81,35 @@ Requires: %name = %EVR
 %description plugin-gmx
 A plugin for tiled which allows to export maps as GameMaker Studio room files.
 
+%package plugin-tscn
+Summary: Godot 4 scene plugin for Tiled
+Group: Graphics
+Requires: %name = %EVR
+%description plugin-tscn
+A plugin for tiled which allows to export maps
+as Godot Engine 4 scene files (.tscn).
+
+%package plugin-rpd
+Summary: Remixed Pixel Dungeon plugin for Tiled
+Group: Graphics
+Requires: %name = %EVR
+%description plugin-rpd
+A plugin for tiled which allows to export maps
+as Remixed Pixel Dungeon levels (.json).
+
 %prep
 %setup
 
 %build
-%qmake_qt5 %name.pro -r RPATH=no PREFIX=%_prefix LIBDIR=%_libdir
-%make_build
+qbs setup-toolchains --detect
+qbs setup-qt %{_bindir}/qmake-qt6 qt6
+qbs config defaultProfile qt6
+qbs qbs.installPrefix:%_prefix projects.Tiled.useRPaths:false projects.Tiled.libDir:%_lib
+qbs build
 
 %install
-%make INSTALL_ROOT=%buildroot install
+qbs install --no-build --install-root %buildroot
+chrpath -d %buildroot%_libdir/libtilededitor.so %buildroot%_libdir/libtiled.so
 
 # locale files
 %find_lang %name --with-qt
@@ -100,6 +128,7 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 %dir %_datadir/%name/
 %dir %_datadir/%name/translations
 %_libdir/lib%name.so*
+%_libdir/lib%{name}editor.so*
 
 %dir %_libdir/%name/
 %dir %_libdir/%name/plugins/
@@ -117,6 +146,9 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 %_mandir/man1/tmxviewer.1*
 %dir %_datadir/thumbnailers
 %_datadir/thumbnailers/%name.thumbnailer
+
+%files plugin-rpmap
+%_libdir/%name/plugins/librpmap.so
 
 %files plugin-tbin
 %_libdir/%name/plugins/libtbin.so
@@ -139,7 +171,16 @@ A plugin for tiled which allows to export maps as GameMaker Studio room files.
 %files plugin-gmx
 %_libdir/%name/plugins/libgmx.so
 
+%files plugin-tscn
+%_libdir/%name/plugins/libtscn.so
+
+%files plugin-rpd
+%_libdir/%name/plugins/librpd.so
+
 %changelog
+* Tue Oct 06 2026 Grigory Ustinov <grenka@altlinux.org> 1.12.2-alt1
+- Automatically updated to 1.12.2.
+
 * Mon Apr 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.8.4-alt1
 - Automatically updated to 1.8.4.
 
