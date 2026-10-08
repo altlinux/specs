@@ -1,6 +1,6 @@
 Name:    puppetboard
-Version: 7.0.2
-Release: alt2
+Version: 7.0.4
+Release: alt1
 
 Summary: Web frontend for PuppetDB
 License: Apache-2.0
@@ -99,6 +99,9 @@ getent passwd puppetboard > /dev/null || \
 %dir %wsgi_dir
 
 %changelog
+* Thu Oct 08 2026 Andrey Cherepanov <cas@altlinux.org> 7.0.4-alt1
+- New version.
+
 * Thu Jun 11 2026 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt2
 - Build with python3-module-commonmark >= 0.9.1.
 
