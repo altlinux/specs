@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 Summary: A small and simple INI-file parser
 License: MIT
@@ -49,11 +49,13 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc CHANGELOG README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 07 2026 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1
+
 * Mon Oct 20 2025 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.1.0 -> 2.3.0.
 
