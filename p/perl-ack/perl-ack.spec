@@ -21,7 +21,7 @@ BuildRequires: perl(YAML/PP.pm)
 %define _enable_test 1
 
 Name: perl-ack
-Version: 3.9.0
+Version: 3.10.0
 Release: alt1
 
 Summary: A grep-like program specifically for large source trees
@@ -70,6 +70,12 @@ export TMPDIR=/tmp
 %perl_vendor_privlib/App/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.10.0-alt1
+- new version 3.10.0.
+- (CVE-2026-49147) SECURITY: sanitize filename ANSI escape sequences.
+- (CVE-2026-49146) SECURITY: prevent memory exhaustion from project .ackrc context options.
+- (CVE-2026-49145) SECURITY: prevent file exfiltration through project .ackrc options.
+
 * Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 3.9.0-alt1
 - automated CPAN update
 

@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %_var
 
 Name: perl-utf8-all
-Version: 0.024
+Version: 0.026
 Release: alt1
 
 Summary: Turn on Unicode everywhere
@@ -85,6 +85,9 @@ make test
 %perl_vendor_privlib/*
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.026-alt1
+- new version 0.026
+
 * Tue Jan 16 2018 Igor Vlasenko <viy@altlinux.ru> 0.024-alt1
 - automated CPAN update
 
