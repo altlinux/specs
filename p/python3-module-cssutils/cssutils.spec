@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.11.1
+Version: 2.15.0
 Release: alt1
 Summary: CSS Cascading Style Sheets library for Python
 License: LGPL-3.0
@@ -19,7 +19,7 @@ Patch: %name-%version-alt.patch
 # manually manage extras dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+BuildRequires(pre): rpm-build-pyproject >= 0.2.3
 %pyproject_builddeps_build
 %if_with check
 %pyproject_builddeps_metadata_extra test
@@ -50,11 +50,13 @@ any rendering facilities!
 %_bindir/csscombine
 %_bindir/cssparse
 %python3_sitelibdir/%mod_name/
-%exclude %python3_sitelibdir/%mod_name/tests/
-%python3_sitelibdir/encutils/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.15.0-alt1
+- new version 2.15.0.
+- Use separately packaged encutils following the upstream split.
+
 * Wed Jun 05 2024 Stanislav Levin <slev@altlinux.org> 2.11.1-alt1
 - 2.11.0 -> 2.11.1.
 
