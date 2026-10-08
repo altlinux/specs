@@ -39,7 +39,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.14.0
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -387,6 +387,9 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 1:4.14.0-alt2
+- fixed build with ffmpeg 9.0
+
 * Tue Jul 28 2026 Anton Farygin <rider@altlinux.org> 1:4.14.0-alt1
 - 4.13.0 -> 4.14.0
 
