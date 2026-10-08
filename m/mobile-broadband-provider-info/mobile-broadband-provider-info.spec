@@ -3,7 +3,7 @@
 
 Name: mobile-broadband-provider-info
 Version: 20251101
-Release: alt1
+Release: alt2
 
 Summary: Mobile Broadband Service Provider Database
 Group: System/Configuration/Networking
@@ -50,6 +50,9 @@ sed -i -E 's|[0-9]{8}|%version|' meson.build
 %doc COPYING README NEWS
 
 %changelog
+* Thu Oct 08 2026 Paul Wolneykien <manowar@altlinux.org> 20251101-alt2
+- Sort the operators by country code.
+
 * Wed Nov 12 2025 Yuri N. Sedunov <aris@altlinux.org> 20251101-alt1
 - 20251101
 
