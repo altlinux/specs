@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname org.armagetronad.armagetronad
 
 Name: armagetronad
-Version: 0.2.9.3.0
+Version: 0.2.9.3.1
 Release: alt1
 Summary: 3D Tron-like high speed game
 
@@ -13,9 +14,22 @@ Vcs: https://gitlab.com/armagetronad/armagetronad
 
 Source: %name-%version.tar
 
-BuildRequires: libxml2-devel libSDL-devel libGL-devel libGLU-devel
-BuildRequires: zlib-devel libpng-devel libSDL_image-devel gcc-c++
-BuildRequires: libjpeg-devel pkgconfig(libcurl)
+Patch: configure_alt-build.patch
+Patch1: excludedocker-alt-build.patch
+
+BuildRequires: libxml2-devel
+BuildRequires: libSDL-devel
+BuildRequires: libGL-devel
+BuildRequires: libGLU-devel
+BuildRequires: zlib-devel
+BuildRequires: libpng-devel
+BuildRequires: libSDL_image-devel
+BuildRequires: gcc-c++
+BuildRequires: libjpeg-devel
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: gettext
+BuildRequires: pandoc
+BuildRequires: python3
 
 %description
 The rules are simple: you ride a lightcycle, a kind of motorbike that
@@ -32,9 +46,15 @@ Summary: 3D Tron-like high speed game. Dedicated server
 %summary
 
 %prep
-%setup -q
+%setup
+%autopatch -p0
+echo "m4_define(AUTOMATIC_VERSION,["%version"])" > version.m4 || exit 1
+pandoc --from=markdown --to=rst CHANGELOG.md > ChangeLog || cp CHANGELOG.md ChangeLog
+subst 's|`which python3 python python2 2> /dev/null \| head -n 1`|"python3"|' batch/make/sortresources
+subst 's|docker/build||' Makefile.am
 
 %build
+%autoreconf
 # Build client
 %configure --enable-glout --disable-uninstall
 %make_build
@@ -70,6 +90,9 @@ rm -v %buildroot/%_bindir/%{name}-master
 %exclude %_datadir/games/%name-dedicated/scripts
 
 %changelog
+* Thu Oct 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.9.3.1-alt1
+- 0.2.9.3.0 -> 0.2.9.3.1
+
 * Wed Jun 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.9.3.0-alt1
 - 0.2.8.3.4 -> 0.2.9.3.0
 - changed license
