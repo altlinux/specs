@@ -1,5 +1,5 @@
 Name: xz
-Version: 5.4.7
+Version: 5.8.4
 Release: alt1
 
 Summary: LZMA/XZ compression programs
@@ -158,6 +158,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Sun Sep 20 2026 Arseny Maslennikov <arseny@altlinux.org> 5.8.4-alt1
+- 5.4.7 -> 5.8.4.
+
 * Wed Jun 11 2025 Arseny Maslennikov <arseny@altlinux.org> 5.4.7-alt1
 - 5.4.5 -> 5.4.7.
 - Apply patches by Lasse Collin to fix CVE-2025-31115.
