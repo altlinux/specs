@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: jujutsu
-Version: 0.36.0
+Version: 0.46.0
 Release: alt1
 Summary: A Git-compatible VCS that is both simple and powerful
 License: Apache-2.0
@@ -62,7 +62,7 @@ strip = false
 EOF
 
 %build
-cargo build %_smp_mflags --offline --release --all-features
+cargo build %_smp_mflags --frozen --offline --release --all-features
 target/release/jj util completion bash > _bash
 target/release/jj util completion fish > _fish
 target/release/jj util completion zsh  > _zsh
@@ -78,7 +78,7 @@ install -Dpm644 man1/*.1 -t %buildroot%_man1dir
 %check
 %buildroot%_bindir/jj -V | grep -Fx 'jj %version'
 # gpgsm tests require gnupg 2.4.4
-cargo test --release -- \
+cargo test --release --frozen -- \
 	--test-threads=1 \
 	--skip test_gpg::gpgsm_signing_roundtrip \
 	--skip test_gpg::gpgsm_signing_roundtrip_explicit_key
@@ -93,6 +93,9 @@ cargo test --release -- \
 %_datadir/fish/vendor_completions.d/jj.fish
 
 %changelog
+* Thu Oct 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.46.0-alt1
+- Update to v0.46.0 (2026-10-07).
+
 * Sun Dec 07 2025 Vitaly Chikunov <vt@altlinux.org> 0.36.0-alt1
 - Update to v0.36.0 (2025-12-04).
 
