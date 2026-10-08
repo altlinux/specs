@@ -5,16 +5,16 @@
 %define mod_name lru
 
 Name: python3-module-%pypi_name
-Version: 0.7
-Release: alt3.1
+Version: 0.8
+Release: alt1
 
 Summary: Tiny LRU cache
 
-License: BSD
+License: LicenseRef-Repoze-BSD-derived
 Group: Development/Python3
 Url: https://github.com/repoze/repoze.lru
 
-# Source-url: %__pypi_url %pypi_name
+# Source-url: %__pypi_url repoze_lru
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -28,8 +28,7 @@ BuildRequires(pre): rpm-build-python3
 # build backend and its deps
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-
-%py3_requires repoze
+BuildRequires: python3-module-pytest
 
 %description
 ``repoze.lru`` is a LRU (least recently used) cache implementation.
@@ -45,15 +44,22 @@ cache faster than keys and values that are used frequently.
 %install
 %pyproject_install
 %python3_prune
-rm -fv %buildroot%python3_sitelibdir/repoze/lru/tests.py
+
+%check
+%pyproject_run_pytest -o addopts=
 
 %files
-%doc *.txt
+%doc *.txt *.rst
 %python3_sitelibdir/%ns_name/%mod_name/
-%python3_sitelibdir/%ns_name.%mod_name-%version-*-nspkg.pth
+%dir %python3_sitelibdir/%ns_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- new version 0.8.
+- Adapt packaging to pyproject metadata, src layout and native namespace.
+- Run the upstream pytest suite.
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 0.7-alt3.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
