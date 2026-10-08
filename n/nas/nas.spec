@@ -6,7 +6,7 @@
 
 Name: nas
 Version: 1.9.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Network Audio System - a portable, network-transparent audio system
 License: MIT
@@ -145,7 +145,7 @@ echo "#define SharedLibX YES" >> config/NetAudio.def
 echo "#define NormalLibX YES" >> config/NetAudio.def
 xmkmf
 pushd config
-%add_optflags -fcommon -Wno-error=implicit-function-declaration -Wno-error=implicit-int
+%add_optflags -fcommon -std=gnu17 -Wno-error=implicit-function-declaration -Wno-error=implicit-int
 %configure --with-gnu-ld %{subst_with pic}
 popd
 %make Makefiles
@@ -216,6 +216,9 @@ echo "# See %dname.conf(5) and sample at %_docdir/%dname-*/" > %buildroot%_sysco
 %_man3dir/*
 
 %changelog
+* Thu Oct 08 2026 Nazarov Denis <nenderus@altlinux.org> 1.9.5-alt1.2
+- Fix FTBFS with gcc 15 (build with -std=gnu17)
+
 * Wed Nov 06 2024 Nazarov Denis <nenderus@altlinux.org> 1.9.5-alt1.1
 - Fix FTBFS
 
