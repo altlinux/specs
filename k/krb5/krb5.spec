@@ -13,7 +13,7 @@
 
 Name: krb5
 Version: 1.22.2
-Release: alt2
+Release: alt2.1
 
 %if_without bootstrap
 %if_with doc
@@ -224,6 +224,8 @@ touch -r $inldif 60kerberos.ldif
 %ifarch %e2k
 sed -r -i 's, error=(pointer-arith|uninitialized),,g' \
    src/aclocal.m4 src/configure*
+sed -i '/#pragma .* "-Wdeclaration-after-statement"/c #pragma diag_suppress 268' \
+   src/plugins/preauth/spake/edwards25519.c
 %endif
 
 %build
@@ -519,6 +521,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Wed Oct 07 2026 Michael Shigorin <mike@altlinux.org> 1.22.2-alt2.1
+- E2K: lcc 1.29.16 ftbfs workaround (ilyakurdyukov@)
+
 * Wed Jul 22 2026 Ivan A. Melnikov <iv@altlinux.org> 1.22.2-alt2
 - Backport upstream fix for strchr() C23 conformance (fixes FTBFS)
 
