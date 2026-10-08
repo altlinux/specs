@@ -1,6 +1,6 @@
 Name: punesemu
 Version: 0.111
-Release: alt1
+Release: alt2
 
 Summary: Qt-based NES emulator and NSF/NSFe Music Player
 License: GPLv2
@@ -54,6 +54,9 @@ rm -rf %buildroot/usr/share/doc/puNES/
 %_datadir/metainfo/
 
 %changelog
+* Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 0.111-alt2
+- fixed build with libavcodec 63 using avcodec_get_supported_config
+
 * Sun Feb 01 2026 Anton Farygin <rider@altlinux.org> 0.111-alt1
 - 0.110 -> 0.111
 - fixed build with ffmpeg 8.x (removed avcodec_close, FF_PROFILE -> AV_PROFILE)
