@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Module-Pluggable
 Name: perl-%dist
-Version: 6.3
+Version: 6.4
 Release: alt1
 
 Summary: Automatically give your module the ability to have plugins
@@ -35,6 +35,9 @@ for your module.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4-alt1
+- new version 6.4
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 6.3-alt1
 - automated CPAN update
 
