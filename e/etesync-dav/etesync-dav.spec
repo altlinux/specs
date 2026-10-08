@@ -5,7 +5,7 @@
 
 Name: etesync-dav
 Version: 0.35.1
-Release: alt1
+Release: alt2
 
 Summary: CalDAV and CardDAV adapter for EteSync
 
@@ -15,6 +15,7 @@ Url: https://github.com/etesync/etesync-dav
 
 # Source-url: https://github.com/etesync/etesync-dav/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Source1: radicale38-check.py
 
 # Radicale 3.5+ compatibility
 # upstream master: https://github.com/etesync/etesync-dav/pull/357
@@ -27,6 +28,10 @@ Patch4: 0004-Fix-WSGIResponse-for-Radicale-3.5.10.patch
 Patch5: 0005-Fix-method-signatures-for-Radicale-3.6.0.patch
 # drop the Radicale < 3.3 pin (not yet proposed upstream)
 Patch6: 0006-setup.py-allow-Radicale-3.3-and-newer.patch
+# peewee 4.x removed SqliteExtDatabase (not yet proposed upstream)
+Patch7: 0007-Use-peewee.SqliteDatabase-for-peewee-4-compatibility.patch
+# https://bugzilla.altlinux.org/60849 (attachment 22355)
+Patch8: 0007-Fix-Radicale-3.8-metadata-and-last-modified.patch
 
 BuildArch: noarch
 
@@ -78,6 +83,7 @@ install -Dpm0644 examples/systemd-user/%name.service %buildroot%_userunitdir/%na
 %check
 export HOME=$(mktemp -d)
 export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 %SOURCE1
 %buildroot%_bindir/etesync-dav --version
 # start the server and check its web UI, as nixos tests do
 # (localhost does not resolve in hasher, use the IP address;
@@ -99,6 +105,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.35.1-alt2
+- fix compatibility with peewee 4.x (SqliteExtDatabase was removed).
+- Fix PROPFIND and GET with Radicale 3.8 (closes: #60849).
+
 * Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.35.1-alt1
 - initial build for Sisyphus
-

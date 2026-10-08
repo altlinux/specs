@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: Python client library for the legacy EteSync protocol
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/etesync/
 
 # Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
+# peewee 4.x removed SqliteExtDatabase (not yet proposed upstream)
+Patch1: 0001-Use-peewee.SqliteDatabase-for-peewee-4-compatibility.patch
 
 BuildArch: noarch
 
@@ -41,6 +43,7 @@ It is used by etesync-dav to access legacy EteSync accounts.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -58,6 +61,9 @@ It is used by etesync-dav to access legacy EteSync accounts.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12.1-alt2
+- fix compatibility with peewee 4.x (SqliteExtDatabase was removed).
+
 * Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12.1-alt1
 - initial build for Sisyphus
 

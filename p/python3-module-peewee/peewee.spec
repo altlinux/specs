@@ -1,9 +1,7 @@
 %define oname peewee
 
-%def_disable check
-
 Name: python3-module-%oname
-Version: 3.19.0
+Version: 4.5.2
 Release: alt1
 
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
@@ -14,7 +12,7 @@ Url: https://pypi.python.org/pypi/peewee/
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# Source-url: %__pypi_url %oname
+# Source-url: https://github.com/coleifer/peewee/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 #Patch0: cython-3.1.patch
 
@@ -29,14 +27,17 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
-BuildRequires: python3-module-pytest python3-modules-sqlite3
-
 BuildRequires: python3-module-Cython
 
-# Keep noarch: Could not find libsqlite3, SQLite extensions will not be built.
-BuildRequires: libsqlite3-devel
+%if_disabled check
+%else
+BuildRequires: python3-modules-sqlite3
+%endif
 
-%add_python3_req_skip pysqlcipher
+%add_python3_req_skip sqlcipher3
+# optional playhouse modules (apsw_ext, flask_utils, pwasyncio, pydantic_utils):
+# upstream declares no hard deps (only extras), as in Fedora
+%add_python3_req_skip apsw flask greenlet pydantic
 
 %description
 Peewee is a simple and small ORM. It has few (but expressive) concepts,
@@ -79,18 +80,27 @@ ln -s ../objects.inv docs/
 %make -C docs html SPHINXBUILD=sphinx-build-3
 
 %check
-python3 setup.py test
 python3 runtests.py
 
 %files
 %doc *.md *.rst examples
 %_bindir/pwiz
+%_bindir/pwmigrate
 %python3_sitelibdir/*
 
 %files docs
 %doc docs/_build/html/*
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.2-alt1
+- new version 4.5.2
+- pack pwmigrate (new in 4.4.0)
+- enable %%check, drop unused BR libsqlite3-devel and pytest
+- build from GitHub tag tarball (PyPI sdist has no tests)
+- skip python3(sqlcipher3) optional dependency
+- don't require apsw, flask, greenlet, pydantic: used only by optional
+  playhouse modules (upstream lists them as extras)
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.19.0-alt1
 - new version 3.19.0
 - drop cython-3.1.patch (fixed upstream)
