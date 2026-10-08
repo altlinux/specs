@@ -1,7 +1,7 @@
 %define oname readme_renderer
 
 Name: python3-module-readme-renderer
-Version: 45.0
+Version: 46.0
 Release: alt1
 
 Summary: readme_renderer is a library for rendering "readme" descriptions for Warehouse
@@ -49,6 +49,9 @@ It can handle Markdown, reStructuredText (.rst), and plain text.
 
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 46.0-alt1
+- new version 46.0
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 45.0-alt1
 - new version 45.0
 

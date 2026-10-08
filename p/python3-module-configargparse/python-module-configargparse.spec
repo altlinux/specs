@@ -1,7 +1,7 @@
 %global oname ConfigArgParse
 
 Name: python3-module-configargparse
-Version: 1.7.5
+Version: 1.8.0
 Release: alt1
 
 Summary: A Python module with support for argparse, config files, and env variables
@@ -12,7 +12,7 @@ Url: https://github.com/bw2/ConfigArgParse
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url configargparse
 Source: %name-%version.tar
 
 BuildRequires: python3-module-setuptools python3-module-wheel python3-module-setuptools-scm
@@ -50,6 +50,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/__pycache__/configargparse*
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
 - new version 1.7.5
 - switch to pyproject build
