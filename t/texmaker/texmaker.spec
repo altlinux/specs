@@ -1,6 +1,6 @@
 Name: texmaker
-Version: 6.0.1
-Release: alt2
+Version: 6.0.2
+Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
 License: GPLv2+
@@ -99,6 +99,9 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Fri Oct 09 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.2-alt1
+- 6.0.2
+
 * Tue Mar 03 2026 Ilya Mashkin <oddity@altlinux.ru> 6.0.1-alt2
 - Fixed build against Qt 6.10
 - Add CVE-2025-50952.patch: guard against zero offset to a
