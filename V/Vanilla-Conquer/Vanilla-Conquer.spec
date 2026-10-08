@@ -1,7 +1,6 @@
-%set_gcc_version 13
 Name: Vanilla-Conquer
-Version: 06032023
-Release: alt1.1
+Version: 16072026
+Release: alt1
 Summary: Game Engine for the 1st generation Command and Conquer games
 License: GPL-3.0-or-later
 Group: Games/Strategy
@@ -12,7 +11,7 @@ Source: %name-%version.tar
 BuildRequires: ImageMagick-tools
 BuildRequires: cmake
 BuildRequires: pkg-config
-BuildRequires: gcc13-c++
+BuildRequires: gcc-c++
 BuildRequires: git-core
 BuildRequires: libopenal-devel
 BuildRequires: libSDL2-devel
@@ -35,8 +34,6 @@ the game.
 
 %prep
 %setup
-export CC=%__cc
-export CXX=%__cxx
 
 %build
 %cmake
@@ -92,6 +89,10 @@ done
 %_desktopdir/*.desktop
 
 %changelog
+* Tue Oct  6 2026 Artyom Bystrov <arbars@altlinux.org> 16072026-alt1
+- Update sources
+- Switch to stock GCC
+
 * Sat Nov  9 2024 Artyom Bystrov <arbars@altlinux.org> 06032023-alt1.1
 - Stay on GCC13
 
