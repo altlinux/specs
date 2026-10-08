@@ -12,27 +12,18 @@ BuildRequires: jpackage-generic-compat
 %global namedversion %{version}
 Name:          native2ascii-maven-plugin
 Version:       2.1.1
-Release:       alt1
+Release:       alt2
 Summary:       Native2Ascii Maven Plugin
 License:       MIT
 URL:           http://mojo.codehaus.org/%{name}/
 VCS:           https://github.com/mojohaus/native2ascii-maven-plugin
 Source0:       http://repo2.maven.org/maven2/org/codehaus/mojo/%{name}/%{namedversion}/%{name}-%{namedversion}-source-release.zip
 
+BuildRequires: maven-local
 BuildRequires: mvn(org.codehaus.mojo:mojo-parent:pom:)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven:maven-project)
-
 BuildRequires: mvn(junit:junit)
-
-BuildRequires: maven-local
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-invoker-plugin
-BuildRequires: maven-plugin-plugin
-
-# requires by javadoc-plugin
-BuildRequires: mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-components:pom:)
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.commons:commons-text)
 
 BuildArch: noarch
@@ -74,6 +65,9 @@ This package contains javadoc for %{name}.
 %endif
 
 %changelog
+* Wed Oct 07 2026 Anton Meleshnikov <alton@altlinux.org> 2.1.1-alt2
+- removed unnecessary requires
+
 * Sun Nov 30 2025 Aleksandr Shamaraev <shad@altlinux.org> 2.1.1-alt1
 - 1.0.beta1 -> 2.1.1
 - added VCS
