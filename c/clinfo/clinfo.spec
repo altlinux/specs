@@ -1,5 +1,5 @@
 Name: clinfo
-Version: 3.0.25.02.14
+Version: 3.1.26.09.26
 Release: alt1
 
 Summary: Enumerate OpenCL platforms and devices
@@ -40,6 +40,9 @@ install -Dpm0644 man1/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.26.09.26-alt1
+- new version 3.1.26.09.26
+
 * Sat Apr 19 2025 L.A. Kostis <lakostis@altlinux.ru> 3.0.25.02.14-alt1
 - new version 3.0.25.02.14.
 
