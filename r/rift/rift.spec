@@ -2,7 +2,7 @@
 
 Name: rift
 Version: 2.9.0
-Release: alt2
+Release: alt3
 Summary: Terminal coding agent for local and cloud language models
 License: MIT
 Group: Development/Tools
@@ -96,6 +96,9 @@ desktop-file-validate %SOURCE3
 %_iconsdir/hicolor/256x256/apps/rift-desktop.png
 
 %changelog
+* Thu Oct 08 2026 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt3
+- fix(openai): skip empty assistant messages in request history.
+
 * Wed Oct 07 2026 Alexey Shabalin <shaba@altlinux.org> 2.9.0-alt2
 - Add support built-in Kimi Code provider.
 
