@@ -1,5 +1,5 @@
 Name: sqlmap
-Version: 1.10.7
+Version: 1.10.9
 Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
@@ -23,6 +23,7 @@ BuildRequires: python3-module-paste
 
 %add_python3_lib_path %_datadir/%name
 %add_python3_req_skip thirdparty.six.moves
+%add_python3_req_skip thirdparty.six.moves.urllib.parse
 %add_findprov_skiplist %_datadir/%name/extra/*
 %add_findprov_skiplist %_datadir/%name/lib/*
 %add_findprov_skiplist %_datadir/%name/plugins/*
@@ -56,6 +57,8 @@ cp -pr data %buildroot%_datadir/%name/
 cp -pr extra %buildroot%_datadir/%name/
 rm -rfv %buildroot%_datadir/%name/extra/runcmd/
 rm -rfv %buildroot%_datadir/%name/extra/shutils/
+# Upstream database boundary tests require the uninstalled tests/_testutils.py.
+rm -rfv %buildroot%_datadir/%name/extra/boundarycheck/
 cp -pr lib %buildroot%_datadir/%name/
 cp -pr plugins %buildroot%_datadir/%name/
 cp -pr tamper %buildroot%_datadir/%name/
@@ -85,6 +88,11 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.9-alt1
+- new version 1.10.9.
+- Exclude upstream boundary tests from the runtime package.
+- Skip the bundled six dynamic urllib.parse namespace dependency.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.7-alt1
 - new version 1.10.7
 
