@@ -3,7 +3,7 @@
 %global git_build    224
 
 Name: nomacs
-Version: 3.22.1
+Version: 3.23.3
 Release: alt1
 
 License: GPLv3+ and CC-BY
@@ -79,7 +79,7 @@ Some usefull plugins for nomacs:
 #patch3 -p1
 
 # Be sure
-rmdir {3rd-party/*,3rd-party}
+#rmdir {3rd-party/*,3rd-party}
 # wrong lang code (https://github.com/nomacs/nomacs/issues/529)
 rm -fv ImageLounge/translations/nomacs_als.ts
 
@@ -120,6 +120,9 @@ sed -i -e 's|Image Lounge|Image?Lounge|g' %{name}.lang
 
 
 %changelog
+* Fri Oct 09 2026 Ilya Mashkin <oddity@altlinux.ru> 3.23.3-alt1
+- 3.23.3
+
 * Thu May 07 2026 Ilya Mashkin <oddity@altlinux.ru> 3.22.1-alt1
 - 3.22.1
 - Build with libraw0-devel (Closes: #58955)
