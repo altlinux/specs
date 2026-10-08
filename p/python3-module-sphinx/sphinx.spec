@@ -31,7 +31,7 @@ python3(roman_numerals) \\\
 Name: python3-module-%oname
 Epoch: 1
 Version: 9.1.0
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -47,6 +47,7 @@ Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
 Patch2: python-sphinx-objects.patch
+Patch3: %name-%version-%release.patch
 
 Requires: python3-module-sphinx-sphinx-build-symlink
 Requires: %(echo "%dependencies")
@@ -285,6 +286,9 @@ EOF
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 1:9.1.0-alt2
+- fixed FTBFS: cherry-picked upstream fix for tests with Pygments 2.21
+
 * Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 1:9.1.0-alt1
 - 8.2.3 -> 9.1.0
 - dropped sphinx-8.2.3-alt-docutils-0.22-compat.patch (fixed upstream)
