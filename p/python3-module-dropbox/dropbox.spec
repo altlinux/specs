@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 12.2.2
+Version: 12.2.3
 Release: alt1
 
 Summary: A Python SDK for integrating with the Dropbox API v2
@@ -36,8 +36,6 @@ BuildRequires: python3-module-pytest-mock
 %prep
 %setup -a1
 
-sed -i 's/import mock/from unittest import mock/' test/unit/test_dropbox_unit.py
-
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
@@ -55,6 +53,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Thu Oct 08 2026 Anton Vyatkin <toni@altlinux.org> 12.2.3-alt1
+- new version 12.2.3
+
 * Wed Sep 23 2026 Anton Vyatkin <toni@altlinux.org> 12.2.2-alt1
 - new version 12.2.2
 
