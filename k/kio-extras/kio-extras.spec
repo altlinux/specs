@@ -6,8 +6,8 @@
 %def_enable exiv2
 
 Name: %rname
-Version: 26.08.1
-Release: alt2
+Version: 26.08.2
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -138,6 +138,9 @@ rm -rf %buildroot/%_K6doc/*/kioworker6/man
 
 
 %changelog
+* Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt2
 - obsolete kde5-kio-extras-common
 
