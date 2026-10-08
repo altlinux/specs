@@ -10,8 +10,8 @@
 # Since we don't plan to package separate patch versions,
 # it's better to use major.minor for versioned files.
 %define v_major 1
-%define v_minor 98
-%define v_patch 1
+%define v_minor 99
+%define v_patch 0
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
 
@@ -320,8 +320,9 @@ CLANG_RUNTIME_DIR=`clang -print-runtime-dir`
 test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 
 # Build configuration.
+# TODO: ADD PGO.
 cat > bootstrap.toml <<EOF
-change-id = 158169
+change-id = 160100
 include = [
         "bootstrap.toml.d/llvm-fork-build.toml"
     ]
@@ -404,7 +405,6 @@ find %buildroot%rust_rustlib -maxdepth 1 -type f -delete
 
 # Remove development files from rust-src
 pushd %buildroot%rust_rustlib/src/rust/library
-rm -rf test
 rm -rf std/tests
 find ./ -name tests.rs -type f -delete
 rm -rf                                              \
@@ -601,6 +601,10 @@ rm -rf %rustdir
 %rust_rustlib/wasm32-unknown-unknown/
 
 %changelog
+* Thu Oct 08 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.99.0-alt1
+- New version (1.99.0).
+- Bring back "test/" into rust-src (Closes: 60762).
+
 * Thu Sep 03 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.98.1-alt1
 - New version (1.98.1).
 - rustc: fix miscompilation in generating vtables
