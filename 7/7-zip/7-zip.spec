@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: 7-zip
-Version: 26.03
+Version: 26.04
 Release: alt1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
@@ -140,6 +140,9 @@ sh check.sh %buildroot%_bindir/7zz
 %endif
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 26.04-alt1
+- new version 26.04
+
 * Sun Sep 06 2026 Fr. Br. George <george@altlinux.org> 26.03-alt1
 - Autobuild version bump to 26.03
 
