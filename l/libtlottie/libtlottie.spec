@@ -1,8 +1,11 @@
 %define rname tlottie
+# upstream sets no soname for the cdylib, this one is ALT-specific:
+# bump it when the C API in include/tlottie.h breaks ABI
+%define sover 1
 
 Name: libtlottie
 Version: 1.0.6
-Release: alt1
+Release: alt2
 
 Summary: Rust Lottie renderer with a C API
 
@@ -27,19 +30,27 @@ tlottie is a Rust library which renders Lottie animations and Telegram
 animated stickers (TGS). It provides a C API and is used by Telegram
 Desktop 7.2 and newer instead of the previous rlottie backend.
 
-Only a static library is built: upstream links it statically.
+%package -n %name%sover
+Summary: Rust Lottie renderer with a C API
+Group: System/Libraries
 
-%package devel-static
-Summary: Development files for %name
-Group: Development/C
-Provides: %name-devel = %EVR
-
-%description devel-static
+%description -n %name%sover
 tlottie is a Rust library which renders Lottie animations and Telegram
 animated stickers (TGS). It provides a C API and is used by Telegram
 Desktop 7.2 and newer instead of the previous rlottie backend.
 
-This package contains the static library and the header needed to build
+%package devel
+Summary: Development files for %name
+Group: Development/C
+Requires: %name%sover = %EVR
+Obsoletes: %name-devel-static < %EVR
+
+%description devel
+tlottie is a Rust library which renders Lottie animations and Telegram
+animated stickers (TGS). It provides a C API and is used by Telegram
+Desktop 7.2 and newer instead of the previous rlottie backend.
+
+This package contains the header and the link library needed to build
 applications with tlottie.
 
 %prep
@@ -49,7 +60,9 @@ install -vD %SOURCE2 .cargo/config.toml
 
 %build
 export CARGO_HOME="$PWD/.cargo"
-cargo rustc --offline --locked --lib --release --features c-api --crate-type staticlib
+# rustc does not set a soname for a cdylib, so pass it explicitly
+cargo rustc --offline --locked --lib --release --features c-api \
+    --crate-type cdylib -- -C link-arg=-Wl,-soname,libtlottie.so.%sover
 
 %check
 export CARGO_HOME="$PWD/.cargo"
@@ -58,7 +71,10 @@ export CARGO_HOME="$PWD/.cargo"
 cargo test --offline --locked -- --skip dos:: --skip renderer::frame::budget::
 
 %install
-install -pD -m644 target/release/libtlottie.a %buildroot%_libdir/libtlottie.a
+install -pD -m755 target/release/libtlottie.so %buildroot%_libdir/libtlottie.so.%version
+ln -s libtlottie.so.%version %buildroot%_libdir/libtlottie.so.%sover
+ln -s libtlottie.so.%sover %buildroot%_libdir/libtlottie.so
+
 install -pD -m644 include/tlottie.h %buildroot%_includedir/%rname/tlottie.h
 
 cat > tlottie.pc <<EOF
@@ -71,18 +87,23 @@ Name: tlottie
 Description: Rust Lottie renderer with a C API
 Version: %version
 Libs: -L\${libdir} -ltlottie
-Libs.private: -lm -lpthread -ldl -lgcc_s
 Cflags: -I\${includedir}/%rname
 EOF
 install -pD -m644 tlottie.pc %buildroot%_pkgconfigdir/tlottie.pc
 
-%files devel-static
+%files -n %name%sover
 %doc README.md LICENSE
-%_libdir/libtlottie.a
+%_libdir/libtlottie.so.%sover
+%_libdir/libtlottie.so.%version
+
+%files devel
+%_libdir/libtlottie.so
 %_includedir/%rname/
 %_pkgconfigdir/tlottie.pc
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt2
+- build shared library libtlottie.so.1 instead of the static one
+
 * Sun Sep 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - initial build for Sisyphus
-
