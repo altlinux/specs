@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Iconic fonts in PyQt and PySide applications
@@ -66,6 +66,9 @@ It started as a Python port of the QtAwesome C++ library by Rick Blommers.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- New version 1.4.2.
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - New version 1.4.1.
 
