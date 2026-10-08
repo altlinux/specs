@@ -7,7 +7,7 @@
 %endif
 
 Name: zathura
-Version: 2026.07.18
+Version: 2026.10.4
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -64,6 +64,7 @@ developing applications that use %name.
 %build
 # Wayland test disabled: weston failed with SIGSEGV sometimes
 %meson \
+	-Dshell-completions=enabled \
 	-Dtests-x11=%tests \
 	-Dtests-wayland=disabled
 
@@ -97,6 +98,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Thu Oct 08 2026 Mikhail Efremov <sem@altlinux.org> 2026.10.4-alt1
+- Updated to 2026.10.4.
+
 * Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 2026.07.18-alt1
 - Updated to 2026.07.18.
 
