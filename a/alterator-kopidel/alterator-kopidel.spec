@@ -10,7 +10,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -148,6 +148,23 @@ tests/vm/vmcheck.sh
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Thu Oct 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.5-alt1
+- Ask before formatting the chosen external drive.
+- Recalculate the targets when compression is toggled, since a
+  compressed build needs a different amount of space.
+- Stop offering the drive and the image of a running build as targets.
+- Offer partitions mounted with errors=remount-ro as working
+  directories, and keep autofs mount points out of the list.
+- Show the external drives without the escapes of lsblk (Closes: 60825).
+- Catch the unreplaced EFI device placeholder before installing GRUB.
+- Fix an external drive build from the GUI leaving /image/Metadata in
+  the system root and in every machine installed from the image.
+- Fix a build copying the system with the ignored-files list of
+  another kopidel run or of a target list refresh in the GUI.
+- Fix a relative working directory or -X path failing the build.
+- Fix kopidel hanging at full CPU on -X or -s given without a value.
+- Fix the test of the compressed image failing at random.
+
 * Mon Sep 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.4-alt1
 - Refuse a build that has no target instead of reporting
   a finished image (Closes: 56597).
