@@ -2,7 +2,7 @@
 
 Name: python3-module-flask-caching
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Cache support for Flask
 License: BSD-3-Clause
@@ -13,6 +13,7 @@ BuildArch: noarch
 
 # Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
+Patch: isolate-memcached-tests.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -38,6 +39,7 @@ This is a fork of the Flask-Cache extension.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -56,6 +58,9 @@ export PATH=$PATH:%_sbindir
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt2
+- Isolate Memcached test keys and account for server clock resolution.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.1-alt1
 - new version 2.5.1
 - build with pyproject (flit-core), enable tests
