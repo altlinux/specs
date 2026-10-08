@@ -1,6 +1,6 @@
 Name: rpm-build-cmake
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: RPM build enviroment for building RPM packages using cmake
 
@@ -10,8 +10,6 @@ Group: Development/Other
 Source: %name-%version.tar
 
 BuildArch: noarch
-
-BuildRequires: rpm-build-python3
 
 Requires: cmake >= %version
 
@@ -45,6 +43,11 @@ install -D -m755 cmake.prov.files %buildroot%_libexecdir/rpm/cmake.prov.files
 %_rpmmacrosdir/cmake
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt2
+- cmake.prov: rewrite in shell, so it does not pull python3 in
+- cmake.prov: drop a -suffix from PACKAGE_VERSION, accept uppercase SET()
+- cmake.prov: drop the lowercase cmake(name) duplicate
+
 * Mon Apr 07 2025 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - apply -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 

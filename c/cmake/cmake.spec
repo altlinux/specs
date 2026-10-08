@@ -11,8 +11,8 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.3.4
-Release: alt2
+Version: 4.4.4
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -56,8 +56,8 @@ Obsoletes: cpack < 2.4.5-alt3
 Provides: cpack = %version-%release
 
 Requires: %name-modules = %version-%release
-# TODO: change cmake to rpm-build-cmake in all specs
-Requires: rpm-macros-%name
+# rpm-build-cmake brings rpm-macros-cmake and the cmake.prov generator
+Requires: rpm-build-cmake >= 4.0.0-alt2
 
 %add_findreq_skiplist %_datadir/%name/Templates/cygwin-package.sh.in
 
@@ -331,6 +331,11 @@ popd
 
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.4-alt1
+- new version 4.4.4
+- require rpm-build-cmake instead of rpm-macros-cmake, so that cmake(Name)
+  provides are generated in every build that uses cmake
+
 * Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.4-alt2
 - FindPkgConfig: do not print pkg-config errors from --static queries
   (--static libs queries fail on a missing Requires.private module,
