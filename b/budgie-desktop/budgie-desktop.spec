@@ -8,7 +8,7 @@
 
 Name: budgie-desktop
 Version: 10.10.3
-Release: alt1
+Release: alt2
 
 Summary: A feature-rich, modern desktop designed to keep out the way of the user
 
@@ -23,6 +23,7 @@ Source0: %name-%version.tar
 
 # vapi for libxfce4windowing (needed until libxfce4windowing uses meson build)
 Patch1: add-libxfce4windowing-vapi.patch
+Patch2: fix-generated-panel-header-dependency.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-python3
@@ -123,6 +124,7 @@ Documentation for budgie-desktop
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %meson -Dwith-hibernate=false -Dxdp-libexecdir=/usr/libexec
@@ -223,6 +225,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.3-alt2
+- Fix parallel build race when generating the panel enum header.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.3-alt1
 - new version 10.10.3
 - update BuildRequires: add libgtop and labwc bridge python modules, drop libwnck, ibus and intltool
