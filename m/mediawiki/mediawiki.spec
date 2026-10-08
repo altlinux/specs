@@ -4,7 +4,7 @@
 
 Name: mediawiki
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -189,6 +189,10 @@ Obsoletes: mediawiki-extensions-LoginNotify
 Provides: mediawiki-extensions-Thanks
 Obsoletes: mediawiki-extensions-Thanks
 
+# since 1.46
+Provides: mediawiki-extensions-CheckUser
+Obsoletes: mediawiki-extensions-CheckUser
+Provides: mediawiki-extensions-TemplateStyles
 
 %description -n %name-common
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -511,6 +515,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt2
+- mediawiki-common: provide and obsolete bundled CheckUser extension (closes: #60866)
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt1
 - new version 1.46.2
 - build with php8.5 (new default): mediawiki-php8.4 -> mediawiki-php8.5
