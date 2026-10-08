@@ -5,8 +5,8 @@
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 6.0.2
-Release: alt3
+Version: 6.1.2
+Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
 
@@ -93,6 +93,10 @@ python3 test.py -vuf
 %doc doc samples
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 6.1.2-alt1
+- New version 6.1.2.
+- (CVE-2026-41066) SECURITY: disable external entity resolution by default in iterparse and ETCompatXMLParser.
+
 * Tue Jul 21 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 6.0.2-alt3
 - Disabled the bootstrap switch and reenabled the testsuite.
 
