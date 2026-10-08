@@ -8,11 +8,11 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt31
+Release: alt32
 
 Summary: %child modules set for %parent
 License: GPL-3.0
-Group: System/Base
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 
 Packager: Leonid Krivoshein <klark@altlinux.org>
@@ -25,6 +25,7 @@ Requires: %name-waitdev     = %version-%release
 Requires: %name-interactive = %version-%release
 Requires: %name-altboot     = %version-%release
 Requires: %name-localdev    = %version-%release
+Requires: %name-mediacheck  = %version-%release
 Requires: %name-liverw      = %version-%release
 Requires: %name-waitnet     = %version-%release
 Requires: %name-nfs         = %version-%release
@@ -35,42 +36,44 @@ AutoReq: noshell, noshebang
 Source0: %name-%version.tar
 
 %description
-Meta-package with the full set of the %child modules for %parent
+Meta-package with the full set of the %child modules for %parent.
 
 %package core
-Summary: %child-core module for %parent
-Group: System/Base
+Summary: The module %child-core for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
-Requires: %parent >= 2.9
+# [2.23.0] commit 78001064a introduces has_feature()
+# [2.36.0] commit db32bd39d introduces rootdelay_reset_timer()
+Requires: %parent >= 2.36.0
 AutoReq: noshell, noshebang
 
 %description core
-%child-core module for %parent
+%summary.
 
 %package getimage
-Summary: getimage sub-module for %name
-Group: System/Base
+Summary: The module %child-getimage for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-core = %version-%release
 Requires: wget
 AutoReq: noshell, noshebang
 
 %description getimage
-getimage sub-module for %name
+%summary.
 
 %package waitdev
-Summary: waitdev sub-module for %name
-Group: System/Base
+Summary: The module %child-waitdev for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-core = %version-%release
 AutoReq: noshell, noshebang
 
 %description waitdev
-waitdev sub-module for %name
+%summary.
 
 %package interactive
-Summary: interactive sub-module for %name
-Group: System/Base
+Summary: The module %child-interactive for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-core = %version-%release
 Requires: console-vt-tools
@@ -80,11 +83,11 @@ Requires: pv
 AutoReq: noshell, noshebang
 
 %description interactive
-interactive sub-module for %name
+%summary.
 
 %package altboot
-Summary: altboot sub-module for %name
-Group: System/Base
+Summary: The module %child-altboot for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-interactive = %version-%release
 Requires: curl
@@ -92,44 +95,56 @@ Requires: losetup
 AutoReq: noshell, noshebang
 
 %description altboot
-altboot sub-module for %name
+%summary.
 
 %package localdev
-Summary: localdev sub-module for %name
-Group: System/Base
+Summary: The module %child-localdev for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-altboot = %version-%release
 AutoReq: noshell, noshebang
 
 %description localdev
-localdev sub-module for %name
+%summary.
+
+%package mediacheck
+Summary: The module %child-mediacheck for %parent
+Group: System/Configuration/Boot and Init
+BuildArch: noarch
+Requires: %name-altboot = %version-%release
+Requires: isomd5sum
+AutoReq: noshell, noshebang
+
+%description mediacheck
+%summary.
 
 %package liverw
-Summary: liverw sub-module for %name
-Group: System/Base
+Summary: The module %child-liverw for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-localdev = %version-%release
 Requires: e2fsprogs
 Requires: fdisk
 Requires: sfdisk
+Requires: isomd5sum
 AutoReq: noshell, noshebang
 
 %description liverw
-liverw sub-module for %name
+%summary.
 
 %package waitnet
-Summary: waitnet sub-module for %name
-Group: System/Base
+Summary: The module %child-waitnet for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-altboot = %version-%release
 AutoReq: noshell, noshebang
 
 %description waitnet
-waitnet sub-module for %name
+%summary.
 
 %package nfs
-Summary: nfs sub-module for %name
-Group: System/Base
+Summary: The module %child-nfs for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-waitnet = %version-%release
 Requires: nfs-utils
@@ -137,11 +152,11 @@ Requires: iproute2
 AutoReq: noshell, noshebang
 
 %description nfs
-nfs sub-module for %name
+%summary.
 
 %package cifs
-Summary: cifs sub-module for %name
-Group: System/Base
+Summary: The module %child-cifs for %parent
+Group: System/Configuration/Boot and Init
 BuildArch: noarch
 Requires: %name-waitnet = %version-%release
 Requires: cifs-utils
@@ -149,16 +164,16 @@ Requires: hostinfo
 AutoReq: noshell, noshebang
 
 %description cifs
-cifs sub-module for %name
+%summary.
 
 %package doc
 Summary: %parent-%child documentation
-Group: Documentation
+Group: Development/Documentation
 BuildArch: noarch
 AutoReq: noshell, noshebang
 
 %description doc
-Documentation, testing and development files for %parent-%child
+Documentation, testing and development files for %parent-%child.
 
 %prep
 %setup -q
@@ -192,6 +207,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %files localdev
 %_datadir/%parent/features/%child-localdev
 
+%files mediacheck
+%_datadir/%parent/features/%child-mediacheck
+
 %files liverw
 %_datadir/%parent/features/%child-liverw
 
@@ -208,6 +226,10 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Thu Oct 08 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt32
+- redesign interaction with rootdelay (ALT #60861)
+- add a new feature 'mediacheck' (ALT #60692)
+
 * Sun Aug 10 2025 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt31
 - rebuilt with shellcheck 0.11.0
 
@@ -262,7 +284,7 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 - bootchain/copyfile: fix unbound variable
 
 * Wed Jul 12 2023 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt18
-- bootchain-altboot: do'nt unset STAGENAME
+- bootchain-altboot: don't unset STAGENAME
 - Display distribution independent dialogs
 - bootchain-core: Pack config 'bootchain' from $(BOOTCHAIN_PATH)
 
