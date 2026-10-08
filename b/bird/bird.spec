@@ -1,8 +1,13 @@
 %define _localstatedir %_var
 %define protocols all
+%ifarch %ix86
+%def_without check
+%else
+%def_with check
+%endif
 
 Name: bird
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -101,6 +106,10 @@ make test
 %_sbindir/birdcl
 
 %changelog
+* Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 3.3.3-alt1
+- 3.3.2 -> 3.3.3
+- disabled checks on %%ix86: the platform is only supported in relaxed mode.
+
 * Mon Aug 03 2026 Anton Farygin <rider@altlinux.org> 3.3.2-alt1
 - 3.3.1 -> 3.3.2
 
