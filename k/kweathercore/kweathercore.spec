@@ -4,7 +4,7 @@
 %define libkweathercore libkweathercore%sover
 
 Name: %rname
-Version: 26.08.1
+Version: 26.08.2
 Release: alt1
 %K6init altplace
 
@@ -80,6 +80,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKWeatherCore.so.*
 
 %changelog
+* Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
 - new version
 
