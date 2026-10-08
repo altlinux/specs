@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-addon-api
-Version: 8.9.0
+Version: 8.9.2
 Release: alt1
 
 Summary: Module for using Node-API from C++
@@ -60,7 +60,7 @@ It provides a C++ object model and exception handling semantics with low overhea
 
 #rm -rfv node_modules/.cache/
 #rm -fv node_modules/{nyc,.bin/nyc}
-npm prune --production
+# Header-only package: no node_modules are installed or need pruning.
 
 # do not work without development requires
 #check
@@ -74,6 +74,10 @@ cp -rp package.json *.js *.h %buildroot/%nodejs_sitelib/%node_module
 %nodejs_sitelib/%node_module
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 8.9.2-alt1
+- new version 8.9.2.
+- Remove unnecessary npm prune to keep the header-only build offline.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 8.9.0-alt1
 - new version 8.9.0
 
