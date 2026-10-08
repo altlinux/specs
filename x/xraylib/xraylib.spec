@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xraylib
-Version: 4.1.5
+Version: 4.3.0
 Release: alt1
 
 Summary: X-ray matter interaction cross sections for X-ray fluorescence applications
@@ -110,6 +110,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 4.3.0-alt1
+- 4.1.5 -> 4.3.0
+
 * Thu Jul 17 2025 Anton Farygin <rider@altlinux.com> 4.1.5-alt1
 - 4.1.1 -> 4.1.5
 
