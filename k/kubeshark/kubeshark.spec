@@ -1,7 +1,7 @@
 %global import_path github.com/kubeshark/kubeshark
 
 Name: kubeshark
-Version: 53.4.0
+Version: 53.5.0
 Release: alt1
 
 Summary:  Network Observability for SREs & AI Agents
@@ -52,5 +52,8 @@ export IGNORE_SOURCES=1
 
 
 %changelog
+* Thu Oct 08 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 53.5.0-alt1
+- Updated to 53.5.0.
+
 * Tue Sep 15 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 53.4.0-alt1
 - Initial build for Sisyphus.
