@@ -1,7 +1,7 @@
 %define oname msgpack
 
 Name: python3-module-%oname
-Version: 1.1.2
+Version: 1.2.2
 Release: alt1
 
 Summary: A Python 3 MessagePack (de)serializer
@@ -15,10 +15,11 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-pytest
 
 %description
 MessagePack is a binary-based efficient data interchange format that is
@@ -45,6 +46,11 @@ cython3 %oname/_cmsgpack.pyx
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- New version 1.2.2.
+- (GHSA-6v7p-g79w-8964, CVE-2026-57585) SECURITY: prevent crashes when reusing Unpacker after an error.
+- Fix additional use-after-free and buffer overflow issues from upstream 1.2.0 and 1.2.2.
+
 * Sat Feb 07 2026 Grigory Ustinov <grenka@altlinux.org> 1.1.2-alt1
 - Build new version.
 
