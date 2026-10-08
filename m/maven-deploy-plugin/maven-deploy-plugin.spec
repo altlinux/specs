@@ -7,7 +7,7 @@ BuildRequires: jpackage-generic-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-deploy-plugin
-Version:        3.1.1
+Version:        3.2.0
 Release:        alt1
 Summary:        Maven Deploy Plugin
 License:        Apache-2.0
@@ -22,7 +22,6 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
@@ -35,12 +34,7 @@ Source44: import.info
 Uploads the project artifacts to the internal remote repository.
 
 %prep
-%setup -q
-
-%pom_add_plugin :maven-plugin-plugin . "
-        <configuration>
-          <helpPackageName>org.apache.maven.plugin.deploy</helpPackageName>
-        </configuration>"
+%setup
 
 %build
 
@@ -55,6 +49,9 @@ Uploads the project artifacts to the internal remote repository.
 %doc DEPENDENCIES LICENSE NOTICE 
 
 %changelog
+* Wed Oct 07 2026 Anton Meleshnikov <alton@altlinux.org> 3.2.0-alt1
+- new version
+
 * Wed Dec 24 2025 Anton Meleshnikov <alton@altlinux.org> 3.1.1-alt1
 - new version (removed javadoc)
 
