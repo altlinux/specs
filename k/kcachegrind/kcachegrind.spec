@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K6bin/hotshot2calltree
 
 Name: %rname
-Version: 26.08.1
+Version: 26.08.2
 Release: alt1
 %K6init
 
@@ -64,6 +64,9 @@ sed -i \
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Tue Sep 22 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
 - new version
 
