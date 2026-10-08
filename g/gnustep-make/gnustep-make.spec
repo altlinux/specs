@@ -8,8 +8,8 @@
 %define optflags_lto %nil
 
 Name: gnustep-make
-Version: 2.8.0
-Release: alt3
+Version: 2.9.3
+Release: alt1
 # https://github.com/gnustep/tools-make
 License: GPL-3.0+
 Group: Development/Objective-C
@@ -23,7 +23,7 @@ Patch1: %name-alt-path-fix.patch
 BuildRequires: clang-devel libgnustep-objc2-devel star
 %endif
 %if_with doc
-BuildRequires: texlive-dist texlive-latex-base texi2html
+BuildRequires: texlive-dist texlive-latex-base /usr/bin/makeinfo /usr/bin/texi2pdf
 %endif
 
 Requires: gnustep-dirs
@@ -82,6 +82,11 @@ export SHELLPROG="/bin/bash"
 %if_with doc
 %make_build -C Documentation \
 	GNUSTEP_MAKEFILES=$PWD
+# Upstream ignores errors from documentation generators.
+for manual in gnustep-howto gnustep-faq gnustep-filesystem gnustep-make gnustep-userfaq; do
+	test -s "Documentation/$manual.pdf"
+	test -s "Documentation/$manual/index.html"
+done
 %endif
 
 %install
@@ -156,6 +161,10 @@ rm -f %buildroot%_infodir/*
 %endif
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.3-alt1
+- New version 2.9.3.
+- Require makeinfo and texi2pdf and verify generated PDF/HTML manuals.
+
 * Thu Aug 14 2025 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt3
 - Fixed bash path (ALT #55481) (thanks Korytov Ivan).
 
