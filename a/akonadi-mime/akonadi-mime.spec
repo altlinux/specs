@@ -1,8 +1,8 @@
 %define rname akonadi-mime
 
 Name: %rname
-Version: 26.08.1
-Release: alt2
+Version: 26.08.2
+Release: alt1
 %K6init
 
 Group: System/Libraries
@@ -77,6 +77,9 @@ Obsoletes: libkf5akonadimime < %version
 
 
 %changelog
+* Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt2
 - obsolete kde5-akonadi-mime-common
 
