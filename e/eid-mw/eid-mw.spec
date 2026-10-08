@@ -1,8 +1,9 @@
 %define mainline_ver 5.1.32
+%define gittag_ver 5.1.32.gaf30d6b7
 
 Name: eid-mw
 Version: %mainline_ver
-Release: alt1
+Release: alt2
 Summary: low-level support for Belgian Electronic Identity Card
 License: LGPLv3
 Group: Office
@@ -112,8 +113,8 @@ for libeidviewer.
 %setup -n %name
 
 echo "#\!/bin/sh" > scripts/build-aux/genver.sh
-echo "echo %mainline_ver" >> scripts/build-aux/genver.sh
-echo "echo %mainline_ver" > .version
+echo "echo %mainline_ver-%gittag_ver" >> scripts/build-aux/genver.sh
+echo "echo %mainline_ver-%gittag_ver" > .version
 
 %build
 %autoreconf
@@ -187,6 +188,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Thu Oct 08 2026 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.32-alt2
+- fix version info in about-eid-mw, closes: #60873
+
 * Sat Jun 20 2026 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.32-alt1
 - updated to version 5.1.32
 
