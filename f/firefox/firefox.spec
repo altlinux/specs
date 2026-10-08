@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 157.0
+Version: 157.0.1
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -387,6 +387,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 157.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-106016: Mitigation bypass in the File Handling component
+
 * Tue Sep 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 157.0-alt1
 - New version.
 - Fixes:
