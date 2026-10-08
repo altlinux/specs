@@ -1,5 +1,5 @@
 Name: element-web
-Version: 1.12.13
+Version: 1.12.30
 Release: alt1
 
 Summary: A glossy Matrix collaboration client
@@ -8,25 +8,25 @@ License: AGPL-3.0-only
 Group: Networking/Instant messaging
 Url: https://element.io/
 
-BuildArch: noarch
-
 # Source-url: https://github.com/element-hq/element-web/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded node modules during update version with rpmgs from
 # etersoft-build-utils. ask me about description using: lav@etersoft.ru
 Source1: %name-development-%version.tar
-
 AutoReq:yes,nonodejs,nonodejs_native,nomono
 AutoReq:nopython,nomingw32,nomingw64,noshebang
 
 # node_modules vendored on x86_64 (native rollup bindings are arch-specific)
 ExclusiveArch: x86_64
+# The installed web assets contain no architecture-specific executables.
+BuildArch: noarch
 
 Requires: /var/www/html
 
 BuildRequires: /proc
 BuildRequires: /usr/bin/node
+BuildRequires: node-typescript python3
 
 %description
 Element (formerly known as Vector and Riot) is a Matrix web client built using
@@ -34,11 +34,21 @@ the Matrix React SDK.
 
 %prep
 %setup -a1
-# Remove packageManager to prevent nx from trying to use specific pnpm version
-subst '/"packageManager"/d' package.json
+# Use system tools without package-manager self-downloads.
+python3 - <<'PY'
+import json
+p = 'package.json'
+d = json.load(open(p))
+d.pop('packageManager', None)
+d.pop('devEngines', None)
+json.dump(d, open(p, 'w'), indent=2)
+PY
 # Ensure all dependencies are hoisted to root node_modules
 echo "shamefully-hoist=true" >> .npmrc
 cp apps/web/config.sample.json apps/web/config.json
+# Vite declaration generation must use the system TypeScript JS API too.
+find node_modules -type l \( -name typescript -o -path '*/@typescript/old' \) \
+    -exec ln -sfn /usr/lib/node_modules/typescript '{}' \;
 
 %build
 export PATH=$(pwd)/node_modules/.bin:$PATH
@@ -46,15 +56,21 @@ export NODE_PATH=$(pwd)/node_modules
 # Run prebuild steps manually (nx calls pnpm which is not available)
 cd apps/web
 sh res/css/rethemendex.sh
-node module_system/scripts/install.ts
 cd -
-# Build shared-components
+# Build workspace libraries in dependency order.
+cd packages/shared-utils
+vite build
+cd -
+cd packages/module-api
+vite build
+cd -
 cd packages/shared-components
 vite build
 cd -
 # Build element-web
 cd apps/web
 webpack-cli --disable-interpret --progress --mode production
+cd -
 
 %install
 mkdir -p %buildroot/var/www/html/
@@ -72,6 +88,11 @@ ln -s %_sysconfdir/%name/config.json %buildroot/var/www/html/%name/config.json
 /var/www/html/%name/
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.30-alt1
+- new version 1.12.30.
+- Keep Element Desktop in a separate source package.
+- Use system TypeScript.
+
 * Thu Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.13-alt1
 - new version (1.12.13) via gear-uupdate
 - switch from yarn to pnpm (upstream moved to pnpm monorepo)
