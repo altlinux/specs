@@ -2,12 +2,12 @@
 %define oname simplejson
 
 Name: python3-module-%oname
-Version: 3.20.2
+Version: 4.1.2
 Release: alt1
 
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
 
-License: MIT/X Consortium
+License: MIT OR AFL-2.1
 Group: Development/Python3
 Url: https://simplejson.readthedocs.io/
 
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %description
@@ -42,28 +42,36 @@ This package contains documentation for simplejson.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 python3 ./scripts/make_docs.py
 
 %install
-%python3_install
+%pyproject_install
 # python2 compat only
 rm -f %buildroot/%python3_sitelibdir/%oname/ordered_dict.py
 
 %check
-python3 setup.py test
+# Exercise both the built C extension and the pure Python implementation.
+cp build/lib.*/simplejson/*.so simplejson/
+python3 -c "import simplejson._speedups"
+python3 -Wd simplejson/tests/__init__.py
 
 %files
 %python3_sitelibdir/%oname/
 %exclude %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %files doc
 %doc docs/*
 
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.2-alt1
+- New version 4.1.2.
+- Build with pyproject macros and test both C and Python implementations.
+- SECURITY: fix C extension use-after-free, buffer overflow and memory error handling.
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.20.2-alt1
 - new version 3.20.2
 
