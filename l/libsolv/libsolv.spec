@@ -1,6 +1,6 @@
 Name: libsolv
 Version: 0.7.39
-Release: alt1.4
+Release: alt1.5
 
 Summary: Library for solving packages and reading repositories
 License: BSD
@@ -17,6 +17,7 @@ Patch3: libsolv-aptpkglist.patch
 Patch4: libsolv-xz-concatenated.patch
 Patch5: libsolv-alt-upgrade-order.patch
 Patch6: libsolv-alt-promote-epoch.patch
+Patch7: libsolv-alt-identical-missing-vendor.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -56,6 +57,7 @@ Group: System/Configuration/Packaging
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 %cmake -GNinja \
@@ -93,6 +95,11 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.5
+- Do not treat a missing vendor as a difference of identical packages
+  when the build times match (APT-RPM pkglist has no Vendor tag): fixes
+  reinstall of all packages by dnf5 distro-sync.
+
 * Sun Oct 04 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.4
 - Compare versions as ALT rpmvercmp does: an alpha segment is newer
   than a numeric one (alt3_5 > 5).

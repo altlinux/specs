@@ -4,7 +4,7 @@
 
 Name: dnf5
 Version: 5.4.3.0
-Release: alt7
+Release: alt9
 
 Summary: Command-line package manager
 
@@ -26,6 +26,8 @@ Patch6: %name-alt-apt-rpm-repo.patch
 Patch7: %name-alt-upgrade-keep-packages.patch
 Patch8: %name-alt-apt-plugin.patch
 Patch9: %name-alt-config-manager-plugin-repos.patch
+Patch10: %name-alt-rpm-4.13-signature-whole-package.patch
+Patch11: %name-alt-apt-pinning.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.21
@@ -195,6 +197,8 @@ Libdnf5 plugin that allows loading Python plugins.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 %cmake \
@@ -414,6 +418,27 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt9
+- apt plugin: APT pinning of sources ("Package: *" records of preferences
+  and preferences.d with "Pin: release" or "Pin: origin"): the APT priority
+  gives the repository priority, Pin-Priority above 1000 allows upgrade to
+  downgrade packages to the versions of the source (eterbug #19659).
+- apt-rpm: download base/release.COMPONENT (fields for APT pinning).
+- add downgrade_to_repo repository option: upgrade (without arguments or
+  with package names) and install of an installed package sync it to the
+  repository when it is the most preferred one for the package.
+- dnf5.conf.5: document apt_component, apt_vendor, apt_srclist,
+  downgrade_to_repo repository options and the apt-rpm type.
+
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt8
+- apt-rpm: check package signatures for a repository with apt_vendor unless
+  pkg_gpgcheck is set explicitly (also for .repo files without the plugin).
+- apt plugin: don't disable pkg_gpgcheck for sources without vendor, so
+  gpgcheck=1 in dnf.conf works for them.
+- rpm 4.13: report a missing key for packages signed only as a whole
+  (no header signature), so the key is imported from gpgkey or the check
+  fails with "Public key is not installed".
+
 * Sun Oct 04 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt7
 - Add "apt-rpm" repository type: base/release verified by the vendor keys
   from /etc/apt/vendors.list, base/pkglist.COMPONENT checked by MD5.
