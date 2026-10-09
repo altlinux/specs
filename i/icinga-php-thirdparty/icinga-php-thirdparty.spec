@@ -15,13 +15,14 @@
 
 Name:           icinga-php-thirdparty
 Version:        0.13.1
-Release:        alt2
+Release:        alt3
 Summary:        Icinga PHP Thirdparty for Icinga Web 2
 License:        MIT
 Group:          Monitoring
 URL:            https://icinga.com
 Vcs:            https://github.com/Icinga/icinga-php-thirdparty.git
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
+Patch0:         Simferopol_TZ.patch
 
 BuildRequires(pre): rpm-build-php-version
 
@@ -36,11 +37,15 @@ which can be integrated as library into Icinga Web 2.
 
 %prep
 %setup
+%patch0 -p2
 find vendor/shardj -type f -name "*.php" -exec chmod -x {} \;
 find vendor/predis -type f -name "*.sh" -exec chmod +x {} \;
 chmod -x vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer/README
 chmod -x vendor/shardj/zf1-future/README-GIT.md
 chmod -x vendor/shardj/zf1-future/library/Zend/Locale/Data/fy.xml
+
+# unsuitable
+truncate -s0 vendor/masterminds/html5/README.md
 
 %build
 # noting to build
@@ -63,6 +68,10 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Tue Oct 06 2026 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt3
+- Truncate unsuitable README.
+- Updated timezone data according to zones in actual use.
+
 * Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt2
 - Select PHP version using %%php_defver macro.
 
