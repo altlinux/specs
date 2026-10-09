@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-gst%gst_api_ver
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject3
@@ -70,6 +70,9 @@ This package provides GStreamer overrides for PyGobject3.
 %doc ChangeLog release-notes-%ver_major.*
 
 %changelog
+* Fri Oct 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.8-alt1
+- 1.28.8
+
 * Tue Sep 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.7-alt1
 - 1.28.7
 
