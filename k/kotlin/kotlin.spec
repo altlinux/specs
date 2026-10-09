@@ -4,7 +4,7 @@
 
 Name: kotlin
 Version: 2.4.20
-Release: alt0.%snapshot
+Release: alt0.%snapshot.1
 
 %global source_dir %name-%version-dev-%snapshot
 %global dist_dir %_libexecdir/%name
@@ -53,9 +53,17 @@ Source23: gradle-cache-modules-rest-nodejs.tar.zst
 Source24: gradle-cache-modules-rest-large.tar.zst
 Source25: gradle-cache-modules-rest-small.tar.zst
 Source26: gradle-cache-aarch64-native.tar.zst
+Source27: gradle-cache-gradle9.tar.zst
 
 Patch0: 0001-ALT-Apply-Kotlin-build-compatibility-fixes.patch
 Patch1: 0002-ALT-Add-aarch64-native-build-support.patch
+Patch2: 0003-ALT-Align-build-logic-with-system-Gradle-9.patch
+Patch3: 0004-ALT-Allow-Gradle-9-DSL-deprecation-warnings.patch
+Patch4: 0005-ALT-Restore-Gradle-7.6-publication-component-access.patch
+Patch5: 0006-ALT-Isolate-Android-prototype-from-embedded-Kotlin.patch
+Patch6: 0007-ALT-Isolate-IDEA-fixtures-from-embedded-Kotlin.patch
+Patch7: 0008-ALT-Isolate-subplugin-example-from-embedded-Kotlin.patch
+Patch8: 0009-ALT-Use-Java-API-in-internal-Gradle-plugins.patch
 
 %global kotlin_native_enabled false
 
@@ -64,7 +72,7 @@ BuildRequires: /proc
 BuildRequires: rpm-build-java
 BuildRequires: maven
 BuildRequires: maven-local
-BuildRequires: gradle
+BuildRequires: gradle >= 9.7.1
 BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: java-11-openjdk-devel
 BuildRequires: java-17-openjdk-devel
@@ -168,12 +176,16 @@ if [ ! -d %gradle_cache_dir ]; then
   echo "vendored Gradle cache directory was not restored" >&2
   exit 1
 fi
+# Add dependencies for the system Gradle 9 Kotlin DSL after restoring the cache.
+tar --zstd -xf %SOURCE27 -C %gradle_cache_dir --strip-components=1
 mkdir -p %build_home
 mkdir -p %m2_repo
 mkdir -p %build_tmp
 if [ -d %m2_seed_repo ]; then
   cp -a %m2_seed_repo/. %m2_repo/
 fi
+# Regenerate this Kotlin build's artifacts instead of reusing the seed outputs.
+find %m2_repo -type d -name '%kotlin_maven_version' -prune -exec rm -rf '{}' +
 
 %build
 export HOME=%build_home
@@ -197,8 +209,11 @@ export JAVA_HOME="$JDK_21"
 export PATH="$JAVA_HOME/bin:$PATH"
 
 gradle dist installJps --offline --no-daemon --no-watch-fs \
-  --no-configuration-cache --dependency-verification=off \
+  --no-configuration-cache --no-build-cache --no-scan \
+  --dependency-verification=off \
   -Pkotlin.native.enabled=%kotlin_native_enabled \
+  -Pkotlin.build.internal.gradle.setup=false \
+  -Porg.gradle.kotlin.dsl.allWarningsAsErrors=false \
   -PdisableBreakpad
 
 %install
@@ -398,6 +413,9 @@ done
 %files maven -f .mfiles-maven
 
 %changelog
+* Thu Oct 08 2026 Ivan Khanas <xeno@altlinux.org> 2.4.20-alt0.5031.1
+- Fix FTBFS: build with system Gradle 9.
+
 * Mon Jun 22 2026 Ivan Khanas <xeno@altlinux.org> 2.4.20-alt0.5031
 - Initial vendored build for bootstraping.
 
