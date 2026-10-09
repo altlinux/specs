@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name zorin-taskbar
-%define ver_major 73
+%define ver_major 74
 %define beta %nil
 %define uuid %_name@zorinos.com
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-shell-extension-%_name
-Version: %ver_major.2.2
+Version: %ver_major
 Release: alt1
 
 Summary: The official taskbar for Zorin OS
@@ -52,6 +52,9 @@ The official taskbar for Zorin OS.
 %doc README.md
 
 %changelog
+* Fri Oct 09 2026 Yuri N. Sedunov <aris@altlinux.org> 74-alt1
+- 74 (GNOME-51 supported)
+
 * Mon Apr 06 2026 Yuri N. Sedunov <aris@altlinux.org> 73.2.2-alt1
 - 73.2.2 (GNOME-50 supported)
 
