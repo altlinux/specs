@@ -1,7 +1,7 @@
 %define oname scapy
 
 Name: scapy
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Scapy is a powerful interactive packet manipulation program written in Python
@@ -67,6 +67,15 @@ rm -rv %buildroot%python3_sitelibdir/%name/arch/windows
 %python3_sitelibdir/%name-*dist-info/
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
+- new version 2.8.0
+- security fixes:
+  + GHSA-g94r-m85q-4mpj: fix local-file disclosure when parsing TLS packets.
+  + GHSA-c547-xwrv-q9jm: fix out-of-bounds reads when receiving packets through libpcap.
+  + GHSA-7vg7-7f47-97qf: fix arbitrary local-file overwrite during recursive SMB downloads.
+  + GHSA-72w4-gq3w-rrpp: fix SMB share selection with case-insensitive names.
+  + GHSA-f6x2-gmgm-25p8: fix infinite processing of zero-width NetFlow templates.
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
 - new version 2.7.0
 
