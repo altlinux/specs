@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    dish-linux
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Native Linux client for the Satellite wireless-gamepad server
@@ -21,6 +21,7 @@ Requires: libqt6-quickcontrols2basic
 Requires: libqt6-quicklayouts
 Requires: libqt6-quickeffects
 Requires: libqt6-svg
+Requires: udev
 
 ExcludeArch: i586
 
@@ -47,6 +48,23 @@ SatelliteSetup.exe with the ViGEmBus driver.
 %install
 %cmake_install
 
+%post
+# Reload udev so the bundled 70-dish-hidraw.rules takes effect, and replay a
+# change event so pads already attached pick up the rule this session.
+if [ -x /usr/bin/udevadm ]; then
+    /usr/bin/udevadm control --reload-rules >/dev/null 2>&1 || :
+    /usr/bin/udevadm trigger --subsystem-match=hidraw --action=change >/dev/null 2>&1 || :
+fi
+:; exit 0
+
+%postun
+if [ "$1" = 0 ]; then
+    if [ -x /usr/bin/udevadm ]; then
+        /usr/bin/udevadm control --reload-rules >/dev/null 2>&1 || :
+    fi
+fi
+:; exit 0
+
 %files
 %_bindir/dish
 %dir %_datadir/metainfo
@@ -59,6 +77,9 @@ SatelliteSetup.exe with the ViGEmBus driver.
 %_man1dir/dish.1*
 
 %changelog
+* Fri Oct 09 2026 Sergey Palcheh <minergenon@altlinux.org> 2.2.1-alt1
+- new version 2.2.1
+
 * Tue Sep 22 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.0-alt1
 - new version 2.1.0
 
