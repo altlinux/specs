@@ -3,7 +3,7 @@
 %def_with check
 
 Name: clockenstein
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Calendar application for Linux Desktops
@@ -41,6 +41,7 @@ Requires: python3(setproctitle)
 Requires: python3(caldav)
 Requires: python3(babel)
 Requires: python3(rich)
+Requires: python3(pycurl)
 Requires: libgsound-gir
 Requires: xapp-symbolic-icons
 
@@ -57,6 +58,7 @@ BuildRequires: python3(setproctitle)
 BuildRequires: python3(caldav)
 BuildRequires: python3(babel)
 BuildRequires: python3(rich)
+BuildRequires: python3(pycurl)
 BuildRequires: libgsound-gir
 %endif
 
@@ -141,6 +143,9 @@ export LC_ALL=C
 %_iconsdir/hicolor/scalable/apps/clockenstein-clocks.svg
 
 %changelog
+* Fri Oct 09 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.1-alt1
+- New version 2.0.1.
+
 * Fri Sep 18 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 
