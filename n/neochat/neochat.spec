@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Chat
@@ -24,9 +24,11 @@ Requires: kunifiedpush
 
 Source: %rname-%version.tar
 Patch1: alt-hide-location.patch
+Patch2: alt-gcc13.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules
+BuildRequires: librange-v3-devel
 BuildRequires: libvulkan-devel
 BuildRequires: libquotient-qt6-devel libolm-devel
 BuildRequires: cmark-devel cmark
@@ -51,6 +53,7 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build
@@ -73,6 +76,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Fri Oct 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
+- fix compile with gcc-13
+
 * Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
