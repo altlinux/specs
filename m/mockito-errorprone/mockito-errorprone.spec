@@ -3,7 +3,7 @@
 Name: mockito-errorprone
 Epoch: 1
 Version: 5.20.0
-Release: alt1
+Release: alt2
 
 Summary: Error Prone integration for Mockito framework
 License: MIT
@@ -38,6 +38,8 @@ BuildRequires: objectweb-asm
 BuildRequires: guava
 BuildRequires: auto-common
 BuildRequires: auto-service
+BuildRequires: checker-javacutil
+BuildRequires: checker-dataflow-errorprone
 
 %description
 Error Prone integration module for Mockito testing framework.
@@ -68,5 +70,8 @@ rm -rf buildSrc
 %files -f .mfiles
 
 %changelog
+* Thu Oct 08 2026 Anton Meleshnikov <alton@altlinux.org> 1:5.20.0-alt2
+- Fix FTBFS (add necessary requires).
+
 * Tue Dec 02 2025 Ivan Khanas <xeno@altlinux.org> 1:5.20.0-alt1
 - First build for ALT.
