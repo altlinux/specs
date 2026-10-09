@@ -1,9 +1,9 @@
 %def_enable introspection
 %def_enable vala
-%def_disable docs
+%def_enable docs
 
 Name: libxfce4util
-Version: 4.20.1
+Version: 4.21.0
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -18,12 +18,12 @@ Vcs: https://gitlab.xfce.org/xfce/libxfce4util.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: glib2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
-# NOTE: gtk-doc is required by build system even if docs are disabled.
-BuildRequires: gtk-doc
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 %define _unpackaged_files_terminate_build 1
 
@@ -41,6 +41,17 @@ Requires: %name = %version-%release
 
 %description devel
 Header files for the %name library.
+
+%if_enabled docs
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-devel < %EVR
+
+%description devel-doc
+This package contains development documentation for %name.
+%endif
 
 %if_enabled introspection
 %package gir
@@ -78,22 +89,15 @@ Vala bindings for %name.
 %patch -p1
 
 %build
-%xfce4reconf
-%configure \
-	--disable-static \
-	--enable-maintainer-mode \
-	%{subst_enable introspection} \
-	%{subst_enable vala} \
-%if_enabled docs
-	--enable-gtk-doc \
-%else
-	--disable-gtk-doc \
-%endif
-	--enable-debug=minimum
-%make_build
+%meson \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_feature vala vala} \
+	%{subst_enable_meson_bool docs gtk-doc}
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -102,13 +106,15 @@ Vala bindings for %name.
 %_sbindir/*
 
 %files devel
-%if_enabled docs
-%doc %_datadir/gtk-doc/html/%name
-%endif
 %dir %_includedir/xfce4/
 %_includedir/xfce4/libxfce4util
 %_pkgconfigdir/*.pc
 %_libdir/*.so
+
+%if_enabled docs
+%files devel-doc
+%doc %_datadir/gtk-doc/html/%name
+%endif
 
 %if_enabled introspection
 %files gir
@@ -124,6 +130,11 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Fri Oct 09 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
+- Added devel-doc subpackage.
+- Switched to meson build.
+- Updated to 4.21.0.
+
 * Mon Mar 24 2025 Mikhail Efremov <sem@altlinux.org> 4.20.1-alt1
 - Updated to 4.20.1.
 - Dropped fake changelog entry.
