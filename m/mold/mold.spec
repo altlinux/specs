@@ -3,82 +3,106 @@
 %define _libexecdir %_prefix/libexec
 
 %set_verify_elf_method strict
-%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 %def_with check
 
 Name: mold
-Version: 2.41.0
+Version: 3.0.0
 Release: alt1
 
-Summary: A Modern Linker
+Summary: A Modern Linker in Rust
 License: MIT
 Group: Development/Tools
 Url: https://github.com/rui314/mold
 Vcs: https://github.com/rui314/mold
 
 Source0: %name-%version.tar
+Source1: %name-%version-vendor.tar
+Source2: cargo-config.toml
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: libstdc++-devel
-BuildRequires: libssl-devel
-BuildRequires: libzstd-devel
-BuildRequires: zlib-devel
-BuildRequires: libblake3-devel
-BuildRequires: libmimalloc-devel
-BuildRequires: tbb-devel
-BuildRequires: libxxhash-devel
+BuildRequires: rust-cargo
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(libzstd)
 %if_with check
-BuildRequires(pre): /proc
-BuildRequires: ctest
+BuildRequires: /proc
+BuildRequires: gcc-c++
+BuildRequires: clang-devel
+BuildRequires: glibc-devel-static
+BuildRequires: libstdc++-devel-static
 %endif
 
 %description
-mold is a faster drop-in replacement for existing Unix linkers.
-It is several times quicker than the LLVM lld linker,
+mold is a high-performance drop-in replacement for existing Unix linkers,
+designed to speed up builds. It is several times quicker than the LLVM lld,
 the second-fastest open-source linker.
-mold aims to enhance developer productivity by minimizing build time,
-particularly in rapid debug-edit-rebuild cycles.
+
+mold is written by the original developer of LLVM lld, the linker that Android,
+Chrome, FreeBSD, PlayStation, Nintendo Switch, and other production systems are
+built with. mold started as an effort to build an even faster linker from
+scratch, free of the architectural limits its author had run into while
+optimizing lld. It has been in production use since 2021, and today it is the
+default linker of many large open-source projects and is used internally by many
+companies.
 
 %prep
-%setup
+%setup -a1
 %autopatch -p1
-# Do not use vendored libraries.
-rm -rfv third-party/{zlib,zstd,mimalloc,tbb,xxhash,blake3}
+cat %_sourcedir/cargo-config.toml >> .cargo/config.toml
 
 %build
-%cmake \
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DMOLD_LTO=ON \
-    -DMOLD_USE_MIMALLOC=ON \
-    -DMOLD_USE_SYSTEM_MIMALLOC=ON \
-    -DMOLD_USE_SYSTEM_TBB=ON \
-%if_with check
-    -DBUILD_TESTING=ON \
+%ifarch %ix86
+# workaround for full LFS support
+cat > fcntl-shim.S << \EOF
+.text
+.globl fcntl
+.type fcntl, @function
+.extern fcntl64
+
+fcntl:
+    jmp fcntl64@PLT
+
+.size fcntl, .-fcntl
+EOF
+cc -fPIC -c fcntl-shim.S -o fcntl-shim.o
+export RUSTFLAGS="--cfg=libc_unstable_gnu_time_bits=\"64\" -Clink-arg=$PWD/fcntl-shim.o"
+export CFLAGS='-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64'
+%else
+export CARGO_PROFILE_RELEASE_LTO=thin
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 %endif
-    %nil
-%cmake_build
+export CARGO_PROFILE_RELEASE_DEBUG=true
+export CARGO_PROFILE_RELEASE_STRIP=none
+export ZSTD_SYS_USE_PKG_CONFIG=true
+cargo build --release %{?_smp_mflags} --offline --verbose
 
 %install
-%cmake_install
+export PREFIX=%_prefix
+export MOLD_LIBDIR=%_libdir
+export DESTDIR=%buildroot
+./install-mold.sh
 
-# remove wrong-installed documentation files
-rm %buildroot%_defaultdocdir/%name/LICENSE*
+# NOTE: drop flags for .debug_gdb_scripts until Rust is fixed
+objcopy --set-section-flags .debug_gdb_scripts=readonly,debug,contents %buildroot%_bindir/mold
+
+# remove wrong-installed license file
+rm %buildroot%_docdir/mold/LICENSE
 
 %check
-%ctest
+export CARGO_PROFILE_TEST_DEBUG=false
+cargo test --locked -p mold -p mold-tests -p mold-cli --lib --test integration
 
 %files
-%doc LICENSE
 %_bindir/*mold
 %_libdir/mold/
 %_libexecdir/mold/
 %_man1dir/*mold.1.*
 
 %changelog
+* Thu Oct 08 2026 Anton Zhukharev <ancieg@altlinux.org> 3.0.0-alt1
+- Updated to 3.0.0.
+
 * Tue Apr 14 2026 Anton Zhukharev <ancieg@altlinux.org> 2.41.0-alt1
 - Updated to 2.41.0.
 
