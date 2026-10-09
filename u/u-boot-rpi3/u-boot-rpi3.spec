@@ -1,5 +1,5 @@
 Name: u-boot-rpi3
-Version: 2026.07
+Version: 2026.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -46,6 +46,9 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Fri Oct 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.10-alt1
+- 2026.10 released
+
 * Tue Jul 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.07-alt1
 - 2026.07 released
 
