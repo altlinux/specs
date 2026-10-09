@@ -1,6 +1,6 @@
 %def_with check
 Name: ocaml-ssl
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 Summary: OCaml bindings for the OpenSSL library
 License: LGPLv2.1 with OCaml-LGPL-linking-exception
@@ -45,6 +45,9 @@ developing applications that use %name.
 %files devel -f ocaml-files.devel
 
 %changelog
+* Fri Oct 09 2026 Anton Farygin <rider@altlinux.org> 0.8.0-alt1
+- 0.7.0 -> 0.8.0
+
 * Tue Nov 07 2023 Anton Farygin <rider@altlinux.ru> 0.7.0-alt1
 - 0.7.0
 - enabled tests
