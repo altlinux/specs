@@ -3,20 +3,21 @@
 %define oname zvbi
 
 Name: libzvbi
-Version: 0.2.44
+Version: 0.2.45
 Release: alt1
 
 Summary: Raw VBI, Teletext and Closed Caption decoding library
 
 License: GPL
 Group: Video
-Url: http://zapping.sourceforge.net/
+Url: https://github.com/zapping-vbi/zvbi
 
-Source: http://prdownloads.sf.net/zapping/%oname-%version.tar.bz2
+# Source-url: https://github.com/zapping-vbi/zvbi/archive/refs/tags/v%version.tar.gz
+Source: %oname-%version.tar.gz
 
 Patch1: libzvbi-0.2.31-linkage_fix.patch
 
-BuildRequires: doxygen libpng-devel libX11-devel intltool libICE-devel
+BuildRequires: doxygen libpng-devel zlib-devel libX11-devel intltool libICE-devel
 # for build tests
 BuildRequires: gcc-c++
 
@@ -80,14 +81,18 @@ will use the zvbi library (aka libzvbi)
 	--enable-proxy \
 	--with-libintl-prefix=%prefix
 
+grep -q "^#define HAVE_LIBPNG 1$" config.h
 %make_build
+
+%check
+%make_build check
 
 %install
 %makeinstall_std
 %find_lang %oname
 
 %files -f %oname.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README.md
 %_bindir/zvbi*
 %_sbindir/zvbi*
 %_libdir/libzvbi*.so.*
@@ -105,6 +110,11 @@ will use the zvbi library (aka libzvbi)
 %endif
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2.45-alt1
+- new version 0.2.45.
+- (GHSA-86rm-g7qf-j2fh) SECURITY: fix out-of-bounds read and write.
+- Update upstream source URL and run upstream tests.
+
 * Tue Oct 07 2025 Alexander Danilov <admsasha@altlinux.org> 0.2.44-alt1
 - Version 0.2.44
 
