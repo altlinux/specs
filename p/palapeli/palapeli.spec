@@ -4,7 +4,7 @@
 %define libpala libpala%pala_sover
 
 Name: %rname
-Version: 26.08.1
+Version: 26.08.2
 Release: alt1
 %K6init
 
@@ -100,6 +100,9 @@ mv %buildroot/%_K6xdgmime/palapeli-mimetypes.xml \
 
 
 %changelog
+* Fri Oct 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Thu Sep 24 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
 - new version
 

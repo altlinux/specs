@@ -1,7 +1,7 @@
 %define rname skladnik
 
 Name: %rname
-Version: 26.08.1
+Version: 26.08.2
 Release: alt1
 %K6init
 
@@ -42,5 +42,8 @@ Skladnik is an implementation of the Japanese warehouse keeper game "sokoban".
 %_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Fri Oct 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Thu Oct 01 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.1-alt1
 - initial build
