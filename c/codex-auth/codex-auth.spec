@@ -7,7 +7,7 @@
 %global _zig_system_integration %nil
 
 Name: codex-auth
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 
 Summary: Command-line tool for switching Codex accounts
@@ -31,9 +31,6 @@ Requires: curl
 # environment has no network access.
 Patch0: %name-%version-alt-offline-tests.patch
 
-# Preserve UTF-8 boundaries when measuring and truncating table cells.
-Patch1: %name-%version-alt-fix-unicode.patch
-
 %description
 codex-auth is a command-line tool for managing and switching
 between Codex accounts.
@@ -56,6 +53,9 @@ between Codex accounts.
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Tue Oct 06 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.1-alt1
+- New version 0.3.1.
+
 * Thu Sep 24 2026 Pavel Khromov <hromovpi@altlinux.org> 0.3.0-alt1
 - Initial build for ALT Sisyphus. 
 
