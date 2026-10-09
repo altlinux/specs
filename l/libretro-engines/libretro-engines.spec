@@ -1,9 +1,6 @@
-%global __find_debuginfo_files %nil
-%set_gcc_version 13
-
 Summary:	An interface for emulator and game ports
 Name:		libretro-engines
-Version:	20251012
+Version:	20260928
 Release:	alt1
 # Actually, various for each core but mostly GPLv2
 License:	GPL2
@@ -11,7 +8,7 @@ Group:		Emulators
 Url:		http://www.libretro.com
 # fetched via libretro-fetch.sh from git and re-packed
 Source0:	%{name}-%{version}.tar.xz
-BuildRequires:	nasm gcc13 gcc13-c++ cmake
+BuildRequires:	nasm gcc gcc-c++ cmake
 # /usr/bin/xxd is needed for libretro-fuse build
 BuildRequires:	build-essential
 BuildRequires:	libstdc++-devel
@@ -44,7 +41,7 @@ RetroArch. All he has to do is to have the emulator port hook into the
 libretro API and that's it - we take care of the rest.
 
 
-%define engines boom3 cannonball dinothawr jumpnbump lutro mrboom numero nxengine prboom reminiscence tyrquake vitaquake2 xrick
+%define engines boom3 cannonball dinothawr ecwolf jumpnbump lutro mrboom numero nxengine prboom reminiscence tyrquake vitaquake2 vitaquake3 xrick
 %{expand:%(\
     for engine in %{engines}; do \
         echo -e "%%package ${engine}\n";\
@@ -66,18 +63,6 @@ libretro API and that's it - we take care of the rest.
 )}
 %endif
 
-%ifnarch %ix86
-%define engines vitaquake3 
-%{expand:%(\
-    for engine in %{engines}; do \
-        echo -e "%%package ${engine}\n";\
-        echo -e "Summary: libretro core\nGroup: Emulators\n";\
-        echo -e "%%description $engine\n%%summary\n";\
-        echo -e "%%files $engine\n%%_libexecdir/libretro/${engine}_libretro.so\n";\
-    done\
-)}
-%endif
-
 %prep
 %setup -q
 
@@ -85,7 +70,7 @@ export CC=%__cc
 export CXX=%__cxx
 %build
 
-for core in boom3 cannonball chailove dinothawr jumpnbump lutro mrboom numero nxengine prboom reminiscence tyrquake vitaquake2 xrick; do
+for core in boom3 cannonball chailove dinothawr ecwolf jumpnbump lutro mrboom numero nxengine prboom reminiscence tyrquake vitaquake2 vitaquake3 xrick; do
 ./libretro-build.sh $core
 done
 
@@ -95,17 +80,15 @@ for core in chailove; do
 done
 %endif
 
-%ifnarch %ix86
-for core in vitaquake3 ; do
-./libretro-build.sh $core
-done
-%endif
-
 %install
 mkdir -p %{buildroot}%{_libexecdir}/libretro
 install -m 0644 ./dist/unix/*.so %{buildroot}%{_libexecdir}/libretro/
 
 %changelog
+* Fri Oct  9 2026 Artyom Bystrov <arbars@altlinux.org> 20260928-alt1
+- Update sources
+- Switch to stock GCC
+
 * Mon Oct 13 2025 Artyom Bystrov <arbars@altlinux.org> 20251012-alt1
 - Update to new versions
 
