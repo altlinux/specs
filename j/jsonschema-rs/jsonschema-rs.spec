@@ -4,7 +4,7 @@
 %define mod_name jsonschema_rs
 
 Name: %pypi_name
-Version: 0.57.1
+Version: 0.58.6
 Release: alt1
 
 Summary: A high-performance JSON Schema validator
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: rust-cargo
 BuildRequires: maturin
+BuildRequires: cmake
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
@@ -43,6 +44,15 @@ install -vpD %SOURCE2 .cargo/config.toml
 %build
 export RUSTFLAGS="${RUSTFLAGS} -g"
 export CARGO_PROFILE_RELEASE_STRIP='none'
+export AWS_LC_SYS_CMAKE_BUILDER=1
+
+%ifarch %ix86
+# Avoid LLVM out-of-memory errors on 32-bit architectures.
+export CARGO_PROFILE_RELEASE_LTO=false
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16
+export CARGO_PROFILE_RELEASE_OPT_LEVEL=2
+%endif
+
 %rust_build -p jsonschema-cli
 pushd crates/jsonschema-py
 %pyproject_build
@@ -64,6 +74,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.58.6-alt1
+- New version (0.58.6).
+
 * Tue Sep 22 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.57.1-alt1
 - New version (0.57.1).
 
