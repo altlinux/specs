@@ -27,7 +27,7 @@
 Name:    arduino
 Epoch:   1
 Version: 1.8.19
-Release: alt3
+Release: alt4
 Summary: An IDE for Arduino-compatible electronics prototyping platforms
 
 License: GPL-2.0+ and LGPL-2.1+ and CC-BY-SA-3.0
@@ -150,6 +150,7 @@ Requires:       mvn(org.apache.logging.log4j:log4j-api)
 Requires:       mvn(org.apache.xmlgraphics:batik-all)
 Requires:       mvn(org.apache.xmlgraphics:xmlgraphics-commons)
 Requires:       mvn(org.bouncycastle:bcpg-jdk15)
+Requires:       mvn(org.bouncycastle:bcutil-jdk15)
 Requires:       mvn(org.jmdns:jmdns)
 Requires:       mvn(org.ow2.asm:asm)
 Requires:       mvn(org.scream3r:jssc)
@@ -369,6 +370,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 
 
 %changelog
+* Fri Oct 09 2026 Paul Wolneykien <manowar@altlinux.org> 1:1.8.19-alt4
+- Fix: Require bouncycastle-util (see ALT #60877).
+
 * Mon Aug 31 2026 Evgeniy Serov <scala@altlinux.org> 1:1.8.19-alt3
 - Build with Java 17.
 - Skip checksum verification for Gear-generated source archives.
