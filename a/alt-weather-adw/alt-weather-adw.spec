@@ -2,8 +2,8 @@
 %define app_id ru.basealt.WeatherAdw
 
 Name: alt-weather-adw
-Version: 1.1.0
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 # Missing alt-identify-client on i586
 ExcludeArch: i586
@@ -66,6 +66,9 @@ affect correct operation of the application.
 %doc README.md
 
 %changelog
+* Fri Oct 09 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.1-alt1
+- improved adapativity
+
 * Thu Oct 08 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.0-alt2
 - made providers card focusable
 - added source switcher to error screen
