@@ -4,7 +4,7 @@
 %def_without check
 
 Name: symbolical
-Version: 0.7.0.0
+Version: 0.8.0.0
 Release: alt1
 
 Summary: Math document application
@@ -26,6 +26,10 @@ BuildRequires: python3(dbus)
 Requires: fonts-ttf-google-noto-serif
 Requires: python3(dateutil)
 Requires: python3(dbus)
+Requires: python3(numpy)
+Requires: python3(scipy)
+Requires: python3(fontTools)
+Requires: python3(pint)
 
 %filter_from_requires /python3(gui)/d
 %filter_from_requires /python3(gui.MainWindow)/d
@@ -78,6 +82,9 @@ sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %bu
 %exclude %_datadir/licenses/symbolical
 
 %changelog
+* Fri Oct 09 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.0.0-alt1
+- New version 0.8.0.0.
+
 * Sat Sep 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0.0-alt1
 - New version 0.7.0.0.
 
