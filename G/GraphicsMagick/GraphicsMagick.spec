@@ -6,7 +6,7 @@
 %endif
 
 Name: GraphicsMagick
-Version: 1.3.48
+Version: 1.3.49
 Release: alt1
 
 Summary: Image manipulation and translation utility
@@ -188,6 +188,9 @@ make check
 %_man1dir/GraphicsMagick++-config.*
 
 %changelog
+* Fri Oct 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.49-alt1
+- 1.3.49 released
+
 * Fri Jul 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.48-alt1
 - 1.3.48 released
 
