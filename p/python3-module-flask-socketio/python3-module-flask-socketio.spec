@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 5.6.1
+Version: 5.7.0
 Release: alt1
 
 Summary: Socket.IO integration for Flask applications.
@@ -61,6 +61,9 @@ This package contains documentation for %pypi_name.
 %doc example
 
 %changelog
+* Fri Oct 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.7.0-alt1
+- 5.6.1 -> 5.7.0
+
 * Thu Jun 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.6.1-alt1
 - 5.3.6 -> 5.6.1
 
