@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 Summary: RFC-compliant FQDN validation and manipulation for Python
 License: MPL-2.0
@@ -29,6 +29,7 @@ so that they are acceptable to modern bowsers.
 %prep
 %setup
 %autopatch -p1
+%pyproject_scm_init v%version
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -47,5 +48,8 @@ so that they are acceptable to modern bowsers.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 09 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.6.0-alt1
+- New version (1.6.0).
+
 * Mon Sep 08 2025 Martynenko Evgeniy <enimalojd@altlinux.org> 1.5.1-alt1
 - Initial build for ALT.
