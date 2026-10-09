@@ -2,7 +2,7 @@
 
 Name:    epsonscan2
 Version: 6.7.82.0
-Release: alt4
+Release: alt5
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -45,9 +45,7 @@ sed -i -e '/BOOST_NO_CXX11_RVALUE_REFERENCES/d' `grep -rl BOOST_NO_CXX11_RVALUE_
 %build
 %add_optflags -Wno-unused-function -Wno-unused-variable -Wno-template-body
 %cmake -GNinja \
-       -Wno-dev \
-       -Wno-unused-function \
-       -Wno-unused-variable \
+       -Wno-author \
        -DCMAKE_SKIP_RPATH=OFF \
        -DCMAKE_SKIP_INSTALL_RPATH=OFF
 
@@ -66,6 +64,9 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Fri Oct 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.7.82.0-alt5
+- NMU: fix FTBFS with new cmake.
+
 * Tue Sep 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.7.82.0-alt4
 - NMU: fix FTBFS with new boost.
 
