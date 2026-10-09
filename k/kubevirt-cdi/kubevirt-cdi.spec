@@ -1,11 +1,11 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path kubevirt.io/containerized-data-importer
 
-# git rev-parse v1.64.0^{commit}
-%global rev_commit 58b908c6731c55da28e02ee5034d7d3fbb9be2e3
+# git rev-parse v1.66.1^{commit}
+%global rev_commit c8129be0728afa1a2c49b69b1c0847a42730a732
 
 Name:    kubevirt-cdi
-Version: 1.64.0
+Version: 1.66.1
 Release: alt1
 
 Summary: Data Import Service for kubernetes, designed with kubevirt in mind
@@ -19,7 +19,7 @@ ExcludeArch: %ix86
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.23
+BuildRequires: golang >= 1.24.0
 BuildRequires: gcc
 BuildRequires: /proc
 BuildRequires: pkgconfig(libnbd)
@@ -188,5 +188,8 @@ export CGO_CFLAGS="-std=gnu17"
 %_bindir/ovirt-populator
 
 %changelog
+* Fri Oct 09 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.66.1-alt1
+- New version 1.66.1.
+
 * Fri Sep 04 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.64.0-alt1
 - Initial build for ALT.
