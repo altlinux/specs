@@ -3,10 +3,10 @@
 
 # ALT release suffix (e.g. .release.4, .hotfix.2, .rc1).
 # Set to %nil when the upstream version has no suffix.
-%define version_suffix .nexus
+%define version_suffix .nexus.release.2
 # Upstream tag/source-tarball suffix, dash-separated (e.g. -release.4, -hotfix.2, -rc1).
 # Set to %nil when the upstream version has no suffix.
-%define upstream_suffix -nexus
+%define upstream_suffix -nexus-release.2
 
 Name: sharpemu
 Version: 0.0.5
@@ -160,6 +160,9 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Fri Oct 09 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.5-alt1.nexus.release.2
+- Update to v0.0.5-nexus-release.2
+
 * Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.5-alt1.nexus
 - Update to v0.0.5-nexus
 - Fix Url tag (point to sharpemu.app)
