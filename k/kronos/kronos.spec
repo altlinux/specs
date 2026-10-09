@@ -1,7 +1,6 @@
-%set_gcc_version 13
 Name:     kronos
 Version:  2.7.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Sega Saturn Emulator
 License:  GPL2
@@ -11,21 +10,20 @@ Url:      https://github.com/FCare/Kronos
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source:   %name-%version.tar
-
+Patch0: Kronos-add-FASTCALL-to-fix-calling-conventions.patch
 ExcludeArch: ppc64le
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc13-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel libGLEW-devel doxygen libfreeglut-devel qt5-base-devel qt5-multimedia-devel
+BuildRequires: cmake gcc-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel libGLEW-devel doxygen libfreeglut-devel qt5-base-devel qt5-multimedia-devel
 
 %description
 Yet Another Buggy And Uncomplete Saturn Emulator
 
 %prep
 %setup
-export CC=%__cc
-export CXX=%__cxx
 sed -i 's/^cmake_minimum_required(VERSION [.0-9]*)/cmake_minimum_required(VERSION 3.5)/' yabause/CMakeLists.txt
 sed -i 's/^cmake_minimum_required(VERSION [.0-9]*)/cmake_minimum_required(VERSION 3.5)/' yabause/src/core/m68k/musashi/CMakeLists.txt
+%patch0 -p1
 
 %build
 cd yabause
@@ -48,6 +46,10 @@ cd yabause
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Oct  9 2026 Artyom Bystrov <arbars@altlinux.org> 2.7.0-alt2
+- Switch to stock GCC
+- Add patch with adding FASTCALL in prototypes
+
 * Wed Sep 17 2025 Artyom Bystrov <arbars@altlinux.org> 2.7.0-alt1
 - Update to new version
 - Fix build with new CMake
