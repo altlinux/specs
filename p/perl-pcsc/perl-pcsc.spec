@@ -1,7 +1,7 @@
 
 Name:           perl-pcsc
-Version:        1.4.14
-Release:        alt2.2
+Version:        1.4.16
+Release:        alt1
 Summary:        Perl interface to the PC/SC smart card library
 
 Group:          Development/Perl
@@ -36,6 +36,10 @@ chmod 644 examples/* # avoid dependencies
 %perl_vendor_autolib/Chipcard
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.16-alt1
+- new version 1.4.16
+- Update watch file for the moved upstream website.
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.14-alt2.2
 - rebuild with new perl 5.28.1
 

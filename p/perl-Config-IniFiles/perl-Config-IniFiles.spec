@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Config-IniFiles
-Version: 3.000003
+Version: 3.003000
 Release: alt1
 
 Summary: Config-IniFiles - A module for reading .ini-style configuration files
@@ -33,6 +33,7 @@ Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jul 12 2005
 BuildRequires: perl-devel perl-Module-Build perl(List/MoreUtils.pm) perl(IO/Scalar.pm)
+BuildRequires: perl(autodie.pm)
 
 %description
 Config::IniFiles provides a way to have readable configuration files outside
@@ -53,6 +54,10 @@ sections can be grouped, and settings can be accessed from a tied hash.
 %perl_vendor_privlib/Config/
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 3.003000-alt1
+- new version 3.003000
+- Add autodie for the upstream test suite.
+
 * Wed Mar 25 2020 Igor Vlasenko <viy@altlinux.ru> 3.000003-alt1
 - automated CPAN update
 
