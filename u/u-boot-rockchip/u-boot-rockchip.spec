@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
-Version: 2026.07
-Release: alt3
+Version: 2026.10
+Release: alt1
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -14,7 +14,7 @@ ExclusiveArch: aarch64
 Source: %name-%version-%release.tar
 
 BuildRequires: aarch64-none-elf-gcc
-BuildRequires: atf-rockchip >= 2.14-alt2 rk35-firmware >= 20241023-alt4
+BuildRequires: atf-rockchip >= 2.14-alt2 rk35-firmware >= 20260626
 BuildRequires: bc ccache dtc >= 1.4 flex libgnutls-devel libssl-devel libuuid-devel
 BuildRequires: python3(libfdt)
 BuildRequires: python3(setuptools)
@@ -49,6 +49,11 @@ sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3588-generic,rk3588-repka-pi5,' \
 	> configs/repka_pi5_defconfig
 echo 'CONFIG_DEVICE_TREE_INCLUDES="rk3588-repka-pi5-u-boot.dtsi"' \
 	>> configs/repka_pi5_defconfig
+#
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3576-generic,rk3576-anbernic-rg-vita-pro,' \
+	< configs/generic-rk3576_defconfig \
+	> configs/anbernic-rg-vita-pro_defconfig
+#
 sed -i '/^CONFIG_FS_EXFAT/d' configs/*
 rm configs/generic-rk33*_defconfig
 
@@ -71,12 +76,17 @@ buildit()
   rm -rf ${O}
 }
 
-export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.18.bin
+export ROCKCHIP_TPL=$RKBIN/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.24.bin
 soc=RK3588
 boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do buildit ${soc,,[A-Z]}; done
 
-export ROCKCHIP_TPL=$RKBIN/rk3568_ddr_1560MHz_v1.23.bin
+export ROCKCHIP_TPL=$RKBIN/rk3576_ddr_lp4_2112MHz_lp5_2736MHz_v1.13.bin
+soc=RK3576
+boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
+for board in $boards; do buildit ${soc,,[A-Z]}; done
+
+export ROCKCHIP_TPL=$RKBIN/rk3568_ddr_1560MHz_v1.26.bin
 soc=RK3568
 boards=$(fgrep -lr CONFIG_ROCKCHIP_${soc} configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 for board in $boards; do buildit ${soc,,[A-Z]}; done
@@ -97,6 +107,9 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Fri Oct 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.10-alt1
+- 2026.10 released
+
 * Wed Sep 23 2026 Dmitry Terekhin <jqt4@altlinux.org> 2026.07-alt3
 - added Orange Pi 5 Pro board (closes: 60207)
 - added RBS Repka Pi 5 board (closes: 60270)
