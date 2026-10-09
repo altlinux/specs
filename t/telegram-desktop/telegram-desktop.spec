@@ -22,7 +22,7 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 7.2.9
+Version: 7.3.0
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -157,9 +157,12 @@ BuildRequires: boost-program_options-devel
 
 # upstream replaced rlottie with its own Rust renderer since 7.2.0
 BuildRequires: libtlottie-devel
+# wallet engine (Rust, UniFFI C++ binding) is a system library since 7.3.0
+BuildRequires: libwallet_engine-devel
 # text is shaped via Pango on Linux (DESKTOP_APP_USE_PANGO is on by default)
 BuildRequires: libpango-devel
-BuildRequires: libqrcodegen-cpp-devel
+# AVIF, HEIF and JPEG XL image formats (kimageformats plugins built in statically)
+BuildRequires: pkgconfig(libavif) pkgconfig(libheif) pkgconfig(libjxl) pkgconfig(libjxl_threads)
 
 # C++ sugar
 %if_with gsl
@@ -366,6 +369,16 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.0-alt1
+- new version 7.3.0
+- rebuild with shared libtlottie
+- build with system libwallet_engine (new requirement since 7.3.0)
+- security fixes:
+  + CVE-2026-107181: fix IPC record injection via tg:// links (upstream 7.2.9)
+  + CVE-2026-94488: fix XSS in the HTML chat exporter (upstream 6.9.4)
+  + CVE-2026-7701: fix vulnerability in RequestButton (affected up to 6.7.5)
+- enable AVIF, HEIF and JPEG XL image support (add libavif, libheif, libjxl BR)
+
 * Sun Sep 20 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.9-alt1
 - new version 7.2.9.
 - use system libtlottie instead of the dropped rlottie backend.
