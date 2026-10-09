@@ -1,5 +1,5 @@
 Name: erc
-Version: 1.1.10
+Version: 1.1.11
 Release: alt1
 
 Summary: Universal Archive Tool
@@ -50,6 +50,11 @@ See detailed russian description here: http://wiki.etersoft.ru/ERC
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.11-alt1
+- erc: add flatpak bundle support (extract, list, test)
+- doc: mention flatpak in README special formats
+- erc: add DwarFS AppImage extraction support (eterbug #19242)
+
 * Sun Jun 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.10-alt1
 - ercat: return error code on failed files like cat does
 - erc: add extract_tar_stdin helper
