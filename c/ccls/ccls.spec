@@ -1,11 +1,12 @@
 Name: ccls
-Version: 0.20250815.1
+Version: 0.20261004
 Release: alt1
 
 Summary: C/C++/Objective-C language server
 License: Apache-2.0
 Group: Development/C
-Url: https://github.com/MaskRay/ccls
+URL: https://github.com/MaskRay/ccls/wiki
+VCS: https://github.com/MaskRay/ccls
 
 Source: %name-%version-%release.tar
 
@@ -33,6 +34,9 @@ export CXX=clang++
 %_bindir/ccls
 
 %changelog
+* Fri Oct 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.20261004-alt1
+- 0.20261004 released
+
 * Mon Nov 17 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.20250815.1-alt1
 - 0.20250815.1 released
 
