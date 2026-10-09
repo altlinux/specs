@@ -1,5 +1,5 @@
 Name: libmd
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Message Digest functions from BSD systems
@@ -48,6 +48,9 @@ Development files for the libbsd library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version 1.2.0
 - fix License tag to valid SPDX
