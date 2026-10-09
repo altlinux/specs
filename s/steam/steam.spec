@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.87
-Release: alt4
+Release: alt5
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -20,6 +20,7 @@ Patch0: %name-desktop-alt.patch
 Patch1: %name-xvt-alt.patch
 Patch2: %name-libgl-drivers-path.patch
 Patch3: %name-steamvr-alt.patch
+Patch4: %name-desktop-checksum-alt.patch
 
 BuildRequires(Pre): rpm-build-python3
 
@@ -63,6 +64,7 @@ List of devices Steam and SteamVR will want read/write permissions on, to help d
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %install
 %makeinstall_std
@@ -91,6 +93,9 @@ List of devices Steam and SteamVR will want read/write permissions on, to help d
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Fri Oct 09 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt5
+- Mark created desktop shortcut as trusted for XFCE (ALT #46246)
+
 * Sun Oct 04 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt4
 - Add require on bzlib-compat (ALT #56814)
 
