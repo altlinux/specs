@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.16
+Version: 2.16.1
 Release: alt1
 Epoch: 1
 
@@ -64,6 +64,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Fri Oct 09 2026 Anton Farygin <rider@altlinux.org> 1:2.16.1-alt1
+- 2.16 -> 2.16.1
+
 * Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 1:2.16-alt1
 - 2.15 -> 2.16
 - built with meson
