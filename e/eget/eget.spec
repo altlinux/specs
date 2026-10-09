@@ -1,5 +1,5 @@
 Name: eget
-Version: 7.18
+Version: 7.19
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,42 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sat Oct 10 2026 Vitaly Lipatov <lav@altlinux.ru> 7.19-alt1
+- eget: skip timestamping for empty (0-byte) files in __timestamping_download
+- eget: skip timestamping for empty files in curl backend
+- eget: deduplicate wget-based url_get_response across backends
+- eget: add missing timeout to wget url_get_response fallback request
+- eget: initialize ORIG_EGET_BACKEND before IPFS gateway autodetection
+- eget: add wget2 compatibility for HTTP header parsing
+- eget: normalize HTTP header output across all backends
+- eget: improve --help description of wildcard vs page search modes
+- eget: improve README description of wildcard vs page search modes
+- eget: add Yandex.Disk public link download support
+- eget: fix absolute href path handling in make_fileurl
+- eget: remove ? as wildcard glob character
+- eget: fix cross-domain redirect host in url_get_raw_real_url
+- eget: rework timeout options, add --max-size and --measurements
+- eget: remove -n short alias for --measurements
+- eget: use timeout(1) for --read-timeout with wget/aria2/axel
+- eget: fix is_sshurl falsely matching file:/path URLs
+- eget: fix --check-url for file: directories
+- eget: strip path components from Content-Disposition filename (RFC 6266)
+- eget: fix curl url_get_response mixing headers with binary body
+- eget: fix wget2 url_get_response to use --save-headers instead of -S
+- eget: add redirect depth limit to url_get_raw_real_url
+- eget: only clear filename for root URL redirects, not all http URLs
+- eget: fall back to original URL for signed CDN redirects with UUID paths
+- eget: detect busybox wget and skip unsupported --tries option
+- eget: reject downloaded HTML page before adding to IPFS
+- eget: accept aria2c as EGET_BACKEND value
+- eget: fix wget2 response parsing for redirected filename detection (eterbug #17865)
+- eget: use last Content-Disposition header when several responses are present
+- eget: strip CR and accept 'Enqueuing' in wget2 response filter
+- eget: accept wget2 as EGET_BACKEND value
+- eget: work around wget2 treating absolute -P path as relative
+- eget: don't pass unsupported --compression=auto to wget2
+- eget: report missing FTP support in wget2
+
 * Sun Mar 01 2026 Vitaly Lipatov <lav@altlinux.ru> 7.18-alt1
 - eget: get_urls: filter out ../ and ./ entries from HTML directory listings
 - eget: support multiple files in EGET_IPFS_DB
