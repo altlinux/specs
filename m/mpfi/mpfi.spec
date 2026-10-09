@@ -14,17 +14,19 @@ BuildRequires: texinfo
 %endif
 
 Name: mpfi
-Version: 1.5.4
-Release: alt2
+Version: 1.5.5
+Release: alt1
 
 Summary: An interval arithmetic library based on MPFR
 
 License: LGPL-2.1+
 Group: Engineering
-Url: http://perso.ens-lyon.fr/nathalie.revol/software.html
+Url: https://gitlab.inria.fr/mpfi/mpfi
+Vcs: https://gitlab.inria.fr/mpfi/mpfi
 
-Source: https://perso.ens-lyon.fr/nathalie.revol/softwares/%name-%version.tar.bz2
+Source: %name-%version.tar
 Source44: import.info
+Patch: %name-%version-%release.patch
 
 BuildRequires: gcc
 BuildRequires: libmpfr-devel
@@ -79,6 +81,7 @@ The %name-static package contains the static %name library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -124,6 +127,12 @@ make check
 %endif
 
 %changelog
+* Fri Oct 09 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.5-alt1
+- New version 1.5.5.
+- Switched to new upstream.
+- Added VCS tag.
+- Used .gear/tags.
+
 * Wed Nov 13 2024 Leontiy Volodin <lvol@altlinux.org> 1.5.4-alt2
 - Fixed version.
 - Fixed build with gcc14.
