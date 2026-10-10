@@ -23,7 +23,7 @@
 
 Name:    telegram-desktop
 Version: 7.3.0
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -234,6 +234,11 @@ Requires: dbus
 %add_optflags -fcf-protection
 %endif
 
+# save memory: huge wallet sources exhaust the 32-bit address space (virtual memory exhausted)
+%ifarch i586
+%add_optflags --param ggc-min-expand=20 --param ggc-min-heapsize=131072
+%endif
+
 
 %description
 Telegram is a messaging app with a focus on speed and security, it's super-fast, simple and free.
@@ -369,6 +374,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Sat Oct 10 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.0-alt2
+- i586: tune gcc GC to fit huge wallet sources into 32-bit address space
+
 * Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.0-alt1
 - new version 7.3.0
 - rebuild with shared libtlottie
