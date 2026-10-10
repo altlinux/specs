@@ -1,6 +1,12 @@
+# GTSAM is very template heavy: compiling every translation unit in parallel
+# with full LTO exhausts RAM on ordinary builders and hangs the machine. Cap
+# the job count and the LTO link parallelism so peak memory stays bounded.
+%global _smp_build_ncpus 2
+%global optflags_lto -flto=2
+
 Name:    libgtsam
-Version: 4.2.2
-Release: alt2
+Version: 4.3.0
+Release: alt1
 
 Summary: GTSAM: C++ library for SAM in robotics/vision via factor graphs & Bayes nets
 License: BSD-3-Clause
@@ -9,14 +15,15 @@ URL:     https://borglab.github.io/gtsam/
 VCS:     https://github.com/borglab/gtsam
 
 Source: gtsam-%version.tar
-Patch0: eigen5-compat.patch
-Patch1: cmake-libdir.patch
+Patch: cmake-libdir.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
 BuildRequires: eigen3-devel tbb-devel python3-dev python3-module-pyparsing
 BuildRequires: libmetis-devel chrpath
+
+ExcludeArch: %ix86
 
 %description
 GTSAM is a C++ library that implements smoothing and mapping (SAM) in robotics
@@ -64,8 +71,7 @@ Python 3 bindings for the GTSAM library.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
+%patch -p1
 
 # Several Python modules exposed from the compiled gtsam extension
 # (gtsam.gtsam.gtsfm, gtsam.gtsam.imuBias, etc.) are not visible to RPM's
@@ -100,7 +106,7 @@ rm -f %buildroot%_libdir/libCppUnitLite.a
 # with "references the file ... but this file does not exist". The target is
 # an internal test helper, not part of the public API, so strip it from the
 # installed export files.
-sed -i '/foreach(_cmake_expected_target IN ITEMS metis-gtsam-if CppUnitLite gtsam)/s/ CppUnitLite//' \
+sed -i '/foreach(_cmake_expected_target IN ITEMS/{s/ CppUnitLite//}' \
     %buildroot%_libdir/cmake/GTSAM/GTSAM-exports.cmake
 sed -i '/^# Create imported target CppUnitLite/,/^# Create imported target gtsam$/{/^# Create imported target gtsam$/!d}' \
     %buildroot%_libdir/cmake/GTSAM/GTSAM-exports.cmake
@@ -125,6 +131,20 @@ if [ -d "$builddir/python/gtsam_unstable" ]; then
     cp -a "$builddir/python/gtsam_unstable" %buildroot%python3_sitelibdir/
 fi
 
+# The extension modules are self-contained; drop the examples/tests and the
+# gtwrap wrapper sources (preamble/, specializations/).  They are build- and
+# documentation-only, and importing them drags in modules that are not
+# packaged in Sisyphus (cssrlib, pyrtklib, dfg_utils, plotly, ...), which
+# would make python3-module-gtsam uninstallable.
+rm -rf %buildroot%python3_sitelibdir/gtsam/examples \
+       %buildroot%python3_sitelibdir/gtsam/tests \
+       %buildroot%python3_sitelibdir/gtsam/preamble \
+       %buildroot%python3_sitelibdir/gtsam/specializations \
+       %buildroot%python3_sitelibdir/gtsam_unstable/examples \
+       %buildroot%python3_sitelibdir/gtsam_unstable/tests \
+       %buildroot%python3_sitelibdir/gtsam_unstable/preamble \
+       %buildroot%python3_sitelibdir/gtsam_unstable/specializations
+
 # Python extension modules carry build-directory RPATH; remove it before
 # verify-elf checks the installed files.
 for so in %buildroot%python3_sitelibdir/gtsam/*.so \
@@ -132,18 +152,16 @@ for so in %buildroot%python3_sitelibdir/gtsam/*.so \
     [ -f "$so" ] && chrpath -d "$so"
 done
 
-# Upstream copies gtsam_unstable tests using the full path instead of the
-# basename, creating bogus /usr/src/RPM/BUILD/... directories under tests.
-rm -rf %buildroot%python3_sitelibdir/gtsam_unstable/tests/usr
-
 %files
 %doc LICENSE README.md
 %_libdir/libgtsam.so.*
+%_libdir/libcephes-gtsam.so.*
 
 %files -n libgtsam-devel
 %_includedir/gtsam/
 %_includedir/CppUnitLite/
 %_libdir/libgtsam.so
+%_libdir/libcephes-gtsam.so
 %_libdir/cmake/GTSAM/
 %_libdir/cmake/GTSAMCMakeTools/
 
@@ -160,6 +178,12 @@ rm -rf %buildroot%python3_sitelibdir/gtsam_unstable/tests/usr
 %python3_sitelibdir/gtsam_unstable/
 
 %changelog
+* Fri Oct 09 2026 Sergey Palcheh <minergenon@altlinux.org> 4.3.0-alt1
+- new version 4.3.0
+- Drop obsolete eigen5-compat patch: upstream 4.3.0 replaced the constant
+  helpers with macros, so the patch no longer applies
+- Refresh cmake-libdir patch for the reworked cmake install logic
+
 * Thu Aug 13 2026 Sergey Palcheh <minergenon@altlinux.org> 4.2.2-alt2
 - Strip stale CppUnitLite target from installed CMake exports so that
   find_package(GTSAM) does not fail on the missing libCppUnitLite.a
