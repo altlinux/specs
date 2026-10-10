@@ -3,7 +3,7 @@
 %def_with check
 
 Name: hyprmod
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 Summary: A native GTK4/libadwaita settings app for Hyprland
 License:  GPL-3.0
@@ -67,6 +67,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%namespace.%n
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.0-alt1
+- Updated to version 0.5.0.
+
 * Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.0-alt1
 - Updated to version 0.4.0.
 

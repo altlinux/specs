@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-hyprland-schema
-Version: 0.6.3
+Version: 0.7.1
 Release: alt1
 Summary: Typed Python schema for every Hyprland configuration option
 License: MIT
@@ -46,6 +46,9 @@ Zero runtime dependencies - stdlib only.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.7.1-alt1
+- Updated to version 0.7.1.
+
 * Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.3-alt1
 - Updated to version 0.6.3.
 

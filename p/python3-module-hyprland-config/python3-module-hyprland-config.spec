@@ -7,7 +7,7 @@
 %endif
 
 Name: python3-module-hyprland-config
-Version: 0.9.11
+Version: 0.9.19
 Release: alt1
 Summary: Round-trip parser and editor for Hyprland configuration files
 License: MIT
@@ -25,6 +25,7 @@ BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-hyprland-schema
 %endif
 
 %description
@@ -49,6 +50,9 @@ doesn't rewrite the rest of the file.
 %python3_sitelibdir/%{pyproject_distinfo %module_name}
 
 %changelog
+* Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.19-alt1
+- Updated to version 0.9.19.
+
 * Sun Jul 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.9.11-alt1
 - Updated to version 0.9.11.
 
