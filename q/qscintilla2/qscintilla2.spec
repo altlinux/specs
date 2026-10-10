@@ -4,7 +4,7 @@
 
 Name: qscintilla2
 Version: 2.14.1
-Release: alt2
+Release: alt3
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 
@@ -142,7 +142,8 @@ popd
 
 pushd designer
 qmake-qt5 QMAKE_CFLAGS_RELEASE="%optflags" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags -I../src" designer.pro
+	QMAKE_CXXFLAGS_RELEASE="%optflags -I../src" \
+	LIBS+="-L../src -lqscintilla2_qt5" designer.pro
 forDebug
 %make_build
 popd
@@ -242,6 +243,9 @@ rm -rf %buildroot/%python3_sitelibdir/*-%version.dist-info
 %_docdir/%libname-%version
 
 %changelog
+* Sat Oct 10 2026 Anton Farygin <rider@altlinux.org> 2.14.1-alt3
+- link Qt5 Designer plugin with QScintilla (ALT #43882)
+
 * Mon Jul 07 2025 Sergey V Turchin <zerg@altlinux.org> 2.14.1-alt2
 - NMU: fix package with Qt-6.9
 
