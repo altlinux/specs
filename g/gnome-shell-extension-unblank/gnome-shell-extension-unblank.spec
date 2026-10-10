@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: gnome-shell-extension-unblank
-Version: 20260928
+Version: 20261008
 Release: alt1
 Summary: Unblank screen when screen saver becomes active
 License: MIT
@@ -32,6 +32,9 @@ BuildRequires: /usr/bin/glib-compile-schemas
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.unblank.gschema.xml
 
 %changelog
+* Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 20261008-alt1
+- Updated to latest upstream git on date 20261008.
+
 * Tue Sep 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 20260928-alt1
 - Updated to latest upstream git on date 20260928.
 
