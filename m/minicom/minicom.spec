@@ -1,11 +1,9 @@
-#set_automake_version 1.11
-
 %define my_lockdir /var/lock/serial
 %define my_group uucp
 
 Name: minicom
-Version: 2.8
-Release: alt2
+Version: 2.11.1
+Release: alt1
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
@@ -16,8 +14,8 @@ Summary: A text-menu-driven modem control and terminal emulation program
 # The rest is simply GPLv2+.
 License: GPL-2.0-or-later AND LGPL-2.0-or-later AND Unlicense
 URL: http://alioth.debian.org/projects/minicom/
+VCS: https://salsa.debian.org/minicom-team/minicom.git
 
-# Source-url: https://salsa.debian.org/minicom-team/minicom/-/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.sh
 Source2: %name.csh
@@ -103,6 +101,10 @@ find extras doc -name 'Makefile*' -print0 |
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Sat Oct 10 2026 Anton Midyukov <antohami@altlinux.org> 2.11.1-alt1
+- New version 2.11.1 (Closes: 60881).
+- Cleanup Changelog.
+
 * Wed Sep 16 2026 Anton Midyukov <antohami@altlinux.org> 2.8-alt2
 - Remove minicom.desktop (Closes: 60561, 60562).
 - Convert License to SPDX format.
@@ -185,7 +187,7 @@ find extras doc -name 'Makefile*' -print0 |
   + redone patch8;
 - BuildRequires(build): autoconf = 2.13;
 
-* Sat Oct 20 2002 Ivan Zakharyaschev <imz@altlinux.ru> 2.00.0-alt6
+* Sun Oct 20 2002 Ivan Zakharyaschev <imz@altlinux.ru> 2.00.0-alt6
 - Updated upstream URL and maintainer's email, summary & description.
 
 * Sat Jun 29 2002 Dmitry V. Levin <ldv@altlinux.org> 2.00.0-alt5
@@ -224,96 +226,3 @@ find extras doc -name 'Makefile*' -print0 |
   + the default configuration files are now taken from the sources
 - added translations of the package info (from the original spec)
 - icon added (taken from Caldera)
-
-* Thu Aug 16 2001 Konstantin Volckov <goldhead@altlinux.ru> 1.83.1-ipl10mdk
-- Fixed permissions on /etc/minicom* files
-
-* Thu Jun 14 2001 Dmitry V. Levin <ldv@altlinux.ru> 1.83.1-ipl9mdk
-- Added format and permission fixes.
-
-* Thu Mar 09 2001 Ivan Zakharyaschev <vanyaz@mccme.ru> 1.83.1-ipl8mdk
-- fix SegFault on wide console (> 160)
-
-* Thu Mar 08 2001 Ivan Zakharyaschev <vanyaz@mccme.ru> 1.83.1-ipl7mdk
-- fix build on glibc 2.2.2
-- coment out Russian summary & desrciption
-
-* Thu Feb 01 2001 Ivan Zakharyaschev <vanyaz@mccme.ru> 1.83.1-ipl6mdk
-- change default serial port setting once more: use /dev/ttyS0 if
-  /dev/modem is unavailable
-
-* Thu Feb 01 2001 Ivan Zakharyaschev <vanyaz@mccme.ru> 1.83.1-ipl5mdk
-- find_lang
-- Russian summary and description
-
-* Wed Jan 31 2001 Ivan Zakharyaschev <vanyaz@mccme.ru> 1.83.1-ipl4mdk
-- security patch from RH (Bill Nottingham <notting@redhat.com>), just in
-  case someone will make minicom suid: drop privs on opening of capture file
-- config patch changed: the default serial port is /dev/ttyS0
-- a stupid doc-file added
-- requires: rzsz (to send files)
-
-* Tue Jan 30 2001 Ivan Zakharyaschev <vanyaz@mccme.ru> 1.83.1-ipl3mdk
-- Url added
-- %_sysconfdir/profile.d/minicom.{csh,sh} -- to enable 8-bit and colour
-- empty %_sysconfdir/minirc.dfl
-- patch3 to have the "pulse" dialing prefix in newly created
-  dial-entries pre-set
-
-* Mon Nov 20 2000 Dmitry V. Levin <ldv@fandra.org> 1.83.1-ipl2mdk
-- FHSification.
-- Removed suid & sgid bits from %_bindir/%name.
-
-* Wed Jul 05 2000 Dmitry V. Levin <ldv@fandra.org> 1.83.1-ipl1mdk
-- RE adaptions.
-
-* Wed Jun 28 2000 Alexandre Dussart <adussart@mandrakesoft.com> 1.83.1-1mdk
-- Updated patches(make patch only modify Makefile and install only install.sh)
-- 1.83.1
-
-* Mon Mar 27 2000 Daouda Lo <daouda@mandrakesoft.com> 1.82.1-2mdk
-- fix group
-
-* Fri Nov 12 1999 Camille B\xe8gnis <camille@mandrakesoft.com>
-- restore setgid uucp to permit minicom to lock in /var/lock
-- add test for compilation on SMP architectures
-- add patch to install.sh to allow installation by non-root users
-- modif install section to allow installation by non-root users
-- update to 1.82.1
-
-* Tue May 11 1999 Bernhard Rosenkraenzer <bero@mandrakesoft.com>
-- Mandrake adaptions
-
-* Sun Mar 21 1999 Cristian Gafton <gafton@redhat.com>
-- auto rebuild in the new build environment (release 5)
-
-* Tue Jan 24 1999 Michael Maher <mike@redhat.com>
-- fixed bug, changed groups.
-
-* Thu Oct 01 1998 Cristian Gafton <gafton@redhat.com>
-- updated to 1.82 to include i18n fixes
-
-* Wed Sep 02 1998 Michael Maher <mike@redhat.com>
-- Built package for 5.2.
-
-* Sun May 10 1998 Cristian Gafton <gafton@redhat.com>
-- security fixes (alan cox, but he forgot about the changelog)
-
-* Thu May 07 1998 Prospector System <bugs@redhat.com>
-- translations modified for de, fr, tr
-
-* Thu May 07 1998 Cristian Gafton <gafton@redhat.com>
-- BuildRoot; updated .make patch to cope with the buildroot
-- fixed the spec file
-
-* Tue May 06 1998 Michael Maher <mike@redhat.com>
-- update of package (1.81)
-
-* Wed Oct 29 1997 Otto Hammersmith <otto@redhat.com>
-- added wmconfig entries
-
-* Tue Oct 21 1997 Otto Hammersmith <otto@redhat.com>
-- fixed source url
-
-* Thu Jul 10 1997 Erik Troan <ewt@redhat.com>
-- built against glibc
