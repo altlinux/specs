@@ -6,7 +6,7 @@
 
 Name:    libgtsam
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: GTSAM: C++ library for SAM in robotics/vision via factor graphs & Bayes nets
 License: BSD-3-Clause
@@ -38,6 +38,7 @@ Summary: Development files for GTSAM
 Group:   Development/C++
 Requires: libgtsam = %EVR
 Requires: eigen3-devel
+Requires: libmetis-devel
 
 %description -n libgtsam-devel
 Development headers, CMake config files and the static helper library for
@@ -178,6 +179,11 @@ done
 %python3_sitelibdir/gtsam_unstable/
 
 %changelog
+* Sat Oct 10 2026 Sergey Palcheh <minergenon@altlinux.org> 4.3.0-alt2
+- libgtsam-devel: require libmetis-devel: the installed CMake export adds
+  /usr/include/metis to INTERFACE_INCLUDE_DIRECTORIES, so consumers fail at
+  the generate step if the Metis headers are not installed.
+
 * Fri Oct 09 2026 Sergey Palcheh <minergenon@altlinux.org> 4.3.0-alt1
 - new version 4.3.0
 - Drop obsolete eigen5-compat patch: upstream 4.3.0 replaced the constant
