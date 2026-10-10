@@ -1,7 +1,19 @@
 %define oname userspace-rcu
+
+# 64-bit uatomic on i586 needs compiler atomic builtins
+%ifnarch %e2k
+%define atomic_builtins --enable-compiler-atomic-builtins
+%else
+%define atomic_builtins %nil
+%endif
+
+# libs in /lib for tools used before /usr is mounted (ALT bug #33268);
+# with usrmerge /lib64 (/lib) is a symlink to /usr/lib64 (/usr/lib)
+%define rootlibdir %(test -L /%_lib && echo %_libdir || echo /%_lib)
+
 Name: libuserspace-rcu
 Version: 0.15.7
-Release: alt1
+Release: alt2
 
 Summary: RCU (read-copy-update) implementation in user space
 
@@ -14,7 +26,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: http://www.lttng.org/files/urcu/userspace-rcu-%version.tar.bz2
 Source: %name-%version.tar
 
-Patch: userspace-rcu-aarch64.patch
 Patch2000: userspace-rcu-e2k.patch
 
 BuildRequires: autoconf automake libtool
@@ -52,15 +63,12 @@ developing applications that use %name.
 
 %prep
 %setup
-#patch0 -p1
 %ifarch %e2k
 %patch2000 -p2
 %endif
 
 %build
-# Patch for AArch64 and PPC64LE needs it
-#autoreconf -vif
-%configure --disable-static
+%configure --disable-static %atomic_builtins
 #Remove Rpath from build system
 %__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 %__subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -70,15 +78,16 @@ developing applications that use %name.
 %install
 %makeinstall_std
 
-rm -vf %buildroot/%_libdir/*.la
-rm -rf %buildroot/%_docdir/%oname/
+rm -v %buildroot%_libdir/*.la
+rm -rv %buildroot%_docdir/%oname/
 
-# move to /lib (ALT bug #33268)
-mkdir -p %buildroot/%_lib/
-mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
+%if "%rootlibdir" != "%_libdir"
+mkdir -p %buildroot%rootlibdir/
+mv %buildroot%_libdir/lib*.so.* %buildroot%rootlibdir/
 for i in %buildroot%_libdir/lib*.so ; do
-    ln -srf %buildroot/%_lib/$(readlink $i) $i
+    ln -srf %buildroot%rootlibdir/$(readlink $i) $i
 done
+%endif
 
 cd doc/examples && make clean
 
@@ -87,7 +96,7 @@ export LD_LIBRARY_PATH=$(pwd)/src/.libs
 make check
 
 %files
-/%_lib/liburcu*.so.*
+%rootlibdir/liburcu*.so.*
 
 %files devel
 %doc README.md doc/*.md
@@ -97,6 +106,12 @@ make check
 %_pkgconfigdir/liburcu*.pc
 
 %changelog
+* Sat Oct 10 2026 Vitaly Lipatov <lav@altlinux.ru> 0.15.7-alt2
+- build with --enable-compiler-atomic-builtins (except e2k):
+  64-bit uatomic operations on i586 (closes: #60896)
+- pack libraries to /usr libdir on usrmerged systems (keep /lib* otherwise)
+- drop unused aarch64 patch, use rm -v without -f
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.15.7-alt1
 - new version 0.15.7
 

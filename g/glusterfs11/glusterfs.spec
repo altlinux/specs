@@ -1,6 +1,6 @@
 # TODO: --enable-bd-xlator
 
-%define major 11.1
+%define major 11.2
 %define somajor 11
 #define _localstatedir /var
 %def_enable epoll
@@ -25,7 +25,7 @@
 
 Name: glusterfs11
 Version: %major
-Release: alt2
+Release: alt1
 
 Summary: Cluster File System
 
@@ -43,12 +43,6 @@ Source4: glusterfs.logrotate
 Source7: glusterd.init
 Source8: glustereventsd.init
 Patch2000: glusterfs11-e2k.patch
-
-Patch: 0001-afr_selfheal_do-return-EIO-if-inode-type-is-not-IA_I.patch
-
-# Stop unsupported i586 build
-# Said all is ok: https://bugzilla.redhat.com/show_bug.cgi?id=1473968
-#ExcludeArch: %ix86
 
 AutoProv: no
 %add_python3_path %_libexecdir/glusterfs/python
@@ -68,6 +62,11 @@ AutoProv: no
 %allow_python3_import_path %_libexecdir/glusterfs/python/syncdaemon
 %allow_python3_import_path %_libexecdir/glusterfs/glusterfind
 %allow_python3_import_path %_libexecdir/glusterfs/gfind_missing_files
+
+# optional integrations (samba, ganesha, geo-replication, quota...) in hooks
+# and manual cgroup helpers using systemctl: not needed to run glusterd
+%add_findreq_skiplist %_sharedstatedir/glusterd/hooks/*
+%add_findreq_skiplist %_datadir/glusterfs/scripts/control-*.sh
 
 # TODO: remove
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
@@ -94,7 +93,8 @@ BuildRequires: /usr/bin/rpcgen
 BuildRequires: libcmocka-devel
 BuildRequires: systemd
 BuildRequires: openssl
-BuildRequires: libuserspace-rcu-devel >= 0.9.1
+# 64-bit uatomic on i586 (compiler atomic builtins)
+BuildRequires: libuserspace-rcu-devel >= 0.15.7-alt2
 
 %{?_with_tcmalloc:BuildRequires: libgperftools-devel}
 %{?_enable_ibverbs:BuildRequires: rdma-core-devel}
@@ -193,9 +193,9 @@ Provides: glusterfs-georeplication = %EVR
 Conflicts: glusterfs3-geo-replication
 Conflicts: glusterfs6-geo-replication
 Conflicts: glusterfs7-geo-replication
-Conflicts: glusterfs8-geo-replication
-Conflicts: glusterfs9-geo-replication
-Conflicts: glusterfs10-geo-replication
+Conflicts: glusterfs8-georeplication
+Conflicts: glusterfs9-georeplication
+Conflicts: glusterfs10-georeplication
 AutoProv: no
 
 %description georeplication
@@ -449,7 +449,6 @@ like Pacemaker.
 
 %prep
 %setup
-%patch -p1
 %ifarch %e2k
 %patch2000 -p2
 %endif
@@ -478,6 +477,7 @@ export PYTHON=%__python3
   --disable-linux-io_uring \
 %endif
   --with-systemddir=%_unitdir \
+  --with-mountutildir=%_sbindir \
   --localstatedir=/var/
   
 # NOTE: --enable-asan makes all sizeof is 0, see broken-configure TESTS
@@ -503,8 +503,6 @@ install -p -m 0644 rpc/rpc-lib/src/*.h %buildroot%_includedir/glusterfs/rpc/
 install -p -m 0644 rpc/xdr/src/*.h %buildroot%_includedir/glusterfs/rpc/
 mkdir -p %buildroot%_includedir/glusterfs/server
 install -p -m 0644 xlators/protocol/server/src/*.h %buildroot%_includedir/glusterfs/server/
-# We'll use our init.d
-rm -f %buildroot/etc/init.d/glusterd
 
 # Create logging directory
 mkdir -p %buildroot%_logdir/glusterfs/
@@ -514,7 +512,7 @@ find %buildroot%_libdir -name '*.a' -delete
 find %buildroot%_libdir -name '*.la' -delete
 
 # Remove installed docs, we include them ourselves as %%doc
-rm -rf %buildroot%_docdir/glusterfs/
+rm -rv %buildroot%_docdir/glusterfs/
 # move binary from datadir to bindir
 #mv %buildroot%_datadir/glusterfs/scripts/gsync-sync-gfid %buildroot%_bindir/
 
@@ -545,7 +543,7 @@ install -D -m644 extras/systemd/glusterfssharedstorage.service %buildroot/%_unit
 %_init_install %SOURCE8 glustereventsd
 install -D -p -m 0644 extras/glusterd-sysconfig %buildroot%_sysconfdir/sysconfig/glusterd
 # Install wrapper umount script
-install -D -p -m 0755 %SOURCE3 %buildroot/sbin/umount.glusterfs
+install -D -p -m 0755 %SOURCE3 %buildroot%_sbindir/umount.glusterfs
 
 %if_enabled geo-replication
 install -D -p -m 0644 extras/glusterfs-georep-logrotate %buildroot%_logrotatedir/glusterfs-georep
@@ -554,38 +552,39 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_logrotatedir/glusterfs
 
 install -D -p -m 644 extras/glusterfs.vim %buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
 %if_without ocf
-rm -rfv %buildroot%_libexecdir/ocf/
+rm -rv %buildroot%_libexecdir/ocf/
 %endif
 %if_disabled ganesha
-rm -f %buildroot/etc/ganesha/ganesha-ha.conf.sample
-rm -f %buildroot/usr/lib/ganesha/create-export-ganesha.sh
-rm -f %buildroot/usr/lib/ganesha/dbus-send.sh
-rm -f %buildroot/usr/lib/ganesha/ganesha-ha.sh
-rm -f %buildroot/usr/lib/ganesha/generate-epoch.py
+rm -v %buildroot/etc/ganesha/ganesha-ha.conf.sample
+rm -v %buildroot/usr/lib/ganesha/create-export-ganesha.sh
+rm -v %buildroot/usr/lib/ganesha/dbus-send.sh
+rm -v %buildroot/usr/lib/ganesha/ganesha-ha.sh
+rm -v %buildroot/usr/lib/ganesha/generate-epoch.py
 %endif
 
 
-rm -fv %buildroot%_sbindir/conf.py
+rm -v %buildroot%_sbindir/conf.py
 # FIXME: uses python 2 syntax
 # see also https://bugzilla.redhat.com/show_bug.cgi?id=1590193
-rm -fv %buildroot%_sbindir/gcron.py
-rm -fv %buildroot%_sbindir/snap_scheduler.py
+rm -v %buildroot%_sbindir/gcron.py
+rm -v %buildroot%_sbindir/snap_scheduler.py
 
 
 # TODO: selinux
 # rm HACK due S10selinux-label-brick.sh: line 46: syntax error near unexpected token `('
-rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-brick.sh
+rm -v %buildroot%_sharedstatedir/glusterd/hooks/1/create/post/S10selinux-label-brick.sh
+rm -v %buildroot%_sharedstatedir/glusterd/hooks/1/add-brick/post/S10selinux-label-brick.sh
 # drop req on policycoreutils (semanage)
-rm -fv %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fcontext.sh
+rm -v %buildroot%_sharedstatedir/glusterd/hooks/1/delete/pre/S10selinux-del-fcontext.sh
 
 # remove cloudsync-plugins
-rm -fv %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.so}
+rm -v %buildroot%glusterlibdir/cloudsync-plugins/{cloudsyncs3.so,cloudsynccvlt.so}
 
 %if_disabled devel
-rm -rf %buildroot%_pkgconfigdir/glusterfs-api.pc
-rm -rf %buildroot%_pkgconfigdir/libgfchangelog.pc
-rm -rf %buildroot%_libdir/{libgfapi.so,libgfchangelog.so,libgfrpc.so,libgfxdr.so,libglusterfs.so}
-rm -rf %buildroot%_includedir/glusterfs/
+rm -v %buildroot%_pkgconfigdir/glusterfs-api.pc
+rm -v %buildroot%_pkgconfigdir/libgfchangelog.pc
+rm -v %buildroot%_libdir/{libgfapi.so,libgfchangelog.so,libgfrpc.so,libgfxdr.so,libglusterfs.so}
+rm -rv %buildroot%_includedir/glusterfs/
 %endif
 
 %post server
@@ -678,8 +677,8 @@ rm -rf %buildroot%_includedir/glusterfs/
 %config(noreplace) %_logrotatedir/glusterfs
 %glusterlibdir/xlator/mount/fuse*
 %_man8dir/mount.glusterfs.8*
-/sbin/mount.glusterfs
-/sbin/umount.glusterfs
+%_sbindir/mount.glusterfs
+%_sbindir/umount.glusterfs
 %if_enabled fusermount
  %_bindir/fusermount-glusterfs
 %endif
@@ -794,6 +793,22 @@ rm -rf %buildroot%_includedir/glusterfs/
 #files checkinstall
 
 %changelog
+* Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.2-alt1
+- new version 11.2
+- drop afr_selfheal_do patch breaking directory self-heal (closes: #59767)
+- build with libuserspace-rcu >= 0.15.7-alt2 (64-bit uatomic on i586)
+- fix Conflicts with glusterfs{8,9,10}-georeplication
+- move mount.glusterfs and umount.glusterfs to /usr/sbin
+- server: skip autoreqs from glusterd hook scripts (they run only for
+  the configured integrations): drops hard deps on samba (/usr/sbin/smbd),
+  dbus-tools (ganesha hook), openssh-clients/scp (geo-replication hook),
+  policycoreutils, libselinux-utils, attr, which
+- server: skip autoreqs from control-cpu-load.sh/control-mem.sh
+  (manual cgroup helpers): drops hard dep on /bin/systemctl
+- fix removal of the selinux hooks moved to add-brick/post
+- drop removal of /etc/init.d/glusterd (not installed anymore),
+  use rm -v without -f
+
 * Tue Feb 20 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 11.1-alt2
 - fixed patch for Elbrus
 
