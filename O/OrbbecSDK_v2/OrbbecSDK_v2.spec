@@ -1,5 +1,5 @@
 Name:    OrbbecSDK_v2
-Version: 2.8.7
+Version: 2.10.6
 Release: alt1
 
 Summary: Software development kit for Orbbec 3D depth cameras and LiDARs
@@ -51,7 +51,8 @@ Requires: %name = %EVR
 %description tools
 This package contains command-line utilities for OrbbecSDK_v2 devices:
   - ob_benchmark: measure depth/color stream latency;
-  - ob_multi_devices_firmware_update: update firmware on multiple devices.
+  - ob_multi_devices_firmware_update: update firmware on multiple devices;
+  - ob_timestamp_tracker: track and analyze frame timestamps.
 
 %package examples
 Summary: Example source code for OrbbecSDK_v2
@@ -92,14 +93,18 @@ OrbbecSDK_v2.
 %install
 %cmake_install
 
+# The arm64 prebuilt enhanced_depth_filter module links NVIDIA TensorRT/CUDA
+# (libnvinfer.so.10, libcudart.so.12), which ALT does not provide; drop it so the
+# package does not ship a plugin whose dependencies cannot be resolved.
+rm -rf %buildroot%_libdir/extensions/filters/enhanced_depth_filter
+
 # Remove hardcoded build-tree RUNPATH from prebuilt extension libraries and strip
 # them (they ship with no .debug sections, so stripping silences both the
-# debuginfo and the eu-elflint warnings).
-for f in %buildroot%_libdir/extensions/*/*.so; do
-    [ -f "$f" ] || continue
-    patchelf --remove-rpath "$f" || true
-    strip --strip-unneeded "$f" || true
-done
+# debuginfo and the eu-elflint warnings). The prebuilt modules are nested at
+# different depths, so walk the whole tree.
+[ -d %buildroot%_libdir/extensions ] && \
+find %buildroot%_libdir/extensions -type f -name '*.so*' \
+    -exec sh -c 'patchelf --remove-rpath "$1" || true; strip --strip-unneeded "$1" || true' _ {} \; || true
 
 # Make sure the main library and the shipped tools also have no RUNPATH
 for f in %buildroot%_libdir/libOrbbecSDK.so.* %buildroot%_bindir/ob_*; do
@@ -114,8 +119,8 @@ mv %buildroot/usr/shared/99-obsensor-libusb.rules %buildroot%_udev_rulesdir/
 rm -f %buildroot/usr/shared/install_udev_rules.sh
 rm -f %buildroot/usr/setup.sh
 
-# The SDK already installs runtime configs into %%_libdir; remove duplicates
-# from the non-standard /usr/shared location.
+# The SDK already installs runtime configs into the library directory; remove
+# duplicates from the non-standard /usr/shared location.
 rm -f %buildroot/usr/shared/OrbbecSDKConfig.xml
 rm -f %buildroot/usr/shared/OrbbecSDKConfig.md
 rmdir %buildroot/usr/shared >/dev/null 2>&1 || true
@@ -126,6 +131,12 @@ mv %buildroot/usr/shared/doc/api %buildroot%_docdir/%name/
 rmdir %buildroot/usr/shared/doc >/dev/null 2>&1 || true
 rmdir %buildroot/usr/shared >/dev/null 2>&1 || true
 
+# Upstream installs license notices to non-standard /usr paths; relocate them
+# under the package documentation directory. The SDK's own LICENSE.txt is
+# already shipped as documentation, so drop the duplicate copy.
+rm -f %buildroot/usr/LICENSE.txt
+mv %buildroot/usr/licenses %buildroot%_docdir/%name/licenses
+
 mkdir -p %buildroot%_datadir/%name
 mv %buildroot/usr/examples %buildroot%_datadir/%name/
 # Upstream helper is Debian/Ubuntu-specific (apt-get/sudo/dpkg), not useful in ALT
@@ -134,6 +145,8 @@ rmdir %buildroot/usr/examples >/dev/null 2>&1 || true
 
 %files
 %doc LICENSE.txt README.md LiDAR_README.md
+%dir %_docdir/%name
+%_docdir/%name/licenses
 %_udev_rulesdir/99-obsensor-libusb.rules
 %_libdir/libOrbbecSDK.so.*
 %_libdir/extensions/
@@ -150,6 +163,7 @@ rmdir %buildroot/usr/examples >/dev/null 2>&1 || true
 %files tools
 %_bindir/ob_benchmark
 %_bindir/ob_multi_devices_firmware_update
+%_bindir/ob_timestamp_tracker
 
 %files examples
 %dir %_datadir/%name
@@ -160,6 +174,9 @@ rmdir %buildroot/usr/examples >/dev/null 2>&1 || true
 %_docdir/%name/api/
 
 %changelog
+* Sat Oct 10 2026 Sergey Palcheh <minergenon@altlinux.org> 2.10.6-alt1
+- new version 2.10.6
+
 * Sat Jun 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.8.7-alt1
 - initial build for ALT Sisyphus
 
