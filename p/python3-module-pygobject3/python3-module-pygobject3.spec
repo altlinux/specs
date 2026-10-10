@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: python3-module-%{_name}3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Python3 bindings for GObject
@@ -176,6 +176,9 @@ xvfb-run %__meson_test -t 2
 %endif
 
 %changelog
+* Fri Oct 09 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.1-alt1
+- 3.58.1
+
 * Fri Aug 28 2026 Yuri N. Sedunov <aris@altlinux.org> 3.58.0-alt1
 - 3.58.0
 
