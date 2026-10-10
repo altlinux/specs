@@ -1,5 +1,5 @@
 Name:    rmd
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Reminders with notifications and saving after reboot
@@ -40,6 +40,9 @@ sed -i 's|^ExecStart=.*|ExecStart=%_bindir/%name daemon|' \
 %_userunitdir/%name.service
 
 %changelog
+* Sat Oct 10 2026 Sergey Palcheh <minergenon@altlinux.org> 0.4.0-alt1
+- new version 0.4.0
+
 * Tue Sep 01 2026 Sergey Palcheh <minergenon@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
 
