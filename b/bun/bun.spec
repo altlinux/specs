@@ -1,16 +1,16 @@
 # 1.4.0 is the first release written in Rust (1.3.14 was the last in Zig).
-# git_commit is the bun-v1.4.2 tag peel, used as GIT_SHA for `bun --revision`;
+# git_commit is the bun-v1.4.3 tag peel, used as GIT_SHA for `bun --revision`;
 # it is not part of the RPM version.
-%define git_commit 744846f844374847c902b5e7fd59b4342a51ef99
-%define git_short 744846f8
+%define git_commit c6da4a4d3010e5553438c60f6bd76d981976867c
+%define git_short c6da4a4d
 # The WebKit revision Source1 was made from. Checked against
 # scripts/build/deps/webkit.ts in %%prep, so a version bump cannot leave the
 # engine behind.
-%define webkit_commit 2e2aa2290fac856d6f451ceacb58f7f5b44dd057
+%define webkit_commit 0c06faadf65bf8e8c8ad3a5a8aca83e1e9ed653f
 # The SQLite amalgamation in Bun's tree. Used for both the bundled() Provides
 # and the %%check that asserts it against sqlite_version(), so the two cannot
 # drift apart on a version bump.
-%define bundled_sqlite 3.53.2
+%define bundled_sqlite 3.53.4
 # The LLVM release selected through ALT's llvm-alt-tool-wrapper via
 # ALTWRAP_LLVM_VERSION in %%build. Patch5 raises bun's pinned LLVM to this
 # major.
@@ -30,8 +30,8 @@
 %def_without rust_nightly
 
 Name: bun
-Version: 1.4.2
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
 Summary: Fast all-in-one JavaScript runtime and toolkit
 # Bun itself is MIT, but it is one statically linked executable and everything
@@ -70,10 +70,11 @@ Source4: %name-node-modules-%version.tar
 Source5: bun_prefetch
 Source6: bun-deps.mjs
 Source7: bun_webkit
-# Bun's build installs the pinned Rust nightly with rustup and downloads its
-# dependencies. Neither is possible in a build environment, and both are
-# avoidable: serve the downloads from the prefetch cache and use the Rust that
-# the distribution ships.
+# Bun's build installs the pinned Rust nightly with rustup, downloads its
+# crates and, since 1.4.3, builds the standard library from source with
+# dependencies of its own. None of that is possible in a build environment:
+# serve the downloads from the prefetch cache and the std crates from the
+# vendor directory, and use the Rust that the distribution ships.
 Patch0: bun-offline-build.patch
 # Two allow() attributes name a lint that is newer than the released compiler,
 # and the workspace denies warnings, so the unknown lint is fatal. Allowing
@@ -94,7 +95,8 @@ Patch3: bun-webkit-no-type-units.patch
 # tracked like any other shared library. See the patch header for the details
 # that are specific to each of them.
 Patch4: bun-system-libs.patch
-# Raise the LLVM version bun pins from 21 to the distribution default.
+# Lower the LLVM version bun pins (23 upstream) to the one the distribution
+# ships; rustc here is built against the same major.
 Patch5: bun-llvm-22.patch
 
 BuildRequires: rust-cargo
@@ -123,7 +125,11 @@ BuildRequires: python3
 # Not a floor upstream states - upstream pins a nightly - but the oldest
 # release this was actually built with. An older compiler fails deep in the
 # workspace instead of here.
-BuildRequires: rustc >= 1.97
+BuildRequires: rustc >= 1.99
+# The build compiles the standard library from source (-Zbuild-std) in every
+# configuration; rust-src is the sysroot's std tree and its Cargo.lock is what
+# bun_prefetch vendors the std crates against.
+BuildRequires: rust-src
 BuildRequires: unzip
 BuildRequires: zstd
 # Unbundled by Patch4. brotlicommon has no header of its own but is a separate
@@ -247,11 +253,115 @@ replace-with = "vendored-sources"
 directory = "$PWD/cargo-vendor"
 EOF
 
-%if_without rust_nightly
-# Bun pins a Rust nightly. Use the distribution compiler instead and open the
-# unstable-feature gate, as rustc's own bootstrap does.
-rm -f rust-toolchain.toml
-%endif
+# The pinned-nightly rust-toolchain.toml stays in place: since 1.4.3 it is an
+# input of the ninja plan, and the distribution cargo/rustc are not rustup
+# proxies, so the nightly pin it carries is simply ignored. The unstable
+# feature gate below is what the nightly would have provided.
+
+# ALT's rust-src prunes library/coretests ("Remove development files"), but
+# the standard library workspace lists it as a member, so cargo cannot load
+# that workspace at all - and since 1.4.3 the build resolves -Zbuild-std in
+# every configuration, which loads it. Rebuild the sysroot as a shadow: a
+# directory tree that symlinks the installed toolchain everywhere except the
+# std sources, copies those (only the pruned member is added, nothing is
+# rewritten; a plain copy because the build directory can sit on a different
+# filesystem than the toolchain), and carries a stub coretests - an empty
+# crate is enough, -Zbuild-std compiles core, alloc, std, proc_macro and
+# panic_abort, never the workspace's test crates. A rustc wrapper answers the one query cargo
+# resolves the std sources from - `rustc --print sysroot` - with the shadow;
+# everything else passes through to the real compiler.
+shadow=%name-rust-sysroot
+real=%(rustc --print sysroot)
+mkdir -p $shadow/bin $shadow/lib/rustlib
+for entry in $real/bin/*; do
+    case ${entry##*/} in rustc) ;; *) ln -s "$entry" $shadow/bin/ ;; esac
+done
+for entry in $real/lib/*; do
+    case ${entry##*/} in rustlib) ;; *) ln -s "$entry" $shadow/lib/ ;; esac
+done
+for entry in $real/lib/rustlib/*; do
+    case ${entry##*/} in src) ;; *) ln -s "$entry" $shadow/lib/rustlib/ ;; esac
+done
+mkdir $shadow/lib/rustlib/src $shadow/lib/rustlib/src/rust
+cp -a $real/lib/rustlib/src/rust/library $shadow/lib/rustlib/src/rust/library
+for entry in $real/lib/rustlib/src/rust/*; do
+    case ${entry##*/} in library) ;; *) ln -s "$entry" $shadow/lib/rustlib/src/rust/ ;; esac
+done
+mkdir -p $shadow/lib/rustlib/src/rust/library/coretests/src
+# The stub has to agree with the workspace's Cargo.lock, which lists the real
+# coretests with its dependencies - cargo metadata runs --locked on that
+# workspace, and a manifest that would change the lock is fatal. The real
+# crate's rand/rand_xorshift are dev-dependencies with default-features off
+# (that is exactly why the lock's rand entry carries no rand_chacha), so the
+# stub mirrors that shape, with the versions taken from the lock itself, so a
+# rustc bump does not stale it. The crates are vendored (see bun_prefetch);
+# the crate itself is never built, -Zbuild-std compiles core, alloc, std,
+# proc_macro and panic_abort only.
+cat >$shadow/lib/rustlib/src/rust/library/coretests/Cargo.toml <<EOF
+[package]
+name = "coretests"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+test = false
+bench = false
+
+[dev-dependencies]
+$(python3 - "$shadow/lib/rustlib/src/rust/library/Cargo.lock" <<'PYEOF'
+import sys, tomllib
+with open(sys.argv[1], "rb") as f:
+    data = tomllib.load(f)
+pkgs = {p["name"]: p for p in data["package"]}
+for dep in sorted(pkgs["coretests"].get("dependencies", [])):
+    name = dep["name"] if isinstance(dep, dict) else dep
+    print(f'{name} = {{ version = "{pkgs[name]["version"]}", default-features = false }}')
+PYEOF
+)
+EOF
+: >$shadow/lib/rustlib/src/rust/library/coretests/src/lib.rs
+# core gained the top-level `type_info::of` - a const TypeId constructor
+# without the 'static bound - after rustc 1.99.0 branched, and bun's
+# collections call it. Add the same wrapper the nightly carries to the shadow
+# copy of core: the const type_id::<T> it wraps is right there in the module.
+# The library workspace compiles entirely from this shadow (build-std), so
+# the addition is consistent for every unit; the compiler binary does not
+# care - no lang item changes.
+ti=$shadow/lib/rustlib/src/rust/library/core/src/mem/type_info.rs
+rm "$ti"
+{
+    cat "$real/lib/rustlib/src/rust/library/core/src/mem/type_info.rs"
+    cat <<'EOF'
+
+// ALT: backport of rust-lang/rust additions after 1.99.0; see the spec.
+#[unstable(feature = "type_info", issue = "146922")]
+#[rustc_const_unstable(feature = "type_info", issue = "146922")]
+pub const fn of<T: ?Sized>() -> TypeId {
+    const { type_id::<T>() }
+}
+EOF
+} > "$ti"
+cat >$shadow/bin/rustc <<EOF
+#!/bin/bash
+# The std sources for -Zbuild-std live in this shadow sysroot, not where the
+# distribution rustc was installed; see the comment above. Cargo learns the
+# sysroot from rustc output, and not only via a bare --print sysroot: its
+# probe also runs `rustc - ... --print=sysroot --print=file-names ...`, so
+# any invocation that asks for a sysroot print gets its output rewritten
+# from the installed path to the shadow. Everything else passes through.
+rewrite=0
+for arg in "\$@"; do
+    case \$arg in
+        --print=sysroot | --print) rewrite=1 ;;
+    esac
+done
+if [ "\$rewrite" = 1 ]; then
+    $real/bin/rustc "\$@" | sed "s|$real|$PWD/$shadow|g"
+    exit \${PIPESTATUS[0]}
+fi
+exec $real/bin/rustc "\$@"
+EOF
+chmod +x $shadow/bin/rustc
 
 %build
 # ALT's unversioned clang, clang++, ld.lld and llvm-ar are all the
@@ -273,6 +383,9 @@ export BUN_SYSTEM_VERSION_ZSTD="$(pkg-config --modversion libzstd)"
 export BUN_SYSTEM_VERSION_LIBDEFLATE="$(pkg-config --modversion libdeflate)"
 export CARGO_HOME="$PWD/.cargo-home"
 export CARGO_NET_OFFLINE=true
+# rustc resolves to the shadow-sysroot wrapper %prep wrote, so cargo's
+# build-std reads the repaired std sources; see the comment there.
+export PATH="$PWD/%name-rust-sysroot/bin:$PATH"
 %if_without rust_nightly
 export RUSTC_BOOTSTRAP=1
 %endif
@@ -389,6 +502,9 @@ EOF
 %_bindir/%{name}x
 
 %changelog
+* Sat Oct 10 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.3-alt1
+- Update to 1.4.3
+
 * Thu Sep 24 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.2-alt2
 - Build with the bun package itself instead of bun-bootstrap
 
