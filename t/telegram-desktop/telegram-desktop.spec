@@ -22,8 +22,8 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 7.3.0
-Release: alt2
+Version: 7.3.1
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -374,6 +374,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Sat Oct 10 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.1-alt1
+- new version 7.3.1
+
 * Sat Oct 10 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.0-alt2
 - i586: tune gcc GC to fit huge wallet sources into 32-bit address space
 
