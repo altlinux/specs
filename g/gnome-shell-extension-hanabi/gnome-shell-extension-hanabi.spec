@@ -4,7 +4,7 @@
 
 Name: gnome-shell-extension-hanabi
 Version: 20260728
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: Live Wallpaper for GNOME
@@ -19,6 +19,8 @@ ExcludeArch: i586
 Source: %name-%version.tar
 Source1: node_modules.tar
 Source2: arm64.tar
+
+Patch: 264.patch
 
 Requires: gnome-shell >= 50.0
 
@@ -40,6 +42,7 @@ or 'Force GtkMediaFile' in the extension settings can help.
 
 %prep
 %setup
+%patch -p1
 
 %ifarch x86_64
 tar -xf %SOURCE1 -C %_builddir/%name-%version/
@@ -61,6 +64,9 @@ meson setup .build --prefix=%buildroot/usr/ && ninja -C .build install
 %doc README.md
 
 %changelog
+* Sat Oct 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260728-alt2
+-  added GNOME 51 support
+
 * Thu Jul 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 2:20260728-alt1
 - updated to git.7863b102a6
 
