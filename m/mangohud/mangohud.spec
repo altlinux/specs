@@ -4,7 +4,7 @@
 
 Name: mangohud
 Version: 0.8.4
-Release: alt1
+Release: alt2
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
 License: MIT
@@ -24,7 +24,6 @@ BuildRequires: libGLEW-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libdbus-devel
 BuildRequires: libglfw3-devel
-BuildRequires: libspdlog-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libvulkan-devel
 BuildRequires: libwayland-client-devel
@@ -72,7 +71,6 @@ easy visual comparison between benchmarks.
 
 %build
 %meson \
-  -Duse_system_spdlog=enabled \
   -Dwith_wayland=enabled \
   -Dmangoapp=true \
   -Dmangohudctl=true
@@ -103,6 +101,10 @@ easy visual comparison between benchmarks.
 %_bindir/mangoplot
 
 %changelog
+* Sat Oct 10 2026 Nazarov Denis <nenderus@altlinux.org> 0.8.4-alt2
+- Build with bundled spdlog instead of the system one; fixes launch of
+  32-bit games under Steam with mangohud (closes: 56107)
+
 * Tue Jun 16 2026 Nazarov Denis <nenderus@altlinux.org> 0.8.4-alt1
 - 0.8.4
 
