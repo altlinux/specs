@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.6
 
 Name: wireshark
-Version: 4.6.8
+Version: 4.6.9
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -236,6 +236,27 @@ _EOF_
 %_libdir/cmake/%name
 
 %changelog
+* Sat Oct 10 2026 Anton Farygin <rider@altlinux.org> 4.6.9-alt1
+- 4.6.8 -> 4.6.9
+- Fixes:
+  * CVE-2026-95389: SCTP protocol dissector crash
+  * CVE-2026-95386: TTL file parser infinite loop
+  * CVE-2026-95390: PEAK CAN TRC file parser crash
+  * CVE-2026-95395: IEEE C37.118 Synchrophasor protocol dissector memory leak
+  * CVE-2026-95387: SPDY protocol dissector crash
+  * CVE-2026-95394: Microsoft Network Monitor file parser large loop
+  * CVE-2026-95393: CSN.1 protocol dissector crash
+  * CVE-2026-95388: Sharkd utility crash
+  * CVE-2026-96422: Frame protocol metadissector crash
+  * CVE-2026-96421: USB HID protocol dissector infinite loop and memory leak
+  * CVE-2026-96417: RF4CE protocol dissector crash
+  * CVE-2026-96420: Toshiba file parser crash
+  * CVE-2026-96419: Profile import crash and possible code execution
+  * CVE-2026-96418: TIFF protocol dissector infinite loop
+  * CVE-2026-96423: X11 protocol dissector crash
+  * CVE-2026-96416: IEEE 802.11 protocol dissector crash
+  * CVE-2026-96415: Catapult DCT2000 protocol dissector crash
+
 * Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 4.6.8-alt1
 - 4.6.7 -> 4.6.8
 
