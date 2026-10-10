@@ -6,7 +6,7 @@
 
 Name:    python3-module-%modulename
 Version: 11.1.2
-Release: alt2
+Release: alt3
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
 License: BSD-3-Clause
@@ -64,6 +64,8 @@ rm -f %python3_sitelibdir/%{modulename}/testing.py
 %check
 # see cheroot/test/conftest.py
 export HTTP_REQUEST_TIMEOUT=3
+# sysmon does not support the per-test coverage contexts in pytest.ini.
+export COVERAGE_CORE=ctrace
 %pyproject_run_pytest -vra
 
 %files
@@ -80,6 +82,9 @@ export HTTP_REQUEST_TIMEOUT=3
 %endif
 
 %changelog
+* Sun Oct 11 2026 Anton Farygin <rider@altlinux.org> 11.1.2-alt3
+- Fixed test build with coverage sysmon core by using ctrace.
+
 * Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 11.1.2-alt2
 - Fixed compatibility with pyOpenSSL 26.
 
