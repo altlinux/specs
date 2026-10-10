@@ -1,8 +1,8 @@
 %define oname testscenarios
 
 Name: python3-module-%oname
-Version: 0.5.0
-Release: alt6
+Version: 0.6.2
+Release: alt1
 
 Summary: Testscenarios, a pyunit extension for dependency injection
 
@@ -15,27 +15,11 @@ BuildArch: noarch
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-# Not full commit, just tests/test_testscenarios.py hunks
-# for applying next patches
-Patch0: 12250124d11440e94fd30149d1ffed6b1b88f02d.patch
-# Not full commit, just tests/test_testcase.py hunks
-# for applying next patches
-Patch1: 2907ab614964e5838047566c7477b16172717b92.patch
-# Fix compatibility with newer testtools
-Patch2: 75b76e7d07bc6d415384e668aefb6b887a3aa13d.patch
-# s/assertEquals/assertEqual/
-Patch3: fd9a58526f1f77c192c129f6e06cb61bf06dfea4.patch
-# https://github.com/testing-cabal/testscenarios/pull/1
-Patch4: 9e2c6ba88925700a42e46f554419fc1a31fc5f29.patch
-# basically, 2 broken tests expected duplicate runs on no-scenario case,
-# which never has beed correct behavior in generate_scenarios
-Patch5: testscenarios-alt-fix-compatibility-with-testtools-2.8.3.patch
-
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-testtools
-BuildRequires: python3-module-pytest python3-module-pbr
+BuildRequires: python3-module-testtools >= 2.8.7
+BuildRequires: python3-module-hatchling python3-module-hatch-vcs
 
 %py3_provides %oname
 %py3_requires testtools
@@ -49,29 +33,29 @@ itself, allowing easy testing in different situations).
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p2
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%pyproject_run -- python -m testtools.run -v testscenarios.test_suite
+# Upstream 0.6.2 sdist omits the tests directory; exercise documented API examples.
+%pyproject_run -- python -m doctest -o ELLIPSIS -v README.rst
 
 %files
-%doc Apache-2.0 BSD COPYING GOALS HACKING NEWS README doc
-%doc AUTHORS ChangeLog
+%doc Apache-2.0 BSD COPYING GOALS HACKING NEWS README.rst doc
 %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
+- New version 0.6.2.
+- Build with hatchling and hatch-vcs; drop obsolete compatibility patches.
+- Run upstream README doctests because the release tarball omits the test suite.
+
 * Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt6
 - Fixed compatibility with newer testtools again.
 
@@ -102,4 +86,3 @@ itself, allowing easy testing in different situations).
 
 * Tue Jul 15 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt1
 - Initial build for Sisyphus
-
