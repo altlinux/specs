@@ -7,7 +7,7 @@
 
 Name: opentoonz
 Version: 1.8.0
-Release: alt2
+Release: alt3
 Summary: 2D animation software
 Group: Graphics
 License: BSD-3-Clause and CC0-1.0 and ALT-Public-Domain and libtiff and CC-BY-NC-4.0
@@ -34,6 +34,7 @@ Patch9: cmakeblur-1.7.1-alt-build.patch
 Patch10: cmakegeom-1.7.1-alt-build.patch
 Patch11: cmakemultiplugin-1.7.1-alt-build.patch
 Patch12: stylepickertool-1.8.0-build.patch
+Patch13: %name-1.8.0-alt-startup-wayland-parent.patch
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: boost-complete
@@ -96,6 +97,7 @@ This package contains documentation and samples for OpenToonz.
 %patch10 -p0
 %patch11 -p0
 %patch12 -p0
+%patch13 -p1
 %ifarch %e2k
 # error: linkage specification is incompatible with previous "__errno_location"
 sed -i 's/extern int errno;//' toonz/sources/image/sgi/filesgi.cpp
@@ -174,6 +176,9 @@ done
 %doc %name-%version-docs/build/html
 
 %changelog
+* Fri Oct 09 2026 Anton Farygin <rider@altlinux.org> 1.8.0-alt3
+- fixed startup dialog stacking on Wayland (Closes: #60884)
+
 * Wed Aug 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.0-alt2
 - updated opentoonz 1.8.0 build patch
 - rebuilded without some cmake configure
