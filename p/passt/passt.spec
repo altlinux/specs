@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: passt
-Version: 20260728
+Version: 20261002
 Release: alt1
 Summary: User-mode networking daemons for virtual machines and namespaces
 License: GPL-2.0-or-later AND BSD-3-Clause
@@ -77,6 +77,9 @@ ln -sr %buildroot%_mandir/man1/pasta.1 %buildroot%_mandir/man1/pasta.avx2.1
 %endif
 
 %changelog
+* Sat Oct 10 2026 Anton Farygin <rider@altlinux.org> 20261002-alt1
+- 20260728 -> 20261002
+
 * Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 20260728-alt1
 - 20260120 -> 20260728
 - upstream replaced qrap with pesto: packaged accordingly.
