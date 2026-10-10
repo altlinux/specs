@@ -1,21 +1,20 @@
-%define git_commit be7327fc3f5abb8717815f2a1a2ad3d335535d8a
+%define git_commit 4fb4fa5e1049dd0b8ca00fa3ba9223cdc1661014
 
 Name: ds4drv
 Version: 0.5.1
-Release: alt3.gitbe7327f
+Release: alt4.git4fb4fa5
 
 Summary: A Sony DualShock 4 userspace driver for Linux
 License: MIT
 Group: Other
 
 Url: https://github.com/chrippa/%name
+Vcs: https://github.com/chrippa/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 BuildArch: noarch
 
 # https://github.com/chrippa/%name/archive/%git_commit/%name-%git_commit.tar.gz
 Source: %name-%git_commit.tar
-
-Patch0: %name-python-3.12.patch
 
 BuildRequires: python3-module-setuptools
 
@@ -32,7 +31,6 @@ Features:
 
 %prep
 %setup -n %name-%git_commit
-%patch0 -p1
 
 %build
 %python3_build
@@ -52,6 +50,10 @@ Features:
 %_unitdir/%name.service
 
 %changelog
+* Sun Oct 11 2026 Nazarov Denis <nenderus@altlinux.org> 0.5.1-alt4.git4fb4fa5
+- Update to git 4fb4fa5
+- Fix run with python-evdev 2.0 (ALT #54473)
+
 * Wed Apr 24 2024 Nazarov Denis <nenderus@altlinux.org> 0.5.1-alt3.gitbe7327f
 - Update to git be7327f
 - Fix double setting in conf (ALT #50015)
