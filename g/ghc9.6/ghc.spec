@@ -23,7 +23,7 @@
 
 Name: ghc%ghc_major
 Version: %build_ghc_version
-Release: alt3
+Release: alt4
 
 Epoch: 1
 
@@ -44,6 +44,7 @@ Source10: get_libs_versions.sh
 Patch15: ghc9.2-alt-docs_disable_failing_on_undefined_reference.patch
 
 Patch20: ghc9.0-debian-no_missing_haddock_file_warning.patch
+Patch21: ghc9.6-backport-fix_sphinx_9.1.0.patch
 
 Patch30: ghc9.6-backport-fix_build_of_hp2ps_with_gcc15.patch
 
@@ -209,6 +210,7 @@ This is a meta-package for all the development library packages in GHC
 %patch15 -p1
 
 %patch20 -p1
+%patch21 -p1
 
 %patch30 -p1
 
@@ -391,6 +393,9 @@ find %buildroot%_ghclibdir/bin -type f | xargs -n 1 patchelf --set-rpath '$ORIGI
 %files devel
 
 %changelog
+* Sun Oct 11 2026 Anton Zhukharev <ancieg@altlinux.org> 1:9.6.7-alt4
+- Fixed FTBFS (sphinx 9.1.0).
+
 * Wed Apr 22 2026 Leonid Znamenok <respublica@altlinux.org> 1:9.6.7-alt3
 - Backported patch to fix building with gcc 15
 
