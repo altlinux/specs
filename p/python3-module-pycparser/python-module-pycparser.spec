@@ -1,7 +1,7 @@
 %define oname pycparser
 
 Name: python3-module-pycparser
-Version: 2.23
+Version: 3.0
 Release: alt1
 
 Summary: C parser in Python
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 BuildArch: noarch
 
@@ -24,7 +25,7 @@ BuildArch: noarch
 
 %description
 pycparser is a complete parser of the C language, written in pure Python
-using the PLY parsing library.
+with a hand-written lexer and recursive-descent parser.
 It parses C code into an AST and can serve as a front-end for C compilers or analysis tools.
 
 
@@ -32,16 +33,23 @@ It parses C code into an AST and can serve as a front-end for C compilers or ana
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%__python3 -m unittest discover -s tests
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
+- new version 3.0
+- build with pyproject
+
 * Sat Mar 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2.23-alt1
 - new version 2.23
 
