@@ -1,7 +1,7 @@
 %define pypi_name datasets
 
 Name: python3-module-%pypi_name
-Version: 4.5.0
+Version: 5.1.0
 Release: alt1
 
 Summary: HuggingFace community-driven open-source library of datasets
@@ -44,5 +44,11 @@ new datasets.
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0
+- security fixes:
+  + CVE-2026-65010: symlink-following arbitrary file write in Extractor.extract()
+  + CVE-2026-66007: path traversal via unsanitized file_name metadata (GHSA-379c-qx7v-6h59)
+
 * Wed Feb 25 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt1
 - initial build for ALT Sisyphus
