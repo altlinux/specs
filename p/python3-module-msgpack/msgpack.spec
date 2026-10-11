@@ -1,7 +1,7 @@
 %define oname msgpack
 
 Name: python3-module-%oname
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: A Python 3 MessagePack (de)serializer
@@ -46,6 +46,11 @@ cython3 %oname/_cmsgpack.pyx
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
+- new version 1.2.3
+- security fixes:
+  + GHSA-j586-36cw-2gc2: fix unbounded memory leak in C extension on strict_map_key validation failure
+
 * Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - New version 1.2.2.
 - (GHSA-6v7p-g79w-8964, CVE-2026-57585) SECURITY: prevent crashes when reusing Unpacker after an error.
