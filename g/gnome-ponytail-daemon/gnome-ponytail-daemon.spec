@@ -1,6 +1,6 @@
 Name: gnome-ponytail-daemon
-Version: 0.0.11
-Release: alt1.git9dd3bda
+Version: 0.0.12
+Release: alt1
 
 Summary: Helper daemon for dogtail on GNOME Wayland
 
@@ -8,7 +8,7 @@ License: GPL-2.0-or-later
 Group: Development/Tools
 Url: https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon
 
-# Source-url: https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon/-/archive/9dd3bda1816de216219232b8f6baec9f2d423ec6/gnome-ponytail-daemon-9dd3bda1816de216219232b8f6baec9f2d423ec6.tar.gz
+# Source-url: https://gitlab.gnome.org/ofourdan/gnome-ponytail-daemon/-/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
@@ -53,6 +53,9 @@ Python module for D-Bus interactions with gnome-ponytail-daemon interfaces.
 %python3_sitelibdir_noarch/ponytail/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.0.12-alt1
+- new version 0.0.12
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.0.11-alt1.git9dd3bda
 - initial build for Sisyphus (git snapshot 9dd3bda after 0.0.11)
 
