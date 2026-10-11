@@ -1,5 +1,5 @@
 Name: PySolFC
-Version: 3.4.1
+Version: 3.6.1
 Release: alt1
 
 Summary: A collection of solitare card games
@@ -9,7 +9,7 @@ Group: Games/Cards
 Url: http://pysolfc.sourceforge.net
 
 # Source-url: https://github.com/shlomif/PySolFC/archive/refs/tags/pysolfc-%version.tar.gz
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Source1: PySol.desktop
 Source2: pysol-start-script
 
@@ -18,6 +18,8 @@ Provides: pysol = 5.%version
 Requires: PySolFC-Cardsets
 
 BuildRequires(pre): rpm-build-python3
+# for HTML help generation (scripts import pysollib.games)
+BuildRequires: python3(attr) python3(configobj) python3(pysol_cards) python3(tkinter)
 
 BuildArch: noarch
 
@@ -52,6 +54,8 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 subst 's|jnius|jnius_never_use|' pysollib/init.py
 
 %build
+# generate HTML help and translations (prebuilt only in sourceforge sdist)
+%make_build rules all_games_html mo
 %python3_build
 
 %install
@@ -75,7 +79,7 @@ rm -rv %buildroot%python3_sitelibdir/pysollib/kivy
 rm -v %buildroot%_datadir/PySolFC/themes/clearlooks/convert_imgs.sh
 
 %files -f pysol.lang
-%doc AUTHORS.md README.md PKG-INFO
+%doc AUTHORS.md README.md NEWS.asciidoc
 %dir %_datadir/%name
 %_bindir/pysol
 %_datadir/%name/*
@@ -88,6 +92,10 @@ rm -v %buildroot%_datadir/PySolFC/themes/clearlooks/convert_imgs.sh
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
+- new version 3.6.1
+- build from GitHub tag source, generate HTML help at build time
+
 * Tue Apr 07 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
 - new version 3.4.1 (ALT bug 58292)
 

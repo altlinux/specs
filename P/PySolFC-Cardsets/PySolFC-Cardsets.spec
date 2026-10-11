@@ -1,6 +1,6 @@
 Name: PySolFC-Cardsets
 Version: 3.1
-Release: alt1
+Release: alt2
 
 Summary: Various cardsets for PySolFC
 
@@ -23,11 +23,6 @@ This package contains various cardsets for PySolFC.
 %build
 %install
 install -d -m755 %buildroot%_datadir/PySolFC
-# remove cardsets included in PySolFC package
-rm -rf cardset-2000 cardset-crystal-mahjongg cardset-dashavatara-ganjifa \
-       cardset-dondorf cardset-gnome-mahjongg-1 cardset-hexadeck \
-       cardset-kintengu cardset-matrix cardset-mughal-ganjifa cardset-oxymoron \
-       cardset-standard cardset-tuxedo cardset-vienna-2k
 cp -a cardset-* %buildroot%_datadir/PySolFC
 
 find %buildroot%_datadir/PySolFC -type f -name 'COPYRIGHT' -exec chmod 0644 '{}' \;
@@ -36,6 +31,9 @@ find %buildroot%_datadir/PySolFC -type f -name 'COPYRIGHT' -exec chmod 0644 '{}'
 %_datadir/PySolFC/cardset*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt2
+- ship all cardsets: PySolFC no longer includes standard ones (fix missing "Standard" cardset)
+
 * Wed Apr 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
 - new version (3.1)
 
