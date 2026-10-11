@@ -1,5 +1,7 @@
+%define abiversion 28
+
 Name: croaring
-Version: 4.7.2
+Version: 5.2.3
 Release: alt1
 
 Summary: Roaring bitmaps in C (and C++)
@@ -20,17 +22,17 @@ Roaring bitmaps are compressed bitmaps which tend to outperform conventional
 compressed bitmaps such as WAH, EWAH or Concise. They are used by several
 major systems such as Apache Lucene, Apache Druid, Apache Spark, and LinkedIn.
 
-%package -n libroaring22
+%package -n libroaring%abiversion
 Summary: CRoaring shared library
 Group: System/Libraries
 
-%description -n libroaring22
+%description -n libroaring%abiversion
 Shared library for CRoaring bitmaps.
 
 %package -n libroaring-devel
 Summary: Development files for CRoaring
 Group: Development/C
-Requires: libroaring22 = %EVR
+Requires: libroaring%abiversion = %EVR
 
 %description -n libroaring-devel
 Header files and CMake configuration for developing with CRoaring.
@@ -48,10 +50,10 @@ Header files and CMake configuration for developing with CRoaring.
 %install
 %cmake_install
 
-%files -n libroaring22
+%files -n libroaring%abiversion
 %doc LICENSE
-%_libdir/libroaring.so.22
-%_libdir/libroaring.so.4.*
+%_libdir/libroaring.so.%abiversion
+%_libdir/libroaring.so.%version
 
 %files -n libroaring-devel
 %doc README.md
@@ -61,6 +63,10 @@ Header files and CMake configuration for developing with CRoaring.
 %_libdir/pkgconfig/roaring.pc
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.3-alt1
+- new version 5.2.3
+- rename libroaring22 to libroaring28 (soname bump)
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.7.2-alt1
 - new version 4.7.2
 - rename libroaring21 to libroaring22 (soname bump)
