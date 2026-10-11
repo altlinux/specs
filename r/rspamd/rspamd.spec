@@ -2,7 +2,7 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 4.1.1
+Version: 4.2.1
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -142,6 +142,9 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1
+- new version 4.2.1
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.1-alt1
 - new version 4.1.1
 
