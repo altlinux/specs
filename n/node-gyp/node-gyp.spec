@@ -1,5 +1,5 @@
 Name: node-gyp
-Version: 12.2.0
+Version: 13.1.0
 Release: alt1
 
 Summary: Node.js native addon build tool
@@ -47,7 +47,7 @@ Requires: gyp >= 0.16.1
 #this is the standard set of headers expected to build any node native module
 #Requires: rpm-build-nodejs
 #Requires:      npm
-Requires:      node-devel >= 16.14.0
+Requires:      node-devel >= 22.22.2
 # still used in node-gyp
 Requires:      rpm-build-python3
 
@@ -113,6 +113,19 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 13.1.0-alt1
+- new version 13.1.0
+- require node >= 22.22.2 (upstream engines)
+- security fixes:
+  + CVE-2026-53655, GHSA-vmf3-w455-68vh: fix tar parser interpretation differential via PAX size override on GNU long-name/long-link headers.
+  + CVE-2026-59871, GHSA-w8wr-v893-vjvp: fix tar process crash via PAX numeric path type confusion.
+  + CVE-2026-59873, GHSA-23hp-3jrh-7fpw: fix tar decompression/parse DoS via unlimited input.
+  + CVE-2026-59874, GHSA-8x88-c5mf-7j5w: fix tar infinite loop on negative entry size in archive replace.
+  + CVE-2026-59875, GHSA-gvwx-54wh-qm9j: fix tar uncaught exception DoS via NUL byte in PAX path/linkpath.
+  + CVE-2026-73566, GHSA-r292-9mhp-454m: fix tar stack overflow DoS via crafted long-path archive.
+  + CVE-2026-33671, GHSA-c2c7-rcm5-vvqj: fix picomatch ReDoS via extglob quantifiers.
+  + CVE-2026-33672, GHSA-3v7f-55p6-f55p: fix picomatch method injection in POSIX character classes.
+
 * Thu Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 12.2.0-alt1
 - new version 12.2.0
 
