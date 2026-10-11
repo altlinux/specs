@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.46.5
+Version: 2.50.0
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
@@ -32,7 +32,7 @@ BuildRequires: python3-dev
 %if_with check
 BuildRequires: python3-module-pytest-benchmark
 %add_pyproject_deps_check_filter pydantic
-%add_pyproject_deps_check_filter pytest-example
+%add_pyproject_deps_check_filter pytest-examples
 %add_pyproject_deps_check_filter pytest-speed
 %add_pyproject_deps_check_filter pytest-codspeed
 %pyproject_builddeps_check
@@ -70,7 +70,12 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 
 %check
 # tests/benchmarks: do not execute benchmark tests
-%pyproject_run_pytest --ignore='tests/benchmarks'
+# Deselected tests import pydantic (circular dep) and pytest_examples
+# (not in check deps)
+%pyproject_run_pytest \
+	--ignore='tests/benchmarks' \
+	--ignore='tests/test_docstrings.py' \
+	--ignore='tests/test_tzinfo.py'
 
 %files
 %doc README.md
@@ -78,6 +83,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.50.0-alt1
+- Updated to 2.50.0.
+
 * Thu Sep 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.46.5-alt1
 - Updated to 2.46.5.
 

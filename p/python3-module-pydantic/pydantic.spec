@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %def_with check
 %define pypi_name pydantic
-%define pydantic_core_ver %(jq -r '.sources.metadata.deps[] | select(startswith("pydantic-core==")) | sub("^pydantic-core=="; "")' %SOURCE1)
+%define pydantic_core_ver %(%SOURCE2 pydantic-core %SOURCE1)
 
 Name: python3-module-%pypi_name
-Version: 2.13.5
-Release: alt2
+Version: 2.14.0
+Release: alt1
 
 Summary: Data parsing and validation using Python type hints
 License: MIT
@@ -16,12 +16,12 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Source2: pyproject_deps_pin.py
 
 %pyproject_runtimedeps_metadata
 # pydantic verifies the exact pydantic-core version at import time; the
 # pin is taken from pyproject_deps.json and verified by the resync step.
 Requires: python3-module-pydantic-core = %pydantic_core_ver
-BuildRequires(pre): jq
 BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
@@ -32,6 +32,10 @@ BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra email
 %pyproject_builddeps_check
+# cloudpickle: test dependency from the upstream `testing-extra` dependency
+# group, not covered by the `dev` group used above. Without it the whole
+# tests/test_pickle.py module is skipped.
+BuildRequires: python3-module-cloudpickle
 %endif
 
 # Manually manage extras dependencies with metadata.
@@ -70,6 +74,10 @@ with pydantic.
 # Also generating north_star_data.json at each test exec and comparing it with
 # expected md5sum leads to failed build, because of Faker or something else has
 # been updated.
+#
+# Note: tests/mypy/test_mypy.py stays skipped (upstream runs it only with the
+# `--test-mypy` flag): with mypy 2.3.1 most of these tests fail, because the
+# recorded expected output does not match the newer mypy diagnostics.
 %pyproject_run_pytest \
 	--ignore='tests/test_docs.py' \
 	--ignore='tests/pydantic_core' \
@@ -81,6 +89,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.14.0-alt1
+- Updated to 2.14.0.
+
 * Sun Sep 13 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.13.5-alt2
 - Added exact version requirement on python3-module-pydantic-core to match
   the upstream pin (Closes: #60514).

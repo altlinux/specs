@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Cron string converter for Python
@@ -56,6 +56,9 @@ by roccivic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.2-alt1
+- Updated to 2.0.2.
+
 * Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.1-alt1
 - Updated to 2.0.1.
 

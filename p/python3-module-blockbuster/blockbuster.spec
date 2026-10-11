@@ -4,7 +4,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 1.5.28
+Version: 1.5.29
 Release: alt1
 
 Summary: Utility to detect blocking calls in the async event loop
@@ -80,6 +80,9 @@ context.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.29-alt1
+- Updated to 1.5.29.
+
 * Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.28-alt1
 - Updated to 1.5.28.
 
