@@ -10,7 +10,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -148,6 +148,45 @@ tests/vm/vmcheck.sh
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Sun Oct 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.6-alt1
+- Fix a build from the GUI erasing a chosen directory that is not
+  named alterator-kopidel-workdir.
+- Fix a build erasing the installer on another drive whose image
+  a previous build left mounted, and tell why the build stops then.
+- Fail the build instead of reporting a finished image when the
+  partitions of the image cannot be mounted, the installer image or
+  the image file cannot be written in full, or the root of the image
+  has no UUID to boot from.
+- Fix the image running out of space half way through the build:
+  formatting gave back the space reserved for it.
+- Refuse to start a build when no GRUB is installed, instead of
+  failing at the end after the whole system has been copied.
+- Fix the last path of a custom list of ignored files going into
+  the image when the list does not end with a newline.
+- Fix the target lists of the GUI sized with the default list of
+  ignored files instead of the chosen one.
+- Fix sizing an uncompressed image counting /mnt and /media in and
+  hanging on a network file system mounted there.
+- Fix the target lists of the GUI staying empty when a mount point
+  or a line of the list of ignored files holds a double quote.
+- Show why a custom list of ignored files is not usable.
+- Show in the GUI why the working directory cannot be prepared.
+- Stop offering the working directory of a running build.
+- Fix the compression checkbox of the GUI getting cleared and locked
+  when no working directory fits a compressed build.
+- Fix the partition profile of the installer for btrfs subvolumes
+  named with a quote or a backslash and mount points with a space.
+- Wait for all the processes of a stopped build before unmounting
+  the image, and leave it mounted if one of them survives.
+- Fix a build failed on a full disk leaving the image mounted, and
+  let kopidel -s umount_razlivochniy unmount it on such a disk.
+- Fix kopidel -s running the step to its end and reporting success
+  when stopped by a signal.
+- Clear what a previous build left in the working directory before
+  a full build from the command line too.
+- Keep the log of the installer packages in the working directory
+  instead of /tmp.
+
 * Thu Oct 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.5-alt1
 - Ask before formatting the chosen external drive.
 - Recalculate the targets when compression is toggled, since a
