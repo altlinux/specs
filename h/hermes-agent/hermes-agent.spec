@@ -3,7 +3,7 @@
 %define mname hermes_agent
 
 Name: hermes-agent
-Version: 2026.7.7.2
+Version: 2026.9.24
 Release: alt1
 
 Summary: Locally-run AI agent with tool use, web browsing, and automation
@@ -19,6 +19,14 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-setuptools python3-module-wheel
+
+# application: keep its modules private and provide nothing but itself
+AutoProv: yes,nopython3
+%add_python3_path %_datadir/%name
+%add_python3_self_prov_path %buildroot%_datadir/%name
+
+# optional mem0ai memory plugin (extra "mem0", not in Sisyphus)
+%add_python3_req_skip mem0.configs.llms.base mem0.configs.llms.openai mem0.llms.base mem0.llms.openai
 
 %description
 hermes-agent is a self-improving AI agent that creates skills from
@@ -37,36 +45,42 @@ sed -i 's/ - / - /g; s/—/-/g' pyproject.toml
 rm -rv web ui-tui scripts/whatsapp-bridge package-lock.json
 
 %build
+# upstream setup.py blocks wheel builds unless this flag is set
+export HERMES_NIX_BUILD=1
 %pyproject_build
 
 %install
 %pyproject_install
-# Move FHS-violating data dirs to %%_datadir
-mkdir -p %buildroot%_datadir/%name/
-mv %buildroot%_prefix/locales %buildroot%_datadir/%name/locales
-mv %buildroot%_prefix/optional-mcps %buildroot%_datadir/%name/optional-mcps
+# move the application modules to a private directory
+mkdir -p %buildroot%_datadir
+mv %buildroot%python3_sitelibdir %buildroot%_datadir/%name
+# upstream wheel no longer ships these data dirs; runtime looks for them next to the packages
+cp -a locales optional-mcps %buildroot%_datadir/%name/
+
+# entry point scripts use the private module directory
+for s in hermes:hermes_cli.main hermes-agent:agent.legacy_cli hermes-acp:acp_adapter.entry ; do
+    cat >%buildroot%_bindir/${s%%%%:*} <<EOF
+#!%__python3
+import sys
+sys.path.insert(0, "%_datadir/%name")
+from ${s#*:} import main
+sys.exit(main())
+EOF
+done
 
 %files
 %doc README.md LICENSE SECURITY.md
 %_bindir/hermes
 %_bindir/hermes-agent
 %_bindir/hermes-acp
-%python3_sitelibdir/acp_adapter/
-%python3_sitelibdir/agent/
-%python3_sitelibdir/cron/
-%python3_sitelibdir/gateway/
-%python3_sitelibdir/hermes_cli/
-%python3_sitelibdir/plugins/
-%python3_sitelibdir/providers/
-%python3_sitelibdir/tools/
-%python3_sitelibdir/tui_gateway/
-%python3_sitelibdir/*.py
-%python3_sitelibdir/__pycache__/
-%python3_sitelibdir/%{pyproject_distinfo %mname}/
-%_datadir/%name/locales/
-%_datadir/%name/optional-mcps/
+%_datadir/%name/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.9.24-alt1
+- new version 2026.9.24
+- move application modules out of python3 site-packages to %%_datadir/%%name
+  (provide only the package itself)
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.7.7.2-alt1
 - new version 2026.7.7.2
 
