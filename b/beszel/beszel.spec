@@ -14,8 +14,8 @@
 %def_without check
 
 Name: beszel
-Version: 0.18.7
-Release: alt2
+Version: 0.21.0
+Release: alt1
 Summary: Lightweight server monitoring hub
 License: MIT
 Group: System/Configuration/Networking
@@ -156,6 +156,9 @@ go test -tags=testing ./...
 %doc LICENSE readme.md
 
 %changelog
+* Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.0-alt1
+- Updated to 0.21.0 (Closes: #60518).
+
 * Wed Jul 08 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.18.7-alt2
 - Fixed SMART monitoring in beszel-agent (Closes: #59586).
 
