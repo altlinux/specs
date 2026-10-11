@@ -1,7 +1,7 @@
 %define pypi_name altair
 
 Name: python3-module-altair
-Version: 6.2.2
+Version: 6.3.0
 Release: alt1
 
 Summary: Vega-Altair: A declarative statistical visualization library for Python
@@ -50,6 +50,9 @@ rather than chart construction details.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.3.0-alt1
+- new version 6.3.0
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 6.2.2-alt1
 - new version 6.2.2
 
