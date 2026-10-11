@@ -1,7 +1,7 @@
-%define sover 0
+%define sover 1
 
 Name: aws-lc
-Version: 1.71.0
+Version: 5.11.0
 Release: alt1
 
 Summary: General-purpose cryptographic library maintained by AWS
@@ -13,7 +13,7 @@ URL: https://github.com/aws/aws-lc
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ ninja-build
+BuildRequires: rpm-build-cmake gcc-c++ ninja-build
 BuildRequires: perl-base
 BuildRequires: libunwind-devel
 
@@ -91,6 +91,10 @@ conflicts with system OpenSSL.
 %_libdir/ssl/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.11.0-alt1
+- new version 5.11.0
+- upstream ABI_VERSION 1: rename libcrypto-awslc0, libssl-awslc0 to libcrypto-awslc1, libssl-awslc1
+
 * Sat Apr 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1.71.0-alt1
 - initial build for ALT Sisyphus
 
