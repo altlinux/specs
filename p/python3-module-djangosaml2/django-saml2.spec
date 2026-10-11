@@ -3,7 +3,7 @@
 %define mod_name djangosaml2
 
 Name: python3-module-%pypi_name
-Version: 1.9.3
+Version: 1.12.0
 Release: alt1
 
 Summary: pysaml2 integration for Django
@@ -45,6 +45,9 @@ Djangosaml2 protects your project with a SAML2 SSO Authentication.
 
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
+- new version 1.12.0
+
 * Fri Jun 28 2024 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
 - initial build for Sisyphus
 
