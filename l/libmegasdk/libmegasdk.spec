@@ -1,35 +1,39 @@
 Name: libmegasdk
-Version: 4.28.3
+Version: 10.19.0
 Release: alt1
 
-Summary: MEGA SDK - Client Access Engine Coverity Scan Build Status
+Summary: MEGA SDK - Client Access Engine
 
-License: BSD 2-clause Simplified License
+License: BSD-2-Clause
 Group: System/Libraries
 Url: https://github.com/meganz/sdk
 
 # Source-url: https://github.com/meganz/sdk/archive/v%version.tar.gz
 Source: v%version.tar.gz
 
-#Source1: #name
-#Source2: #name.service
-#Source3: #name.conf
-#Source4: #name-serv
+# The SDK has no stable ABI: the soname changes with every minor release
+%define abiversion %(echo %version | cut -d. -f1-2)
+
+# Upstream builds only a static in-tree library: build it shared and install it
+Patch1: libmegasdk-10.19.0-shared-library.patch
+Patch2: libmegasdk-10.19.0-install.patch
+Patch3: libmegasdk-10.19.0-qt-bindings-install.patch
+Patch4: libmegasdk-10.19.0-no-stdc++fs.patch
+Patch5: libmegasdk-10.19.0-direct-deps.patch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-BuildRequires: doxygen
-BuildRequires: gcc-c++
-# devel-static due libstdc++fs.a
-BuildRequires: libstdc++-devel-static
-BuildRequires: libcares-devel libcryptopp-devel libcurl-devel libfreeimage-devel libfuse-devel libpcrecpp-devel
-BuildRequires: libreadline-devel libsodium-devel libsqlite3-devel libssl-devel libuv-devel zlib-devel libicu-devel
-BuildRequires: libavformat-devel libgomp-devel libraw-devel libswscale-devel libzen-devel libmediainfo-devel libcryptopp-devel
-# FIXME: suddenly required for libcryptopp checking
-BuildRequires: libudev-devel
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: gcc-c++ qt5-base-devel
+BuildRequires: libcryptopp-devel libsodium-devel libsqlite3-devel libcurl-devel libssl-devel libicu-devel
+BuildRequires: libuv-devel libfreeimage-devel libmediainfo-devel libzen-devel libreadline-devel
+# libmediainfo.pc refers to glib-2.0 includes
+BuildRequires: glib2-devel
+BuildRequires: zlib-devel
+BuildRequires: libavformat-devel libavcodec-devel libavutil-devel libswscale-devel libswresample-devel
 
 %description
-MEGA SDK - Client Access Engine Coverity Scan Build Status.
+MEGA SDK - Client Access Engine.
 
 MEGA --- The Privacy Company --- is a Secure Cloud Storage provider
 that protects your data thanks to end-to-end encryption.
@@ -40,108 +44,118 @@ And while most cloud storage providers can and do claim the same,
 MEGA is different - unlike the industry norm where the cloud storage provider holds the decryption key,
 with MEGA, you control the encryption, you hold the keys, and you decide who you grant or deny access to your files.
 
+%package -n libmega%abiversion
+Summary: MEGA SDK shared library
+Group: System/Libraries
+
+%description -n libmega%abiversion
+MEGA SDK - Client Access Engine shared library.
+
+%package -n libmega-qt%abiversion
+Summary: Qt5 bindings for MEGA SDK shared library
+Group: System/Libraries
+
+%description -n libmega-qt%abiversion
+Qt5 bindings for MEGA SDK - Client Access Engine shared library.
+
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: libmegasdk = %EVR
+Requires: libmega%abiversion = %EVR
+Requires: libmega-qt%abiversion = %EVR
+# the exported CMake targets include MEGA::gfxworker
+Requires: %name-gfxworker = %EVR
+Provides: %name-devel-qt5 = %EVR
+Obsoletes: %name-devel-qt5 < %EVR
 
 %description devel
-This package contains the header and object files necessary for developing with
-%name.
+This package contains the headers, pkg-config and CMake files necessary
+for developing with %name (including the Qt5 bindings).
 
-%package devel-qt5
-Summary: Qt5 development binding files for %name
-Group: Development/C
-Requires: libmegasdk-devel = %EVR
+%package gfxworker
+Summary: MEGA SDK isolated graphics processing helper
+Group: Graphics
 
-%description devel-qt5
-This package contains Qt5 development binding files for %name.
+%description gfxworker
+Helper process used by MEGA SDK based applications to create thumbnails
+and previews in a separate process.
 
 %package tools
 Summary: Tools from MEGA SDK
 Group: File tools
-Requires: libmegasdk = %EVR
 
 Conflicts: megafuse
-Provides: megasymplesync = %EVR
-Obsoletes: megasymplesync
 
 %description tools
 Example tools from MEGA SDK - Client Access Engine
 * megacli (a powerful command line tool that allows to use all SDK features)
-* megasimplesync (a command line tool that allows to use the synchronization engine)
 
 %prep
 %setup
-# hack against missed --tag=CXX during linking
-sed -i 's|ANDROID|TRUE|' Makefile.am
-
-sed -i 's/#define CAP_TRUNCATED CODEC_CAP_TRUNCATED/#define CAP_TRUNCATED 0/' src/gfx/freeimage.cpp
-
-sed -i 's|with_pcre/include|with_pcre|' configure.ac
-sed -i 's|with_db/include|with_db|' configure.ac
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-%autoreconf
-#add_optflags -std=gnu++17
-%configure --disable-static \
-           --disable-java \
-           --disable-php \
-           --disable-python \
-           --disable-curl-checks \
-           --disable-gcc-hardening \
-           --enable-drive-notifications \
-           --enable-chat \
-           --with-cares --with-curl --with-sodium --with-openssl --with-sqlite --with-zlib \
-           --with-freeimage --with-pcre=%_includedir/pcre --with-fuse --with-libuv \
-           --with-libzen --with-libmediainfo --with-ffmpeg --with-cryptopp \
-           %nil
-
-# only sqlite or db4
-#           --with-db=%_includedir/db4
-
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DBUILD_SHARED_LIBS=ON \
+    -DSDKLIB_INSTALL=ON \
+    -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
+    -DSDKLIB_OUTPUT_NAME=mega \
+    -DSDKQTBINDINGS_OUTPUT_NAME=mega-qt \
+    -DENABLE_SDKLIB_WERROR=OFF \
+    -DENABLE_SDKLIB_TESTS=OFF \
+    -DENABLE_SDKLIB_EXAMPLES=ON \
+    -DENABLE_QT_BINDINGS=ON \
+    -DENABLE_ISOLATED_GFX=ON \
+    -DENABLE_LOG_PERFORMANCE=ON \
+    -DENABLE_MEDIA_FILE_METADATA=ON \
+    -DUSE_LIBUV=ON \
+    -DUSE_FREEIMAGE=ON \
+    -DUSE_FFMPEG=ON \
+    -DUSE_PDFIUM=OFF \
+    -DUSE_READLINE=ON \
+    %nil
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
-# just copy, no qt build here
-mkdir -p %buildroot/%_datadir/%name/qt5/
-cp -a bindings/qt/* %buildroot/%_datadir/%name/qt5/
+%files -n libmega%abiversion
+%_libdir/libmega.so.%abiversion
+%_libdir/libmega.so.%version
 
-mkdir -p %buildroot/%_datadir/%name/m4/
-cp -a m4/ax*.m4 %buildroot/%_datadir/%name/m4/
-
-#mkdir -p %buildroot%_initdir/ %buildroot/lib/systemd/system/ %buildroot/etc/
-#cp #SOURCE1 %buildroot%_initdir/
-#cp #SOURCE2 %buildroot/lib/systemd/system/
-#cp #SOURCE3 %buildroot/etc/
-#cp #SOURCE4 %buildroot%_bindir/
-
-# missed headers
-cp include/mega/{mega_glob.h,mega_http_parser.h,textchat.h,nodemanager.h,setandelement.h,heartbeats.h} %buildroot/%_includedir/mega/
-cp include/mega/posix/drivenotifyposix.h %buildroot/%_includedir/mega/posix/
-
-%files
-%_libdir/libmega.so.*
+%files -n libmega-qt%abiversion
+%_libdir/libmega-qt.so.%abiversion
+%_libdir/libmega-qt.so.%version
 
 %files devel
-%_includedir/mega/
-%_includedir/*.h
-%_libdir/pkgconfig/libmega.pc
+%_includedir/megasdk/
 %_libdir/libmega.so
-%dir %_datadir/%name/
-%_datadir/%name/m4/
+%_libdir/libmega-qt.so
+%_libdir/pkgconfig/sdklib.pc
+%_libdir/cmake/sdklib/
 
-%files devel-qt5
-%_datadir/%name/qt5/
+%files gfxworker
+%dir %_libexecdir/megasdk/
+%_libexecdir/megasdk/gfxworker
 
 %files tools
 %_bindir/megacli
-#_bindir/megafuse
-%_bindir/megasimplesync
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 10.19.0-alt1
+- new version 10.19.0 (CMake build)
+- build SDKlib as shared libmega.so.10.19 (the ABI changes every minor release)
+- pack libmega10.19 and libmega-qt10.19 (Qt5 bindings) per Shared Libs Policy
+- install headers (into /usr/include/megasdk), pkg-config and CMake package files
+- pack gfxworker helper into libmegasdk-gfxworker subpackage
+- drop libmegasdk-devel-qt5 (the Qt5 bindings are in libmegasdk-devel now)
+- megasimplesync is dropped by upstream
+
 * Tue Nov 07 2023 Vitaly Lipatov <lav@altlinux.ru> 4.28.3-alt1
 - new version 4.28.3 (with rpmrb script)
 

@@ -1,5 +1,5 @@
 Name: megasync
-Version: 4.11.0.0
+Version: 6.6.2.0
 Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
@@ -12,28 +12,32 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/meganz/MEGAsync/archive/v%{version}_Linux.tar.gz
 Source: v%{version}_Linux.tar.gz
-Source1: qt5sdk.pri
 
-Patch: MEGASync-4.0.2.0-createForeignFileNode.patch
+# MEGAsync v6.6.2.0_Linux pins the MEGA SDK submodule to v10.19.0.
+# The SDK has no stable ABI: update megasync and libmegasdk together (one task).
+%define sdk_version 10.19.0
+%define sdk_abiversion %(echo %sdk_version | cut -d. -f1-2)
 
-# TODO: due google_breakpad
-ExclusiveArch: %ix86 x86_64
+# Build with the installed MEGA SDK instead of the src/MEGASync/mega submodule
+Patch1: megasync-6.6.2.0-system-sdk.patch
+Patch2: megasync-6.6.2.0-vcpkg-install-only.patch
+Patch3: megasync-6.6.2.0-system-gfxworker.patch
+Patch4: megasync-6.6.2.0-offline-clang-format.patch
+Patch5: megasync-6.6.2.0-zlib.patch
 
-BuildPreReq: rpm-macros-qt5
+BuildRequires(pre): rpm-build-cmake rpm-macros-qt5
+BuildRequires: gcc-c++
+BuildRequires: libmegasdk-devel = %sdk_version
+BuildRequires: qt5-base-devel qt5-declarative-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel
+BuildRequires: libxcb-devel zlib-devel
 
-BuildRequires: cmake
-
-BuildRequires: zlib-devel
-
-BuildRequires: libmegasdk-devel >= 4.28.3
-BuildRequires: libmegasdk-devel-qt5
-
-# Automatically added by buildreq on Sat Jun 13 2015
-# optimized out: fontconfig glib2-devel glibc-devel-static libGL-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libcloog-isl4 libdc1394-22 libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libjson-c libopencore-amrnb0 libopencore-amrwb0 libp11-kit libpango-devel libqt5-core libqt5-gui libqt5-network libqt5-opengl libqt5-sql libqt5-svg libqt5-widgets libqt5-xml libraw1394-11 libsodium-devel libstdc++-devel libswscale-devel libvpx-devel libwayland-client libwayland-server python3-base qt5-base-devel qt5-declarative-devel qt5-script-devel qt5-tools xorg-scrnsaverproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ qt5-connectivity-devel qt5-location-devel qt5-multimedia-devel qt5-phonon-devel qt5-quick1-devel qt5-tools-devel qt5-webkit-devel qt5-websockets-devel qt5-svg-devel qt5-x11extras-devel
-
-# instead of internal fonts OpenSans, SourceSansPro
-Requires: fonts-ttf-open-sans fonts-otf-adobe-source-sans-pro
+# the soname (libmega.so.%sdk_abiversion) does not pin the SDK patch release
+Requires: libmega%sdk_abiversion = %sdk_version
+Requires: libmega-qt%sdk_abiversion = %sdk_version
+# the graphics helper is started by the path, not linked
+Requires: libmegasdk-gfxworker = %sdk_version
+# QML modules imported by the UI from the embedded resources
+Requires: qt5-quickcontrols qt5-quickcontrols2 qt5-graphicaleffects
 
 %description
 Easy automated syncing between your computers and your MEGA cloud drive.
@@ -43,60 +47,44 @@ of the official sync client of MEGA: https://mega.nz/sync
 
 %prep
 %setup
-#patch -p0
-
-# SegFault workaround
-%__subst 's|bool direct = .*|bool direct = false;|' src/MEGASync/control/MegaSyncLogger.cpp
-
-%__subst "s|-lcrypto|-lcrypto -lz|g" src/MEGASync/platform/platform.pri
-%__subst "1iQMAKE_CXXFLAGS += -I/usr/include/mega/posix " src/MEGASync/MEGASync.pro
-
-mkdir -p src/MEGASync/mega/bindings/qt/
-cp -a %_datadir/libmegasdk/qt5/*.* src/MEGASync/mega/bindings/qt/
-cp %SOURCE1 src/MEGASync/mega/bindings/qt/sdk.pri
-
-mkdir -p src/MEGASync/mega/include/mega/
-ln -s %_includedir/mega/config.h src/MEGASync/mega/include/mega/config.h
-
-# drop fonts
-sed -i 's|.*fonts/.*||' src/MEGASync/gui/Resources_linux.qrc
-sed -i 's|.*//fonts/.*||' src/MEGASync/MegaApplication.cpp
-rm -rv src/MEGASync/gui/fonts/
-
-#mkdir -p  %{buildroot}/etc/sysctl.d/
-#echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/99-megasync-inotify-limit.conf
-
-#mkdir -p  %{buildroot}/etc/udev/rules.d/
-#echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/99-megasync-udev.rules
-
-
-# TODO: use external one only
-#rm -rf src/MEGASync/google_breakpad
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
-cd src
-%qmake_qt5 CONFIG+="release" MEGA.pro
-lrelease-qt5 MEGASync/MEGASync.pro
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DUSE_SYSTEM_MEGA_SDK=ON \
+    -DENABLE_DESKTOP_APP_WERROR=OFF \
+    -DENABLE_DESKTOP_UPDATE_GEN=OFF \
+    -DENABLE_DESIGN_TOKENS_IMPORTER=OFF \
+    -DENABLE_DESKTOP_APP_TESTS=OFF \
+    -DENABLE_LINUX_EXT=OFF \
+    -DUSE_BREAKPAD=OFF \
+    %nil
+%cmake_build
 
 %install
-cd src/MEGASync/
-mkdir -p %buildroot%_bindir/
-install -m 0755 %name %buildroot%_bindir/%name
-
-cd platform/linux/data
-mkdir -p %buildroot%_desktopdir/
-install -m 0644 megasync.desktop %buildroot%_desktopdir/%name.desktop
-
-mkdir -p %buildroot%_iconsdir/
-cp -a icons/hicolor/ %buildroot%_iconsdir/
+# the project installs into usr/... relative to an empty prefix
+DESTDIR=%buildroot cmake --install %_cmake__builddir --prefix /
 
 %files
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
+%_iconsdir/hicolor/*/status/*
+%_iconsdir/ubuntu-mono-dark/status/24/mega*.svg
+%_datadir/%name/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.6.2.0-alt1
+- new version 6.6.2.0 (CMake build)
+- build with the installed MEGA SDK 10.19.0 (libmegasdk) instead of the submodule
+- use the SDK gfxworker helper for thumbnails and previews
+- drop obsolete qmake-era workarounds, build without breakpad
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 4.11.0.0-alt1
 - new version 4.11.0.0 (with rpmrb script)
 
