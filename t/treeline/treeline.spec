@@ -1,6 +1,6 @@
 BuildRequires: desktop-file-utils
 Name: treeline
-Version: 3.1.6
+Version: 3.2.1
 Release: alt1
 
 Summary: Treeline stores almost any kind of information
@@ -32,7 +32,7 @@ screen, printed, or exported to html.
 %build
 %install
 python3 install.py -b %buildroot -p %prefix -x
-rm %buildroot%_datadir/%name/setup.py 
+rm %buildroot%_datadir/%name/setup.py
 
 install -D -m 0644 treeline.desktop %buildroot%_desktopdir/%name.desktop
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -50,6 +50,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
+- new version 3.2.1
+- port to PyQt6 (upstream)
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
 - new version 3.1.6 (with rpmrb script)
 
