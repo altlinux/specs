@@ -1,14 +1,14 @@
 %global _unpackaged_files_terminate_build 1
-%global import_path github.com/github/github-mcp-server
-%global commit 85598ba6e1256f7ebf4867b95d63b833c4549264
+%global import_path github.com/github/github-mcp-server/v2
+%global commit eb47a99ddb866ca2b8a162920e6bda9521f33ebb
 
 %def_without check
 # tests need network access to the GitHub API, not available in the
 # build environment.
 
 Name: github-mcp-server
-Version: 1.12.2
-Release: alt2
+Version: 2.0.2
+Release: alt1
 
 Summary: GitHub's official MCP server
 License: MIT
@@ -65,6 +65,9 @@ install -Dm644 %SOURCE4 \
 %_userpresetdir/50-github-mcp-server.preset
 
 %changelog
+* Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.2-alt1
+- Updated to 2.0.2.
+
 * Tue Sep 29 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.12.2-alt2
 - Renamed the user unit to github-mcp-server.service.
 - The gateway port can now be changed via GITHUB_PORT in
