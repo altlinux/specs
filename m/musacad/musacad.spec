@@ -4,7 +4,7 @@
 %def_with check
 
 Name: musacad
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: High-performance, multi-threaded 2D CAD in modern C++23
@@ -83,6 +83,9 @@ sed -i "s|assets/screenshots/||g" README.md
 %_datadir/metainfo/org.musacad.MusaCAD.metainfo.xml
 
 %changelog
+* Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Sat Oct 03 2026 Nikolay Strelkov <snk@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 
