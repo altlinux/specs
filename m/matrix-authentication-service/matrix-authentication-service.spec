@@ -3,7 +3,7 @@
 %define cargo_install %rust_install
 
 Name: matrix-authentication-service
-Version: 1.14.0
+Version: 1.26.0
 Release: alt1
 
 Summary: OAuth 2.0 and OpenID Connect authentication server for Matrix
@@ -22,7 +22,7 @@ ExclusiveArch: x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust /proc
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 Requires: ca-certificates
 
 %description
@@ -32,7 +32,9 @@ provider designed for use with Matrix homeservers such as Synapse.
 It provides user authentication, session management, and upstream
 identity provider integration for the Matrix ecosystem.
 
-Requires PostgreSQL >= 13 as a database backend.
+Requires PostgreSQL >= 13 as a database backend with the pg_trgm extension
+(postgresqlNN-contrib on the database server; on PostgreSQL < 16 run
+CREATE EXTENSION pg_trgm as a superuser before upgrading).
 
 %prep
 %setup -a1
@@ -47,6 +49,7 @@ sed -i 's|/usr/local/share/mas-cli|/usr/share/mas-cli|g' \
 sed -i '/^\[profile.release\]/,/^$/{
     s/^codegen-units = 1/codegen-units = 16/
     s/^lto = true/lto = false/
+    s/^lto = "thin"/lto = false/
 }' Cargo.toml
 
 %cargo_prep
@@ -88,6 +91,16 @@ mkdir -p %buildroot%_sysconfdir/mas
 %_datadir/mas-cli/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26.0-alt1
+- new version 1.26.0
+- security fixes:
+  + RUSTSEC-2026-0285, GHSA-2mjx-qc3c-rqvc: fix rustls accepting TLS 1.3 handshake messages across encryption levels
+  + RUSTSEC-2026-0258, GHSA-q83h-524g-xf6h: fix h2 unbounded empty DATA frames
+  + RUSTSEC-2026-0204: fix crossbeam-epoch invalid pointer dereference
+- update share data (templates, translations, assets, policy) to 1.26.0
+- use rpm-build-cmake instead of cmake in BuildRequires
+- disable thin LTO in the release profile to reduce memory usage
+
 * Fri Apr 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt1
 - initial build for ALT Sisyphus
 - added ca-certificates requirement

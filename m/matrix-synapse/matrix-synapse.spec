@@ -2,8 +2,8 @@
 %define optflags_lto %nil
 
 Name: matrix-synapse
-Version: 1.148.0
-Release: alt2
+Version: 1.162.0
+Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
 License: Apache-2.0
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: python3 >= 3.9
+BuildRequires: python3 >= 3.10
 
 %py3_buildrequires setuptools_rust >= 1.3
 %py3_buildrequires maturin
@@ -41,7 +41,7 @@ BuildRequires: python3 >= 3.9
 %py3_use canonicaljson < 3.0.0
 %py3_use canonicaljson >= 2.0.0
 %py3_use signedjson < 2.0.0
-%py3_use signedjson >= 1.1.0
+%py3_use signedjson >= 1.1.4
 %py3_use service-identity >= 18.1.0
 %py3_use twisted-core >= 21.2.0
 %py3_use treq >= 21.5.0
@@ -55,7 +55,7 @@ BuildRequires: python3 >= 3.9
 %py3_use pymacaroons >= 0.13.0
 %py3_use msgpack >= 0.5.2
 %py3_use phonenumbers >= 8.2.0
-%py3_use prometheus-client >= 0.6.0
+%py3_use prometheus-client >= 0.10.0
 %py3_use attrs >= 21.1.0
 %py3_use netaddr >= 0.7.18
 %py3_use jinja2 >= 3.0
@@ -68,7 +68,7 @@ BuildRequires: python3 >= 3.9
 %py3_use packaging >= 20.0
 %py3_use pydantic >= 2.12
 #py3_use setuptools-rust >= 1.3
-%py3_use multipart >= 0.0.9
+%py3_use python-multipart >= 0.0.9
 %py3_use cffi >= 1.15
 %py3_use pynacl >= 1.3
 %py3_use pyparsing >= 2.4
@@ -95,7 +95,7 @@ BuildRequires: python3 >= 3.9
 #py3_use opentracing >= 2.2.0
 #py3_use jaeger-client >= 4.0.0
 
-%py3_use txredisapi >= 1.4.7
+%py3_use txredisapi >= 1.4.12
 #py3_use hiredis-py  
 %py3_use pympler
 %py3_use idna >= 2.5
@@ -123,7 +123,7 @@ Requires: python3-module-twisted-mail >= 17.5.0
 # optional
 %add_python3_req_skip opentracing
 # internal (not provides from rust module)
-%add_python3_req_skip synapse.synapse_rust.push synapse.synapse_rust.acl synapse.synapse_rust.events synapse.synapse_rust.rendezvous synapse.synapse_rust.http_client
+%filter_from_requires /^python3(synapse\.synapse_rust\./d
 
 %description
 Matrix is an ambitious new ecosystem for open federated Instant Messaging and VoIP.
@@ -187,7 +187,7 @@ rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
 %_sysusersdir/%name.conf
 %_tmpfilesdir/%name.conf
 %python3_sitelibdir/*
-%attr(0750,root,_synapse) %dir /etc/synapse/
+%attr(0770,root,_synapse) %dir /etc/synapse/
 %attr(0640,root,_synapse) %config(noreplace) /etc/synapse/homeserver.yaml
 %attr(0640,root,_synapse) %config(noreplace) /etc/synapse/log_config.yaml
 
@@ -196,6 +196,30 @@ rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.162.0-alt1
+- new version 1.162.0
+- security fixes:
+  + CVE-2026-45076, GHSA-6qf2-7x63-mm6v: fix pagination denial of service
+  + CVE-2026-45078, GHSA-8q93-326v-3m7g: fix CPU starvation under worker lock contention
+  + CVE-2026-102534, GHSA-fp53-rw9v-hcf9: fix resource exhaustion from user-configured push rules
+  + CVE-2026-102533, GHSA-rgv2-84w7-5j9p: fix accepting spoofed to-device messages
+  + CVE-2026-102535, GHSA-27p5-4f45-gx76: fix event disclosure via federation /get_missing_events
+  + CVE-2026-102543, GHSA-95fh-hv8c-chvq: fix relaying federation 401 responses to clients
+  + CVE-2026-102531, GHSA-cjh7-rcpx-xpf8: fix malicious redirection of room aliases
+  + CVE-2026-102592, GHSA-6wjm-9p2x-gvpm: fix memory exhaustion by multipart/form-data requests
+  + CVE-2026-102532, GHSA-qcjr-46gf-7f4r: fix auth event disclosure via federation /event_auth
+  + CVE-2026-102542, GHSA-r66v-qhwx-8rg4: fix event ID disclosure via federation /timestamp_to_event
+  + CVE-2026-102591, GHSA-jhcg-5392-5mjw: fix invalid Sliding Sync responses on invalid room data
+  + CVE-2026-102595, GHSA-vh4c-pqh4-w3wq: fix extraneous HTTP path segments in some endpoints
+  + CVE-2026-102597, GHSA-hgcg-p9gx-fq5f: fix extraneous trailing data on the URL of some endpoints
+  + GHSA-82j2-j2ch-gfr8: fix rustls-webpki denial of service via malformed CRL
+  + GHSA-36hh-v3qg-5jq4: fix PyO3 out-of-bounds read in PyList/PyTuple iterators
+  + GHSA-chgr-c6px-7xpp: fix PyO3 missing Sync bound on PyCFunction closures
+- update requirements, require python-multipart instead of multipart
+- filter out requires on internal synapse.synapse_rust modules
+- make /etc/synapse writable for _synapse group to create the signing key
+  (closes: #57534) (closes: #38962)
+
 * Mon Mar 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.148.0-alt2
 - fix /etc/synapse directory permissions for _synapse user (ALT bug 57534)
 
