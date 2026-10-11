@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyremote
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Use SoapySDR devices over network
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(SoapySDR)
+BuildRequires: pkgconfig(avahi-client)
 
 %description
 The SoapyRemote project provides a client module and a server that make it
@@ -37,8 +38,11 @@ modules on the server as if they were local module
 %_bindir/SoapySDRServer
 %_man1dir/SoapySDRServer.1.*
 %_unitdir/SoapySDRServer.service
-%_sysctldir/SoapySDRServer.conf
+%_sysctldir/10-SoapySDRServer.conf
 
 %changelog
+* Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.3-alt1
+- New version 0.5.3.
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.5.2-alt1
 - Initial build for Sisyphus
