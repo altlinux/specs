@@ -1,5 +1,5 @@
 Name: loook
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Loook searches for text strings in ODF documents
@@ -12,7 +12,7 @@ BuildArch: noarch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://mechtilde.de/Loook/Downloads/loook-%version-sources.zip
+# Source-url: https://mechtilde.de/Loook/Downloads/loook-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires: gettext-tools
@@ -43,9 +43,10 @@ mkdir -p %buildroot%_bindir/
 ln -s %_datadir/%name/%name.py %buildroot%_bindir/%name
 
 # install messages
-for m in cs de en es fr it nl ; do
+for m in cs de en es fr it nl pt-br:pt_BR ; do
+    l=${m#*:} ; m=${m%%:*}
     msgfmt %name.${m}.po -o %name-%version.${m}.mo
-    install -Dm 0644 %name-%version.${m}.mo %buildroot%_datadir/locale/${m}/LC_MESSAGES/%name.mo
+    install -Dm 0644 %name-%version.${m}.mo %buildroot%_datadir/locale/${l}/LC_MESSAGES/%name.mo
 done
 
 %find_lang %name
@@ -61,6 +62,9 @@ install -Dm 0644 %name.desktop %buildroot%_desktopdir/%name.desktop
 %_man1dir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- new version 0.9.1 (add pt_BR translation)
+
 * Thu Jun 13 2024 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version (0.9.0) (ALT bug 50291)
 
