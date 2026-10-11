@@ -3,7 +3,7 @@
 %define appname com.cassidyjames.dippi
 
 Name: dippi
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: Calculate display info like DPI and aspect ratio
@@ -71,6 +71,9 @@ Tells you if a display's density is:
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.3-alt1
+- New version 5.0.3.
+
 * Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.2-alt1
 - New version 5.0.2.
 
