@@ -14,9 +14,13 @@
 %endif
 %def_with vulkan
 
+# rpm-macros-cuda-toolkit >= 0.2 branches %%cuda_version on %%_priority_distbranch,
+# which is defined by girar but not in a plain hasher chroot (beehive FTBFS).
+%{!?_priority_distbranch:%global _priority_distbranch sisyphus}
+
 Name: ollama
 Version: 0.40.2
-Release: alt1
+Release: alt2
 Summary: Get up and running with large language models
 License: MIT
 Group: Sciences/Computer science
@@ -221,6 +225,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sun Oct 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.40.2-alt2
+- Fixed FTBFS on beehive.
+
 * Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.40.2-alt1
 - Updated to version 0.40.2.
 
