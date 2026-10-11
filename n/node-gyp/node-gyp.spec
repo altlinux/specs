@@ -1,6 +1,6 @@
 Name: node-gyp
 Version: 13.1.0
-Release: alt1
+Release: alt2
 
 Summary: Node.js native addon build tool
 License: MIT
@@ -71,9 +71,6 @@ You need also Install gcc-c++ package for compiling native addon modules for Nod
 %patch3 -p2
 %patch4 -p2
 
-# use system gyp
-%__subst "s|\(var gyp_script =\).*|\1 '/usr/bin/gyp'|g" lib/configure.js
-
 # fix -fPIC using on ix86
 %__subst 's| and target_arch!="ia32"||' addon.gypi
 
@@ -113,6 +110,10 @@ ln -sf ../lib/node_modules/node-gyp/bin/node-gyp.js %buildroot%_bindir/node-gyp
 %doc README.md LICENSE
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 13.1.0-alt2
+- fix node-gyp rebuild: await build dir creation in system nodedir patch (closes: #51743)
+- drop no-op gyp_script substitution
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 13.1.0-alt1
 - new version 13.1.0
 - require node >= 22.22.2 (upstream engines)
