@@ -1,5 +1,5 @@
 Name: sqlmap
-Version: 1.10.9
+Version: 1.10.10
 Release: alt1
 
 Summary: Automatic SQL injection and database takeover tool
@@ -88,6 +88,9 @@ popd
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.10-alt1
+- new version 1.10.10
+
 * Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.9-alt1
 - new version 1.10.9.
 - Exclude upstream boundary tests from the runtime package.
