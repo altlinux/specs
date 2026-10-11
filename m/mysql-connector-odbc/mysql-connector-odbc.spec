@@ -2,7 +2,7 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 9.7.0
+Version: 26.7.1
 Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
@@ -20,6 +20,9 @@ Source0: %name-%version.tar
 
 Source1: odbc.ini
 Source2: odbcinst.ini
+
+# myodbc-installer uses odbcinst with /etc/odbcinst.ini and /etc/odbc.ini from unixODBC
+Requires: unixODBC
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -69,16 +72,25 @@ install -pm 0644 %SOURCE1 odbc.ini
 install -pm 0644 %SOURCE2 odbcinst.ini
 sed -e 's|@@lib@@|%_libdir|g' -i odbcinst.ini
 
-rm -v %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC}
+rm -v %buildroot/%_prefix/{ChangeLog,README.txt,LICENSE.txt,INFO_BIN,INFO_SRC,CONTRIBUTING.md}
 rm -vr %buildroot%_prefix/test/
 
 %files
 %doc ChangeLog README.txt LICENSE.txt odbcinst.ini odbc.ini
 %_bindir/myodbc-installer
-%_libdir/libmyodbc9a.so
-%_libdir/libmyodbc9w.so
+%_libdir/libmyodbc26a.so
+%_libdir/libmyodbc26w.so
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 26.7.1-alt1
+- new version 26.7.1
+- driver libraries renamed upstream to libmyodbc26[aw].so
+- add Requires: unixODBC for myodbc-installer (closes: #51437)
+- security fixes (Oracle Critical Patch Update, August 2026):
+  + CVE-2026-71079: fix Connector/ODBC vulnerability exploitable via MySQL protocol.
+  + CVE-2026-71084: fix local Connector/ODBC vulnerability.
+  + CVE-2026-71073: fix local Connector/ODBC vulnerability.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 9.7.0-alt1
 - new version 9.7.0
 
