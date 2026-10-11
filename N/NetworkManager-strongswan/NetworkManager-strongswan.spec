@@ -2,7 +2,7 @@
 %def_with gtk4
 
 Name: NetworkManager-strongswan
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: NetworkManager strongSwan IPSec VPN plug-in
@@ -92,6 +92,9 @@ This package contains files for GTK4 applications to use %name.
 %endif
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.6-alt1
+- new version 1.6.6
+
 * Sat Apr 25 2026 Ilya Mashkin <oddity@altlinux.ru> 1.6.5-alt1
 - 1.6.5
 - Fixes regarding CVE-2025-9615
