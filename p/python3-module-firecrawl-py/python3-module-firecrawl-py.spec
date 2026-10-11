@@ -2,7 +2,7 @@
 %define mod_name firecrawl
 
 Name: python3-module-firecrawl-py
-Version: 4.24.0
+Version: 4.50.0
 Release: alt1
 
 Summary: Python SDK for Firecrawl API
@@ -41,5 +41,8 @@ rm -rf %buildroot%python3_sitelibdir/%mod_name/__tests__
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.50.0-alt1
+- new version 4.50.0
+
 * Mon May 04 2026 Vitaly Lipatov <lav@altlinux.ru> 4.24.0-alt1
 - initial build for ALT Sisyphus
