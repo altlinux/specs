@@ -3,19 +3,20 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.4.2
+Version: 4.5.0
 Release: alt1
 Summary: Python implementation of the actor model
 License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.org/project/pykka
+URL: https://pypi.org/project/pykka
 VCS: https://github.com/jodal/pykka
 
 Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-hatchling
 
 %if_with check
@@ -45,6 +46,9 @@ which makes it easier to build concurrent applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.5.0-alt1
+- Updated to version 4.5.0.
+
 * Sun Apr 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 4.4.2-alt1
 - Updated to version 4.4.2.
 
