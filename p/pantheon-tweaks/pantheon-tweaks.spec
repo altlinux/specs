@@ -4,7 +4,7 @@
 %define appname io.github.pantheon_tweaks.pantheon-tweaks
 
 Name: pantheon-tweaks
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: A system customization app for the Pantheon desktop environment.
@@ -53,6 +53,9 @@ easily and safely customise your desktop's appearance.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.6.0-alt1
+- New version 2.6.0.
+
 * Tue May 05 2026 Nikolay Strelkov <snk@altlinux.org> 2.5.2-alt1
 - New version 2.5.2.
 
