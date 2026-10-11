@@ -1,6 +1,6 @@
 %define oname huey
 Name: python3-module-%oname
-Version: 3.2.1
+Version: 3.4.0
 Release: alt1
 
 Summary: a little task queue for python
@@ -54,6 +54,9 @@ rm -rfv %buildroot%python3_sitelibdir/huey/contrib/
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
+- new version 3.4.0
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - new version 3.2.1
 - drop huey_consumer.py (entry-point only since 3.x)
