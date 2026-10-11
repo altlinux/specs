@@ -3,7 +3,7 @@
 
 Name: minicom
 Version: 2.11.1
-Release: alt1
+Release: alt2
 
 Group: Communications
 Summary: A text-menu-driven modem control and terminal emulation program
@@ -13,7 +13,7 @@ Summary: A text-menu-driven modem control and terminal emulation program
 # but I wasn't able to exclude them from the build process completely yet.
 # The rest is simply GPLv2+.
 License: GPL-2.0-or-later AND LGPL-2.0-or-later AND Unlicense
-URL: http://alioth.debian.org/projects/minicom/
+URL: https://salsa.debian.org/minicom-team/minicom
 VCS: https://salsa.debian.org/minicom-team/minicom.git
 
 Source: %name-%version.tar
@@ -101,6 +101,9 @@ find extras doc -name 'Makefile*' -print0 |
 %lang(ru) %doc %name.FAQ.ru
 
 %changelog
+* Sun Oct 11 2026 Anton Midyukov <antohami@altlinux.org> 2.11.1-alt2
+- Update URL (Closes: 60583).
+
 * Sat Oct 10 2026 Anton Midyukov <antohami@altlinux.org> 2.11.1-alt1
 - New version 2.11.1 (Closes: 60881).
 - Cleanup Changelog.
