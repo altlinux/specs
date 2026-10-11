@@ -1,7 +1,7 @@
 %define oname icdiff
 
 Name: python3-module-icdiff
-Version: 2.0.4
+Version: 2.0.10
 Release: alt1
 
 Summary: Python module for Improved Colored Difference Tool
@@ -71,6 +71,9 @@ of what changed when it's not immediately obvious from diff.
 
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
+- new version 2.0.10
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.0.4-alt1
 - cleanup spec
 - new version (2.0.4) with rpmgs script
