@@ -1,5 +1,5 @@
 Name: postsrsd
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: Sender Rewriting Scheme daemon for Postfix
@@ -55,6 +55,9 @@ fi
 /var/lib/postsrsd
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.4.1-alt1
+- new version 2.4.1
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - new version 2.4.0
 
