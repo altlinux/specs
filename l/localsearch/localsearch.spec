@@ -1,5 +1,4 @@
-#FS_IOC_GETFSUUID
-#https://bugzilla.altlinux.org/58153
+%def_enable snapshot
 
 %define _name localsearch
 %define old_name tracker-miners
@@ -11,16 +10,26 @@
 %define rdn_name org.freedesktop.LocalSearch%api_ver_major
 %define _libexecdir %_prefix/libexec
 
+%ifarch x86_64
+%def_enable check
+%else
+%def_disable check
+%endif
+
 Name: %_name
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: LocalSearch is the file search framework of the GNOME desktop
 License: GPL-2.0-or-later and LGPL-2.0-or-later
 Group: Databases
 Url: https://gnome.pages.gitlab.gnome.org/localsearch/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
+%else
+Source: %_name-%version%beta.tar
+%endif
 
 %add_python3_path %_libdir/%_name-%api_ver/
 
@@ -110,6 +119,10 @@ BuildRequires: pkgconfig(gupnp-dlna-gst-2.0)
 %{?_enable_playlist:BuildRequires: libtotem-pl-parser-devel}
 %{?_enable_network_manager:BuildRequires: libnm-devel}
 %{?_enable_man:BuildRequires: asciidoc-a2x xsltproc}
+%{?_enable_check:BuildRequires: /proc /dev/pts man
+BuildRequires: typelib(Tracker) = 3.0 typelib(Tsparql) = 3.0
+BuildRequires: typelib(Gst) = 1.0 typelib(UPowerGlib) = 1.0
+BuildRequires: gst-plugins-good1.0 gst-plugins-bad1.0 gst-plugins1.0-tools}
 
 %description
 LocalSearch is the file search framework of the GNOME desktop. It stores
@@ -161,6 +174,9 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 
 %find_lang %name%api_ver_major
 
+%check
+%__meson_test
+
 %files -f %name%api_ver_major.lang
 %_xdgconfigdir/autostart/%name-%api_ver_major.desktop
 %_bindir/%name
@@ -208,6 +224,10 @@ ln -sf %_name-%api_ver/libtracker-extract.so \
 %doc AUTHORS NEWS README*
 
 %changelog
+* Sun Oct 11 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt2
+- updated to 3.12.0-27-g30d07f6c9
+- enabled %%check for x86_64
+
 * Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 3.12.0-alt1
 - 3.12.0
 

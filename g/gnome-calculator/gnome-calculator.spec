@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: gnome-calculator
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GTK4 based desktop calculator
@@ -214,6 +214,9 @@ GTK interface library.
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Sun Oct 11 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 
