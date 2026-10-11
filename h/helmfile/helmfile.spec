@@ -1,5 +1,5 @@
 Name: helmfile
-Version: 1.7.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Deploy Kubernetes Helm Charts
@@ -8,9 +8,9 @@ License: MIT
 Group: Development/Tools
 Url: https://github.com/helmfile/helmfile
 
-# Source-url: https://github.com/helmfile/helmfile/archive/refs/tags/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://github.com/helmfile/helmfile/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
@@ -23,7 +23,7 @@ ExclusiveArch: %go_arches
 
 #BuildRequires: golang-packaging
 BuildRequires: xz
-BuildRequires: golang >= 1.19
+BuildRequires: golang >= 1.27.1
 
 Requires: helm >= 3.11.1
 
@@ -60,6 +60,18 @@ install -m755 ${HOME}/go/bin/helmfile %buildroot/%_bindir/helmfile
 %_bindir/helmfile
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
+- new version 1.8.1
+- security fixes:
+  + CVE-2026-56854: fix source-address critical option bypass in golang.org/x/crypto/ssh.
+  + CVE-2026-56852: fix infinite loop on invalid input in golang.org/x/text.
+  + CVE-2026-84303, GHSA-qc2q-p7wx-3px3: fix xDS RBAC header matching bypass in grpc-go.
+  + CVE-2026-84304, GHSA-vp52-pcj8-j9qc: fix OOM via HTTP/2 DATA frame fragmentation in grpc-go.
+  + CVE-2026-84445, GHSA-2v4p-qf9q-27wj: fix server panic on missing authority/Host in grpc-go.
+  + GHSA-hrxh-6v49-42gf: fix xDS RBAC and HTTP/2 transport vulnerabilities in grpc-go.
+  + CVE-2026-85732, GHSA-h7vf-4x9w-h99v: fix blind SSRF via pagination Link header in oras-go.
+  + CVE-2026-81870, GHSA-8wmf-6v46-5gfg: fix endpoint URL leak in exporter logs in opentelemetry-go sdk.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - new version 1.7.0
 
