@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-bitcoinlib
-Version: 0.11.0
+Version: 0.12.2
 Release: alt1
 
 Summary: Provides an easy interface to the Bitcoin data structures and protocol
@@ -60,6 +60,9 @@ python3 setup.py test
 
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12.2-alt1
+- new version 0.12.2
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt1
 - new version 0.11.0 (with rpmrb script)
 - cleanup spec
