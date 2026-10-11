@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 7.0
+Version: 8.1
 Release: alt1
 
 Summary: Wrapper around re or regex that adds additional back references
@@ -51,6 +51,9 @@ for some.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 8.1-alt1
+- New version 8.1.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
 - New version 7.0.
 
