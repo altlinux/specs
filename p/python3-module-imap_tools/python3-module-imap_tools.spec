@@ -2,7 +2,7 @@
 %define module_name imap_tools
 
 Name: python3-module-%module_name
-Version: 1.15.0
+Version: 1.15.1
 Release: alt1
 Summary: High level lib for work with email by IMAP
 License: Apache-2.0
@@ -44,6 +44,9 @@ High level lib for work with email by IMAP:
 %doc LICENSE README.rst
 
 %changelog
+* Sun Oct 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.15.1-alt1
+- Updated to version 1.15.1.
+
 * Fri Sep 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.15.0-alt1
 - Updated to version 1.15.0.
 
