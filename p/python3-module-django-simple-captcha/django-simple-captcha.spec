@@ -3,7 +3,7 @@
 %define mod_name captcha
 
 Name: python3-module-%pypi_name
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: A very simple, yet powerful, Django captcha application
@@ -50,6 +50,9 @@ yet highly customizable Django application to add captcha images to any Django f
 
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
+- new version 0.7.0
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
 - new version 0.6.2 (with rpmrb script)
 
