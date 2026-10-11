@@ -3,7 +3,7 @@
 %def_disable embed
 
 Name: python3-module-%oname
-Version: 24.11.1
+Version: 26.8.0
 Release: alt1
 
 Summary: Coroutine-based network library
@@ -145,6 +145,9 @@ cp -fR src/greentest %buildroot%python3_sitelibdir/
 #doc examples
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 26.8.0-alt1
+- new version 26.8.0
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 24.11.1-alt1
 - new version 24.11.1 (with rpmrb script)
 
