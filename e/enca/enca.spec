@@ -1,15 +1,16 @@
 %def_disable static
 
 Name: enca
-Version: 1.19
-Release: alt3
+Version: 1.22
+Release: alt1
 
 Summary: A program that guesses encoding of text files
 License: GPL
 Group: Text tools
 
-Url: http://cihar.com/software/enca
-Source: http://dl.cihar.com/enca/%name-%version.tar
+Url: https://github.com/nijel/enca
+# Source-git: https://github.com/nijel/enca.git
+Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -128,6 +129,10 @@ export ACLOCAL_PATH=/usr/share/gettext/m4
 # - fix devel-docs/html/ build
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.22-alt1
+- new version 1.22
+- switch Url and watch file to GitHub
+
 * Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.19-alt3
 - NMU: fixed FTBFS: find gettext m4 macros (AM_ICONV) via ACLOCAL_PATH
 
