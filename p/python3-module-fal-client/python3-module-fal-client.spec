@@ -2,7 +2,7 @@
 %define pypi_name fal_client
 
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 1.0.3
 Release: alt1
 
 Summary: Python client for fal.ai
@@ -44,6 +44,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3
+
 
 * Mon May 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
