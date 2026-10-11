@@ -1,6 +1,6 @@
 Name: alterator-hostname
-Version: 1.0
-Release: alt2
+Version: 1.1
+Release: alt1
 
 Summary: alterator module for set hostname
 License: GPL-3.0-or-later
@@ -34,6 +34,9 @@ alterator module for set hostname.
 %_alterator_backend3dir/*
 
 %changelog
+* Sun Oct 11 2026 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- backend3/hostname: fix write hostname (Closes: 60872).
+
 * Tue Jan 14 2025 Anton Midyukov <antohami@altlinux.org> 1.0-alt2
 - Do not run hostnamectl or hostname
 
