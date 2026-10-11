@@ -1,7 +1,7 @@
 %define pypi_name vncdotool
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.4.2
 Release: alt1
 
 Summary: Python API for vncdotool, a command line VNC client
@@ -37,7 +37,7 @@ Requires: python3-module-%pypi_name = %EVR
 vncdotool is a command line VNC client. It can be useful to automate
 interactions with virtual machines or hardware devices that are otherwise
 difficult to control. This package provides the console scripts
-(vncdo, vncdotool, vnclog).
+(vncdo, vncdo-replay, vncdotool, vnclog).
 
 %prep
 %setup
@@ -54,9 +54,14 @@ difficult to control. This package provides the console scripts
 
 %files -n %pypi_name
 %_bindir/vncdo
+%_bindir/vncdo-replay
 %_bindir/vncdotool
 %_bindir/vnclog
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.2-alt1
+- new version 1.4.2
+- package new vncdo-replay utility
+
 * Sat Jul 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - initial build for ALT Sisyphus
