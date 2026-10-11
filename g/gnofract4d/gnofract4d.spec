@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gnofract4d
-Version: 4.3
-Release: alt2
+Version: 4.4
+Release: alt1
 
 Summary: Gnofract 4D is a Gnome-based program to draw fractals
 
@@ -14,14 +14,19 @@ Url: https://github.com/fract4d/gnofract4d
 Source: %name-%version.tar
 
 # This *really* requires gcc at runtime!
+# GTK4 via gi.require_version: autodep emits typelib(Gtk) without a version
+Requires: typelib(Gtk) = 4.0 typelib(Gdk) = 4.0 typelib(Gsk) = 4.0
+# do_snapshot draws with cairo.Context: gi foreign cairo converter (not in -nox) + pycairo, loaded implicitly
+Requires: python3(gi._gi_cairo) python3(cairo)
 Requires: gcc
 
 %add_python3_req_skip frm_docbook
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-macros-meson
 
-BuildRequires: gcc-c++ libGConf-devel libjpeg-devel libpng-devel
-BuildRequires: python3-devel
+BuildRequires: meson gcc-c++ libjpeg-devel libpng-devel
+BuildRequires: python3-devel /usr/bin/glib-compile-resources
+BuildRequires: python3-module-pytest
 
 AutoProv: no
 
@@ -34,27 +39,33 @@ the two sets and explore their inter-relationships.
 
 %prep
 %setup
+# version is taken from git describe or export-subst file
+sed -i "s|run_command('bin' / 'version', check: true).stdout().strip()|'%version'|" meson.build
+grep -q "version: '%version'" meson.build
 
 %build
-%python3_build_debug
+%meson \
+    -Dstrip=false \
+    -Dpython.purelibdir=%python3_sitelibdir \
+    -Dpython.platlibdir=%python3_sitelibdir
+%meson_build
 
 %install
-%python3_install
+%meson_install
+rm -rv %buildroot%_docdir/%name/
+%python3_fix_shebang %buildroot%_bindir/%name
 
-# drop all tests
-rm -rf %buildroot%python3_sitelibdir/fract*/test*
+%check
+# the build copies fract4dc module and _conf_data.py into the source tree
+export HOME=$PWD/test-home
+%__python3 -m pytest -v -k 'not testFDSite' fract4d fract4d_compiler
 
-rm -rf %buildroot/usr/share/doc/gnofract4d
-
-%find_lang %name --with-gnome
-
-%files -f %name.lang
+%files
 %doc README.md
 %_bindir/%name
 %python3_sitelibdir/fract4d/
 %python3_sitelibdir/fract4d_compiler/
 %python3_sitelibdir/fract4dgui/
-%python3_sitelibdir/*.egg-info
 %_datadir/%name/
 %_datadir/mime/packages/*
 %_pixmapsdir/*
@@ -62,6 +73,11 @@ rm -rf %buildroot/usr/share/doc/gnofract4d
 %_desktopdir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4-alt1
+- new version 4.4
+- build with meson (upstream dropped setup.py)
+- require GTK 4 typelibs and gi cairo support
+
 * Sat Aug 05 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3-alt2
 - update URL, cleanup spec
 - set AutoProv: no (as for any program)
