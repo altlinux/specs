@@ -1,7 +1,8 @@
 %define oname ada
+%define abiversion 4
 
 Name: libada
-Version: 3.4.4
+Version: 4.0.0
 Release: alt1
 
 Summary: WHATWG-compliant and fast URL parser written in modern C++
@@ -24,9 +25,17 @@ Ada is a fast and spec-compliant URL parser written in C++.
 WHATWG-compliant and fast URL parser,
 part of Node.js, Clickhouse, Redpanda, Kong, Telegram and Cloudflare Workers.
 
+%package -n %name%abiversion
+Summary: WHATWG-compliant and fast URL parser written in modern C++
+Group: System/Libraries
+
+%description -n %name%abiversion
+Ada is a fast and spec-compliant URL parser written in C++.
+This package contains the shared library of Ada.
+
 %package devel
 Summary: Development files for %oname
-Requires: %name = %EVR
+Requires: %name%abiversion = %EVR
 Group: Development/C
 
 %description devel
@@ -52,8 +61,9 @@ developing applications that use %oname.
 %check
 #ctest
 
-%files
-%_libdir/lib%oname.so.*
+%files -n %name%abiversion
+%_libdir/lib%oname.so.%abiversion
+%_libdir/lib%oname.so.%abiversion.*
 
 %files devel
 %doc LICENSE*
@@ -66,6 +76,10 @@ developing applications that use %oname.
 %_includedir/ada_c.h
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0
+- library package renamed to libada4 per soname
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.4-alt1
 - new version 3.4.4
 
