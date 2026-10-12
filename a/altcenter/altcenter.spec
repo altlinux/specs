@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.45
+Release: alt0.46
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,13 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Oct 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.46
+- SSH settings: added SSH empty password setting.
+- SSH settings: added SSH host authentication settings.
+- SSH settings: added SSH user and group access settings.
+- SSH settings: added SSH config validation before reload.
+- SSH settings: disabled SSH apply button without changes.
+
 * Sun Oct 04 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.45
 - SSH settings: added SSH timeout settings.
 - SSH settings: added SSH port configuration.
