@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat rpm-macros-ninja-build
 BuildRequires: /usr/bin/desktop-file-install libncurses-devel qt5-base-devel libreadline-devel pkgconfig(libusb-1.0)
@@ -5,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install libncurses-devel qt5-base-devel lib
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		android-file-transfer
-Version:	4.5
+Version:	4.6
 Release:	alt1
 Summary:	Reliable Android MTP client with minimalist UI
 Group:		Development/Tools
@@ -18,11 +19,11 @@ BuildRequires:	ccmake cmake ctest
 BuildRequires:	desktop-file-utils
 BuildRequires:	gcc-c++
 BuildRequires:	ninja-build
-BuildRequires:	pkgconfig(Qt5Core)
-BuildRequires:	pkgconfig(Qt5Gui)
-BuildRequires:	pkgconfig(Qt5Help)
-BuildRequires:	pkgconfig(Qt5Network)
-BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt6Core)
+BuildRequires:	pkgconfig(Qt6Gui)
+BuildRequires:	pkgconfig(Qt6Help)
+BuildRequires:	pkgconfig(Qt6Network)
+BuildRequires:	pkgconfig(Qt6Widgets)
 BuildRequires:	pkgconfig(fuse)
 BuildRequires:	pkgconfig(openssl)
 #BuildRequires:	pkgconfig(readline)
@@ -74,6 +75,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/%{name}.a
 
 
 %changelog
+* Mon Oct 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.6-alt1
+- 4.5 -> 4.6
+- builded with QT6
+
 * Sun Jul 20 2025 Aleksandr Shamaraev <shad@altlinux.org> 4.5-alt1
 - 4.2 -> 4.5
 - removed android-file-transfer-4.2-gcc13.patch
