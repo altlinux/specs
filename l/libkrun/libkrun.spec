@@ -2,7 +2,7 @@
 %define so_version 1
 
 Name:    libkrun
-Version: 1.19.5
+Version: 1.19.6
 Release: alt1
 Summary: Dynamic library providing Virtualization-based process isolation capabilities
 License: Apache-2.0
@@ -65,6 +65,9 @@ echo "" >> .cargo/config.toml
 %_includedir/libkrun_input.h
 
 %changelog
+* Mon Oct 12 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.19.6-alt1
+- New version 1.19.6.
+
 * Sun Sep 27 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.19.5-alt1
 - New version 1.19.5.
 
