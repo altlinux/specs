@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: shader-slang
-Version: 2026.17
+Version: 2026.19
 Release: alt1
 
 Summary: Slang shading language compiler
@@ -14,7 +14,7 @@ Url: https://github.com/shader-slang/slang
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 BuildRequires: glslang-devel libspirv-tools-devel spirv-headers
 BuildRequires: vulkan-headers libunordered_dense-devel
 BuildRequires: python3
@@ -142,6 +142,11 @@ rm -v %buildroot%_libdir/libslang.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.19-alt1
+- new version 2026.19
+- Fix hash call with unordered_dense 5.
+- Fix loading of serialized modules on 32-bit x86 (64-bit field alignment).
+
 * Sun Sep 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.17-alt1
 - Fix loongarch64 and riscv64 builds (ALT bug #60399).
 - new version (2026.17)
