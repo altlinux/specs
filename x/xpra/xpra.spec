@@ -2,8 +2,8 @@
 %def_with wayland
 
 Name: xpra
-Version: 6.4.3
-Release: alt3
+Version: 6.5.4
+Release: alt1
 
 Summary: X Persistent Remote Applications
 License: GPL-2.0-or-later AND LicenseRef-Callaway-BSD AND LGPL-3.0-or-later AND LicenseRef-Callaway-MIT
@@ -100,6 +100,8 @@ Requires: xorg-xvfb setxkbmap
 Requires: python3-module-pyinotify python3-module-rencode python3-module-lz4 python3-module-netifaces
 
 Requires: libgtk+3-gir
+# gi is imported lazily, autoreq misses it
+Requires: python3-module-pygobject3
 
 Requires: cert-sh-functions
 
@@ -124,7 +126,10 @@ We can then attach to this session from the same machine, with:
 > xpra attach :100
 
 If connecting from a remote machine, you would use something like (or you can also use the GUI):
-> xpra attach ssh:serverhostname:100
+> xpra attach ssh://serverhostname/100
+
+To access an existing desktop session (display :0) of a remote machine, use:
+> xpra shadow ssh://serverhostname/0
 
 %package -n gnome-shell-extension-%name
 Summary: Gnome integration for the xpra client
@@ -168,10 +173,11 @@ export CFLAGS="${CFLAGS:-%optflags} $(pkg-config --cflags pygobject-3.0)"
 	--with-Xdummy \
 	--with-Xdummy_wrapper \
 	--without-mdns \
+	--without-wireshark \
 	%_smp_mflags
 
 %install
-%python3_install --without-mdns
+%python3_install --without-mdns --without-wireshark
 
 move_if_not_there () {
   local source="$1" destdir="$2"
@@ -245,6 +251,11 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.4-alt1
+- new version 6.5.4
+- add missing Requires: python3-module-pygobject3
+- update connection string examples in description (closes: #35373)
+
 * Fri May 29 2026 Anton Midyukov <antohami@altlinux.org> 6.4.3-alt3
 - NMU: New subpackage xpra-weston (Closes: 59375).
 
