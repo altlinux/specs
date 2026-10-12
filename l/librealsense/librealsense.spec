@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librealsense
-Version: 2.58.4
+Version: 2.59.1
 Release: alt1
 
 Summary: Cross-platform camera capture for Intel RealSense
@@ -25,13 +25,15 @@ Patch9:  librealsense.fix-zstd-qsort.patch
 Patch11: librealsense.fix-easylogging-visibility.patch
 Patch12: librealsense.fix-cxx14-all.patch
 Patch13: librealsense.fix-fastcdr-v2-api.patch
+Patch14: librealsense.use-system-libcurl.patch
+Patch15: librealsense.use-system-libdeflate.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-python3 rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: libglfw3-devel libusb-devel libudev-devel libGL-devel libGLU-devel
 BuildRequires: python3-dev python3-module-setuptools pybind11-devel libcap-devel
 BuildRequires: nlohmann-json-devel doxygen libyaml-cpp-devel libsqlite3-devel
-BuildRequires: fast-cdr-devel
+BuildRequires: fast-cdr-devel libcurl-devel libssl-devel libdeflate-devel
 Requires: udev
 Provides: librealsense2 = %EVR
 
@@ -86,13 +88,15 @@ with %name.
 
 %build
 %cmake \
-  -DBUILD_UNIT_TESTS=NO \
-  -DCHECK_FOR_UPDATES=NO \
+  -DBUILD_UNIT_TESTS=OFF \
+  -DCHECK_FOR_UPDATES=ON \
+  -DENABLE_AI_ASSISTANT=ON \
+  -DENABLE_STATS=OFF \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
   -DCMAKE_INSTALL_BINDIR=%_bindir \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DCMAKE_INSTALL_INCLUDEDIR=%_includedir \
-  -DBUILD_PYTHON_BINDINGS:bool=true \
+  -DBUILD_PYTHON_BINDINGS:bool=ON \
   -DUSE_EXTERNAL_NLOHMANN_JSON=ON \
   -DCMAKE_C_FLAGS="%optflags -ffat-lto-objects" \
   -DCMAKE_CXX_FLAGS="%optflags -ffat-lto-objects" \
@@ -134,6 +138,8 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-callback
 %_bindir/rs-capture
 %_bindir/rs-color
+%_bindir/rs-composite-ctl
+%_bindir/rs-composite-option
 %_bindir/rs-convert
 %_bindir/rs-data-collect
 %_bindir/rs-depth
@@ -152,6 +158,7 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-gl
 %_bindir/rs-gpu-frame
 %_bindir/rs-hdr
+%_bindir/rs-hdrd-control
 %_bindir/rs-hello-realsense
 %_bindir/rs-measure
 %_bindir/rs-motion
@@ -207,6 +214,14 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %doc LICENSE doc/doxygen/html/*
 
 %changelog
+* Mon Oct 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.59.1-alt1
+- new version 2.59.1
+- use system libcurl instead of bundled ExternalProject clone
+- use system libdeflate instead of configure-time git clone
+- extend fastcdr v2 API fix to msg types new in 2.59.1 (Transform, TransformStamped,
+  CameraInfo, CompressedImage, TFMessage)
+- enable CHECK_FOR_UPDATES and AI assistant (default), disable RUM stats (ENABLE_STATS)
+
 * Mon Aug 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.58.4-alt1
 - new version 2.58.4
 - drop use-system-json patch, use upstream USE_EXTERNAL_NLOHMANN_JSON option
