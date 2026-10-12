@@ -16,7 +16,6 @@
 # TODO: def_with clang
 %def_with wayland
 %def_with x11
-%def_with rlottie
 %def_with gsl
 %def_without system_fonts
 %def_without ninja
@@ -24,7 +23,7 @@
 %def_with scudo
 
 Name: ayugram-desktop
-Version: 7.0.9
+Version: 7.2.9
 Release: alt1
 
 Summary: Desktop Telegram client with good customization and Ghost mode
@@ -48,7 +47,6 @@ Patch2: telegram-desktop-set-native-window-frame.patch
 #Patch7: telegram-desktop-fix-build-with-make.patch
 #Patch8: telegram-desktop-use-external-gsl.patch
 #Patch9: telegram-desktop-try-fix-circular-deps.patch
-Patch20: telegram-desktop-fix-protoc.patch
 
 # lacks few build deps, still
 # [ppc64le] E: Couldn't find package libdispatch-devel
@@ -84,7 +82,7 @@ BuildRequires: libstdc++%__gcc_version_major-devel-static
 BuildRequires: python3
 
 # cmake 3.16 as in CMakeLists.txt
-BuildRequires: cmake >= 3.16
+BuildRequires: rpm-build-cmake
 BuildRequires: extra-cmake-modules
 
 BuildRequires(pre): rpm-macros-qt6
@@ -168,8 +166,10 @@ BuildRequires: bzlib-devel libbrotli-devel gstreamer1.0-devel
 
 BuildRequires: boost-program_options-devel
 
-# uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
-BuildRequires: librlottie-devel >= 0.1.1
+# upstream replaced rlottie with its own Rust renderer since 7.2.0
+BuildRequires: libtlottie-devel
+# text is shaped via Pango on Linux (DESKTOP_APP_USE_PANGO is on by default)
+BuildRequires: libpango-devel
 BuildRequires: libqrcodegen-cpp-devel
 BuildRequires: libada-devel
 
@@ -190,8 +190,6 @@ BuildRequires: libprotobuf-devel libprotobuf-lite-devel protobuf-compiler
 # passkeys: system libfido2 replaces the bundled libfido2 + libcbor pair
 BuildRequires: libfido2-devel
 # rich message markdown
-# cmark-gfm.cmake exports the /usr/bin/cmark-gfm target, so the tool is required too
-BuildRequires: libcmark-gfm-devel /usr/bin/cmark-gfm
 BuildRequires: kf6-kcoreaddons-devel
 
 # qsb (Qt Shader Baker) bakes Telegram/shaders for the QRhi/Vulkan renderer
@@ -274,7 +272,6 @@ We are not responsible for the possible blocking of your account. Use the client
 #%%patch1 -p2
 %patch2 -p2
 #%%patch3 -p1
-%patch20 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -301,26 +298,15 @@ for i in \
 	Telegram/ThirdParty/lz4 \
 	Telegram/ThirdParty/range-v3 \
 	Telegram/ThirdParty/xxHash \
-	Telegram/ThirdParty/cmark-gfm \
 	Telegram/ThirdParty/kcoreaddons \
 	Telegram/ThirdParty/libfido2 \
 	Telegram/ThirdParty/libcbor \
-%if_with rlottie
-	Telegram/ThirdParty/rlottie \
-%endif
 %if 0
 %endif
 	%nil ; do
 	echo "Removing $i ..."
 	rm -rv $i
 done
-
-%if_with rlottie
-# really ALT's rlottie is forked rlottie from desktop-app
-subst 's|#ifndef LOTTIE_USE_PACKAGED_RLOTTIE|#ifdef LOTTIE_USE_PACKAGED_RLOTTIE|' \
-	Telegram/lib_lottie/lottie/lottie_icon.cpp \
-	Telegram/lib_lottie/lottie/details/lottie_frame_provider_direct.cpp
-%endif
 
 # https://github.com/telegramdesktop/tdesktop/issues/26489#issuecomment-1627535022
 sed -i -e 's/find_package(Protobuf REQUIRED)/find_package(Protobuf REQUIRED CONFIG)/' \
@@ -379,13 +365,6 @@ export EXTRA_LDFLAGS="-Wl,--push-state,--no-as-needed -latomic -Wl,--pop-state"
 %else
     -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=ON \
 %endif
-%if_with rlottie
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE=ON \
-# FIXME: lottie_cache.h:9:10: fatal error: ffmpeg/ffmpeg_utility.h: No such file or directory
-#    -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
-%else
-    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE=OFF \
-%endif
     %nil
 
 %if_with ninja
@@ -425,6 +404,15 @@ ln -s AyuGram %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.9-alt1
+- new version 7.2.9.
+- use system libtlottie instead of the dropped rlottie backend.
+- shape text via Pango (upstream default on Linux).
+- drop fix-protoc patch (cld3 protobuf headers are pregenerated upstream).
+- build bundled cmark-gfm (upstream dropped the packaged cmark-gfm mode).
+- security fixes:
+  + CVE-2026-107181: fix IPC record injection via tg:// links (upstream 7.2.9)
+
 * Sun Sep 20 2026 Vitaly Lipatov <lav@altlinux.ru> 7.0.9-alt1
 - new version 7.0.9
 - rebase on clean upstream tree: apply set-native-window-frame and fix-protoc as patches
