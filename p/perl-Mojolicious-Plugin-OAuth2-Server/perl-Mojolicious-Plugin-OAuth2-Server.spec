@@ -1,7 +1,7 @@
 %define real_name Mojolicious-Plugin-OAuth2-Server
 
 Name: perl-%real_name
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: Easier implementation of an OAuth2 Authorization Server / Resource Server with Mojolicious
@@ -12,8 +12,6 @@ Group: Development/Perl
 URL: https://metacpan.org/release/%real_name
 # Source-url: https://cpan.metacpan.org/authors/id/L/LE/LEEJO/%real_name-%version.tar.gz
 Source: %real_name-%version.tar
-
-Patch0: %name-%version-alt-hmac-min-key.patch
 
 BuildArch: noarch
 
@@ -30,7 +28,6 @@ configurable token TTLs.
 
 %prep
 %setup -q -n %real_name-%version
-%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -43,5 +40,8 @@ configurable token TTLs.
 %perl_vendor_privlib/Mojolicious/Plugin/OAuth2*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.53-alt1
+- new version 0.53
+
 * Mon Jul 27 2026 Vitaly Lipatov <lav@altlinux.ru> 0.52-alt1
 - initial build for Sisyphus
