@@ -8,7 +8,7 @@
 %define xdg_name org.gnome.Quadrapassel
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Fit falling blocks together
@@ -68,6 +68,9 @@ which will disappear.
 
 
 %changelog
+* Sun Oct 11 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 

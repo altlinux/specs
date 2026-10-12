@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _name osm-gps-map
 %define libname osmgpsmap
 %define namespace OsmGpsMap
@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name%api_ver
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Gtk+3 widget for displaying map tiles
@@ -89,6 +89,9 @@ This package provides development documentation for %_name library.
 mv %buildroot%_datadir/gtk-doc/html/lib%libname{,-%api_ver}
 %endif
 
+%check
+%make -k check VERBOSE=1
+
 %files
 %doc AUTHORS README NEWS
 %_libdir/lib%libname-%api_ver.so.*
@@ -113,6 +116,9 @@ mv %buildroot%_datadir/gtk-doc/html/lib%libname{,-%api_ver}
 
 
 %changelog
+* Mon Oct 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - updated to 1.2.1-47-gd4f2b75 (ported to libsoup-3.0)
 
