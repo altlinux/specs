@@ -1,10 +1,9 @@
 %define oname webassets
 
 %def_without docs
-%def_without check
 
 Name:       python3-module-%oname
-Version:    2.0
+Version:    3.0.0
 Release:    alt1
 
 Summary:    Media asset management for Python, with glue code for various web frameworks
@@ -20,6 +19,11 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
+%if_disabled check
+%else
+BuildRequires: pytest3 python3(yaml) python3(zope.dottedname) python3(jinja2)
+%endif
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
@@ -65,10 +69,10 @@ This package contains documentation for %oname.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
 %if_with docs
@@ -79,12 +83,14 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+pytest3 -v tests
 
 %files
 %doc AUTHORS CHANGES *.rst
 %_bindir/webassets
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %if_with docs
 %exclude %python3_sitelibdir/*/pickle
 
@@ -96,6 +102,11 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1
+- new version 3.0.0
+- switch to pyproject build
+- run tests with pytest
+
 * Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
 - new version 2.0 (with rpmrb script)
 - return to build from tarball

@@ -4,7 +4,7 @@
 
 Name: python3-module-dukpy
 Version: 0.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: Simple JavaScript interpreter for Python
 
@@ -17,6 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: Use-system-duktape.patch
+Patch1: Fix-tests-with-webassets-3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -42,6 +43,7 @@ actually crash your program as it is mostly implemented in C.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 # This removed the bundled duktape. The files that form the "Duktape
 # 1.x compatible module loading framework" remain. They are some
 # compat glue that is not shipped in duktape-devel.
@@ -61,10 +63,15 @@ rm -rv dukpy
 
 %files
 %_bindir/%modulename
+%_bindir/%modulename-install
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1.1
+- NMU: fix tests with webassets 3.0.
+- Package dukpy-install.
+
 * Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 0.4.0-alt1
 - Automatically updated to 0.4.0.
 
