@@ -1,6 +1,6 @@
 %define oname smpplib
 Name: python3-module-%oname
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 
 Summary: SMPP library for Python
@@ -34,6 +34,9 @@ SMPP library for Python.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.4-alt1
+- new version 2.2.4
+
 * Sat Jul 29 2023 Vitaly Lipatov <lav@altlinux.ru> 2.2.3-alt1
 - new version 2.2.3 (with rpmrb script)
 
