@@ -1,7 +1,7 @@
 %define pypi_name narwhals
 
 Name: python3-module-narwhals
-Version: 2.24.0
+Version: 2.27.1
 Release: alt1
 
 Summary: Extremely lightweight compatibility layer between dataframe libraries
@@ -51,6 +51,9 @@ are pulled in only when actually used.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.27.1-alt1
+- new version 2.27.1
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.24.0-alt1
 - new version 2.24.0
 - switch build backend to uv_build (upstream switched from hatchling)
