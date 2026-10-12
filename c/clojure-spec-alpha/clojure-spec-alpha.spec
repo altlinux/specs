@@ -6,7 +6,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 0.3.218
+%define version 0.6.249
 %global project     clojure
 %global artifactId  spec.alpha
 %global archivename %{artifactId}-%{artifactId}
@@ -14,15 +14,16 @@ BuildRequires: jpackage-default
 
 Name:           clojure-spec-alpha
 Epoch:          1
-Version:        0.3.218
-Release:        alt1_3jpp11
+Version:        0.6.249
+Release:        alt1
 Summary:        Spec is a Clojure library to describe the structure of data and functions
 
 Group:          Development/Other
 License:        EPL-1.0
 URL:            https://github.com/%{project}/%{artifactId}/
-Source0:        https://github.com/%{project}/%{artifactId}/archive/refs/tags/v%{full_version}.zip
+VCS:            https://github.com/clojure/spec.alpha
 
+Source0:        https://github.com/%{project}/%{artifactId}/archive/refs/tags/v%{full_version}.zip
 
 BuildArch:      noarch
 
@@ -96,7 +97,7 @@ use generative testing to test functions.
         </executions>"
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -105,6 +106,10 @@ use generative testing to test functions.
 %doc --no-dereference LICENSE
 %doc CHANGES.md README.md CONTRIBUTING.md
 %changelog
+* Thu Oct 08 2026 Anton Meleshnikov <alton@altlinux.org> 1:0.6.249-alt1
+- new version
+- added vcs tag
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:0.3.218-alt1_3jpp11
 - new version
 

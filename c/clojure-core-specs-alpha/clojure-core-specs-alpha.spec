@@ -6,7 +6,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 0.2.62
+%define version 0.5.81
 %global project     clojure
 %global artifactId  core.specs.alpha
 %global archivename %{artifactId}-%{artifactId}
@@ -14,13 +14,15 @@ BuildRequires: jpackage-default
 
 Name:           clojure-core-specs-alpha
 Epoch:          1
-Version:        0.2.62
-Release:        alt1_3jpp11
+Version:        0.5.81
+Release:        alt1
 Summary:        Clojure library containing specs to describe Clojure core macros and functions
 
 Group:          Development/Other
 License:        EPL-1.0
 URL:            https://github.com/%{project}/%{artifactId}
+VCS:            https://github.com/clojure/core.specs.alpha
+
 Source0:        https://github.com/%{project}/%{artifactId}/archive/refs/tags/v%{full_version}.zip
 
 BuildArch:      noarch
@@ -31,7 +33,6 @@ BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.clojure:clojure)
 BuildRequires:  mvn(org.clojure:spec.alpha)
 Source44: import.info
-
 
 %description 
 Core.specs.alpha is a Clojure library containing specs to describe Clojure
@@ -93,7 +94,7 @@ core macros and functions.
 
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
@@ -103,6 +104,10 @@ core macros and functions.
 %doc epl-v10.html CHANGES.md README.md CONTRIBUTING.md
 
 %changelog
+* Thu Oct 08 2026 Anton Meleshnikov <alton@altlinux.org> 1:0.5.81-alt1
+- new version
+- added vcs tag
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:0.2.62-alt1_3jpp11
 - new version
 
