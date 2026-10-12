@@ -1,7 +1,7 @@
 %define oname python-gnupg
 
 Name: python3-module-gnupg
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 
 Summary: A Python wrapper for GnuPG
@@ -10,7 +10,7 @@ License: BSD
 Group: Development/Python
 Url: https://docs.red-dove.com/python-gnupg/
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url python_gnupg
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -44,6 +44,9 @@ using proven Public Key Infrastructure (PKI) encryption technology based on Open
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.7-alt1
+- new version 0.5.7
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.6-alt1
 - new version 0.5.6 (with rpmrb script)
 
