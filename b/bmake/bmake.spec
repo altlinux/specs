@@ -1,5 +1,5 @@
 Name: bmake
-Version: 20260824
+Version: 20260912
 Release: alt1
 
 Summary: The NetBSD make(1) tool
@@ -51,6 +51,9 @@ install -pDm755 Linux/bmake %buildroot%_bindir/bmake
 %dir %_datadir/mk/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 20260912-alt1
+- new version 20260912
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 20260824-alt1
 - new version 20260824
 
