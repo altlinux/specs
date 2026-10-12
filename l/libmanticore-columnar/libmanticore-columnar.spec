@@ -1,5 +1,5 @@
 Name: libmanticore-columnar
-Version: 13.9.0
+Version: 14.3.1
 Release: alt1
 
 Summary: Manticore Columnar Library is a column-oriented storage library
@@ -14,8 +14,7 @@ Patch1: libmanticore-columnar-system-pgm.patch
 Patch2: libmanticore-columnar-propagate-skip-knn.patch
 Patch3: libmanticore-columnar-respect-embedded-build.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.21
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: gcc-c++
 BuildRequires: /proc
 BuildRequires: libfastpfor-devel
@@ -46,6 +45,8 @@ with columnar library support.
 %patch2 -p1
 %patch3 -p1
 subst 's|"lib/cmake/columnar"|"%_lib/cmake/columnar"|' CMakeLists.txt
+# upstream pack workflow sets the real version here
+subst 's|project ( columnar VERSION 0.0.0 )|project ( columnar VERSION %version )|' CMakeLists.txt
 
 %build
 %if_with avx
@@ -87,6 +88,11 @@ DESTDIR=%buildroot cmake --install api-build
 %_cmakedir/columnar/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 14.3.1-alt1
+- new version 14.3.1
+- use rpm-build-cmake
+- set the library version string (was 0.0.0)
+
 * Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 13.9.0-alt1
 - new version 13.9.0
 

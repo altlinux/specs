@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: manticore
-Version: 29.0.2
+Version: 29.9.0
 Release: alt1
 
 Summary: Manticore full-text search server
@@ -17,6 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/manticoresoftware/manticoresearch/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Source2: %name-files-%version.tar
+Source3: %name.conf
 
 Patch1: manticore-system-xxhash-pkgconfig.patch
 Patch2: manticore-uni-algo-no-freebsd-ifdef.patch
@@ -34,11 +35,10 @@ BuildRequires: boost-context-devel boost-filesystem-devel boost-asio-devel boost
 BuildRequires: libexpat-devel libmysqlclient-devel libre2-devel libssl-devel libunixODBC-devel libstemmer-devel postgresql-devel zlib-devel
 BuildRequires: nlohmann-json-devel libuni-algo-devel cctz-devel libxxhash-devel libzstd-devel libcurl-devel
 BuildRequires: libicu-devel
-BuildRequires: libmanticore-columnar-devel >= 13.9.0
+BuildRequires: libmanticore-columnar-devel >= 14.3.1
 BuildRequires: libroaring-devel
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.17
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: gcc-c++
 BuildRequires: /proc
 
@@ -134,8 +134,14 @@ rm -rf %buildroot%_sysusersdir/
 cd %buildroot/
 tar xfv %SOURCE2
 
+# searchd loads MCL modules only from %_datadir/%name/modules
+mkdir -p %buildroot%_datadir/%name/modules/
+for i in columnar secondary ; do
+    ln -s %_libdir/lib_manticore_$i.so %buildroot%_datadir/%name/modules/lib_manticore_$i.so
+done
+
 %pre
-%sysusers_create %name.conf
+%sysusers_create_package %name %SOURCE3
 
 %post
 %post_service %name
@@ -171,6 +177,12 @@ tar xfv %SOURCE2
 %_bindir/index_converter
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt1
+- new version 29.9.0
+- use rpm-build-cmake
+- create _manticore user before installing files (fix data dirs owned by root)
+- load columnar and secondary modules from libmanticore-columnar
+
 * Fri Aug 21 2026 Vitaly Lipatov <lav@altlinux.ru> 29.0.2-alt1
 - new version 29.0.2
 
