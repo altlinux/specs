@@ -9,7 +9,7 @@
 %define git_commit c93a4cb9311efc66b90d33ea03f75f2c4120e9b0
 
 Name: minikube
-Version: 1.38.1
+Version: 1.39.0
 Release: alt1
 
 Summary: Run Kubernetes locally
@@ -70,6 +70,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_%name
 
 %changelog
+* Mon Oct 05 2026 Nikita Stavtsev <nst@altlinux.org> 1.39.0-alt1
+- 1.38.1 -> 1.39.0
+
 * Thu Jul 09 2026 Nikita Stavtsev <nst@altlinux.org> 1.38.1-alt1
 - 1.37.0 --> 1.38.1
 
