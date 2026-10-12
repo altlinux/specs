@@ -1,5 +1,5 @@
 Name: conspy
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: Remote control for text mode virtual consoles
@@ -8,7 +8,7 @@ Group: Terminals
 License: AGPL-3.0+
 Url: https://conspy.sourceforge.net/
 
-# Source-url: http://prdownloads.sourceforge.net/%name/%name-%version-1/conspy-%version.tar.gz
+# Source-url: https://downloads.sourceforge.net/project/%name/%name-%version-1/%name-%version.tar.gz
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Jan 21 2006
@@ -35,6 +35,9 @@ touch NEWS
 %_man1dir/*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.17-alt1
+- new version 1.17
+
 * Tue Jun 06 2023 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
 - new version 1.16 (with rpmrb script) (ALT bug 46377)
 - license changed to AGPL-3.0+
