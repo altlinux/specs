@@ -1,7 +1,7 @@
 %def_enable videobackdrop
 
 Name: xfdesktop
-Version: 4.21.0
+Version: 4.21.1
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -23,6 +23,7 @@ BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
 BuildRequires: libxfce4util-devel
 BuildRequires: libxfconf-devel >= 4.19.3
 BuildRequires: libxfce4windowing-devel >= 4.20.6
+Buildrequires: libxfce4session-client-devel >= 4.21.2
 BuildRequires: libX11-devel
 BuildRequires: libgtk-layer-shell-devel
 BuildRequires: libnotify-devel
@@ -77,6 +78,7 @@ fi
 %doc README.md NEWS AUTHORS doc/README.*
 %_bindir/*
 %_desktopdir/*
+%_datadir/xfce4/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_pixmapsdir/*
 %_mandir/man?/*
@@ -84,6 +86,9 @@ fi
 %ghost %default_background
 
 %changelog
+* Mon Oct 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt1
+- Updated to 4.21.1.
+
 * Tue Jun 23 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
 - Enabled video backdrop.
 - Switched to meson build.
