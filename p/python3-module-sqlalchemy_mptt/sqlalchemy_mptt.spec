@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 0.2.5
-Release: alt3
+Version: 0.6.0
+Release: alt1
 
 Summary: SQLAlchemy MPTT mixins (Nested Sets)
 License: MIT
@@ -109,6 +109,9 @@ pytest3
 
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0
+
 * Fri Jul 02 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.5-alt3
 - fix build, temp. disable tests (due TestInheritanceTree)
 
