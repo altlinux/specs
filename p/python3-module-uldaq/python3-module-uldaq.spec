@@ -1,6 +1,6 @@
 %define oname uldaq
 Name: python3-module-%oname
-Version: 1.1.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Universal Library Python API for Measurement Computing DAQ devices
@@ -53,5 +53,8 @@ Examples for %name.
 %doc examples
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
+- new version 1.2.3
+
 * Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - initial build for Sisyphus
