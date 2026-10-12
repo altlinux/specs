@@ -4,7 +4,7 @@
 
 Name:    rtabmap
 Version: 0.23.8
-Release: alt1
+Release: alt2
 
 Summary: RTAB-Map library and standalone application
 License: BSD-3-Clause
@@ -13,13 +13,20 @@ URL:     https://introlab.github.io/rtabmap/
 VCS:     https://github.com/introlab/rtabmap
 
 Source: %name-%version.tar
+Patch: rtabmap-cmake-cxx-standard.patch
+Patch1: rtabmap-orbbec-sdk-no-version.patch
+Patch2: rtabmap-gtsam-4.3.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
-BuildRequires: libopencv-devel pcl-devel libpcap-devel libpng-devel eigen3-devel
+BuildRequires: libopencv-devel pcl-devel libpng-devel eigen3-devel
 BuildRequires: eigen3-compat-devel libflann-devel-static libvtk-devel vtk-qt5
 BuildRequires: qt5-base-devel openni-devel libfreenect-devel libdc1394-devel
-BuildRequires: librealsense-devel libpdal-devel octomap-devel libopengv-devel libyaml-cpp-devel
+BuildRequires: librealsense-devel libpdal-devel octomap-devel libopengv-devel
+BuildRequires: libyaml-cpp-devel libgtsam-devel ceres-solver-devel libglog-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel
+BuildRequires: apriltag-devel OrbbecSDK_v2-devel
+BuildRequires: pybind11-devel python3-dev libnumpy-py3-devel
 Requires: lib%name = %EVR
 
 ExclusiveArch: x86_64
@@ -63,13 +70,23 @@ This package contains additional RTAB-Map command-line tools and examples.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
     -DCMAKE_INSTALL_LIBDIR:PATH=%_lib \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no \
     -DCMAKE_INSTALL_RPATH:STRING='' \
-    -DWITH_CERES=OFF \
+    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_FLAGS:STRING='%optflags -DGLOG_USE_GLOG_EXPORT' \
+    -DOrbbecSDK_DIR=%_libdir \
+    -DWITH_CERES=ON \
+    -DWITH_GTSAM=ON \
+    -DWITH_APRILTAG=ON \
+    -DWITH_ORBBEC_SDK=ON \
+    -DWITH_PYTHON=ON \
     -DWITH_PDAL=ON \
     -DWITH_OCTOMAP=ON \
     -DWITH_OPENGV=ON \
@@ -84,7 +101,6 @@ This package contains additional RTAB-Map command-line tools and examples.
     -DWITH_ZEDOC=OFF \
     -DWITH_MYNTEYE=OFF \
     -DWITH_G2O=OFF \
-    -DWITH_GTSAM=OFF \
     -DWITH_MRPT=OFF \
     -DWITH_POINTMATCHER=OFF \
     -DWITH_FASTCV=OFF
@@ -139,5 +155,14 @@ This package contains additional RTAB-Map command-line tools and examples.
 %_bindir/rtabmap-rgbd_dataset
 
 %changelog
+* Sat Oct 10 2026 Sergey Palcheh <minergenon@altlinux.org> 0.23.8-alt2
+- fixed cmake configure failure with empty CMAKE_CXX_STANDARD
+  (quote the variable in the c++14 condition guard)
+- enabled GTSAM, Ceres, AprilTag, Orbbec SDK and Python3 support;
+  build with C++17 (required by Ceres 2.2 and pybind11 3.x)
+- backported GTSAM 4.3.0 (final) support: switch variable traits now
+  derive from gtsam::internal::Manifold, and the gravity attitude factor
+  uses AttitudeFactor<Pose3> on GTSAM >= 4.3.0
+
 * Wed Jul 08 2026 Sergey Palcheh <minergenon@altlinux.org> 0.23.8-alt1
 - Initial build for Sisyphus
