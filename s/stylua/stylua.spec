@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stylua
-Version: 2.5.2
+Version: 2.6.0
 Release: alt1
 
 Summary: A Lua code formatter
 License: MPL-2.0
 Group: Development/Tools
-Url: https://crates.io/crates/stylua
+URL: https://crates.io/crates/stylua
 VCS: https://github.com/JohnnyMorganz/StyLua
 
 Source: %name-%version.tar
 Source1: vendor.tar
-Patch: %name-%version-alt-fix-cross-compiling.patch
+Patch: stylua-2.5.2-alt-fix-cross-compiling.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -44,6 +44,9 @@ StyLua mainly follows the Roblox Lua Style Guide, with a few deviations.
 %_bindir/%name
 
 %changelog
+* Mon Oct 12 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2.6.0-alt1
+- Updated to version 2.6.0.
+
 * Mon May 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2.5.2-alt1
 - Updated to version 2.5.2.
 
