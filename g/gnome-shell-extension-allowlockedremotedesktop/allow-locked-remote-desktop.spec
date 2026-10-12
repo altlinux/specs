@@ -2,7 +2,7 @@
 
 Name: gnome-shell-extension-allowlockedremotedesktop
 Version: 5000
-Release: alt1
+Release: alt2
 
 Summary: Allow remote desktop connections when the screen is locked
 
@@ -25,6 +25,7 @@ GNOME Shell extension to allow remote desktop connections when the screen is loc
 
 %prep
 %setup
+subst 's|"50"|"50", "51"|' metadata.json
 
 %build
 make
@@ -39,6 +40,9 @@ unzip -q %{oname}.shell-extension.zip \
 %doc README.md
 
 %changelog
+* Tue Oct 13 2026 Aleksandr Shamaraev <shad@altlinux.org> 5000-alt2
+- added GNOME 51 support
+
 * Fri Mar 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 5000-alt1
 - 4900 -> 5000 (GNOME 50 supported)
 
