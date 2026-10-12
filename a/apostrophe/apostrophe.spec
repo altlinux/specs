@@ -1,8 +1,9 @@
 %def_enable snapshot
 %define _name apostrophe
-%define ver_major 3.4
+%define ver_major 3.5
 %define rdn_name org.gnome.gitlab.somas.Apostrophe
-%define reveal_ver 5.2.1
+#build-aux/flatpak/org.gnome.gitlab.somas.Apostrophe.json
+%define reveal_ver 6.0.2
 
 Name: %_name
 Version: %ver_major
@@ -88,6 +89,9 @@ cp -r reveal.js-%reveal_ver/* %buildroot/%_datadir/%name/libs/reveal.js
 
 
 %changelog
+* Mon Oct 12 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
+- v3.5-3-g57abdf3
+
 * Mon Oct 06 2025 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
 - 3.4
 
