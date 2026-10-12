@@ -4,17 +4,15 @@
 
 Name: ctre
 Version: 3.11.0
-Release: alt3
+Release: alt4
 Summary: Compile Time Regular Expression in C++
 License: Apache-2.0
 Group: Development/C++
 URL: https://compile-time.re
 VCS: https://github.com/hanickadot/compile-time-regular-expressions
 
-# Source-url: %vcs/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-
-Patch: ctre-3.11.0-noarch.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -79,6 +77,10 @@ sphinx-build-3 docs doc
 %doc doc/*
 
 %changelog
+* Fri Oct 09 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt4
+- Fix FTBFS with CMake 4.4+.
+- Switch to build from Gear tags.
+
 * Thu Aug 27 2026 Valery Zabrovsky <brow@altlinux.org> 3.11.0-alt3
 - Fix docs build for older Sphinx.
 
