@@ -1,7 +1,7 @@
 %define repo sla
 
 Name: gap-sla
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 Summary: GAP: Computations with simple Lie algebras
 License: GPL-2.0+
@@ -38,6 +38,9 @@ The package SLA contains functionality for working with simple Lie algebras.
 %gap_sitelib/%repo/*
 
 %changelog
+* Mon Oct 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.6.3-alt1
+- New version 1.6.3.
+
 * Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.6.2-alt1
 - New version 1.6.2.
 - Added VCS tag.

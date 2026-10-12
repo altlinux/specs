@@ -1,7 +1,7 @@
 %define repo GAPDoc
 
 Name: gap-gapdoc
-Version: 1.6.10
+Version: 1.6.11
 Release: alt1
 Summary: GAP: package for GAP Documentation
 License: GPL-2.0+
@@ -39,6 +39,9 @@ Recommends: gap-io >= 4.7.
 %gap_sitelib/%repo/
 
 %changelog
+* Mon Oct 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.6.11-alt1
+- New version 1.6.11.
+
 * Wed Jun 03 2026 Leontiy Volodin <lvol@altlinux.org> 1.6.10-alt1
 - New version 1.6.10.
 
