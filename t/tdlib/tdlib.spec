@@ -15,8 +15,8 @@
 %endif
 
 Name: tdlib
-Version: 1.8.52
-Release: alt2
+Version: 1.8.65
+Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
 
@@ -25,7 +25,7 @@ Group: Development/C++
 Url: https://github.com/tdlib/td
 
 #Source-url: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
-# Source-url: https://github.com/tdlib/td/commit/3870c29b158b75ca5e48e0eebd6b5c3a7994a000
+# Source-url: https://github.com/tdlib/td/commit/a8f21f5230172634becc1739050ef23ecd6ea291
 Source: %name-%version.tar
 
 Patch: %name-system-crypto.patch
@@ -38,7 +38,7 @@ BuildRequires: gperf
 BuildRequires: libssl-devel
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
@@ -197,6 +197,10 @@ rm -f %_libdir/libtdutils.a
 %endif
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.65-alt1
+- new version 1.8.65
+- BuildRequires: rpm-build-cmake instead of cmake
+
 * Fri Jan 16 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 1.8.52-alt2
 - Add tde2e-devel-static.
 
