@@ -103,7 +103,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -310,6 +310,7 @@ tar -xf subprojects.tar
 %build
 export ALTWRAP_LLVM_VERSION=%llvmver
 %meson \
+	-Dbuildtype=release \
 	-Dplatforms=x11,wayland \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
@@ -345,7 +346,7 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 %ifarch aarch64
 	-Dteflon=true \
 %endif
-#
+	-Db_ndebug=true
 
 %meson_build
 
@@ -535,6 +536,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Oct 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.4-alt2
+- iris: fixed GPU HANG on MSAA disabled (closes: #60874)
+
 * Mon Oct 05 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.4-alt1
 - 26.2.4
 
