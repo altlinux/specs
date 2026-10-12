@@ -1,6 +1,6 @@
 Name: polymc
-Version: 7.0
-Release: alt2
+Version: 8.1
+Release: alt1
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -14,9 +14,6 @@ Source: %name-%version.tar
 # Source1-url: https://github.com/PolyMC/libnbtplusplus/archive/refs/heads/master.zip
 Source1: %name-libnbtplusplus-%version.tar
 
-# Fix compiling for Qt 6.9.0
-Patch1: 0dc124d636d76692b1e2c01050743dd87dc78a05.patch
-
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake
@@ -26,7 +23,7 @@ BuildRequires: qt6-base-devel
 BuildRequires: qt6-svg-devel qt6-svg
 BuildRequires: qt6-charts-devel qt6-5compat-devel
 
-BuildRequires: cmake gcc-c++ extra-cmake-modules
+BuildRequires: rpm-build-cmake gcc-c++ extra-cmake-modules
 
 BuildRequires: java-devel
 BuildRequires: jre-openjdk-headless
@@ -50,7 +47,6 @@ a simple interface.
 %prep
 %setup -a1
 %__subst 's|share/jars|share/polymc/jars|' CMakeLists.txt launcher/Application.cpp
-%patch1 -p1
 
 %build
 %cmake \
@@ -70,6 +66,7 @@ a simple interface.
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.xml
 %dir %_datadir/%name/
+%_datadir/%name/legacy-jar-security.properties
 %dir %_datadir/%name/jars/
 %_datadir/%name/jars/NewLaunch.jar
 %_datadir/%name/jars/JavaCheck.jar
@@ -78,6 +75,10 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 8.1-alt1
+- new version 8.1
+- drop Qt 6.9 patch (applied upstream)
+
 * Wed Jul 30 2025 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt2
 - fix compiling with Qt 6.9.0
 
