@@ -6,8 +6,8 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.24.0
-Release: alt2
+Version: 0.24.1
+Release: alt1
 
 Summary: System configuration tool
 License: GPLv3
@@ -95,7 +95,7 @@ cp -r tests/* %{buildroot}%{testsdir}
 
 %files
 %{_bindir}/%{name}
-%{confdir}
+%config(noreplace) %{confdir}
 %exclude %{confdir}/wl.sh
 %exclude %{confdir}/permissions/wl
 %exclude %{confdir}/excluded_from_white_list
@@ -107,8 +107,8 @@ cp -r tests/* %{buildroot}%{testsdir}
 
 %files -n %{name}-wl
 %{confdir}/wl.sh
-%{confdir}/permissions/wl
-%{confdir}/excluded_from_white_list
+%config(noreplace) %{confdir}/permissions/wl
+%config(noreplace) %{confdir}/excluded_from_white_list
 
 %files -n %{name}-checkinstall
 %{testsdir}/*
@@ -117,6 +117,13 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Mon Oct 12 2026 Alexey Appolonov <alexey@altlinux.org> 0.24.1-alt1
+- The feedback provided when setting control++ modes now works correctly;
+- The script that generates the whitelist is improved (both in terms of safety
+  and user experience);
+- The mode samples and the "excluded_from_white_list" are not replaced when the
+  package is updated.
+
 * Fri Apr 24 2026 Alexey Appolonov <alexey@altlinux.org> 0.24.0-alt2
 - A much better looking makefile.
 
