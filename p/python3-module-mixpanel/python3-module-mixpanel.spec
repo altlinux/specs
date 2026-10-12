@@ -1,7 +1,7 @@
 %define pypi_name mixpanel
 
 Name: python3-module-mixpanel
-Version: 5.2.0
+Version: 5.4.0
 Release: alt1
 
 Summary: Official Mixpanel library for Python
@@ -47,6 +47,9 @@ rm -rv %buildroot%python3_sitelibdir/%pypi_name/flags/test_*.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.0-alt1
+- new version 5.4.0
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
 - new version 5.2.0
 - exclude openfeature-provider subproject from install
