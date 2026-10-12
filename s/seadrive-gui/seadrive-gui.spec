@@ -1,12 +1,6 @@
-%ifarch %qt5_qtwebengine_arches
-%def_enable qtwebengine
-%else
-%def_disable qtwebengine
-%endif
-
 Name: seadrive-gui
-Version: 2.0.19
-Release: alt2.1
+Version: 3.0.26
+Release: alt1
 
 Summary: Seafile Drive client
 
@@ -16,25 +10,37 @@ Url: https://github.com/haiwen/seadrive-gui
 
 # Source-url: https://github.com/haiwen/seadrive-gui/archive/v%version.tar.gz
 Source: %name-%version.tar
+Patch0: seadrive-gui-no-return-error.patch
+Patch1: seadrive-gui-cmake-dbus-link.patch
 
-# TODO: is not opensourced
-#Requires: seadrive-daemon >= 1.0.0
+# seadrive daemon is packaged as seafile-fuse
+Requires: seafile-fuse >= %version
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): rpm-macros-qt5-webengine
+# Qt6 build requires Qt6 WebEngine
+ExclusiveArch: %qt6_qtwebengine_arches
 
-BuildRequires: cmake libsqlite3-devel libssl-devel zlib-devel libcurl-devel
-BuildRequires: qt5-imageformats qt5-tools-devel qt5-base-devel
+BuildRequires(pre): rpm-build-cmake
+BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): rpm-macros-qt6-webengine
 
-BuildRequires: libevent-devel >= 2.0
-BuildRequires: libglib2-devel libuuid-devel libjansson-devel
-BuildRequires: libsearpc-devel
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Linguist)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Test)
+BuildRequires: pkgconfig(Qt6Core5Compat)
+BuildRequires: pkgconfig(Qt6WebEngineCore)
+BuildRequires: pkgconfig(Qt6WebEngineWidgets)
+BuildRequires: pkgconfig(Qt6DBus)
+BuildRequires: qt6-imageformats
 
-%if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
-%else
-BuildRequires: qt5-webkit-devel
-%endif
+# see CMakeLists.txt
+BuildRequires: pkgconfig(glib-2.0) >= 2.16.0
+BuildRequires: pkgconfig(jansson) >= 2.0
+BuildRequires: pkgconfig(libsearpc) >= 1.0
+BuildRequires: pkgconfig(openssl) >= 0.98
+BuildRequires: pkgconfig(sqlite3) >= 3.0.0
 
 %description
 Seafile Drive client.
@@ -45,21 +51,20 @@ A library can also be encrypted with a user chosen password.
 Seafile also allows users to create groups and easily sharing
 files into groups.
 
-Note: you need install seadrive-daemon also, which not opensourced.
+The seadrive daemon is provided by the seafile-fuse package.
 
 %prep
 %setup
-sed -i '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' CMakeLists.txt
-%if_disabled qtwebengine
-sed -i '/USE_QT_WEBKIT/ {s/OFF/ON/}' CMakeLists.txt
-%endif
+%patch0 -p1
+%patch1 -p1
 
 %build
-PATH=%_qt5_bindir:$PATH %cmake_insource
-%make_build
+export PATH=%_qt6_bindir:$PATH
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmakeinstall_std
 
 %find_lang %name
 
@@ -70,6 +75,12 @@ PATH=%_qt5_bindir:$PATH %cmake_insource
 %_pixmapsdir/*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.26-alt1
+- new version 3.0.26
+- switch to Qt6 (build with Qt6 WebEngine)
+- fix build: add missing return on Linux, fix Qt6::DBus link signature
+- add Requires: seafile-fuse (seadrive daemon)
+
 * Mon Nov 27 2023 Ivan A. Melnikov <iv@altlinux.org> 2.0.19-alt2.1
 - NMU: use rpm-macros-qt5-webengine (fixes build on loongarch64)
 
