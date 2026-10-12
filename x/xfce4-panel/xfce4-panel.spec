@@ -5,7 +5,7 @@
 %define gtk3_soname 4
 
 Name: xfce4-panel
-Version: 4.21.2
+Version: 4.21.3
 Release: alt1
 
 Summary: Panel for Xfce
@@ -28,6 +28,7 @@ BuildRequires: libxfce4ui-gtk3-devel >= 4.21.8
 BuildRequires: libgarcon-gtk3-devel >= %xfce_min_vers
 BuildRequires: libxfconf-devel >= %xfce_min_vers
 Buildrequires: libxfce4windowing-devel >= 4.20.1-alt1
+Buildrequires: libxfce4session-client-devel >= 4.21.2
 BuildRequires: libX11-devel libXext-devel libwnck3-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libwayland-client-devel libgtk-layer-shell-devel
@@ -145,6 +146,7 @@ Vala bindings for libxfce4panel-gtk3.
 %_iconsdir/hicolor/*/apps/*
 %_datadir/xfce4/panel/
 %_desktopdir/*.desktop
+%_datadir/xfce4/applications/*.desktop
 
 %if_enabled docs
 %files -n libxfce4panel-devel-doc
@@ -175,6 +177,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Mon Oct 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt1
+- Updated to 4.21.3.
+
 * Mon Jun 08 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
 - Returned devel-doc subpackage.
 - Updated to 4.21.2.
