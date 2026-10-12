@@ -1,6 +1,6 @@
 Name: ghostty
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: Fast, feature-rich and cross-platform terminal emulator
 License: MIT
@@ -67,6 +67,7 @@ This package contains terminfo entries for Ghostty.
 
 %prep
 %setup -a1
+sed -ri '/^\s*\.version\s*=/ s,"[^"]+","%version-%release",' build.zig.zon
 
 %build
 %zig_build \
@@ -88,8 +89,11 @@ This package contains terminfo entries for Ghostty.
 
 %install
 %zig_install
+install -pD %buildroot%_datadir/systemd/user/app-com.mitchellh.ghostty.service \
+	%buildroot%_userunitdir/app-com.mitchellh.ghostty.service
 rm -v	%buildroot%_libdir/libghostty-vt.a \
-	%buildroot%_datadir/pkgconfig/libghostty-vt-static.pc
+	%buildroot%_datadir/pkgconfig/libghostty-vt-static.pc \
+	%buildroot%_datadir/systemd/user/app-com.mitchellh.ghostty.service
 %find_lang com.mitchellh.ghostty
 %ifdef bootstrap
 tar cf %SOURCE1 --exclude '*/rules' zig-pkg
@@ -97,6 +101,7 @@ tar cf %SOURCE1 --exclude '*/rules' zig-pkg
 
 %files -f com.mitchellh.ghostty.lang
 %_bindir/ghostty
+%_userunitdir/app-com.mitchellh.ghostty.service
 %_desktopdir/com.mitchellh.ghostty.desktop
 %_datadir/bash-completion/completions/ghostty.bash
 %_datadir/dbus-1/services/com.mitchellh.ghostty.service
@@ -123,6 +128,9 @@ tar cf %SOURCE1 --exclude '*/rules' zig-pkg
 %_datadir/terminfo/x/xterm-ghostty
 
 %changelog
+* Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.1-alt3
+- package ghostty systemd user service (closes: 60879)
+
 * Mon Sep 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.1-alt2
 - v1.3.1-2556-g0c2a290d3
 - drop ghostty-terminfo req (closes: 60504)
