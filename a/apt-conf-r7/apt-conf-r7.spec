@@ -1,6 +1,6 @@
 Name: apt-conf-r7
 Summary: Official repository of R7 applications for ALT
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 License: Public-Domain
@@ -12,6 +12,7 @@ ExclusiveArch: x86_64
 Source: %name-%version.tar
 
 Requires: apt-https
+Requires: apt-gpgkeys-pki
 
 %description
 %{summary}.
@@ -29,13 +30,20 @@ install -Dpm 0644 icons/r7-office64.png %buildroot%_datadir/app-info/icons/altli
 install -Dpm 0644 icons/default128.png %buildroot%_datadir/app-info/icons/altlinux/128x128/default128.png
 install -Dpm 0644 icons/R7Grafika128x128.png %buildroot%_datadir/app-info/icons/altlinux/128x128/R7Grafika.png
 install -Dpm 0644 icons/r7-office128.png %buildroot%_datadir/app-info/icons/altlinux/128x128/r7-office.png
+install -Dpm0644 r7-vendors.list %buildroot%_sysconfdir/apt/vendors.list.d/r7.list
+install -Dpm0644 RPM-GPG-KEY-R7-OFFICE.public %buildroot%_datadir/pki/apt-gpg/sources/RPM-GPG-KEY-R7-OFFICE.public
 
 %files
 %config(noreplace) %_sysconfdir/apt/sources.list.d/r7.list
+%_sysconfdir/apt/vendors.list.d/r7.list
+%_datadir/pki/apt-gpg/sources/RPM-GPG-KEY-R7-OFFICE.public
 %_datadir/app-info/xmls/*.xml
 %_datadir/app-info/icons/altlinux/*/*.png
 
 %changelog
+* Mon Oct 12 2026 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Used signed repository (ALT #55733).
+
 * Tue Dec 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
 - Add application descriptions and icons.
 
