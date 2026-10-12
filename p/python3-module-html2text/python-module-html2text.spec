@@ -1,6 +1,6 @@
 %define oname html2text
 Name: python3-module-html2text
-Version: 2020.1.16
+Version: 2025.4.15
 Release: alt1
 
 Summary: Converts a page of HTML into clean, easy-to-read plain ASCII text
@@ -15,6 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-setuptools python3-module-setuptools_scm python3-module-wheel
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro
 
@@ -29,10 +30,11 @@ be valid Markdown (a text-to-HTML format).
 %setup
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 mv %buildroot%_bindir/html2text %buildroot%_bindir/html2text.py3
 
@@ -44,9 +46,14 @@ mv %buildroot%_bindir/html2text %buildroot%_bindir/html2text.py3
 
 %files
 %_bindir/html2text.py3
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2025.4.15-alt1
+- new version 2025.4.15
+- build with pyproject macros
+
 * Sat Mar 21 2020 Vitaly Lipatov <lav@altlinux.ru> 2020.1.16-alt1
 - new version 2020.1.16 (with rpmrb script) (ALT bug 37305)
 
