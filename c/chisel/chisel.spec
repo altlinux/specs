@@ -2,7 +2,7 @@
 %def_without check
 
 Name: chisel
-Version: 1.12.1
+Version: 1.13.0
 Release: alt1
 
 Summary: TCP tunnel over HTTP
@@ -51,6 +51,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.13.0-alt1
+- new version 1.13.0
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.1-alt1
 - new version 1.12.1
 - set the program version at build time (chisel --version printed 0.0.0-src)
