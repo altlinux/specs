@@ -1,5 +1,5 @@
 Name: seafile-client
-Version: 9.0.21
+Version: 9.0.22
 Release: alt1
 
 Summary: Seafile client GUI (Qt-based)
@@ -14,10 +14,9 @@ Source1: com.seafile.seafile-applet.desktop
 
 Patch0: seafile-client-no-return-error.patch
 Patch1: 86ebea086c6b78738b3140c922c909331d2b9a94.patch
-Patch2: alt-qt69.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: doxygen graphviz
 
 BuildRequires(pre): rpm-macros-qt6-webengine
@@ -59,7 +58,6 @@ This package contains desktop GUI client.
 %setup
 %patch0 -p2
 %patch1 -p1
-%patch2 -p1
 # https://github.com/haiwen/seafile-client/pull/1346
 subst -p '1iADD_DEFINITIONS(-DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_26)' \
 	CMakeLists.txt
@@ -90,6 +88,11 @@ ln -s seafile-applet %buildroot%_bindir/%name
 %_pixmapsdir/*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.22-alt1
+- new version 9.0.22
+- drop alt-qt69.patch (merged upstream)
+- use rpm-build-cmake instead of cmake in BuildRequires
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.21-alt1
 - new version 9.0.21
 

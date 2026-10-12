@@ -1,5 +1,5 @@
 Name: seafile
-Version: 9.0.21
+Version: 9.0.22
 Release: alt1
 
 Summary: Full-fledged cloud storage platform
@@ -135,6 +135,9 @@ cp %SOURCE1 .
 %_pkgconfigdir/libseafile.pc
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.22-alt1
+- new version 9.0.22
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.21-alt1
 - new version 9.0.21
 
