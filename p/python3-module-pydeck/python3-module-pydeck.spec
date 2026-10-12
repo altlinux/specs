@@ -1,7 +1,7 @@
 %define pypi_name pydeck
 
 Name: python3-module-%pypi_name
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: Widget for deck.gl maps
@@ -46,6 +46,9 @@ rm -rv %buildroot%_prefix/etc
 %_sysconfdir/jupyter/nbconfig/notebook.d/%pypi_name.json
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- new version 0.9.3
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
 - initial build for ALT Sisyphus
 
