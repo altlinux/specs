@@ -3,7 +3,7 @@
 %def_without bootstrap
 
 Name: python3-module-servicemanager
-Version: 2.0.7
+Version: 2.0.10
 Release: alt1
 
 Summary: A python tool to manage developing and testing with lots of microservices
@@ -45,6 +45,9 @@ service environment.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.10-alt1
+- new version 2.0.10
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.7-alt1
 - new version 2.0.7 (with rpmrb script)
 
