@@ -1,6 +1,6 @@
 Name: guile30
 Version: 3.0.11
-Release: alt1
+Release: alt2
 
 Summary: A GNU implementation of Scheme
 License: GPLv3
@@ -54,6 +54,7 @@ sed -E -i 's/(AUXILIARY_STACK=)1/\10/' configure.ac
 %makeinstall_std
 sed -i 's,/usr/bin/guile,/usr/bin/guile30,' \
    %buildroot%_bindir/guild %buildroot%_bindir/guile-config
+sed -ri '/^(guild|guile)=/ s,$,30,' %buildroot%_pkgconfigdir/*.pc
 
 mv %buildroot%_bindir/guild %buildroot%_bindir/guild30
 mv %buildroot%_bindir/guile %buildroot%_bindir/guile30
@@ -86,6 +87,9 @@ make check
 %_infodir/*.info*
 
 %changelog
+* Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.11-alt2
+- set guile binary names in pkgconfig to versioned ones (closes: 60900)
+
 * Mon Dec 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.11-alt1
 - 3.0.11 released
 
