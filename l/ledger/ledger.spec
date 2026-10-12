@@ -4,8 +4,8 @@
 %def_with python
 
 Name: ledger
-Version: 3.3.2
-Release: alt1.2
+Version: 3.4.1
+Release: alt1
 
 Summary: Ledger is a highly flexible, double-entry accounting system
 
@@ -19,15 +19,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Patch: 69e6b89cf8d2820d28174e7ffaea1c59a0f84d3f.patch
-Patch1: ledger-upstream-fix-build-with-boost-1.85.0.patch
-Patch2: ledger-upstream-fix-build-with-boost-1.86.0.patch
 
 Requires: libledger = %EVR
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-intro
 
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 BuildRequires: boost-filesystem-devel
 %if_with python
 BuildRequires: boost-python3-devel
@@ -108,8 +106,6 @@ This package contains emacs libraries to ease use of ledger.
 %prep
 %setup
 #patch -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %cmake -DUSE_PYTHON=yes
@@ -119,6 +115,8 @@ This package contains emacs libraries to ease use of ledger.
 
 %install
 %cmake_install
+# contrib scripts are not packaged
+rm -rv %buildroot%_datadir/contrib
 
 %files
 %doc LICENSE.md README.md
@@ -142,6 +140,12 @@ This package contains emacs libraries to ease use of ledger.
 #%_emacslispdir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
+- new version 3.4.1
+- drop boost 1.85.0 and 1.86.0 patches (applied upstream)
+- do not install contrib scripts
+- BuildRequires: rpm-build-cmake instead of cmake
+
 * Sun Oct 27 2024 Ivan A. Melnikov <iv@altlinux.org> 3.3.2-alt1.2
 - NMU: fix building with boost 1.86.0
 
