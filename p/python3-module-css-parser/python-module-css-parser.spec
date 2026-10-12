@@ -1,16 +1,16 @@
 %define oname css-parser
 
 Name: python3-module-css-parser
-Version: 1.0.10
+Version: 1.1.1
 Release: alt1
 
 Summary: A CSS Cascading Style Sheets library for Python
 
 Group: Development/Python3
-License: LGPL
+License: LGPL-3.0-or-later
 Url: https://pypi.python.org/pypi/css-parser
 
-# Source-url: %__pypi_url %oname
+# Source-url: %__pypi_url css_parser
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -20,6 +20,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %description
 A Python package to parse and build CSS Cascading Style Sheets. DOM only, not
@@ -39,16 +40,27 @@ This package contains documentation for %name.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %python3_prune
 
+%check
+%__python3 run_tests.py
+
 %files
-%python3_sitelibdir_noarch/*
+%doc README.md
+%python3_sitelibdir/css_parser/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1
+- switch to pyproject build
+- fix License: LGPL-3.0-or-later
+- enable tests
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 1.0.10-alt1
 - new version 1.0.10 (with rpmrb script)
 
