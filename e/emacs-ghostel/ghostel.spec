@@ -1,5 +1,5 @@
 Name: emacs-ghostel
-Version: 0.56.0
+Version: 0.57.0
 Release: alt1
 
 Summary: Terminal emulator for Emacs
@@ -35,8 +35,7 @@ keymaps, buffers, commands, and remote process integration.
 
 %define _zig_system_integration %nil
 %define _zig_optimize_mode ReleaseFast
-%define emacsversion %(emacs -Q --batch --eval '(princ (format "%s.%s" emacs-major-version emacs-minor-version))')
-%define modulepath %_libdir/emacs/%emacsversion/site-lisp
+%define modulepath %_libdir/emacs/site-lisp
 
 %prep
 %setup -a1
@@ -68,16 +67,18 @@ emacs -Q --batch --eval \
 	(setq backup-inhibited t)
 	(update-directory-autoloads "lisp"))'
 cp -av etc lisp %buildroot%modulepath/ghostel
-cp -av %_datadir/emacs/site-lisp/subdirs.el \
-    %buildroot%modulepath
+
 %ifdef bootstrap
 tar cf %SOURCE1 --exclude '*/rules' zig-pkg
 %endif
 
 %files
-%_libdir/emacs/*/site-lisp/*
+%_libdir/emacs/site-lisp/ghostel
 
 %changelog
+* Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.57.0-alt1
+- 0.57 released
+
 * Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.56.0-alt1
 - 0.56.0 released
 

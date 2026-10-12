@@ -1,6 +1,6 @@
 Name: emacs
 Version: 31.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -87,11 +87,14 @@ Group: Editors
 %{?_enable_natcomp:Requires: %name-el = %version-%release}
 Provides: %_libexecdir/emacs
 Provides: emacs-cedet = %version-%release
+Provides: emacs-elisp-manual = %version-%release
 Provides: emacs-gnus = %version-%release
+Provides: emacs-info = %version-%release
+Provides: emacs-leim = %version-%release
 Provides: emacs-speedbar = %version-%release
-Conflicts: app-defaults < 0.2.1-alt1
-Conflicts: emacs-base-X11 < 0.0.2
-Obsoletes: emacs-base-X11 < 0.0.2
+Obsoletes: emacs-elisp-manual
+Obsoletes: emacs-info
+Obsoletes: emacs-leim
 AutoReq: yes, nopython
 Requires: font(symbola)
 
@@ -100,30 +103,8 @@ Summary: The sources for Lisp programs included with GNU Emacs
 Group: Development/Other
 BuildArch: noarch
 Requires: %name-common = %version-%release
-
-%package leim
-Summary: GNU Emacs Lisp code for input methods for internationalization
-Group: Editors
-BuildArch: noarch
-Requires: %name-common = %version-%release
-
-%package leim-el
-Summary: The Emacs Lisp source code for input methods included in %name-leim
-Group: Development/Other
-BuildArch: noarch
-Requires: %name-leim = %version-%release
-
-%package info
-Summary: Info docs for GNU Emacs text editor
-Group: Editors
-BuildArch: noarch
-Requires: %name-common = %version-%release
-
-%package elisp-manual
-Summary: Emacs Lisp Manual
-Group: Editors
-BuildArch: noarch
-Requires: %name-common = %version-%release
+Provides: emacs-leim-el = %version-%release
+Obsoletes: emacs-leim-el
 
 #{{{
 %define desc \
@@ -162,31 +143,11 @@ included with the main GNU Emacs text editor package.
 
 You need to install %name-el only if you intend to modify any of the
 Emacs packages or see some Lisp examples.
-
-If you need the sources for %name-leim, install %name-leim-el.
-
-%description leim
-The Lisp code for input methods for various international scripts for GNU Emacs.
-
-%description leim-el
-Emacs-leim-el contains the Emacs Lisp sources for the Emacs Lisp code
-for input methods for various international scripts of GNU Emacs.
-
-You need to install %name-leim-el only if you intend to modify any of theses
-GNU Emacs packages, see some Lisp examples or for reference for configuring your
-localized input methods.
-
-%description info
-This package contain full GNU Emacs documentation in Info format except
-Emacs Lisp language documentation that contains in %name-elisp-manual
-package
-
-%description elisp-manual
-This package contain full description of Emacs Lisp language
 #}}}
 
 %define _emacs_archlibdir %_libexecdir/emacs/%version/%_host_alias
-%define locallisppath %_datadir/emacs/site-lisp:%_datadir/emacs/%version/site-lisp:%_libdir/emacs/%version/site-lisp
+%define _modulepath %_libdir/emacs/site-lisp:%_libdir/emacs/%version/site-lisp
+%define _sitelisppath %_datadir/emacs/site-lisp:%_datadir/emacs/%version/site-lisp
 %ifarch %e2k
 # on default -O3 crashes with SIGILL in lucid_event_type_list_p
 %global _optlevel 2
@@ -202,7 +163,7 @@ autoreconf -i -I m4
 %define _configure_script ../configure
 %define _configure_mostly --disable-build-details --sharedstatedir=/var \\\
 	--without-pop --without-gpm --with-wide-int --with-modules \\\
-	--enable-locallisppath=%locallisppath \\\
+	--enable-locallisppath=%_sitelisppath:%_modulepath \\\
 	%{?_enable_natcomp:--with-native-compilation=aot}
 
 mkdir build-athena && pushd build-athena
@@ -267,7 +228,10 @@ rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 find %buildroot%_datadir/emacs/%version -type d -name native-lisp |xargs rm -rv
 
 # arch-dependent part of locallisppath, mostly for modules
-mkdir -p %buildroot%_libdir/emacs/%version/site-lisp
+install -pD %buildroot%_datadir/emacs/site-lisp/subdirs.el \
+        %buildroot%_libdir/emacs/site-lisp/subdirs.el
+install -pD %buildroot%_datadir/emacs/site-lisp/subdirs.el \
+        %buildroot%_libdir/emacs/%version/site-lisp/subdirs.el
 
 # cleanups
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop \
@@ -294,22 +258,13 @@ find %buildroot%_datadir/emacs/%version/etc -type f \
     | sed -e 's,^%buildroot,,' >> common.ls
 
 find %buildroot%_datadir/emacs/%version/lisp -type d \
-    | sed -e 's,^%buildroot,%%dir ,' > lispdirs.ls
+    | sed -e 's,^%buildroot,%%dir ,' >> common.ls
 
 find %buildroot%_datadir/emacs/%version/lisp -type f -name \*.el -o -name \*.elc \
-    | sed -e 's,^%buildroot,,' > elc.ls
+    | sed -e 's,^%buildroot,,' >> common.ls
 
 find %buildroot%_datadir/emacs/%version/lisp -type f -name \*.el.gz \
-    | sed -e 's,^%buildroot,,' > elgz.ls
-
-sed -e '/\/leim/d' < lispdirs.ls >> common.ls
-sed -e '/\/leim\//d' < elc.ls >> common.ls
-
-sed -e '/\/leim\//d' < elgz.ls > el.ls
-
-sed -ne '/\/leim/p' < lispdirs.ls > leim.ls
-sed -ne '/\/leim\//p' < elc.ls >> leim.ls
-sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
+    | sed -e 's,^%buildroot,,' > el.ls
 
 %set_compress_method skip
 %add_debuginfo_skiplist %_libdir/emacs/%version/native-lisp
@@ -351,6 +306,7 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %if_enabled natcomp
 %dir %_libdir/emacs/%version/native-lisp
 %endif
+%_libdir/emacs/site-lisp
 %_libdir/emacs/%version/site-lisp
 
 %_emacslispdir
@@ -360,26 +316,19 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_datadir/metainfo/emacs.*.xml
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
+%_infodir/*
 %_man1dir/*.1*
 
 %_includedir/emacs-module.h
 
 %files el -f el.ls
 
-%files leim -f leim.ls
-
-%files leim-el -f leim.el.ls
-
-%files info
-%_infodir/*
-%exclude %_infodir/eintr*
-%exclude %_infodir/elisp*
-
-%files elisp-manual
-%_infodir/eintr*
-%_infodir/elisp*
-
 %changelog
+* Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 31.1-alt2
+- add arch-dependent site-lisp dirs
+- merge back leim (closes: 55456)
+- merge back info
+
 * Mon Aug 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 31.1-alt1
 - 31.1 released
 

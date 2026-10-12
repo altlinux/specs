@@ -1,5 +1,5 @@
 Name: emacs-libvterm
-Version: 0.0.20260720
+Version: 0.0.20260913
 Release: alt1
 
 Summary: Libvterm-based terminal emulator for Emacs
@@ -17,8 +17,7 @@ Fully-fledged terminal emulator inside GNU Emacs based on libvterm.
 As a result of using compiled code (instead of elisp), emacs-libvterm is fully
 capable, fast, and it can seamlessly handle large outputs.
 
-%define emacsversion %(emacs -q --batch --eval '(princ (format "%s.%s" emacs-major-version emacs-minor-version))')
-%define modulepath %_libdir/emacs/%emacsversion/site-lisp
+%define modulepath %_libdir/emacs/site-lisp
 
 %prep
 %setup
@@ -30,18 +29,19 @@ emacs -Q --batch -f batch-byte-compile vterm.el
 gzip vterm.el
 
 %install
-install -pm0644 -D vterm-module.so %buildroot%modulepath/vterm-module.so
-install -pm0644 vterm.elc vterm.el.gz %buildroot%modulepath/
+install -pm0644 -D vterm-module.so %buildroot%modulepath/vterm/vterm-module.so
+install -pm0644 vterm.elc vterm.el.gz %buildroot%modulepath/vterm
 
 %global _customdocdir %_defaultdocdir/%name
 
 %files
 %doc README* etc/*
-%modulepath/vterm.elc
-%modulepath/vterm.el.gz
-%modulepath/vterm-module.so
+%modulepath/vterm
 
 %changelog
+* Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20260913-alt1
+- updated from git rev.6d715a9
+
 * Mon Sep 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.20260720-alt1
 - updated from git rev.7092111
 
