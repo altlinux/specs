@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: installer-alterator-livecd
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Special steps for run installer in LiveCD desktop
@@ -60,6 +60,10 @@ This package contains common installer stage3 files and dependencies.
 %_alterator_backend3dir/livecd-finish
 
 %changelog
+* Mon Oct 12 2026 Anton Midyukov <antohami@altlinux.org> 0.1.4-alt1
+- backend3/livecd-finish: fix script execution from livecd_postinstall_dir
+  (Closes: 60915).
+
 * Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.1.3-alt1
 - Depend on installer-common-functions instead of rootfs-installer-features.
 
