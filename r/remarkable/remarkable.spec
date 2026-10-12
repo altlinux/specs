@@ -1,5 +1,5 @@
 Name: remarkable
-Version: 1.87
+Version: 1.95
 Release: alt1
 
 Summary: A free fully featured markdown editor
@@ -11,9 +11,7 @@ License: MIT
 # Source-url: https://github.com/jamiemcg/Remarkable/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: remarkable-1.87-webkit2.patch
-Patch2: remarkable-1.87-python39.patch
-Patch3: remarkable-1.75-Live-Preview-Mode-Executes-JavaScript.patch
+Patch1: remarkable-1.95-sysconfig-path.patch
 
 AutoProv:no
 
@@ -25,13 +23,13 @@ BuildRequires: python3(setuptools_scm)
 BuildArch: noarch
 
 # local implementation uses wkhtmltopdf, but have a wrong placement
-%add_python3_req_skip pdfkit
+# findBar and styles are internal modules of the package (found via sys.path)
+%add_python3_req_skip pdfkit findBar styles
 
-# gi.require_version('WebKit2', '4.0')
-Requires: libwebkit2gtk-gir
+# gi.require_version('WebKit2', '4.1') (typelib is not detected by autoreq)
+Requires: libwebkit2gtk4.1-gir
 # typelib(GtkSource) = 3.0
 Requires: libgtksourceview3-gir
-
 
 %description
 A Fully Featured Markdown Editor for Linux.
@@ -39,9 +37,8 @@ A Fully Featured Markdown Editor for Linux.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-#patch3 -p1
 subst 's|^import pdfkit||' remarkable/RemarkableWindow.py
+sed -i 's/\r$//' remarkable/undobuffer.py
 
 %install
 # Check https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=remarkable
@@ -69,5 +66,10 @@ cp -a data/media data/ui %buildroot%_datadir/%name/
 #python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.95-alt1
+- new version 1.95
+- fix startup: use the ALT site-packages path for internal modules
+- require WebKit2 4.1 typelib
+
 * Mon May 01 2023 Vitaly Lipatov <lav@altlinux.ru> 1.87-alt1
 - initial build for Sisyphus
