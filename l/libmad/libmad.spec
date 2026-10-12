@@ -1,11 +1,12 @@
 Name: libmad
-Version: 0.16.4
+Version: 0.16.5
 Release: alt1
 
 Summary: High quality MPEG audio decoder library
 License: GPLv2
 Group: Sound
-Url: https://codeberg.org/tenacityteam/libmad
+URL: https://codeberg.org/tenacityteam/libmad
+VCS: https://codeberg.org/tenacityteam/libmad
 
 Source: libmad-%version.tar
 
@@ -34,6 +35,7 @@ MAD-based software.
 
 %install
 %cmakeinstall_std
+rm -vf %buildroot%_libdir/*.a
 
 %files
 %doc CHANGES CREDITS COPYRIGHT README*
@@ -46,6 +48,9 @@ MAD-based software.
 %_includedir/mad.h
 
 %changelog
+* Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.5-alt1
+- 0.16.5 released
+
 * Tue Mar 11 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.16.4-alt1
 - 0.16.4 released
 
