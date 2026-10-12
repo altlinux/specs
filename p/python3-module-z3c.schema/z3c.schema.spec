@@ -3,15 +3,16 @@
 %define oname z3c.schema
 
 Name: python3-module-%oname
-Version: 1.1.0
-Release: alt3
+Version: 2.0
+Release: alt1
 
 Summary: Additional schema fields for Zope 3
 License: ZPLv2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/z3c.schema/
 
-Source0: https://pypi.python.org/packages/97/b4/e2975b847ac8471f878a1660423d3e97b77ea554aaffd9b48f59f5732188/%{oname}-%{version}.tar.gz
+# Source-url: %__pypi_url %oname
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 %py3_requires zope.i18nmessageid zope.interface zope.schema
@@ -32,7 +33,7 @@ This package provides different additional Zope 3 schema fields.
 This package contains tests for z3c.schema.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
 %build
 %python3_build
@@ -59,6 +60,10 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0-alt1
+- new version 2.0
+- use PyPI Source-url macro
+
 * Tue Aug 24 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt3
 - s/python_build/python3_build/
 
