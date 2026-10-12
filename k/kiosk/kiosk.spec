@@ -1,6 +1,6 @@
 Name: kiosk
 Version: 0.5
-Release: alt3
+Release: alt4
 
 Source: %name-%version.tar
 
@@ -28,6 +28,9 @@ Utility for managing kiosk mode
 %_man1dir/kiosk.1.xz
 
 %changelog
+* Mon Oct 12 2026 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt4
+- fix shortopt for user-list-remove (Closes: #60787)
+
 * Mon Sep 01 2025 Oleg Solovyov <mcpain@altlinux.org> 0.5-alt3
 - fix typo
 
