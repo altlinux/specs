@@ -1,8 +1,7 @@
-# TODO: enable tests (they forget pack tests in the tarball)
 %define oname grok
 
 Name: libgrokj2k
-Version: 15.0.0
+Version: 20.4.16
 Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
@@ -15,13 +14,19 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/GrokImageCompression/grok/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+# spdlog v2.x used as git submodule src/include/spdlog at v%version
+# from https://github.com/gabime/spdlog/tree/ce0424bb375805955c0c5482a32ddb821708eb47
+Source2: spdlog-%version.tar
+Patch0: grok-use-system-highway.patch
+Patch1: grok-tests-mapped-offset-64bit.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: perl-base perl-devel perl-Image-ExifTool
 BuildRequires: zlib-devel libpng-devel libtiff-devel liblcms2-devel libjpeg-devel
 BuildRequires: libwebp-devel libzstd-devel liblzma-devel libdeflate-devel cli11-devel
+BuildRequires: libfmt-devel highway-devel libtaskflow-devel >= 4.1.0-alt2
 
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake ctest gcc-c++
 
 %description
 World's Leading Open Source JPEG 2000 Codec:
@@ -51,14 +56,15 @@ Requires: %name = %EVR
 Compress and decompress tools for grokj2k:
 * grk_compress
 * grk_decompress
+* grk_transcode
 
 %prep
-%setup
+%setup -a2
+%patch0 -p1
+%patch1 -p1
 %ifarch %e2k
 sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2a")|' CMakeLists.txt
 sed -i 's|CMAKE_CXX_COMPILER_VERSION|12.0|' CMakeLists.txt
-# spdlog uses a very old libfmt
-sed -i 's|defined(__cpp_nontype_template_args)|0|' src/include/spdlog/fmt/bundled/core.h
 %add_optflags -mno-sse
 %endif
 %ifarch ppc64le
@@ -77,13 +83,21 @@ rm -rf thirdparty/libz
         -DGRK_BUILD_LIBTIFF=OFF \
         -DGRK_BUILD_LCMS2=OFF \
         -DGRK_BUILD_JPEG=OFF \
-        -DHWY_SYSTEM_GTEST=ON \
-        -DBUILD_TESTING=OFF \
+        -DBUILD_TESTING=ON \
+        -DSPDLOG_FMT_EXTERNAL=ON \
         %nil
 %make_build
 
 %install
 %makeinstall_std
+
+%check
+# NR-* (nonregression) and ETS-* (conformance) tests need the separate
+# grok-test-data repository, so only self-contained tests are run
+exclude='^(NR|ETS)-'
+# re-executes itself via /proc/self/exe, which needs /proc
+[ -e /proc/self/exe ] || exclude="$exclude|^grk_region_component_memory_test$"
+ctest --output-on-failure -j%__nprocs -E "$exclude"
 
 %files
 %doc README.md
@@ -96,6 +110,7 @@ rm -rf thirdparty/libz
 %_bindir/grk_compress
 %_bindir/grk_decompress
 %_bindir/grk_dump
+%_bindir/grk_transcode
 
 %files devel
 %_libdir/%name.so
@@ -106,6 +121,15 @@ rm -rf thirdparty/libz
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.16-alt1
+- new version 20.4.16
+- build with system highway
+- pack spdlog 2.x (git submodule of upstream) as source
+- pack grk_transcode tool
+- build tests and run them in %%check
+- build the mmap interposer test on 64-bit only (fix i586 build)
+- build with system taskflow
+
 * Sun May 25 2025 Vitaly Lipatov <lav@altlinux.ru> 15.0.0-alt1
 - new version 15.0.0 (with rpmrb script)
 

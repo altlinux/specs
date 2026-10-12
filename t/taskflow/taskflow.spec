@@ -1,6 +1,6 @@
 Name: taskflow
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Modern C++ header-only library for parallel and heterogeneous task programming
 
@@ -15,6 +15,8 @@ Patch: taskflow-cmake-arch-independent.patch
 Patch1: taskflow-system-doctest.patch
 # 32-bit build fix, cf. https://github.com/taskflow/taskflow/issues/751 (not yet proposed upstream)
 Patch2: taskflow-object-pool-32bit.patch
+# inline (zero-worker) executor mode, needed by grok: https://github.com/taskflow/taskflow/pull/802
+Patch3: taskflow-inline-executor-pr802.patch
 
 BuildArch: noarch
 
@@ -43,6 +45,7 @@ This package contains the header files, CMake config and pkg-config file.
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %cmake \
@@ -69,5 +72,8 @@ This package contains the header files, CMake config and pkg-config file.
 %_datadir/pkgconfig/taskflow.pc
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt2
+- add inline (zero-worker) executor mode (upstream PR #802), needed by grok
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - initial build for Sisyphus
