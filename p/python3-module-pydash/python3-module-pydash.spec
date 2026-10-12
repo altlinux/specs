@@ -2,7 +2,7 @@
 %def_without test
 
 Name: python3-module-%oname
-Version: 8.0.6
+Version: 8.1.0
 Release: alt1
 
 Summary: The kitchen sink of Python utility libraries for doing "stuff" in a functional way
@@ -37,6 +37,9 @@ Based on the Lo-Dash Javascript library.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 8.1.0-alt1
+- new version 8.1.0
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.6-alt1
 - new version 8.0.6
 - switch to pyproject build
