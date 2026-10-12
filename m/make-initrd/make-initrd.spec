@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.59.0
-Release: alt2
+Version: 2.60.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -278,6 +278,14 @@ AutoReq: noshell, noshebang
 %description guestfs
 Make-initrd guestfs feature.
 
+%package kernel-install
+Summary: kernel-install plugin to build initramfs or UKI with make-initrd
+BuildArch: noarch
+Group: System/Base
+Requires: %name = %version-%release
+
+%description kernel-install
+kernel-install plugin to build initramfs or UKI with make-initrd.
 
 %define _libexecdir %_prefix/libexec
 
@@ -424,7 +432,27 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 %endif
 
+%files kernel-install
+%prefix/lib/kernel/install.conf.d/50-make-initrd.conf
+%prefix/lib/kernel/install.d/50-make-initrd.install
+
 %changelog
+* Mon Oct 12 2026 Anton Midyukov <antohami@altlinux.org> 2.60.0-alt1
+- Kernel-install integration:
+  + Add a plugin for building initramfs and UKI images.
+  + Build UKI images even when an existing initrd is passed.
+- Feature luks:
+  + Add automatic root unlocking with LUKS2 tokens.
+  + Fix key lookup for device identifiers such as UUID=.
+- Feature kickstart:
+  + Make optional RAID modules non-mandatory.
+- Feature uki:
+  + Fix kernel image lookup.
+- Build:
+  + Add an option to enable LTO.
+- Misc:
+  + Update libshell to v0.6.0.
+
 * Wed Sep 16 2026 Michael Shigorin <mike@altlinux.org> 2.59.0-alt2
 - Introduce clevis, zfs knobs (on by default).
 
