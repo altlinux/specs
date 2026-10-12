@@ -2,7 +2,7 @@
 %define nameD shazamio_core
  
 Name:    python3-module-shazamio-core
-Version: 1.2.1
+Version: 2.0.0
 Release: alt1
 
 Summary: shazamio-core
@@ -16,9 +16,9 @@ Source0: %name-%version.tar
 Source1: vendor.tar
  
 BuildRequires(pre): rpm-build-rust rpm-build-python3 rpm-build-gir
-BuildRequires: python3-module-setuptools python3-module-wheel
-BuildRequires: libalsa-devel python3-module-maturin
-BuildRequires: /proc
+BuildRequires: libalsa-devel
+BuildRequires: python3-module-maturin
+BuildRequires: cmake
 
 %description
 %summary
@@ -35,6 +35,7 @@ directory = "vendor"
 EOF
 
 %build
+%add_optflags -fPIC
 %pyproject_build
 
 %install
@@ -46,6 +47,9 @@ EOF
 %python3_sitelibdir/%{nameD}-*
 
 %changelog
+* Mon Oct 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.0.0-alt1
+- 1.2.1 -> 2.0.0
+
 * Sun Sep 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt1
 - 1.2.0 -> 1.2.1
 
