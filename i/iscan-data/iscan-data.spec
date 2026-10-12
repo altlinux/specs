@@ -1,10 +1,10 @@
 # TODO: generate udev rules like does make-policy-file script
 
 # FIXTHEIR: never use release in source releases
-%define rel 2
+%define rel 1
 
 Name: iscan-data
-Version: 1.39.1
+Version: 1.39.2
 Release: alt1
 
 Summary: Image Scan! for Linux data files
@@ -13,7 +13,9 @@ License: GPL
 Group: Graphics
 Url: http://download.ebz.epson.net/dsc/search/01/search/?OSC=LX
 
-# Source-url: http://support.epson.net/linux/src/scanner/iscan/iscan-data_%version-%rel.tar.gz
+# Original: http://support.epson.net/linux/src/scanner/iscan/iscan-data_%version-%rel.tar.gz
+# Epson returns 403, mirror sha256 matches AUR
+# Source-url: https://downloads.sourceforge.net/project/fabiololix-os-archive/src/iscan-data_%version-%rel.tar.gz
 Source: %name-%version.tar
 
 Conflicts: iscan-free < 2.30.0
@@ -83,6 +85,10 @@ rm -rf %buildroot%_libdir/
 /lib/udev/hwdb.d/%name.hwdb
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.39.2-alt1
+- new version 1.39.2
+- use SourceForge mirror for Source-url (support.epson.net returns 403)
+
 * Thu Oct 31 2019 Vitaly Lipatov <lav@altlinux.ru> 1.39.1-alt1
 - initial build for ALT Sisyphus
 - skip udev rules
