@@ -1,6 +1,6 @@
 Name: openhantek
-Version: 3.3.3
-Release: alt2
+Version: 3.4.0
+Release: alt1
 Epoch: 1
 
 Summary: OpenHantek is a DSO software for Hantek (Voltcraft/Darkwire/Protek/Acetech) USB digital signal oscilloscopes
@@ -16,7 +16,7 @@ Patch1: openhantek-set-version.patch
 
 # Automatically added by buildreq on Thu Dec 28 2017
 # optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-opengl libqt5-printsupport libqt5-widgets libstdc++-devel lsb-release python-base python-modules python3 python3-base qt5-base-devel qt5-tools sssd-client
-BuildRequires: cmake doxygen libGLU-devel libfftw3-devel libssl-devel libusb-devel qt5-imageformats qt5-tools-devel
+BuildRequires: rpm-build-cmake doxygen libGLU-devel libfftw3-devel libssl-devel libusb-devel qt5-imageformats qt5-tools-devel
 
 Requires: xkeyboard-config
 
@@ -47,12 +47,16 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_bindir/%name
 %_bindir/OpenHantek
 %_udevrulesdir/60-openhantek.rules
-%_desktopdir/OpenHantek.desktop
+%_desktopdir/org.openhantek.OpenHantek.desktop
 %_docdir/openhantek/
 %_iconsdir/hicolor/*x*/apps/*.png
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1:3.4.0-alt1
+- new version 3.4.0
+- BuildRequires: rpm-build-cmake instead of cmake
+
 * Sun Jul 07 2024 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.3-alt2
 - fix packing
 
