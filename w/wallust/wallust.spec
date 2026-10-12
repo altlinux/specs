@@ -1,13 +1,13 @@
 Name: wallust
-Version: 3.3.0
+Version: 3.5.2
 Release: alt1
 
 Summary: Generate colorschemes from images
 License: MIT
 Group: Graphics
-Url: https://github.com/explosion-mental/wallust
+Url: https://codeberg.org/explosion-mental/wallust
 
-# Source-url: https://github.com/explosion-mental/wallust/archive/refs/tags/%version.tar.gz
+# Source-url: https://codeberg.org/explosion-mental/wallust/archive/%version.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
@@ -61,6 +61,10 @@ install -Dpm 0644 completions/wallust.fish %buildroot%_datadir/fish/vendor_compl
 %doc LICENSE
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.2-alt1
+- new version 3.5.2
+- upstream moved to codeberg
+
 * Sun Jan 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt1
 - initial build for ALT Sisyphus
 - add man pages and shell completions
