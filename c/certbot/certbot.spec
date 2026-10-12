@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 5.6.0
+Version: 5.8.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -19,6 +19,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/certbot/certbot/archive/v%version.tar.gz
 Source: %name-%version.tar
+Source1: certbot-renew.service
+Source2: certbot-renew.timer
+# ALT bug 43399, TODO: send upstream
+Patch: certbot-apache-altlinux.patch
 
 BuildArch: noarch
 BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
@@ -130,6 +134,7 @@ Certbot dns_route53 plugin.
 
 %prep
 %setup
+%patch -p1
 
 %build
 cd certbot
@@ -180,6 +185,9 @@ ln -s %name %buildroot%_bindir/letsencrypt
 install -Dp -m644 certbot/docs/_build/man/certbot.1 %buildroot/%_man1dir/certbot.1
 install -Dp -m644 certbot/docs/_build/man/certbot.7 %buildroot/%_man7dir/certbot.7
 
+install -Dp -m644 %SOURCE1 %buildroot%_unitdir/certbot-renew.service
+install -Dp -m644 %SOURCE2 %buildroot%_unitdir/certbot-renew.timer
+
 rm -rv %buildroot%python3_sitelibdir/certbot*/_internal/tests/
 rm -rv %buildroot%python3_sitelibdir/certbot*/tests/
 rm -rv %buildroot%python3_sitelibdir/certbot/*/*_test*
@@ -187,12 +195,17 @@ rm -rv %buildroot%python3_sitelibdir/certbot/*/*_test*
 %check
 #python_test
 
+%preun
+%preun_systemd certbot-renew.timer
+
 %files
 %doc LICENSE.txt
 %doc README.rst CHANGELOG.md CONTRIBUTING.md
 %_bindir/%name
 %_man1dir/%{name}*
 %_man7dir/%{name}*
+%_unitdir/certbot-renew.service
+%_unitdir/certbot-renew.timer
 %dir %_sysconfdir/%name/
 %dir %_sharedstatedir/%name/
 %dir %_logdir/%name/
@@ -235,6 +248,11 @@ rm -rv %buildroot%python3_sitelibdir/certbot/*/*_test*
 %endif
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.8.0-alt1
+- new version 5.8.0
+- apache: add ALT Linux httpd2 layout support (closes: #43399)
+- add certbot-renew systemd service and timer, disabled by default (closes: #41480)
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt1
 - new version 5.6.0
 
