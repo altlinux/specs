@@ -61,7 +61,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.4
-Release: alt2
+Release: alt3
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -106,11 +106,6 @@ BuildRequires: /usr/bin/npm
 BuildRequires: python3(rjsmin)
 BuildRequires: python3-module-argcomplete
 %endif # only_client
-
-%if_with modern_ui
-BuildRequires: esbuild
-BuildRequires: rollup-native
-%endif
 
 # python
 BuildRequires: python3-module-lesscpy
@@ -583,18 +578,8 @@ git commit -am 'with our changes'
 
 %if_with modern_ui
 pushd install/freeipa-webui
-
-# use native rollup
-mv node_modules/rollup node_modules/rollup.bak
-cp -a %_prefix/lib/node_modules/rollup node_modules
-cp -a %_prefix/lib/node_modules/@rollup/rollup-*-gnu node_modules/@rollup
-
-# prepare to use native esbuild
-local_esbuild=$(npm ls -l -p esbuild | cut -d@ -f2 | sed 's/[.]/\\&/g')
-distro_esbuild=%{get_version esbuild}
-find node_modules/esbuild -name '*.js' | xargs sed -i "s,$local_esbuild,$distro_esbuild,g"
-
-popd
+# prebuilt platform-agnostic static content
+mv node_modules/__built_content/dist -t .
 %else
 touch install/freeipa-webui/Makefile.am
 %endif
@@ -607,17 +592,6 @@ else
 fi
 
 %build
-%if_with modern_ui
-# prebuild modern webui otherwise it will try `npm clean-install`
-# which requires internet.
-pushd install/freeipa-webui
-
-# Use system esbuild. Note that /usr/bin/esbuild cannot be used
-# because eslint module specifically checks for such path.
-ESBUILD_BINARY_PATH=/bin/esbuild npm run build
-popd
-%endif
-
 export PYTHON=%__python3
 %autoreconf
 %configure --with-vendor-suffix=-%release \
@@ -1226,6 +1200,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Oct 12 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt3
+- Fixed FTBFS (esbuild 0.28.2).
+
 * Wed Sep 30 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt2
 - Backported upstream fixes:
   + https://github.com/freeipa/freeipa/pull/8473 (fixes: CVE-2026-14612)
