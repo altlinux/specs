@@ -3,7 +3,7 @@
 %define mod_name parallel
 
 Name: python3-module-%pypi_name
-Version: 0.5.1
+Version: 1.3.5
 Release: alt1
 
 Summary: The official Python library for the Parallel API
@@ -44,5 +44,8 @@ asynchronous clients powered by httpx.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.5-alt1
+- new version 1.3.5
+
 * Mon May 04 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.1-alt1
 - initial build for ALT Sisyphus
