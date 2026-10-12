@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.23.7
+Version: 1.23.11
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -96,6 +96,7 @@ cat dpkg-dev.lang >> %name.lang
 %_man5dir/*
 %_man7dir/*
 /usr/lib/dpkg/dpkg-db-keeper
+%_datadir/bash-completion/completions/dpkg*
 %if_with extbuild
 %lang(pl) %_mandir/pl/man?/*
 %lang(de) %_mandir/de/man?/*
@@ -117,6 +118,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt1
+- new version 1.23.11
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.7-alt1
 - new version 1.23.7
 - fix i586 build: check compiler flags together with the configured CFLAGS
