@@ -1,6 +1,14 @@
+%define libclient_name libxfce4session-client
+%def_enable introspection
+%def_enable vala
+%def_enable docs
+
+%define libclient_sover 0
+%define libclient_name_with_vers %libclient_name-1
+
 Name: xfce4-session
-Version: 4.21.1
-Release: alt2
+Version: 4.21.2
+Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -23,7 +31,8 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: libxfce4util-devel >= 4.19.2 libxfconf-devel >= 4.18.0
+BuildRequires: libxfce4util-devel >= 4.21.0
+BuildRequires: libxfconf-devel >= 4.18.0
 BuildRequires: libxfce4ui-gtk3-devel >= 4.21.0
 BuildRequires: libxfce4windowing-devel >= 4.19.2
 # For gdk-pixbuf-csource
@@ -31,6 +40,10 @@ BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libX11-devel iceauth libICE-devel libSM-devel libwnck3-devel
 BuildRequires: libgtk-layer-shell-devel
+BuildRequires: libwayland-client-devel wayland-protocols wayland-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel}
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 Requires: wm-common-freedesktop
 Requires: xfce4-about
@@ -66,15 +79,89 @@ Wayland session for Xfce desktop environment.
 Данный пакет содержит сессию Wayland для окружения рабочего
 стола Xfce.
 
+%package -n %libclient_name
+Summary: Xfce session management client library
+License: LGPL-2.0-or-later
+Group: Development/C
+
+%description -n %libclient_name
+The %libclient_name library provides an API for applications to
+interact with the Xfce session manager. It allows applications to save
+and restore their state, manage session lifecycles, and supports modern
+D-Bus and Wayland-based session management protocols.
+
+%package -n %libclient_name-devel
+Summary: Development files for %libclient_name
+License: LGPL-2.0-or-later
+Group: Development/C
+Requires: %libclient_name = %EVR
+
+%description -n %libclient_name-devel
+Development files for the %libclient_name.
+
+%if_enabled docs
+%package -n %libclient_name-devel-doc
+Summary: Development documentation for %libclient_name
+License: LGPL-2.0-or-later
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %libclient_name-devel < %EVR
+
+%description -n %libclient_name-devel-doc
+This package contains development documentation for %libclient_name.
+%endif
+
+%if_enabled introspection
+%package -n %libclient_name-gir
+Summary: GObject introspection data for %libclient_name
+License: LGPL-2.0-or-later
+Group: System/Libraries
+Requires: %libclient_name = %EVR
+
+%description -n %libclient_name-gir
+GObject introspection data for %libclient_name.
+
+%package -n %libclient_name-gir-devel
+Summary: GObject introspection devel data for %libclient_name
+License: LGPL-2.0-or-later
+Group: System/Libraries
+BuildArch: noarch
+Requires: %libclient_name-gir = %EVR
+Requires: %libclient_name-devel = %EVR
+
+%description -n %libclient_name-gir-devel
+GObject introspection devel data for %libclient_name.
+%endif
+
+%if_enabled vala
+%package -n %libclient_name-vala
+Summary: Vala bindings for %libclient_name
+License: LGPL-2.0-or-later
+Group: System/Libraries
+Requires: %libclient_name-devel = %EVR
+BuildArch: noarch
+
+%description -n %libclient_name-vala
+Vala bindings for %libclient_name.
+%endif
+
 %prep
 %setup
 %patch -p1
+
+# Don't try to use new function from gtk-3.24.53:
+# code broken in the upstream.
+# See ALT bug #60916 for details.
+sed -r -i 's/have_xdg_toplevel_realize[[:blank:]]*=[[:blank:]]*.+$/have_xdg_toplevel_realize = false/' meson.build
 
 %build
 %meson \
 	-Dhost-os=linux \
 	-Dx11=enabled \
-	-Dwayland=enabled
+	-Dwayland=enabled \
+	%{subst_enable_meson_bool introspection introspection} \
+	%{subst_enable_meson_feature vala vala} \
+	%{subst_enable_meson_bool docs gtk-doc}
 
 %meson_build -v
 
@@ -114,7 +201,40 @@ sed 's|@LIBDIR@|%_libdir|' <%SOURCE6 > %buildroot%_sysconfdir/xdg/autostart/xfce
 %_datadir/wayland-sessions/xfce-wayland.desktop
 %_datadir/xfce4/labwc/
 
+%files -n %libclient_name
+%_libdir/%libclient_name_with_vers.so.%libclient_sover
+%_libdir/%libclient_name_with_vers.so.%libclient_sover.*
+
+%files -n %libclient_name-devel
+%_libdir/pkgconfig/%libclient_name_with_vers.pc
+%_libdir/%libclient_name_with_vers.so
+%_includedir/xfce4/%libclient_name_with_vers/
+
+%if_enabled docs
+%files -n %libclient_name-devel-doc
+%doc %_datadir/gtk-doc/html/%libclient_name
+%endif
+
+%if_enabled introspection
+%files -n %libclient_name-gir
+%_libdir/girepository-1.0/*.typelib
+
+%files -n %libclient_name-gir-devel
+%_datadir/gir-1.0/*.gir
+%endif
+
+%if_enabled vala
+%files -n %libclient_name-vala
+%_datadir/vala/vapi/%libclient_name_with_vers.*
+%endif
+
 %changelog
+* Mon Oct 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
+- Don't try to use gdk_wayland_window_get_xdg_toplevel().
+- Added libxfce4session-client subpackages.
+- xfce4-session-target-stop.desktop: Fixed comment.
+- Updated to 4.21.2.
+
 * Mon Jan 26 2026 Mikhail Efremov <sem@altlinux.org> 4.21.1-alt2
 - Fixed Russian description.
 - Added xfce4-session.target unit (closes: #57638).
