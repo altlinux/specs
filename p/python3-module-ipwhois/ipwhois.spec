@@ -4,8 +4,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.2.0
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Retrieve and parse whois data for IPv4 and IPv6 addresses
 
@@ -18,10 +18,9 @@ BuildArch: noarch
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
-Patch2: fix-alt.patch
-
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
 BuildRequires: python3(dns)
@@ -45,13 +44,12 @@ Features:
 
 %prep
 %setup
-%patch2 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export NO_INTERNET=YES
@@ -59,12 +57,17 @@ nosetests3 -v -w ipwhois --exclude="(online|stress)"
 
 %files
 %doc *.rst
-%_bindir/ipwhois_cli.py
-%_bindir/ipwhois_utils_cli.py
+%_bindir/ipwhois_cli
+%_bindir/ipwhois_utils_cli
 %python3_sitelibdir/ipwhois/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0
+- switch to pyproject build
+- drop fix-alt.patch (entry point scripts are generated)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt2
 - switch to build from tarball
 - disable tests (missed in pypi tarball)
