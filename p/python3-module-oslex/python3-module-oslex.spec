@@ -2,7 +2,7 @@
 %define mod_name oslex
 
 Name:    python3-module-%pypi_name
-Version: 0.1.3
+Version: 2.0.0
 Release: alt1
 
 Summary: OS-independent wrapper for shlex and mslex
@@ -52,5 +52,8 @@ posixpath/ntpath.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1.3-alt1
 - initial build for ALT Sisyphus
