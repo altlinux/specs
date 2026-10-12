@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    moonlight-qt
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 Summary: GameStream client for PCs (Windows, Mac, Linux, and Steam Link)
 License: GPL-3.0
@@ -12,11 +12,10 @@ Vcs:     https://github.com/moonlight-stream/moonlight-qt.git
 Source0: %name-%version.tar
 
 Source1: %name-%version-moonlight-common-c.tar
-Source2: %name-%version-h264bitstream.tar
-Source3: %name-%version-qmdnsengine.tar
-Source4: %name-%version-libsoundio.tar
-Source5: %name-%version-SDL_GameControllerDB.tar
-Source6: %name-%version-moonlight-common-c-enet.tar
+Source2: %name-%version-qmdnsengine.tar
+Source3: %name-%version-SDL_GameControllerDB.tar
+Source4: %name-%version-moonlight-common-c-enet.tar
+Source5: %name-%version-moonlight-common-c-nanors.tar
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-tools
@@ -42,7 +41,7 @@ Requires: libqt6-quicklayouts
 %summary.
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6
+%setup -a1 -a2 -a3 -a4 -a5
 
 %build
 %qmake_qt6 moonlight-qt.pro PREFIX=%prefix
@@ -59,6 +58,9 @@ Requires: libqt6-quicklayouts
 %_datadir/metainfo/*
 
 %changelog
+* Mon Oct 12 2026 Maxim Slipenko <maks1ms@altlinux.org> 6.2.0-alt1
+- New version 6.2.0.
+
 * Wed Feb 19 2025 Maxim Slipenko <maks1ms@altlinux.org> 6.1.0-alt1
 - Initial build
 
