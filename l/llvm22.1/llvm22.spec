@@ -87,7 +87,7 @@ AutoProv: nopython
 # this is not for linking but for building :)
 %def_with lld
 
-%def_with libomp
+%def_without libomp
 
 %ifarch x86_64 ppc64le aarch64 loongarch64
 %def_with clang
@@ -124,7 +124,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt0.2
+Release: alt0.3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -1614,6 +1614,9 @@ ninja -C %builddir check-all || :
 %endif
 
 %changelog
+* Sun Oct 11 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.8-alt0.3
+- libomp: disable (use libomp from llvm23.1).
+
 * Mon Sep 14 2026 L.A. Kostis <lakostis@altlinux.ru> 22.1.8-alt0.2
 - Added patch from ISPC:
   + ispc-llvm-22_1_split_vec_op_wasm.patch
