@@ -6,7 +6,7 @@
 %add_python3_req_skip yfinance vega_datasets
 
 Name: python3-module-%oname
-Version: 1.57.0
+Version: 1.65.0
 Release: alt1
 
 Summary: A faster way to build and share data apps
@@ -60,6 +60,9 @@ Streamlit apps.
 %_bindir/streamlit
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.65.0-alt1
+- new version 1.65.0
+
 * Thu May 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.57.0-alt1
 - new version (1.57.0)
 
