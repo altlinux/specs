@@ -2,8 +2,8 @@
 %define oname libfaketime
 
 Name: python3-module-libfaketime
-Version: 2.0.0
-Release: alt3
+Version: 3.0.1
+Release: alt1
 
 Summary: A fast alternative to freezegun that wraps libfaketime
 
@@ -35,7 +35,7 @@ python-libfaketime is a wrapper of libfaketime for python. Some brief details:
 # use system library
 subst "s|: _get_lib_path()|: '%_libdir/faketime'|" libfaketime/__init__.py
 # do not build the bundled libfaketime (FTBFS with gcc 15), use system library
-subst "s|cmdclass={'install': CustomInstall},||" setup.py
+subst 's|cmdclass={"install": CustomInstall},||' setup.py
 
 %build
 %python3_build
@@ -48,12 +48,15 @@ rm -rv %buildroot%python3_sitelibdir/libfaketime/vendor/
 
 
 %files
-%doc *.rst
+%doc *.md
 %_bindir/python-libfaketime
 %python3_sitelibdir/*
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
+- new version 3.0.1
+
 * Sun Jun 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt3
 - fixed FTBFS: do not build the bundled libfaketime, use system library
 
