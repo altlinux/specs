@@ -1,5 +1,5 @@
 Name: whatsie
-Version: 4.16.3
+Version: 6.1.1
 Release: alt1
 
 Summary: Feature rich WhatsApp Client for Desktop Linux
@@ -11,22 +11,25 @@ Url: https://github.com/keshavbhatt/whatsie
 # Source-url: https://github.com/keshavbhatt/whatsie/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-qt5
-BuildRequires(pre):rpm-build-intro
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-qt6-webengine
+ExclusiveArch: %qt6_qtwebengine_arches
+BuildRequires(pre): rpm-build-intro
+BuildRequires: rpm-build-cmake
 
-BuildRequires: pkgconfig(Qt5Core)
-BuildRequires: pkgconfig(Qt5Help)
-BuildRequires: pkgconfig(Qt5Location)
-BuildRequires: pkgconfig(Qt5Positioning)
-BuildRequires: pkgconfig(Qt5PositioningQuick)
-BuildRequires: pkgconfig(Qt5Qml)
-BuildRequires: pkgconfig(Qt5Quick)
-BuildRequires: pkgconfig(Qt5QuickTest)
-BuildRequires: pkgconfig(Qt5QuickWidgets)
-BuildRequires: pkgconfig(Qt5WebChannel)
-BuildRequires: pkgconfig(Qt5WebEngine)
-BuildRequires: pkgconfig(Qt5WebEngineCore)
-BuildRequires: pkgconfig(Qt5WebEngineWidgets)
+BuildRequires: pkgconfig(Qt6Core)
+BuildRequires: pkgconfig(Qt6Gui)
+BuildRequires: pkgconfig(Qt6Widgets)
+BuildRequires: pkgconfig(Qt6Network)
+BuildRequires: pkgconfig(Qt6Concurrent)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6WebChannel)
+BuildRequires: pkgconfig(Qt6WebEngineCore)
+BuildRequires: pkgconfig(Qt6WebEngineWidgets)
+BuildRequires: qt6-webengine-devel
+
+# hunspell dictionaries converted to .bdic spell-check dictionaries
+BuildRequires: hunspell-en_US hunspell-ru-lebedev hunspell-de hunspell-fr hunspell-es
 
 %description
 Feature rich WhatsApp Client for Desktop Linux.
@@ -35,28 +38,31 @@ Feature rich WhatsApp Client for Desktop Linux.
 %setup
 
 %build
-%qmake_qt5 src
-%make_build
+%cmake -DWHATSIE_BUILD_TESTS=OFF \
+	-DWHATSIE_HUNSPELL_DIR=%_datadir/myspell \
+	-DWHATSIE_CONVERT_DICT=%_libdir/qt6/libexec/qwebengine_convert_dict
+%cmake_build
 
 %install
-make install INSTALL_ROOT=%buildroot
-rm -v %buildroot/usr/share/licenses/whatsie/LICENSE
+%cmake_install
 
 %files
 %doc LICENSE
-%doc CHANGELOG.md README.md
+%doc README.md
 %_bindir/whatsie
 %_desktopdir/com.ktechpit.whatsie.desktop
-%_iconsdir/hicolor/*/apps/com.ktechpit.whatsie.png
-%_iconsdir/hicolor/scalable/apps/com.ktechpit.whatsie.svg
-%_iconsdir/hicolor/symbolic/apps/com.ktechpit.whatsie-symbolic.svg
-%_metainfodir/com.ktechpit.whatsie.appdata.xml
-%dir %_datadir/org.keshavnrj.ubuntu
-%dir %_datadir/org.keshavnrj.ubuntu/WhatSie/
-%dir %_datadir/org.keshavnrj.ubuntu/WhatSie/qtwebengine_dictionaries
-%_datadir/org.keshavnrj.ubuntu/WhatSie/qtwebengine_dictionaries/*.bdic
+%_iconsdir/hicolor/*/apps/com.ktechpit.whatsie*
+%_metainfodir/com.ktechpit.whatsie.metainfo.xml
+%dir %_datadir/whatsie
+%dir %_datadir/whatsie/qtwebengine_dictionaries
+%_datadir/whatsie/qtwebengine_dictionaries/*.bdic
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt1
+- new version 6.1.1
+- migrate to Qt6 and CMake build
+- build only on Qt6 WebEngine architectures
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 4.16.3-alt1
 - initial build for ALT Sisyphus
 
