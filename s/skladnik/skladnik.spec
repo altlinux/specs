@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Games/Boards
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel
 BuildRequires: libvulkan-devel
 BuildRequires: kf6-kconfig-devel kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
-BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel
+BuildRequires: kf6-ki18n-devel kf6-kio-devel kf6-kwidgetsaddons-devel kf6-kxmlgui-devel kf6-kdoctools-devel
 BuildRequires: kde6-libkdegames-devel
 
 %description
@@ -42,6 +42,9 @@ Skladnik is an implementation of the Japanese warehouse keeper game "sokoban".
 %_datadir/metainfo/*%{rname}*.xml
 
 %changelog
+* Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
+- fix build docs
+
 * Fri Oct 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
