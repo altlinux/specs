@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mobile-config-firefox
-Version: 5.4.1
+Version: 5.5.1
 Release: alt1
 
 Summary: Mobile and privacy friendly firefox configuration
@@ -38,9 +38,12 @@ sed -i "s|/usr/lib/mobile-config-firefox|%firefox_datadir|" \
 %files
 %firefox_datadir/*
 %firefox_prefix/*
-%_datadir/metainfo/org.postmarketos.mobile_config_firefox.metainfo.xml
+%_datadir/metainfo/eco.nura.mobile_config_firefox.metainfo.xml
 
 %changelog
+* Mon Oct 12 2026 Egor Shestakov <ved@altlinux.org> 5.5.1-alt1
+- Update to 5.5.1
+
 * Thu Jul 30 2026 Egor Shestakov <ved@altlinux.org> 5.4.1-alt1
 - Update to 5.4.1:
   + Properly enable Pipewire webrtc backend.
