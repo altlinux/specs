@@ -1,11 +1,11 @@
 %define dist Crypt-DSA
 Name: perl-%dist
-Version: 1.19
+Version: 1.24
 Release: alt1
 
 Summary: %dist - DSA signatures and key generation
 
-License: Artistic
+License: GPL-1.0-or-later or Artistic-1.0-Perl
 Group: Development/Perl
 Url: %CPAN %dist
 
@@ -13,7 +13,8 @@ BuildArch: noarch
 Source0: http://www.cpan.org/authors/id/T/TI/TIMLEGGE/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jun 17 2008
-BuildRequires: openssl perl-Convert-PEM perl-Crypt-DES_EDE3 perl-Data-Buffer perl-Digest-SHA1 perl-Module-Install perl-File-Which perl(Crypt/URandom.pm)
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl-devel openssl perl-Convert-PEM perl-Crypt-DES_EDE3 perl-Data-Buffer perl-File-Which perl(Convert/ASN1.pm) perl(Crypt/SysRandom.pm) perl(Digest/SHA.pm) perl(Math/BigInt.pm)
 
 %description
 Crypt::DSA is an implementation of the DSA (Digital Signature Algorithm)
@@ -36,6 +37,15 @@ verification, and key generation.
 %perl_vendor_privlib/Crypt/DSA*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.24-alt1
+- new version 1.24
+- switch random source to Crypt::SysRandom (drop Crypt::URandom).
+- security fixes:
+  + CVE-2026-8700: replace rand() with a CSPRNG.
+  + CVE-2026-8704: replace two-arg open.
+  + CVE-2026-12205: generate a fresh nonce for every signature.
+  + CVE-2026-14570: fix modulo bias in key generation.
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 1.19-alt1
 - automated CPAN update
 
