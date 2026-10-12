@@ -1,11 +1,11 @@
 # TODO: fix nuget to operate offline
 %def_with prebuild
 
-%define dotnetver 9.0
+%define dotnetver 10.0
 %define _dotnet_corerelease %{dotnetver}*
 
 Name: powershell
-Version: 7.5.0
+Version: 7.6.6
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -32,7 +32,7 @@ AutoProv: no
 
 Requires: dotnet-%dotnetver
 
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 BuildRequires: dotnet-sdk-%dotnetver
 
 
@@ -158,6 +158,10 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 7.6.6-alt1
+- new version 7.6.6
+- build with .NET 10.0 (pwsh 7.6 targets net10.0)
+
 * Fri Jul 03 2026 Vitaly Lipatov <lav@altlinux.ru> 7.5.0-alt1
 - new version 7.5.0 (with rpmrb script)
 - build with .NET 9.0 (pwsh 7.5 targets net9.0)
