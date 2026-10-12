@@ -1,7 +1,7 @@
 %define pypi_name joserfc
 
 Name: python3-module-%pypi_name
-Version: 1.7.3
+Version: 1.7.5
 Release: alt1
 
 Summary: The ultimate Python library for JOSE RFCs, including JWS, JWE, JWK, JWA, JWT
@@ -34,5 +34,8 @@ The ultimate Python library for JOSE RFCs, including JWS, JWE, JWK, JWA, JWT.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- new version 1.7.5
+
 * Sat Jul 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.3-alt1
 - initial build for ALT Linux Sisyphus (dep of authlib 1.7.2)
