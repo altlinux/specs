@@ -1,5 +1,5 @@
 Name: domoticz
-Version: 2026.2
+Version: 2026.4
 Release: alt1
 
 Summary: Open source Home Automation System
@@ -8,7 +8,7 @@ License: GPLv3+ and Apache-2.0 and Boost and BSD and MIT
 Group: Other
 Url: http://www.domoticz.com
 
-# Source-url: https://github.com/domoticz/domoticz/releases/download/%version/domoticz_src_2026.18004.tar.gz
+# Source-url: https://github.com/domoticz/domoticz/releases/download/%version/domoticz_src_2026.18387.tar.gz
 Source: %name-%version.tar
 
 Source1: %name.service
@@ -16,15 +16,13 @@ Source2: %name.conf
 # Manually update version reported inside app
 Source3: %name-appversion
 
-# Fix build with jsoncpp where valueToQuotedString takes single argument
-Patch1: %name-valueToQuotedString.patch
-
 AutoReq: yes, noperl, nolua
 AutoProv: no
 
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: boost-program_options-devel boost-signals-devel boost-asio-devel
 BuildRequires: cereal-devel
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: curl-devel
 BuildRequires: fontpackages-devel
 BuildRequires: gcc-c++
@@ -64,7 +62,6 @@ any mobile device
 
 %prep
 %setup
-%patch1 -p1
 cp -p %SOURCE3 ./appversion.h
 
 %build
@@ -157,7 +154,6 @@ rm -rf %buildroot%_datadir/%name/www/templates
 ln -s %_sharedstatedir/%name/templates \
 %buildroot%_datadir/%name/www/templates
 
-
 %pre
 groupadd -f -r domoticz
 useradd -r -g domoticz -d %_datadir/%name -s /sbin/nologin \
@@ -182,6 +178,13 @@ usermod -a -G uucp domoticz || :
 %_unitdir/%name.service
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.4-alt1
+- new version 2026.4
+- drop valueToQuotedString patch (fixed upstream)
+- security fixes:
+  + GHSA-c7cm-grjm-2rph: HTTP response splitting and open redirect in OAuth2 authorize endpoint
+  + CVE-2026-75520: missing authorization on udevices command handler
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.2-alt1
 - new version 2026.2 (with rpmrb script)
 
