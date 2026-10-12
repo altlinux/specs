@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      3ebd10a7c1bd0f81742bdcd0c3fe56d727db7401
+%global commit      638bd94939c7c5b3db80756d925b4878cb288470
 %global shortcommit %(c=%commit; echo ${c:0:7})
-%global altkernel 6.18.26-talos
+%global altkernel 6.18.49-talos
 %global latest_distro_tag v11.0
 %global kubernetes_ver 1.36
 %define _libexecdir %prefix/libexec
@@ -15,7 +15,7 @@
 %endif
 
 Name: talos
-Version: 1.13.9
+Version: 1.13.11
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -210,6 +210,10 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Mon Oct 12 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.11-alt1
+- New version 1.13.11.
+- Fix build with go 1.27 via updating siderolabs/go-debug.
+
 * Wed Aug 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.9-alt1
 - New version 1.13.9.
 - Fix default image in upgrade command.
