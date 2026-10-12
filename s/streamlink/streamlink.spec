@@ -1,7 +1,7 @@
 %define srcname streamlink
 
 Name: streamlink
-Version: 8.6.1
+Version: 8.6.2
 Release: alt1
 
 Summary: Python library for extracting streams from various websites
@@ -147,6 +147,11 @@ rm -rv %buildroot%_datadir/fish
 #%license LICENSE
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.2-alt1
+- new version 8.6.2
+- security fixes:
+  + GHSA-j7pf-m7gx-jr33: arbitrary local file read via file:// URLs in DASH Location tags
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.1-alt1
 - new version 8.6.1
 
