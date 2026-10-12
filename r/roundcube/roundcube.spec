@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -141,6 +141,22 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
+- new version 1.7.4
+- fixes vulnerabilities:
+ + Fix CSS declaration smuggling via un-encoded ampersand emission
+ + Fix CSS property injection via body background attribute
+ + Fix email header injection via bare CR in the subject field
+ + Fix email header injection via C-escape \r in the recipient display name
+ + Fix email header injection via identity's organization field
+ + Fix zero-click stored XSS via TNEF MIME tag injection in the attachment URL
+ + Fix XSS in the HTML editor using text/enriched part content
+ + Fix cross-user access in contact group membership in the SQL address book
+ + Fix is_local_url() bypass via trailing-dot FQDN in stylesheet URL
+ + Fix remote content blocking bypass via CSS escapes in FuncIRI attributes
+ + Fix remote-content blocker bypass via SVG SMIL src animation
+ + Fix SSRF bypass in CSS proxy via hexadecimal IPv6-mapped IPv4 addresses
+
 * Tue Aug 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.3-alt1
 - new version (1.7.3) via gear-uupdate
 - fixes vulnerabilities:
