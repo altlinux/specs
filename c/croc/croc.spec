@@ -1,6 +1,6 @@
 # TODO : https://github.com/rust-lang/cargo/issues/7058
 Name: croc
-Version: 9.6.15
+Version: 11.5.4
 Release: alt1
 
 Summary: Easily and securely send things from one computer to another
@@ -42,12 +42,20 @@ go build -mod=vendor
 install -D -m 0755 croc %buildroot%_bindir/croc
 install -D -m 0644 croc.service %buildroot%_unitdir/croc.service
 
+%check
+# skip tests needing network (public/local IP lookup) and a pty (/dev/ptmx), absent in hasher
+go test -mod=vendor ./... -skip 'TestPublicIP|TestLocalIP|TestAttachLocalTerminalControlCStopsHost|TestTerminalExitStatusComesFromProcessWait|TestTerminalCloseReapsProcess'
+
 %files
 %doc README.md
 %_bindir/croc
 %_unitdir/croc.service
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 11.5.4-alt1
+- new version 11.5.4
+- run upstream tests
+
 * Mon Apr 08 2024 Vitaly Lipatov <lav@altlinux.ru> 9.6.15-alt1
 - new version (9.6.15) with rpmgs script
 
