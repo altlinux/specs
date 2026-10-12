@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 Summary: A python statistical library based on Pandas
 Group: Development/Python3
@@ -48,14 +48,18 @@ statistical functions.
 %pyproject_install
 
 %check
-%pyproject_run -- python3 -m pytest -v -k "not (TestRegression and test_linear_regression)"
+%pyproject_run_pytest -vra
 					
 %files
-%doc README.rst CODE_OF_CONDUCT.md LICENSE
+%doc README.rst LICENSE
 %python3_sitelibdir_noarch/%modulename
 %python3_sitelibdir_noarch/%modulename-%version.dist-info
 
 %changelog
+* Thu Oct 08 2026 Polina Poidenko <polipoki@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+- Removed CODE_OF_CONDUCT.md.
+
 * Wed Apr 22 2026 Polina Poidenko <polipoki@altlinux.org> 0.6.1-alt1
 - New version 0.6.1.
 
