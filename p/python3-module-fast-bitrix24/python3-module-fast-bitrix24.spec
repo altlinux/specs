@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.7.4
-Release: alt3
+Version: 1.8.14
+Release: alt1
 
 Summary: High-performance Python API wrapper for fast bulk data exchange with Bitrix24 via REST API.
 License: MIT
@@ -15,7 +15,6 @@ Url: https://github.com/leshchenko1979/fast_bitrix24.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -32,19 +31,13 @@ BuildRequires: python3-module-pytest-asyncio
 %endif
 
 %description
-This sphinx extension provides some useful extensions to the Sphinxs autodoc extension.
-Those are
-- It creates a Table of Contents in the style of the autosummary extension with
-methods, classes, functions and attributes
-- As you can include the __init__ method documentation for via the autoclass_content
-configuration value, we provide the autodata_content configuration value to include the
-documentation from the __call__ method
-- You can exclude the string representation of specific objects. E.g.
-if you have a large dictionary using the not_document_data configuration value.
+fast_bitrix24 is a high-performance Python wrapper for the Bitrix24 REST API.
+It provides synchronous and asynchronous clients, automatically batches and
+parallelizes requests, and includes throttling to help comply with Bitrix24
+request limits.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -60,6 +53,9 @@ if you have a large dictionary using the not_document_data configuration value.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 12 2026 Dmitry Lyalyaev <fruktime@altlinux.org> 1.8.14-alt1
+- updated from 1.7.4 to 1.8.14
+
 * Fri Feb 20 2026 Stanislav Levin <slev@altlinux.org> 1.7.4-alt3
 - NMU: fixed FTBFS (pytest 9).
 
