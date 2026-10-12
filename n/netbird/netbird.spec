@@ -1,11 +1,11 @@
 # TODO: add netbird-management, netbird-signal and netbird-relay 
 %global import_path github.com/netbirdio/netbird
 %define _unpackaged_files_terminate_build 1
-%define commit      300b6695012158bdede367738a0389a25d83cf04
+%define commit      fca64287cf51a85552a41b022013abbfdb335452
 %define shortcommit %(c=%commit; echo ${c:0:8})
 
 Name: netbird
-Version: 0.78.2
+Version: 0.80.0
 Release: alt1
 
 Summary: Mesh VPN based on WireGuard
@@ -82,6 +82,9 @@ install -dm750 %buildroot%_sharedstatedir/%name
 %dir %attr(0750,root,root) %_sharedstatedir/%name
 
 %changelog
+* Wed Oct 07 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.80.0-alt1
+- New version 0.80.0.
+
 * Tue Sep 15 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.78.2-alt1
 - New version 0.78.2.
 
