@@ -1,5 +1,5 @@
 Name: virtualsmartcard
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: Virtual Smart Card
@@ -62,5 +62,8 @@ rm -v %buildroot%python3_sitelibdir_noarch/%name/cards/nPA.py
 %config(noreplace) %_sysconfdir/reader.conf.d/vpcd
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
+- new version 0.10
+
 * Sat Mar 22 2025 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - initial build for ALT Sisyphus
