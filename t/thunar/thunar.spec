@@ -11,7 +11,7 @@
 %endif
 
 Name: thunar
-Version: 4.21.6
+Version: 4.21.7
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -30,7 +30,8 @@ BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: libxfce4panel-gtk3-devel >= 4.14.0 libxfconf-devel >= 4.12.0
 BuildRequires: libxfce4util >= 4.17.2
 BuildRequires: libxfce4ui-gtk3-devel >= 4.21.8
-BuildRequires: libSM-devel libpcre2-devel
+BuildRequires: libxfce4session-client-devel >= 4.21.2
+BuildRequires: libpcre2-devel
 BuildRequires: libgexiv2-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify-devel libgudev-devel
@@ -186,6 +187,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Oct 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.7-alt1
+- Updated to 4.21.7.
+
 * Fri Jul 17 2026 Mikhail Efremov <sem@altlinux.org> 4.21.6-alt1
 - Enabled libcanberra support.
 - Updated to 4.21.6.
