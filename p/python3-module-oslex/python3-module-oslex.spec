@@ -3,7 +3,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: OS-independent wrapper for shlex and mslex
 
@@ -15,12 +15,13 @@ BuildArch: noarch
 
 # Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
+Patch: oslex-import-mslex-lazily.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-wheel
 
-# mslex is needed only on Windows
+# mslex is imported lazily only by the *_ms (Windows-style) functions, see patch
 %add_python3_req_skip mslex
 
 %description
@@ -39,6 +40,7 @@ posixpath/ntpath.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -52,6 +54,9 @@ posixpath/ntpath.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt2
+- import mslex lazily: it is needed only by the *_ms functions (patch); do not require it
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0
 
