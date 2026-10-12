@@ -5,8 +5,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 1.6.0
-Release: alt5
+Version: 1.8.1
+Release: alt1
 Summary: Debugging manhole for python applications 
 License: BSD
 Group: Development/Python3
@@ -140,6 +140,9 @@ export TOXENV=%py3_nodot-normal-normal-nocov
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
+- New version 1.8.1.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt5
 - s/rpm-macros-sphinx/rpm-macros/sphinx3/
 
