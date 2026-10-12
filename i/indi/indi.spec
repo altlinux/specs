@@ -32,7 +32,7 @@ data acquisition, monitoring, and a lot more.
 %global soversion 2
 
 Name: indi
-Version: 2.2.4.2
+Version: 2.2.5
 Release: alt1
 
 Summary: Instrument Neutral Distributed Interface
@@ -193,6 +193,9 @@ popd
 %_libdir/lib%{name}AlignmentClient.a
 
 %changelog
+* Mon Oct 12 2026 Ulysses Apokin <ulysses@altlinux.org> 2.2.5-alt1
+- New version.
+
 * Thu Sep 10 2026 Ulysses Apokin <ulysses@altlinux.org> 2.2.4.2-alt1
 - New version.
 
