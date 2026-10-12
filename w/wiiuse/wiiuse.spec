@@ -1,15 +1,15 @@
 %define sover 0
 
 Name: wiiuse
-Version: 0.15.7
+Version: 0.16.0
 Release: alt1
 Summary: The wiiuse library is used to access and control multiple Nintendo Wiimotes
 License: GPL-3.0-or-later
 Group: System/Libraries
 Url: https://github.com/wiiuse/wiiuse
-VCS: https://github.com/wiiuse/wiiuse.git
+VCS: https://github.com/wiiuse/wiiuse
 
-Source: %url/archive/%version/wiiuse-%version.tar.gz
+Source: https://github.com/wiiuse/wiiuse/archive/%version/wiiuse-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja dos2unix
@@ -76,6 +76,9 @@ rm -rf %buildroot%_docdir/wiiuse
 %_bindir/wiiuseexample-sdl
 
 %changelog
+* Mon Oct 12 2026 Leontiy Volodin <lvol@altlinux.org> 0.16.0-alt1
+- New version 0.16.0.
+
 * Mon Mar 02 2026 Leontiy Volodin <lvol@altlinux.org> 0.15.7-alt1
 - New version 0.15.7.
 
