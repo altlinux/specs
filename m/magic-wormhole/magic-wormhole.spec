@@ -1,5 +1,5 @@
 Name:    magic-wormhole
-Version: 0.18.0
+Version: 0.24.0
 Release: alt1
 
 Summary: get things from one computer to another, safely
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-python3
 BuildRequires(pre): rpm-build-intro >= 2.1.1
 
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel python3-module-versioneer
 
 BuildArch: noarch
@@ -33,8 +33,14 @@ AutoProv:yes,nopython3
 %py3_use click
 %py3_use humanize
 %py3_use txtorcon >= 18.0.2
-%py3_use zipstream-ng
-%add_python3_req_skip iterableio
+%py3_use zipstream-ng >= 1.7.1
+%py3_use iterable-io >= 1.0.0
+%py3_use qrcode >= 8.0
+
+# for tests
+BuildRequires: python3-module-twisted-core python3-module-autobahn
+BuildRequires: python3-module-pytest python3-module-pytest-twisted python3-module-hypothesis
+BuildRequires: python3-module-noiseprotocol
 
 
 %description
@@ -66,13 +72,53 @@ rm -rv %buildroot%python3_sitelibdir/wormhole/test/
 # TODO
 rm -v %buildroot/usr/wormhole_complete.*
 
+%check
+# the full test suite needs magic-wormhole-mailbox-server and
+# magic-wormhole-transit-relay (not packaged): conftest.py can't be loaded,
+# so run the self-contained tests only, skipping the ones using its fixtures
+%pyproject_run_pytest -v --noconftest -p no:cacheprovider \
+    --deselect src/wormhole/test/test_machines.py::test_unknown_phase \
+    --deselect src/wormhole/test/dilate/test_api.py::test_on_status_error \
+    --deselect src/wormhole/test/dilate/test_api.py::test_dilation_status \
+    --deselect src/wormhole/test/dilate/test_inbound.py::test_open_data_close \
+    src/wormhole/test/test_hints.py \
+    src/wormhole/test/test_hkdf.py \
+    src/wormhole/test/test_ipaddrs.py \
+    src/wormhole/test/test_journal.py \
+    src/wormhole/test/test_keys.py \
+    src/wormhole/test/test_machines.py \
+    src/wormhole/test/test_observer.py \
+    src/wormhole/test/test_rlcompleter.py \
+    src/wormhole/test/test_ssh.py \
+    src/wormhole/test/test_tor_manager.py \
+    src/wormhole/test/test_util_attrs_zope.py \
+    src/wormhole/test/test_util.py \
+    src/wormhole/test/test_wordlist.py \
+    src/wormhole/test/dilate/test_api.py \
+    src/wormhole/test/dilate/test_connect.py \
+    src/wormhole/test/dilate/test_encoding.py \
+    src/wormhole/test/dilate/test_framer.py \
+    src/wormhole/test/dilate/test_inbound.py \
+    src/wormhole/test/dilate/test_parse.py \
+    src/wormhole/test/dilate/test_record.py \
+    src/wormhole/test/dilate/test_traffic_timing.py \
+    src/wormhole/test/dilate/test_version.py
+
 %files
 %_bindir/wormhole
+%_bindir/magic-wormhole
 #_bindir/wormhole-server
 %python3_sitelibdir/wormhole/
-%python3_sitelibdir/*.*-info
+%python3_sitelibdir/%{pyproject_distinfo magic-wormhole}/
 
 %changelog
+* Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.24.0-alt1
+- new version 0.24.0.
+- security fixes:
+  + CVE-2026-42448: fix path traversal when receiving into an existing output directory.
+- Require upstream zipstream-ng, iterable-io, qrcode versions; stop hiding iterable-io.
+- Run the self-contained part of the test suite in %%check.
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.18.0-alt1
 - new version 0.18.0
 - drop zipstream-ng version requirement (1.5.0 available in repo)

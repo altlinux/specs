@@ -4,7 +4,7 @@
 %def_enable check
 
 Name:    python3-module-zipstream-ng
-Version: 1.5.0
+Version: 1.9.3
 Release: alt1
 
 Summary: A modern and easy to use streamable zip file generator.
@@ -13,8 +13,7 @@ Group:   Development/Python3
 URL:     https://github.com/pR0Ps/zipstream-ng.git
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 %if_enabled check
 BuildRequires: python3-module-tox
@@ -60,6 +59,10 @@ EOF
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
+- NMU: new version 1.9.3.
+- Build with hatchling (upstream switched from setuptools).
+
 * Fri May 12 2023 Danil Shein <dshein@altlinux.org> 1.5.0-alt1
 - new version 1.5.0
 
