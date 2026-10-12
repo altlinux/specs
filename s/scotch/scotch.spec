@@ -12,7 +12,7 @@
 %define sover 7.0
 
 Name: scotch
-Version: 7.0.16
+Version: 7.0.17
 Release: alt1
 
 Summary: Package and libraries for sequential and parallel graph partitioning
@@ -22,10 +22,8 @@ Group: Sciences/Mathematics
 URL: http://www.labri.fr/perso/pelegrin/scotch
 VCS: https://gitlab.inria.fr/scotch/scotch
 
-# Source-url: %vcs/-/archive/v%version/%name-v%version.tar.gz
 Source: %name-%version.tar
-
-Patch: disable-scotchmetisv3.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-fortran libgfortran-devel bison flex cmake
@@ -250,6 +248,10 @@ export OMPI_MCA_plm_rsh_agent=false OMPI_MCA_btl=^tcp
 %_datadir/%name/tgt
 
 %changelog
+* Mon Oct 12 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.17-alt1
+- New version 7.0.17.
+- Switch to build from Gear tags.
+
 * Wed Sep 30 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.16-alt1
 - New version 7.0.16.
 
