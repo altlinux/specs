@@ -14,7 +14,7 @@
 
 Name: gnome-games-%_name
 Version: %ver_major.35
-Release: alt2
+Release: alt2.1
 
 Summary: A collection of card games
 Group: Games/Cards
@@ -39,7 +39,7 @@ Requires: pysol-cardsets
 %define glib_ver 2.32.0
 %define gtk_ver 3.18.0
 # guile-3.0 also supported but /usr/bin/guile points to guile22
-%define guile_ver 22
+%define guile_ver 30
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: /proc meson gcc-c++ yelp-tools
@@ -88,6 +88,10 @@ which are easy to play with the aid of a mouse.
 %exclude %_libdir/valgrind/aisleriot.supp
 
 %changelog
+* Sat Oct 10 2026 Yuri N. Sedunov <aris@altlinux.org> 3.22.35-alt2.1
+- updated to 3.22.35-39-g51e1d770
+- built with guile30
+
 * Sat Jan 24 2026 Yuri N. Sedunov <aris@altlinux.org> 3.22.35-alt2
 - updated to 3.22.35-27-gf06e69fc
 - disabled obsolete kde5 card themes support (ALT #57630),
