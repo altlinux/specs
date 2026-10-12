@@ -1,10 +1,11 @@
 %define rname reportlab
+%define pypi_name reportlab
 %define oname Reportlab
 
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.4.10
+Version: 5.0.1
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -13,6 +14,7 @@ License: BSD license (see LICENSE.txt for details)
 Group: Development/Python3
 Url: https://pypi.org/project/reportlab
 
+# Source-url: %__pypi_url %pypi_name
 Source: reportlab-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx3
@@ -71,6 +73,9 @@ popd
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt1
+- new version 5.0.1
+
 * Tue Feb 17 2026 Grigory Ustinov <grenka@altlinux.org> 4.4.10-alt1
 - Build new version.
 
