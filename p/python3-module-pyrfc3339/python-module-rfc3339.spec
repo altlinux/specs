@@ -1,7 +1,7 @@
 %define pypi_name pyrfc3339
 
 Name: python3-module-pyrfc3339
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Generate and parse RFC 3339 timestamps
@@ -41,6 +41,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version (2.1.0) via gear-uupdate
 - switch to pyproject_build
