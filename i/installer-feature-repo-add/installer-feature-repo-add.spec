@@ -1,5 +1,5 @@
 Name: installer-feature-repo-add
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Add the installation media to APT configuration
@@ -29,6 +29,9 @@ Conflicts: alterator-pkg < 2.6.18-alt1
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Oct 13 2026 Anton Midyukov <antohami@altlinux.org> 0.4.3-alt1
+- Mount with option 'utf8' iso and udf filesystems only.
+
 * Mon Aug 24 2026 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt1
 - Do not filter USB CD-ROM.
 
