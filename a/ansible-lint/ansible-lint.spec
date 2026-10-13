@@ -1,5 +1,5 @@
 Name: ansible-lint
-Version: 26.9.0
+Version: 26.10.0
 Release: alt1
 
 Summary: Best practices checker for Ansible
@@ -58,6 +58,9 @@ echo "ref-names: tag: v%version" > .git_archival.txt
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.10.0-alt1
+- New version.
+
 * Wed Sep 23 2026 Andrey Cherepanov <cas@altlinux.org> 26.9.0-alt1
 - New version.
 
