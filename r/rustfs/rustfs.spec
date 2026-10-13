@@ -1,16 +1,21 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Name: rustfs
 Version: 1.0.0
-Release: alt2.beta.8
-Summary: High-performance distributed object storage for MinIO alternative
+Release: alt3
+Summary: Open-source S3-compatible high-performance object storage
 Group: System/Servers
 License: Apache-2.0
-Url: https://github.com/rustfs/rustfs
+Url: https://rustfs.com
+Vcs: https://github.com/rustfs/rustfs.git
 ExcludeArch: i586
-Source0: %name-%version.tar
-Source1: rustfs
-Source2: rustfs.service
+
+Source: %name-%version.tar
+Source1: vendor.tar
+Source2: %name-console.tar
+Source3: %name.env
+Source4: %name.service
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -22,35 +27,34 @@ BuildRequires: cmake rust-bindgen clang-devel
 %endif
 
 %description
-RustFS is a high-performance distributed object storage software built
-using Rust, one of the most popular languages worldwide. Along with MinIO,
-it shares a range of advantages such as simplicity, S3 compatibility,
-open-source nature, support for data lakes, AI, and big data. Furthermore,
-it has a better and more user-friendly open-source license in comparison
-to other storage systems, being constructed under the Apache license.
-As Rust serves as its foundation, RustFS provides faster speed and safer
-distributed features for high-performance object storage.
+RustFS is an open-source, S3-compatible high-performance object storage
+system supporting migration and coexistence with other S3-compatible
+platforms such as MinIO and Ceph.
+
+It has a scalable and fault-tolerant distributed architecture suitable
+for large-scale deployments and is optimized for data lakes, AI and big
+data workloads.
 
 %prep
-%setup
+%setup -a1
+tar -xf %SOURCE2 -C rustfs/static --strip-components=1
 %rust_prep
 
 %build
-RUSTFLAGS="--cfg tokio_unstable" %rust_build -p %name
+%rust_build -p %name
 
 %install
 %rust_install
 
-mkdir -p -- \
-    %buildroot%_sharedstatedir/%name \
-    %buildroot%_logdir/%name
+mkdir -p %buildroot%_sharedstatedir/%name
 
-install -pD %SOURCE1 %buildroot%_sysconfdir/%name/%name
-install -pD -m644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pD %SOURCE3 %buildroot%_sysconfdir/%name/%name
+install -pD -m644 %SOURCE4 %buildroot%_unitdir/%name.service
 
 %pre
-groupadd -r -f _%name > /dev/null 2>&1 ||:
-useradd -r -g _%name -M -d %_sharedstatedir/%name -s /dev/null _%name > /dev/null 2>&1 ||:
+groupadd -r -f _%name ||:
+useradd -r -g _%name -c 'RustFS object storage' \
+	-d %_sharedstatedir/%name -s /dev/null _%name >/dev/null 2>&1 ||:
 
 %post
 %post_systemd %name.service
@@ -59,16 +63,19 @@ useradd -r -g _%name -M -d %_sharedstatedir/%name -s /dev/null _%name > /dev/nul
 %preun_systemd %name.service
 
 %files
-%doc LICENSE
-%doc *.md
+%doc LICENSE README.md CHANGELOG.md
 %dir %_sysconfdir/%name
 %config(noreplace) %attr(640, root, _%name) %_sysconfdir/%name/%name
 %dir %attr(770, root, _%name) %_sharedstatedir/%name
-%dir %attr(770, root, _%name) %_logdir/%name
 %_unitdir/%name.service
 %_bindir/%name
 
 %changelog
+* Thu Oct 01 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.0-alt3
+- new version (first stable release)
+- update the web console to v0.1.27
+- sync the systemd unit with upstream
+
 * Wed Jun 24 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.0.0-alt2.beta.8
 - new version
 
