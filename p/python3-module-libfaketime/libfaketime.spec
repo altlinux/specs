@@ -3,7 +3,7 @@
 
 Name: python3-module-libfaketime
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: A fast alternative to freezegun that wraps libfaketime
 
@@ -13,6 +13,8 @@ Url: https://pypi.org/project/libfaketime/
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+# find system libfaketime at run time (noarch: lib64 or lib)
+Patch: python3-module-libfaketime-system-lib-path.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -32,8 +34,7 @@ python-libfaketime is a wrapper of libfaketime for python. Some brief details:
 
 %prep
 %setup
-# use system library
-subst "s|: _get_lib_path()|: '%_libdir/faketime'|" libfaketime/__init__.py
+%patch -p1
 # do not build the bundled libfaketime (FTBFS with gcc 15), use system library
 subst 's|cmdclass={"install": CustomInstall},||' setup.py
 
@@ -54,6 +55,10 @@ rm -rv %buildroot%python3_sitelibdir/libfaketime/vendor/
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt2
+- find system libfaketime at run time (fix noarch package and
+  python-libfaketime command on 32-bit arches)
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - new version 3.0.1
 
