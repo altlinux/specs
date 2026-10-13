@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.14.0
+Version: 2.15.0
 Release: alt1
 
 Summary: Python style guide checker
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -49,13 +50,15 @@ mv %buildroot%_bindir/pycodestyle{,.py3}
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.*
 %_bindir/pycodestyle.py3
 %python3_sitelibdir/pycodestyle.py
 %python3_sitelibdir/__pycache__/pycodestyle.cpython-*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 07 2026 Stanislav Levin <slev@altlinux.org> 2.15.0-alt1
+- 2.14.0 -> 2.15.0
+
 * Mon Jun 23 2025 Stanislav Levin <slev@altlinux.org> 2.14.0-alt1
 - 2.13.0 -> 2.14.0.
 
