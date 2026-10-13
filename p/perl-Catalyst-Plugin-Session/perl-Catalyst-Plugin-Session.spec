@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Test/Needs.pm)
+BuildRequires: perl(Test/Needs.pm) perl(Crypt/SysRandom.pm)
 # END SourceDeps(oneline)
 #
 #   - Catalyst::Plugin::Session -
@@ -15,7 +15,7 @@ BuildRequires: perl(Test/Needs.pm)
 %def_enable test
 
 Name: perl-Catalyst-Plugin-Session
-Version: 0.43
+Version: 0.44
 Release: alt1
 
 Summary: %m_name - Generic Session plugin - ties together server side
@@ -51,6 +51,11 @@ applications.
 %doc Changes README
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.44-alt1
+- NMU: new version 0.44.
+- security fixes:
+  + CVE-2025-40924: session ids generated insecurely.
+
 * Fri Jun 03 2022 Igor Vlasenko <viy@altlinux.org> 0.43-alt1
 - automated CPAN update
 

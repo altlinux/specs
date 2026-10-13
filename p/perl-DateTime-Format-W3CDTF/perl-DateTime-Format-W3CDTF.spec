@@ -4,8 +4,8 @@ BuildRequires: perl(DateTime/Locale.pm)
 %define _unpackaged_files_terminate_build 1
 %define dist DateTime-Format-W3CDTF
 Name: perl-%dist
-Version: 0.08
-Release: alt2
+Version: 0.09
+Release: alt1
 
 Summary: Parse and format W3CDTF datetime strings
 License: GPL or Artistic
@@ -38,6 +38,9 @@ date format of RSS 1.0.
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.09-alt1
+- NMU: new version 0.09.
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.08-alt2
 - fixed build
 

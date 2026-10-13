@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define dist CPAN-Meta
 Name: perl-%dist
-Version: 2.150010
-Release: alt3
+Version: 2.150015
+Release: alt1
 
 Summary: The distribution metadata for a CPAN dist
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/CPAN-Meta-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/CPAN-Meta-%{version}.tar.gz
 
 BuildArch: noarch
 
-BuildRequires: perl-CPAN-Meta-Requirements perl-Test-Script perl(Encode.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/PP.pm)
+BuildRequires: perl-CPAN-Meta-Requirements >= 2.145 perl-Test-Script perl(Encode.pm) perl(CPAN/Meta/YAML.pm) perl(JSON/PP.pm)
 %if_without bootstrap
 #BuildRequires: perl-Parse-CPAN-Meta
 %endif
@@ -56,6 +56,9 @@ using JSON::PP and/or CPAN::Meta::YAML.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.150015-alt1
+- NMU: new version 2.150015.
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 2.150010-alt3
 - fixed self-br thanks to rider@
 
