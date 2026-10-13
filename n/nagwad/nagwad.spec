@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.10
+Version:  0.11.11
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -270,6 +270,10 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Tue Oct 13 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.11-alt1
+- Version 0.11.11.
+- Added new 'avc' check and alert ("SELinux security alert").
+
 * Wed Oct 16 2024 Paul Wolneykien <manowar@altlinux.org> 0.11.10-alt1
 - Replace "notes" field with "display_name" in Icinga JSON conf.
 - Fix: Don't print boot ID in CLI mode.
