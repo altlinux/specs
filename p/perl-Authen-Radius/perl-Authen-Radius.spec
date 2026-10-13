@@ -5,7 +5,7 @@
 %define dist_name RadiusPerl
 
 Name: perl-Authen-Radius
-Version: 0.33
+Version: 0.37
 Release: alt1
 
 Summary: provide simple Radius client facilities
@@ -17,6 +17,7 @@ URL: http://search.cpan.org/~manowar/RadiusPerl/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
+# Source-url: https://www.cpan.org/authors/id/P/PO/PORTAONE/%real_name-%version.tar.gz
 Source: %real_name-%version.tar
 
 BuildArch: noarch
@@ -28,7 +29,7 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 
 # Automatically added by buildreq on Sat Jan 21 2017
 # optimized out: perl perl-Devel-StackTrace perl-Encode perl-Math-BigInt perl-devel python-base python-modules python3-base
-BuildRequires: perl-Data-HexDump perl-Net-IP perl-Test-NoWarnings
+BuildRequires: perl-Data-HexDump perl-Net-IP perl-Test-NoWarnings perl-Test-MockModule
 
 %description
 Perl module Authen::Raduis allows you to communicate with a Radius
@@ -53,6 +54,11 @@ response.
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.37-alt1
+- NMU: new version 0.37.
+- security fixes:
+  + CVE-2024-3596: send Message-Authenticator by default (Blast-RADIUS mitigation).
+
 * Mon Nov 03 2025 Nikolay A. Fetisov <naf@altlinux.org> 0.33-alt1
 - New version
 

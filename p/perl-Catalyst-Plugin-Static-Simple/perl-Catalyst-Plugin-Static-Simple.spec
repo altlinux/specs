@@ -12,7 +12,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-Static-Simple
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: %m_name - Make serving static pages painless
@@ -24,7 +24,7 @@ Url: http://search.cpan.org/dist/Catalyst-Plugin-Static-Simple/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/I/IL/ILMARI/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETHER/%{module}-%{version}.tar.gz
 
 BuildPreReq: perl-version
 # Automatically added by buildreq on Tue Apr 20 2010 (-bi)
@@ -50,6 +50,9 @@ without requiring a single line of code from you.
 %doc Changes
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.38-alt1
+- NMU: new version 0.38.
+
 * Sun May 16 2021 Igor Vlasenko <viy@altlinux.org> 0.37-alt1
 - automated CPAN update
 

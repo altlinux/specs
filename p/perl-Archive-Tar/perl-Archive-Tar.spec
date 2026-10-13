@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Archive-Tar
 Name: perl-%dist
-Version: 3.04
+Version: 3.14
 Release: alt1
 
 Summary: Module for creation and manipulation of tar archives
@@ -37,6 +37,13 @@ allowing for the creation of tar file objects for custom manipulation.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.14-alt1
+- NMU: new version 3.14.
+- security fixes:
+  + CVE-2026-9538: memory exhaustion via attacker controlled entry size field.
+  + CVE-2026-42496: symlinks extracted with targets outside the extraction directory.
+  + CVE-2026-42497: hardlinks extracted to paths outside the extraction directory.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 3.04-alt1
 - automated CPAN update
 
