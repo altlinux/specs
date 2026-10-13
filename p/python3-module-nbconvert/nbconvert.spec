@@ -9,8 +9,8 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.17.1
-Release: alt2
+Version: 7.17.2
+Release: alt1
 
 Summary: Converting Jupyter Notebooks
 
@@ -108,6 +108,9 @@ export JUPYTER_PATH=%buildroot%_datadir/jupyter
 %endif
 
 %changelog
+* Tue Oct 13 2026 Anton Vyatkin <toni@altlinux.org> 7.17.2-alt1
+- New version 7.17.2.
+
 * Sun Oct 04 2026 Anton Vyatkin <toni@altlinux.org> 7.17.1-alt2
 - Fixed FTBFS (nest-asyncio).
 
