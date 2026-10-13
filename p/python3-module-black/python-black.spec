@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 26.10.0
+Version: 26.10.1
 Release: alt1
 Summary: The Uncompromising Code Formatter
 License: MIT
@@ -89,6 +89,9 @@ Black makes code review faster by producing the smallest diffs possible.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 26.10.1-alt1
+- 26.10.0 -> 26.10.1
+
 * Mon Oct 05 2026 Stanislav Levin <slev@altlinux.org> 26.10.0-alt1
 - 26.5.1 -> 26.10.0
 
