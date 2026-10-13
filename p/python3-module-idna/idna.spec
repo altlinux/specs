@@ -1,29 +1,44 @@
-%define oname idna
+%define _unpackaged_files_terminate_build 1
+%define pypi_name idna
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 3.18
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 3.20
 Release: alt1
-
-Summary: A library to support the Internationalised Domain Names in Applications (IDNA)
-
+Summary: Internationalized Domain Names in Applications (IDNA)
 License: BSD
 Group: Development/Python3
-Url: https://github.com/kjd/idna
-
-Source: %oname-%version.tar
+Url: https://pypi.org/project/idna/
+Vcs: https://github.com/kjd/idna
 BuildArch: noarch
-
-BuildRequires: rpm-build-python3
-BuildRequires: python3-module-flit
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
-A library to support the Internationalised Domain Names in Applications (IDNA)
-protocol as specified in RFC 5891. This version of the protocol is often referred
-to as "IDNA2008" and can produce different results from the earlier standard from 2003.
+Support for Internationalized Domain Names in Applications (IDNA) and
+Unicode IDNA Compatibility Processing. It supersedes the standard
+library's encodings.idna, which only implements the 2003 specification,
+offering broader script coverage and limiting domains with known
+security vulnerabilities.
 
 %prep
-%setup -n %oname-%version
-
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+# see .github/workflows/python-package.yml
+%pyproject_deps_resync_check_pipreqfile .github/requirements/test.in
+%endif
 
 %build
 %pyproject_build
@@ -31,12 +46,18 @@ to as "IDNA2008" and can produce different results from the earlier standard fro
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest -vra
+
 %files
 %_bindir/idna
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-*.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 09 2026 Stanislav Levin <slev@altlinux.org> 3.20-alt1
+- 3.18 -> 3.20
+
 * Thu Jun 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 3.18-alt1
 - NMU: new version
 
