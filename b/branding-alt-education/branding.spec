@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt3
+Release: alt4
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -463,6 +463,11 @@ fi
 %_datadir/branding-%flavour/xdg-data/
 
 %changelog
+* Tue Oct 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt4
+- Highlight the module link with keyboard focus on the main page
+  of the classic control center (Closes: 60963).
+- Show the boot menu hint in the chosen boot language, not always in Russian.
+
 * Thu Oct 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt3
 - Fix the "from simple to complex" typo on a Russian slide (Closes: 59611).
 - Spell the company name BaseALT on the English slides
