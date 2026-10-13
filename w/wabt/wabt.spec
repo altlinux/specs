@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: wabt
-Version: 1.0.41
+Version: 1.0.42
 Release: alt1
 Summary: The WebAssembly Binary Toolkit
 License: Apache-2.0
@@ -24,6 +24,7 @@ Source8: wasm-c-api-0.tar
 BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: python3
 BuildRequires: openssl-devel
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc
@@ -84,7 +85,6 @@ sed -i 's/run-tests\.py/& --timeout=600/' CMakeLists.txt
 %_bindir/spectest-interp
 %_bindir/wasm2c
 %_bindir/wasm2wat
-%_bindir/wasm-decompile
 %_bindir/wasm-interp
 %_bindir/wasm-objdump
 %_bindir/wasm-stats
@@ -103,6 +103,9 @@ sed -i 's/run-tests\.py/& --timeout=600/' CMakeLists.txt
 %_cmakedir/%name
 
 %changelog
+* Tue Oct 13 2026 Sergey Zhidkih <rx1513@altlinux.org> 1.0.42-alt1
+- Update to 1.0.42 (2026-09-15).
+
 * Mon Jun 29 2026 Sergey Zhidkih <rx1513@altlinux.org> 1.0.41-alt1
 - Update to 1.0.41 (2026-05-06).
 
