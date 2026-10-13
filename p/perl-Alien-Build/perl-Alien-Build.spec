@@ -11,7 +11,7 @@ Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 #BuildRequires: perl(FFI/Platypus.pm) perl(PkgConfig.pm)
-BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) perl(Mojo/JSON.pm) perl(Mojo/URL.pm) perl(Mojolicious/Lite.pm) perl(Net/SSLeay.pm) perl(Proc/Daemon.pm) perl(autodie.pm) perl-podlators cmake
+BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) perl(Mojo/JSON.pm) perl(Mojo/URL.pm) perl(Mojolicious/Lite.pm) perl(Net/SSLeay.pm) perl(Proc/Daemon.pm) perl(autodie.pm) perl-podlators rpm-build-cmake
 # END SourceDeps(oneline)
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -25,7 +25,7 @@ BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) p
 %{bcond_without perl_Alien_Build_enables_optional_test}
 
 Name:           perl-Alien-Build
-Version:        2.84
+Version:        2.88
 Release:        alt1
 Summary:        Build external dependencies for use in CPAN
 License:        GPL+ or Artistic
@@ -156,6 +156,11 @@ Requires:       perl(Text/ParseWords.pm) >= 3.260
 # YAML or Data::Dumper
 Requires:       perl(YAML.pm)
 Requires:       wget
+# share-phase plugins add_requires() these lazily, autodeps do not see them
+Requires:       perl(URI.pm)
+Requires:       perl(URI/Escape.pm)
+Requires:       perl(URI/file.pm)
+Requires:       perl(Sort/Versions.pm)
 # Alien::Base::PkgConfig moved from perl-Alien-Base-ModuleBuild
 Conflicts:      perl-Alien-Base-ModuleBuild < 1.00
 
@@ -189,6 +194,8 @@ perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
 make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 %check
+# test corpus has cmake_minimum_required < 3.5
+export CMAKE_POLICY_VERSION_MINIMUM=3.5
 make test
 
 %files
@@ -197,6 +204,11 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.88-alt1
+- new version 2.88
+- add Requires on perl(URI), URI::Escape, URI::file and Sort::Versions needed by share plugins
+- fix %%check with cmake 4 (CMAKE_POLICY_VERSION_MINIMUM)
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.84-alt1
 - automated CPAN update
 

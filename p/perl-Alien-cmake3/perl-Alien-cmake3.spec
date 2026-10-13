@@ -7,12 +7,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Alien-cmake3
-Version:        0.09
+Version:        0.10
 Release:        alt1
 Summary:        Find or download or build cmake 3 or better
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Alien-cmake3
 Source0:        http://www.cpan.org/authors/id/P/PL/PLICEASE/Alien-cmake3-%{version}.tar.gz
+Patch0:         Alien-cmake3-alt-use-system-cmake4.patch
 # This is an Alien::Build plugin, it stores data about architecture specific
 # files, therefore this an architecture specific package, yet there is no XS
 # code, so debuginfo generation and dependency on perl-devel is disabled.
@@ -31,7 +32,7 @@ BuildRequires:  perl(Path/Tiny.pm)
 BuildRequires:  perl(strict.pm)
 BuildRequires:  perl(warnings.pm)
 # Run-time:
-BuildRequires:  ctest cmake
+BuildRequires:  ctest rpm-build-cmake
 BuildRequires:  perl(Alien/Base.pm)
 BuildRequires:  perl(base.pm)
 # Tests:
@@ -51,6 +52,7 @@ cmake version 3.0.0 or better.
 
 %prep
 %setup -q -n Alien-cmake3-%{version}
+%patch0 -p1
 
 %build
 unset ALIEN_CMAKE_FROM_SOURCE
@@ -70,6 +72,10 @@ make test
 %{perl_vendor_archlib}/Alien*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
+- new version 0.10
+- Use the system cmake 4.x instead of downloading cmake (fix FTBFS).
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
 - automated CPAN update
 
