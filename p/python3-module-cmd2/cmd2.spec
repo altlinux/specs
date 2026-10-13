@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.2.4
+Version: 4.3.0
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -39,6 +39,9 @@ BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-rich
 BuildRequires: python3-module-rich-argparse
 BuildRequires: python3-module-prompt_toolkit
+BuildRequires: python3-module-pyte
+BuildRequires: /dev/pts
+BuildRequires: /proc
 %endif
 
 %description
@@ -117,6 +120,9 @@ export TERM=xterm-256color
 %endif
 
 %changelog
+* Tue Oct 13 2026 Anton Vyatkin <toni@altlinux.org> 4.3.0-alt1
+- New version 4.3.0.
+
 * Mon Oct 05 2026 Anton Vyatkin <toni@altlinux.org> 4.2.4-alt1
 - New version 4.2.4.
 
