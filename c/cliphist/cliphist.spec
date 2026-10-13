@@ -1,7 +1,7 @@
 %global   import_path go.senan.xyz/cliphist
 
 Name:     cliphist
-Version:  0.6.1
+Version:  0.7.0
 Release:  alt1
 
 Summary:  Wayland clipboard manager with support for multimedia
@@ -71,6 +71,9 @@ done
 %_bindir/%name-wofi-img
 
 %changelog
+* Tue Oct 13 2026 Roman Alifanov <ximper@altlinux.org> 0.7.0-alt1
+- new version 0.7.0
+
 * Thu Oct 17 2024 Roman Alifanov <ximper@altlinux.org> 0.6.1-alt1
 - new version 0.6.1 (with rpmrb script)
 - pack cliphist-rofi-img and cliphist-wofi-img
