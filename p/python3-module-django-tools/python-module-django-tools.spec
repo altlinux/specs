@@ -2,29 +2,24 @@
 %define modname django_tools
 
 Name: python3-module-django-tools
-Version: 0.48.3
-Release: alt2
+Version: 0.59.0
+Release: alt1
 
 Summary: Miscellaneous tools for django
 
-License: GPLv2
+License: GPL-3.0-or-later
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/django-tools
+Url: https://pypi.org/project/django-tools
 
-# package from pypi missed django_tools_test_project, but it is prepared to build without poetry
-# Source-url: https://github.com/jedie/django-tools/archive/refs/tags/v%version.tar.gz
-# Source-url: %__pypi_url %oname
+# upstream git: https://github.com/jedie/django-tools
+# Source-url: %__pypi_url %modname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-module-django
-
-# missed in a module from pypi
-%add_python3_req_skip django_tools_test_project.django_tools_test_app.models
+BuildRequires: python3(hatchling)
 
 %description
 Miscellaneous tools for django.
@@ -43,29 +38,31 @@ This package contains tests for %oname.
 
 %prep
 %setup
-# need only for developing and tests
-rm -v %modname/publish.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
-# strange tools
-rm -v %buildroot%_bindir/{dev_server,publish,update_rst_readme}
+%pyproject_install
+# test project for upstream development only
+rm -v %buildroot%_bindir/django_tools_project
+rm -rv %buildroot%python3_sitelibdir/django_tools_project/
+# tests need the test project above
+find %buildroot%python3_sitelibdir/%modname -depth -type d -name tests -exec rm -rv {} +
 
 %files
-%python3_sitelibdir/%modname
-%python3_sitelibdir/*.egg-info
-#exclude %python3_sitelibdir/%modname/unittest_utils/
-#exclude %python3_sitelibdir/%modname/selenium/
-
-#files tests
-#python3_sitelibdir/%modname/unittest_utils/
+%doc README.md
+%python3_sitelibdir/%modname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.59.0-alt1
+- new version 0.59.0
+- switch to pyproject build (hatchling)
+- fix License (GPL-3.0-or-later)
+- drop the development test project from the package
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 0.48.3-alt2
 - switch to build from tarball, real build 0.48.3
 
