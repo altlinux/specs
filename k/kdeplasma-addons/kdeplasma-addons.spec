@@ -16,7 +16,7 @@
 
 Name: %rname
 Version: 6.7.5
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -232,6 +232,9 @@ touch touch-%_arch
 
 
 %changelog
+* Tue Oct 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt2
+- update word-filter.patch
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 
