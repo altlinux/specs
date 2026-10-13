@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: picard
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: MusicBrainz-based audio tagger
 License: GPL-2.0-or-later
@@ -17,6 +17,7 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: desktop-file-utils
 BuildRequires: gettext
+BuildRequires: libdiscid-devel
 %if_enabled check
 BuildRequires: python3(dateutil)
 BuildRequires: python3(fasteners)
@@ -34,6 +35,7 @@ BuildRequires: xvfb-run
 %add_python3_req_skip AppKit MediaPlayer
 
 Requires: hicolor-icon-theme
+Requires: python3(pygit2)
 
 %description
 Picard is an audio tagging application using data from the MusicBrainz
@@ -56,8 +58,6 @@ desktop-file-install \
   --dir=%buildroot%_datadir/applications      \
   %buildroot%_datadir/applications/*
 
-# rm -r %buildroot%_datadir/locale/{es_419,zh-Hans,zh_Hans,zh_Hant}
-
 %find_lang %name
 %find_lang %name-attributes
 %find_lang %name-constants
@@ -77,6 +77,9 @@ cat %name-attributes.lang %name-constants.lang %name-countries.lang >> %name.lan
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Tue Oct 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.0.2-alt1
+- release-3.0.2
+
 * Thu Oct 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.0.1-alt1
 - release-3.0.1
 
