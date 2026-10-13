@@ -11,7 +11,7 @@
 
 Name: %rname
 Version: 26.04.3
-Release: alt1
+Release: alt1.1
 #Epoch: 0
 %K6init no_altplace
 
@@ -33,6 +33,7 @@ Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 # upstream
 # FC
 Patch31: calligra-gcc11.patch
+Patch32: calligra-okular-26.08-plugin-export.patch
 # SuSE
 # ALT
 Patch102: alt-find-ooo-sdk.patch
@@ -58,7 +59,7 @@ BuildRequires: kf6-kcontacts-devel
 BuildRequires: qt6-phonon-devel libqca-qt6-devel libpoppler-qt6-devel
 BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libGLEW-devel libgsl-devel libicu-devel libjpeg-devel libopenjpeg2.0-devel libtiff-devel pstoedit
 BuildRequires: liblcms2-devel libmysqlclient-devel
-BuildRequires: libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
+BuildRequires: libsqlite3-devel sqlite3 openexr-devel postgresql-devel
 BuildRequires: libvisio-devel libwpg-devel libwpd10-devel libwps-devel libodfgen-devel libetonyek-devel libxml2-devel
 BuildRequires: libdrm-devel libpng-devel libexpat-devel libspnav-devel
 BuildRequires: plasma6-activities-devel
@@ -188,6 +189,7 @@ Conflicts: calligra-okular-generators < 20
 %setup
 #
 %patch31 -p1
+%patch32 -p1
 #
 %patch102 -p1
 %patch103 -p1
@@ -431,6 +433,10 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 26.04.3-alt1.1
+- NMU: drop unused libxbase-devel from BuildRequires (xbase is being removed)
+- NMU: fix build with okular 26.08 (upstream patch)
+
 * Thu Jul 02 2026 Sergey V Turchin <zerg@altlinux.org> 26.04.3-alt1
 - new version
 
