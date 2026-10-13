@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-asar
-Version: 3.1.0
+Version: 4.3.1
 Release: alt1
 
 Summary: Simple extensive tar-like archive format with indexing
@@ -18,18 +18,18 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/electron/asar/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-#Source1: %name-preloaded-%version.tar
+Source1: %name-development-%version.tar
 Source2: %name-production-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 1.9.18
 
-BuildRequires: rpm-build-nodejs node
+BuildRequires: rpm-build-nodejs node >= 22.12.0
+BuildRequires: /usr/bin/tsc
 BuildRequires(pre): rpm-macros-nodejs
 
-Requires: node >= 8
-# rpm-build-nodejs
+Requires: node >= 22.12.0
 
 Provides: nodejs-%node_module = %version-%release
 Obsoletes: nodejs-%node_module < %version
@@ -38,7 +38,6 @@ Obsoletes: %node_module < %version
 
 AutoReq: no
 AutoProv: no
-Requires: node
 
 %description
 Asar is a simple extensive archive format,
@@ -47,27 +46,34 @@ together without compression,
 while having random access support.
 
 %prep
-%setup -a 2
+%setup -a 1
+# upstream sets the version only at npm publish (semantic-release)
+sed -i 's|"version": "0.0.0-development"|"version": "%version"|' package.json
+grep -F '"version": "%version"' package.json
 
 %build
-
-# do not work without development requires
-# and needs xvfb-maybe
-#%check
-#npm test
+# compile TypeScript sources (src/*.ts -> lib/*.js) with the system tsc
+# (the types from tsconfig.json come from the vendored development node_modules)
+tsc
+# replace the build tree node_modules with the production one
+rm -r node_modules
+tar xf %SOURCE2
 
 %install
-# replace node_modules with got after npm install --production
-#rm -rf node_modules
-#tar xf %SOURCE2
-
 mkdir -p %buildroot%nodejs_sitelib/%node_module/
 chmod a+x bin/*
 cp -rp bin lib node_modules package.json %buildroot/%nodejs_sitelib/%node_module
 
 mkdir -p %buildroot%_bindir/
-#ln -s %nodejs_sitelib/%node_module/bin/asar.js %buildroot%_bindir/asar
-%_ln_sr %buildroot%nodejs_sitelib/%node_module/bin/asar.js %buildroot%_bindir/asar
+%_ln_sr %buildroot%nodejs_sitelib/%node_module/bin/asar.mjs %buildroot%_bindir/asar
+
+%check
+# upstream tests need vitest and electron: just check the CLI round trip
+node bin/asar.mjs --version | grep -Fx 'v%version'
+node bin/asar.mjs pack src check.asar
+node bin/asar.mjs list check.asar | grep -Fx '/asar.ts'
+node bin/asar.mjs extract check.asar check.out
+cmp src/asar.ts check.out/asar.ts
 
 #nodejs_symlink_deps
 
@@ -77,6 +83,11 @@ mkdir -p %buildroot%_bindir/
 %nodejs_sitelib/%node_module
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
+- new version 4.3.1
+- build lib from TypeScript sources with node-typescript
+- asar command runs ESM bin/asar.mjs, requires node >= 22.12.0
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - new version 3.1.0 (with rpmrb script)
 
