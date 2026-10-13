@@ -18,7 +18,7 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.15.0
+Version: %ver_major.16.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -191,6 +191,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 140.16.0-alt1
+- 140.16.0
+
 * Wed Sep 02 2026 Yuri N. Sedunov <aris@altlinux.org> 140.15.0-alt1
 - 140.15.0
 - fixed build with rust-1.98
