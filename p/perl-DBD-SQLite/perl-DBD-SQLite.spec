@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-SQLite
 Name: perl-%dist
-Version: 1.76
+Version: 1.78
 Release: alt1
 
 Summary: SQLite driver for DBI interface in Perl
@@ -51,6 +51,9 @@ sed -i- 's/require DBD::SQLite/die/' Makefile.PL
 	%perl_vendor_autolib/DBD
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.78-alt1
+- NMU: new version 1.78.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.76-alt1
 - automated CPAN update
 

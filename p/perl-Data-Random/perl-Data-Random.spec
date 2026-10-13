@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Data-Random
-Version: 0.13
+Version: 0.15
 Release: alt1
 
 Summary: Perl module to generate random data
@@ -50,6 +50,9 @@ A module used to generate random data.  Useful mostly for test programs.
 %perl_vendor_privlib/auto/share/dist/Data-Random
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.15-alt1
+- NMU: new version 0.15.
+
 * Thu Apr 19 2018 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
 - automated CPAN update
 

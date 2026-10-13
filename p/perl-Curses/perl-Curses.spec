@@ -4,7 +4,7 @@ BuildRequires: libncurses-devel
 %define _unpackaged_files_terminate_build 1
 %define dist Curses
 Name: perl-%dist
-Version: 1.45
+Version: 1.46
 Release: alt1
 
 Summary: Terminal screen handling and optimization
@@ -44,6 +44,9 @@ perl -Mblib -MCurses -e1
 %perl_vendor_autolib/Curses*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- NMU: new version 1.46.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.45-alt1
 - automated CPAN update
 

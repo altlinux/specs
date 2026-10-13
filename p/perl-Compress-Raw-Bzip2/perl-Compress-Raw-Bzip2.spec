@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Bzip2
 Name: perl-%dist
-Version: 2.213
+Version: 2.225
 Release: alt1
 
 Summary: Low-level interface to the bzip2 compression library
@@ -39,6 +39,9 @@ export BUILD_BZIP2=0 BZIP2_INCLUDE=%_includedir BZIP2_LIB=%_libdir
 %perl_vendor_autolib/Compress
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.225-alt1
+- NMU: new version 2.225.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.213-alt1
 - automated CPAN update
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define m_distro Data-TreeDumper
 Name: perl-Data-TreeDumper
-Version: 0.41
+Version: 0.43
 Release: alt1
 Summary: dumps any data structure
 
@@ -12,8 +12,11 @@ License: Perl
 Url: http://search.cpan.org/~nkh/Data-TreeDumper/
 
 BuildArch: noarch
+# Source-url: https://www.cpan.org/authors/id/N/NK/NKH/%m_distro-%version.tar.gz
 Source: %m_distro-%version.tar
 BuildRequires: perl-devel perl-Check-ISA perl-Term-Size perl-Sort-Naturally perl-Class-ISA
+# loaded via eval "use Term::Size" in BEGIN, missed by perl.req
+Requires: perl(Term/Size.pm)
 
 %description
 %summary
@@ -35,6 +38,10 @@ rm -f %buildroot%_bindir/*.pl %buildroot%perl_vendor_privlib/Data/*.pl
 %doc Todo README
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.43-alt1
+- NMU: new version 0.43.
+- add missing Requires: perl(Term/Size.pm) (loaded via eval).
+
 * Tue Oct 31 2023 Igor Vlasenko <viy@altlinux.org> 0.41-alt1
 - new version
 

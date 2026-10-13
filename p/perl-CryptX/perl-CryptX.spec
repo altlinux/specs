@@ -2,7 +2,7 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.087
+Version: 0.091
 Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
@@ -103,6 +103,13 @@ sed -i 's,-msse4.[12] -maes,,' Makefile.PL
 %perl_vendor_archlib/Math
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.091-alt1
+- NMU: new version 0.091.
+- security fixes:
+  + CVE-2026-41564: Crypt::PK PRNG state not reseeded after fork.
+  + CVE-2026-41565: stack buffer overflow in AEAD decrypt_verify helpers.
+  + CVE-2026-13758: non-constant time AEAD tag comparison in decrypt_done.
+
 * Fri Jun 13 2025 Igor Vlasenko <viy@altlinux.org> 0.087-alt1
 - automated CPAN update
 
