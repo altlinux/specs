@@ -51,12 +51,12 @@
 
 Name: libreoffice
 %define hversion 26.8
-%define urelease 0.3
+%define urelease 1.1
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
-%define uname libreoffice5
+%define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
 
 Summary: LibreOffice Productivity Suite
@@ -129,6 +129,8 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
+# https://gerrit.libreoffice.org/c/core/+/212087
+Patch501: alt-tdf173885_Fix_for_Impress_crash_when_scrolling_through_slides.patch
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -514,6 +516,7 @@ git apply %PATCH116
 #patch412 -p1
 
 %patch500 -p0
+%patch501 -p1
 %patch700 -p1
 
 # TODO move officebeans to SDK or separate package
@@ -933,6 +936,11 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1.1-alt1
+- New version (fixes: CVE-2026-63266, CVE-2026-63267, CVE-2026-63268,
+  CVE-2026-63269, CVE-2026-63270, CVE-2026-63277).
+- Fixed Impress crash when scrolling through slides (ALT #60819).
+
 * Sun Sep 06 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.0.3-alt1
 - New version.
 - Impress: fixed insert sound file (ALT #57028).
