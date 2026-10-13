@@ -24,6 +24,7 @@ Requires: kchmviewer \
 Requires: lazarus \
 %endif \
 Requires: gambas-full \
+Requires: dosbox \
 %{nil}
 
 %define edu_graphics_reqs \
@@ -36,7 +37,6 @@ Requires: dia \
 Requires: shotwell \
 %endif \
 Requires: imagination \
-Requires: shutter \
 %ifarch x86_64 aarch64 \
 Requires: blender \
 %endif \
@@ -45,7 +45,6 @@ Requires: blender \
 %define edu_av_editing_reqs \
 Requires: audacity \
 Requires: kdenlive \
-Requires: cheese \
 Requires: gst-plugins-bad \
 Requires: gst-plugins-ugly \
 %{nil}
@@ -56,14 +55,24 @@ Requires: gnuplot-qt \
 Requires: wxMaxima \
 %{nil}
 
-%define edu_reference_reqs \
+%define edu_capture_reqs \
+Requires: shutter \
+Requires: cheese \
+%{nil}
+
+%define edu_dictionary_reqs \
 %ifnarch %e2k %ix86 \
-Requires: calibre \
 Requires: goldendict-ng \
 %else \
 Requires: stardict \
 %endif \
 Requires: dict-mueller7-utf8 \
+%{nil}
+
+%define edu_reference_reqs \
+%ifnarch %e2k %ix86 \
+Requires: calibre \
+%endif \
 %ifarch x86_64 aarch64 \
 Requires: freeplane \
 %endif \
@@ -102,12 +111,15 @@ Requires: man-pages-ru \
 %{nil}
 
 %define edu_scanning_reqs \
-Requires: xsane \
-Requires: xsane-doc-ru \
 Requires: simple-scan \
 Requires: sane \
 Requires: sane-airscan \
 Requires: hplip-sane \
+%{nil}
+
+%define edu_advanced_scanning_reqs \
+Requires: xsane \
+Requires: xsane-doc-ru \
 Requires: gimagereader-gtk \
 Requires: tesseract \
 Requires: tesseract-langpack-ru \
@@ -201,18 +213,20 @@ Requires: gnome-games-aisleriot \
 Requires: gnome-games-mines \
 Requires: gnome-games-tetravex \
 %endif \
-Requires: dosbox \
 %{nil}
 
 %define edu_remote_management_reqs \
-%ifnarch %e2k \
-Requires: puppet \
-%endif \
 %ifarch x86_64 aarch64 \
 Requires: x11spice \
 Requires: openssh-server \
 %endif \
 Requires: freerdp3-server \
+%{nil}
+
+%define edu_classroom_management_reqs \
+%ifnarch %e2k \
+Requires: puppet \
+%endif \
 Requires: veyon \
 %{nil}
 
@@ -239,6 +253,7 @@ Requires: system-config-printer-udev \
 Requires: printer-drivers-base \
 Requires: gutenprint-cups-ppds \
 Requires: hplip-hpijs \
+Requires: hplip-gui \
 Requires: printer-driver-oki \
 Requires: bluez-cups \
 Requires: printer-testpages \
@@ -267,16 +282,12 @@ Requires: thunderbird \
 
 %define edu_hardware_quirk_reqs \
 Requires: udev-rules-nvidia-sleep \
+Requires: udev-rules-cpuidle-display \
 %{nil}
 
 %define edu_base_reqs \
-%edu_programming_reqs \
-%edu_graphics_reqs \
-%edu_av_editing_reqs \
-%edu_math_reqs \
-%edu_reference_reqs \
-%edu_content_filter_reqs \
-%edu_db_connectors_reqs \
+%edu_capture_reqs \
+%edu_dictionary_reqs \
 %edu_l10n_reqs \
 %edu_scanning_reqs \
 %edu_fonts_reqs \
@@ -286,10 +297,22 @@ Requires: udev-rules-nvidia-sleep \
 %edu_remote_management_reqs \
 %edu_software_management_reqs \
 %edu_printing_reqs \
-%edu_antivirus_reqs \
-%edu_burning_reqs \
 %edu_mail_reqs \
 %edu_hardware_quirk_reqs \
+%{nil}
+
+%define edu_school_apps_reqs \
+%edu_programming_reqs \
+%edu_graphics_reqs \
+%edu_av_editing_reqs \
+%edu_math_reqs \
+%edu_reference_reqs \
+%edu_content_filter_reqs \
+%edu_db_connectors_reqs \
+%edu_advanced_scanning_reqs \
+%edu_classroom_management_reqs \
+%edu_antivirus_reqs \
+%edu_burning_reqs \
 %{nil}
 
 %define edu_python_reqs \
@@ -410,7 +433,7 @@ Requires: OpenBoard \
 %{nil}
 
 Name: task-edu
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary(ru_RU.UTF-8): Базовый образовательный комплект
@@ -484,6 +507,7 @@ Group: Education
 Provides: %name-gradeschool = %EVR
 Obsoletes: %name-gradeschool < %EVR
 %edu_base_reqs
+%edu_school_apps_reqs
 %edu_highschool_own_reqs
 %description highschool
 %{summary}.
@@ -692,6 +716,7 @@ Summary(ru_RU.UTF-8): Образовательное программное об
 Summary: Complete list of education software for schools
 Group: Education
 %edu_base_reqs
+%edu_school_apps_reqs
 %edu_highschool_own_reqs
 %edu_teacher_reqs
 %description school
@@ -722,6 +747,14 @@ Group: Education
 %files school
 
 %changelog
+* Tue Oct 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.9.4-alt1
+- Keep the school applications out of the base set again:
+  programming, graphics, audio and video editing, math, reference,
+  content filtering, database connectors, OCR, classroom management,
+  antivirus and burning are required by highschool and school only.
+- Require hplip-gui.
+- Require udev-rules-cpuidle-display.
+
 * Wed Sep 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.9.3-alt1
 - Require alterator-secsetup.
 
