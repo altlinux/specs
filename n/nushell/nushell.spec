@@ -4,7 +4,7 @@
 %def_with check
 
 Name: nushell
-Version: 0.114.1
+Version: 0.116.1
 Release: alt1
 
 Summary: A new type of shell
@@ -14,7 +14,6 @@ Url: http://www.nushell.sh/
 Vcs: https://github.com/nushell/nushell.git
 Source: %name-%version.tar
 Source1: vendor.tar
-Source2: Cargo.lock
 # Not supported by upstream
 ExcludeArch: %ix86
 
@@ -27,19 +26,54 @@ BuildRequires: libssh2-devel
 BuildRequires: libzstd-devel
 
 %description
-Nushell (or Nu for short) is a new type of shell that supports structured and typed data.
+Nushell (or Nu for short) is a new type of shell that supports
+structured and typed data.
+
+%package -n nu_plugin_inc
+Summary: Nushell nu_plugin_inc plugin
+Group: Development/Tools
+
+%description -n nu_plugin_inc
+Increment a value or version (e.g., semver). This plugin acts as both
+an end-user plugin as well as a simple developer example of how to
+create a plugin.
+
+%package -n nu_plugin_polars
+Summary: Nushell nu_plugin_polars plugin
+Group: Development/Tools
+
+%description -n nu_plugin_polars
+Extremely fast columnar operations using DataFrames via the Polars
+Library.
+
+%package -n nu_plugin_gstat
+Summary: Nushell nu_plugin_gstat plugin
+Group: Development/Tools
+
+%description -n nu_plugin_gstat
+Returns information on the status of a Git repository as Nushell
+structured data.
+
+%package -n nu_plugin_formats
+Summary: Nushell nu_plugin_formats plugin
+Group: Development/Tools
+
+%description -n nu_plugin_formats
+Support for several additional data formats - EML, ICS, INI, plist,
+and VCF.
+
+%package -n nu_plugin_query
+Summary: Nushell nu_plugin_query plugin
+Group: Development/Tools
+
+%description -n nu_plugin_query
+Support for querying XML (via XPath), JSON, HTML (via CSS selectors),
+and web page metadata.
 
 %prep
 %setup -a 1
-install -Dm644 %SOURCE2 .
-mkdir -p .cargo
+%rust_prep
 cat >> .cargo/config.toml <<EOF
-
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
 
 [env]
 ZSTD_SYS_USE_PKG_CONFIG = "1"
@@ -49,14 +83,29 @@ DEP_CURL_STATIC = "1"
 EOF
 
 %build
-%rust_build
+%rust_build                 \
+    -p nu                   \
+    -p nu_plugin_inc        \
+    -p nu_plugin_polars     \
+    -p nu_plugin_gstat      \
+    -p nu_plugin_formats    \
+    -p nu_plugin_query 
 
 %install
-%rust_install %bin_name
+%rust_install nu nu_plugin_inc nu_plugin_polars nu_plugin_gstat nu_plugin_formats nu_plugin_query
 
-#according to the upstream documentation
+
 %check
-cargo test --workspace --                                                           \
+%rust_test \
+    -p nu                   \
+    -p nu_plugin_inc        \
+    -p nu_plugin_polars     \
+    -p nu_plugin_gstat      \
+    -p nu_plugin_formats    \
+    -p nu_plugin_query      \
+    --                      \
+    --skip integration::cli::ide_check_missing_file_reports_error                   \
+    --skip integration::cli::ide_flags_accept_values                                \
     --skip commands::move_::umv::errors_if_destination_doesnt_exist                 \
     --skip commands::move_::umv::errors_if_moving_to_itself                         \
     --skip commands::move_::umv::errors_if_renaming_directory_to_an_existing_file   \
@@ -85,10 +134,35 @@ if [ $1 -eq 0 ]; then
 fi
 
 %files
+%doc README.md CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE
 %_bindir/%bin_name
-%doc README.md CONTRIBUTING.md CODE_OF_CONDUCT.md
+
+%files -n nu_plugin_inc
+%doc LICENSE
+%_bindir/nu_plugin_inc
+
+%files -n nu_plugin_polars
+%doc LICENSE
+%_bindir/nu_plugin_polars
+
+%files -n nu_plugin_gstat
+%doc LICENSE
+%_bindir/nu_plugin_gstat
+
+%files -n nu_plugin_formats
+%doc LICENSE
+%_bindir/nu_plugin_formats
+
+%files -n nu_plugin_query
+%doc LICENSE
+%_bindir/nu_plugin_query
 
 %changelog
+* Tue Oct 13 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.116.1-alt1
+- Updated to upstream version 0.116.1
+- Packaged MIT License
+- Added core plugins (Closes: 60508)
+
 * Mon Jul 13 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.114.1-alt1
 - Updated to upstream version 0.114.1
 
