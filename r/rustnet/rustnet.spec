@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           rustnet
-Version:        1.6.0
+Version:        1.7.0
 Release:        alt1
 
 Summary:        A cross-platform network monitoring terminal UI tool
@@ -23,8 +23,6 @@ BuildRequires:      pkgconfig(libelf)
 BuildRequires:      pkgconfig(zlib)
 BuildRequires:      pkgconfig(libpcap)
 BuildRequires:      clang
-
-ExcludeArch: %ix86
 
 %description
 A cross-platform network monitoring tool built with Rust.
@@ -54,18 +52,25 @@ sed -i \
 # and depend on system time, and the build may crash due to them.
 # The test_get_all_stats and test_get_all_stats tests
 # do not work correctly in an isolated environment.
+# Output-related tests rely on filesystem permissions that differ in the
+# isolated build environment.
 %check
 %rust_test -- --skip test_rate_tracker_steady_traffic \
     --skip test_rate_tracker_multiple_updates \
     --skip test_rate_tracker_window_sliding \
     --skip test_list_interfaces \
-    --skip test_get_all_stats
+    --skip test_get_all_stats \
+    --skip app::output \
+    --skip app::unix_output
 
 %files
 %_bindir/*
 %doc README.md CHANGELOG.md
 
 %changelog
+* Wed Oct 07 2026 Sergey Savelev <medovi@altlinux.org> 1.7.0-alt1
+- New version 1.7.0.
+
 * Tue Sep 15 2026 Sergey Savelev <medovi@altlinux.org> 1.6.0-alt1
 - New version 1.6.0.
 
