@@ -1,8 +1,8 @@
 %define rname kmime
 
 Name: kf6-%rname
-Version: 6.30.0
-Release: alt2
+Version: 6.31.0
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -74,6 +74,9 @@ Obsoletes: libkpim6mime < 26.08
 %_K6lib/libKF6Mime.so.*
 
 %changelog
+* Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt1
+- new version
+
 * Wed Sep 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt2
 - fix obsoletes
 

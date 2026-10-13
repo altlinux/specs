@@ -1,7 +1,7 @@
 %define rname prison
 
 Name: kf6-%rname
-Version: 6.30.0
+Version: 6.31.0
 Release: alt1
 %K6init altplace
 
@@ -67,7 +67,7 @@ KF6 library
 %files devel
 %_K6inc/?rison*/
 %_K6link/lib*.so
-%_K6lib/cmake/KF6Prison
+%_K6lib/cmake/KF6Prison*/
 
 %files -n libkf6prison
 %_K6lib/libKF6Prison.so.*
@@ -81,6 +81,9 @@ KF6 library
 
 
 %changelog
+* Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt1
+- new version
+
 * Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
 - new version
 

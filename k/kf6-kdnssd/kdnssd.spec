@@ -1,7 +1,7 @@
 %define rname kdnssd
 
 Name: kf6-%rname
-Version: 6.30.0
+Version: 6.31.0
 Release: alt1
 %K6init altplace
 
@@ -72,6 +72,9 @@ KF6 library
 
 
 %changelog
+* Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt1
+- new version
+
 * Mon Sep 14 2026 Sergey V Turchin <zerg@altlinux.org> 6.30.0-alt1
 - new version
 
