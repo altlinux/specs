@@ -1,6 +1,6 @@
 Name: catdoc
 Version: 0.95
-Release: alt1
+Release: alt2
 
 Summary: Converts MS-Word and MS-Excel files to text
 
@@ -15,6 +15,7 @@ Source1: xlsview
 
 Patch1: catdoc-0.93.4-page-option.patch
 Patch2: catdoc-fix-broken-formatting.patch
+Patch3: catdoc-0.95-stdin-set-std-func.patch
 Requires: tk, mktemp >= 1:1.3.1, url_handler
 
 BuildRequires: groff-base groff-ps tcl tk
@@ -36,6 +37,7 @@ comma-separated values to stdout.
 %prep
 %setup -q
 %patch1 -p1
+%patch3 -p1
 #%patch2 -p1
 export man1dir=%_man1dir
 %configure --with-install-root="%buildroot"
@@ -59,6 +61,9 @@ install -pD -m755 %SOURCE1 %buildroot%_bindir/xlsview
 %doc README NEWS
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.95-alt2
+- Fix SIGSEGV in xls2csv and catppt when reading from stdin (closes: #35505).
+
 * Sat Aug 05 2017 Vitaly Lipatov <lav@altlinux.ru> 0.95-alt1
 - new version 0.95 (with rpmrb script)
 
