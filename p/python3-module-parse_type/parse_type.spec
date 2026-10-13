@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 0.6.6
-Release: alt1
+Release: alt2
 Summary: Simplifies to build parse types based on the parse module
 License: MIT
 Group: Development/Python
@@ -55,6 +55,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 0.6.6-alt2
+- Fixed FTBFS (parse 1.22.2)
+
 * Tue Aug 12 2025 Stanislav Levin <slev@altlinux.org> 0.6.6-alt1
 - 0.6.4 -> 0.6.6.
 
