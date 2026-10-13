@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libintl-perl
 Name: perl-libintl
-Version: 1.35
+Version: 1.37
 Release: alt1
 
 Summary: High-Level Interface to Uniforum Message Translation
@@ -9,6 +9,7 @@ License: LGPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
+# Source-url: http://www.cpan.org/authors/id/G/GU/GUIDO/%{dist}-%{version}.tar.gz
 Source0: http://www.cpan.org/authors/id/G/GU/GUIDO/%{dist}-%{version}.tar.gz
 
 # avoid rpmdb bloat
@@ -38,6 +39,7 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 %dir	%perl_vendor_privlib/Locale
 	%perl_vendor_privlib/Locale/*.pm
 %doc	%perl_vendor_privlib/Locale/*.pod
+	%perl_vendor_privlib/Locale/Messages
 %dir	%perl_vendor_privlib/Locale/Recode
 	%perl_vendor_privlib/Locale/Recode/*.pm
 %dir	%perl_vendor_privlib/Locale/RecodeData
@@ -45,6 +47,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.37-alt1
+- NMU: new version 1.37.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.35-alt1
 - automated CPAN update
 
