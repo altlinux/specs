@@ -1,6 +1,6 @@
 Name: icon-theme-morewaita
-Version: 49
-Release: alt2
+Version: 50.1
+Release: alt1
 
 Summary: An expanded Adwaita-styled companion icon theme with extra icons
 License: GPL-3.0-or-later AND CC-BY-SA-4.0
@@ -50,6 +50,9 @@ popd
 %exclude %_iconsdir/MoreWaita/LICENSE
 
 %changelog
+* Tue Oct 13 2026 Anton Midyukov <antohami@altlinux.org> 50.1-alt1
+- New version 50.1.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 49-alt2
 - Add preferences.svg, preferences-desktop.svg.
 
