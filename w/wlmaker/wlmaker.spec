@@ -1,6 +1,6 @@
 Name:    wlmaker
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Wayland Maker - A Wayland compositor inspired by Window Maker
 License: Apache-2.0
@@ -13,6 +13,7 @@ Source0: %name-%version.tar
 # go to submodules/libbase @ <hash>, Code -> Download ZIP,
 # and extract it to .gear/submodules/.
 Source1: submodules.tar
+Patch:   wlmaker-v0.8-63-g40f6765.patch
 
 BuildRequires(pre): rpm-build-cmake ctest
 BuildRequires: pkgconfig(cairo)
@@ -47,6 +48,7 @@ Key features:
 %prep
 %setup -a1
 sed -i 's/XkbConfigurationFile/\/\/ XkbConfigurationFile/g' etc/Config.plist
+%patch -p1
 
 %build
 %cmake
@@ -81,6 +83,9 @@ sed -i 's/XkbConfigurationFile/\/\/ XkbConfigurationFile/g' etc/Config.plist
 %_sysconfdir/xdg/%name
 
 %changelog
+* Mon Oct 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.8.1-alt2
+- Fix FTBFS: disable primitives.minimize_large unit test due to libcairo update.
+
 * Tue Jul 07 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.8.1-alt1
 - 0.8 -> 0.8.1
 

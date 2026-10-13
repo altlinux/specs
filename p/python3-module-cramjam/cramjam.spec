@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.12.0
-Release: alt2
+Version: 2.13.0
+Release: alt1
 
 Summary: A collection of compression algorithms
 License: MIT
@@ -66,6 +66,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Mon Oct 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.13.0-alt1
+- 2.12.0 -> 2.13.0
+
 * Sat Jul 04 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.12.0-alt2
 - Patched vendored pyo3-ffi 0.25.0 to fix segfault on import on 32-bit Python
   3.14 (backport of PyO3 PR #5180: gate PyObject refcnt_and_flags union field to
