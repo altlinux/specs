@@ -13,8 +13,8 @@
 
 Name:     %pname-source
 Epoch:    1
-Version:  0.5.1
-Release:  alt4
+Version:  0.5.2
+Release:  alt1
 
 Summary:  Osec-based integrity checking script and settings
 License:  GPLv2
@@ -107,6 +107,10 @@ shellcheck %pname -e SC1090,SC1091 -e SC2155,SC2166,SC3043
 %endif
 
 %post -n %pname
+# Don't use macros here: macros might be redefined, but existing
+# paths stay unchanged:
+[ ! -e /var/log/integalert ] || chmod -R o-rwX /var/log/integalert
+[ ! -e /var/lib/integalert ] || chmod -R o-rwX /var/lib/integalert
 %post_service %pname
 
 %preun -n %pname
@@ -148,6 +152,11 @@ shellcheck %pname -e SC1090,SC1091 -e SC2155,SC2166,SC3043
 %endif
 
 %changelog
+* Tue Oct 13 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.5.2-alt1
+- Fix permissions in the package post scriptlet.
+- Fix: Make the logs non-world-readable (Fixes: OVE-20261013-0015).
+- Fix: Make the osec database non-world-readable (Fixes: OVE-20261013-0016).
+
 * Sat Feb 22 2025 Michael Shigorin <mike@altlinux.org> 1:0.5.1-alt4
 - E2K: no shellcheck so far (ghc missing)
 
