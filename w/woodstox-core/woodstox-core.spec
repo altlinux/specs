@@ -7,7 +7,7 @@ BuildRequires: jpackage-default
 
 Name:           woodstox-core
 Summary:        High-performance XML processor
-Version:        7.1.1
+Version:        7.3.0
 Release:        alt1
 License:        Apache-2.0
 
@@ -46,6 +46,8 @@ such as validation.
 %patch0 -p1
 %patch1 -p1
 
+%pom_remove_plugin :jacoco-maven-plugin
+
 # Patch out optional support for msv and relax schema validation
 %pom_remove_dep :relaxngDatatype
 %pom_remove_dep net.java.dev.msv:
@@ -54,10 +56,11 @@ rm -rf src/main/java/com/ctc/wstx/msv
 
 # Remove tests for msv and relaxng functionality
 rm -rf src/main/java/com/ctc/wstx/msv
-rm src/test/java/failing/{RelaxNGTest,TestRelaxNG189,TestRelaxNG190,TestW3CSchema189,W3CDefaultValuesTest,W3CSchemaTypesTest}.java
-rm src/test/java/stax2/vwstream/{W3CSchemaWrite16Test,W3CSchemaWrite23Test}.java
+rm src/test/java/failing/{W3CSchemaNillableAttr39Test,W3CSchemaMaxOccursStackOverflow87Test,W3CSchemaDate109Test,W3CDefaultValuesTest}.java
+rm src/test/java/stax2/vwstream/{W3CSchemaWrite16Test,W3CSchemaWrite23Test,W3CSchemaWriteNoNsTest}.java
 rm src/test/java/wstxtest/msv/{TestW3CSchema,TestW3CSchemaTypes,TestWsdlValidation}.java
-rm src/test/java/wstxtest/vstream/{TestRelaxNG,TestW3CSchemaComplexTypes}.java
+rm src/test/java/wstxtest/vstream/{TestSchemaExternalEntity,TestRelaxNG,TestW3CSchemaComplexTypes,TestW3CSchemaNillable}.java
+rm src/test/java/com/ctc/wstx/msv/TestDisableExternalEntities.java
 
 %build
 %mvn_build -j
@@ -70,6 +73,9 @@ rm src/test/java/wstxtest/vstream/{TestRelaxNG,TestW3CSchemaComplexTypes}.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Oct 07 2026 Anton Meleshnikov <alton@altlinux.org> 7.3.0-alt1
+- new version
+
 * Mon Aug 24 2026 Anton Meleshnikov <alton@altlinux.org> 7.1.1-alt1
 - new version (thanks fedora for the spec)
 - remove javadoc

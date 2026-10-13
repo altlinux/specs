@@ -4,7 +4,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             stax2-api
-Version:          4.3.0
+Version:          4.3.1
 Release:          alt1
 Summary:          Experimental API extending basic StAX implementation
 License:          BSD-2-Clause
@@ -42,6 +42,8 @@ This package contains the API documentation for %{name}.
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin :maven-javadoc-plugin
 
+%pom_remove_plugin :jacoco-maven-plugin
+
 %build
 %mvn_file :%{name} %{name}
 %mvn_build
@@ -55,6 +57,9 @@ This package contains the API documentation for %{name}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Wed Oct 07 2026 Anton Meleshnikov <alton@altlinux.org> 4.3.1-alt1
+- new version
+
 * Mon Aug 24 2026 Anton Meleshnikov <alton@altlinux.org> 4.3.0-alt1
 - new version
 - added vcs tag

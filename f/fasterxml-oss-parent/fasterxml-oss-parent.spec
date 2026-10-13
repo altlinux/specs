@@ -1,12 +1,12 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname oss-parent
 
 Name:          fasterxml-oss-parent
-Version:       70
+Version:       79
 Release:       alt1
 Summary:       FasterXML parent pom
 License:       Apache-2.0
@@ -56,6 +56,9 @@ This package contains the parent pom file for FasterXML.com projects.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Oct 12 2026 Anton Meleshnikov <alton@altlinux.org> 79-alt1
+- new version
+
 * Thu Apr 02 2026 Anton Meleshnikov <alton@altlinux.org> 70-alt1
 - new version
 
