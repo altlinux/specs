@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitlogue
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Playback of Git commits in the terminal as an animated story
@@ -69,6 +69,9 @@ export LIBGIT2_NO_VENDOR=1
 %doc README.md CHANGELOG.md
 
 %changelog
+* Mon Oct 05 2026 Sergey Savelev <medovi@altlinux.org> 0.12.0-alt1
+- New version 0.12.0.
+
 * Thu Sep 03 2026 Sergey Savelev <medovi@altlinux.org> 0.11.0-alt1
 - New version 0.11.0.
 
