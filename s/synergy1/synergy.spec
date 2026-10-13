@@ -3,7 +3,7 @@
 Summary:	Mouse and keyboard sharing utility
 Name:		synergy1
 Version:	1.12.0
-Release:	alt2
+Release:	alt2.1
 License:	GPLv2
 Group:		Accessibility
 URL:		http://synergy-project.org/
@@ -16,7 +16,6 @@ Packager:	Evgeny Sinelnikov <sin@altlinux.org>
 # Automatically added by buildreq on Fri Sep 28 2007
 BuildRequires: gcc-c++ libXtst-devel
 BuildRequires: libcurl-devel
-BuildRequires: libcryptopp-devel
 BuildRequires: libssl-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
@@ -61,6 +60,9 @@ install -D -m0644 doc/synergyc.man %buildroot/%_man1dir/synergyc.1
 %_man1dir/synergyc*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt2.1
+- NMU: drop unused libcryptopp-devel from BuildRequires (crypto++ is not used upstream).
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12.0-alt2
 - NMU: spec: adapt to new cmake macros.
 

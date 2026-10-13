@@ -2,7 +2,7 @@
 
 Name:    pdal
 Version: 2.9.3
-Release: alt2
+Release: alt2.1
 
 Summary: PDAL is Point Data Abstraction Library. GDAL for point cloud data.
 License: BSD-3-Clause
@@ -16,7 +16,6 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: bash-completion
-BuildRequires: libcryptopp-devel
 BuildRequires: libcurl-devel
 BuildRequires: libgdal-devel
 BuildRequires: libgeotiff-devel
@@ -90,6 +89,9 @@ sed -i "s/EIGEN_GNUC_AT_LEAST(6,0)/0/" \
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.3-alt2.1
+- NMU: drop unused libcryptopp-devel from BuildRequires (crypto++ is not used upstream).
+
 * Mon Jun 15 2026 Andrey Cherepanov <cas@altlinux.org> 2.9.3-alt2
 - Rebuilt with GDAL 3.13.1.
 

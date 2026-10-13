@@ -2,7 +2,7 @@
 
 Name: clementine
 Version: 1.4.1.150
-Release: alt1.g126edd142
+Release: alt1.g126edd142.1
 Summary: A music player and library organiser
 
 Group: Sound
@@ -26,7 +26,6 @@ BuildRequires: gst-plugins%gst_api_ver-devel
 BuildRequires: gstreamer%gst_api_ver-utils
 BuildRequires: pkgconfig(gstreamer-tag-%gst_api_ver)
 BuildRequires: libchromaprint-devel
-BuildRequires: libcryptopp-devel >= 6
 # SQLITE_DBCONFIG_ENABLE_FTS3_TOKENIZER is available since 3.12
 BuildRequires: libsqlite3-devel >= 3.12
 BuildRequires: libpulseaudio-devel
@@ -161,6 +160,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.1.150-alt1.g126edd142.1
+- NMU: drop unused libcryptopp-devel from BuildRequires (crypto++ is not used upstream).
+
 * Wed Sep 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1.150-alt1.g126edd142
 - Update upstream source to 1.4.1.150-g126edd142
 - Switch to Qt6
