@@ -1,12 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-#define php_version %php_defver
-# ALT #60799
-%define php_version 8.4
+%define php_version %php_defver
 %def_without pam
 
 Name: moodle
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPL-3.0+
@@ -256,6 +254,9 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt2
+- Rebuilt with default PHP.
+
 * Sat Oct 03 2026 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt1
 - New version.
 
