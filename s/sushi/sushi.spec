@@ -15,7 +15,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: A quick previewer for Nautilus
@@ -139,6 +139,7 @@ GObject introspection devel data for the Sushi library.
 %_libdir/%name/*/*.so
 %dir %_libdir/%name/girepository-1.0
 %_libdir/%name/girepository-1.0/%namespace-%api_ver.typelib
+%_desktopdir/%xdg_name.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/*
 %_iconsdir/hicolor/*/*/*.svg
@@ -146,6 +147,9 @@ GObject introspection devel data for the Sushi library.
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 51.2-alt1
+- 51.2
+
 * Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
 - 51.1
 
