@@ -1,5 +1,5 @@
 Name: nautilus-open-any-terminal
-Version: 0.6.0
+Version: 0.8.3
 Release: alt1
 
 Summary: Extension for nautilus, which adds an context-entry for opening other terminal emulators
@@ -60,6 +60,9 @@ And others...
 %exclude %_datadir/caja-python/extensions/nautilus_open_any_terminal.py
 
 %changelog
+* Tue Oct 13 2026 Roman Alifanov <ximper@altlinux.org> 0.8.3-alt1
+- new version 0.8.3
+
 * Tue Aug 06 2024 Roman Alifanov <ximper@altlinux.org> 0.6.0-alt1
 - new version 0.6.0 (with rpmrb script)
 
