@@ -1,12 +1,16 @@
-%define tarver 1.9.0-998
+%define tarver 2.0.0-21
 %define mainver %( echo %tarver | sed 's/-.*//' )
-%define soname  0
+%define soname 0
 
+%def_enable fltk
+# system fltk
+%def_without fltk
+# system cocoa
 %def_with cocoa
 
 Name: giac
-Version: 1.9.0.998
-Release: alt2
+Version: 2.0.0.21
+Release: alt1
 
 Summary: Computer algebra system
 
@@ -14,17 +18,18 @@ License: GPL-3.0+
 Group: Sciences/Mathematics
 Url: https://www-fourier.ujf-grenoble.fr/~parisse/giac.html
 
-# Source-url: https://www-fourier.ujf-grenoble.fr/~parisse/debian/dists/stable/main/source/giac_%tarver.tar.gz
+# Source-url: https://www-fourier.univ-grenoble-alpes.fr/~parisse/debian/dists/stable/main/source/giac_%tarver.tar.gz
 Source: %name-%version.tar.gz
+Patch: giac-2.0.0.21-debian-autoreconf.patch
 
-# Some files is not compiled with -fpic/-fPIC on armh and ppc64le.
-ExcludeArch: armh ppc64le
+# Some files is not compiled with -fpic/-fPIC on i586, armh and ppc64le.
+ExcludeArch: i586 armh ppc64le
 
-BuildRequires: flex gcc-c++ libXft-devel libXinerama-devel libblas-devel libcurl-devel libecm-devel libfltk-devel libgfortran-devel libglpk-devel libgsl-devel libjpeg-devel liblapack-devel libmpfi-devel libntl-devel libreadline-devel libsamplerate-devel libnauty-devel pari-devel
+BuildRequires: flex gcc-c++ libXft-devel libXinerama-devel libblas-devel libcurl-devel libecm-devel libfltk-devel libgfortran-devel libglpk-devel libgsl-devel libjpeg-devel liblapack-devel libmpfi-devel libntl-devel libreadline-devel libsamplerate-devel libnauty-devel pari-devel libncurses-devel libgmpxx-devel
 %ifnarch %e2k
 BuildRequires: gcc-fortran
 %endif
-%if !%{with cocoa}
+%if_with cocoa
 BuildRequires: libao-devel
 %endif
 
@@ -68,6 +73,23 @@ Obsoletes: %name-devel < %EVR
 This package contains header files and libraries needed to develop
 application that use the GIAC computer algebra system.
 
+%package -n libxcas%soname
+Summary: The core library for %name
+Group: System/Libraries
+
+%description -n libxcas%soname
+A computer algebra system, compatible with existing CAS, as a C++
+library with various user interfaces (GUI with formal spreadsheet and exact
+dynamic geometry, on-line, readline, emacs, texmacs...).
+
+%package -n libxcas-devel
+Summary: Development files for %name
+Group: Development/C++
+
+%description -n libxcas-devel
+This package contains header files and libraries needed to develop
+application that use the GIAC computer algebra system.
+
 %package doc
 Summary: Documentation for %name
 Group: Documentation
@@ -79,6 +101,7 @@ usage of giac, a computer algebra system.
 
 %prep
 %setup
+%patch -p1
 %ifarch %e2k
 # name collision
 sed -i "/gen _compare/i #undef __compare" src/misc.cc
@@ -89,12 +112,18 @@ sed -i "1i #include <alloca.h>" micropython-1.12/py/obj.h
 find . -type f -iname '.*' -delete
 
 %build
-# Fix crashes
-export CXXFLAGS+=' -std=c++14 -Wp,-U_GLIBCXX_ASSERTIONS'
+export CXXFLAGS+=' -std=c++17 -fpermissive -Wp,-U_GLIBCXX_ASSERTIONS'
+%if_without fltk
+%add_optflags -I../fltk-1.3.8 -L../fltk-1.3.8/lib -lfltk -lfltk_forms -lfltk_gl -lfltk_images
+export LIBFLTK=GIAC
+%endif
 %autoreconf
 %configure \
     --enable-gui \
     --enable-static=no \
+%if_disabled fltk
+    --disable-fltk \
+%endif
 #
 
 # Eliminate hardcoded rpaths
@@ -183,10 +212,15 @@ rm %buildroot%_docdir/giac/Makefile.am
 %doc COPYING
 %_libdir/libgiac.so.%{soname}*
 
+%files -n libxcas%soname
+%doc COPYING
+%_libdir/libxcas.so.%{soname}*
+
 %files -n lib%name-devel
 %doc COPYING
 %_includedir/giac/
 %_libdir/libgiac.so
+%_libdir/libxcas.so
 
 %files doc
 %doc COPYING
@@ -202,6 +236,12 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/*
 
 %changelog
+* Tue Oct 13 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.0.21-alt1
+- New version 2.0.0.21 (ALT #60910).
+- Added libxcas subpackage.
+- Built without system fltk.
+- Excluded build on i586.
+
 * Wed Feb 05 2025 Leontiy Volodin <lvol@altlinux.org> 1.9.0.998-alt2
 - Renamed giac-devel to libgiac-devel.
 
