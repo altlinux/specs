@@ -1,5 +1,5 @@
 Name: pychess
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Free and feature-rich chess client
@@ -29,6 +29,14 @@ BuildRequires: python3-module-pygobject3
 # Avoid unment dependency:
 #   pychess: Depends: python3(gi.repository.GdkPixbuf) (< 0) but it is not installable
 %add_python3_req_skip gi.repository.GdkPixbuf
+
+# Autodeps give unversioned typelib(Gtk), satisfied by GTK 4 as well,
+# and python3-module-pygobject3-nox without the cairo foreign struct
+# converter needed to draw the board (ALT bug #53639).
+Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gdk) = 3.0
+Requires: typelib(GtkSource) = 4
+Requires: python3-module-pygobject3
 
 %description
 PyChess is a GTK+ chess game for Linux. It is designed to at the same time
@@ -63,6 +71,10 @@ PYTHONPATH=lib %__python3 create_theme_preview.py
 %_man1dir/*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- New version 1.2.0.
+- Add missing Requires on GTK 3 typelibs and full pygobject3 (closes: #53639).
+
 * Wed Oct 15 2025 Leonid Znamenok <respublica@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
