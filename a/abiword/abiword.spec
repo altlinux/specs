@@ -14,7 +14,7 @@
 
 Name: abiword
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -212,6 +212,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt2
+- updated to release-3.0.8-2-g7a418a78d
+
 * Mon Feb 23 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
 - 3.0.8
 - removed upstreamed librevenge patch
