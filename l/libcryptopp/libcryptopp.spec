@@ -1,47 +1,57 @@
-%def_without autotools
 %def_disable static
 
 %define oname	cryptopp
+%define abiversion 9
 
 %ifarch armh
 %add_optflags -mfpu=neon
 %endif
 
-Name: libcryptopp
-Version: 8.9.0
-Release: alt1
+# LTO partitioning breaks the x86 inline asm labels (undefined LMulN) in integer.cpp
+%ifarch %ix86
+%global optflags_lto %nil
+%endif
 
-# convert 5.6.2 -> 562 format
-%define orig_version	%(echo %version | sed -e "s/\\.//g")
+Name: libcryptopp
+Version: 2026.9.1
+Release: alt1
 
 Summary: Cryptopp Library - a free C++ class library of cryptographic schemes
 
 License: Boost Software License
-Url: http://www.cryptopp.com/
+Url: https://github.com/cryptopp-modern/cryptopp-modern
 Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: http://www.cryptopp.com/%oname%orig_version.zip
+# Source-url: https://github.com/cryptopp-modern/cryptopp-modern/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-
-Patch: %oname-autotools.patch
-
-Provides: libcrypto++ = %version-%release
-Obsoletes: libcrypto++
 
 # Automatically added by buildreq on Sun Jan 27 2008
 BuildRequires: gcc-c++
 
 %description
 Cryptopp Library is a free C++ class library of cryptographic schemes.
+This is cryptopp-modern, the maintained fork of Crypto++.
 
-Small intro in russian: http://andreyvit.livejournal.com/37576.html
+%package -n %name%abiversion
+Summary: Cryptopp Library - a free C++ class library of cryptographic schemes
+Group: System/Libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+Provides: libcrypto++ = %EVR
+Obsoletes: libcrypto++ < %EVR
+
+%description -n %name%abiversion
+Cryptopp Library is a free C++ class library of cryptographic schemes.
+This is cryptopp-modern, the maintained fork of Crypto++.
+
+This package contains the shared library.
 
 %package devel
 Summary: Files for development of applications which will use Cryptopp
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name%abiversion = %EVR
 
 Provides: libcrypto++-devel = %version-%release
 Obsoletes: libcrypto++-devel
@@ -62,53 +72,30 @@ Static Cryptopp library.
 %package progs
 Summary: Cryptopp programs
 Group: File tools
-Requires: %name = %version-%release
+Requires: %name%abiversion = %EVR
 
 %description progs
 Cryptopp programs.
 
 %prep
 %setup
-%if_with autotools
-%patch -p1
-rm -f GNUmakefile
-%endif
 %ifarch %e2k
-sed -i "1i #define CRYPTOPP_DISABLE_ASM 1" config_asm.h
+sed -i "1i #define CRYPTOPP_DISABLE_ASM 1" include/cryptopp/config_asm.h
 %endif
-#touch NEWS README AUTHORS ChangeLog
 
 %build
 %add_optflags -fpermissive
-%if_with autotools
-%autoreconf
-%configure %{subst_enable static}
-%ifnarch x86_64
-# Does not build with PIC by default on x86, see
-# http://groups.google.com/group/cryptopp-users/browse_thread/thread/d639907b0b1816b9
-%__subst '1 i #define CRYPTOPP_DISABLE_SSE2' config.h
-%endif
- %make_build
-%else
- %make_build LDLIBS="-lpthread" CXXFLAGS="%optflags %optflags_shared" PREFIX=%prefix static dynamic cryptest.exe
-%endif
-
-
-# too long
-#%check
-#./cryptest v 2>&1 | tee cryptest.log
-#grep -qs '^FAILED' cryptest.log && exit 1 || :
+%make_build LDLIBS="-lpthread" CXXFLAGS="%optflags %optflags_shared" PREFIX=%prefix static dynamic cryptest.exe
+%make PREFIX=%_prefix LIBDIR=%_libdir libcryptopp.pc
+sed -i "s/^Version: .*/Version: %version/" libcryptopp.pc
 
 %check
-make test
+./cryptest.exe v
+./cryptest.exe tv all
 
 %install
-%if_with autotools
-%makeinstall_std
-%else
 make install DESTDIR=%buildroot PREFIX=%_prefix LIBDIR=%_libdir
 mv %buildroot%_bindir/cryptest.exe %buildroot%_bindir/cryptest
-%endif
 
 %if_disabled static
 rm -v %buildroot%_libdir/libcryptopp.a
@@ -125,9 +112,10 @@ Libs: -lcryptopp
 Cflags:
 EOF
 
-%files
-%doc License.txt Readme.txt
-%_libdir/libcryptopp.so.*
+%files -n %name%abiversion
+%doc LICENSE Readme.txt README.md
+%_libdir/libcryptopp.so.%abiversion
+%_libdir/libcryptopp.so.%version
 
 %files devel
 %_libdir/libcryptopp.so
@@ -145,6 +133,17 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.9.1-alt1
+- switch to the maintained fork cryptopp-modern
+- new version 2026.9.1
+- new soname libcryptopp.so.9: pack the library as libcryptopp9 (Shared Libs Policy)
+- add upstream libcryptopp.pc
+- security fixes:
+  + CVE-2024-28285: fix fault injection in hybrid DL decryption (ElGamal, ECIES, DLIES).
+  + CVE-2023-50980: fix DoS in BERDecodeGF2NP (strict exponent order, field degree cap).
+  + CVE-2023-50981: fix DoS in ModularSquareRoot and Rabin private key decoding.
+  + GHSA-9g8r-h7q5-x8pc: fix heap overflow in PKCS#1 v1.5 unpadding.
+
 * Mon Dec 25 2023 Vitaly Lipatov <lav@altlinux.ru> 8.9.0-alt1
 - new version 8.9.0 (with rpmrb script)
 
