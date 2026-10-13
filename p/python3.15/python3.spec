@@ -104,7 +104,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.0.0.rc1
+Version: %{pybasever}.0.1
 Release: alt1
 
 %if 0%{?_python3_standalone:1}
@@ -794,7 +794,7 @@ export LANG=C
 # Show some info, helpful for debugging test failures
 LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 
-ignore="-i test_freeze_simple_script testPeek test_embed test_site" # We are too fast
+ignore="-i test_freeze_simple_script testPeek" # We are too fast
 unsupported="-x test_urllib2 test_urllibnet test_socket" # No net in hasher
 # -l (--findleaks) is not compatible with -j
 WITHIN_PYTHON_RPM_BUILD= \
@@ -1237,6 +1237,9 @@ python3%_python3_standalone -c "import pyxcrypt; pyxcrypt.crypt('LedZeppelinRock
 %endif
 
 %changelog
+* Mon Oct 12 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15.0.1-alt1
+- Update to upstream 3.15.0 release
+
 * Wed Aug 05 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15.0.0.rc1-alt1
 - Update to upstream 3.15.0.rc1
 - Add %%pyarch to extension modules

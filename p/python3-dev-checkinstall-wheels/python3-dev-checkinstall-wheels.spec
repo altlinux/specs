@@ -6,7 +6,7 @@
 
 Name: python3-dev-checkinstall-wheels
 Version: 3.%submajor
-Release: alt1
+Release: alt2
 
 Summary: Special package with tests and wheels for python3-dev-checkinstall
 
@@ -40,6 +40,9 @@ done
 %tool_dir/wheels_for_checkinstall-%version
 
 %changelog
+* Mon Oct 12 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15-alt2
+- Update wheels for released python3.15.
+
 * Sat Jul 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15-alt1
 - Update for python3.15
 
