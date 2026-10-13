@@ -22,7 +22,7 @@
 %global workdir %cachedir/work
 
 Name: tomcat10
-Version: 10.1.60
+Version: 10.1.61
 Release: alt1
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
@@ -440,6 +440,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.61-alt1
+- 10.1.60 -> 10.1.61
+
 * Mon Sep 28 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.60-alt1
 - 10.1.59 -> 10.1.60 (fixes: CVE-2026-73581, CVE-2026-75973, CVE-2026-76183,
   CVE-2026-77756, CVE-2026-77762, CVE-2026-77791, CVE-2026-78383,
