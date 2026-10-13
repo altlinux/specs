@@ -7,7 +7,7 @@
 # %%python3_set_limited_api is not supported yet
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 Summary: A collection of framework independent HTTP protocol utils
 License: MIT
@@ -62,6 +62,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.0 -> 0.9.0
+
 * Fri Jun 05 2026 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.7.1 -> 0.8.0.
 
