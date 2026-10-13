@@ -16,7 +16,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 3.14.4
+Version: 3.14.5
 Release: alt1
 
 Summary: http client/server for asyncio
@@ -97,6 +97,9 @@ make cythonize-nodeps
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 12 2026 Stanislav Levin <slev@altlinux.org> 3.14.5-alt1
+- 3.14.4 -> 3.14.5
+
 * Tue Oct 06 2026 Stanislav Levin <slev@altlinux.org> 3.14.4-alt1
 - 3.14.3 -> 3.14.4
 
