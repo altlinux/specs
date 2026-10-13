@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 6.7.5
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -124,6 +124,9 @@ KF6 library
 %patch6 -p1
 %patch7 -p1
 
+# disable interrupts module
+sed -i 's|^add_subdirectory.*interrupts.*||' kcms/CMakeLists.txt
+
 grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
  && echo 'set_target_properties(KInfoCenterInternal PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 6)' >>src/CMakeLists.txt \
  ||:
@@ -173,6 +176,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K6bin/kinfocenter-ansi2html.sh
 
 
 %changelog
+* Tue Oct 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt2
+- disable interrupts module
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 
