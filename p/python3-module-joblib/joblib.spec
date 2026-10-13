@@ -6,8 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.6.0
-Release: alt1
-
+Release: alt2
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
 Group: Development/Python3
@@ -86,6 +85,9 @@ sed -i \
 %exclude %python3_sitelibdir/%mod_name/__pycache__/test*
 
 %changelog
+* Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
+- Fixed FTBFS (loky 3.7.0)
+
 * Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 1.6.0-alt1
 - 1.5.3 -> 1.6.0
 
