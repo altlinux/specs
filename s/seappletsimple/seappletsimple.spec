@@ -1,7 +1,7 @@
 %def_disable qt5
 
 Name: seappletsimple
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: Simple applet for SELinux
@@ -68,6 +68,9 @@ install -m644 %name.desktop %buildroot/%_xdgconfigdir/autostart/%name.desktop
 %_xdgconfigdir/autostart/%name.desktop
 
 %changelog
+* Tue Oct 13 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.6-alt1
+- don't ignore lowest level (closes: 60921)
+
 * Tue Mar 03 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.5-alt1
 - add workaround against MATE system tray menu
 - remove compiler warnings
