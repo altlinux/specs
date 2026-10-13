@@ -1,4 +1,4 @@
-%def_disable check
+%def_enable check
 %define _unpackaged_files_terminate_build 1
 %define _localstatedir %_var
 
@@ -9,6 +9,7 @@
 %add_findreq_skiplist %_unitdir/systemd-volatile-root.service
 %add_findreq_skiplist %_unitdir/altlinux-libresolv.service
 %add_findreq_skiplist %_unitdir/altlinux-openresolv.service
+%add_findreq_skiplist %_unitdir/systemd-tpm2-swtpm.service
 
 %def_disable static_libsystemd
 %def_disable static_libudev
@@ -33,9 +34,7 @@
 %def_enable gnutls
 %def_enable openssl
 %def_enable libcurl
-%def_disable libidn
 %def_enable libidn2
-%def_enable libiptc
 %def_enable polkit
 %def_enable homed
 %def_enable passwdqc
@@ -59,7 +58,7 @@
 %def_enable zstd
 %def_enable tests
 
-%def_disable smack
+%def_enable smack
 %def_enable seccomp
 %def_enable ima
 %def_enable selinux
@@ -70,7 +69,7 @@
 %def_enable sysusers
 %def_enable tcb
 %def_disable ldconfig
-%def_disable firstboot
+%def_enable firstboot
 %def_enable standalone_binaries
 
 %if_enabled sysusers
@@ -81,9 +80,8 @@
 %def_enable kexec
 %endif
 
-# from meson.build: bpf_arches = ['x86_64']
-%ifarch x86_64
-%def_disable bpf_framework
+%ifarch x86_64 aarch64
+%def_enable bpf_framework
 %else
 %def_disable bpf_framework
 %endif
@@ -94,12 +92,12 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 260
+%define ver_major 262
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -117,6 +115,7 @@ Source10: systemd-udev-trigger-no-reload.conf
 Source11: env-path-user.conf
 Source12: env-path-system.conf
 Source14: systemd-user.pam
+Source15: systemd-run0.pam
 Source19: udevd.init
 Source20: udevd.sysconfig
 Source22: scsi_id.config
@@ -220,20 +219,17 @@ BuildRequires: pkgconfig(bash-completion)
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl) >= 7.32.0}
-%{?_enable_libidn:BuildRequires: pkgconfig(libidn)}
 %{?_enable_libidn2:BuildRequires: pkgconfig(libidn2) >= 2.0.0}
-%{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_polkit:BuildRequires: pkgconfig(polkit-gobject-1)}
 %{?_enable_bootloader:BuildRequires: python3-module-elftools}
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
 %{?_enable_passwdqc:BuildRequires: pkgconfig(passwdqc)}
-%{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.1.0 /usr/bin/clang /usr/bin/llvm-strip bpftool}
+%{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.1.0 /usr/bin/clang /usr/bin/llvm-strip bpftool rpm-build-vm}
 %{?_enable_tcb:BuildRequires: libtcb-devel}
-# for make check
-#BuildRequires: /proc
-#BuildRequires: lz4
 # for tests
 %{?_enable_tests:BuildRequires: rpm-build-python3 diffutils}
+# xkeyboard-config for test-localed-util, /dev/pts for test-terminal-util.
+%{?_enable_check:BuildRequires: xkeyboard-config /dev/pts}
 
 Requires: dbus >= %dbus_ver
 Conflicts: filesystem < 3
@@ -243,11 +239,14 @@ Requires: agetty
 Requires: acl
 Requires: util-linux >= 2.27.1
 %{?_enable_seccomp:Requires: libseccomp >= 2.3.1}
-%{?_enable_libidn:Requires: libidn >= 1.33-alt2}
 %{?_enable_libidn2:Requires: libidn2 > 2.0.4-alt3}
+%{?_enable_libcryptsetup:Requires: libcryptsetup}
+%{?_enable_openssl:Requires: libcrypto3}
+Requires: libfdisk
+%{?_enable_bpf_framework:Requires: libbpf}
+%{?_enable_libcurl:Requires: libcurl}
 
 # Requires: selinux-policy >= 3.8.5
-%{?_enable_efi:Requires: %name-boot-efi = %EVR}
 Requires: libnss-myhostname = %EVR
 Requires: libnss-systemd = %EVR
 
@@ -433,7 +432,7 @@ Summary: nss-resolve is plugin for resolve hostnames via systemd-resolved
 Requires(pre): chrooted >= 0.3.5-alt1 sed
 Requires(postun): chrooted >= 0.3.5-alt1 sed
 Requires: dbus >= %dbus_ver
-Requires: %name-networkd = %EVR
+Requires: %name-resolved = %EVR
 
 %description -n libnss-resolve
 NSS module "nss-resolve" has been added which can be used
@@ -473,12 +472,28 @@ Summary: System daemon that manages network configurations
 Conflicts: %name < 1:214-alt13
 Requires: %name = %EVR
 Requires: iproute2
+%if_enabled resolve
+Requires: %name-resolved = %EVR
+%endif
 Provides: network-config-subsystem
 
 %description networkd
 systemd-networkd is a system service that manages networks.
 It detects and configures network devices as they appear,
 as well as creating virtual network devices.
+
+%package resolved
+Group: System/Base
+Summary: Network Name Resolution manager
+Requires: %name = %EVR
+Conflicts: %name-networkd < %EVR
+%{?_enable_openssl:Requires: libssl3 libcrypto3}
+
+%description resolved
+systemd-resolved is a system service that provides network name resolution
+to local applications. It implements a caching and validating DNS/DNSSEC
+stub resolver, as well as an LLMNR and MulticastDNS resolver and responder.
+It may be used together with systemd-networkd, NetworkManager or on its own.
 
 %package oomd-defaults
 Group: System/Base
@@ -494,7 +509,7 @@ a userspace out-of-memory (OOM) killer.
 Group: System/Configuration/Other
 Summary: Network Time Synchronization
 Conflicts: %name < 1:214-alt13
-Requires: %name-networkd = %EVR
+Requires: %name = %EVR
 Provides: ntp-client
 # temporary disabled
 # Provides: ntp-server
@@ -508,6 +523,15 @@ Summary: Tools for containers and VMs
 Group: System/Configuration/Other
 Requires: %name = %EVR
 #Requires: libnss-mymachines = %%EVR
+%{?_enable_bpf_framework:Requires: libbpf}
+# importd and machined dlopen() these for image download and unpacking.
+%{?_enable_libcurl:Requires: libcurl}
+%{?_enable_openssl:Requires: libcrypto3}
+%{?_enable_xz:Requires: liblzma}
+%{?_enable_zlib:Requires: zlib}
+%{?_enable_bzip2:Requires: bzlib}
+%{?_enable_zstd:Requires: libzstd}
+Requires: libarchive13
 Provides: /lib/systemd/systemd-machined
 
 %description container
@@ -520,6 +544,7 @@ systemd-machined, and systemd-importd.
 Summary: Tools for Portable Services
 Group: System/Configuration/Other
 Requires: %name = %EVR
+%{?_enable_openssl:Requires: libcrypto3}
 
 %description portable
 A portable service is ultimately just an OS tree, either inside of a directory
@@ -530,6 +555,8 @@ Summary: Home Directory/User Account Manager
 Group: System/Configuration/Other
 Requires: %name = %EVR
 Requires: pam_%{name}_home = %EVR
+Requires: libfdisk
+%{?_enable_openssl:Requires: libcrypto3}
 
 %description homed
 systemd-homed is a system service that may be used
@@ -547,6 +574,9 @@ Analyze tool for systemd.
 Group: System/Servers
 Summary: Journal Gateway Daemon
 Requires: %name = %EVR
+%{?_enable_microhttpd:Requires: libmicrohttpd}
+%{?_enable_gnutls:Requires: libgnutls30}
+%{?_enable_libcurl:Requires: libcurl}
 Provides: systemd-journal-gateway = %EVR
 Obsoletes: systemd-journal-gateway < %EVR
 
@@ -575,9 +605,11 @@ This package enables EFI signature verification.
 Group: System/Kernel and hardware
 Summary: Tool to build Unified Kernel Images
 Requires: %name = %EVR
+# ukify uses the EFI stubs from /usr/lib/systemd/boot/efi by default
+%{?_enable_bootloader:Requires: %name-boot-efi = %EVR}
 #BuildArch: noarch
-BuildRequires: python3(pefile) python3(PIL) python3(zstd)
-%py3_requires pefile PIL zstd
+BuildRequires: python3(pefile) python3(PIL)
+%py3_requires pefile PIL
 
 %description ukify
 This package provides ukify, a script that combines a kernel image, an initrd,
@@ -675,6 +707,7 @@ Requires: libfido2_1 libqrencode4 libarchive
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-81-GENERATORS.fstab-generator.sh
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-86-MULTI-PROFILE-UKI.sh
 %add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-07-PID1.private-bpf.sh
+%add_findreq_skiplist /usr/lib/systemd/tests/testdata/units/TEST-90-RESTRICT-FSACCESS.enforce.sh
 %filter_from_requires /^.usr.lib.os-release/d
 
 %description tests
@@ -684,6 +717,8 @@ They can be useful to test systemd internals.
 %package utils-standalone
 Group: System/Configuration/Boot and Init
 Summary: Standalone systemd utils
+Requires: libfdisk
+%{?_enable_openssl:Requires: libcrypto3}
 Provides: %name-modules-load-standalone = %EVR
 Provides: %name-repart-standalone = %EVR
 Provides: %name-shutdown-standalone = %EVR
@@ -758,6 +793,13 @@ Conflicts: startup < 0.9.9.14
 sed -i "s|/usr/bin/bash|/bin/bash|g" test/units/*.sh
 
 %build
+%if_enabled bpf_framework
+# vmlinux.h for the BPF programs, dumped from the kernel BTF in a VM.
+vm-run --sbin --heredoc <<'EOF'
+bpftool btf dump file /sys/kernel/btf/vmlinux format c > vmlinux.h
+EOF
+grep -qs '^struct task_struct {' vmlinux.h
+%endif
 %meson \
         -Dmode=release \
         -Dlink-udev-shared=false \
@@ -770,7 +812,7 @@ sed -i "s|/usr/bin/bash|/bin/bash|g" test/units/*.sh
         -Dlink-executor-shared=false \
         %{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
         %{?_enable_static_libudev:-Dstatic-libudev=pic} \
-        %{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
+        %{?_enable_standalone_binaries:-Dstandalone-binaries=busctl,modules-load,repart,shutdown,sysctl,sysusers,tmpfiles} \
         -Dxinitrcdir=%_sysconfdir/X11/xinit.d \
         -Dpamlibdir=/%_lib/security \
         -Dsplit-bin=true \
@@ -834,10 +876,11 @@ sed -i "s|/usr/bin/bash|/bin/bash|g" test/units/*.sh
         %{?_enable_initrd:-Dinitrd=true} \
         %{?_enable_quotacheck:-Dquotacheck=true} \
         %{?_enable_randomseed:-Drandomseed=true} \
-        %{?_enable_bpf_framework:-Dbpf-framework=true} \
+        %{?_enable_bpf_framework:-Dbpf-framework=enabled -Dvmlinux-h=provided -Dvmlinux-h-path=$PWD/vmlinux.h} \
+        %{?_disable_bpf_framework:-Dbpf-framework=disabled -Dvmlinux-h=disabled} \
         %{?_enable_coredump:-Dcoredump=true} \
         %{?_enable_pstore:-Dpstore=true} \
-        %{?_enable_smack:-Dsmack=true} \
+        -Dsmack=%{?_enable_smack:true}%{!?_enable_smack:false} \
         %{?_enable_gcrypt:-Dgcrypt=enabled} \
         %{?_enable_qrencode:-Dqrencode=enabled} \
         %{?_enable_microhttpd:-Dmicrohttpd=enabled} \
@@ -846,9 +889,7 @@ sed -i "s|/usr/bin/bash|/bin/bash|g" test/units/*.sh
         %{?_enable_p11kit:-Dp11kit=enabled} \
         %{?_enable_libfido2:-Dlibfido2=enabled} \
         %{?_enable_libcurl:-Dlibcurl=enabled} \
-        %{?_enable_libidn:-Dlibidn=true} \
         %{?_enable_libidn2:-Dlibidn2=enabled} \
-        %{?_enable_libiptc:-Dlibiptc=enabled} \
         %{?_enable_polkit:-Dpolkit=enabled} \
         %{?_enable_efi:-Defi=true} \
         %{?_enable_vmspawn:-Dvmspawn=enabled} \
@@ -940,10 +981,10 @@ rm -f %buildroot%_systemd_dir/boot/efi/linuxia32.elf.stub
 
 %if_disabled bpf_framework
 rm -f %buildroot%_systemd_dir/tests/unit-tests/manual/test-bpf-token
+%endif
 
 # Drop mkosi CI fixtures: their unit files trip sisyphus_check.
 rm -rf %buildroot%_systemd_dir/tests/mkosi
-%endif
 
 %if_disabled tpm2
 # for some weird reason, systemd still installs these man pages
@@ -961,6 +1002,7 @@ rm -vf %buildroot%_man8dir/systemd-tpm2*
 
 # Make sure these directories are properly owned
 mkdir -p %buildroot%_unitdir/{basic,dbus,default,graphical,poweroff,rescue,reboot,sysinit}.target.wants
+%{?_enable_coredump:mkdir -p %buildroot%_unitdir/systemd-coredump@.service.wants}
 
 install -m755 %SOURCE2 %buildroot%_systemd_dir/systemd-sysv-install
 
@@ -1041,6 +1083,11 @@ EOF
 # don't enable wall ask password service, it spams every console
 rm -f %buildroot%_unitdir/multi-user.target.wants/systemd-ask-password-wall.path
 
+%if_enabled firstboot
+# don't run interactive systemd-firstboot on boot with empty machine-id
+rm -f %buildroot%_unitdir/sysinit.target.wants/systemd-firstboot.service
+%endif
+
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
@@ -1100,8 +1147,9 @@ mkdir -p %buildroot%_user_env_gen_dir
 mkdir -p %buildroot%_env_gen_dir
 mkdir -p %buildroot%_sysconfdir/systemd/{system,user}-generators
 
-# fix pam.d/systemd-user for ALTLinux
+# fix pam.d/systemd-user and pam.d/systemd-run0 for ALTLinux
 install -m644 %SOURCE14 %buildroot%_sysconfdir/pam.d/systemd-user
+install -m644 %SOURCE15 %buildroot%_sysconfdir/pam.d/systemd-run0
 
 # Install ALTLinux default preset policy
 mkdir -p %buildroot%_presetdir
@@ -1234,7 +1282,16 @@ install -D -m644 -t %buildroot%_unitdir/systemd-udev-trigger.service.d/ %SOURCE1
 
 %check
 export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/src/shared:$(pwd)/%{__builddir}
-%meson_test
+# Excluded: hasher mounts /proc with hidepid and /etc/login.defs is 0640;
+# test-rpm-macros checks the upstream macros.systemd that ALT does not ship.
+%__meson test --print-errorlogs -C %__builddir \
+	--exclude test-sd-login \
+	--exclude test-fileio \
+	--exclude test-mountpoint-util \
+	--exclude test-process-util \
+	--exclude test-stat-util \
+	--exclude test-uid-classification \
+	--exclude test-rpm-macros
 
 %pre
 groupadd -r -f -g 84 systemd-journal >/dev/null 2>&1 ||:
@@ -1395,15 +1452,34 @@ groupadd -r -f -g 85 systemd-network >/dev/null 2>&1 ||:
 useradd -g systemd-network -c 'systemd Network Management' \
     -d /var/empty -s /dev/null -r -l -M -u 85 systemd-network >/dev/null 2>&1 ||:
 
+%post networkd
+%post_systemd_postponed systemd-networkd.service systemd-networkd.socket systemd-networkd-varlink.socket systemd-networkd-varlink-metrics.socket systemd-networkd-resolve-hook.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service
+# resolved is installed before 85-networkd.preset (Requires), so preset it here.
+# Initial install only: upgrades from the old networkd keep resolved state.
+if [ $1 -eq 1 ] && sd_booted; then
+        systemctl --no-reload preset systemd-resolved.service || :
+fi
+
+%preun networkd
+%systemd_preun systemd-networkd.service systemd-networkd.socket systemd-networkd-varlink.socket systemd-networkd-varlink-metrics.socket systemd-networkd-resolve-hook.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service
+%endif
+
+%if_enabled resolve
+%pre resolved
 groupadd -r -f -g 86 systemd-resolve >/dev/null 2>&1 ||:
 useradd -g systemd-resolve -c 'systemd Resolver' \
     -d /var/empty -s /dev/null -r -l -M -u 86 systemd-resolve >/dev/null 2>&1 ||:
 
-%post networkd
-%post_systemd_postponed systemd-networkd.service systemd-networkd.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service systemd-resolved.service
+%post resolved
+# No preset: upgrading from the old networkd installs resolved anew ($1 = 1),
+# preset would reset its state.  It is preset by networkd instead.
+if sd_booted; then
+        systemctl daemon-reload
+        /lib/systemd/systemd-update-helper mark-restart-system-units systemd-resolved.service || :
+fi
 
-%preun networkd
-%systemd_preun systemd-networkd.service systemd-networkd.socket systemd-networkd-wait-online.service systemd-network-generator.service systemd-networkd-persistent-storage.service systemd-resolved.service
+%preun resolved
+%systemd_preun systemd-resolved.service
 %endif
 
 %if_enabled coredump
@@ -1411,6 +1487,16 @@ useradd -g systemd-resolve -c 'systemd Resolver' \
 groupadd -r -f -g 88 systemd-coredump >/dev/null 2>&1 ||:
 useradd -g systemd-coredump -c 'systemd Core Dumper' \
     -d /var/empty -s /dev/null -r -l -M -u 88 systemd-coredump >/dev/null 2>&1 ||:
+
+%post coredump
+# The static socket is not started until reboot, and the kernel helper drops core dumps meanwhile.
+if sd_booted; then
+        systemctl daemon-reload
+        systemctl --no-block start systemd-coredump.socket || :
+fi
+
+%preun coredump
+%systemd_preun systemd-coredump.socket
 %endif
 
 %if_enabled timesyncd
@@ -1442,6 +1528,12 @@ fi
 
 %preun homed
 %systemd_preun systemd-homed.service
+
+%post container
+%post_systemd_postponed systemd-mountfsd.socket systemd-nsresourced.socket machines.target
+
+%preun container
+%systemd_preun systemd-mountfsd.socket systemd-nsresourced.socket machines.target
 
 %post boot-efi
 if bootctl --quiet is-installed >/dev/null 2>&1 ; then
@@ -1842,7 +1934,7 @@ fi
 
 %if_enabled firstboot
 %_bindir/systemd-firstboot
-%_man8dir/systemd-firstboot.*
+%_man1dir/systemd-firstboot.*
 %endif
 
 %if_enabled qrencode
@@ -1972,6 +2064,8 @@ fi
 %_systemd_dir/systemd-pcrextend
 %_systemd_dir/systemd-tpm2-setup
 %_systemd_dir/systemd-tpm2-clear
+%_systemd_dir/systemd-tpm2-swtpm
+%_man8dir/systemd-pcrosseparator*
 %_man1dir/systemd-measure*
 %_man8dir/systemd-pcrlock*
 %_man8dir/systemd-pcrfs*
@@ -2004,6 +2098,9 @@ fi
 %exclude %_unitdir/systemd-network-generator.service
 %exclude %_unitdir/*resolv*
 %exclude %_unitdir/*/*resolv*
+%endif
+%if_enabled resolve
+%exclude %_unitdir/*resolved*
 %endif
 %if_enabled timesyncd
 %exclude %_unitdir/*timesyncd*
@@ -2279,6 +2376,51 @@ fi
 
 %_systemd_dir/systemd-report
 %_man1dir/systemd-report.*
+%_systemd_dir/systemd-report-basic
+%_systemd_dir/systemd-report-cgroup
+%_systemd_dir/systemd-report-files
+%_systemd_dir/systemd-report-sign-tsm
+%_man8dir/systemd-report-files*
+%_man8dir/systemd-report-sign-tsm*
+%if_enabled openssl
+%_systemd_dir/systemd-report-sign-plain
+%_man8dir/systemd-report-sign-plain*
+%if_enabled tpm2
+%_systemd_dir/systemd-report-sign-tpm2
+%_man8dir/systemd-report-sign-tpm2*
+%endif
+%endif
+
+%_bindir/storagectl
+%_sbindir/mount.storage
+%_systemd_dir/systemd-storage-block
+%_systemd_dir/systemd-storage-fs
+%_man1dir/storagectl.*
+%_man1dir/mount.storage.*
+%_man8dir/systemd-storage-block*
+%_man8dir/systemd-storage-fs*
+
+%_bindir/systemd-sysinstall
+%_man8dir/systemd-sysinstall*
+
+%_systemd_dir/systemd-clonesetup
+%_man5dir/clonetab.*
+%_man8dir/systemd-clonesetup*
+
+%if_enabled libcurl
+%_systemd_dir/systemd-imds
+%_systemd_dir/systemd-imdsd
+%_man1dir/systemd-imds.*
+%_man8dir/systemd-imds*
+%if_enabled sysusers
+%_sysusersdir/systemd-imds.conf
+%endif
+%endif
+
+%_man8dir/systemd-confext-sysroot*
+%_man8dir/systemd-sysext-sysroot*
+
+%_tmpfilesdir/root.conf
 
 %_tmpfilesdir/20-systemd-varlink.conf
 %_datadir/user-tmpfiles.d/20-systemd-varlink.conf
@@ -2376,37 +2518,21 @@ fi
 %files networkd
 %_bindir/networkctl
 %ghost %config(noreplace) %_sysconfdir/systemd/networkd.conf
-%ghost %config(noreplace) %_sysconfdir/systemd/resolved.conf
 %_systemd_dir/networkd.conf
-%_systemd_dir/resolved.conf
-%_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
 %_datadir/dbus-1/system.d/org.freedesktop.network1.conf
-%_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
 %_datadir/dbus-1/system-services/org.freedesktop.network1.service
 %if_enabled polkit
 %_datadir/polkit-1/rules.d/systemd-networkd.rules
 %_datadir/polkit-1/actions/org.freedesktop.network1.policy
-%_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
 %endif
 %_systemd_dir/systemd-network-generator
 %_presetdir/85-networkd.preset
 %_systemd_dir/systemd-networkd
 %_systemd_dir/systemd-networkd-wait-online
-%_systemd_dir/systemd-resolved
-%_systemd_dir/resolv.conf
 %_modprobedir/systemd.conf
-%_bindir/resolvectl
-%_bindir/systemd-resolve
-# TODO: Provides: /sbin/resolvconf ?
-%exclude %_sbindir/resolvconf
 %_tmpfilesdir/systemd-network.conf
-# TODO: package systemd-resolve.conf
-%exclude %_tmpfilesdir/systemd-resolve.conf
 %_unitdir/*networkd*
 %_unitdir/systemd-network-generator.service
-# Use *resolved* (trailing 'd') so systemd-networkd-resolve-hook.socket is not
-# double-listed here — it is already covered by *networkd* above.
-%_unitdir/*resolved*
 %_unitdir/altlinux-*resolv*
 %_unitdir/*/*resolv*
 %_systemd_dir/network/80-6rd-tunnel.network
@@ -2419,20 +2545,45 @@ fi
 %_mandir/*/*networkd*
 %_mandir/*/systemd-network-generator*
 %_mandir/*/*netdev*
+%_mandir/*/*network1*
+%_man1dir/networkctl.*
+%_man5dir/systemd.network.*
+%if_enabled sysusers
+%_sysusersdir/systemd-network.conf
+%endif
+%endif
+
+%if_enabled resolve
+%files resolved
+%ghost %config(noreplace) %_sysconfdir/systemd/resolved.conf
+%_systemd_dir/resolved.conf
+%_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
+%_datadir/dbus-1/system-services/org.freedesktop.resolve1.service
+%if_enabled polkit
+%_datadir/polkit-1/actions/org.freedesktop.resolve1.policy
+%endif
+%_systemd_dir/systemd-resolved
+%_systemd_dir/resolv.conf
+%_bindir/resolvectl
+%_bindir/systemd-resolve
+# TODO: Provides: /sbin/resolvconf ?
+%exclude %_sbindir/resolvconf
+# TODO: package systemd-resolve.conf
+%exclude %_tmpfilesdir/systemd-resolve.conf
+# Use *resolved* (trailing 'd') so systemd-networkd-resolve-hook.socket is not
+# listed here — it belongs to networkd.
+%_unitdir/*resolved*
 %_mandir/*/*resolved*
 %_mandir/*/*resolve1*
-%_mandir/*/*network1*
 %_mandir/*/*dnssd*
-%_man1dir/networkctl.*
 %_man1dir/resolvectl.*
 %_man1dir/resolvconf.*
 %_man5dir/dnssec-trust-anchors.d.*
 %_man5dir/systemd.dns-delegate*
 %_man5dir/systemd.negative.*
 %_man5dir/systemd.positive.*
-%_man5dir/systemd.network.*
+%_man5dir/systemd.rr.*
 %if_enabled sysusers
-%_sysusersdir/systemd-network.conf
 %_sysusersdir/systemd-resolve.conf
 %endif
 %endif
@@ -2737,6 +2888,31 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Oct 13 2026 Egor Ignatov <egori@altlinux.org> 1:262-alt1
+- 262.
+- Split systemd-resolved out of systemd-networkd (closes: #60729):
+  + enable systemd-resolved with systemd-networkd on new installations;
+  + keep systemd-resolved state on upgrades;
+  + systemd-resolved answers LLMNR on port 5355 by default.
+- Drop systemd-timesyncd dependency on systemd-networkd.
+- Wait for any link with DNS in altlinux-*resolv services (closes: #32470).
+- Drop systemd dependency on systemd-boot-efi (closes: #52832):
+  + systemd-ukify requires systemd-boot-efi for the EFI stubs now;
+  + install systemd-boot-efi explicitly to use systemd-boot.
+- Package systemd-firstboot without enabling it on first boot (closes: #60350).
+- Own systemd-coredump@.service.wants directory (closes: #50781).
+- Add pam_rootok and pam_umask to systemd-user PAM config.
+- Use common-login in systemd-run0 PAM config (closes: #60730).
+- Enable bpf-framework on x86_64 and aarch64:
+  + systemd-nsresourced user namespace API;
+  + RestrictFileSystems=, SocketBind*= and RestrictNetworkInterfaces=.
+- Require libraries loaded via dlopen() since v261.
+- Start systemd-coredump.socket when systemd-coredump is installed.
+- Preset systemd-container units on first install: mountfsd, nsresourced, machines.target.
+- Do not require swtpm-tools for systemd-tpm2-swtpm.service.
+- Drop python3(zstd) from systemd-ukify dependencies.
+- Set / permissions to 0555 by new upstream tmpfiles.d/root.conf.
+
 * Mon Aug 10 2026 Alexey Shabalin <shaba@altlinux.org> 1:260.4-alt2
 - Enable getty@.service on upgrades to restore the autovt@.service alias dropped
   upstream in v260, unless it is already set up, e.g. taken over by kmscon (ALT#60052).
