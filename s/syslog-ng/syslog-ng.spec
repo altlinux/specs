@@ -22,7 +22,7 @@
 
 Name: syslog-ng
 Version: 4.8.3
-Release: alt1
+Release: alt2
 
 Summary: syslog-ng daemon
 Group: System/Kernel and hardware
@@ -274,6 +274,8 @@ skip_submodules=1 ./autogen.sh
 %if_enabled native_connector
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %endif
+
+%add_optflags -Wno-error=declaration-after-statement
 
 %configure \
  --sbindir=/sbin \
@@ -576,6 +578,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 4.8.3-alt2
+- rebuilt with net-snmpi-5.9.5.2
+
 * Wed Dec 10 2025 Sergey Y. Afonin <asy@altlinux.org> 4.8.3-alt1
 - 4.8.3 (CVE-2024-47619)
 

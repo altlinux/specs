@@ -1,4 +1,6 @@
-%define abiversion 40
+%define _unpackaged_files_terminate_build 1
+%set_autoconf_version 2.71
+%define abiversion 45
 %define _name net-snmp
 %def_disable mibs
 %def_with mysql
@@ -6,19 +8,17 @@
 # XXX tests fail
 %def_without test
 
-%set_gcc_version      13
-
 Name: %_name%abiversion
-Version: 5.9.4
-Release: alt1.3
+Version: 5.9.5.2
+Release: alt1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
 Group: System/Servers
-Url: http://net-snmp.sourceforge.net
+URL: http://net-snmp.sourceforge.net
+VCS: https://github.com/net-snmp/net-snmp
 
 Source0: %name-%version.tar
-#git clone git://net-snmp.git.sourceforge.net/gitroot/net-snmp/net-snmp
 Source1: %_name.init
 Source2: %_name.conf
 Source3: %_name.logrotate
@@ -30,6 +30,7 @@ Source8: snmpd.service
 Source9: snmptrapd.service
 
 Patch: %name-%version-%release.patch
+Patch1: net-snmp-agent-smux-accept.patch
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
@@ -37,12 +38,14 @@ Patch: %name-%version-%release.patch
 
 %def_enable static
 BuildRequires: librpm-devel >= 4.0.4 libssl-devel
+BuildRequires: autoconf_2.71
 # Automatically added by buildreq on Wed Oct 13 2010
 BuildRequires: libnl-devel librpm-devel libsensors3-devel pdksh perl-devel python3-module-setuptools perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple perl-JSON perl-Mail-Sender
 %{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_with_mysql:BuildRequires: libmysqlclient-devel}
 %{?_with_systemd:BuildRequires: systemd-devel}
 BuildRequires: perl-podlators chrpath
+BuildRequires: libncurses-devel
 
 %package -n %_name-common
 Summary: Common dirs and files for the SNMP protocol
@@ -259,6 +262,7 @@ for run-time access to parsed MIB data.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 export CC=%__cc
@@ -455,6 +459,7 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %_bindir/snmptable
 %_bindir/snmptest
 %_bindir/snmptls
+%_bindir/snmptop
 %_bindir/snmptranslate
 %_bindir/snmptrap
 %_bindir/snmpusm
@@ -479,6 +484,7 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %_man1dir/snmpstatus.*
 %_man1dir/snmptable.*
 %_man1dir/snmptest.*
+%_man1dir/snmptop.*
 %_man1dir/snmptranslate.*
 %_man1dir/snmptrap.*
 %_man1dir/snmpusm.*
@@ -518,10 +524,10 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %_libdir/libnetsnmp.so.*
 
 %files -n lib%name-agent
-%_libdir/libnetsnmpagent.so.*
-%_libdir/libnetsnmphelpers.so.*
-%_libdir/libnetsnmpmibs.so.*
-%_libdir/libnetsnmptrapd.so.*
+%_libdir/libnetsnmpagent.so.%{abiversion}*
+%_libdir/libnetsnmphelpers.so.%{abiversion}*
+%_libdir/libnetsnmpmibs.so.%{abiversion}*
+%_libdir/libnetsnmptrapd.so.%{abiversion}*
 
 %files -n lib%_name-devel
 %doc net-snmp-mibs.tar.bz2
@@ -561,6 +567,12 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %doc python/README
 
 %changelog
+* Sat Oct 10 2026 Andrey Cherepanov <cas@altlinux.org> 5.9.5.2-alt1
+- 5.9.5.2 (fixes: CVE-2025-68615, CVE-2026-89147).
+- New VCS: https://github.com/net-snmp/net-snmp.
+- Added Linux 6.7 compatibility parsing /proc/net/snmp.
+- Add %%abiversion to library names in %%files.
+
 * Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 5.9.4-alt1.3
 - NMU: fixed build with python3.13
 
