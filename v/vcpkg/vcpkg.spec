@@ -2,7 +2,7 @@
 
 Name: vcpkg
 Version: 2026.09.26
-Release: alt1
+Release: alt2
 
 Summary: C++ Library Manager
 
@@ -14,12 +14,16 @@ Url: https://github.com/microsoft/vcpkg-tool
 # Source-url: https://github.com/microsoft/vcpkg-tool/archive/refs/tags/%repotag.tar.gz
 Source: %name-%version.tar
 Source1: %name.sh
+Source2: %name-wrapper.sh
+Source3: README.ALT
+
+Requires: /usr/bin/git
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: catch2-devel
 BuildRequires: libfmt-devel >= 9.1.0
 BuildRequires: libcurl-devel
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: cmrc >= 2.0.1
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -29,13 +33,16 @@ Vcpkg is a package manager for the different C and C++ libraries.
 
 Vcpkg can collect usage data. The data collected by Microsoft is anonymous.
 
-Fedora package has telemetry disabled by default. If you want enable
-telemetry, you should remove the %_sysconfdir/profile.d/%name.sh file
-or unset the VCPKG_DISABLE_METRICS environment variable.
+Telemetry is disabled by default. If you want enable telemetry, you should
+remove the %_sysconfdir/profile.d/%name.sh file or unset the
+VCPKG_DISABLE_METRICS environment variable.
+
+vcpkg needs a clone of the https://github.com/microsoft/vcpkg registry
+(VCPKG_ROOT, $HOME/.local/share/vcpkg by default). The /usr/bin/vcpkg
+wrapper clones it on the first use, see README.ALT.
 
 %prep
 %setup
-
 
 # Fixing line endings...
 sed -e "s,\r,," -i README.md
@@ -65,16 +72,28 @@ ln -svf %_includedir/catch2/ include/
 %install
 %cmake_install
 
+# The wrapper takes care of VCPKG_ROOT
+install -D -m 0755 -p %buildroot%_bindir/%name %buildroot%_libexecdir/%name/%name
+install -m 0755 -p "%SOURCE2" %buildroot%_bindir/%name
+install -m 0644 -p "%SOURCE3" README.ALT
+
 # Installing environment options override...
 install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 
 %files
-%doc README.md
+%doc README.md README.ALT
 %doc LICENSE.txt NOTICE.txt
 %_bindir/%name
+%dir %_libexecdir/%name
+%_libexecdir/%name/%name
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.09.26-alt2
+- add vcpkg wrapper: default VCPKG_ROOT, clone the registry on first use (closes: #54865)
+- add "vcpkg update-registry" command
+- add README.ALT
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.09.26-alt1
 - new version 2026.09.26
 - drop fmt 12 workaround (fixed upstream)
