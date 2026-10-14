@@ -19,7 +19,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 157.0.1
+Version: 158.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -47,10 +47,10 @@ Patch006: 0006-Fix-OTR-query-message-split-on-newline.patch
 Patch007: 0007-Add-Yandex-search-engine-to-the-bundled-search-confi.patch
 Patch008: 0008-Reserve-space-in-the-chat-tooltip-for-async-loaded-i.patch
 Patch009: 0009-Apply-chat-message-style-changes-to-already-open-con.patch
-Patch010: 0010-Fix-Matrix-chat-SSO-login-loop-when-saveToken-is-dis.patch
-Patch011: 0011-Enable-cut-and-copy-in-the-calendar-view-context-men.patch
-Patch012: 0012-Restore-the-task-tree-observers-when-its-frame-is-re.patch
-Patch013: 0013-Add-patch-taking-EWS-well-known-folder-names-from-th.patch
+Patch010: 0010-Restore-the-task-tree-observers-when-its-frame-is-re.patch
+Patch011: 0011-Add-patch-taking-EWS-well-known-folder-names-from-th.patch
+Patch012: 0012-Adjust-address-autofill-regions-for-ALT.patch
+Patch013: 0013-gfx-thebes-Keep-the-generic-of-fontconfig-generic-al.patch
 ### End Patches
 
 Provides: mailclient
@@ -404,6 +404,92 @@ xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Wed Oct 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 158.0-alt1
+- New version.
+- Fix emoji drawn in black and white when the system font
+  is a fontconfig generic alias like Sans Serif (Closes: 60882).
+- Fixes:
+  + CVE-2026-110247: Integer overflow in libmime buffer growth could lead to heap corruption
+  + CVE-2026-110249: Denial-of-service in the Exchange email component
+  + CVE-2026-109704: Privilege escalation in the Application Update component
+  + CVE-2026-109705: Sandbox escape, site isolation issue due to incorrect boundary conditions, use-after-free in the Networking component
+  + CVE-2026-109706: Use-after-free in the Storage: IndexedDB component
+  + CVE-2026-109707: Sandbox escape due to use-after-free in the Networking component
+  + CVE-2026-109708: Sandbox escape due to incorrect boundary conditions in the Networking component
+  + CVE-2026-109709: Information disclosure, privilege escalation in the Security: Process Sandboxing component
+  + CVE-2026-109710: Use-after-free in the Graphics: Text component
+  + CVE-2026-109711: Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-109712: Sandbox escape due to uninitialized memory in the Graphics component
+  + CVE-2026-109713: Use-after-free in the Crash Reporting component
+  + CVE-2026-109714: Incorrect boundary conditions in the Layout component
+  + CVE-2026-109715: Incorrect boundary conditions in the JavaScript Engine component
+  + CVE-2026-109716: Incorrect boundary conditions in the JavaScript Engine component
+  + CVE-2026-109717: Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-109718: Use-after-free in the XML component
+  + CVE-2026-109719: Race condition, use-after-free in the Graphics: CanvasWebGL component
+  + CVE-2026-109720: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-109721: Incorrect boundary conditions in the JavaScript Engine: JIT component
+  + CVE-2026-109722: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-109723: Integer overflow in the Layout: Text and Fonts component
+  + CVE-2026-109724: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-109725: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-109726: Use-after-free in the SVG component
+  + CVE-2026-109727: Use-after-free in the Audio/Video component
+  + CVE-2026-109728: Use-after-free in the DOM: Animation component
+  + CVE-2026-109729: Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-109730: Integer overflow in the Graphics component
+  + CVE-2026-109731: Incorrect boundary conditions in the Graphics: Canvas2D component
+  + CVE-2026-109732: Use-after-free in the DOM: Streams component
+  + CVE-2026-109733: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-106016: Mitigation bypass in the File Handling component
+  + CVE-2026-109734: Mitigation bypass in the DOM: Security component
+  + CVE-2026-109735: Use-after-free in the DOM: Animation component
+  + CVE-2026-109736: Frame poisoning in the Layout component
+  + CVE-2026-109737: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-109738: Use-after-free in the Audio/Video: Playback component
+  + CVE-2026-109739: Privilege escalation in the WebExtensions component
+  + CVE-2026-109740: Sandbox escape due to incorrect boundary conditions in the Widget: Win32 component
+  + CVE-2026-109741: Use-after-free in the Storage: Bucket File System component
+  + CVE-2026-109742: Information disclosure in the PDF Viewer component
+  + CVE-2026-109743: Privilege escalation in the Panning and Zooming component
+  + CVE-2026-109744: Other issue in the DOM: File component
+  + CVE-2026-109745: Sandbox escape due to uninitialized memory in the DOM: Web Serial component
+  + CVE-2026-109746: Mitigation bypass in the DOM: Security component
+  + CVE-2026-109747: Other issue in the Address Bar component
+  + CVE-2026-109748: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-109749: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-109750: Site isolation issue in the DOM: Web Authentication component
+  + CVE-2026-109751: Information disclosure in the Networking component
+  + CVE-2026-109752: Use-after-free in the DOM: Workers component
+  + CVE-2026-109753: Incorrect boundary conditions in the Layout component
+  + CVE-2026-109754: Incorrect boundary conditions in the DOM: Editor component
+  + CVE-2026-109755: Sandbox escape in the DOM: Content Processes component
+  + CVE-2026-109756: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-109757: Sandbox escape due to race condition in the Networking component
+  + CVE-2026-109759: Site isolation issue in the Networking component
+  + CVE-2026-109760: Mitigation bypass in the Networking: HTTP component
+  + CVE-2026-109761: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-109762: Incorrect boundary conditions in the SVG component
+  + CVE-2026-109763: Mitigation bypass in the File Handling component
+  + CVE-2026-109764: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-109765: Race condition, use-after-free in the Graphics: Text component
+  + CVE-2026-109766: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-109767: Information disclosure in the Networking component
+  + CVE-2026-109768: Denial-of-service in the Site Reports component
+  + CVE-2026-109769: Information disclosure in the Networking: Cache component
+  + CVE-2026-109770: Spoofing issue in the DOM: Web Serial component
+  + CVE-2026-109771: Information disclosure in the WebRTC: Networking component
+  + CVE-2026-109772: Same-origin policy bypass in the DevTools component
+  + CVE-2026-109773: Denial-of-service in the Sync component
+  + CVE-2026-109774: Invalid pointer, undefined behavior in the DOM: Notifications component
+  + CVE-2026-109775: Denial-of-service in the WebRTC component
+  + CVE-2026-109776: Race condition in the XPCOM component
+  + CVE-2026-109777: Information disclosure in the Storage: IndexedDB component
+  + CVE-2026-109778: Privilege escalation in the WebExtensions component
+  + CVE-2026-109779: Race condition in the Networking: DNS component
+  + CVE-2026-109780: Mitigation bypass in the DOM: Core & HTML component
+  + CVE-2026-109781: Denial-of-service in the Printing: Output component
+
 * Fri Oct 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 157.0.1-alt1
 - New version.
 
