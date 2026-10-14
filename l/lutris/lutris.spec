@@ -4,7 +4,7 @@
 
 Name: lutris
 Version: 0.5.22
-Release: alt1
+Release: alt2
 
 Summary: Manager for game installation and execution
 
@@ -86,6 +86,9 @@ chmod +x %buildroot%_datadir/lutris/bin/lutris-wrapper
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed Oct 14 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.22-alt2
+- Fixed launch with libgnome-desktop3-gir (ALT #61062).
+
 * Wed Feb 25 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.22-alt1
 - New version 0.5.22.
 
