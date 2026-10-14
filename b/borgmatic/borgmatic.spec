@@ -1,5 +1,5 @@
 Name: borgmatic
-Version: 2.1.7
+Version: 2.1.10
 Release: alt1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
@@ -58,6 +58,9 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.10-alt1
+- new version 2.1.10
+
 * Mon Aug 24 2026 Pavel Vainerman <pv@altlinux.ru> 2.1.7-alt1
 - new version (2.1.7)
 
