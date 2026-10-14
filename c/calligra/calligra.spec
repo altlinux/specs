@@ -10,8 +10,8 @@
 %define libkookulargenerator_odt libkookulargenerator_odt%sover_gen
 
 Name: %rname
-Version: 26.04.3
-Release: alt1.1
+Version: 26.08.2
+Release: alt1
 #Epoch: 0
 %K6init no_altplace
 
@@ -33,7 +33,6 @@ Source: http://download.kde.org/stable/calligra/%version/calligra-%version.tar
 # upstream
 # FC
 Patch31: calligra-gcc11.patch
-Patch32: calligra-okular-26.08-plugin-export.patch
 # SuSE
 # ALT
 Patch102: alt-find-ooo-sdk.patch
@@ -189,7 +188,6 @@ Conflicts: calligra-okular-generators < 20
 %setup
 #
 %patch31 -p1
-%patch32 -p1
 #
 %patch102 -p1
 %patch103 -p1
@@ -433,6 +431,9 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Tue Oct 13 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
+- new version
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 26.04.3-alt1.1
 - NMU: drop unused libxbase-devel from BuildRequires (xbase is being removed)
 - NMU: fix build with okular 26.08 (upstream patch)
