@@ -3,7 +3,7 @@
 %def_with check
 
 Name: libunicode
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: Modern C++20 Unicode library
@@ -78,5 +78,8 @@ The %{name}-tools package contains tools about %name.
 %_bindir/unicode-query
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.4-alt1
+- New version 0.9.4.
+
 * Mon Aug 24 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.3-alt1
 - Initial build for Sisyphus
