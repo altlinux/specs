@@ -3,7 +3,7 @@
 %def_without check
 
 Name: tauno-monitor
-Version: 0.3.3
+Version: 0.3.5
 Release: alt1
 
 Summary: Simple serial port monitor
@@ -22,6 +22,9 @@ BuildRequires: rpm-build-python3
 
 Requires: python3(serial)
 Requires: python3(gi)
+Requires: python3(matplotlib)
+Requires: python3-module-matplotlib-gtk4
+Requires: python3-module-pygobject3
 
 BuildArch: noarch
 
@@ -74,6 +77,9 @@ chmod a+x %buildroot%_bindir/tauno-monitor
 %_datadir/tauno-monitor/*
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.5-alt1
+- New version 0.3.5.
+
 * Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
 - New version 0.3.3.
 
