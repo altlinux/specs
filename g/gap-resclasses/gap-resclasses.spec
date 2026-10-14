@@ -1,7 +1,7 @@
 %define repo resclasses
 
 Name: gap-resclasses
-Version: 4.7.4
+Version: 4.8.0
 Release: alt1
 Summary: GAP: Set-Theoretic Computations with Residue Classes
 License: GPL-2.0+
@@ -47,6 +47,9 @@ Recommends: gap-io >= 4.4.5.
 %gap_sitelib/%repo/
 
 %changelog
+* Wed Oct 14 2026 Leontiy Volodin <lvol@altlinux.org> 4.8.0-alt1
+- New version 4.8.0.
+
 * Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 4.7.4-alt1
 - New version 4.7.4.
 - Added VCS tag.
