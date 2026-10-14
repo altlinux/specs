@@ -5,7 +5,7 @@
 %define _name nibbles
 %define __name gnome-%_name
 %define xdg_name org.gnome.Nibbles
-%define ver_major 4.5
+%define ver_major 4.6
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -30,18 +30,14 @@ Provides:  %__name = %EVR
 Obsoletes: gnome-games-gnibbles
 Provides:  gnome-games-gnibbles = %EVR
 
-%define glib_ver 2.78.0
-%define gtk_ver 4.15
+%define gtk_ver 4.24
 %define adw_ver 1.5
-%define vala_ver 0.56
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson vala-tools >= %vala_ver
-BuildRequires: yelp-tools gsettings-desktop-schemas-devel
+BuildRequires: meson gcc-c++ yelp-tools
 BuildRequires: desktop-file-utils /usr/bin/appstreamcli
-BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
-BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
-BuildRequires: pkgconfig(libgnome-games-support-2)
+BuildRequires: libgtk4-devel >= %gtk_ver
+BuildRequires: pkgconfig(gtkmm-4.0) >= %gtk_ver
 BuildRequires: pkgconfig(gsound)
 
 %description
@@ -79,6 +75,9 @@ much room to move.
 %doc NEWS
 
 %changelog
+* Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1
+- 4.6.2 (ported from Vala to C++)
+
 * Mon May 11 2026 Yuri N. Sedunov <aris@altlinux.org> 4.5.2-alt1
 - 4.5.2
 

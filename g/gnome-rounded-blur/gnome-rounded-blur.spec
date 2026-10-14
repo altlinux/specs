@@ -10,8 +10,8 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GNOME Rounded Blur
 Group: System/Libraries
@@ -25,8 +25,6 @@ Source: https://github.com/kancko/gnome-rounded-blur/archive/v%version/%_name-%v
 %else
 Source: %_name-%version.tar
 %endif
-#https://github.com/kancko/gnome-rounded-blur/pull/7
-Patch10: gnome-rounded-blur-1.0.1-up-mutter-51.patch
 
 # mutter-51
 %define mutter_api_ver 51
@@ -78,7 +76,6 @@ GObject introspection devel data for %_name.
 
 %prep
 %setup -n %_name-%version
-%patch10 -p1
 
 %build
 %meson
@@ -106,6 +103,9 @@ GObject introspection devel data for %_name.
 %_girdir/%namespace-%api_ver.gir
 
 %changelog
+* Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt2
 - fixed for mutter-51
 
