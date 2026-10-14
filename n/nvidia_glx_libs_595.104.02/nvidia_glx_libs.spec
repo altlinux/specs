@@ -21,7 +21,7 @@
 %define nv_version 595
 %define nv_release 104
 %define nv_minor   02
-%define pkg_rel alt1
+%define pkg_rel alt2
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -31,13 +31,16 @@ Version: %nv_version_full
 Release: %pkg_rel
 
 ExclusiveArch: %ix86 x86_64 aarch64
+# ALTBUG#60545
+%filter_from_requires /^\/usr\/lib\/ld-linux-/d
 
 Source0: null
 Source201: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
 Source202: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
+Source300: nvidia-cuda-mps.service
 Patch1: systemd-powerd-no-fail.patch
 
-BuildRequires: rpm-macros-alternatives
+BuildRequires: rpm-macros-alternatives rpm-macros-systemd
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 #BuildRequires: libGLdispatch libGLX
@@ -166,20 +169,41 @@ Summary: nvidia library
 nvidia library
 
 %package -n nvidia-smi
-Group: System/Libraries
+Group: System/Configuration/Other
 Summary: NVIDIA System Management Interface program
 %description -n nvidia-smi
 nvidia-smi (also NVSMI) provides monitoring and management capabilities for each of
 NVIDIA's Tesla, Quadro, GRID and GeForce devices from Fermi and higher architecture families.
 
 %package -n nvidia-powerd
-Group: System/Libraries
+Group: System/Servers
 Summary: NVIDIA Dynamic Boost daemon
 Requires: nvidia_glx_common
 %description -n nvidia-powerd
 Daemon that manages the Dynamic Boost feature on compatible NVIDIA GPUs.
+The 'nvidia-powerd' daemon provides support for the NVIDIA Dynamic Boost
+feature on Linux platforms. Dynamic Boost is a system-wide power controller
+which manages GPU and CPU power, according to the workload on the system. By
+shifting power between the GPU and the CPU, Dynamic Boost can deliver more
+power to the component that would benefit most from it, without impacting the
+system's total thermal and electrical budgets. This optimizes overall system
+performance per watt.
+ 
+%package -n nvidia-cuda-mps
+Group: System/Servers
+Summary: NVIDIA CUDA Multi Process Service (MPS)
+Requires: nvidia_glx_common
+%description -n nvidia-cuda-mps
+The Compute Unified Device Architecture (CUDA) enables NVIDIA
+graphics processing units (GPUs) to be used for massively parallel
+general purpose computation.
 
+CUDA MPS is a feature that allows multiple CUDA processes to share a single
+GPU context. CUDA MPS should be transparent to CUDA programs.
 
+CUDA MPS requires a device that supports Unified Virtual Address (UVA) and
+has compute capability SM 3.5 or higher.
+Pre-CUDA 4.0 APIs are not supported under CUDA MPS.
 
 %prep
 %setup -T -c -n %tbname-%version%dirsuffix
@@ -208,11 +232,15 @@ ln -s libcuda.so.%version %buildroot/%_libdir/libcuda.so
 #%endif
 # all 64-bit
 %if "%_lib" != "lib"
-install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
-# install programs
 mkdir -p %buildroot/%_bindir/
-install -m 0755 nvidia-smi %buildroot/%_bindir/
+mkdir -p %buildroot/%_sbindir/
+mkdir -p  %buildroot/%_unitdir/
+mkdir -p  %buildroot/%_logdir/
 mkdir -p %buildroot/%_man1dir/
+mkdir -p  %buildroot/%_datadir/dbus-1/system.d/
+install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
+# install nvidia-smi
+install -m 0755 nvidia-smi %buildroot/%_bindir/
 install -m 0644 nvidia-smi.1.gz %buildroot/%_man1dir/
 # install nvidia-powerd
 install -m 0755 nvidia-powerd %buildroot/%_bindir/
@@ -222,8 +250,14 @@ mkdir -p %buildroot/%_datadir/nvidia/nvidia-powerd/
 if [ -e dlsnetparams.csv ] ; then
     install -m 0444 dlsnetparams.csv %buildroot/%_datadir/nvidia/nvidia-powerd/
 fi
-mkdir -p  %buildroot/%_datadir/dbus-1/system.d/
 install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbus.conf
+# install MPS
+mkdir -p  %buildroot/%_logdir/
+install -m 0755 nvidia-cuda-mps-control %buildroot/%_bindir/
+install -m 0755 nvidia-cuda-mps-server %buildroot/%_sbindir/
+install -m 0644 nvidia-cuda-mps-control.1.gz %buildroot/%_man1dir/
+mkdir -p %buildroot/%_logdir/nvidia-mps/
+install -m 0644 %SOURCE300 %buildroot/%_unitdir/
 %endif
 
 %files -n ocl-nvidia
@@ -252,9 +286,18 @@ install -m 0644 nvidia-dbus.conf %buildroot/%_datadir/dbus-1/system.d/nvidia-dbu
 %_bindir/nvidia-powerd
 %_unitdir/nvidia-powerd.service
 %_datadir/nvidia/nvidia-powerd/
+%files -n nvidia-cuda-mps
+%dir %_logdir/nvidia-mps/
+%_bindir/nvidia-cuda-mps-control
+%_sbindir/nvidia-cuda-mps-server
+%_unitdir/nvidia-cuda-mps.service
+%_man1dir/*nvidia-cuda-mps-control*
 %endif
 
 %changelog
+* Wed Oct 14 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt2
+- package nvidia-cuda-mps
+
 * Mon Oct 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt1
 - new version
 
