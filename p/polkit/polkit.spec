@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: polkit
-Version: 126
-Release: alt2
+Version: 127
+Release: alt1
 
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
 Group: System/Libraries
 
-URL: http://www.freedesktop.org/wiki/Software/PolicyKit
+URL: https://github.com/polkit-org/polkit
+VCS: https://github.com/polkit-org/polkit
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Requires: lib%name = %version-%release
@@ -94,6 +97,15 @@ groupadd -r -f polkitd 2>/dev/null ||:
 useradd -r -n -g polkitd -d / \
 	-s /dev/null -c "User for polkitd" polkitd 2>/dev/null ||:
 
+%post
+%post_systemd_postponed polkit-agent-helper.socket
+
+%preun
+%systemd_preun polkit-agent-helper.socket polkit.service
+
+%postun
+%systemd_postun_with_restart polkit.service
+
 %files -f %name-1.lang
 %dir %_sysconfdir/%name-1
 %attr(0700,polkitd,root) %dir %_sysconfdir/%name-1/rules.d
@@ -104,9 +116,12 @@ useradd -r -n -g polkitd -d / \
 %dir %_prefix/lib/%name-1
 %_prefix/lib/%name-1/polkitd
 %attr(4511,root,root) %_prefix/lib/polkit-1/polkit-agent-helper-1
+%_unitdir/polkit-agent-helper.socket
+%_unitdir/polkit-agent-helper@.service
 %dir %_datadir/%name-1
 %dir %_datadir/%name-1/actions
 %attr(0700,polkitd,root) %dir %_datadir/%name-1/rules.d
+%_datadir/%name-1/polkitd.conf
 %_datadir/%name-1/policyconfig-1.dtd
 %_datadir/%name-1/actions/org.freedesktop.policykit.policy
 %_datadir/dbus-1/system-services/org.freedesktop.PolicyKit1.service
@@ -114,6 +129,7 @@ useradd -r -n -g polkitd -d / \
 %_tmpfilesdir/polkit-tmpfiles.conf
 %_sysusersdir/polkit.conf
 %_man1dir/*.1*
+%_man5dir/*.5*
 %_man8dir/*.8*
 
 %files default-rules
@@ -135,6 +151,9 @@ useradd -r -n -g polkitd -d / \
 %_girdir/*.gir
 
 %changelog
+* Wed Oct 14 2026 Egor Ignatov <egori@altlinux.org> 127-alt1
+- New version 127.
+
 * Sun May 11 2025 Alexey Shabalin <shaba@altlinux.org> 126-alt2
 - fixed path to polkit-agent-helper-1 (ALT#54217)
 
