@@ -2,7 +2,7 @@
 %define dist Gtk2
 Name: perl-%dist
 Version: 1.24993
-Release: alt1
+Release: alt1.1
 
 Summary: Perl bindings to the gtk+-2.x library
 License: LGPL
@@ -14,6 +14,7 @@ Source0: http://www.cpan.org/authors/id/X/XA/XAOC/%{dist}-%{version}.tar.gz
 Patch0: perl-Gtk2-1.224-alt-gtk_version.patch
 Patch1: perl-Gtk2-1.224-alt-gtk_init.patch
 Patch2: perl-Gtk2-1.242-alt-cairo.patch
+Patch3: perl-Gtk2-1.24993-alt-gcc15-itemfactory-cast.patch
 
 %define base_ver 1.240
 Requires: perl-Glib >= %base_ver
@@ -56,6 +57,7 @@ for developers (overview of internals and internal API reference).
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
 
 %build
 %ifndef _build_display
@@ -114,6 +116,9 @@ cp -av gtk-demo examples %buildroot%pkgdocdir/
 %doc	%perl_vendor_archlib/Gtk2/Pango/Cairo/*.pod
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 1.24993-alt1.1
+- NMU: fixed FTBFS with gcc 15 (cast GtkItemFactory callbacks).
+
 * Thu Aug 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.24993-alt1
 - automated CPAN update
 
