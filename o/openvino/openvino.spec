@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 # Library soversion is computed by upstream from the version:
-# 2026.4.0 -> "26" "4" "0" -> libopenvino.so.2640 (cmake/developer_package/version.cmake).
-%define sover 2640
+# 2026.4.1 -> "26" "4" "1" -> libopenvino.so.2641 (cmake/developer_package/version.cmake).
+%define sover 2641
 %define plugindir %_libdir/openvino-%version
 
 %def_with python
 %def_without check
 
 Name: openvino
-Version: 2026.4.0
+Version: 2026.4.1
 Release: alt1
 
 Summary: Open source toolkit for optimizing and deploying AI inference
@@ -18,12 +18,14 @@ Group: Sciences/Computer science
 Url: https://docs.openvino.ai/
 Vcs: https://github.com/openvinotoolkit/openvino
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 Source: %name-%version.tar
 Source1: ovc
 Source2: %name-%version-submodule-src-plugins-intel_cpu-thirdparty-onednn.tar
 Source3: %name-%version-submodule-src-plugins-intel_cpu-thirdparty-mlas.tar
+Source4: %name-%version-submodule-src-plugins-intel_cpu-thirdparty-ComputeLibrary.tar
+Source5: %name-%version-submodule-src-plugins-intel_cpu-thirdparty-kleidiai.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -31,12 +33,14 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkg-config
 BuildRequires: ittapi-devel-static
+%ifarch x86_64
 BuildRequires: level-zero-npu-extensions-devel
 BuildRequires: libze-devel
 BuildRequires: libxbyak-devel
 BuildRequires: opencl-headers
 BuildRequires: opencl-cpp-headers
 BuildRequires: ocl-icd-devel
+%endif
 BuildRequires: libpugixml-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: protobuf-compiler
@@ -95,6 +99,7 @@ Group: System/Libraries
 This package contains the virtual device plugins for OpenVINO Runtime:
 AUTO, MULTI, HETERO and BATCH.
 
+%ifarch x86_64
 %package plugin-intel-cpu
 Summary: Intel CPU plugin for OpenVINO Runtime
 Group: System/Libraries
@@ -118,6 +123,17 @@ Group: System/Libraries
 %description plugin-intel-npu
 This package contains the Intel NPU plugin for OpenVINO Runtime, which
 enables inference on Intel Neural Processing Units via Level Zero.
+%endif
+
+%ifarch aarch64
+%package plugin-arm-cpu
+Summary: ARM CPU plugin for OpenVINO Runtime
+Group: System/Libraries
+
+%description plugin-arm-cpu
+This package contains the ARM CPU plugin for OpenVINO Runtime, which
+enables inference on AArch64 CPUs using ARM Compute Library.
+%endif
 
 %package -n lib%name-ir-frontend%sover
 Summary: OpenVINO IR frontend
@@ -179,7 +195,11 @@ Group: Development/Python3
 AutoReq: yes, nopython3
 Requires: python3-module-numpy
 # plugins are loaded at runtime; CPU is the device available everywhere
+%ifarch x86_64
 Requires: %name-plugin-intel-cpu = %EVR
+%else
+Requires: %name-plugin-arm-cpu = %EVR
+%endif
 
 %description -n python3-module-%name
 OpenVINO is an open-source toolkit for optimizing and deploying deep learning
@@ -199,7 +219,7 @@ formats to OpenVINO IR.
 %endif
 
 %prep
-%setup -a2 -a3
+%setup -a2 -a3 -a4 -a5
 %autopatch -p1
 
 %build
@@ -221,22 +241,37 @@ formats to OpenVINO IR.
 	-DPython3_EXECUTABLE=%__python3 \
 	-DENABLE_INTEL_CPU=ON \
 	-DENABLE_MLAS_FOR_CPU=ON \
+%ifarch x86_64
 	-DENABLE_INTEL_GPU=ON \
 	-DENABLE_ONEDNN_FOR_GPU=OFF \
 	-DENABLE_INTEL_NPU=ON \
 	-DENABLE_INTEL_NPU_INTERNAL=OFF \
 	-DENABLE_INTEL_NPU_COMPILER=OFF \
+%else
+	-DENABLE_ARM_COMPUTE_CMAKE=ON \
+	-DENABLE_KLEIDIAI_FOR_CPU=ON \
+	-DENABLE_INTEL_GPU=OFF \
+	-DENABLE_INTEL_NPU=OFF \
+%endif
 	-DENABLE_PROFILING_ITT=BASE \
 	-DENABLE_PLUGINS_XML=OFF \
 	-DENABLE_SYSTEM_TBB=ON \
 	-DENABLE_TBBBIND_2_5=OFF \
 	-DENABLE_SYSTEM_PUGIXML=ON \
 	-DENABLE_SYSTEM_FLATBUFFERS=ON \
+%ifarch x86_64
 	-DENABLE_SYSTEM_OPENCL=ON \
+%else
+	-DENABLE_SYSTEM_OPENCL=OFF \
+%endif
 	-DENABLE_SYSTEM_PROTOBUF=ON \
 	-DProtobuf_USE_STATIC_LIBS=OFF \
 	-DENABLE_SYSTEM_SNAPPY=ON \
+%ifarch x86_64
 	-DENABLE_SYSTEM_LEVEL_ZERO=ON \
+%else
+	-DENABLE_SYSTEM_LEVEL_ZERO=OFF \
+%endif
 	-DENABLE_OV_ONNX_FRONTEND=ON \
 	-DENABLE_OV_PADDLE_FRONTEND=ON \
 	-DENABLE_OV_IR_FRONTEND=ON \
@@ -273,6 +308,7 @@ rm -r %buildroot%_datadir/openvino
 %plugindir/libopenvino_auto_batch_plugin.so
 %plugindir/libopenvino_hetero_plugin.so
 
+%ifarch x86_64
 %files plugin-intel-cpu
 %plugindir/libopenvino_intel_cpu_plugin.so
 
@@ -282,6 +318,12 @@ rm -r %buildroot%_datadir/openvino
 
 %files plugin-intel-npu
 %plugindir/libopenvino_intel_npu_plugin.so
+%endif
+
+%ifarch aarch64
+%files plugin-arm-cpu
+%plugindir/libopenvino_arm_cpu_plugin.so
+%endif
 
 %files -n lib%name-ir-frontend%sover
 %_libdir/libopenvino_ir_frontend.so.%sover
@@ -335,5 +377,9 @@ rm -r %buildroot%_datadir/openvino
 %endif
 
 %changelog
+* Fri Oct 09 2026 Georgij Tsarin <crystarm@altlinux.org> 2026.4.1-alt1
+- 2026.4.0 -> 2026.4.1
+- Enabled aarch64 builds with ARM Compute Library.
+
 * Wed Sep 23 2026 Artem Krasovskiy <aibure@altlinux.org> 2026.4.0-alt1
 - Initial build for Sisyphus.
