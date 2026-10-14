@@ -1,6 +1,6 @@
 Name: xfce4-terminal
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Terminal emulator application for Xfce
 Summary (ru_RU.UTF-8): Эмулятор терминала для Xfce
@@ -75,6 +75,9 @@ __EOF__
 %_desktopdir/*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1.1
+- NMU: fix build without gtk-layer-shell (wayland disabled): guard idle ids in finalize.
+
 * Tue Mar 10 2026 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Switched to meson build.
 - Updated to 1.2.0.
