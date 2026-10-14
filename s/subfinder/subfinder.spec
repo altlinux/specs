@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: subfinder
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 
 Summary: Fast passive subdomain enumeration tool
@@ -41,8 +41,10 @@ install -Dm0755 %name %buildroot%_bindir/%name
 %doc *.md
 %_bindir/%name
 
-
 %changelog
+* Tue Oct 13 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 2.17.0-alt1
+- v2.17.0.
+
 * Tue Sep 01 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 2.16.0-alt1
 - v2.16.0
 
