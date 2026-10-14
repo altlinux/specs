@@ -1,11 +1,13 @@
-%define        _unpackaged_files_terminate_build 1
 %def_enable    check
 %def_enable    doc
 %def_enable    devel
+%if_enabled    devel
+%define        _unpackaged_files_terminate_build 1
+%endif
 %define        gemname smart_proxy
 
 Name:          gem-smart-proxy
-Version:       3.13.0
+Version:       3.19.2
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       GPL-3.0
@@ -24,8 +26,7 @@ Source5:       Gemfile
 Patch:         %name-%version-%release.patch
 Patch1:        config.patch
 Patch2:        config-path.patch
-BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rake) >= 0
+BuildRequires(pre): rpm-macros-ruby rake setup-rb
 %if_enabled check
 BuildRequires: gem(benchmark-ips) >= 0
 BuildRequires: gem(ci_reporter) >= 1.6.3
@@ -37,6 +38,7 @@ BuildRequires: gem(mocha) >= 1.10
 BuildRequires: gem(pry) >= 0
 BuildRequires: gem(rack) >= 1.3
 BuildRequires: gem(rack-test) >= 0
+BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(rubocop) >= 1.56.0
 BuildRequires: gem(rubocop-performance) >= 1.5.2
@@ -46,42 +48,39 @@ BuildRequires: gem(sinatra) >= 2.0
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(webmock) >= 0
 BuildRequires: gem(webrick) >= 1.0
-BuildConflicts: gem(ci_reporter) >= 3
 BuildConflicts: gem(concurrent-ruby) >= 2
-BuildConflicts: gem(mocha) >= 3
 BuildConflicts: gem(rubocop) >= 2
 BuildConflicts: gem(rubocop-performance) >= 2
-BuildConflicts: gem(ruby-prof) >= 2
-BuildConflicts: gem(sd_notify) >= 1
-BuildConflicts: gem(sinatra) >= 5
-BuildConflicts: gem(webrick) >= 2
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rsec >= 1.0,rsec < 2
-%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
-%ruby_use_gem_dependency rubocop >= 1.56,rubocop < 2
-%ruby_use_gem_dependency ci_reporter >= 2.0.0,ci_reporter < 3
-%ruby_use_gem_dependency mocha >= 2.7,mocha < 3
-%ruby_use_gem_dependency sinatra >= 4.0,sinatra < 5
-%ruby_use_gem_dependency ruby-prof >= 1.7,ruby-prof < 2
+%ruby_use_gem_dependency rack >= 2.0
+%ruby_use_gem_dependency rsec >= 1.0
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3
+%ruby_use_gem_dependency rexml >= 3.2
+%ruby_use_gem_dependency rubocop >= 1.56
+%ruby_use_gem_dependency ci_reporter >= 2.0.0
+%ruby_use_gem_dependency mocha >= 2.7
+%ruby_use_gem_dependency sinatra >= 2.0
+%ruby_use_gem_dependency ruby-prof >= 1.7
+%ruby_use_gem_dependency webrick >= 1.0
+%ruby_use_gem_dependency sd_notify >= 0.1
 %ruby_alias_names smart_proxy,smart-proxy
 Requires:      railsctl >= 1.0.1-alt1
 Requires:      ruby >= 2.7
 Requires:      gem(json) >= 0
 Requires:      gem(logging) >= 0
-Requires:      gem(rack) >= 1.3
+Requires:      gem(ostruct) >= 0
+Requires:      gem(rack) >= 2.0
+Requires:      gem(rexml) >= 3.2
 Requires:      gem(sd_notify) >= 0.1
 Requires:      gem(sinatra) >= 2.0
 Requires:      gem(webrick) >= 1.0
 Conflicts:     gem-smart-proxy-compat
-Conflicts:     gem(sd_notify) >= 1
-Conflicts:     gem(sinatra) >= 5
-Conflicts:     gem(webrick) >= 2
-Provides:      gem(smart_proxy) = 3.13.0
+Provides:      gem(smart_proxy) = 3.19.2
 
-%ruby_use_gem_version smart_proxy:3.13.0
+%ruby_use_gem_version smart_proxy:3.19.2
 
 %description
 Smart Proxy is a free open source project that provides restful API to
@@ -106,7 +105,7 @@ Currently Supported modules:
 
 
 %package       -n smart-proxy
-Version:       3.13.0
+Version:       3.19.2
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета smart_proxy
@@ -126,7 +125,7 @@ Requires:      gem(gssapi) >= 0
 Requires:      gem(ruby-libvirt) >= 0.6.0
 Requires:      gem(jwt) >= 0
 Requires:      gem(xmlrpc) >= 0.2
-Requires:      gem(smart_proxy) = 3.13.0
+Requires:      gem(smart_proxy) = 3.19.2
 Requires:      gem(smart_proxy_salt) >= 2.0
 Requires:      gem(smart_proxy_dynflow) >= 0.5
 Requires:      gem(smart_proxy_remote_execution_ssh) >= 0.4.1
@@ -135,7 +134,6 @@ Requires:      gem(smart_proxy_discovery) >= 1.0.5
 Requires:      gem(smart_proxy_pulp) >= 2.1.0
 Requires:      gem(smart_proxy_chef) >= 0.2.0
 Conflicts:     gem(concurrent-ruby) >= 2
-Conflicts:     gem(ruby-prof) >= 2
 Conflicts:     smart-proxy-compat
 
 %description   -n smart-proxy
@@ -167,14 +165,14 @@ Currently Supported modules:
 
 %if_enabled    doc
 %package       -n gem-smart-proxy-doc
-Version:       3.13.0
+Version:       3.19.2
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(smart_proxy) = 3.13.0
+Requires:      gem(smart_proxy) = 3.19.2
 
 %description   -n gem-smart-proxy-doc
 RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files.
@@ -206,14 +204,14 @@ Currently Supported modules:
 
 %if_enabled    devel
 %package       -n gem-smart-proxy-devel
-Version:       3.13.0
+Version:       3.19.2
 Release:       alt1
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(smart_proxy) = 3.13.0
+Requires:      gem(smart_proxy) = 3.19.2
 Requires:      gem(benchmark-ips) >= 0
 Requires:      gem(ci_reporter) >= 1.6.3
 Requires:      gem(concurrent-ruby) >= 1.0
@@ -234,14 +232,9 @@ Requires:      gem(sinatra) >= 2.0
 Requires:      gem(test-unit) >= 0
 Requires:      gem(webmock) >= 0
 Requires:      gem(webrick) >= 1.0
-Conflicts:     gem(ci_reporter) >= 3
 Conflicts:     gem(concurrent-ruby) >= 2
-Conflicts:     gem(mocha) >= 3
 Conflicts:     gem(rubocop) >= 2
 Conflicts:     gem(rubocop-performance) >= 2
-Conflicts:     gem(ruby-prof) >= 2
-Conflicts:     gem(sd_notify) >= 1
-Conflicts:     gem(sinatra) >= 5
 Conflicts:     gem(webrick) >= 2
 
 %description   -n gem-smart-proxy-devel
@@ -285,7 +278,7 @@ Currently Supported modules:
 #TODO move to baltix
 install -dm750 %buildroot%_logdir/smart-proxy \
                %buildroot%_sysconfdir/smart-proxy/config/settings.d \
-               %buildroot/run/smart-proxy \
+               %buildroot%_runtimedir/smart-proxy \
                %buildroot%_localstatedir/smart-proxy/
 install -m644 %SOURCE1 %buildroot%_sysconfdir/smart-proxy/config/
 install -Dm644 %SOURCE2 %buildroot%_unitdir/smart-proxy.service
@@ -328,7 +321,7 @@ rm -rf %_localstatedir/smart-proxy/Gemfile.lock
 %_tmpfilesdir/smart-proxy.conf
 %attr(750,_smartforeman,foreman) %_logdir/smart-proxy
 %attr(751,_smartforeman,foreman) %_localstatedir/smart-proxy
-%attr(751,_smartforeman,foreman) /run/smart-proxy
+%attr(751,_smartforeman,foreman) %_runtimedir/smart-proxy
 
 %if_enabled    doc
 %files         -n gem-smart-proxy-doc
@@ -343,6 +336,9 @@ rm -rf %_localstatedir/smart-proxy/Gemfile.lock
 
 
 %changelog
+* Tue Oct 13 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.2-alt1
+- ^ 3.13.0 -> 3.19.2
+
 * Thu Jan 23 2025 Pavel Skrylev <majioa@altlinux.org> 3.13.0-alt1
 - ^ 3.5.1 -> 3.13.0
 
