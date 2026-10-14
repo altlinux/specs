@@ -9,7 +9,7 @@ BuildRequires: perl(AnyEvent/AIO.pm) perl(AnyEvent/BDB.pm) perl(BDB.pm) perl(IO/
 %global cpan_version 6.57
 Name:           perl-Coro
 Version:        6.570
-Release:        alt4_1
+Release:        alt4_1.1
 Summary:        The only real threads in perl
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
@@ -19,6 +19,7 @@ Source0:        https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/Coro-%{cpan_v
 Patch0:         %{name}-5.25-ucontext-default.patch
 # Do not disable hardening
 Patch1:         Coro-6.512-Disable-disabling-FORTIFY_SOURCE.patch
+Patch2:         Coro-6.57-nvtime-no-args.patch
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -115,6 +116,7 @@ programming much safer and easier than using other thread models.
 %patch0 -p1 -b .ucontext-default
 %endif
 %patch1 -p1
+%patch2 -p1
 
 # Unbundle libecb
 rm Coro/ecb.h
@@ -161,6 +163,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{perl_vendor_archlib}/Coro.pm
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2:6.570-alt4_1.1
+- NMU: fixed FTBFS with gcc 15 (nvtime called with extra argument).
+
 * Mon Jun 21 2021 Igor Vlasenko <viy@altlinux.org> 2:6.570-alt4_1
 - restored tests
 - removed set_perl_req_method relaxed
