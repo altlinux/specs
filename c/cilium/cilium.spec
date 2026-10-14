@@ -8,7 +8,7 @@
 %endif
 
 Name:    cilium
-Version: 1.19.6
+Version: 1.20.2
 Release: alt1
 
 Summary: Cloud native networking, security and observability based on eBPF
@@ -25,7 +25,7 @@ Source: %name-%version.tar
 BuildRequires: rpm-macros-golang
 BuildRequires: rpm-build-golang
 BuildRequires: rpm-build-python3
-BuildRequires: golang >= 1.25
+BuildRequires: golang >= 1.26
 BuildRequires: /proc
 BuildRequires: buf, protobuf-go, gcc, binutils, glibc-devel, coreutils
 
@@ -60,20 +60,20 @@ Cilium is used mainly by platform and infrastructure engineers who run
 Kubernetes clusters and need a fast, secure, and observable network layer
 for their workloads.
 
-%package 	operator
+%package        operator
 Summary:        Operator component for cilium
-Group:		System/Configuration/Networking
+Group:          System/Configuration/Networking
 
-%description	operator
-%summary
+%description    operator
+%summary.
 
 %package        hubble-relay
 Summary:        Hubble-relay component for cilium
 Group:          System/Configuration/Networking
-Requires: 	ca-certificates, gops
+Requires:       ca-certificates, gops
 
 %description    hubble-relay
-%summary
+%summary.
 
 %package        clustermesh-apiserver
 Summary:        Clustermesh-apiserver component for cilium
@@ -81,7 +81,7 @@ Group:          System/Configuration/Networking
 Requires:       gops
 
 %description    clustermesh-apiserver
-%summary
+%summary.
 
 %prep
 %setup
@@ -105,6 +105,7 @@ SUBDIRS_CILIUM_CONTAINER="cilium-dbg \
 	hubble \
 	tools/mount \
 	tools/sysctlfix \
+	tools/envoy-bootstrap-locality \
 	plugins/cilium-cni"
 
 for sub in $SUBDIRS_CILIUM_CONTAINER
@@ -135,6 +136,7 @@ install -p -m 0755 $BUILDDIR/bin/bugtool %buildroot%_bindir/%name-bugtool
 install -p -m 0755 $BUILDDIR/bin/hubble %buildroot%_bindir/%name-hubble
 install -p -m 0755 $BUILDDIR/bin/mount %buildroot%_bindir/%name-mount
 install -p -m 0755 $BUILDDIR/bin/sysctlfix %buildroot%_bindir/%name-sysctlfix
+install -p -m 0755 $BUILDDIR/bin/envoy-bootstrap-locality %buildroot%_bindir/%name-envoy-bootstrap-locality
 install -p -m 0755 $BUILDDIR/bin/cilium-cni %buildroot%_bindir/cilium-cni
 
 mkdir -p %buildroot%_localstatedir/%name/bpf
@@ -163,7 +165,9 @@ cp $BUILDDIR/src/%import_path/clustermesh-apiserver/etcd-config.yaml %buildroot%
 %_bindir/%name-hubble
 %_bindir/%name-mount
 %_bindir/%name-sysctlfix
+%_bindir/%name-envoy-bootstrap-locality
 %_bindir/cilium-cni
+%dir %_localstatedir/%name
 %dir %_localstatedir/%name/bpf
 %dir %_localstatedir/%name/scripts
 %_localstatedir/%name/bpf/*
@@ -181,6 +185,9 @@ cp $BUILDDIR/src/%import_path/clustermesh-apiserver/etcd-config.yaml %buildroot%
 %_localstatedir/%name/etcd-config.yaml
 
 %changelog
+* Wed Oct 14 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.20.2-alt1
+- 1.19.6 -> 1.20.2
+
 * Mon Aug 03 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.19.6-alt1
 - 1.19.3 -> 1.19.6
 
