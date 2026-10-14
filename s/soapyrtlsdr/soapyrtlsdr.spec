@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyrtlsdr
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: RTL-SDR device support for SoapySDR
@@ -38,5 +38,8 @@ based on the Realtek RTL2832U chip as receivers.
 %_libdir/SoapySDR/modules0.8/librtlsdrSupport.so
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.4-alt1
+- new version 0.3.4 (with rpmrb script)
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
 - Initial build for Sisyphus
