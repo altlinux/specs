@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo7.0
-Version: 7.0.43
-Release: alt2
+Version: 7.0.45
+Release: alt1
 Summary: mongo server, sharding server,  and support scripts
 License: SSPL-1.0
 Group: Development/Databases
@@ -205,6 +205,10 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/mongo
 
 %changelog
+* Wed Oct 14 2026 Alexei Takaseev <taf@altlinux.org> 7.0.45-alt1
+- 7.0.45 (Fixes: CVE-2026-87108, CVE-2026-87109, CVE-2026-87110,
+                 CVE-2026-96297, CVE-2026-103965)
+
 * Tue Sep 22 2026 Alexei Takaseev <taf@altlinux.org> 7.0.43-alt2
 - Fix build with gcc15
 
