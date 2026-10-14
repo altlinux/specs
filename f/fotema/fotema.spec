@@ -4,15 +4,15 @@
 %define optflags_lto %nil
 
 %define _name Fotema
-%define ver_major 2.4
+%define ver_major 2.5
 %define rdn_name app.fotema.%_name
 
 %def_enable check
 %def_disable bootstrap
 
 Name: fotema
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: A photo gallery for GNOME
 License: GPL-3.0-or-later
@@ -109,6 +109,9 @@ export CFLAGS="-O0 -g"
 %doc README* THUMBNAILS*
 
 %changelog
+* Wed Oct 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt1
+- 2.4.2 -> 2.5.0
+
 * Mon Sep 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.2-alt3
 - fixed FTBFS: builded with ffmpeg 9
 
