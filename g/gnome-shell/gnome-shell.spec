@@ -17,8 +17,8 @@
 %def_disable check
 
 Name: gnome-shell
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -57,7 +57,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define desktop_ver 3.35.90
 %define json_glib_ver 1.6
 %define nm_ver 1.24
-%define ibus_ver 1.5.19
+%define ibus_ver 1.5.35
 %define gsds_ver %ver_major
 %define libsecret_ver 0.18
 %define malcontent_ver 0.11
@@ -79,7 +79,7 @@ Requires: gdm-data
 Requires: tecla
 # network.js requires
 Requires: gnome-control-center
-Requires: ibus ibus-gtk4
+Requires: ibus >= %ibus_ver ibus-gtk4
 # for zipped extensions
 Requires: unzip
 # synce 3.38
@@ -108,7 +108,9 @@ Requires: typelib(GLib)
 Requires: typelib(Gly) = 2
 Requires: typelib(GnomeBluetooth) = %bt_api_ver
 Requires: typelib(GnomeDesktop)
+Requires: typelib(GnomeBG)
 Requires: typelib(GnomeQR)
+Requires: typelib(GnomeAutoar)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gst)
@@ -316,6 +318,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 }
 
 %changelog
+* Wed Oct 14 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1.1
 - added lost "typelib(GUdev)" runtime dependency
 
