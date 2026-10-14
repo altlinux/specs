@@ -2,7 +2,7 @@
 
 Name: fontforge
 Version: 20251009
-Release: alt1
+Release: alt2
 
 Summary: FontForge -- font editor
 License: BSD
@@ -11,9 +11,11 @@ Group: Publishing
 Url: http://fontforge.sourceforge.net/
 # Source-url: https://github.com/fontforge/fontforge/archive/%version.tar.gz
 Source: %name-%version.tar
+Patch1: fontforge-shape-dialog-layout.patch
+Patch2: fontforge-toolbox-tooltip-hotkey.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 BuildRequires: libgtk+3-devel libgtkmm3-devel libgio-devel
 BuildRequires: python3-module-setuptools
 
@@ -46,6 +48,8 @@ FontForge позволяет пользователям создавать и и
 %package -n lib%name
 Summary: FontForge shared library
 Group: System/Libraries
+# iconv(3) UCS-4 conversion is needed at startup
+Requires: glibc-gconv-modules
 
 %package -n lib%name-devel
 Summary: FontForge development files
@@ -77,6 +81,8 @@ FontForge development files
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 sed -i "s|sphinx-build|sphinx-build-3|" cmake/packages/FindSphinx.cmake
 %ifarch %e2k
 # lcc 1.24.11 doesn't do that; mcst#....
@@ -121,6 +127,12 @@ sed -i "s|-Werror=int-conversion||" CMakeLists.txt
 
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 20251009-alt2
+- Fix overlapping labels in the Shape Type dialogs for translated UI (closes: #55969, #55981).
+- Fix toolbox tooltips showing hotkeys of the neighbouring tools (closes: #47674).
+- libfontforge: require glibc-gconv-modules (iconv is used at startup).
+- BuildRequires: rpm-build-cmake instead of cmake.
+
 * Tue Oct 28 2025 Vitaly Lipatov <lav@altlinux.ru> 20251009-alt1
 - new version 20251009 (with rpmrb script)
 
