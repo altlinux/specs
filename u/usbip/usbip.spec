@@ -1,4 +1,4 @@
-%define kernel_version   5.10
+%define kernel_version   7.2
 %define kernel_source /usr/src/kernel/sources/kernel-source-%kernel_version.tar
 %define source_dir tools/usb/usbip
 %define lname lib%name
@@ -175,6 +175,9 @@ ln -s ../sbin/usbip %buildroot%_bindir/usbip
 %endif
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt1
+- build with sources from linux kernel 7.2
+
 * Sat May 13 2023 Vitaly Lipatov <lav@altlinux.ru> 5.10-alt1
 - build with sources from linux kernel 5.10 (ALT bug 40036)
 - cleanup spec, merge with Fedora's pieces
