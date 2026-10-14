@@ -1,4 +1,5 @@
 %add_findreq_skiplist %_datadir/mysql/mysql-test/mysql-test-run.pl
+%add_findreq_skiplist %_datadir/mysql/mini-benchmark
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup-v2
 
@@ -55,7 +56,7 @@
 
 Name: mariadb
 Version: 12.3.3
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -122,6 +123,7 @@ Patch30: mariadb-errno.patch
 Patch32: mariadb-basedir.patch
 
 Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
+Patch102: mariadb-12.3.3-issue-257749.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-12.3.3-disable-download-fmt.patch
 Patch105: mariadb-12.3.3-use-local-duckdb.patch
@@ -447,6 +449,7 @@ patch -p1 -d ./storage/duckdb/third_parties/duckdb < ./storage/duckdb/patches/du
 %patch32 -p1
 
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
+%patch102 -p1
 %patch103 -p1 -d ./storage/rocksdb/rocksdb
 %patch104 -p1
 %patch105 -p1
@@ -1141,6 +1144,10 @@ fi
 %endif
 
 %changelog
+* Tue Oct 13 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt2
+- Fix issue #257749
+- Cleanup garbage requires
+
 * Tue Aug 25 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt1
 - 12.3.3 (Fixes CVE-2026-61081, CVE-2026-60585, CVE-2026-60331,
                 CVE-2026-60747, CVE-2026-47023, CVE-2026-60184)
