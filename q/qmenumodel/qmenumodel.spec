@@ -4,7 +4,7 @@
 %def_with check
 
 Name: qmenumodel
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Qt5 renderer for Ayatana Indicators
@@ -104,6 +104,9 @@ QMenuModel library.
 %_qt5_qmldir/QMenuModel.1/*
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.1-alt1
+- New version 0.10.1.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 0.10.0-alt1
 - New version 0.10.0.
 
