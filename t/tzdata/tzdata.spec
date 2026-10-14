@@ -1,6 +1,6 @@
 Name: tzdata
 Version: 2026e
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -107,6 +107,10 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Wed Oct 14 2026 Anton Farygin <rider@altlinux.org> 2026e-alt2
+- Backported upstream commit tzdata-2f298306 "Europe/Uzhgorod, Europe/Zaporozhye now just links"
+- zone1970.tab, zone.tab: country codes updated per RF law
+
 * Tue Oct 13 2026 Anton Farygin <rider@altlinux.org> 2026e-alt1
 - 2024a -> 2026e
 
