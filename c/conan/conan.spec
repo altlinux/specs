@@ -11,7 +11,7 @@
 %endif
 
 Name: %pypi_name
-Version: 2.28.1
+Version: 2.33.0
 Release: alt1
 Summary: Conan - The open-source C/C++ package manager (client)
 License: MIT
@@ -101,6 +101,9 @@ rm -r %buildroot%python3_sitelibdir/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_server}/
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.33.0-alt1
+- new version 2.33.0
+
 * Sat Jun 06 2026 Anton Midyukov <antohami@altlinux.org> 2.28.1-alt1
 - New version 2.28.1.
 
