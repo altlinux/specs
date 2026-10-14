@@ -19,7 +19,7 @@
 
 Name: firefox-esr
 Version: 140.17.0
-Release: alt1
+Release: alt2
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -30,6 +30,15 @@ URL: https://www.mozilla.org/firefox/
 ExcludeArch: ppc64le
 
 Source0: firefox-source.tar
+Source1: firefox.cpp
+Source2: firefox.desktop
+Source3: firefox-mozconfig
+Source4: firefox-prefs.js
+Source5: firefox-privacy-prefs.js
+Source6: distribution.ini
+Source7: firefox-search-provider.ini
+Source8: firefox-l10n.txt
+Source9: l10n.tar
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
@@ -37,7 +46,7 @@ Patch003: 0003-ALT-fix-double_t-redefinition.patch
 Patch004: 0004-build-Disable-Werror.patch
 Patch005: 0005-firefox-140-glslopt-once-flag-libc.patch
 Patch006: 0006-firefox-140-fix-sys-seccomp-glibc.patch
-#Patch007: 0007-MOZ-bug-2053518-Rust-target-detection-fails-to-translate-1.98.patch
+Patch007: 0007-firefox-esr-140.17.0-kde-system-proxy.patch
 Patch100: 0100-firefox-140.13.0-python3.14-mach-ast.patch
 Patch101: 0101-firefox-140-python3.14-mozbuild-reader.patch
 Patch102: 0102-firefox-140-python3.14-jsonschema.patch
@@ -175,7 +184,7 @@ Most likely you don't need to use this package.
 
 
 %prep
-%setup -q -n firefox-%version -c
+%setup -q -n firefox-%version -c -a 9
 %autopatch -p1
 
 python3 - <<'PY'
@@ -196,12 +205,12 @@ checksum_file.write_text(
 )
 PY
 
-mv -- .rpm/l10n .
-cp -f .rpm/firefox-mozconfig .mozconfig
+cp -f %SOURCE3 .mozconfig
 
 tee -a .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
+ac_add_options --disable-libproxy
 %ifnarch armh %{ix86} ppc64le loongarch64
 ac_add_options --enable-linker=lld
 %endif
@@ -252,7 +261,7 @@ rm -rf -- third_party/python/click/click*
 %add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
-export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE8)"
 
 MOZ_OPT_FLAGS=()
 
@@ -344,7 +353,7 @@ python3 ./mach build -j $NPROCS -v
 
 while read -r loc; do
 	python3 ./mach build chrome-$loc
-done < .rpm/firefox-l10n.txt
+done < %SOURCE8
 
 make -C objdir/browser/installer multilocale.txt
 
@@ -353,11 +362,11 @@ $CXX $CXXFLAGS \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
-	.rpm/firefox.cpp -o firefox
+        %SOURCE1 -o firefox
 
 %install
 export SHELL=/bin/sh
-export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE8)"
 
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
@@ -372,8 +381,8 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 .rpm/firefox-prefs.js %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
-install -D -m 644 .rpm/firefox-privacy-prefs.js %buildroot/%_sysconfdir/firefox/defaults/pref/all-privacy.js
+install -D -m 644 %SOURCE4 %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 %SOURCE5 %buildroot/%_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 sed -i \
 	-e 's#@VERSION@#%{version}#g' \
@@ -401,14 +410,14 @@ fi
 install -m755 firefox %buildroot/%_bindir/firefox
 ln -s firefox %buildroot/%_bindir/firefox-wayland
 
-install -D -m 644 .rpm/distribution.ini \
-	%buildroot/%firefox_prefix/distribution/distribution.ini
+install -D -m 644 %SOURCE6 \
+        %buildroot/%firefox_prefix/distribution/distribution.ini
 
-install -D -m 644 .rpm/firefox.desktop \
-	%buildroot/%_datadir/applications/firefox.desktop
+install -D -m 644 %SOURCE2 \
+        %buildroot/%_datadir/applications/firefox.desktop
 
-install -D -m 644 .rpm/firefox-search-provider.ini \
-	%buildroot/%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
+install -D -m 644 %SOURCE7 \
+        %buildroot/%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
 
 # Add alternatives
 mkdir -p %buildroot/%_altdir
@@ -445,7 +454,7 @@ rm -rf -- \
 )
 
 # Install default policies
-install -D -m 644 .rpm/policies.json \
+install -D -m 644 .gear/policies.json \
 	%buildroot%_sysconfdir/firefox/policies/policies.json
 
 %files
@@ -473,6 +482,11 @@ install -D -m 644 .rpm/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Oct 14 2026 Pavel Vasenkov <pav@altlinux.org> 140.17.0-alt2
+- Move packaging files from .rpm to .gear and pass them as SOURCE macros
+- Provide support for KDE system proxy setting (Closes: #58097)
+- Refresh metadata
+
 * Tue Sep 29 2026 Pavel Vasenkov <pav@altlinux.org> 140.17.0-alt1
 - New ESR version.
 - Security fixes:
