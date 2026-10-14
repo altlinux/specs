@@ -5,7 +5,7 @@
 %def_with check
 
 Name: ayatana-indicator-keyboard
-Version: 26.6.2
+Version: 26.6.3
 Release: alt1
 
 Summary: Ayatana Indicator for managing keyboard layout and desktop language
@@ -126,6 +126,9 @@ rm -fv %buildroot%_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/%name.mo
 %_datadir/dbus-1/interfaces/org.ayatana.indicator.keyboard.AccountsService.xml
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.3-alt1
+- New version 26.6.3.
+
 * Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.2-alt1
 - New version 26.6.2.
 
