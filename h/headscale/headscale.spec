@@ -3,7 +3,7 @@
 %global import_path github.com/juanfont/headscale
 
 Name: headscale
-Version: 0.29.4
+Version: 0.29.5
 Release: alt1
 
 Summary: An open source, self-hosted implementation of the Tailscale control server
@@ -93,6 +93,9 @@ useradd --system \
 %attr(750, headscale, headscale) %dir %_localstatedir/headscale
 
 %changelog
+* Wed Oct 14 2026 Egor Ignatov <egori@altlinux.org> 0.29.5-alt1
+- New version 0.29.5.
+
 * Tue Sep 29 2026 Egor Ignatov <egori@altlinux.org> 0.29.4-alt1
 - New version 0.29.4.
 
