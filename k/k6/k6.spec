@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: k6
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 Summary: A modern load testing tool, using Go and JavaScript
 
@@ -13,7 +13,7 @@ Vcs: https://github.com/grafana/k6.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: %go_arches
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -49,5 +49,8 @@ export LDFLAGS="-X main.version=%version"
 %_bindir/k6
 
 %changelog
+* Wed Oct 14 2026 Nikita Stavtsev <nst@altlinux.org> 2.3.0-alt1
+- 2.2.0 -> 2.3.0
+
 * Mon Sep 21 2026 Nikita Stavtsev <nst@altlinux.org> 2.2.0-alt1
 - Initial build
