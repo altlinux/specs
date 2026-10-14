@@ -1,6 +1,6 @@
 Name: emonoda
 Version: 2.1.40
-Release: alt1
+Release: alt2
 
 Summary: The set of tools to organize and management of your torrents
 
@@ -12,6 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/mdevaev/emonoda/archive/v%version.tar.gz
 Source: %name-%version.tar
+Patch1: patches/rtorrent-0.15-size-limit-target.patch
 
 
 Provides: rtfetch
@@ -29,6 +30,7 @@ The set of tools to organize and management of your torrents.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -53,6 +55,9 @@ The set of tools to organize and management of your torrents.
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.40-alt2
+- fixed rTorrent 0.15+ support: pass explicit target to network.xmlrpc.size_limit (closes: #57859)
+
 * Thu Mar 05 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.40-alt1
 - new version 2.1.40 (with rpmrb script)
 - removed cython-3.1 patch (merged upstream)
