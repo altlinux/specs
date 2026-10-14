@@ -6,7 +6,7 @@
 
 Name: ecryptfs-utils
 Version: 111
-Release: alt1
+Release: alt2
 
 Summary: The eCryptfs mount helper and support libraries
 
@@ -157,7 +157,7 @@ the interface supplied by the %name library.
 %patch999 -p1 -b .werror
 
 %__subst 's|/etc/init.d/cryptdisks restart|service cryptdisks restart|' src/utils/ecryptfs-setup-swap
-%__subst 's|/sbin/\(u*mount\)|%_sbin/\1|g' src/utils/*
+%__subst 's|/sbin/\(u*mount\)|%_sbindir/\1|g' src/utils/*
 
 sed -i -r 's:^_syslog\(LOG:ecryptfs_\0:' src/pam_ecryptfs/pam_ecryptfs.c
 
@@ -319,6 +319,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 111-alt2
+- Fix unexpanded %%_sbin macro in ecryptfs-setup-private, ecryptfs-mount-private and ecryptfs-umount-private (closes: #53664).
+
 * Fri Apr 22 2022 Vitaly Lipatov <lav@altlinux.ru> 111-alt1
 - initial build for ALT Sisyphus
 - disable openssl module (missed ecryptfs_openssl_init_from_param_vals function)
