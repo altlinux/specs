@@ -2,7 +2,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -14,8 +14,8 @@ VCS: https://codeberg.org/haydn/typesetter
 Source: %name-%version.tar
 Source1: vendor.tar
  
-BuildRequires(pre): rpm-build-rust rpm-macros-meson
-BuildRequires: /proc
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: rpm-build-rust
 BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(pango) pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(cairo-gobject) pkgconfig(gtk4)
@@ -40,13 +40,14 @@ Typesetter is a lightweight desktop application for creating beautiful documents
 
 %prep
 %setup -a1
-mkdir -p .cargo
-cat >> .cargo/config <<EOF
-[source.crates-io]
+%rust_prep
+cat >> .cargo/config.toml <<EOF
+
+[source."git+https://github.com/haydntrowell/mathml2latex?tag=0.1.0"]
+git = "https://github.com/haydntrowell/mathml2latex"
+tag = "0.1.0"
 replace-with = "vendored-sources"
 
-[source.vendored-sources]
-directory = "vendor"
 EOF
 
 %build
@@ -57,6 +58,8 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %install
 %meson_install
 
+rm %buildroot%_datadir/fonts/RobotoFlex[GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght].ttf
+
 %find_lang %name --all-name
 
 %files -f %name.lang
@@ -65,7 +68,7 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %_datadir/applications/%oname.desktop
 %_datadir/dbus-1/services/%oname.service
 %_datadir/fonts/Typesetter*.ttf
-%_datadir/fonts/Source*.ttf
+%_datadir/fonts/Source*.ttf 
 %_datadir/glib-2.0/schemas/%oname.gschema.xml
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/metainfo/%oname.metainfo.xml
@@ -73,6 +76,9 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 %_datadir/%name
 
 %changelog
+* Wed Oct 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.0-alt1
+- 0.15.2 -> 0.16.0
+
 * Wed Jul 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.15.2-alt1
 - 0.15.1 -> 0.15.2
 
