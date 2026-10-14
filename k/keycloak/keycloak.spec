@@ -1,8 +1,8 @@
 %define kiota_version v1.32.4
 
 Name:    keycloak
-Version: 26.8.0
-Release: alt2
+Version: 26.8.1
+Release: alt1
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -120,6 +120,13 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1-alt1
+- New version (fixes: CVE-2026-15943, CVE-2026-18569, CVE-2026-82968,
+  CVE-2026-94001, CVE-2026-94000, CVE-2026-94218, CVE-2026-94215,
+  CVE-2026-94213, CVE-2026-94217, CVE-2026-96446, CVE-2026-96445,
+  CVE-2026-97177, CVE-2026-95503, CVE-2026-97311, CVE-2026-97846,
+  CVE-2026-101333, CVE-2026-91777, CVE-2026-103884, CVE-2026-107121).
+
 * Thu Oct 01 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.0-alt2
 - Added vendoring libraries for stable branches.
 
