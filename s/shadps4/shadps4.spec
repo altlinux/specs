@@ -1,4 +1,4 @@
-%define sirit_commit c58f4d441cfdb6905d011a906704716833485486
+%define sirit_commit fc2b42d5e57ee2f638676c0c02f7fd71934b596a
 %define tracy_commit 143a53d1985b8e52a7590a0daca30a0a7c653b42
 %define zydis_commit 120e0e705f8e3b507dc49377ac2879979f0d545c
 %define imgui_commit 7e1b65d26d52e9dd199d889c148c72184de647b4
@@ -17,7 +17,7 @@
 %define minimp3_commit 7b590fdcfa5a79c033e76eacc05d0c3e4c79f536
 
 Name: shadps4
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 Summary: Sony PlayStation 4 emulator
@@ -137,9 +137,7 @@ shadPS4 is an early PlayStation 4 emulator for Windows, Linux and macOS written 
 %__mv -Tf ../abseil-cpp-%abseil_version externals/abseil-cpp
 
 sed -i 's/find_package(glslang 15 CONFIG)/find_package(glslang CONFIG)/g' CMakeLists.txt
-sed -i '/^#include "video_core\/amdgpu\/regs.h"$/a #include <cstring>' src/video_core/amdgpu/regs.cpp
-sed -i '/^#include "video_core\/amdgpu\/tiling.h"$/a #include <cstring>' src/video_core/amdgpu/resource.h
-sed -i 's|add_subdirectory(zstd/build/cmake)|add_library(libzstd_static SHARED IMPORTED)\n    set_target_properties(libzstd_static PROPERTIES IMPORTED_LOCATION "%_libdir/libzstd.so" INTERFACE_INCLUDE_DIRECTORIES "%_includedir")|' externals/CMakeLists.txt
+sed -i 's|find_package(zstd 1.5.6 CONFIG)|add_library(zstd::libzstd SHARED IMPORTED GLOBAL)\n    set_target_properties(zstd::libzstd PROPERTIES IMPORTED_LOCATION "%_libdir/libzstd.so" INTERFACE_INCLUDE_DIRECTORIES "%_includedir")|' CMakeLists.txt
 sed -i '/target_include_directories(zarchive PRIVATE zstd\/lib)/d' externals/CMakeLists.txt
 sed -i 's|target_include_directories(Cpp_Httplib INTERFACE cpp-httplib/)|target_include_directories(Cpp_Httplib INTERFACE "%_includedir")\ntarget_link_libraries(Cpp_Httplib INTERFACE cpp-httplib)|' externals/CMakeLists.txt
 
@@ -170,6 +168,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_bindir/%name
 
 %changelog
+* Wed Oct 14 2026 Nazarov Denis <nenderus@altlinux.org> 0.20.0-alt1
+- Version 0.20.0
+
 * Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 0.19.0-alt1
 - Version 0.19.0
 
