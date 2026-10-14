@@ -5,13 +5,13 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.21
-Release: alt2
+Version: 0.80
+Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 License: GPL-3.0-or-later
 Group: System/Base
-Url: https://pagure.io/certmonger
-VCS: https://pagure.io/certmonger
+Url: https://codeberg.org/freeipa/certmonger
+VCS: https://codeberg.org/freeipa/certmonger
 Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
 Requires: dbus
@@ -77,12 +77,17 @@ nss_ver="$(rpm -q --qf '%%{VERSION}-%%{RELEASE}' libnss 2>/dev/null)" &&
     [ "$nss_3122" -eq 1 ] &&
     touch tests/025-casave-dbm/xfail ||:
 
-# https://pagure.io/certmonger/issue/297
+# https://codeberg.org/freeipa/certmonger/issues/297
 # conditional xfail, xfail if nss >= 3.115.1-alt1
 nss_ver="$(rpm -q --qf '%%{VERSION}-%%{RELEASE}' libnss 2>/dev/null)" &&
     nss_3115="$(rpmvercmp 3.115.1-alt1 $nss_ver 2>/dev/null)" &&
     { [ "$nss_3115" -eq 0 ] || [ "$nss_3115" -eq -1 ] ; } &&
     touch tests/007-certsave-dbm/xfail ||:
+
+# https://codeberg.org/freeipa/certmonger/issues/328
+%ifarch %ix86
+touch tests/042-timestamp/xfail
+%endif
 
 %make check
 
@@ -97,46 +102,7 @@ fi
 %preun
 %preun_service %name
 
-%triggerpostun -- certmonger <= 0.79.7-alt1
-# update certmonger helper paths for existing installations
-# /usr/lib/certmonger/ => /usr/libexec/certmonger/
-set -o errexit
-set -o nounset
-set -o pipefail
-
-export LC_ALL=C
-
-help () {
-    printf -- 'Please, check and update certmonger CAs helpers manually\n' >&2
-    exit 0
-}
-
-getcert refresh-ca -a >/dev/null 2>&1 || help
-cas_list="$(getcert list-cas | grep -o "^CA '.*':" | cut -d\' -f2 | \
-              tr '\n' ' ')" || \
-         help
-
-old_path=" /usr/lib/certmonger/"
-new_path=" /usr/libexec/certmonger/"
-helper=
-modified_helper=
-for ca in $cas_list; do
-    # helper could be empty
-    helper="$(getcert list-cas -c "$ca" | grep 'helper-location:' | \
-                cut -d':' -f2)" || \
-           continue
-    if [ -z "$helper" -o -n "${helper##*$old_path*}" ]; then
-        continue
-    fi
-    modified_helper="${helper//$old_path/$new_path}"
-    # remove leading whitespace
-    modified_helper="$(sed 's/^[[:space:]]*//' <<<"$modified_helper")"
-    getcert modify-ca -c "$ca" -e "$modified_helper" || help
-done
-getcert refresh-ca -a >/dev/null 2>&1 || help
-
 %files -f %name.lang
-%doc README.md STATUS doc/*.txt
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.fedorahosted.certmonger.conf
 %config(noreplace) %_sysconfdir/certmonger/certmonger.conf
 %attr(0644,root,root) %config(noreplace) %_tmpfilesdir/certmonger.conf
@@ -170,6 +136,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 0.80-alt1
+- 0.79.21 -> 0.80
+
 * Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 0.79.21-alt2
 - Fixed FTBFS (nss 3.122).
 
