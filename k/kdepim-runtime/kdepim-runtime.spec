@@ -11,7 +11,7 @@
 
 Name: %rname
 Version: 26.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 ExcludeArch: %not_qt6_qtwebengine_arches
@@ -35,6 +35,7 @@ BuildRequires: libcups-devel
 BuildRequires: libqca-qt6-devel
 BuildRequires: libqtkeychain-qt6-devel
 BuildRequires: xsltproc libsasl2-devel boost-devel
+BuildRequires: libetebase-devel
 BuildRequires: kf6-kdav-devel
 BuildRequires: kf6-karchive-devel kf6-kauth-devel kf6-kbookmarks-devel kf6-kcmutils-devel kf6-kcodecs-devel kf6-kcompletion-devel kf6-kconfig-devel
 BuildRequires: kf6-kconfigwidgets-devel kf6-kcoreaddons-devel kf6-kcrash-devel kf6-kdbusaddons-devel
@@ -189,6 +190,9 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 
 
 %changelog
+* Wed Oct 14 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
+- build etebase backend (closes: 60806)
+
 * Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
