@@ -1,6 +1,6 @@
 Name: mate-control-center
 Version: 1.28.2
-Release: alt3
+Release: alt4
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -71,6 +71,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.2-alt4
+- updated ru translation
+
 * Sat Oct 03 2026 Anton Midyukov <antohami@altlinux.org> 2:1.28.2-alt3
 - NMU: remove runtime dependency on gnome-keyring.
 
