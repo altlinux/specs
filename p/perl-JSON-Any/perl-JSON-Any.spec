@@ -4,7 +4,7 @@ BuildRequires: perl(Module/Metadata.pm) perl(Test/Needs.pm)
 %define _unpackaged_files_terminate_build 1
 %define dist JSON-Any
 Name: perl-%dist
-Version: 1.40
+Version: 1.42
 Release: alt1
 
 Summary: Wrapper Class for the various JSON classes
@@ -41,6 +41,9 @@ installed.
 %perl_vendor_privlib/JSON
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 1.42-alt1
+- new version 1.42
+
 * Wed Sep 13 2023 Igor Vlasenko <viy@altlinux.org> 1.40-alt1
 - automated CPAN update
 
