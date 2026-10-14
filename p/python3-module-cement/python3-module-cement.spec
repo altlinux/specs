@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.16
-Release: alt1
+Release: alt2
 
 Summary: Application Framework for Python
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Vcs: https://github.com/datafolklabs/cement
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Patch: cement-3.0.16-fix-logger-tests.patch
 
 BuildRequires: git
 BuildRequires(pre): rpm-build-python3
@@ -50,6 +51,7 @@ development of CLI tools.
 
 %prep
 %setup
+%patch -p1
 
 # Breaks https://peps.python.org/pep-0621/
 sed -i 's/, "README"//' pyproject.toml
@@ -88,6 +90,9 @@ fi
 %doc README.* LICENSE
 
 %changelog
+* Wed Oct 14 2026 Anton Vyatkin <toni@altlinux.org> 3.0.16-alt2
+- Fixed FTBFS.
+
 * Sat Jul 25 2026 Anton Vyatkin <toni@altlinux.org> 3.0.16-alt1
 - New version 3.0.16.
 
