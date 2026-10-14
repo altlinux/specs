@@ -1,7 +1,7 @@
 %define pkg nodejs
 Name: rpm-build-%pkg
 Version: 0.20.7
-Release: alt4
+Release: alt5
 
 Summary: RPM helper scripts for building %pkg packages
 
@@ -75,7 +75,7 @@ echo "%%nodejs_native_arch x64" >> %buildroot%_rpmmacrosdir/%pkg
 echo "%%nodejs_native_arch arm64" >> %buildroot%_rpmmacrosdir/%pkg
 %endif
 %ifarch %e2k
-echo "%%nodejs_native_arch e2k" >> %buildroot%_rpmmacrosdir/%pkg
+echo "%%nodejs_native_arch elbrus" >> %buildroot%_rpmmacrosdir/%pkg
 %endif
 %ifarch loongarch64
 echo "%%nodejs_native_arch loong64" >> %buildroot%_rpmmacrosdir/%pkg
@@ -111,6 +111,9 @@ install -Dpm0644 multiver_modules %{buildroot}%{_datadir}/node/multiver_modules
 %_rpmmacrosdir/%pkg
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt5
+- %%nodejs_native_arch: e2k -> elbrus, as node reports it (closes: #57880)
+
 * Sun Apr 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.20.7-alt4
 - add %%nodejs_native_arch macro (maps RPM arch to Node.js process.arch)
 - update %%nodejs_arches: add aarch64 loongarch64 riscv64 mipsel; remove %%arm %%ix86
