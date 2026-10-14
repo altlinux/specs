@@ -5,7 +5,7 @@ BuildRequires: fonts-ttf-liberation
 %define dist SDL
 Name: perl-%dist
 Version: 2.548
-Release: alt4
+Release: alt4.1
 
 Summary: Simple DirectMedia Layer for Perl
 License: LGPL-2.1-or-later AND (GPL-1.0-or-later OR Artistic-1.0-Perl)
@@ -22,6 +22,8 @@ Patch1:         SDL-2.548-Unbundle-Gentium-Book-Basic-regular-font-alt.patch
 # Adapt to perl 5.37.1, proposed to upstream,
 # <https://github.com/PerlGameDev/SDL/issues/303>
 Patch2:         SDL-2.548-Adapt-to-perl-5.37.1.patch
+# Fix conflicting boot_SDL prototype (C23 default in GCC 15).
+Patch3:         SDL-2.548-Fix-boot_SDL-prototype-with-C23.patch
 
 Conflicts: frozen-bubble < 2.2.0-alt3.2
 Conflicts: perl-SDL_Perl
@@ -77,6 +79,7 @@ application/game into PAR archive.
 %patch1 -p1
 %endif
 %patch2 -p1
+%patch3 -p1
 
 if [ %version = 2.548 ]; then
 # Disable the sdlx_controller_interface.t test, it hangs on arm and ppc64le
@@ -111,6 +114,9 @@ rm -r share
 %perl_vendor_archlib/Module/Build/SDL.pm
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.548-alt4.1
+- NMU: fixed build with GCC 15 (boot_SDL prototype)
+
 * Mon Oct 30 2023 Igor Vlasenko <viy@altlinux.org> 2.548-alt4
 - fixed build with perl 5.38
 
