@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2024a
+Version: 2026e
 Release: alt1
 
 Summary: Timezone data
@@ -7,7 +7,8 @@ Summary: Timezone data
 # so it is OK to release the whole as GPLv2+.
 License: GPLv2+
 Group: System/Base
-Url: http://www.iana.org/time-zones
+Url: https://www.iana.org/time-zones
+VCS: https://github.com/eggert/tz.git
 BuildArch: noarch
 
 %define srcname %name-%version-%release
@@ -41,11 +42,13 @@ cp -a -t .rearguard -- *
 xz -9k NEWS
 
 %build
-%define make_args CC='%__cc' CFLAGS='%optflags' MANTXTS= VERSION=%version
+# Keep REDO=posix_right for backward compatibility; upstream defaults to posix_only since 2026a.
+# TODO: remove this override, adjust packaging, and recheck all packages for compatibility.
+%define make_args CC='%__cc' CFLAGS='%optflags' MANTXTS= VERSION=%version REDO=posix_right
 make %make_args
 
 %define rearguard tzdata%version-rearguard.tar.gz
-make -C .rearguard %rearguard %make_args
+make -C .rearguard %rearguard.t %make_args
 
 %install
 case "$(rpm --eval %%_priority_distbranch)" in
@@ -54,7 +57,7 @@ case "$(rpm --eval %%_priority_distbranch)" in
 esac
 %make_install install_default DESTDIR=%buildroot \
 	MANTXTS= ZONETABLES=zone1970.tab \
-	VERSION=%version ZFLAGS="$ZFLAGS"
+	VERSION=%version REDO=posix_right ZFLAGS="$ZFLAGS"
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
@@ -70,8 +73,7 @@ echo '%name%version' > %buildroot%srcdir/VERSION
 %define __spec_install_custom_post hardlink -vc %buildroot
 
 %check
-for f in *.html; do touch check_"$f"; done
-make -k check %make_args
+make -k check CHECK_WEB_PAGES= %make_args
 
 # test basic glibc compatibility
 cat > expected <<'EOF'
@@ -105,6 +107,9 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Tue Oct 13 2026 Anton Farygin <rider@altlinux.org> 2026e-alt1
+- 2024a -> 2026e
+
 * Sat Apr 06 2024 Dmitry V. Levin <ldv@altlinux.org> 2024a-alt1
 - 2023c -> 2024a (closes: #49855).
 
