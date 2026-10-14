@@ -2,7 +2,7 @@
 
 Name:    keycloak
 Version: 26.8.1
-Release: alt1
+Release: alt2
 
 Summary: Open Source Identity and Access Management For Modern Applications and Services
 License: Apache-2.0
@@ -120,6 +120,9 @@ chown -R keycloak:keycloak %_libexecdir/%name/data
 %attr(0750,keycloak,keycloak) %dir %_sharedstatedir/%name
 
 %changelog
+* Wed Oct 14 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1-alt2
+- Added vendoring libraries for stable branches.
+
 * Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1-alt1
 - New version (fixes: CVE-2026-15943, CVE-2026-18569, CVE-2026-82968,
   CVE-2026-94001, CVE-2026-94000, CVE-2026-94218, CVE-2026-94215,
