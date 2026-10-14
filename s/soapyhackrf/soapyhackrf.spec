@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyhackrf
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: HackRF device support for SoapySDR
@@ -38,5 +38,8 @@ to transmit and receive.
 %_libdir/SoapySDR/modules0.8/*.so
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.5-alt1
+- new version 0.3.5 (with rpmrb script)
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.3.4-alt1
 - Initial build for Sisyphus
