@@ -2,7 +2,7 @@
 
 Name: aerc
 Version: 0.22.0
-Release: alt1
+Release: alt2
 Summary: Email client for your terminal
 
 License: MIT
@@ -26,6 +26,8 @@ ExclusiveArch: %go_arches
 BuildRequires: golang >= 1.7
 
 Requires: notmuch
+# html filter runs w3m in a separate user and network namespace (unshare)
+Requires: sysctl-conf-userns
 
 %description
 Aerc is an email client that runs in your terminal. It's highly
@@ -47,9 +49,8 @@ sed -e 's|install: $(DOCS) aerc wrap|install: $(DOCS)|' \
 #__subst "s|github.com/zenhack/go.notmuch|github.com/brunnre8/go.notmuch|" $(find . -name "*.go" -type f)
 
 %build
-export GOFLAGS=-mod=vendor
+export GOFLAGS="-mod=vendor -tags=notmuch"
 make wrap colorize CC=gcc
-export BUILDTAGS=notmuch
 export LDFLAGS="-X main.Version=%version \
                 -X main.Prefix=%prefix \
                 -X main.Flags=$(echo -- $(GOFLAGS) | base64 | tr -d '\r\n') \
@@ -78,6 +79,10 @@ desktop-file-validate %buildroot/%_desktopdir/aerc.desktop
 %_man7dir/aerc-*.7.*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.22.0-alt2
+- Build with notmuch backend (pass -tags=notmuch via GOFLAGS) (closes: #55228).
+- Require sysctl-conf-userns for html filter (closes: #56796).
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.22.0-alt1
 - new version 0.22.0
 
