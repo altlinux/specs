@@ -4,10 +4,10 @@
 BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Carp.pm) perl(Cpanel/JSON/XS.pm) perl(Data/Dump.pm) perl(Data/Dumper.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(FindBin.pm) perl(Getopt/Long.pm) perl(HTML/Entities.pm) perl(IO/All.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(JSON.pm) perl(JSON/PP.pm) perl(JSON/XS.pm) perl(MIME/Base64.pm) perl(Module/Load.pm) perl(Mojo/JSON.pm) perl(Mojolicious.pm) perl(Scalar/Util.pm) perl(Term/ANSIColor.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(Text/Table.pm) perl(Tie/Array.pm) perl(Tie/Hash.pm) perl(URI/Escape.pm) perl(YAML.pm) perl(YAML/PP/LibYAML/Parser.pm) perl(YAML/Syck.pm) perl(YAML/Tiny.pm)
 BuildRequires: perl(YAML/XS.pm) perl(base.pm) perl(boolean.pm) perl(constant.pm) perl(lib.pm) perl(overload.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-BuildRequires: rpm-build-perl perl-devel perl-podlators
+BuildRequires: rpm-build-perl perl-devel perl-podlators perl(Test/Warnings.pm)
 
 Name: perl-%module_name
-Version: 0.39.0
+Version: 0.43.0
 Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
@@ -16,6 +16,8 @@ Url: %CPAN %module_name
 
 Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{module_name}-v%{version}.tar.gz
 BuildArch: noarch
+# Representer.pm loads experimental via eval string (perl >= 5.36), invisible to autodeps
+Requires: perl(experimental.pm)
 
 %description
 This is Yet Another YAML Parser. For why this project was started, see
@@ -48,6 +50,11 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.43.0-alt1
+- new version 0.43.0
+- added Requires: perl(experimental.pm) (used in eval string for builtin::is_bool; dump died without it)
+- added BuildRequires: perl(Test/Warnings.pm) (tests switched from Test::Warn)
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.39.0-alt1
 - automated CPAN update
 
