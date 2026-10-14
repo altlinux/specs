@@ -1,6 +1,6 @@
 Name: massdns
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: High-performance DNS stub resolver for bulk lookups
 
@@ -24,7 +24,8 @@ resolvers.
 %setup
 
 %build
-%make_build CFLAGS="%optflags"
+# upstream takes the version from git describe, absent in the tarball
+%make_build CFLAGS="%optflags" PROJECT_FLAGS='-DMASSDNS_REVISION=\"v%version\"'
 
 %install
 install -Dm755 bin/massdns %buildroot%_bindir/massdns
@@ -36,5 +37,8 @@ install -Dm644 doc/massdns.1 %buildroot%_man1dir/massdns.1
 %_man1dir/massdns.1*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
+- set the version shown by massdns --version (closes: #58649)
+
 * Thu Feb 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - initial build for ALT Sisyphus
