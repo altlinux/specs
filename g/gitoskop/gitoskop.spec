@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gitoskop
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Read-only HTTP API for browsing trees of bare git repositories
@@ -98,6 +98,17 @@ cargo test --release --locked --offline
 %_datadir/%name/web
 
 %changelog
+* Wed Oct 14 2026 Anton Farygin <rider@altlinux.org> 1.8.1-alt1
+- 1.8.0 -> 1.8.1
+- webui: file search no longer drops the caret when results swap in, Back
+  returns to the file list (Closes: #60779)
+- webui: repository overview prefers README.md over README
+- webui: source line numbers are real links, copy link yields the line URL
+- webui: live search preserves the previous page in browser history
+- webui: no phantom line after a final newline in source, blame and counts
+- webui: a scrolled file keeps its path and toolbar visible, Source/Blame
+  switches preserve the selected line
+
 * Sat Sep 26 2026 Anton Farygin <rider@altlinux.org> 1.8.0-alt1
 - 1.7.0 -> 1.8.0
 - hardening: fixed stored XSS via gear/spec links and blob_plain, CSP on HTML
