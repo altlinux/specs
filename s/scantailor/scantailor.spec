@@ -1,20 +1,22 @@
 Name: scantailor
-Version: 1.0.19
+Version: 1.2.1
 Release: alt1
 
 Summary: Scan processing software
 License: GPLv3
 Group: Graphics
-Url: https://github.com/vigri/scantailor-advanced
+Url: https://github.com/ScanTailor-Advanced/scantailor-advanced
 
-# Source-url: https://github.com/vigri/scantailor-advanced/archive/refs/tags/v%version.tar.gz
+# Source-url: https://github.com/ScanTailor-Advanced/scantailor-advanced/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-Source1: %name.desktop
+# fix translations lookup after the 1.2.0 binary rename
+Patch: scantailor-advanced-1.2.1-translations-filter.patch
+Patch1: scantailor-advanced-1.2.1-tests-zero-tolerance.patch
 
-# Automatically added by buildreq on Fri Apr 10 2009
-BuildRequires: boost-devel-headers boost-intrusive-devel cmake gcc-c++
-BuildRequires: zlib-devel libXft-devel libXmu-devel libXpm-devel libjpeg-devel libtiff-devel libpng-devel
-BuildRequires: qt5-base-devel qt5-tools-devel qt5-svg-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats
+BuildRequires: rpm-build-cmake ctest gcc-c++
+BuildRequires: boost-devel-headers boost-intrusive-devel boost-devel
+BuildRequires: zlib-devel libjpeg-devel libtiff-devel libpng-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel
 
 %description
 scantailor-advanced is a book scan processing software.
@@ -36,7 +38,10 @@ GUI интерфейс. Наиболее известными аналогами
 
 %prep
 %setup
-subst "s|scantailor-advanced|%name|" CMakeLists.txt
+%patch -p1
+%patch1 -p1
+# keep settings and translations under the old application name
+subst 's|set(APPLICATION_NAME "${target_name}")|set(APPLICATION_NAME "%name")|' CMakeLists.txt
 # remove project's options
 subst "s|.*add_compile_options.*||" CMakeLists.txt
 
@@ -46,19 +51,35 @@ subst "s|.*add_compile_options.*||" CMakeLists.txt
 
 %install
 %cmakeinstall_std
-mv %buildroot%_iconsdir/hicolor/scalable/apps/ScanTailor.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-rm -f %buildroot%_desktopdir/scantailor.desktop
-install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
+# compatibility with the old binary name
+ln -s scantailor-advanced %buildroot%_bindir/%name
+
+%check
+export QT_QPA_PLATFORM=offscreen
+%ctest -E imageproc_tests
+# compares scaleToGray() with QImage::scaled(), whose smoothing differs in Qt6
+%_cmake__builddir/imageproc_tests --run_test='!ScaleTestSuite/test_random_image'
 
 %files
+%_bindir/scantailor-advanced
 %_bindir/%name
 %dir %_datadir/%name/
 %_datadir/%name/translations/
-%_desktopdir/%name.desktop
-/usr/share/mime/packages/scantailor-project.xml
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_desktopdir/scantailor-advanced.desktop
+%_datadir/mime/packages/scantailor-project.xml
+%_iconsdir/hicolor/scalable/apps/scantailor-advanced.svg
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1
+- switch upstream to https://github.com/ScanTailor-Advanced/scantailor-advanced
+- build with Qt6, use rpm-build-cmake
+- install upstream scantailor-advanced binary and desktop file
+- keep scantailor as a compatibility symlink to scantailor-advanced
+- fix translations lookup after the binary rename
+- enable unit tests in %%check
+- fix unit tests comparing with zero (absolute tolerance, fails on aarch64 and i586)
+
 * Tue Mar 18 2025 Vitaly Lipatov <lav@altlinux.ru> 1.0.19-alt1
 - new version 1.0.19 (with rpmrb script)
 
