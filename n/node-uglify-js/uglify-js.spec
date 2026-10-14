@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-uglify-js
-Version: 3.17.0
+Version: 3.19.3
 Release: alt1
 
 Summary: JavaScript parser, minifier, compressor and beautifier toolkit
@@ -74,6 +74,9 @@ cp -a LICENSE README.md package.json bin/ lib/ tools/ %buildroot/%nodejs_sitelib
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 3.19.3-alt1
+- new version 3.19.3 (closes: #55012)
+
 * Fri Aug 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.17.0-alt1
 - new version 3.17.0 (with rpmrb script)
 - disable node_modules packing (no extra deps as for 3.17)
