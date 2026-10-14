@@ -3,7 +3,7 @@
 
 Name: i2pd
 Version: 2.61.0
-Release: alt1
+Release: alt2
 
 Summary: Full C++ implementation of I2P router
 
@@ -22,9 +22,9 @@ Source2: %name.logrotate
 Source4: tunnels.conf
 Source5: %name.sysconfig
 
-BuildRequires: rpm-build-intro rpm-macros-cmake
+BuildRequires: rpm-build-intro rpm-build-cmake
 
-BuildRequires: gcc-c++ cmake libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel
+BuildRequires: gcc-c++ libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel
 
 BuildRequires: /proc
 
@@ -120,6 +120,11 @@ mkdir -p %buildroot%_logdir/%name/
 %dir %_logdir/%name/
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.61.0-alt2
+- systemd unit: add ExecReload (SIGHUP), graceful stop timeout, LimitNOFILE and network-online ordering.
+- the config in the current format is shipped since 2.61.0-alt1, service starts again (closes: #42746)
+- BuildRequires: rpm-build-cmake instead of cmake
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2.61.0-alt1
 - new version 2.61.0
 - restore upstream files reverted in 2.59.0-alt1 and 2.60.0-alt1
