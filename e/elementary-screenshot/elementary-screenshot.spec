@@ -4,7 +4,7 @@
 %define appname io.elementary.screenshot
 
 Name: elementary-screenshot
-Version: 8.0.4
+Version: 9.0.0
 Release: alt1
 
 Summary: Screenshot tool designed for elementary OS
@@ -53,6 +53,9 @@ BuildRequires: pkgconfig(libportal)
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 9.0.0-alt1
+- New version 9.0.0.
+
 * Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.4-alt1
 - New version 8.0.4.
 

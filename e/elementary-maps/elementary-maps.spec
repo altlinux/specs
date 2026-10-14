@@ -4,7 +4,7 @@
 %define appname io.elementary.maps
 
 Name: elementary-maps
-Version: 8.1.0
+Version: 9.0.0
 Release: alt1
 
 Summary: Map viewer designed for elementary OS
@@ -55,5 +55,8 @@ sed -i 's|^Categories=.*|Categories=Science;Maps;Geography;|' data/maps.desktop.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 9.0.0-alt1
+- New version 9.0.0.
+
 * Sun Oct 26 2025 Nikolay Strelkov <snk@altlinux.org> 8.1.0-alt1
 - Initial build for Sisyphus

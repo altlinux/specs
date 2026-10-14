@@ -4,7 +4,7 @@
 %define appname io.elementary.camera
 
 Name: elementary-camera
-Version: 8.0.2
+Version: 9.0.0
 Release: alt1
 
 Summary: Camera app designed for elementary OS
@@ -54,7 +54,11 @@ sed -i 's|^Categories=.*|Categories=GNOME;GTK;AudioVideo;Recorder;|' data/io.ele
 %_iconsdir/hicolor/*/apps/%{appname}.svg
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
 %_datadir/metainfo/%{appname}.metainfo.xml
+%_datadir/locale/zh_Hant/LC_MESSAGES/%{appname}.mo
 
 %changelog
+* Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 9.0.0-alt1
+- New version 9.0.0.
+
 * Sat Sep 20 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - Initial build for Sisyphus
