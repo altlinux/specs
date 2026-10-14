@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-firefox
-Version: 8.0
+Version: 8.3
 Release: alt1
 
 Summary: Firefox-specific ADMX policy templates
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 BuildRequires: admx-lint
 
-Source0: policy-templates.tar
+Source0: policy-templates-%version.tar
 
 %description
 Firefox-specific ADMX files, which are registry-based policy settings provide
@@ -21,7 +21,7 @@ an XML-based structure for defining the display of the Administrative Template
 policy settings in the Group Policy Object Editor.
 
 %prep
-%setup -q -n policy-templates
+%setup -q -n policy-templates-%version
 
 %install
 mkdir -p %buildroot%_datadir
@@ -48,6 +48,13 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Thu Sep 17 2026 Valentin Sokolov <sova@altlinux.org> 8.3-alt1
+- Update Policy templates for Firefox 156 and Firefox ESR 153.3
+
+* Mon Sep 14 2026 Valentin Sokolov <sova@altlinux.org> 8.2-alt1
+- Update Policy templates for Firefox 155 and Firefox ESR 153.2.0
+- Use versioned source tarball name
+
 * Fri Jul 24 2026 Valentin Sokolov <sova@altlinux.org> 8.0-alt1
 - Update Policy templates for Firefox 153 and Firefox ESR 153
 
