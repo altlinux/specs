@@ -2,7 +2,7 @@
 %global import_path github.com/AvengeMedia/DankMaterialShell/core
 
 Name: dms-shell
-Version: 1.5.3
+Version: 1.6.3
 Release: alt1
 
 Summary: DankMaterialShell - Material 3 inspired shell for Wayland compositors
@@ -10,7 +10,7 @@ License: MIT
 Group: Graphical desktop/Other
 
 Url: https://github.com/AvengeMedia/DankMaterialShell
-# Source-url: https://github.com/AvengeMedia/DankMaterialShell/archive/refs/tags/v%version.tar.gz
+# Source-url: https://github.com/AvengeMedia/DankMaterialShell/releases/download/v%version/dms-source.tar.gz
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
@@ -22,7 +22,6 @@ ExcludeArch: i586
 
 Requires: accountsservice
 Requires: dsearch
-Requires: dgop
 Requires: quickshell
 Requires: matugen
 Requires: qt6-multimedia
@@ -45,10 +44,12 @@ lock screen, and comprehensive plugin system.
 
 %prep
 %setup -a1
+sed -i -e '/@update-desktop-database/d' -e '/@gtk-update-icon-cache/d' Makefile
 
 %build
 
 cp -r vendor ./core/
+%make -C core sync-shell
 
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
@@ -56,51 +57,22 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 cd .build/src/%import_path
+export TAGS="distro_binary withshell"
+export LDFLAGS="-X main.Version=%version"
 %golang_build core/cmd/dms
 
 %install
 export BUILDDIR="$PWD/.build"
-export IGNORE_SOURCES=1
-%golang_install
-
-install -d %buildroot%_datadir/bash-completion/completions
-install -d %buildroot%_datadir/zsh/site-functions
-install -d %buildroot%_datadir/fish/vendor_completions.d
-
-dms completion bash > %buildroot%_datadir/bash-completion/completions/dms || :
-dms completion zsh > %buildroot%_datadir/zsh/site-functions/_dms || :
-dms completion fish > %buildroot%_datadir/fish/vendor_completions.d/dms.fish || :
-
-install -Dm644 assets/systemd/dms.service %buildroot%_userunitdir/dms.service
-
-install -Dm644 assets/com.danklinux.dms.desktop %buildroot%_desktopdir/com.danklinux.dms.desktop
-install -Dm644 assets/com.danklinux.dms.notepad.desktop %buildroot%_desktopdir/com.danklinux.dms.notepad.desktop
-install -Dm644 assets/dms-open.desktop %buildroot%_desktopdir/dms-open.desktop
-install -Dm644 assets/danklogo.svg %buildroot%_iconsdir/hicolor/scalable/apps/danklogo.svg
-
-install -dm755 %buildroot%_datadir/quickshell/dms
-cp -r "quickshell/"* %buildroot%_datadir/quickshell/dms/
-
-rm -rf %buildroot%_datadir/quickshell/dms/.git*
-rm -f %buildroot%_datadir/quickshell/dms/.gitignore
-rm -rf %buildroot%_datadir/quickshell/dms/.github
-rm -rf %buildroot%_datadir/quickshell/dms/distro
-rm -f %buildroot%_datadir/quickshell/dms/scripts/i18nsync.py
-rm -f %buildroot%_datadir/quickshell/dms/scripts/spam-notifications.sh
-rm -f %buildroot%_datadir/quickshell/dms/scripts/verify-notifications.sh
-rm -f %buildroot%_datadir/quickshell/dms/translations/extract_settings_index.py
-rm -f %buildroot%_datadir/quickshell/dms/translations/extract_translations.py
-rm -f %buildroot%_datadir/quickshell/dms/translations/replace_qstr.py
-rm -f %buildroot%_datadir/quickshell/dms/translations/check_term_freeze.py
-
-echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
+%makeinstall_std \
+    PREFIX=%_prefix \
+    BUILD_DIR="$BUILDDIR/bin" \
+    SYSTEMD_USER_DIR=%buildroot%_userunitdir
 
 %files
 %_bindir/dms
 %_datadir/bash-completion/completions/dms
 %_datadir/zsh/site-functions/_dms
 %_datadir/fish/vendor_completions.d/dms.fish
-%_datadir/quickshell/dms/
 %_userunitdir/dms.service
 %_desktopdir/com.danklinux.dms.desktop
 %_desktopdir/com.danklinux.dms.notepad.desktop
@@ -108,6 +80,11 @@ echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 %_iconsdir/hicolor/scalable/apps/danklogo.svg
 
 %changelog
+* Tue Oct 13 2026 Boris Yumankulov <boria138@altlinux.org> 1.6.3-alt1
+- new version 1.6.3
+- remove dgop runtime dependency (monitoring library is built into dms)
+- use upstream make install for package files
+
 * Mon Aug 03 2026 Boris Yumankulov <boria138@altlinux.org> 1.5.3-alt1
 - new version 1.5.3
 
@@ -126,4 +103,3 @@ echo "%version" > %buildroot%_datadir/quickshell/dms/VERSION
 
 * Tue Mar 31 2026 Boris Yumankulov <boria138@altlinux.org> 1.4.4-alt1
 - initial build for ALT Sisyphus
-
