@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        155.0.8059.39
+Version:        155.0.8059.79
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -48,10 +48,6 @@ Source100:      chromium.sh
 Source101:      chromium.desktop
 Source102:      chromium.xml
 Source200:      chromium.default
-# https://github.com/rollup/rollup/blob/master/LICENSE-CORE.md
-# third_party/devtools-frontend/src/package-lock.json
-# https://npm.skia.org/chrome-devtools/@rollup%%2frollup-linux-arm64-gnu/-/rollup-linux-arm64-gnu-4.60.4.tgz
-Source300:      rollup-linux-arm64-gnu-4.60.4.tgz
 # https://github.com/microsoft/TypeScript/releases/
 # https://github.com/microsoft/TypeScript/releases/download/v7.0.2/typescript-linux-arm64.tgz
 Source301:      typescript-linux-arm64.tgz
@@ -398,10 +394,6 @@ mkdir -p third_party/gperf/cipd/bin/
 ln -sf %_bindir/gperf third_party/gperf/cipd/bin/gperf
 
 %ifarch aarch64
-# unpack rollup binary for aarch64
-# mkdir -p third_party/devtools-frontend/src/node_modules/@rollup/rollup-linux-arm64-gnu
-# tar xf %SOURCE300 && mv package third_party/devtools-frontend/src/node_modules/@rollup/rollup-linux-arm64-gnu
-
 # typescript
 tar xf %SOURCE301 -C third_party/typescript/linux-amd64/src/
 pushd third_party/typescript/linux-amd64/src/
@@ -750,6 +742,47 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Wed Oct 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 155.0.8059.79-alt1
+- New version (155.0.8059.79).
+- Fixes:
+  + CVE-2026-110152: Buffer overflow in ANGLE
+  + CVE-2026-110149: Use after free in Browser
+  + CVE-2026-110136: Use after free in PDF
+  + CVE-2026-110161: Use after free in Network
+  + CVE-2026-110165: Use after free in Core
+  + CVE-2026-110148: Use after free in SVG
+  + CVE-2026-110151: Use after free in Media
+  + CVE-2026-110162: Use after free in Desktop
+  + CVE-2026-110170: Use after free in Bindings
+  + CVE-2026-110160: Missing authorization in ReadingMode
+  + CVE-2026-110143: Use of uninitialized variable in ThirdParty lmza_sdk
+  + CVE-2026-110146: Information leak in Passwords
+  + CVE-2026-110150: Privilege elevation in Installer
+  + CVE-2026-110156: Incorrect reference resolution in Extensions
+  + CVE-2026-110137: Use after free in WebRTC
+  + CVE-2026-110140: Type confusion in V8
+  + CVE-2026-110158: Use after free in Passwords
+  + CVE-2026-110145: Use after free in Passwords
+  + CVE-2026-110159: Incorrect authorization in Updater
+  + CVE-2026-110144: Incorrect authorization in Mojo
+  + CVE-2026-110153: Use after free in Media
+  + CVE-2026-110166: Buffer overflow in Animation
+  + CVE-2026-110169: Use after free in V8
+  + CVE-2026-110168: Use after free in V8
+  + CVE-2026-110139: Use after free in Media
+  + CVE-2026-110172: Use after free in Media
+  + CVE-2026-110164: Use after free in DOM
+  + CVE-2026-110163: Use after free in DOM
+  + CVE-2026-110141: Observable discrepancy in Media
+  + CVE-2026-110138: Use after free in ShapeDetection
+  + CVE-2026-110157: Use after free in SVG
+  + CVE-2026-110147: Use after free in PDF
+  + CVE-2026-110154: Use after free in Canvas
+  + CVE-2026-110155: Buffer overflow in PDFium
+  + CVE-2026-110167: Use after free in Media
+  + CVE-2026-110171: Use after free in Media
+  + CVE-2026-110142: Use after free in FileSystem
+
 * Thu Oct 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 155.0.8059.39-alt1
 - New version (155.0.8059.39).
 - Fixes:
