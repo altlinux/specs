@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-executing
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 Summary: Get the currently executing AST node of a frame, and other information
 License: MIT
@@ -48,6 +48,9 @@ what a frame is currently doing, particularly the AST node being executed.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 14 2026 Anton Vyatkin <toni@altlinux.org> 2.3.0-alt1
+- New version 2.3.0.
+
 * Tue Sep 02 2025 Anton Vyatkin <toni@altlinux.org> 2.2.1-alt1
 - New version 2.2.1.
 
