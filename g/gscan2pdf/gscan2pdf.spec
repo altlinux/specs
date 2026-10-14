@@ -2,7 +2,7 @@
 
 Name: gscan2pdf
 Version: 2.13.5
-Release: alt2
+Release: alt3
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
 Group: Office
@@ -24,7 +24,7 @@ BuildRequires: perl-Gtk3 perl-Gtk3-ImageView perl-Gtk3-SimpleList libgoocanvas2-
 
 Requires: libgoocanvas2-gir perl-Pod-Perldoc
 
-BuildRequires: perl-Magick perl-Sane >= 0.05 perl-IPC-Cmd
+BuildRequires: perl-Magick perl-IPC-Cmd
 
 BuildRequires: perl-devel
 
@@ -93,6 +93,9 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.13.5-alt3
+- Drop perl-Sane from BuildRequires (replaced by perl-Image-Sane).
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.13.5-alt2
 - add perl-IPC-Cmd to BuildRequires
 
