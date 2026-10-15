@@ -6,7 +6,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.24.1
+Version: 0.24.2
 Release: alt1
 
 Summary: System configuration tool
@@ -117,6 +117,9 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu Oct 15 2026 Alexey Appolonov <alexey@altlinux.org> 0.24.2-alt1
+- Improved security and usability of the whitelist generation script.
+
 * Mon Oct 12 2026 Alexey Appolonov <alexey@altlinux.org> 0.24.1-alt1
 - The feedback provided when setting control++ modes now works correctly;
 - The script that generates the whitelist is improved (both in terms of safety
