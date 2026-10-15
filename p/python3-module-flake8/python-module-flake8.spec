@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.3.0
+Version: 7.4.1
 Release: alt1
 
 Summary: Code checking using pep8 and pyflakes
@@ -16,6 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -61,12 +62,14 @@ warning. - a Mercurial hook.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst LICENSE
 %_bindir/flake8
 %python3_sitelibdir/flake8/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 7.4.1-alt1
+- 7.3.0 -> 7.4.1
+
 * Mon Jun 23 2025 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1
 - 7.2.0 -> 7.3.0.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 4.0.3
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
@@ -18,6 +18,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
@@ -60,7 +61,6 @@ mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 %pyproject_run_unittest
 
 %files
-%doc README.*
 %_bindir/pyflakes-py3
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
@@ -70,6 +70,9 @@ mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 %python3_sitelibdir/%pypi_name/test
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 4.0.3-alt1
+- 3.4.0 -> 4.0.3
+
 * Mon Jun 23 2025 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.2 -> 3.4.0.
 
