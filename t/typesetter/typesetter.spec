@@ -2,11 +2,11 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.16.0
+Version: 0.16.1
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
-License: GPL-3.0-only
+License: GPL-3.0-or-later
 Group: Editors
 Url: https://typesetter.trowell.net
 VCS: https://codeberg.org/haydn/typesetter
@@ -76,6 +76,10 @@ rm %buildroot%_datadir/fonts/RobotoFlex[GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,
 %_datadir/%name
 
 %changelog
+* Thu Oct 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.1-alt1
+- 0.16.0 -> 0.16.1
+- changed license
+
 * Wed Oct 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.0-alt1
 - 0.15.2 -> 0.16.0
 
