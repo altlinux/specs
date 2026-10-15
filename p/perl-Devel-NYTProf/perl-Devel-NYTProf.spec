@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 6.14
+Version: 6.15
 Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
@@ -10,6 +10,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/J/JK/JKEENAN/%{dist}-%{version}.tar.gz
+
+Requires: perl(JSON/MaybeXS.pm)
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-JSON-Any perl-Moose perl-Test-Pod perl-Test-Pod-Coverage zlib-devel perl-Test-Differences perl(File/Which.pm) perl(Capture/Tiny.pm)
@@ -40,6 +42,10 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.15-alt1
+- new version 6.15
+- added missing runtime dependency on JSON::MaybeXS (used by nytprofhtml)
+
 * Sat Oct 21 2023 Igor Vlasenko <viy@altlinux.org> 6.14-alt1
 - automated CPAN update
 

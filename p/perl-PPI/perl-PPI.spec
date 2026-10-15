@@ -4,7 +4,7 @@ BuildRequires: perl(Safe/Isa.pm) perl(YAML/PP.pm)
 %define _unpackaged_files_terminate_build 1
 %define dist PPI
 Name: perl-%dist
-Version: 1.283
+Version: 1.291
 Release: alt1
 
 Summary: Parse, Analyze and Manipulate Perl (without perl)
@@ -42,6 +42,9 @@ it's also a reverse acronym for "I Parse Perl".
 %perl_vendor_privlib/PPI*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.291-alt1
+- new version 1.291
+
 * Fri May 16 2025 Igor Vlasenko <viy@altlinux.org> 1.283-alt1
 - automated CPAN update
 

@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-ExtUtils-XSpp
-Version: 0.18
+Version: 0.19
 Release: alt1
 Serial:  1
 
@@ -28,7 +28,7 @@ Url: http://www.cpan.org
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 BuildArch: noarch
 
-Source: http://www.cpan.org/authors/id/S/SM/SMUELLER/ExtUtils-XSpp-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/M/MB/MBARBON/ExtUtils-XSpp-%{version}.tar.gz
 Patch: perl-ExtUtils-XSpp-fix_build.patch
 
 # Automatically added by buildreq on Sat Jan 30 2010
@@ -61,6 +61,9 @@ pre-processor *xsubpp* and the XS++ pre-processor *xspp*.
 %_man1dir/*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.19-alt1
+- new version 0.19
+
 * Mon Sep 23 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.18-alt1
 - automated CPAN update
 
