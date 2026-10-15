@@ -1,22 +1,32 @@
 %define oname pytools
 
 Name: python3-module-%oname
-Version: 2017.4
-Release: alt2
+Version: 2026.1.1
+Release: alt1
 Summary: A collection of tools for Python
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/pytools
+Url: https://pypi.org/project/pytools
 
-# https://github.com/inducer/pytools.git
+# Source-git: https://github.com/inducer/pytools.git
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-appdirs python3-module-decorator
-BuildPreReq: python3-module-six
-BuildRequires: python3-modules-sqlite3
-BuildRequires: python3-module-pytest
 BuildArch: noarch
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+%if_disabled check
+%else
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-platformdirs
+BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-siphash24
+BuildRequires: python3-module-numpy
+BuildRequires: python3-modules-sqlite3
+%endif
+
+# platformdirs is a hard upstream dependency imported lazily in persistent_dict
+Requires: python3(platformdirs)
 
 %add_python3_req_skip mpi4py.rc
 
@@ -43,25 +53,31 @@ This package contains test for Pytools.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3
+# test_xdg_cache_home depends on the XDG cache layout of the build environment;
+# test_scalar_hashing hashes np.clongdouble bytes, unstable with x87 padding on i586
+%pyproject_run_pytest -v pytools/test -k "not test_xdg_cache_home and not test_scalar_hashing"
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/test.py*
-%exclude %python3_sitelibdir/%oname/__pycache__/test*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%exclude %python3_sitelibdir/%oname/test/
 
 %files tests
-%python3_sitelibdir/%oname/test.py*
-%python3_sitelibdir/%oname/__pycache__/test*
+%python3_sitelibdir/%oname/test/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.1.1-alt1
+- NMU: new version 2026.1.1
+- switch to pyproject build
+- move tests to pytools/test/ (upstream layout)
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 2017.4-alt2
 - Drop python2 support.
 

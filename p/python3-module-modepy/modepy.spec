@@ -4,8 +4,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 2016.1.2
-Release: alt3
+Version: 2026.1
+Release: alt1
 
 Summary: Modes and nodes for high-order discretizations
 License: MIT
@@ -15,9 +15,18 @@ Url: https://documen.tician.de/modepy/
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch1: %oname-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
+%if_disabled check
+%else
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-scipy
+BuildRequires: python3-module-pymbolic
+BuildRequires: python3-module-pytools
+BuildRequires: python3-module-typing_extensions
+%endif
 
 
 %description
@@ -64,17 +73,16 @@ This package contains documentation for modepy.
 
 %prep
 %setup
-%patch1 -p1
 
 %if_with docs
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 %endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -84,10 +92,14 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
+%check
+%pyproject_run_pytest -v modepy/test
+
 %files
 %doc LICENSE
 %doc README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %if_with docs
 %exclude %python_sitelibdir/%oname/pickle
 %endif
@@ -102,6 +114,12 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.1-alt1
+- NMU: new version 2026.1
+- switch to pyproject build
+- enable tests
+- drop modepy-alt-docs.patch (docs conf changed upstream)
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2016.1.2-alt3
 - drop unused BR: rpm-macros-sphinx
 
