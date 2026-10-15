@@ -14,7 +14,7 @@
 %def_disable tests
 
 Name: gnome-settings-daemon
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A program that manages general GNOME settings
@@ -179,6 +179,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %endif
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.1-alt1
+- 51.1
+
 * Mon Sep 14 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 
