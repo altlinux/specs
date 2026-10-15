@@ -7,7 +7,7 @@
 
 Name: cni-plugins
 Version: 1.9.1
-Release: alt1
+Release: alt2
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: Apache-2.0
@@ -41,7 +41,8 @@ the containernetworking team.
 sed -i 's,/opt/cni/bin,%cni_dir,' plugins/ipam/dhcp/systemd/cni-dhcp.service
 
 %build
-./build_linux.sh
+export CGO_ENABLED=0
+./build_linux.sh -ldflags "-X %import_path/pkg/utils/buildversion.BuildVersion=v%version"
 
 %install
 mkdir -p %buildroot{%cni_dir,%cni_etc_dir/net.d,%_unitdir,%_tmpfilesdir}
@@ -50,6 +51,16 @@ install -m0755 bin/* %buildroot%cni_dir/
 install -p -m0644 plugins/ipam/dhcp/systemd/cni-dhcp.service %buildroot%_unitdir
 install -p -m0644 plugins/ipam/dhcp/systemd/cni-dhcp.socket %buildroot%_unitdir
 install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
+
+%check
+export CGO_ENABLED=0
+# The other packages create network namespaces and need root.
+%gotest \
+  ./pkg/errors \
+  ./pkg/link \
+  ./pkg/testutils/echo \
+	./plugins/ipam/host-local/... \
+  ./plugins/ipam/static
 
 %post
 %post_service cni-dhcp
@@ -67,6 +78,10 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Thu Oct 15 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.9.1-alt2
+- Set CGO_ENABLED=0.
+- Enable unit tests.
+
 * Mon Mar 30 2026 Alexander Stepchenko <geochip@altlinux.org> 1.9.1-alt1
 - New version 1.9.1.
 - Fixes:
