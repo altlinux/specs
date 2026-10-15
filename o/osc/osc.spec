@@ -1,5 +1,5 @@
 Name: osc
-Version: 1.27.3
+Version: 1.28.0
 Release: alt1
 
 Summary: Open Build Service Commander
@@ -99,6 +99,9 @@ install -Dpm0644 git-obs.1 %buildroot%_man1dir/git-obs.1
 %_man1dir/git-obs.1*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.28.0-alt1
+- new version 1.28.0
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 1.27.3-alt1
 - new version 1.27.3 (fix build with Python 3.12: no imp module)
 - build with pyproject macros, add git-obs, shell completions, man pages
