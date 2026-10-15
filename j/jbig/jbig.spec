@@ -1,6 +1,6 @@
 Name: jbig
-Version: 2.1
-Release: alt2
+Version: 2.2
+Release: alt1
 
 Summary: JBIG-KIT lossless image compression library
 
@@ -11,13 +11,10 @@ Url: http://www.cl.cam.ac.uk/~mgk25/jbigkit/
 # Source-url: http://www.cl.cam.ac.uk/~mgk25/download/jbigkit-%version.tar.gz
 Source: %name-%version.tar
 
-Patch: jbigkit-2.1-shlib.patch
-Patch1: jbigkit-2.0-warnings.patch
-Patch2: jbigkit-ldflags.patch
-# patch for coverity issues - backported from upstream
-Patch3: jbigkit-covscan.patch
+Patch: jbigkit-2.2-shlib.patch
 
-%define sover %version
+# soname = library version (as in Fedora): 2.2 changed struct jbg_dec_state
+%define sover 2.2
 
 %package -n libjbig%sover
 Summary: JBIG-KIT lossless image compression library (shared library)
@@ -90,15 +87,10 @@ document pages.
 
 %prep
 %setup
-%patch0 -p1 -b .shlib
-%patch1 -p1 -b .warnings
-# jbigkit: Partial Fedora build flags injection (bug #1548546)
-%patch2 -p1 -b .ldflags
-# covscan issues - backported from upstream
-%patch3 -p1 -b .covscan
+%patch -p1
 
 %build
-%make_build CCFLAGS='%optflags'
+%make_build RPM_OPT_FLAGS='%optflags' SOVER=%sover
 
 LD_LIBRARY_PATH=$PWD/libjbig make test
 
@@ -110,10 +102,10 @@ install -p -m0644 libjbig/jbig.h %buildroot%_includedir
 install -p -m0644 libjbig/jbig85.h %buildroot%_includedir
 install -p -m0644 libjbig/jbig_ar.h %buildroot%_includedir
 
-install -p -m0755 libjbig/libjbig.so.%version %buildroot%_libdir
-install -p -m0755 libjbig/libjbig85.so.%version %buildroot%_libdir
-ln -sf libjbig.so.%version %buildroot%_libdir/libjbig.so
-ln -sf libjbig85.so.%version %buildroot%_libdir/libjbig85.so
+install -p -m0755 libjbig/libjbig.so.%sover %buildroot%_libdir
+install -p -m0755 libjbig/libjbig85.so.%sover %buildroot%_libdir
+ln -sf libjbig.so.%sover %buildroot%_libdir/libjbig.so
+ln -sf libjbig85.so.%sover %buildroot%_libdir/libjbig85.so
 
 %if_enabled static
 cp -a libjbig/libjbig.a %buildroot%_libdir/
@@ -156,6 +148,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/pbmtojbg.*
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2-alt1
+- new version 2.2
+- rebase shared library patch, drop patches merged upstream
+- change soname to libjbig.so.2.2, libjbig85.so.2.2 (libjbig2.2): 2.2 adds
+  maxmem field to public struct jbg_dec_state (ABI break)
+
 * Fri Aug 04 2023 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt2
 - cleanup spec, applied patches from Fedora
 - use real soname libjbig.so.2.1
