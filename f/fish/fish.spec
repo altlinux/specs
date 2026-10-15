@@ -6,8 +6,8 @@
 %endif
 
 Name: fish
-Version: 4.7.1
-Release: alt2
+Version: 4.9.3
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -47,6 +47,16 @@ is simple but incompatible with other shell languages.
 %setup -a 1
 %rust_prep
 cat >> .cargo/config.toml <<EOF
+[source."git+https://codeberg.org/danielrainer/fluent-ftl-tools?rev=5917664c8f2e4928ef1e480ff5c13bbe1e226066"]
+git = "https://codeberg.org/danielrainer/fluent-ftl-tools"
+rev = "5917664c8f2e4928ef1e480ff5c13bbe1e226066"
+replace-with = "vendored-sources"
+
+[source."git+https://github.com/danielrainer/fluent-rs?rev=cf712bced280b217b6307edabc2089b3e57204ab"]
+git = "https://github.com/danielrainer/fluent-rs"
+rev = "cf712bced280b217b6307edabc2089b3e57204ab"
+replace-with = "vendored-sources"
+
 [source."git+https://github.com/fish-shell/rust-pcre2?tag=0.2.9-utf32"]
 git = "https://github.com/fish-shell/rust-pcre2"
 tag = "0.2.9-utf32"
@@ -113,6 +123,9 @@ fi
 # %_man1dir/*
 
 %changelog
+* Thu Oct 15 2026 Artyom Sinyugin <writers@altlinux.org> 4.9.3-alt1
+- updated from 4.7.1 to 4.9.3
+
 * Fri Jun 19 2026 Artyom Sinyugin <writers@altlinux.org> 4.7.1-alt2
 - Fix fail in gyle because of random test fail.
 
