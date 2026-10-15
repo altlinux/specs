@@ -1,6 +1,7 @@
 Name: javazi
 Version: %{get_version tzdata}
-Release: %{get_release tzdata}
+%define tzdata_rel %(rpmquery --qf '%%{RELEASE}' tzdata 2>/dev/null | sed 's/^alt//')
+Release: alt2.%tzdata_rel
 
 Summary: Timezone data for Java
 License: Public Domain
@@ -23,6 +24,12 @@ Source2: %javazic18.tar
 
 Patch1: javazic-fixup.patch
 Patch2: javazic-exclusion-fix.patch
+# OpenJDK JDK-8340552: harden TzdbZoneRulesCompiler against missing zone names
+Patch3: javazi-1.8-fedora-harden-links.patch
+# OpenJDK JDK-8051641: ZoneRulesBuilder last rules fix
+Patch4: javazi-1.8-fedora-lastrule-fix.patch
+
+Source3: ZoneTest.java
 
 BuildRequires: hardlink java-devel-default tzdata-source
 
@@ -54,6 +61,11 @@ pushd %javazic16
 	mv sun alt
 	find alt -type f -name '*.java' -print0 |
 		xargs -0 -- sed -ri 's/sun(\.(tools|util)\.)/alt\1/g'
+popd
+
+pushd %javazic18
+%patch3 -p1
+%patch4 -p1
 popd
 
 %build
@@ -90,13 +102,37 @@ install -pm644 tzdata/tzdb.dat %buildroot%_datadir/javazi-1.8/
 # Hardlink identical files together.
 %define __spec_install_custom_post hardlink -vc %buildroot
 
+%check
+# Smoke test: load the freshly built tzdb.dat with the build system JDK.
+system_java_home=$(dirname $(readlink -f $(which java)))/..
+mkdir -p java_home
+cp -Lr $system_java_home/* java_home/.
+tzdb_found=$(find java_home -name tzdb.dat | head -1)
+[ -n "$tzdb_found" ] || { echo "ERROR: no tzdb.dat found in system JDK"; exit 1; }
+for tzdb in $(find java_home -name tzdb.dat) ; do
+	rm -f $tzdb
+	cp %buildroot%_datadir/javazi-1.8/tzdb.dat $tzdb
+done
+cp %{SOURCE3} .
+javac ZoneTest.java
+java_home/bin/java ZoneTest
+
 %files
 %_datadir/javazi*/
 
 %files checkinstall
 
 %changelog
-* Wed Aug 10 2022 Dmitry V. Levin <ldv@altlinux.org> %{get_SVR tzdata}
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Rebuild with the latest tzdata.
+
+* Thu Oct 15 2026 Anton Farygin <rider@altlinux.org> 2026e-alt2
+- javazic-1.8: dropped EST/HST/MST alias entries (they are links since
+  tzdata 2024b) (Closes: #61080)
+- backported fixes from Fedora: JDK-8340552, JDK-8051641
+- added %check smoke test for the built tzdb.dat
+
+* Wed Aug 10 2022 Dmitry V. Levin <ldv@altlinux.org> 2024a-alt1
 - Rebuilt with the latest tzdata.
 
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 2021a-alt1.1
