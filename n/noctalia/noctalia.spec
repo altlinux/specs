@@ -3,7 +3,7 @@
 %def_with check
 
 Name: noctalia
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 
 Summary: A sleek, customizable desktop shell crafted for Wayland
@@ -134,6 +134,10 @@ install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/noctalia
 %_userunitdir/noctalia.service
 
 %changelog
+* Thu Oct 15 2026 Egor Ignatov <egori@altlinux.org> 5.3.0-alt1
+- New version 5.3.0.
+- Fix plugin_recommendations test on i586 (x87 float comparison).
+
 * Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 5.2.1-alt1
 - New version 5.2.1.
 
