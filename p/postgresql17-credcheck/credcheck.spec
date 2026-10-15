@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-credcheck
-Version: 5.0
+Version: 6.0
 Release: alt1
 
 Summary: The credcheck PostgreSQL extension provides few general credential checks
@@ -51,6 +51,9 @@ By using this extension, we can define a set of rules:
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Oct 15 2026 Alexei Takaseev <taf@altlinux.org> 6.0-alt1
+- 6.0
+
 * Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 5.0-alt1
 - 5.0
 
