@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: oksh
-Version: 7.5
+Version: 7.9
 Release: alt1
 
 Summary: Portable OpenBSD ksh(1)
@@ -36,6 +36,9 @@ across operating systems and C compilers.
 %_man1dir/oksh.1*
 
 %changelog
+* Thu May 30 2024 Aleksey Cheusov <cheusov@altlinux.org> 7.9-alt1
+- 7.9-alt1
+
 * Thu May 30 2024 Aleksey Cheusov <cheusov@altlinux.org> 7.5-alt1
 - 7.5-alt1
 
