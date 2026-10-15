@@ -16,24 +16,26 @@ researchers.
 Name: kaldi
 # See src/.version
 Version: 5.5
-Release: alt1.gite02e35f
+Release: alt2.gite02e35f
 
 Summary: Kaldi is a toolkit for speech recognition
 License: Apache-2.0
 Group: System/Libraries
-Url: https://kaldi-asr.org
-Vcs: https://github.com/kaldi-asr/kaldi.git
+URL: https://kaldi-asr.org
+VCS: https://github.com/kaldi-asr/kaldi.git
 
 Source: %name-%version.tar
 Patch: fix-kaldi-gite02e35f-ALT-cmake.patch
 
-BuildRequires(pre): rpm-build-cmake
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: liblapack-devel
 BuildRequires: libopenblas-devel
 BuildRequires: libopenfst-devel
 BuildRequires: ninja-build
+BuildRequires: python3
 
 # Build requires libopenfst-devel failed to build on the i586
 ExcludeArch: %ix86
@@ -81,14 +83,10 @@ sed -i -e 's/@VERSION@/%version/g' \
 	-DBUILD_SHARED_LIBS=ON \
 	-DKALDI_BUILD_TEST=OF \
 	-DKALDI_USE_PATCH_NUMBER=ON
-pushd %_cmake__builddir
-%ninja_build
-popd
+%cmake_build
 
 %install
-pushd %_cmake__builddir
-%ninja_install
-popd
+%cmake_install
 
 %files -n libkaldi%soversion
 %_libdir/libkaldi*.so.%{soversion}*
@@ -574,5 +572,8 @@ popd
 %_bindir/weight-silence-post
 
 %changelog
+* Thu Oct 15 2026 Ulysses Apokin <ulysses@altlinux.org> 5.5-alt2.gite02e35f
+- Fix FTBFS.
+
 * Thu Nov 06 2025 Ulysses Apokin <ulysses@altlinux.org> 5.5-alt1.gite02e35f
 - Initial build for Sisyphus.
