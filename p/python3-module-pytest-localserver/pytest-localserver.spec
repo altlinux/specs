@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.0
+Version: 0.10.0.post0
 Release: alt1
 Summary: pytest plugin to test server connections locally
 License: MIT
@@ -50,11 +50,13 @@ you to test server connections locally.
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 0.10.0.post0-alt1
+- 0.10.0 -> 0.10.0.post0
+
 * Thu Nov 27 2025 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - 0.9.0.post0 -> 0.10.0.
 
