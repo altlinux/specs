@@ -9,8 +9,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 0.40.4
-Release: alt2.1
+Version: 0.41.2
+Release: alt1
 
 Summary: Highly concurrent networking library
 License: MIT
@@ -22,7 +22,6 @@ Url: https://pypi.org/project/eventlet/
 Source: %name-%version.tar
 
 Patch: 0001-Revert-Emit-warning-on-startup-that-eventlet-is-depr.patch
-Patch1: 0002-Fix-compatibility-with-greenlet-3.4.patch
 
 BuildArch: noarch
 
@@ -102,7 +101,6 @@ This package contains documentation for Eventlet.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 # requires thrift, python 2.7 only
 rm -rv eventlet/zipkin
@@ -144,6 +142,11 @@ and not test_raise_dns_tcp"
 %endif
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.41.2-alt1
+- new version 0.41.2
+- rebase deprecation warning revert patch (drop the new startup warning)
+- drop greenlet 3.4 compatibility patch (applied upstream)
+
 * Wed Aug 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.40.4-alt2.1
 - NMU: fix compatibility with greenlet >= 3.4.
 
