@@ -5,9 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.35.0
-Release: alt1.1
-
+Version: 0.36.0
+Release: alt1
 Summary: Python data validation for Humans
 License: MIT
 Group: Development/Python3
@@ -16,14 +15,15 @@ Vcs: https://github.com/python-validators/validators
 BuildArch: noarch
 
 Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-ruff
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -35,6 +35,11 @@ schema.
 %prep
 %setup
 %autopatch -p1
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup testing
+%endif
 
 %build
 %pyproject_build
@@ -46,13 +51,12 @@ schema.
 %pyproject_run_pytest -ra
 
 %files
-%doc README.*
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.35.0-alt1.1
-- Demodernized packaging.
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 0.36.0-alt1
+- 0.35.0 -> 0.36.0
 
 * Fri May 23 2025 Stanislav Levin <slev@altlinux.org> 0.35.0-alt1
 - 0.34.0 -> 0.35.0.
