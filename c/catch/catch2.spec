@@ -7,7 +7,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: catch
-Version: 3.11.0
+Version: 3.16.1
 Release: alt1
 # src package `catch' version `3.4.0-alt1' is less than its version `v1.6.0-alt1' in sisyphus/task/archive/_172/176589
 Epoch: 3
@@ -20,8 +20,8 @@ Url: https://github.com/catchorg/Catch2
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: gcc-c++
 
 BuildRequires: ctest python3
 
@@ -82,6 +82,9 @@ subst 's|catch2|catch3|' %buildroot%_datadir/pkgconfig/catch2-with-main.pc
 %_datadir/pkgconfig/catch2-with-main.pc
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 3:3.16.1-alt1
+- new version 3.16.1
+
 * Tue Dec 16 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 3:3.11.0-alt1
 - new version (3.11.0)
 
