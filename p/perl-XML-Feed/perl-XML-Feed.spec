@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Feed
 Name: perl-%dist
-Version: 0.65
+Version: 1.0.2
 Release: alt1
 
 Summary: XML Syndication Feed Support
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAVECROSS/%{dist}-v%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ XML::Feed is a syndication feed parser for both RSS and Atom feeds.
 It also implements feed auto-discovery for finding feeds, given a URI.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n %{dist}-v%{version}
 
 %build
 %perl_vendor_build
@@ -37,6 +37,10 @@ It also implements feed auto-discovery for finding feeds, given a URI.
 %perl_vendor_privlib/XML
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.2-alt1
+- new version 1.0.2 (validates the format argument against known formatters:
+  fixes code injection via a malicious format string)
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.65-alt1
 - automated CPAN update
 
