@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.7
-Release: alt2
+Version: 4.8
+Release: alt1
 Summary: Build manual page from python's ArgumentParser object
 License: Apache-2.0
 Group: Development/Python3
@@ -66,7 +66,6 @@ export PIP_NO_BUILD_ISOLATION=NO
 %pyproject_run_pytest -ra -Wignore
 
 %files
-%doc README.md
 %_man1dir/argparse-manpage.1.*
 %_bindir/argparse-manpage.py3
 %python3_sitelibdir/build_manpages/
@@ -74,6 +73,9 @@ export PIP_NO_BUILD_ISOLATION=NO
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 4.8-alt1
+- 4.7 -> 4.8
+
 * Tue Oct 28 2025 Stanislav Levin <slev@altlinux.org> 4.7-alt2
 - Fixed FTBFS (pip 25.3).
 
