@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libwww-perl
 Name: perl-libwww
-Version: 6.80
+Version: 6.83
 Release: alt1
 
 Summary: WWW client/server library for Perl (aka LWP)
@@ -70,6 +70,11 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/lwp*.pod
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.83-alt1
+- new version 6.83
+- security fixes:
+  + CVE-2026-8368, BDU:2026-12875: fix Authorization header leak on cross-origin redirects.
+
 * Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 6.80-alt1
 - automated CPAN update
 
