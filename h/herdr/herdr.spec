@@ -3,7 +3,7 @@
 %def_with check
 
 Name: herdr
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: Terminal workspace manager for AI coding agents
@@ -141,6 +141,9 @@ herdr_test --exact workspace::tests::generated_workspace_ids_are_short_base32_ha
 %_datadir/herdr
 
 %changelog
+* Thu Oct 15 2026 Egor Ignatov <egori@altlinux.org> 0.9.5-alt1
+- New version 0.9.5.
+
 * Wed Oct 14 2026 Egor Ignatov <egori@altlinux.org> 0.9.4-alt1
 - New version 0.9.4.
 
