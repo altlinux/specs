@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: portprotonqt
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Modern GUI for managing and launching games from PortProton and Steam
@@ -51,14 +51,14 @@ Requires: python3(qrcode)
 %install
 %meson_install
 
+%find_lang %name
+
 bash ./dev-scripts/generate-completions.sh
 cd completions
 install -Dm 0644 portprotonqt %buildroot%_datadir/bash-completion/completions/portprotonqt
 install -Dm 0644 portprotonqt.fish %buildroot%_datadir/fish/vendor_completions.d/portprotonqt.fish
 install -Dm 0644 _portprotonqt %buildroot%_datadir/zsh/site-functions/_portprotonqt
-cd -
 
-%find_lang %name
 
 %files -f %name.lang
 %doc LICENSE
@@ -83,6 +83,9 @@ cd -
 %_sysusersdir/portprotonqt.conf
 
 %changelog
+* Thu Oct 15 2026 Boris Yumankulov <boria138@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Wed Aug 26 2026 Mikhail Tergoev <fidel@altlinux.org> 1.4.1-alt1
 - new version 1.4.1
 
