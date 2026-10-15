@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Stty
 Name: perl-%dist
-Version: 0.04
+Version: 0.08
 Release: alt1
 
 Summary: Change and print terminal line settings
 License: GPL or Artistic
 Group: Development/Perl
 
-URL: %CPAN %dist
+URL: https://metacpan.org/dist/%dist
 Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
@@ -29,11 +29,14 @@ This is the PERL POSIX compliant stty.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %dir %perl_vendor_privlib/IO
 %perl_vendor_privlib/IO/Stty.pm
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.08-alt1
+- new version 0.08
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - automated CPAN update
 

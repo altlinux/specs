@@ -15,14 +15,14 @@
 %define _enable_test 1
 
 Name: perl-PDF-Reuse
-Version: 0.39
+Version: 0.44
 Release: alt1
 
 Summary: Reuse and mass produce PDF documents   
 
 License: Artistic
 Group: Development/Perl
-Url: http://www.cpan.org
+Url: https://metacpan.org/dist/PDF-Reuse
 
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
@@ -92,10 +92,12 @@ who write the scripts have to know Acrobat JavaScript well.)
 %perl_vendor_install
 
 %files
-%perl_vendor_privlib/auto/PDF*
 %perl_vendor_privlib/PDF*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.44-alt1
+- new version 0.44
+
 * Thu Nov 17 2016 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
 - automated CPAN update
 

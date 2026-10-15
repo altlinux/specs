@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define dist IO-Tty
 Name: perl-%dist
-Version: 1.20
+Version: 1.31
 Release: alt1
 
 Summary: interface to pseudo tty's
 License: GPL or Artistic
 Group: Development/Perl
 
-URL: %CPAN %dist
+URL: https://metacpan.org/dist/%dist
 Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 
 # always loaded when available
@@ -34,11 +34,14 @@ IO::Tty and IO::Pty provide an interface to pseudo tty's
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README.md
 %perl_vendor_archlib/IO
 %perl_vendor_autolib/IO
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.31-alt1
+- new version 1.31
+
 * Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 1.20-alt1
 - automated CPAN update
 

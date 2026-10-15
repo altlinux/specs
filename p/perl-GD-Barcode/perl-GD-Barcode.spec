@@ -18,14 +18,14 @@ BuildRequires: perl(Test2/V0.pm)
 %define _enable_test 1
 
 Name: perl-GD-Barcode
-Version: 2.01
+Version: 2.02
 Release: alt1
 
 Summary: Create barcode image with GD
 
 License: Artistic
 Group: Development/Perl
-Url: http://www.cpan.org
+Url: https://metacpan.org/dist/GD-Barcode
 
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
@@ -54,6 +54,9 @@ From 1.14, you can use this module even if no GD (except plot method).
 %perl_vendor_privlib/GD*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.02-alt1
+- new version 2.02
+
 * Fri Aug 08 2025 Igor Vlasenko <viy@altlinux.org> 2.01-alt1
 - automated CPAN update
 
