@@ -1,4 +1,4 @@
-%define tarver 2.0.0-21
+%define tarver 2.1.0-1
 %define mainver %( echo %tarver | sed 's/-.*//' )
 %define soname 0
 
@@ -9,7 +9,7 @@
 %def_with cocoa
 
 Name: giac
-Version: 2.0.0.21
+Version: 2.1.0.1
 Release: alt1
 
 Summary: Computer algebra system
@@ -20,7 +20,6 @@ Url: https://www-fourier.ujf-grenoble.fr/~parisse/giac.html
 
 # Source-url: https://www-fourier.univ-grenoble-alpes.fr/~parisse/debian/dists/stable/main/source/giac_%tarver.tar.gz
 Source: %name-%version.tar.gz
-Patch: giac-2.0.0.21-debian-autoreconf.patch
 
 # Some files is not compiled with -fpic/-fPIC on i586, armh and ppc64le.
 ExcludeArch: i586 armh ppc64le
@@ -101,7 +100,6 @@ usage of giac, a computer algebra system.
 
 %prep
 %setup
-%patch -p1
 %ifarch %e2k
 # name collision
 sed -i "/gen _compare/i #undef __compare" src/misc.cc
@@ -236,6 +234,9 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/*
 
 %changelog
+* Thu Oct 15 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.0.1-alt1
+- New version 2.1.0.1 (with rpmgs script).
+
 * Tue Oct 13 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.0.21-alt1
 - New version 2.0.0.21 (ALT #60910).
 - Added libxcas subpackage.
