@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: flux
-Version: 0.200.0
+Version: 0.201.0
 Release: alt1
 Summary: Influx data language
 Group: Development/Other
@@ -98,6 +100,9 @@ popd
 %_includedir/influxdata
 
 %changelog
+* Thu Oct 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.201.0-alt1
+- 0.200.0 -> 0.201.0
+
 * Thu Apr 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.200.0-alt1
 - 0.199.0 -> 0.200.0
 
