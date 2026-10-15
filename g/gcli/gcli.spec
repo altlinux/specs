@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gcli
-Version: 2.9.1
+Version: 2.13.0
 Release: alt1
 
 Group: Development/Other
@@ -17,7 +17,7 @@ BuildRequires: flex make
 BuildRequires: libcurl-devel libssl-devel
 BuildRequires: libedit-devel
 # For tests
-BuildRequires: libatf-c-devel kyua
+BuildRequires: libatf-c-devel kyua perl-devel
 
 %description
 %summary.
@@ -51,6 +51,9 @@ make check
 %_man5dir/*
 
 %changelog
+* Thu Oct 15 2026 Artyom Sinyugin <writers@altlinux.org> 2.13.0-alt1
+- updated from 2.9.1 to 2.13.0
+
 * Mon Dec 08 2025 Artyom Sinyugin <writers@altlinux.org> 2.9.1-alt1
 - New version 2.9.1 (ALT#55585).
 
