@@ -4,14 +4,14 @@
 %def_with check
 
 Name: syft
-Version: 1.51.1
+Version: 1.54.1
 Release: alt1
 
 Summary: A CLI tool and Go library for generating an SBOM from container images and filesystems
 License: Apache-2.0
 Group: Development/Tools
 Url: https://github.com/anchore/syft
-Vcs: https://github.com/anchore/syft
+Vcs: https://github.com/anchore/syft.git
 ExclusiveArch: %go_arches
 
 Source0: %name-%version.tar
@@ -80,6 +80,9 @@ go test $(go list ./... | grep -vxFf %SOURCE2)
 %_bindir/%name
 
 %changelog
+* Thu Oct 15 2026 Alexey Shabalin <shaba@altlinux.org> 1.54.1-alt1
+- Updated to 1.54.1.
+
 * Tue Sep 08 2026 Andrey Kuzma <kuzmaav@altlinux.org> 1.51.1-alt1
 - Updated to 1.51.1.
 
