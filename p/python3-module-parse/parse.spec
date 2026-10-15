@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.22.2
+Version: 1.22.3
 Release: alt1
 Summary: parse() is the opposite of format()
 License: MIT
@@ -51,6 +51,9 @@ Parse strings using a specification based on the Python format() syntax.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 1.22.3-alt1
+- 1.22.2 -> 1.22.3
+
 * Wed Oct 07 2026 Stanislav Levin <slev@altlinux.org> 1.22.2-alt1
 - 1.22.1 -> 1.22.2
 
