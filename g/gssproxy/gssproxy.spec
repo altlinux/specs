@@ -9,7 +9,7 @@
 
 Name: gssproxy
 Version: 0.9.2
-Release: alt2
+Release: alt3
 Summary: GSSAPI Proxy
 
 Group: System/Servers
@@ -18,7 +18,7 @@ Url: https://github.com/gssapi/gssproxy
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
+Requires: libverto-module-base
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-valgrind
 
@@ -203,6 +203,9 @@ __SVC_EOF__
 %attr(0640,root,%gssproxy_group) %config(noreplace) %_sysconfdir/gssproxy/99-network-fs-clients.conf
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 0.9.2-alt3
+- Added missing dependency on virtual libverto module (closes: #61074).
+
 * Fri Mar 27 2026 Stanislav Levin <slev@altlinux.org> 0.9.2-alt2
 - Fixed service reload.
 
