@@ -1,8 +1,10 @@
-%define        _unpackaged_files_terminate_build 1
-%define        oname aws-c-cal
+%def_enable    check
+%def_enable    devel
+%{?!_disable_check:%define _unpackaged_files_terminate_build 1}
+%define        nomen aws-c-cal
 
-Name:          lib%oname
-Version:       0.6.9
+Name:          lib%nomen
+Version:       1.0.0
 Release:       alt1
 Group:         Development/C
 Summary:       Aws Crypto Abstraction Layer
@@ -11,76 +13,73 @@ Url:           https://github.com/awslabs/aws-c-cal
 Vcs:           https://github.com/awslabs/aws-c-cal.git
 
 Source:        %name-%version.tar
-Patch:         path.patch
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): rpm-macros-ninja-build
+BuildRequires(pre): rpm-build-cmake
+%{?!_disable_check:BuildRequires: ctest}
+BuildRequires: /proc
 BuildRequires: cmake
-BuildRequires: libssl-devel
-BuildRequires: libaws-c-common-devel
+BuildRequires: clang-tools
+BuildRequires: pkgconfig(libssl)
+BuildRequires: cmake(aws-c-common)
 
 %description
 Aws Crypto Abstraction Layer: Cross-Platform, C99 wrapper for cryptography
 primitives.
 
 
+%if_enabled    devel
 %package       devel
 Group:         Development/C
 Summary:       Aws Crypto Abstraction Layer development files
+Requires:      ctest
 Requires:      cmake
-Requires:      libssl-devel
-Requires:      libaws-c-common-devel
+Requires:      clang-tools
+Requires:      pkgconfig(libssl)
+Requires:      cmake(aws-c-common)
 
 %description   devel
-Development headers and libraries for %oname.
+Development headers and libraries for %nomen.
 
 Aws Crypto Abstraction Layer: Cross-Platform, C99 wrapper for cryptography
 primitives.
-
-
-%package       -n x-platform-fuzz-corpus
-Group:         Development/C
-Summary:       Aws Crypto Abstraction Layer executables
-
-%description   -n x-platform-fuzz-corpus
-Aws Crypto Abstraction Layer executables.
-
-Aws Crypto Abstraction Layer: Cross-Platform, C99 wrapper for cryptography
-primitives.
+%endif
 
 
 %prep
 %setup
-%autopatch
 
 %build
-%cmake_insource \
+%cmake \
+%{?!_disable_check:-DBUILD_TESTING=ON} \
    -DCMAKE_MODULE_PATH=%_libdir/cmake \
-   -DBUILD_SHARED_LIBS=ON
-
+   -DCMAKE_PREFIX_PATH=%_usr \
+   -DBUILD_SHARED_LIBS=ON \
+   %nil
+%cmake_build
 
 %install
 %cmakeinstall_std
 
 %check
-%make test
+%ctest
 
 
 %files
 %doc README*
 %_libdir/%name.so.*
 
+%if_enabled    devel
 %files         devel
 %doc README*
 %_libdir/%name.so
-%_libdir/cmake/%oname
+%_libdir/cmake/%nomen
 %_includedir/aws/cal
-
-%files         -n x-platform-fuzz-corpus
-%_bindir/produce_x_platform_fuzz_corpus
-%_bindir/run_x_platform_fuzz_corpus
-%_bindir/sha256_profile
+%endif
 
 
 %changelog
+* Tue Oct 06 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
+- ^ 0.6.9 -> 1.0.0
+- * rebased to upstream git flow
+
 * Wed Jan 03 2024 Pavel Skrylev <majioa@altlinux.org> 0.6.9-alt1
 - Initial build for Sisyphus

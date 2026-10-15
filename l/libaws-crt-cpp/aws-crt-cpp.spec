@@ -1,29 +1,34 @@
-%define        _unpackaged_files_terminate_build 1
+%def_disable   check
+%def_enable    devel
+%if_enabled    devel
+%define _unpackaged_files_terminate_build 1
+%endif
+%define        nomen aws-crt-cpp
 
-Name:          aws-crt-cpp
-Version:       0.26.0
+Name:          lib%nomen
+Version:       0.43.9
 Release:       alt1
 Group:         Development/C++
 Summary:       C++ wrapper around the aws-c-* libraries
 License:       Apache-2.0
-Url:           https://github.com/aws/aws-sdk-cpp
-Vcs:           https://github.com/aws/aws-sdk-cpp.git
+Url:           https://github.com/awslabs/aws-crt-cpp
+Vcs:           https://github.com/awslabs/aws-crt-cpp.git
 
 Source:        %name-%version.tar
-Patch:         path.patch
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-cmake
+%{?!_disable_check:BuildRequires: ctest}
 BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: libssl-devel
-BuildRequires: libaws-c-common-devel
-BuildRequires: libaws-c-sdkutils-devel
-BuildRequires: libaws-c-http-devel
-BuildRequires: libaws-c-mqtt-devel
-BuildRequires: libaws-c-auth-devel
-BuildRequires: libaws-c-s3-devel
-BuildRequires: libaws-checksums-devel
-BuildRequires: libaws-c-event-stream-devel
+BuildRequires: pkgconfig(libssl)
+BuildRequires: cmake(aws-c-common)
+BuildRequires: cmake(aws-c-sdkutils)
+BuildRequires: cmake(aws-c-http)
+BuildRequires: cmake(aws-c-mqtt)
+BuildRequires: cmake(aws-c-auth)
+BuildRequires: cmake(aws-c-s3)
+BuildRequires: cmake(aws-checksums)
+BuildRequires: cmake(aws-c-event-stream)
 
 %description
 C++ wrapper around the aws-c-* libraries. Provides Cross-Platform Transport
@@ -43,11 +48,11 @@ Currently Included:
   content-type.
 
 
-%package       -n lib%name
+%package       -n %nomen
 Group:         Development/C++
 Summary:       C++ wrapper around the aws-c-* libraries
 
-%description   -n lib%name
+%description   -n %nomen
 C++ wrapper around the aws-c-* libraries. Provides Cross-Platform Transport
 Protocols and SSL/TLS implementations for C++.
 
@@ -65,24 +70,24 @@ Currently Included:
   content-type.
 
 
-%package       -n lib%name-devel
+%if_enabled    devel
+%package       devel
 Group:         Development/C++
 Summary:       C++ wrapper around the aws-c-* libraries development files
-Requires:      lib%name = %EVR
-Requires:      /proc
 Requires:      cmake
+Requires:      ctest
 Requires:      gcc-c++
-Requires:      libssl-devel
-Requires:      libaws-c-common-devel
-Requires:      libaws-c-sdkutils-devel
-Requires:      libaws-c-http-devel
-Requires:      libaws-c-mqtt-devel
-Requires:      libaws-c-auth-devel
-Requires:      libaws-c-s3-devel
-Requires:      libaws-checksums-devel
-Requires:      libaws-c-event-stream-devel
+Requires:      pkgconfig(libssl)
+Requires:      cmake(aws-c-common)
+Requires:      cmake(aws-c-sdkutils)
+Requires:      cmake(aws-c-http)
+Requires:      cmake(aws-c-mqtt)
+Requires:      cmake(aws-c-auth)
+Requires:      cmake(aws-c-s3)
+Requires:      cmake(aws-checksums)
+Requires:      cmake(aws-c-event-stream)
 
-%description   -n lib%name-devel
+%description   devel
 C++ wrapper around the aws-c-* libraries development files.
 
 C++ wrapper around the aws-c-* libraries. Provides Cross-Platform Transport
@@ -100,6 +105,7 @@ Currently Included:
   efficient SW implementations.
 * aws-c-event-stream: C99 implementation of the vnd.amazon.event-stream
   content-type.
+%endif
 
 
 %prep
@@ -107,36 +113,45 @@ Currently Included:
 %autopatch
 
 %build
-%cmake_insource \
+%cmake \
+%{?!_disable_check: -DBUILD_TESTING=ON} \
    -DCMAKE_MODULE_PATH=%_libdir/cmake/ \
    -DBUILD_SHARED_LIBS=ON \
    -DBUILD_DEPS=OFF \
-   -DBUILD_TESTING=ON \
-   -DUSE_OPENSSL=ON
-
+   -DUSE_OPENSSL=ON \
+   %nil
 %cmake_build
 
 %install
 %cmakeinstall_std
 
 %check
-#%make test
+%ctest
+
 
 %files
 %doc README*
-%_bindir/*
+%_libdir/%name.so.*
 
-%files         -n lib%name
+%files         -n %nomen
 %doc README*
-%_libdir/lib%name.so
+%_bindir/elasticurl_cpp
+%_bindir/mqtt5_app
+%_bindir/mqtt5_canary
 
-%files         -n lib%name-devel
+%if_enabled    devel
+%files         devel
 %doc README*
-%_libdir/cmake/%name
+%_libdir/%name.so
+%_libdir/cmake/%nomen
 %_includedir/aws/iot
 %_includedir/aws/crt
+%endif
 
 
 %changelog
+* Sat Oct 10 2026 Pavel Skrylev <majioa@altlinux.org> 0.43.9-alt1
+- ^ 0.26.0 -> 0.43.9
+
 * Tue Jan 02 2024 Pavel Skrylev <majioa@altlinux.org> 0.26.0-alt1
 - Initial build v0.26.0 for Sisyphus
