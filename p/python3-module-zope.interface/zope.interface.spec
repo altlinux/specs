@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.6
+Version: 8.7
 Release: alt1
 
 Summary: Zope interfaces package
@@ -69,6 +69,9 @@ ENDTESTS
 %exclude %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 8.7-alt1
+- 8.6 -> 8.7
+
 * Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 8.6-alt1
 - 8.5 -> 8.6
 
