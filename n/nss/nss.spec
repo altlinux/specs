@@ -7,7 +7,7 @@
 %define optflags_lto %nil
 
 Name: nss
-Version: 3.130
+Version: 3.131
 Release: alt1
 
 Summary: Netscape Network Security Services(NSS)
@@ -27,7 +27,6 @@ Source6: system-pkcs11.txt
 Patch001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
 Patch002: 0002-ALT-Disable-flaky-tests.patch
 Patch003: 0003-Disable-ssl_policy_pkix_ocsp-test.patch
-Patch004: 0004-Bug-2070738-Fix-generating-nss.pc-with-system-nspr.patch
 ### End Patches
 
 BuildRequires: gcc-c++
@@ -278,6 +277,9 @@ popd
 %files -n libnss-nssckbi-checkinstall
 
 %changelog
+* Thu Oct 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.131-alt1
+- New version.
+
 * Wed Sep 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.130-alt1
 - New version.
 
