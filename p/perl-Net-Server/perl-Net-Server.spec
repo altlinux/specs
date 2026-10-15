@@ -3,7 +3,7 @@ BuildRequires: perl-podlators
 %define module  Net-Server
 
 Name: perl-%module
-Version: 2.014
+Version: 2.018
 Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
@@ -12,7 +12,7 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/%module/
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/R/RH/RHANDOM/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BB/BBB/%{module}-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-IO-Multiplex perl-Net-SSLeay perl(Log/Log4perl.pm) perl(Pod/Man.pm)
 Requires: perl-IO-Multiplex perl-Net-SSLeay
@@ -34,6 +34,9 @@ scripts for %name
 
 %prep
 %setup -q -n %{module}-%{version}
+# these tests need IPv6 loopback (::1) which is absent in the build sandbox
+rm -v t/14_TCP_NOv6.t t/20_IPv6_bogus.t t/21_IPv6_socketip.t t/23_IPv6_recurse.t \
+	t/24_IPvA_socketip.t t/26_IPv6_socketip_Only.t t/28_IPvA_socketip_Only.t
 
 %build
 %perl_vendor_build
@@ -53,6 +56,9 @@ scripts for %name
 
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.018-alt1
+- new version 2.018
+
 * Thu Mar 16 2023 Igor Vlasenko <viy@altlinux.org> 2.014-alt1
 - automated CPAN update
 

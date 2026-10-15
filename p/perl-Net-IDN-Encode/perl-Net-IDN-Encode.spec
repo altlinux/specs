@@ -4,8 +4,8 @@
 %define real_name Net-IDN-Encode
 
 Name: perl-Net-IDN-Encode
-Version: 2.500
-Release: alt2
+Version: 2.502
+Release: alt1
 
 Summary: Encoding and decoding of Internationalized Domain Names
 
@@ -21,9 +21,6 @@ Source: %real_name-%version.tar
 # Make Unicode property generator compatible with perl 5.30-RC1,
 # CPAN RT#129588, <https://github.com/cfaerber/Net-IDN-Encode/pull/8>
 Patch0: Net-IDN-Encode-2.500-Make-generated-arrays-available-at-compile-time.patch
-# Adapt to perl-5.38.0 and stricter GCC, bug #2241714, CPAN RT#149108,
-# proposed to an upstream.
-Patch1: Net-IDN-Encode-2.500-use_uvchr_to_utf8_flags_instead_of_uvuni_to_utf8_flags.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -44,7 +41,6 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode
 %prep
 %setup -q -n %real_name-%version
 %patch0 -p1
-%patch1 -p1
 
 %build
 %perl_vendor_build
@@ -58,6 +54,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode
 %perl_vendor_archlib/Net
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.502-alt1
+- new version 2.502 (perl 5.38 fix is upstream, drop our patch)
+
 * Sat Nov 11 2023 Igor Vlasenko <viy@altlinux.org> 2.500-alt2
 - NMU:
 - perl 5.38 support (uvuni_to_utf8_flags is removed)

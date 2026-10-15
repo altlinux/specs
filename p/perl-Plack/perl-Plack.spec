@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Plack
-Version: 1.0051
+Version: 1.0055
 Release: alt1
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
@@ -81,6 +81,13 @@ find . -iname 'apache1*' -delete
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0055-alt1
+- new version 1.0055
+- security fixes:
+  + CVE-2026-110333: fix memory leak of request env in Plack::Middleware::Recursive.
+  + CVE-2026-110332: fix Plack::Request::Upload basename returning empty, . or .. names.
+  + CVE-2026-110335: fix Plack::App::URLMap matching SERVER_PORT when stripping it from Host.
+
 * Mon Jan 15 2024 Igor Vlasenko <viy@altlinux.org> 1.0051-alt1
 - new version
 

@@ -1,6 +1,6 @@
 %define dist Net-Daemon
 Name: perl-%dist
-Version: 0.49
+Version: 0.52
 Release: alt1
 
 Summary: Perl extension for portable daemons
@@ -34,10 +34,13 @@ server applications.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc ChangeLog README.md
 %perl_vendor_privlib/Net
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.52-alt1
+- new version 0.52
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
 - automated CPAN update
 

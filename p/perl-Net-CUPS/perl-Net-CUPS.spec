@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Net::CUPS
 
 Name: perl-Net-CUPS
-Version: 0.64
-Release: alt1.3
+Version: 0.65
+Release: alt1
 
 Summary: Perl interface to the Common Unix Printing System API
 Summary(ru_RU.UTF-8): интерфейс Perl к API Common Unix Printing System
@@ -15,7 +15,6 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 %define real_name Net-CUPS
 Source: %real_name-%version.tar
-Patch0: perl-Net-CUPS-use-libcupsfilters.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -36,7 +35,6 @@ Printing System (CUPS). Он предоставляет возможность �
 
 %prep
 %setup  -n %real_name-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -51,6 +49,9 @@ Printing System (CUPS). Он предоставляет возможность �
 %perl_vendor_archlib/Net
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.65-alt1
+- new version 0.65 (fixes libcupsfilters >= 2 compatibility, drop our patch)
+
 * Tue Oct 24 2023 Igor Vlasenko <viy@altlinux.org> 0.64-alt1.3
 - NMU: fixed build
 
