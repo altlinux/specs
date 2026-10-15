@@ -3,21 +3,25 @@
 
 Name: git-bug
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Distributed, offline-first bug tracker embedded in git
 License: GPL-3.0-or-later
 Group: Development/Tools
-Url: https://github.com/git-bug/git-bug
-Vcs: https://github.com/git-bug/git-bug
+URL: https://github.com/git-bug/git-bug
+VCS: https://github.com/git-bug/git-bug
 
-ExclusiveArch: %go_arches
+# webui does not support building on the %ix86 architecture
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Source2: node_modules.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
+BuildRequires: rpm-build-nodejs
 
 %description
 git-bug is a standalone, distributed, offline-first issue management tool that
@@ -25,7 +29,7 @@ embeds issues, comments, and more as objects in a git repository (not files!),
 enabling you to push and pull them to one or more remotes.
 
 %prep
-%setup -a1
+%setup -a1 -a2
 %autopatch -p1
 
 %build
@@ -33,8 +37,13 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
+pushd $BUILDDIR/src/$IMPORT_PATH/webui
+npm run build
+popd
 pushd $BUILDDIR/src/$IMPORT_PATH
 export LDFLAGS="-X main.version=%version"
+export TAGS="webui"
+go generate
 %golang_build .
 popd
 
@@ -60,6 +69,9 @@ install -Dpm 0644 -t %buildroot%_man1dir doc/man/*.1
 %_man1dir/*
 
 %changelog
+* Thu Oct 15 2026 Ulysses Apokin <ulysses@altlinux.org> 0.11.0-alt2
+- Build binary with embedded web UI.
+
 * Wed Sep 23 2026 Ulysses Apokin <ulysses@altlinux.org> 0.11.0-alt1
 - New version.
 
