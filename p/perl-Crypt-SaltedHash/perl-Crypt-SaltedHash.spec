@@ -11,22 +11,22 @@
 %def_enable test
 
 Name: perl-Crypt-SaltedHash
-Version: 0.09
+Version: 0.12
 Release: alt1
 
 Summary: %m_name - Perl interface to functions that assist in working with salted hashes
 
-License: Artistic and GPL
+License: GPL-1.0-or-later or Artistic-1.0-Perl
 Group: Development/Perl
 Url: http://search.cpan.org/dist/Crypt-SaltedHash/
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/G/GS/GSHANK/Crypt-SaltedHash-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/R/RR/RRWO/Crypt-SaltedHash-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version perl(Test/Fatal.pm) perl(Digest/SHA.pm)
+BuildRequires: perl(Crypt/SysRandom.pm) perl(Digest/SHA.pm) perl(Test/Fatal.pm) perl(Module/Metadata.pm)
 
 %description
 The Crypt::SaltedHash module provides an object oriented
@@ -49,6 +49,9 @@ agorithms.
 %doc Changes README
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12-alt1
+- new version 0.12
+
 * Tue Sep 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
