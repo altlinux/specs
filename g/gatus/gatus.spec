@@ -1,14 +1,14 @@
 %global import_path github.com/TwiN/gatus/v5
 
 Name: gatus
-Version: 5.36.0
-Release: alt2
+Version: 5.37.0
+Release: alt1
 
 Summary: Automated developer-oriented status page
 License: Apache-2.0
 Group: Monitoring
 Url: https://gatus.io
-Vcs: https://github.com/TwiN/gatus
+Vcs: https://github.com/TwiN/gatus.git
 
 Source0: %name-%version.tar
 Source1: vendor.tar
@@ -78,6 +78,9 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null \
 %attr(775, _%name, _%name) %dir %_localstatedir/%name
 
 %changelog
+* Thu Oct 15 2026 Alexey Shabalin <shaba@altlinux.org> 5.37.0-alt1
+- updated from 5.36.0 to 5.37.0
+
 * Tue Sep 15 2026 Alexander Stepchenko <geochip@altlinux.org> 5.36.0-alt2
 - Add SupplementaryGroups=iputils to systemd service to allow ICMP sockets
   creation.
