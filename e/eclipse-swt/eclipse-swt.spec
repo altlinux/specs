@@ -1,6 +1,6 @@
-%define swt_bundle_version 3.132.0
+%define swt_bundle_version 3.135.0
 %define major_version   4
-%define minor_version   38
+%define minor_version   41
 # see alt bug #43049
 %define __find_debuginfo_files %nil
 # libs.req java problem
@@ -8,8 +8,8 @@
 %define swtsrcdir bundles/org.eclipse.swt
 
 Name:    eclipse-swt
-Version: 4.38
-Release: alt2
+Version: 4.41
+Release: alt1
 Epoch:   1
 Summary: Eclipse SWT: The Standard Widget Toolkit for GTK+
 
@@ -174,6 +174,9 @@ cp -a %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/*.so %{buildroot}/%{_libdir}/%{n
 %doc --no-dereference NOTICE
 
 %changelog
+* Thu Oct 15 2026 Andrey Cherepanov <cas@altlinux.org> 1:4.41-alt1
+- New version.
+
 * Tue Jul 07 2026 Arseniy Kostevich <faux@altlinux.org> 1:4.38-alt2
 - Package manifest, resources and native libraries in swt.jar (Closes: #59750).
 
