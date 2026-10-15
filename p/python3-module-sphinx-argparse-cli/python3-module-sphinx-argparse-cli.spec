@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 1.22.0
+Version: 1.24.0
 Release: alt1
 
 Summary: CLI arguments renderer for Sphinx
@@ -55,6 +55,9 @@ py.test3
 
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 1.24.0-alt1
+- 1.24.0
+
 * Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 

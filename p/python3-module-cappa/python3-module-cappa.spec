@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 0.32.2
+Version: 0.33.0
 Release: alt1
 
 Summary: Cappa is a declarative command line parsing library
@@ -47,6 +47,9 @@ py.test-3 tests
 %doc README* CHANGELOG*
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.33.0-alt1
+- 0.33.0
+
 * Mon Aug 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.32.2-alt1
 - first build for Sisyphus
 
