@@ -7,7 +7,7 @@
 %define subst_with_to() %{expand:%%{?_with_%1:--with-%2}} %{expand:%%{?_without_%1:--without-%2}}
 
 Name: yaz
-Version: 5.37.3
+Version: 5.38.0
 Release: alt1
 
 Summary: Z39.50/SRW/SRU toolkit
@@ -145,6 +145,9 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 5.38.0-alt1
+- new version 5.38.0
+
 * Fri Jul 17 2026 Fr. Br. George <george@altlinux.org> 5.37.3-alt1
 - Autobuild version bump to 5.37.3
 - Vendor gitmodules
