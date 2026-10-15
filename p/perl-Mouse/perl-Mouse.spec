@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build.pm) perl(Test/LeakTrace.pm)
 %define dist Mouse
 Name: perl-%dist
-Version: 2.5.11
+Version: 2.6.2
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -10,7 +10,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/S/SK/SKAJI/%{dist}-v%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SY/SYOHEX/%{dist}-v%{version}.tar.gz
 
 # XXX syntax check fails
 %define __spec_autodep_custom_pre export MOUSE_PUREPERL=1
@@ -45,6 +45,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt1
+- new version 2.6.2
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.5.11-alt1
 - automated CPAN update
 

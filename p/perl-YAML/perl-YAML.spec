@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist YAML
 Name: perl-%dist
-Version: 1.31
+Version: 1.321
 Release: alt1
 
 Summary: YAML Ain't Markup Language
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/I/IN/INGY/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TI/TINITA/%{dist}-%{version}.tar.gz
 Patch: YAML-1.15-alt-fixes.patch
 
 BuildArch: noarch
@@ -41,6 +41,11 @@ data structures of most modern programming languages (including Perl).
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.321-alt1
+- new version 1.321
+- security fixes:
+  + CVE-2026-63676: fix regex backtracking with exponential load time.
+
 * Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 1.31-alt1
 - automated CPAN update
 

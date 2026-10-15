@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-XPath
 Name: perl-%dist
-Version: 1.48
+Version: 1.49
 Release: alt1
 
 Summary: A set of modules for parsing and evaluating XPath statements
@@ -41,6 +41,9 @@ sed -i- '/EXE_FILES/d' Makefile.PL
 %perl_vendor_privlib/XML
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.49-alt1
+- new version 1.49
+
 * Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.48-alt1
 - automated CPAN update
 

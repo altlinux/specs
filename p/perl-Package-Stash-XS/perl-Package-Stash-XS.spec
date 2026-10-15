@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Test/Needs.pm)
 # END SourceDeps(oneline)
+BuildRequires: perl(Term/ANSIColor.pm)
 %define _unpackaged_files_terminate_build 1
 %define dist Package-Stash-XS
 Name: perl-%dist
-Version: 0.30
+Version: 0.32
 Release: alt1
 
 Summary: Faster and more correct implementation of the Package::Stash API
@@ -37,6 +38,10 @@ installed, and should be preferred in all environments with a compiler.
 %perl_vendor_autolib/Package*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.32-alt1
+- new version 0.32
+- added BuildRequires: perl(Term/ANSIColor.pm) (needed by tests).
+
 * Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
 - automated CPAN update
 
