@@ -15,12 +15,12 @@
 %define _enable_test 1
 
 Name: perl-Tie-Cycle
-Version: 1.231
+Version: 1.233
 Release: alt1
 
 Summary: Cycle through a list of values via a scalar
 
-License: Artistic
+License: Artistic-2.0
 Group: Development/Perl
 Url: http://www.cpan.org
 
@@ -63,6 +63,10 @@ example of this effect.
 %perl_vendor_privlib/Tie/*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.233-alt1
+- NMU: new version 1.233
+- fixed License tag: Artistic-2.0
+
 * Thu Apr 17 2025 Igor Vlasenko <viy@altlinux.org> 1.231-alt1
 - automated CPAN update
 

@@ -2,7 +2,7 @@
 BuildRequires: perl(Module/Build.pm)
 %define dist XML-Twig
 Name: perl-%dist
-Version: 3.53
+Version: 3.55
 Release: alt1
 
 Summary: A perl module for processing huge XML documents in tree mode
@@ -38,6 +38,7 @@ xml_merge	merge back XML files split with xml_split
 
 %install
 %perl_vendor_install
+rm -v %buildroot%perl_vendor_privlib/XML/speedup.pl
 
 %files
 %doc	Change* README
@@ -49,6 +50,10 @@ xml_merge	merge back XML files split with xml_split
 	%perl_vendor_privlib/XML/Twig/XPath.pm
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.55-alt1
+- NMU: new version 3.55
+- do not package the build helper speedup.pl
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 3.53-alt1
 - automated CPAN update
 

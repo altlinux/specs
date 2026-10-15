@@ -6,8 +6,8 @@ BuildRequires: gcc-c++ perl(CPAN.pm) perl(JSON.pm) perl(LWP/Simple.pm) perl(Modu
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Syntax-Highlight-Engine-Kate
-Version:        0.14
-Release:        alt1_7
+Version:        0.16
+Release:        alt1
 Summary:        Port to Perl of the syntax highlight engine of the Kate text editor
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Syntax-Highlight-Engine-Kate
@@ -42,6 +42,7 @@ BuildRequires:  perl(lib.pm)
 BuildRequires:  perl(List/Util.pm)
 BuildRequires:  perl(Term/ANSIColor.pm)
 BuildRequires:  perl(Test/Differences.pm)
+BuildRequires:  perl(Test/Exception.pm)
 BuildRequires:  perl(Test/More.pm)
 BuildRequires:  perl(Test/Warn.pm)
 BuildRequires:  perl(Time/HiRes.pm)
@@ -77,6 +78,10 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.16-alt1
+- NMU: new version 0.16
+- added Test::Exception to BuildRequires for tests
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1_7
 - update to new release by fcimport
 

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-Diff
 Name: perl-%dist
-Version: 1.45
+Version: 1.46
 Release: alt1
 
 Summary: Perform diffs on files and record sets
@@ -37,6 +37,9 @@ generally slower on larger files.
 %perl_vendor_privlib/Text
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- NMU: new version 1.46
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 1.45-alt1
 - automated CPAN update
 

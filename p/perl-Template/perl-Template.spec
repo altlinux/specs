@@ -3,7 +3,7 @@
 %def_without altbugzilla
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 3.102
+Version: 3.106
 Release: alt1
 
 Summary: Perl Template Toolkit
@@ -11,7 +11,7 @@ License: GPLv2+ or Artistic-2.0
 Group: Development/Perl
 
 URL: http://www.template-toolkit.org
-Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TODDR/%{dist}-%{version}.tar.gz
 Patch: Template-Toolkit-2.22-alt-no-apache.patch
 Patch2: Template-Toolkit-3.008-alt-initialize-variable.patch
 Patch4: Template-Toolkit-3.007-alt-encode-utf8.patch
@@ -73,6 +73,12 @@ LaTeX, and so on.
 	%perl_vendor_archlib/Template/App/ttree.pm
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.106-alt1
+- NMU: new version 3.106
+- refreshed initialize-variable patch
+- security fixes:
+  + CVE-2026-5090: escape single quotes in html_filter and HTML.escape.
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 3.102-alt1
 - automated CPAN update
 
