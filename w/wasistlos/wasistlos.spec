@@ -1,6 +1,6 @@
 Name: wasistlos
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: An unofficial WhatsApp client written in C++ with the help of gtkmm-3.0 and webkit2
 
@@ -10,9 +10,10 @@ Url: https://github.com/xeco23/WasIstLos
 
 # Source-url: https://github.com/xeco23/WasIstLos/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch: wasistlos-open-window-uri.patch
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: gcc-c++
 #BuildRequires: pkgconfig(appindicator3-0.1)
 BuildRequires: pkgconfig(ayatana-appindicator3-0.1)
 BuildRequires: pkgconfig(webkit2gtk-4.1) >= 2.34
@@ -30,6 +31,7 @@ Wasistlos is an unofficial WhatsApp linux client written in C++ with the help of
 
 %prep
 %setup
+%patch -p1
 # disable hw-accel by default (ALT bug 43906)
 #subst 's|"hw-accel", 1|"hw-accel", 0|' src/ui/WebView.cpp
 
@@ -54,6 +56,9 @@ rm -rv %buildroot%_datadir/locale/zh_Hans/
 /usr/share/metainfo/com.github.xeco23.WasIstLos.appdata.xml
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt2
+- Open window.open() links (Get started on the login page) in the default browser (closes: #57493).
+
 * Sun Feb 16 2025 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - new version (1.7.0) with rpmgs script via gear-uupdate
 - upstream renamed to wasistlos, update Url and Source
