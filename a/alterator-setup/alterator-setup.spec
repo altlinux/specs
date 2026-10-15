@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.5.6
+Version: 0.5.8
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -51,6 +51,8 @@ Requires: alterator-users
 Requires(post): chkconfig service
 Requires(preun): chkconfig service
 
+Conflicts: installer-common-functions < 1.16.39-alt1
+
 %description base
 %summary.
 
@@ -72,7 +74,7 @@ Summary: Apply the installer features to a system deployed as a rootfs
 Group: System/Configuration/Other
 
 Requires: %name-base = %EVR
-Requires: installer-common-functions
+Requires: installer-common-functions >= 1.16.39-alt1
 
 Provides: rootfs-installer-features = %EVR
 Obsoletes: rootfs-installer-features < %EVR
@@ -158,6 +160,13 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Wed Oct 14 2026 Mikhail Efremov <sem@altlinux.org> 0.5.8-alt1
+- setup-finish: Set destdir and METHOD variables.
+- setup-preinstall: Set METHOD to 'rootfs'.
+
+* Tue Oct 13 2026 Anton Midyukov <antohami@altlinux.org> 0.5.7-alt1
+- setup-preinstall: fix run scripts with installer-common-functions.
+
 * Sun Aug 02 2026 Anton Midyukov <antohami@altlinux.org> 0.5.6-alt1
 - systemd/setup.service: add conflict with kmsconvt@tty1.service.
 

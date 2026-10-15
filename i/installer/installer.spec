@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.16.38
+Version: 1.16.39
 Release: alt1
 
 Summary: Installer common parts
@@ -195,6 +195,10 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Wed Oct 14 2026 Mikhail Efremov <sem@altlinux.org> 1.16.39-alt1
+- install2-sh-functions: Don't fail if $datadir/variables is absent.
+- install2-sh-functions: Add rootfs method support.
+
 * Mon Jul 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.16.38-alt1
 - Split the install2 shell functions into installer-common-functions.
 - Allow install2 functions to work with the running root as destination.
