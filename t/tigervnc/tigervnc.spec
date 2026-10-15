@@ -4,7 +4,7 @@
 
 Name: tigervnc
 Version: 1.16.2
-Release: alt2
+Release: alt3
 
 Summary: A TigerVNC remote display system
 License: GPL-2.0-or-later
@@ -39,6 +39,7 @@ Patch109: Ubuntu-0205-defined-CMAKE_INSTALL_FULL_BINDIR.patch
 
 ## ALT patches
 Patch501: tigervnc-stdinpasswd.patch
+Patch502: tigervnc-ru-translation.patch
 
 BuildRequires: ImageMagick-tools
 BuildRequires: cmake
@@ -152,6 +153,7 @@ cp %SOURCE3 %SOURCE4 .
 
 ## ALT apply patches
 %patch501 -p1
+%patch502 -p1
 
 %build
 
@@ -276,6 +278,9 @@ install vncserver.man %buildroot/%_man1dir/vncserver.1
 %_xorgmoduledir/extensions/*.so
 
 %changelog
+* Tue Oct 13 2026 Anton Farygin <rider@altlinux.org> 1.16.2-alt3
+- updated russian translation (Closes: #61040)
+
 * Tue Jun 02 2026 Anton Farygin <rider@altlinux.org> 1.16.2-alt2
 - updated xorg-server to 21.1.23 (Fixes: CVE-2025-26601, CVE-2025-26600, CVE-2025-26599
  , CVE-2025-26598, CVE-2025-26597, CVE-2025-26596, CVE-2025-26595, CVE-2025-26594)
