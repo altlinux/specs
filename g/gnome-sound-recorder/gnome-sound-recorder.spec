@@ -8,7 +8,7 @@
 
 Name: gnome-sound-recorder
 Version: %ver_major
-Release: alt0.7%beta
+Release: alt0.8%beta
 
 Summary: Sound Recorder for GNOME
 Group: Sound
@@ -22,6 +22,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+Patch1: gnome-sound-recorder-43.beta-alt-ts6.patch
 
 BuildArch: noarch
 
@@ -65,6 +66,7 @@ The GNOME application for record and play sound files.
 
 %prep
 %setup -n %name-%version%beta
+%patch1 -b .ts6
 
 %build
 %meson
@@ -85,6 +87,9 @@ The GNOME application for record and play sound files.
 
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.8.beta
+- updated to 43.beta-136-g902c7ee
+
 * Sat May 02 2026 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.7.beta
 - updated to 43.beta-132-g195d7e3
 
