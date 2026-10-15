@@ -2,8 +2,8 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-pg_hint_plan
-Version: 1.5.3
-Release: alt2
+Version: 1.5.4
+Release: alt1
 
 Summary: pg_hint_plan makes it possible to tweak PostgreSQL execution plans using so-called "hints" in SQL comments
 License: BSD and PostgreSQL
@@ -62,6 +62,9 @@ install -pDm0644 docs/_build/man/pg_hint_plan.1 %buildroot%_man1dir/pg_hint_plan
 %_man1dir/*
 
 %changelog
+* Thu Oct 15 2026 Alexei Takaseev <taf@altlinux.org> 1.5.4-alt1
+- 1.5.4
+
 * Tue Mar 17 2026 Alexei Takaseev <taf@altlinux.org> 1.5.3-alt2
 - Use LLVM if it used in PostgreSQL
 
