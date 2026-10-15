@@ -99,11 +99,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.2
-%define ver_minor 4
+%define ver_minor 5
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -536,6 +536,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Oct 15 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.5-alt1
+- 26.2.5
+
 * Mon Oct 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.4-alt2
 - iris: fixed GPU HANG on MSAA disabled (closes: #60874)
 
