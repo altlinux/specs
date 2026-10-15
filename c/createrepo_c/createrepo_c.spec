@@ -1,6 +1,6 @@
 Name:     createrepo_c
-Version:  1.2.4
-Release:  alt3
+Version:  1.2.5
+Release:  alt1
 Summary:  Creates a common metadata repository
 License:  GPL-2.0+
 Group:    System/Configuration/Packaging
@@ -104,6 +104,9 @@ ln -s modifyrepo_c %buildroot%_bindir/modifyrepo
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.5-alt1
+- New version 1.2.5.
+
 * Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.4-alt3
 - List in primary.xml the same files as genpkglist keeps in APT indexes:
   shared libraries, jars, fonts, /usr/games and --primary-files paths
