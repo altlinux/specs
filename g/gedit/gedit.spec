@@ -3,9 +3,9 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
-%define lib_ver 50
+%define lib_ver 51
 %define api_ver 3.0
 %define namespace Gedit
 %def_enable plugins
@@ -34,14 +34,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 %define glib_ver 2.76.0
 %define gtk_ver 3.24.0
-%define tepl_ver 6.14
-%define gtksourceview_ver 299.6.0
+%define tepl_ver 6.15
+%define gtksourceview_ver 299.8.0
 %define peas_ver 1.14.1
 %define gspell_ver 1.0.0
 %define soup_ver 2.60.0
 
-#Obsoletes: %name-plugins < 48.2
-#Provides: %name-plugins = %EVR
+Obsoletes: %name-plugins < 51.0
+Provides: %name-plugins = %EVR
 
 Requires: %name-data = %EVR
 Requires: %name-gir = %EVR
@@ -208,6 +208,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 5.10
+%define ver_major 5.11
 %define api_ver 5
 %define namespace Amtk
 
@@ -160,6 +160,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 5.11.0-alt1
+- 5.11.0
+
 * Mon Mar 30 2026 Yuri N. Sedunov <aris@altlinux.org> 5.10.0-alt1
 - 5.10.0
 

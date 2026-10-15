@@ -1,5 +1,5 @@
 %def_enable snapshot
-%define ver_major 3.49
+%define ver_major 3.51
 %define oldname gnome-latex
 %define xdg_name org.gnome.enter_tex
 
@@ -30,15 +30,18 @@ Requires: %_bindir/latexmk dconf
 Requires: texlive-dist
 
 %define gtk_ver 3.24
-%define gtksource_ver 299.6.0
-%define tepl_ver 6.14
-%define amtk_ver 5.9.0
+%define handy_ver 1.2
+%define gtksource_ver 299.8.0
+%define tepl_ver 6.15
+%define amtk_ver 5.11.0
 %define vala_ver 0.46.5
+
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libgedit-gtksourceview-devel >= %gtksource_ver
 BuildRequires: pkgconfig(libgedit-tepl-6) >= %tepl_ver
 BuildRequires: libgedit-amtk-devel >= %amtk_ver
@@ -111,6 +114,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 3.51.0-alt1
+- 3.51.0
+
 * Sun Jan 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.49.0-alt1
 - 3.49.0
 
