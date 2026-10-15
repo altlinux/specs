@@ -1,27 +1,25 @@
 %define ShortName TopTenPages
+%setup_mediawiki_ext 1.46 %ShortName
 
 Name: mediawiki-extensions-%ShortName
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Shows the most popular Pages within an article
 
 License: GPL
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
+Url: https://www.mediawiki.org/wiki/Extension:%ShortName
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
+BuildRequires(pre): rpm-build-mediawiki >= 0.6
 
-Requires: mediawiki-common >= 1.19
+Requires: mediawiki-extensions-HitCounters >= 0.4
 
-Requires: mediawiki-extensions-HitCounters
-
-# http://www.mediawiki.org/wiki/Extension:TopTenPages/Code
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-TopTenPages/archive/master.tar.gz
+# Source-url: https://github.com/wikimedia/mediawiki-extensions-TopTenPages/archive/refs/heads/%MWREL.tar.gz
 Source: %ShortName-%version.tar
 
 %description
@@ -35,8 +33,12 @@ Shows the most popular Pages within an article.
 
 %files -f %ShortName.files
 
-
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt2
+- update to REL1_46 branch (compatible with MediaWiki 1.46)
+- require mediawiki-common >= 1.46
+- added BuildRequires(pre): rpm-build-mediawiki >= 0.6 (for %setup_mediawiki_ext, replaces BuildPreReq)
+
 * Sat Sep 29 2018 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1
 - new version (0.4.0) with rpmgs script
 

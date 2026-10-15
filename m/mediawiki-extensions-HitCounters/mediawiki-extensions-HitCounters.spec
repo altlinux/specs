@@ -1,42 +1,43 @@
 %define ShortName HitCounters
+%setup_mediawiki_ext 1.46 %ShortName
 
 Name: mediawiki-extensions-%ShortName
-Version: 0.3.4
+Version: 0.4
 Release: alt1
 
 Summary: Mediawiki hit counters (removed since Mediawiki 1.25)
 
 License: GPL
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
+Url: https://www.mediawiki.org/wiki/Extension:%ShortName
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
+BuildRequires(pre): rpm-build-mediawiki >= 0.6
 
-Requires: mediawiki-common >= 1.36
-
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-HitCounters/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/wikimedia/mediawiki-extensions-HitCounters/archive/refs/heads/%MWREL.tar.gz
 Source: %ShortName-%version.tar
-
-Patch: mediawiki-extensions-HitCounters.patch
 
 %description
 Mediawiki hit counters (removed since Mediawiki 1.25).
 
 %prep
 %setup -n %ShortName-%version
-%patch -p2
 
 %install
 %mediawiki_ext_install 50 %ShortName
 
 %files -f %ShortName.files
 
-
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
+- new version 0.4 (REL1_46 branch, compatible with MediaWiki 1.46)
+- drop patch (fixed upstream)
+- require mediawiki-common >= 1.46
+- added BuildRequires(pre): rpm-build-mediawiki >= 0.6 (for %setup_mediawiki_ext, replaces BuildPreReq)
+
 * Fri Jun 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.3.4-alt1
 - new version 0.3.4 (with rpmrb script)
 
