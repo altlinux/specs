@@ -1,6 +1,6 @@
 Name: domoticz
 Version: 2026.4
-Release: alt1
+Release: alt2
 
 Summary: Open source Home Automation System
 
@@ -15,6 +15,8 @@ Source1: %name.service
 Source2: %name.conf
 # Manually update version reported inside app
 Source3: %name-appversion
+
+Patch1: %name-show-ajax-errors.patch
 
 AutoReq: yes, noperl, nolua
 AutoProv: no
@@ -62,6 +64,7 @@ any mobile device
 
 %prep
 %setup
+%patch1 -p1
 cp -p %SOURCE3 ./appversion.h
 
 %build
@@ -90,6 +93,10 @@ rm -rv %buildroot%_datadir/%name/Config/
 
 # remove docs, we grab them in files below
 rm -v %buildroot%_datadir/%name/*.txt
+
+# remove byte-code with buildroot paths and editor backup files
+find %buildroot%_datadir/%name -name __pycache__ -type d -print -exec rm -r {} +
+find %buildroot%_datadir/%name -name '*.swp' -print -delete
 
 # move binary to standard directory
 mkdir -p %buildroot%_bindir/
@@ -178,6 +185,10 @@ usermod -a -G uucp domoticz || :
 %_unitdir/%name.service
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.4-alt2
+- Show server error messages when adding a switch or a scene fails (HTTP 400 had no ajax error handler) (closes: #61067).
+- Remove __pycache__ and editor backup files from the package (repocop buildroot, backup-file-in-package).
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.4-alt1
 - new version 2026.4
 - drop valueToQuotedString patch (fixed upstream)
