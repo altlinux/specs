@@ -4,7 +4,7 @@ BuildRequires: perl(IPC/Cmd.pm)
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Tiny
 Name: perl-%dist
-Version: 0.090
+Version: 0.096
 Release: alt1
 
 Summary: A small, simple, correct HTTP/1.1 client
@@ -38,6 +38,11 @@ LWP::UserAgent.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.096-alt1
+- new version 0.096
+- security fixes:
+  + CVE-2026-7010: fix header smuggling and strip credential headers on cross-origin redirects.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.090-alt1
 - automated CPAN update
 
