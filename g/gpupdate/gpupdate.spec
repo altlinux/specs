@@ -81,7 +81,7 @@
 
 
 Name: gpupdate
-Version: 0.16.3
+Version: 0.16.4
 Release: alt1
 
 Summary: GPT applier
@@ -187,6 +187,8 @@ ln -s %python3_sitelibdir/gpoa/gpupdate \
 
 ln -s %python3_sitelibdir/gpoa/gpupdate-setup \
     %buildroot%_sbindir/gpupdate-setup
+ln -s %python3_sitelibdir/gpoa/gpupdate-machine-run \
+    %buildroot%_sbindir/gpupdate-machine-run
 
 mkdir -p \
     %buildroot%_prefix/libexec/%name
@@ -220,7 +222,8 @@ install -Dm0644 completions/gpupdate-setup %buildroot/%_datadir/bash-completion/
 
 for i in gpupdate-localusers \
     gpupdate-group-users \
-    gpupdate-system-uids
+    gpupdate-system-uids \
+    gpupdate-ssh
 do
     install -pD -m755 "dist/$i" \
         "%buildroot%_sysconfdir/control.d/facilities/$i"
@@ -247,17 +250,18 @@ fi
 
 %files
 %_sbindir/gpoa
+%_sbindir/gpupdate-machine-run
 %_sbindir/gpupdate-setup
 %_bindir/gpupdate
 %_prefix/libexec/%name/scripts_runner
 %_prefix/libexec/%name/pkcon_runner
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpoa
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate
+%attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate-machine-run
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate-setup
 %attr(755,root,root) %python3_sitelibdir/gpoa/scripts_runner
 %attr(755,root,root) %python3_sitelibdir/gpoa/pkcon_runner
 %python3_sitelibdir/gpoa
-%_datadir/%name
 %_unitdir/%name.service
 %_unitdir/%name-scripts-run.service
 %_unitdir/%name.timer
@@ -285,11 +289,46 @@ fi
 
 %files -n gpoa-lib
 %python3_sitelibdir/gpoa_lib
+%_datadir/%name
 %exclude %python3_sitelibdir/gpoa_lib/test
 %doc API_REFERENCE.md API_REFERENCE_RU.md
 %doc README.md PLUGIN_DEVELOPMENT_GUIDE.md PLUGIN_DEVELOPMENT_GUIDE_RU.md EXAMPLES.md
 
 %changelog
+* Thu Oct 15 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.4-alt1
+- Added:
+  gpupdate-machine-run for commands with isolated machine Kerberos credentials
+  (closes: 60548)
+  GPO-configurable user policy refresh on SSH login (closes: 53161)
+  Chromium 153 integer-valued policy exceptions
+  Optional strict exit status for policy scripts
+- Fixed:
+  User file policies creating root-owned home directories (closes: 48946)
+  KDE policy application without a graphical environment (closes: 60718)
+  Missing icon and comment in merged machine shortcuts (closes: 60563)
+  GNOME and XFCE shortcut trust metadata (closes: 56019)
+  Absolute local script paths (closes: 47135)
+  Structured Chromium and Yandex JSON preservation through dconf
+  (closes: 46281)
+  Yandex numeric policy types for delays, limits and import settings
+  ADMX numeric-value extraction for decimal elements and enums
+  Packaged display manager plugin discovery and safe GDM background updates
+  LightDM greeter detection and native INI configuration
+  User polkit rule isolation, plugin execution and privilege-worker IPC
+  GPO cache identity, FreeIPA refresh handling and loopback precedence
+  Policy-scoped and per-user apply-once state, managed-file and hidden cleanup
+  Cached policy application
+  File-operation safety, bounded worker IPC and command-group cleanup
+  Kerberos credential isolation and LAPS retry post-actions
+  Native DWORD handling in Firewall and NTP, standalone GSettings lock updates
+  Script preparation failures and active timer shutdown when disabling gpupdate
+  Browser policy publication and GDM restoration across theme upgrades
+  Configuration preservation on upgrade and policy execution error reporting
+- Packaging:
+  Ship shared applier templates with gpoa-lib
+- Documentation:
+  Clarified plugin translation paths and documented regression test scenarios
+
 * Tue Sep 08 2026 Valery Sinelnikov <greh@altlinux.org> 0.16.3-alt1
 - Fixed:
   gpupdate.service: order after oddjobd.service at boot (closes: #56687)
@@ -786,4 +825,3 @@ fi
 
 * Thu Nov 14 2019 Igor Chudov <nir@altlinux.org> 0.0.1-alt1
 - Initial release
-
