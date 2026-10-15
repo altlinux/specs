@@ -3,7 +3,7 @@
 %global import_path github.com/project-zot/zot
 
 Name: zot
-Version: 2.1.16
+Version: 2.1.22
 Release: alt1
 
 Summary: A production-ready vendor-neutral OCI-native container image registry (purely based on OCI Distribution Specification)
@@ -46,6 +46,10 @@ sed -i 's/CGO_ENABLED=0/CGO_ENABLED=1/' Makefile
 
 cp %{SOURCE5} ./go.mod
 
+# All configured browsers support destructuring.
+sed -i '/^  esbuild: {/a\    supported: { destructuring: true },' \
+    zui/vite.config.js
+
 %ifarch x86_64
 %define node_arch x64
 %endif
@@ -66,6 +70,9 @@ fi
 ln -sf %_bindir/esbuild %vite_esb_dir/bin/esbuild
 ln -sf %_bindir/esbuild %vite_nm/.bin/esbuild
 sed -i "s/0.25.12/$(rpm -q --qf '%{VERSION}' esbuild)/g" \
+    %vite_nm/esbuild/lib/main.js
+sed -i \
+    's/JSON.parse(response.metafile)/JSON.parse(typeof response.metafile === "string" ? response.metafile : decodeUTF8(response.metafile))/' \
     %vite_nm/esbuild/lib/main.js
 
 ln -sf %_bindir/rollup  zui/node_modules/.bin/rollup
@@ -147,6 +154,9 @@ useradd -r -g _%name -M -d %_localstatedir/%name -s /dev/null -c "Zot registry u
 %_datadir/fish/vendor_completions.d/zli.fish
 
 %changelog
+* Wed Oct 07 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.22-alt1
+- 2.1.16 -> 2.1.22 (Fixes: CVE-2026-61833).
+
 * Mon Apr 20 2026 Aleksandr Gamzin <gamzin@altlinux.org> 2.1.16-alt1
 - 2.1.14 -> 2.1.16.
 

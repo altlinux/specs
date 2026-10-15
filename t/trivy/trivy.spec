@@ -11,7 +11,7 @@
 %endif
 
 Name: trivy
-Version: 0.71.2
+Version: 0.75.0
 Release: alt1
 Summary: A Fast Vulnerability Scanner for Containers
 
@@ -26,7 +26,7 @@ Source3: %name.sysconfig
 ExclusiveArch:  %go_arches
 
 BuildRequires(pre): rpm-macros-systemd rpm-macros-golang
-BuildRequires: rpm-build-golang wire golang >= 1.26
+BuildRequires: rpm-build-golang wire golang >= 1.27
 
 BuildRequires: /proc
 
@@ -115,6 +115,9 @@ rm -rf -- %buildroot%go_root
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Wed Oct 07 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.75.0-alt1
+- 0.75.0 (Fixes: CVE-2026-63328)
+
 * Mon Jun 29 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.71.2-alt1
 - 0.71.2
 - Fix order conditions bug in cpe detection.
