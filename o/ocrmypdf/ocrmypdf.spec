@@ -3,7 +3,7 @@
 %def_without docs
 
 Name: ocrmypdf
-Version: 17.4.2
+Version: 17.13.0
 Release: alt1
 
 Summary: Add an OCR text layer to scanned PDF files
@@ -38,6 +38,8 @@ Requires: ghostscript >= 9.15
 #Recommends:     pngquant >= 2.0.0
 Requires: tesseract >= 4.1.1
 Requires:     unpaper >= 6.1
+# pikepdf.pdfa API, the version is not detected automatically
+Requires: python3-module-pikepdf >= 10.15
 
 %if_with docs
 BuildRequires: python3-module-myst-parser
@@ -116,6 +118,10 @@ k="${k-}${k+ and }not test_tesseract_config_invalid"
 %endif
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 17.13.0-alt1
+- new version 17.13.0
+- require pikepdf >= 10.15 (pikepdf.pdfa)
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 17.4.2-alt1
 - new version 17.4.2
 

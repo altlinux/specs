@@ -5,7 +5,7 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-pikepdf
-Version: 10.3.0
+Version: 10.17.0
 Release: alt1
 License: MPL-2.0
 Summary: A Python library for reading and writing PDF files
@@ -16,15 +16,13 @@ Source: %name-%version.tar
 
 Requires: libpoppler-gir
 
-BuildRequires: gcc-c++ libqpdf-devel jbig2dec
+BuildRequires: gcc-c++ rpm-build-cmake libqpdf-devel jbig2dec
 
 BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools-scm)
-BuildRequires: python3(pybind11)
+BuildRequires: python3(scikit_build_core)
+BuildRequires: python3(nanobind)
 BuildRequires: python3(lxml)
 
 %if_with docs
@@ -39,6 +37,9 @@ BuildRequires: python3(packaging)
 BuildRequires: python3(pytest)
 BuildRequires: python3(hypothesis)
 BuildRequires: python3(psutil)
+BuildRequires: python3(fontTools)
+BuildRequires: python3(jsonschema)
+BuildRequires: python3(referencing)
 BuildRequires: /proc
 %if %tomli
 BuildRequires: python3(tomli)
@@ -54,8 +55,6 @@ Say it out loud, and it sounds like "pikepdf".
 %setup
 # disable pytest-xdist (unstable results)
 sed -i 's/-n auto//' pyproject.toml
-
-sed -i 's/license = "MPL-2.0"/license = {file = "LICENSE.txt"}/' pyproject.toml
 
 # XXX don't want IPython as dependency
 sed -i '/autodoc_mock_imports/s/\]/, "IPython"]/
@@ -93,6 +92,10 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 10.17.0-alt1
+- NMU: new version 10.17.0.
+- Build with scikit-build-core and nanobind (upstream build system change).
+
 * Fri Feb 06 2026 Grigory Ustinov <grenka@altlinux.org> 10.3.0-alt1
 - Automatically updated to 10.3.0.
 
