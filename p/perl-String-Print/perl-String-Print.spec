@@ -8,7 +8,7 @@ BuildRequires: perl-Encode-CN perl-Encode-TW perl-Encode-JP perl-Encode-KR perl-
 
 
 Name: perl-%module_name
-Version: 0.96
+Version: 1.02
 Release: alt1
 Summary: printf extensions
 Group: Development/Perl
@@ -35,6 +35,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.02-alt1
+- new version 1.02
+
 * Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 0.96-alt1
 - automated CPAN update
 
