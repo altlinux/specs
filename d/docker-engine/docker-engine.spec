@@ -7,11 +7,11 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      6a43e3d5afddf4111da0f864bbc7cae5d7e95001
+%global commit      b26fb77d3e7b01f9d21b89539c1ab428f5ca431f
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 29.7.2
+Version: 29.9.1
 Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
@@ -145,6 +145,9 @@ exit 0
 %dir %{_sharedstatedir}/docker
 
 %changelog
+* Thu Oct 15 2026 Ivan Khanas <xeno@altlinux.org> 29.9.1-alt1
+- New version.
+
 * Tue Aug 11 2026 Vladimir Didenko <cow@altlinux.org> 29.7.2-alt1
 - 29.7.2
 
