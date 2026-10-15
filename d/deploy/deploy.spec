@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -33,6 +33,10 @@ echo "pg_ver: %pg_ver" > modules/vars/postgresql
 %_datadir/%name
 
 %changelog
+* Wed Oct 14 2026 Ivan Khanas <xeno@altlinux.org> 0.5.2-alt1
+- Add --offline to skip package index updates for educational web
+  applications.
+
 * Wed Jul 22 2026 Nikita Panov <nexxy@altlinux.org> 0.5.1-alt1
 - Stop masking foreman setup error.
 

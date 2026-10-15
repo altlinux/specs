@@ -1,10 +1,10 @@
 %define php_version %php_defver
 %define system_requires apache2-base, apache2-mod_php%php_version, apache2-mod_ssl, mariadb-server
-%define deploy_requires deploy >= 0.4.2
+%define deploy_requires deploy >= 0.5.2-alt1
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
-Version: 1.5.6
+Version: 1.5.7
 Release: alt1
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
@@ -133,6 +133,10 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Wed Oct 14 2026 Ivan Khanas <xeno@altlinux.org> 1.5.7-alt1
+- Deploy educational web applications in offline mode.
+- Report first-boot deployment failures instead of displaying success.
+
 * Sun Jun 28 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.5.6-alt1
 - Add -common subpackage with a first-boot orchestrator that runs the
   office-server deploys from server-apps.d/ and reports progress to Plymouth.
