@@ -2,7 +2,7 @@
 %define pypi_name more-itertools
 
 Name: python3-module-%pypi_name
-Version: 11.2.0
+Version: 11.2.1
 Release: alt1
 Summary: More routines for operating on iterables, beyond itertools
 License: MIT
@@ -49,6 +49,9 @@ routines for working with Python iterables.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 11.2.1-alt1
+- 11.2.0 -> 11.2.1
+
 * Wed Oct 14 2026 Stanislav Levin <slev@altlinux.org> 11.2.0-alt1
 - 11.1.0 -> 11.2.0
 
