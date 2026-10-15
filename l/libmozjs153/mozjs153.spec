@@ -19,7 +19,7 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.1.0
+Version: %ver_major.5.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -47,11 +47,13 @@ Patch4: Bug-1761665-Extend-x86-workaround-to-32-bit-ARM.patch
 Patch5: Fix-math_private.h-for-i386-FTBFS.patch
 # https://bugzilla.mozilla.org/show_bug.cgi?id=2053518
 # https://github.com/mozilla-firefox/firefox/commit/1ecaa12836a6
+# merged in 153.5.0
 Patch10: firefox-154.1-up-rust-1.98.patch
 
 BuildRequires(pre): rpm-build-python3 libicu-devel
 BuildRequires: /dev/shm /proc
-BuildRequires: python3-devel python3(setuptools) python3(six) python3(curses)
+BuildRequires: python3-devel python3(setuptools) python3(six)
+BuildRequires: python3(curses) python3(sqlite3)
 BuildRequires: gcc-c++ ccache nasm cbindgen
 BuildRequires: libreadline-devel zip unzip
 BuildRequires: libffi-devel libffi-devel-static
@@ -101,7 +103,7 @@ interface to the JavaScript engine.
 %patch3 -p1
 #%%patch4 -p1
 #%%patch5 -p1
-%patch10 -p1
+#%%patch10 -p1
 
 %build
 [ ! -d _build ] && mkdir _build && \
@@ -186,6 +188,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 153.5.0-alt1
+- 153.5.0
+
 * Sun Aug 23 2026 Yuri N. Sedunov <aris@altlinux.org> 153.1.0-alt1
 - 153.1.0
 
