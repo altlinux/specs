@@ -1,14 +1,14 @@
 Name: yuki-iptv
-Version: 0.0.19
+Version: 261004.0
 Release: alt1
 
 Summary: IPTV player with EPG support (Astroncia IPTV fork)
 
 License: GPLv3
 Group: Video
-Url: https://codeberg.org/liya/yuki-iptv
+Url: https://github.com/itachi-re/yuki-iptv
 
-# Source-url: https://codeberg.org/liya/yuki-iptv/archive/%version.tar.gz
+# Source-url: https://github.com/itachi-re/yuki-iptv/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -17,7 +17,7 @@ BuildRequires: rpm-build-python3
 
 Requires: libmpv2 ffmpeg
 
-Requires: python3-module-PyQt5 python3-module-Pillow
+Requires: python3-module-PyQt6 python3-module-Pillow
 
 # recommends
 Requires: yt-dlp
@@ -36,7 +36,8 @@ The channels and pictures in the screenshots are for demonstration purposes only
 
 %prep
 %setup
-sed -i "s/__DEB_VERSION__/${pkgver//+*/}/g" usr/lib/yuki-iptv/yuki-iptv.py
+sed -i "s/__DEB_VERSION__/%version/g" usr/lib/yuki-iptv/yuki-iptv.py
+sed -i "1s|^#!/usr/bin/bash|#!/bin/bash|" usr/bin/yuki-iptv
 
 %build
 make
@@ -54,9 +55,13 @@ cp -r usr/ %buildroot/
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/yuki-iptv.svg
-%_datadir/metainfo/*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 261004.0-alt1
+- new version 261004.0
+- switch to the new upstream https://github.com/itachi-re/yuki-iptv
+- port to PyQt6
+
 * Tue Dec 02 2025 Vitaly Lipatov <lav@altlinux.ru> 0.0.19-alt1
 - new version 0.0.19 (with rpmrb script)
 
