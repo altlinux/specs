@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-Parser
 Name: perl-%dist
-Version: 2.47
+Version: 2.59
 Release: alt1
 
 Summary: Perl module for parsing XML files
@@ -13,7 +13,7 @@ Source: %dist-%version.tar
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libexpat-devel perl-devel perl-libwww
+BuildRequires: libexpat-devel perl-devel perl-libwww perl-File-ShareDir perl-File-ShareDir-Install
 
 %description
 XML::Parser is a Perl module for parsing XML documents.
@@ -36,11 +36,19 @@ find blib/lib/XML/Parser/Encodings -type f -not -name '*.enc' -print -delete
 %perl_vendor_install
 
 %files
-%doc Changes README README.md
+%doc Changes README.md
 %perl_vendor_archlib/XML
 %perl_vendor_autolib/XML
+%perl_vendor_archlib/auto/share/dist/%dist
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.59-alt1
+- new version 2.59
+- encoding maps are now installed via File::ShareDir
+- security fixes:
+  + CVE-2006-10002, BDU:2026-12813: fix heap buffer overflow in parse_stream() with :utf8 input layer.
+  + CVE-2006-10003, BDU:2026-12814: fix off-by-one heap buffer overflow in st_serial_stack.
+
 * Tue Jan 02 2024 Igor Vlasenko <viy@altlinux.org> 2.47-alt1
 - new version
 
