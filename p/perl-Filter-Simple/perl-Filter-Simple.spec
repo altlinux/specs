@@ -1,15 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Filter-Simple
+%define base_version 0.94
 Name: perl-%dist
-Version: 0.94
+Version: 0.97
 Release: alt1
 
 Summary: Simplified source filtering
 License: GPL or Artistic
 Group: Development/Perl
 
-URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/S/SM/SMUELLER/%{dist}-%{version}.tar.gz
+URL: https://metacpan.org/release/%dist
+Source0: %{dist}-%{base_version}.tar
+Patch0: Filter-Simple-0.94-Upgrade-to-0.95.patch
+Patch1: Filter-Simple-0.94-Upgrade-to-0.96.patch
+Patch2: Filter-Simple-0.96-Update-to-0.97.patch
 
 BuildArch: noarch
 
@@ -21,7 +25,10 @@ The Filter::Simple module provides a simplified interface to
 Filter::Util::Call; one that is sufficient for most common cases.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -q -n %{dist}-%{base_version}
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
@@ -34,6 +41,9 @@ Filter::Util::Call; one that is sufficient for most common cases.
 %perl_vendor_privlib/Filter
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.97-alt1
+- 0.94 -> 0.97 (upstream patches 0.95, 0.96, 0.97 from Fedora)
+
 * Wed Aug 30 2017 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
 - automated CPAN update
 
