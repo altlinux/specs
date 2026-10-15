@@ -1,6 +1,6 @@
 %define dist WWW-RobotRules
 Name: perl-%dist
-Version: 6.02
+Version: 6.03
 Release: alt1
 
 Summary: Database of robots.txt-derived permissions
@@ -16,6 +16,7 @@ BuildArch: noarch
 
 # requires AnyDBM_File; not required by any packag
 %add_findreq_skiplist */WWW/RobotRules/AnyDBM_File.pm
+%add_findreq_skiplist */WWW/RobotRules/DB_File.pm
 
 # Automatically added by buildreq on Mon Feb 20 2012
 BuildRequires: perl-DBM perl-URI perl-devel
@@ -36,10 +37,15 @@ from accessing parts of their web site.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes
 %perl_vendor_privlib/WWW
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.03-alt1
+- new version 6.03
+- dropped README from %%doc (not shipped by upstream anymore).
+- skip dependency scan of WWW/RobotRules/DB_File.pm (optional backend, needs DB_File; like AnyDBM_File.pm).
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 6.02-alt1
 - 6.01 -> 6.02
 

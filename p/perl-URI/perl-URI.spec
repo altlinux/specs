@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 # END SourceDeps(oneline)
 %define dist URI
 Name: perl-%dist
-Version: 5.33
+Version: 5.37
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -19,7 +19,7 @@ BuildArch: noarch
 %add_findreq_skiplist */isbn.pm
 
 # Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-Encode perl-devel perl-libnet perl(Test/Needs.pm) perl(MIME/Base32.pm)
+BuildRequires: perl-Encode perl-devel perl-libnet perl(Test/Needs.pm) perl(MIME/Base32.pm) perl(Unicode/Normalize.pm)
 
 %description
 This package contains the URI.pm module with friends.  The module
@@ -40,6 +40,12 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 5.37-alt1
+- new version 5.37
+- security fixes:
+  + CVE-2026-19953: fix encoding of non-NFC IDNA host names to non-standard punycode.
+- added BuildRequires: perl(Unicode/Normalize.pm) (needed for tests).
+
 * Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 5.33-alt1
 - automated CPAN update
 

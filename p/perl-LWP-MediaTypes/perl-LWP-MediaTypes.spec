@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist LWP-MediaTypes
 Name: perl-%dist
-Version: 6.04
+Version: 6.05
 Release: alt1
 
 Summary: Guess media type for a file or a URL
@@ -37,6 +37,9 @@ is defined by the media.types file.
 %perl_vendor_privlib/LWP
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.05-alt1
+- NMU: new version 6.05.
+
 * Thu Mar 21 2019 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
 - automated CPAN update
 

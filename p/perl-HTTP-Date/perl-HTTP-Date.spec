@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Date
 Name: perl-%dist
-Version: 6.06
+Version: 6.08
 Release: alt1
 
 Summary: Date conversion routines
@@ -12,11 +12,13 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
+# autodep misses the eval { require Time::Zone } in HTTP::Date (declared runtime prereq in META)
+Requires: perl(Time/Zone.pm)
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Feb 20 2012
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Time/Zone.pm)
 
 %description
 This module provides functions that deal the date formats used by
@@ -37,6 +39,12 @@ time2str() and str2time(), are exported by default.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.08-alt1
+- new version 6.08
+- security fixes:
+  + CVE-2026-14741: fix CPU exhaustion via regex backtracking in str2time.
+- added explicit Requires: perl(Time/Zone.pm) (new upstream runtime prerequisite).
+
 * Sat Jul 08 2023 Igor Vlasenko <viy@altlinux.org> 6.06-alt1
 - automated CPAN update
 
