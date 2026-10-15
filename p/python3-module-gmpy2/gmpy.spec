@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: GMP/MPIR, MPFR, and MPC interface
@@ -53,6 +53,9 @@ rm -rv gmpy2 build
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.2-alt1
+- New version 2.3.2.
+
 * Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
 - New version 2.3.1.
 
