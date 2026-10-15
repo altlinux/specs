@@ -10,7 +10,7 @@
 %endif
 
 Name: librdkafka
-Version: 2.6.1
+Version: 2.16.0
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
@@ -24,7 +24,7 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 Source: %name-%version.tar
 Source1: rdkafka.pc
 
-BuildRequires: cmake gcc-c++ libssl-devel liblz4-devel libxxhash-devel libsasl2-devel
+BuildRequires: gcc-c++ libssl-devel liblz4-devel libxxhash-devel libsasl2-devel
 
 %if_with check
 BuildRequires: ctest
@@ -79,6 +79,10 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.16.0-alt1
+- New version 2.16.0.
+- Drop unused cmake from BuildRequires (built with mklove configure).
+
 * Tue Nov 19 2024 Grigory Ustinov <grenka@altlinux.org> 2.6.1-alt1
 - Automatically updated to 2.6.1.
 
