@@ -4,8 +4,8 @@ BuildRequires: perl(DateTime/Locale.pm)
 %define _unpackaged_files_terminate_build 1
 %define dist MooseX-Types-DateTime
 Name: perl-%dist
-Version: 0.13
-Release: alt2.1
+Version: 0.14
+Release: alt1
 
 Summary: DateTime related constraints and coercions for Moose
 License: GPL or Artistic
@@ -37,6 +37,9 @@ designed to work with the DateTime suite of objects.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14-alt1
+- new version 0.14
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 0.13-alt2.1
 - fixed build
 

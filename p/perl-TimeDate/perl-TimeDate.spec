@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist TimeDate
 Name: perl-%dist
-Version: 2.33
+Version: 2.35
 Release: alt1
 
 Summary: Date and time manipulation routines for Perl
@@ -32,11 +32,14 @@ a more reliable interface to textual representations of points in time.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc Changes README
 %perl_vendor_privlib/Date*
 %perl_vendor_privlib/Time*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.35-alt1
+- new version 2.35
+
 * Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 2.33-alt1
 - automated CPAN update
 
