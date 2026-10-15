@@ -1,7 +1,7 @@
 %define alterator_libexecdir %_prefix/libexec/alterator
 
 Name: alterator-manager
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Modular tool for system configuration via D-Bus
@@ -90,6 +90,12 @@ cp -r docs %buildroot%_docdir/%name-%version/
 %preun_service alterator-manager
 
 %changelog
+* Thu Oct 15 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt1
+- Fix unnecessary debug output from the system log. Debug messages were
+  written to the system log when the service was started without --debug
+  option. Now, debug messages are written to the system log only when the
+  service is started with the --debug option. (Closes: 60950)
+
 * Fri Sep 18 2026 Ivan Savin <svn17@altlinux.org> 0.2.2-alt1
 - Enable monitoring of directories containing backend files before those files
   are loaded. Previously, monitoring started only after the backend files had
