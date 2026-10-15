@@ -1,7 +1,7 @@
 %def_enable selinux
 
 Name: bubblewrap
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -54,6 +54,9 @@ the host.
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Wed Oct 14 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0
 
