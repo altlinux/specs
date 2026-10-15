@@ -1,41 +1,63 @@
-%define oname texttable
+%define _unpackaged_files_terminate_build 1
+%define pypi_name texttable
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 1.7.0
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 1.7.1
 Release: alt1
 
 Summary: Module for creating simple ASCII tables
 
 License: %lgpl3only
 Group: Development/Python3
-Url: https://github.com/foutaise/texttable
-
-Source: %oname-%version.tar
+Url: https://pypi.org/project/texttable
+Vcs: https://github.com/foutaise/texttable
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+# not packaged
+%add_pyproject_deps_check_filter cjkwrap
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
+%endif
 
 %description
 texttable is a module to generate a formatted text table, using ASCII characters.
 
 %prep
-%setup -n %oname-%version
+%setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_tox tox.ini testenv
+%endif
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -vra tests.py
 
 %files
-%doc LICENSE
-%python3_sitelibdir/%oname.*
-%python3_sitelibdir/*.egg-*
-%python3_sitelibdir/__pycache__/*
+%python3_sitelibdir/%mod_name.*
+%python3_sitelibdir/__pycache__/%mod_name.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1
+- 1.7.0 -> 1.7.1
+
 * Thu Nov 2 2023 Vladimir Didenko <cow@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
