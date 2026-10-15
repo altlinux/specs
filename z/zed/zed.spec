@@ -8,6 +8,10 @@
 %define app_id dev.zed.Zed
 %define app_cli zed-editor
 
+%define bash_completionsdir %_datadir/bash-completion/completions
+%define fish_completionsdir %_datadir/fish/vendor_completions.d
+%define zsh_completionsdir %_datadir/zsh/site-functions
+
 %define webrtc_basedir %_builddir
 # git grep WEBRTC_TAG
 %define webrtc_tag webrtc-0001d84-2
@@ -20,7 +24,7 @@
 %endif
 
 Name: zed
-Version: 1.22.0
+Version: 1.24.2
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -42,7 +46,10 @@ Patch0: %name-%version-alt.patch
 BuildRequires: rust-cargo
 BuildRequires: cargo-about
 BuildRequires: cmake
-BuildRequires: gcc-c++
+BuildRequires: binutils
+BuildRequires: clang-devel
+BuildRequires: libstdc++-devel
+BuildRequires: mold
 BuildRequires: libgit2-devel
 BuildRequires: libssh2-devel
 BuildRequires: libssl-devel
@@ -80,7 +87,7 @@ editor from the creators of Atom and Tree-sitter.
 install -vpD %SOURCE2 .cargo/config.toml
 install -vp  %SOURCE3 ./update-metadata-releases.py
 
-unzip -o %webrtc_source -d %webrtc_basedir
+unzip -oq %webrtc_source -d %webrtc_basedir
 
 # Cargo metadata may reject vendored packages with a feature-gated
 # `default-run` target. `default-run` is irrelevant for license generation.
@@ -95,6 +102,8 @@ export PROTOC="/usr/bin/protoc"
 export PROTOC_INCLUDE="/usr/include"
 export OPENSSL_NO_VENDOR=1
 export LIBGIT2_NO_VENDOR=1
+export CC=clang
+export CXX=clang++
 
 # Upstream says that licenses should be generated before
 # building the binaries. See the following for more info:
@@ -111,11 +120,24 @@ export CARGO_PROFILE_RELEASE_INCREMENTAL=false
 export CARGO_PROFILE_RELEASE_LTO=thin
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
 export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
+
+# .gear/config.toml defines no rustflags, so RUSTFLAGS does not override
+# anything. `--icf=safe` needs the .llvm_addrsig sections from `-addrsig`.
+export RUSTFLAGS="-C linker=clang -C link-arg=-fuse-ld=mold -C llvm-args=-addrsig -C link-arg=-Wl,--icf=safe"
+
 cargo build --release %{?_smp_mflags} --offline --verbose --package zed --package cli
 
 %install
 install -pD -m0755 target/release/zed %buildroot%_libexecdir/zed-editor
 install -pD -m0755 target/release/cli %buildroot%_bindir/%app_cli
+
+# Run the installed cli so clap picks up %app_cli as the command name.
+# The cli refuses to run as root (crates/util/src/util.rs), hence the override.
+export ZED_ALLOW_ROOT=true
+mkdir -p %buildroot%bash_completionsdir %buildroot%fish_completionsdir %buildroot%zsh_completionsdir
+%buildroot%_bindir/%app_cli --completions bash > %buildroot%bash_completionsdir/%app_cli
+%buildroot%_bindir/%app_cli --completions fish > %buildroot%fish_completionsdir/%app_cli.fish
+%buildroot%_bindir/%app_cli --completions zsh > %buildroot%zsh_completionsdir/_%app_cli
 install -pD -m0644 crates/zed/resources/app-icon.png %buildroot%_iconsdir/hicolor/512x512/apps/%app_id.png
 install -pD -m0644 crates/zed/resources/app-icon@2x.png %buildroot%_iconsdir/hicolor/1024x1024/apps/%app_id.png
 
@@ -137,11 +159,18 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %doc LICENSE-APACHE README.md assets/licenses.md
 %_libexecdir/zed-editor
 %_bindir/%app_cli
+%bash_completionsdir/%app_cli
+%fish_completionsdir/%app_cli.fish
+%zsh_completionsdir/_%app_cli
 %_desktopdir/%app_id.desktop
 %_datadir/metainfo/%app_id.metainfo.xml
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Oct 15 2026 Anton Zhukharev <ancieg@altlinux.org> 1.24.2-alt1
+- Updated to 1.24.2.
+- Packaged shell completions for bash, fish and zsh.
+
 * Thu Oct 01 2026 Anton Zhukharev <ancieg@altlinux.org> 1.22.0-alt1
 - Updated to 1.22.0.
 
