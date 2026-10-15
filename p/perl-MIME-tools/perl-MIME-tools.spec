@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist MIME-tools
 Name: perl-%dist
-Version: 5.515
+Version: 5.519
 Release: alt1
 Epoch: 1
 
@@ -38,6 +38,9 @@ messages.
 %perl_vendor_privlib/MIME*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1:5.519-alt1
+- new version 5.519
+
 * Fri Apr 04 2025 Igor Vlasenko <viy@altlinux.org> 1:5.515-alt1
 - automated CPAN update
 
