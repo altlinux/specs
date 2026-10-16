@@ -11,7 +11,7 @@
 # it's better to use major.minor for versioned files.
 %define v_major 1
 %define v_minor 99
-%define v_patch 0
+%define v_patch 1
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
 
@@ -265,6 +265,26 @@ no standard for what functions can be imported on the web. This target
 can also be useful for creating minimal or bare-bones WebAssembly
 binaries.
 
+%package bpfeb-unknown-none-target
+Summary: Static libraries for bpfeb-unknown-none target support
+Url: https://doc.rust-lang.org/nightly/rustc/platform-support/bpf-unknown-none.html
+Group: Development/Other
+Requires: %name-toolchain = %EVR
+Requires: rustc
+
+%description bpfeb-unknown-none-target
+Big endian target for the 64-bit BPF virtual machine.
+
+%package bpfel-unknown-none-target
+Summary: Static libraries for bpfel-unknown-none target support
+Url: https://doc.rust-lang.org/nightly/rustc/platform-support/bpf-unknown-none.html
+Group: Development/Other
+Requires: %name-toolchain = %EVR
+Requires: rustc
+
+%description bpfel-unknown-none-target
+Little endian target for the 64-bit BPF virtual machine.
+
 %prep
 %setup -a1
 %autopatch -p1
@@ -331,7 +351,7 @@ include = [
 # Order matters. When installing docs last target replaces previous target docs
 # removing compiler docs.
 # TODO: Make github issue.
-target = ["wasm32-unknown-unknown", "%rust_host_triple"]
+target = ["wasm32-unknown-unknown", "bpfeb-unknown-none", "bpfel-unknown-none", "%rust_host_triple"]
 cargo = "%cargo"
 rustc = "%rustc"
 python = "python3"
@@ -600,7 +620,17 @@ rm -rf %rustdir
 %files wasm32-unknown-unknown-target
 %rust_rustlib/wasm32-unknown-unknown/
 
+%files bpfeb-unknown-none-target
+%rust_rustlib/bpfeb-unknown-none/
+
+%files bpfel-unknown-none-target
+%rust_rustlib/bpfel-unknown-none/
+
 %changelog
+* Fri Oct 16 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.99.1-alt1
+- New version (1.99.1).
+- Add bpf*-unknown-none targets support (Closes: 60762).
+
 * Thu Oct 08 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.99.0-alt1
 - New version (1.99.0).
 - Bring back "test/" into rust-src (Closes: 60762).
