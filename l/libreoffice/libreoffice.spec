@@ -53,7 +53,7 @@ Name: libreoffice
 %define hversion 26.8
 %define urelease 1.1
 Version: %hversion.%urelease
-Release: alt1
+Release: alt2
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
@@ -131,6 +131,7 @@ Patch412: alt-012-svg-icons-3.patch
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 # https://gerrit.libreoffice.org/c/core/+/212087
 Patch501: alt-tdf173885_Fix_for_Impress_crash_when_scrolling_through_slides.patch
+Patch502: 0005-tdf-172966-Don-t-add-attach-attachment-to-mailto-URI.patch
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -517,6 +518,8 @@ git apply %PATCH116
 
 %patch500 -p0
 %patch501 -p1
+%patch502 -p1
+
 %patch700 -p1
 
 # TODO move officebeans to SDK or separate package
@@ -936,6 +939,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Oct 16 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1.1-alt2
+- Didn't add attach=/attachment= to mailto URI (ALT #60829).
+
 * Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1.1-alt1
 - New version (fixes: CVE-2026-63266, CVE-2026-63267, CVE-2026-63268,
   CVE-2026-63269, CVE-2026-63270, CVE-2026-63277).
