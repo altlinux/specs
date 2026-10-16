@@ -2,7 +2,7 @@
 %define dist SQL-Abstract
 Name: perl-%dist
 Version: 2.000001
-Release: alt1
+Release: alt1.1
 
 Summary: Generate SQL from Perl data structures
 License: GPL or Artistic
@@ -12,6 +12,9 @@ URL: http://search.cpan.org/dist/SQL-Abstract/
 Source0: http://www.cpan.org/authors/id/M/MS/MSTROUT/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
+
+# SQL::Abstract::Test is a test helper only: avoid dependency on perl-devel
+%add_findreq_skiplist */SQL/Abstract/Test.pm
 
 # Automatically added by buildreq on Thu Jan 13 2011 (-bi)
 BuildRequires: perl-DBIx-Class perl-Term-ANSIColor perl-Test-Deep perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-Test-Warn
@@ -38,6 +41,9 @@ create an abstract SQL generation module.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.000001-alt1.1
+- NMU: skip requires of test-only SQL::Abstract::Test to avoid dependency on perl-devel (closes: #49930)
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 2.000001-alt1
 - automated CPAN update
 
