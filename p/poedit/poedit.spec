@@ -7,7 +7,7 @@
 %def_without cld2
 
 Name: poedit
-Version: 3.9.1
+Version: 3.10
 Release: alt1
 
 Summary: Cross-platform translation files editor
@@ -83,6 +83,9 @@ rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %doc AUTHORS NEWS README*
 
 %changelog
+* Fri Oct 16 2026 Yuri N. Sedunov <aris@altlinux.org> 3.10-alt1
+- 3.10
+
 * Thu Jun 04 2026 Yuri N. Sedunov <aris@altlinux.org> 3.9.1-alt1
 - 3.9.1
 - disabled cpprest support
