@@ -1,5 +1,5 @@
 Name: memtest86+
-Version: 8.10
+Version: 9.00
 Release: alt1
 
 Summary: Memory test for x86 architecture
@@ -10,17 +10,13 @@ Url: http://www.memtest.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-ExclusiveArch: %ix86 x86_64 loongarch64
+ExclusiveArch: %ix86 x86_64 loongarch64 aarch64
 Requires(post,preun): bootloader-utils >= 0.3
 
 %ifarch %ix86
 %define builddir build/i586
-%endif
-%ifarch x86_64
-%define builddir build/x86_64
-%endif
-%ifarch loongarch64
-%define builddir build/loongarch64
+%else
+%define builddir build/%_host_cpu
 %endif
 
 %description
@@ -100,6 +96,10 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README.md
 
 %changelog
+* Fri Oct 16 2026 Anton Midyukov <antohami@altlinux.org> 9.00-alt1
+- New version 9.00.
+- Initial build on aarch64.
+
 * Sun May 17 2026 Anton Midyukov <antohami@altlinux.org> 8.10-alt1
 - New version 8.10.
 
