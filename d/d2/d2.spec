@@ -2,8 +2,8 @@
 %define import_path oss.terrastruct.com/d2
 
 Name: d2
-Version: 0.7.1
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: A modern diagram scripting language that turns text to diagrams
 License: MPL-2.0
@@ -45,6 +45,9 @@ export IGNORE_SOURCES=1
 %_bindir/d2
 
 %changelog
+* Thu Oct 15 2026 Artem Krasovskiy <aibure@altlinux.org> 0.9.0-alt1
+- updated from 0.7.1 to 0.9.0
+
 * Wed Jul 29 2026 Anton Zhukharev <ancieg@altlinux.org> 0.7.1-alt2
 - Corrected license tag.
 
