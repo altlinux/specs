@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.36.0
-Release: alt2
+Version: 1.37.0
+Release: alt1
 Summary: Integration of uv with tox (bare package, bring your own uv)
 License: MIT
 Group: Development/Python3
@@ -58,6 +58,9 @@ export UV_OFFLINE=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1.37.0-alt1
+- 1.36.0 -> 1.37.0
+
 * Tue Sep 01 2026 Stanislav Levin <slev@altlinux.org> 1.36.0-alt2
 - Fixed FTBFS (tox 4.59).
 

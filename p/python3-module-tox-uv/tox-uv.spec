@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.36.0
+Version: 1.37.0
 Release: alt1
 Summary: Integration of uv with tox (meta package)
 License: MIT
@@ -70,6 +70,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1.37.0-alt1
+- 1.36.0 -> 1.37.0
+
 * Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 1.36.0-alt1
 - 1.35.2 -> 1.36.0
 
