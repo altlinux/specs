@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-fastmcp
-Version: 3.4.7
+Version: 4.1.0
 Release: alt1
 
 Summary: The fast, Pythonic way to build MCP servers and clients
@@ -122,5 +122,8 @@ cd fastmcp_slim
 %python3_sitelibdir/fastmcp_slim-%version.dist-info/
 
 %changelog
+* Fri Oct 16 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.0-alt1
+- Updated to 4.1.0.
+
 * Tue Sep 08 2026 Anton Zhukharev <ancieg@altlinux.org> 3.4.7-alt1
 - Packaged for ALT Sisyphus.
