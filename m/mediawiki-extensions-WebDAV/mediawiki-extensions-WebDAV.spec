@@ -1,26 +1,25 @@
 %define oname WebDAV
-%define major 1.15
-%define revision r37162
+%define mwversion 1.46
+%define commit 9f08d3c
+%setup_mediawiki_ext %mwversion %oname
 
 Name: mediawiki-extensions-%oname
-Version: %major.%revision
+Version: 3.1.0
 Release: alt1
 
-BuildArch: noarch
-
-Group: Networking/WWW
 Summary: WebDAV / DeltaV / Subversion interface to MediaWiki articles
-Url: http://www.mediawiki.org/wiki/Extension:%oname
+
+License: GPL-3.0-only
+Group: Networking/WWW
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.15.1-alt4
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: http://upload.wikimedia.org/ext-dist/%oname-MW%major-%revision.tar.gz
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
 Source: %oname-%version.tar
 
 %description
@@ -38,12 +37,24 @@ RFC 4918. The WebDAV versioning extension, DeltaV, is defined in RFC 3253.
 %setup -n %oname-%version
 
 %install
-mkdir -p %buildroot%_datadir/mediawiki/
-cp -a * %buildroot%_datadir/mediawiki/
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{Gruntfile.js,package.json,package-lock.json,composer.lock,vendor/bin}
+rm -rv %buildroot%mediawiki_ext_dir/vendor/sabre/*/bin
+# the entry point finds MediaWiki by the directory of the script, run it from the web root
+ln -s extensions/%oname/entrypoints/webdav.php %buildroot%_mediawikidir/webdav.php
 
-%files
-%_datadir/mediawiki/*
+%files -f %oname.files
+%_mediawikidir/webdav.php
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
+- update to REL1_46 snapshot 9f08d3c (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- new WebDAV extension on sabre/dav (extension.json format), vendor from the snapshot
+- removed vendor binaries
+- added the webdav.php entry point symlink in the MediaWiki root (the old package installed it there)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Tue Feb 02 2010 Vitaly Lipatov <lav@altlinux.ru> 1.15.r37162-alt1
 - initial build for ALT Linux Sisyphus

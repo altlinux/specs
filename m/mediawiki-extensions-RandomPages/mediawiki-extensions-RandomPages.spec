@@ -1,28 +1,27 @@
 %define oname RandomPages
-
-%define mwversion 1.35
+%define mwversion 1.46
+%define commit 73849b8
 %setup_mediawiki_ext %mwversion %oname
 
 Name: mediawiki-extensions-%oname
-Version: 0.6
+Version: 0.6.0
 Release: alt1
 
 Summary: RandomPages adds a new MediaWiki wiki parser for get random pages
 
-License: GPL v3
+License: GPL-3.0-or-later
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%oname
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-mediawiki >= 0.6
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-Requires: mediawiki-common >= %mwversion
-
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-RandomPages/archive/%MWREL.zip
-Source: %name-%version.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
+Patch: %oname-portable-random.patch
 
 %description
 RandomPages adds a new MediaWiki wiki parser tag: <randompages />
@@ -33,14 +32,23 @@ Available options:
 * levels int, levels of CSS applyed to each entry, defaluts to 5
 
 %prep
-%setup
+%setup -n %oname-%version
+%patch -p1
 
 %install
 %mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{Gruntfile.js,package.json,package-lock.json}
 
 %files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- update to REL1_46 snapshot 73849b8 (MediaWiki 1.46)
+- added patch: use random() instead of the MySQL-only rand() (sqlite, PostgreSQL)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Sat Oct 10 2020 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - new version (0.6) with rpmgs script - for 1.35
 
@@ -52,4 +60,3 @@ Available options:
 
 * Sat Jun 05 2010 Vitaly Lipatov <lav@altlinux.ru> 0.2-alt1
 - initial build for ALT Linux Sisyphus
-

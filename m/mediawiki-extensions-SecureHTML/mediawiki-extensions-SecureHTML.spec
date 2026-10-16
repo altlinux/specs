@@ -1,26 +1,25 @@
 %define oname SecureHTML
+%define mwversion 1.46
+%define commit ca352e4
+%setup_mediawiki_ext %mwversion %oname
 
 Name: mediawiki-extensions-%oname
 Version: 3.0
-Release: alt2
+Release: alt3
 
 Summary: This MediaWiki extension provides a secure way to include raw HTML code on a page
 
-License: No license specified
+License: GPL-2.0-or-later
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%oname
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.3
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-Requires: mediawiki-common >= 1.30
-
-#Requires: mediawiki-extensions-StubManager
-
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-SecureHTML/archive/v%version.tar.gz
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
 Source: %oname-%version.tar
 
 %description
@@ -33,10 +32,18 @@ but allows an editor to add a protected template on an unprotected, editable pag
 
 %install
 %mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{Gruntfile.js,package.json,package-lock.json}
 
 %files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt3
+- update to REL1_46 snapshot ca352e4 (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- switched to the extdist snapshot
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Thu Oct 31 2019 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt2
 - drop StubManager require 
 
@@ -45,4 +52,3 @@ but allows an editor to add a protected template on an unprotected, editable pag
 
 * Wed May 26 2010 Vitaly Lipatov <lav@altlinux.ru> 2.3.0.r1223-alt1
 - initial build for ALT Linux Sisyphus
-

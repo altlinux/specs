@@ -1,42 +1,49 @@
-%define ShortName DynamicPageList
+%define oname DynamicPageList
+%define mwversion 1.46
+%define commit dc16342
+%setup_mediawiki_ext %mwversion %oname
 
-%define mwversion 1.37
-%setup_mediawiki_ext %mwversion %ShortName
-
-Name: mediawiki-extensions-%ShortName
-Version: 1.37
+Name: mediawiki-extensions-%oname
+Version: 1.46
 Release: alt1
-
-BuildArch: noarch
-
-Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
-License: GPL
 
 Summary: MediaWiki extension for build a list of pages that are listed in a set of categories
 
+License: GPL-2.0-or-later
+Group: Networking/WWW
+Url: https://www.mediawiki.org/wiki/Extension:%oname
+
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+BuildArch: noarch
 
-BuildRequires(pre): rpm-build-mediawiki >= 0.6
-Requires: mediawiki-common >= %mwversion
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-intersection/archive/%MWREL.zip
-Source: %name-%version.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/intersection-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 DynamicPageList is a MediaWiki extension which allows wiki users to
 create a list of pages that are listed in a set of categories.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %install
-%mediawiki_ext_install 50 %ShortName
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,Gruntfile.js,package.json,package-lock.json}
 
-%files -f %ShortName.files
+%files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- update to REL1_46 snapshot dc16342 (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- the source is the intersection repository (DynamicPageList was renamed and archived upstream), extension and directory name stay DynamicPageList
+- version follows the MediaWiki version (extension.json says 1.7.0)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 1.37-alt1
 - new version (1.37) with rpmgs script
 - switch to MW version

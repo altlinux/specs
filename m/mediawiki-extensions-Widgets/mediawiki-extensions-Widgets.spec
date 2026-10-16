@@ -1,46 +1,51 @@
-%define ShortName Widgets
+%define oname Widgets
+%define mwversion 1.46
+%define commit e67d0bd
+%setup_mediawiki_ext %mwversion %oname
 
-Name: mediawiki-extensions-%ShortName
-Version: 1.3.0
-Release: alt1git
+Name: mediawiki-extensions-%oname
+Version: 1.7.0
+Release: alt1
 
-BuildArch: noarch
-
-Group: Networking/WWW
 Summary: Widgets extension allows adding widgets to wiki by just creating pages in Widget namespace
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
+
+License: GPL-2.0-or-later
+Group: Networking/WWW
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+BuildArch: noarch
 
-BuildRequires: rpm-build-mediawiki >= 0.2
-BuildRequires: rpm-build-intro
-Requires: mediawiki-common >= 1.31
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-Widgets/archive/refs/heads/master.zip
-Source: %name-%version.tar
-
-Source1: %name-predownloaded-production.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 Widgets extension allows adding widgets
 to wiki by just creating pages in Widget namespace.
 
 %prep
-%setup -a1
-%remove_repo_info
-rm -f compiled_templates/*.php
-rm -rf googlecode/
+%setup -n %oname-%version
 
 %install
-%mediawiki_ext_install 50 %ShortName
-subst "4i\$wgGroupPermissions['sysop']['editwidgets'] = true;" %buildroot%_mediawiki_settings_dir/50-%ShortName.php
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{Gruntfile.js,package.json,package-lock.json,composer.lock,vendor/smarty/smarty/run-tests*.sh}
+subst "4i\$wgGroupPermissions['sysop']['editwidgets'] = true;" %buildroot%_mediawiki_settings_dir/50-%oname.php
 
-%files -f %ShortName.files
+%files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
+- update to REL1_46 snapshot e67d0bd (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- vendor (smarty 4.5) comes with the snapshot: dropped the predownloaded Source1
+- removed vendor smarty test scripts
+- dropped BuildRequires: rpm-build-intro (no %%remove_repo_info: the snapshot has no repo info)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Sun Jun 27 2021 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1git
 - new version (1.3.0) with rpmgs script
 - CVE-2020-9382, CVE-2020-35625

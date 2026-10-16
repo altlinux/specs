@@ -1,30 +1,27 @@
-%define ShortName TimedMediaHandler
+%define oname TimedMediaHandler
+%define mwversion 1.46
+%define commit 632d48c
+%setup_mediawiki_ext %mwversion %oname
 
-Name: mediawiki-extensions-%ShortName
-Version: 1.36
+Name: mediawiki-extensions-%oname
+Version: 1.46
 Release: alt1
 
-Summary: Mediawiki extension for isplay audio and video files in wiki pages
+Summary: MediaWiki extension to display audio and video files in wiki pages
 
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
+Url: https://www.mediawiki.org/wiki/Extension:%oname
+
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-%setup_mediawiki_ext %version %ShortName
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
+Obsoletes: mediawiki-extensions-MwEmbedSupport < 0.3.0-alt2
 
-# Source-url: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/TimedMediaHandler/+archive/refs/heads/%MWREL.tar.gz
-Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-mediawiki >= 0.2
-BuildRequires(pre): rpm-build-intro
-
-Requires: mediawiki-common >= %mwversion
-
-AutoReq:yes,noosgi
-AutoProv:yes,noosgi
-
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 The TimedMediaHandler extension allows you to display
@@ -39,15 +36,28 @@ for WebM files, and integrates with mediaWiki's jobQueue system
 for scheduling transcoding jobs.
 
 %prep
-%setup
-%remove_repo_info
+%setup -n %oname-%version
 
 %install
-%mediawiki_ext_install 50 %ShortName
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,Gruntfile.js,package.json,package-lock.json,jsdoc.json,composer.lock}
+# no transcoding without ffmpeg configured by the administrator
+echo '$wgEnableTranscode = false;' >> %buildroot%_mediawiki_settings_dir/50-%oname.php
 
-%files -f %ShortName.files
+%files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- update to REL1_46 snapshot 632d48c (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- version follows the MediaWiki version (extension.json says 0.6.0)
+- the snapshot has vendor/getid3 (the old package had none)
+- disable transcoding in the package config ($wgEnableTranscode = false)
+- Obsoletes: mediawiki-extensions-MwEmbedSupport (merged into TimedMediaHandler)
+- dropped BuildRequires: rpm-build-intro (no %%remove_repo_info: the snapshot has no repo info)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.36-alt1
 - switch to build according to MW version
 

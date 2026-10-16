@@ -1,24 +1,26 @@
 %define oname ProofreadPage
+%define mwversion 1.46
+%define commit 7b34246
+%setup_mediawiki_ext %mwversion %oname
 
 Name: mediawiki-extensions-%oname
-Version: 1.22
+Version: 1.46
 Release: alt1
 
-BuildArch: noarch
-
-Group: Networking/WWW
 Summary: The Proofread Page extension can render scanned images
-Url: http://www.mediawiki.org/wiki/Extension:%oname
+
+License: GPL-2.0-or-later
+Group: Networking/WWW
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPL
+BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.22
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-ProofreadPage/legacy.tar.gz/REL1_22
-Source: %name-%version.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 The Proofread Page extension can render a book either as a column
@@ -30,14 +32,22 @@ data. Since the pages are not in the main namespace, they are not included
 in the statistical count of text units.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %install
 %mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,Gruntfile.js,package.json,package-lock.json,composer.lock}
 
 %files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- update to REL1_46 snapshot 7b34246 (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- version follows the MediaWiki version (extension.json has no version)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Fri Feb 07 2014 Vitaly Lipatov <lav@altlinux.ru> 1.22-alt1
 - new version (1.22) with rpmgs script
 

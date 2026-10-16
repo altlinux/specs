@@ -1,31 +1,30 @@
-%define ShortName Collection
-%define mwversion 1.40
-%setup_mediawiki_ext %mwversion %ShortName
-%define commit d3c0c1b
+%define oname Collection
+%define mwversion 1.46
+%define commit 7b9996d
 %define defphp php%php_defver
+%setup_mediawiki_ext %mwversion %oname
 
-Name: mediawiki-extensions-%ShortName
-Version: %mwversion
-Release: alt2.%commit
+Name: mediawiki-extensions-%oname
+Version: 1.46
+Release: alt1
 
-Group: Networking/WWW
 Summary: Collects a number of pages. Collections can be edited, persisted and optionally retrieved as PDF, ODF or DocBook (XML)
-Url: http://www.mediawiki.org/wiki/Extension:Collection
+
+License: GPL-2.0-or-later
+Group: Networking/WWW
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPLv2
-
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-mediawiki >= 0.2
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 BuildRequires(pre): rpm-build-php
-Requires: mediawiki-common >= 1.22
 
 Requires: %defphp-curl
 
-# Source-url: https://extdist.wmflabs.org/dist/extensions/%ShortName-%MWREL-%commit.tar.gz
-Source: %name-%version.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 This extension allows a user to organize personal selections of pages in a collection. Collections can be
@@ -37,14 +36,23 @@ This extension allows a user to organize personal selections of pages in a colle
 * ordered as a printed book at http://pediapress.com/
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %install
-%mediawiki_ext_install 50 %ShortName
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,Gruntfile.js,package.json,package-lock.json,composer.lock}
 
-%files -f %ShortName.files
+%files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- update to REL1_46 snapshot 7b9996d (MediaWiki 1.46) (closes: #60922)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- version follows the MediaWiki version (extension.json says 1.8.0)
+- release without the commit (the commit is only in the Source-url and here)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Thu Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt2.d3c0c1b
 - use php_defver macro instead of hardcoded php8.1
 

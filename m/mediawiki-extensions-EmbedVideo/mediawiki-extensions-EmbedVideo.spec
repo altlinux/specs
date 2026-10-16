@@ -1,22 +1,25 @@
-%define ShortName EmbedVideo
+%define oname EmbedVideo
+%define mwversion 1.46
+%setup_mediawiki_ext %mwversion %oname
 
-Name: mediawiki-extensions-%ShortName
-Version: 3.0.8
+Name: mediawiki-extensions-%oname
+Version: 4.2.0
 Release: alt1
 
 Summary: MediaWiki extension which adds a parser function called #ev for embedding video clips
 
+License: MIT
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%ShortName
-License: GPLv2
+Url: https://www.mediawiki.org/wiki/Extension:EmbedVideo
 
-# Source-url: https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/archive/refs/tags/v%version.tar.gz
-Source: %name-%version.tar
+Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-mediawiki >= 0.2
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
+# Source-url: https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/archive/refs/tags/v%version.tar.gz
+Source: %oname-%version.tar
 
 %description
 The EmbedVideo Extension is a MediaWiki extension which adds a parser function
@@ -24,14 +27,21 @@ called #ev for embedding video clips from over 22 popular video sharing services
 in multiple languages and countries.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %install
-%mediawiki_ext_install 50 %ShortName
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,package.json,package-lock.json}
 
-%files -f %ShortName.files
+%files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version 4.2.0 (StarCitizenWiki fork, requires MediaWiki 1.43+)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Sun Jul 24 2022 Vitaly Lipatov <lav@altlinux.ru> 3.0.8-alt1
 - new version 3.0.8 (with rpmrb script)
 

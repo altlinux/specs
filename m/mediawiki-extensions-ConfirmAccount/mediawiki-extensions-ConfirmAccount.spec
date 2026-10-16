@@ -1,27 +1,26 @@
 %define oname ConfirmAccount
-%define mwversion 1.39
-%define revision 596e436
+%define mwversion 1.46
+%define commit f358585
 %setup_mediawiki_ext %mwversion %oname
 
-Name: mediawiki-extensions-ConfirmAccount
-Version: 1.39
-Release: alt1.%revision
+Name: mediawiki-extensions-%oname
+Version: 1.46
+Release: alt1
 
 Summary: This extension disables direct account creation and requires submission and approval.
 
-License: GPL
+License: GPL-2.0-or-later
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:ConfirmAccount
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-mediawiki >= 0.6
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
-#Source-url: https://github.com/wikimedia/mediawiki-extensions-ConfirmAccount/archive/refs/heads/master.zip
-# Source-url: https://extdist.wmflabs.org/dist/extensions/ConfirmAccount-%MWREL-%revision.tar.gz
-Source: %name-%version.tar
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 The ConfirmAccount extension disables direct account creation
@@ -30,14 +29,22 @@ Account creations can be enabled through configuring user rights,
 such as if you wanted Sysops/Bureaucrats to be able to directly make them.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %install
 %mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{Gruntfile.js,package.json,package-lock.json}
 
 %files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
+- update to REL1_46 snapshot f358585 (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- version follows the MediaWiki version (extension.json has no version)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39-alt1.596e436
 - new version (1.39) with rpmgs script
 
@@ -68,4 +75,3 @@ such as if you wanted Sysops/Bureaucrats to be able to directly make them.
 
 * Sun Aug 15 2010 Vitaly Lipatov <lav@altlinux.ru> 1.16.r62787-alt1
 - new version (1.16.r62787) import in git
-

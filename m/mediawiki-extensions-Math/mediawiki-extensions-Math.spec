@@ -1,56 +1,54 @@
-%define ShortName Math
-%define mwversion 1.40
-%setup_mediawiki_ext %mwversion %ShortName
-%define commit 4cf19b0
+%define oname Math
+%define mwversion 1.46
+%define commit 1cbf35f
 %define defphp php%php_defver
+%setup_mediawiki_ext %mwversion %oname
 
-Name: mediawiki-extensions-%ShortName
-Version: 3.0.0.%mwversion
-Release: alt2.%commit
+Name: mediawiki-extensions-%oname
+Version: 3.0.0.1.46
+Release: alt1
 
 Summary: Math extension provides support for rendering mathematical formulas on-wiki
 
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:Math
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://extdist.wmflabs.org/dist/extensions/Math-%MWREL-%commit.tar.gz
-Source: %name-%version.tar
-
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-mediawiki >= 0.6
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 BuildRequires(pre): rpm-build-php
 
-# for default math rendering service
 Requires: %defphp-curl
 
-Requires: mediawiki >= %mwversion
+# Source-url: https://extdist.wmflabs.org/dist/extensions/%oname-%MWREL-%commit.tar.gz
+Source: %oname-%version.tar
 
 %description
 Math extension provides support for rendering mathematical formulas
 on-wiki via texvc.
 
 %prep
-%setup
-
-%build
+%setup -n %oname-%version
 
 %install
-# remove build files
-#rm -v $(cat .gitignore | grep -v "^#.*")
-
-%mediawiki_ext_install 50 %ShortName
-
-rm -rv %buildroot%mediawiki_ext_dir/{tests,mathoid,modules/ve-math/tools}
+%mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,mathoid,modules/ve-math/tools,Gruntfile.js,package.json,package-lock.json,composer.lock}
 # disable extra reqs
 rm -v %buildroot%mediawiki_ext_dir/maintenance/{buildPHPparser.js,downloadMoreTexVCtests.sh}
 
-%files -f %ShortName.files
+%files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.46-alt1
+- update to REL1_46 snapshot 1cbf35f (MediaWiki 1.46)
+- dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
+- dropped Requires: mediawiki (it pulls apache and mysql)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+
 * Thu Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.40-alt2.4cf19b0
 - use php_defver macro instead of hardcoded php8.1
 
@@ -73,4 +71,3 @@ rm -v %buildroot%mediawiki_ext_dir/maintenance/{buildPHPparser.js,downloadMoreTe
 
 * Sat Oct 06 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.r22a09c87d3895-alt1
 - initial build for ALT Linux Sisyphus
-

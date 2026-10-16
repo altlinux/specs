@@ -4,7 +4,7 @@
 
 Name: mediawiki
 Version: %major.2
-Release: alt2
+Release: alt3
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -192,6 +192,16 @@ Obsoletes: mediawiki-extensions-Thanks
 # since 1.46
 Provides: mediawiki-extensions-CheckUser
 Obsoletes: mediawiki-extensions-CheckUser
+# dead extensions removed from Sisyphus: an installed one is enabled (LocalSettings.d)
+# and breaks MediaWiki 1.46, so remove it on upgrade
+Obsoletes: mediawiki-extensions-Dia <= 1.11-alt2
+Obsoletes: mediawiki-extensions-DoubleWiki <= 1.23.wmf22-alt1
+Obsoletes: mediawiki-extensions-FileSync <= 0.0.2-alt1
+Obsoletes: mediawiki-extensions-FreeMind <= 0.0.1-alt1
+Obsoletes: mediawiki-extensions-MultiCategorySearch <= 1.65-alt1
+Obsoletes: mediawiki-extensions-SpecialNamespaces <= 1.0gerrit-alt1
+Obsoletes: mediawiki-extensions-Validator <= 1.0-alt1
+Obsoletes: mediawiki-extensions-WebStore <= 1.15.r48763-alt1
 Provides: mediawiki-extensions-TemplateStyles
 
 %description -n %name-common
@@ -515,6 +525,11 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt3
+- mediawiki-common: obsolete dead extensions removed from Sisyphus (Dia, DoubleWiki,
+  FileSync, FreeMind, MultiCategorySearch, SpecialNamespaces, Validator, WebStore):
+  left installed, they break MediaWiki 1.46
+
 * Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt2
 - mediawiki-common: provide and obsolete bundled CheckUser extension (closes: #60866)
 
