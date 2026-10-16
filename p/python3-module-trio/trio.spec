@@ -1,14 +1,15 @@
+%define _unpackaged_files_terminate_build 1
 %define pypi_name trio
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.33.0
-Release: alt2
+Version: 0.34.0
+Release: alt1
 Summary: Trio - Pythonic async I/O for humans and snake people
 License: MIT or Apache-2.0
 Group: Development/Python3
-URL: https://pypi.org/project/trio
+Url: https://pypi.org/project/trio
 VCS: https://github.com/python-trio/trio
 BuildArch: noarch
 Source: %name-%version.tar
@@ -19,17 +20,14 @@ BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: /proc
+# test deps
 BuildRequires: python3-module-pytest
+# own deps
 BuildRequires: python3-module-attrs
 BuildRequires: python3-module-sniffio
 BuildRequires: python3-module-outcome
 BuildRequires: python3-module-sortedcontainers
 BuildRequires: python3-module-idna
-# these are optional
-BuildRequires: python3-module-trustme
-BuildRequires: python3-module-astor
-BuildRequires: python3-module-openssl
-BuildRequires: python3-module-isort
 %endif
 
 # Self provides
@@ -74,7 +72,6 @@ This package contains tests for %pypi_name.
     -m 'not redistributors_should_skip' \
 
 %files
-%doc README.*
 %python3_sitelibdir/%pypi_name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %exclude %python3_sitelibdir/%pypi_name/_tests
@@ -85,6 +82,9 @@ This package contains tests for %pypi_name.
 %python3_sitelibdir/%pypi_name/_core/_tests
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 0.34.0-alt1
+- 0.33.0 -> 0.34.0
+
 * Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.33.0-alt2
 - return trio.testing to base package (closes: 60346)
 
