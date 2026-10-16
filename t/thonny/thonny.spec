@@ -1,19 +1,20 @@
 Name: thonny
-Version: 3.3.14
+Version: 5.0.0
 Release: alt1
 License: MIT
 Summary: Python IDE for beginners
-Source: %name-%version.tar.gz
-Source44: %name.watch
 Group: Development/Python3
 BuildArch: noarch
-Url: https://thonny.org/
-Requires: python3-module-%name = %version-%release
-Requires: python3-module-astroid python3-module-jedi python3-module-pylint python3-module-mypy
+Url: https://github.com/thonny/thonny
 
-# Automatically added by buildreq on Fri Aug 03 2018
-# optimized out: python-base python-modules python3 python3-base python3-dev python3-module-pkg_resources sh3
-BuildRequires: python3-module-setuptools
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-uv-build
+
+Requires: python3-module-astroid python3-module-jedi python3-module-pylint python3-module-mypy
+Requires: python3-module-asttokens
 
 %description
 Thonny is a Python IDE meant for learning programming.
@@ -27,12 +28,23 @@ Thonny is a Python IDE meant for learning programming.
 
 %prep
 %setup
+# Remove vendoring libraries
+rm -rf \
+  thonny/plugins/circuitpython \
+  thonny/plugins/esp \
+  thonny/plugins/ev3 \
+  thonny/plugins/microbit \
+  thonny/plugins/micropython \
+  thonny/plugins/prime_inventor \
+  thonny/plugins/rp2040 \
+  thonny/plugins/rpi_pico \
+  thonny/vendored_libs 
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -D packaging/linux/org.thonny.Thonny.appdata.xml %buildroot%_datadir/appdata/org.thonny.Thonny.appdata.xml
 install -D packaging/linux/org.thonny.Thonny.desktop %buildroot%_desktopdir/org.thonny.Thonny.desktop
 install -D packaging/linux/thonny.1 %buildroot%_man1dir/thonny.1
@@ -43,10 +55,10 @@ done
 
 %files
 %doc licenses
-%doc *rst
+%doc *.rst
 %_bindir/*
 %_datadir/appdata/*
-%_datadir/icons/*/*/*/*
+%_iconsdir/*/*/*/*
 %_desktopdir/*
 %_man1dir/*
 
@@ -54,6 +66,13 @@ done
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Oct 16 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version (ALT #44839).
+- New URL https://github.com/thonny/thonny.
+- Built using pyproject macros.
+- Built without vendoring libraries and micropython plugins.
+- Required python3-module-asttokens (ALT #44130).
+
 * Thu Oct 21 2021 Ildar Mulyukov <ildar@altlinux.ru> 3.3.14-alt1
 - new version
 
