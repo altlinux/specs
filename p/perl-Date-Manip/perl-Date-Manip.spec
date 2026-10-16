@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators perl(File/Find/Rule.pm)
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.99
+Version: 7.00
 Release: alt1
 
 Summary: Date manipulation routines
@@ -11,6 +11,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SB/SBECK/%{dist}-%{version}.tar.gz
+Patch1: CVE-2026-60074.patch
+Patch2: CVE-2026-60075.patch
 
 %add_findprov_skiplist */Date/Manip/Offset/*.pm
 %add_findprov_skiplist */Date/Manip/TZ/*.pm
@@ -37,6 +39,8 @@ scripts for %name
 
 %prep
 %setup -q -n %{dist}-%{version}
+%patch1 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
@@ -65,6 +69,12 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 7.00-alt1
+- new version 7.00 (tzdata 2026c).
+- security fixes:
+  + CVE-2026-60074: fix parsing of non-ASCII digits in numeric date fields.
+  + CVE-2026-60075: fix quadratic regexp backtracking on long date strings.
+
 * Mon Aug 24 2026 Alexander Danilov <admsasha@altlinux.org> 6.99-alt1
 - New version 6.99 (fixes: CVE-2026-60075).
 
