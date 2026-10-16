@@ -31,7 +31,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        155.0.8059.79
+Version:        155.0.8059.84
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -742,6 +742,20 @@ cp -av chromium-gost/extra/extensions %buildroot%_libdir/%name/default_apps
 %_altdir/%name
 
 %changelog
+* Fri Oct 16 2026 Andrew A. Vasilyev <andy@altlinux.org> 155.0.8059.84-alt1
+- New version (155.0.8059.84).
+- Fixes:
+  + CVE-2026-110922: Use after free in Prerender
+  + CVE-2026-110913: Memory corruption in DOM
+  + CVE-2026-110919: Use after free in V8
+  + CVE-2026-110918: Memory corruption in Core
+  + CVE-2026-110917: Memory corruption in SVG
+  + CVE-2026-110921: Use after free in V8
+  + CVE-2026-110920: Memory corruption in V8
+  + CVE-2026-110916: Improper input validation in Desktop
+  + CVE-2026-110915: Use after free in Compositing
+  + CVE-2026-110914: Memory corruption in Workers
+
 * Wed Oct 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 155.0.8059.79-alt1
 - New version (155.0.8059.79).
 - Fixes:
