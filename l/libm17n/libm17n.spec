@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname m17n-lib
+
 Name: libm17n
-Version: 1.8.6
-Release: alt2
+Version: 1.8.7
+Release: alt1
 
 Summary: Multilingual text processing library
 
@@ -83,6 +85,9 @@ Libraries/include files for development with %name.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Oct 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.7-alt1
+- 1.8.6 -> 1.8.7
+
 * Mon Oct 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.6-alt2
 - fixed FTBFS
 
