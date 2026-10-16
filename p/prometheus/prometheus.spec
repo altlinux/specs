@@ -2,7 +2,7 @@
 %def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 3.12.0
+Version: 3.15.0
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -147,6 +147,9 @@ done
 %dir %attr(0750, %name, %name) %_localstatedir/%name
 
 %changelog
+* Fri Oct 16 2026 Artyom Sinyugin <writers@altlinux.org> 3.15.0-alt1
+- updated from 3.12.0 to 3.15.0
+
 * Mon Jun 25 2026 Artyom Sinyugin <writers@altlinux.org> 3.12.0-alt1
 - New version 3.12.0.
 - Restrict default web listener to localhost.

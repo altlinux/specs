@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
 
@@ -85,6 +85,9 @@ export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
 %config(noreplace) %attr(0640,root,prometheus) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Oct 16 2026 Artyom Sinyugin <writers@altlinux.org> 1.12.1-alt1
+- updated from 1.12.0 to 1.12.1
+
 * Mon Jul 13 2026 Artyom Sinyugin <writers@altlinux.org> 1.12.0-alt1
 - updated from 1.11.1 to 1.12.0
 

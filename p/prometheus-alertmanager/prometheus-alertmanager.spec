@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.33.1
+Version: 0.34.1
 Release: alt1
 Summary: Prometheus Alertmanager
 
@@ -91,6 +91,9 @@ done
 %dir %attr(0750, prometheus, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Fri Oct 16 2026 Artyom Sinyugin <writers@altlinux.org> 0.34.1-alt1
+- updated from 0.33.1 to 0.34.1
+
 * Thu Jul 09 2026 Artyom Sinyugin <writers@altlinux.org> 0.33.1-alt1
 - updated from 0.33.0 to 0.33.1
 
