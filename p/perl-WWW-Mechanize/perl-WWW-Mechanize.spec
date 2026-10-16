@@ -4,7 +4,7 @@ BuildRequires: perl(Encode/JP.pm) perl(HTTP/Cookies.pm) perl(Test/Memory/Cycle.p
 # END SourceDeps(oneline)
 %define dist WWW-Mechanize
 Name: perl-%dist
-Version: 2.19
+Version: 2.22
 Release: alt1
 
 Summary: Handy web browsing in a Perl object
@@ -48,6 +48,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.22-alt1
+- new version 2.22
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 2.19-alt1
 - automated CPAN update
 

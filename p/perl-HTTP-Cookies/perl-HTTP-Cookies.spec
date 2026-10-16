@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Cookies
 Name: perl-%dist
-Version: 6.11
+Version: 6.12
 Release: alt1
 
 Summary: HTTP cookie jars
@@ -40,6 +40,9 @@ knows about.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.12-alt1
+- new version 6.12
+
 * Fri Dec 08 2023 Igor Vlasenko <viy@altlinux.org> 6.11-alt1
 - automated CPAN update
 

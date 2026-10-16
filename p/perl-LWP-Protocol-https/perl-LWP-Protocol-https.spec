@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist LWP-Protocol-https
 Name: perl-%dist
-Version: 6.14
+Version: 6.17
 Release: alt1
 
 Summary: Provide https support for LWP::UserAgent
@@ -44,6 +44,9 @@ to access sites using HTTP over SSL/TLS.
 %perl_vendor_privlib/LWP
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.17-alt1
+- new version 6.17
+
 * Tue Mar 19 2024 Igor Vlasenko <viy@altlinux.org> 6.14-alt1
 - automated CPAN update
 
