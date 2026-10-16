@@ -1,19 +1,33 @@
 Name: rpm-build-mediawiki
-Version: 0.6
+Version: 0.7
 Release: alt1
 
-Summary: RPM helper scripts for packaging mediawiki extensions
+Summary: RPM build environment for MediaWiki extensions
 License: GPL
 Group: Development/Other
 
-URL: http://www.altlinux.org/MediaWiki_Policy
+URL: https://www.altlinux.org/MediaWiki_Policy
 Source: %name-%version.tar
 
 BuildArch: noarch
 
+Requires: rpm-macros-mediawiki = %EVR
+
 %description
-RPM helper scripts for package mediawiki extensions.
-It introduced mediawiki_ext_install macro.
+RPM build environment for MediaWiki extensions packages:
+pulls in rpm-macros-mediawiki with the mediawiki_ext_install
+and setup_mediawiki_ext macros.
+
+See %url for detailed mediawiki extension packaging policy.
+
+%package -n rpm-macros-mediawiki
+Summary: RPM macros for packaging MediaWiki extensions
+Group: Development/Other
+
+%description -n rpm-macros-mediawiki
+RPM macros for MediaWiki extensions packages: mediawiki_ext_install,
+setup_mediawiki_ext, set_required_mediawiki.
+Use it in BuildRequires(pre) of an extension spec.
 
 See %url for detailed mediawiki extension packaging policy.
 
@@ -25,9 +39,17 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/mediawiki
 
 %files
 %doc EXAMPLE.ALT
+
+%files -n rpm-macros-mediawiki
 %_rpmmacrosdir/mediawiki
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
+- move the macros to rpm-macros-mediawiki subpackage (RPM Macros Packaging Policy),
+  rpm-build-mediawiki requires it
+- update EXAMPLE.ALT to the current extension spec template
+- URL: use https
+
 * Tue Jul 31 2018 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - support mediawiki 1.24 or newer
 - add setup_mediawiki_ext, mediawikiext_dir macros

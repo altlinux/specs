@@ -1,29 +1,27 @@
 %define oname UserMerge
-
-%define mwversion 1.22
-# convert version for Source URL (set before Summary:)
-%define REL %(echo "REL%mwversion" | sed -e "s|\\.|_|g")
+%define mwversion 1.46
+%setup_mediawiki_ext %mwversion %oname
 
 Name: mediawiki-extensions-%oname
-Version: 1.8.1
-Release: alt2
+Version: 1.10.2
+Release: alt1
 Serial: 1
 
 Summary: User Merge and Delete extension allows to merge one Wiki user's account with another one
 
-License: GPL
+License: GPL-2.0-or-later
 Group: Networking/WWW
-Url: http://www.mediawiki.org/wiki/Extension:%oname
+Url: https://www.mediawiki.org/wiki/Extension:%oname
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-mediawiki >= 0.2
-Requires: mediawiki-common >= 1.22
+BuildRequires(pre): rpm-macros-mediawiki >= 0.7
 
+Requires: mediawiki >= %mwversion
 
-# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-UserMerge/legacy.tar.gz/%REL
+# Source-url: https://codeload.github.com/wikimedia/mediawiki-extensions-%oname/tar.gz/refs/heads/%MWREL
 Source: %oname-%version.tar
 
 %description
@@ -39,10 +37,18 @@ user_id 0 and ask you to confirm merge to Anonymous.
 
 %install
 %mediawiki_ext_install 50 %oname
+# remove development files
+rm -rv %buildroot%mediawiki_ext_dir/{tests,Gruntfile.js,package.json,package-lock.json,composer.json}
 
 %files -f %oname.files
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.10.2-alt1
+- new version 1.10.2 (REL1_46, extension.json format, MediaWiki 1.46)
+- BuildRequires(pre): rpm-macros-mediawiki (macros moved there from rpm-build-mediawiki)
+- require mediawiki >= 1.46 (as in extension.json)
+- remove development files (tests, node and composer files) from package
+
 * Sun Mar 02 2014 Vitaly Lipatov <lav@altlinux.ru> 1:1.8.1-alt2
 - cleanup spec
 - build with real last sources
