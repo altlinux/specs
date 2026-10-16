@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -34,6 +34,13 @@ install -Dm755 %name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Fri Oct 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
+- take outed a separate line in write function
+- changed export format for TG
+- the default path has been changed to $HOME/tmp/
+- the export file name has been changed. It now consists of the selected brunch and the current date. For example, p11-16-10-2026.md
+- added the ability to use a different path. For example, it would look like this: export-cybertalk p11 --toMD --enable-translate --path=/home/shad
+
 * Sat Oct 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.6.2-alt1
 - 0.6.1 -> 0.6.2
 
