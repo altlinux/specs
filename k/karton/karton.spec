@@ -2,7 +2,7 @@
 %define oname org.kde.karton
 
 Name: karton
-Version: 20260804
+Version: 20260905
 Release: alt1
 
 Summary: A libvirt-based Virtual Machine Manager for KDE
@@ -10,10 +10,12 @@ Summary: A libvirt-based Virtual Machine Manager for KDE
 License: GPL-3.0-or-later and CC0-1.0 and BSD-2-Clause and CC-BY-SA-4.0 and BSD-3-Clause and GPL-2.0-or-later
 Group: Emulators
 
-Url: https://invent.kde.org/kenoi/karton
-Vcs: https://invent.kde.org/kenoi/karton
+Url: https://invent.kde.org/system/karton
+Vcs: https://invent.kde.org/system/karton
 
 Source: %name-%version.tar
+
+Patch: karton-alt-fixes.patch
 
 Requires: libvirt-daemon-driver-qemu 
 Requires: qemu
@@ -44,6 +46,7 @@ BuildRequires: kf6-kirigami-addons-devel
 
 %prep
 %setup
+%patch -p1
 
 %build
 %K6cmake
@@ -60,6 +63,11 @@ BuildRequires: kf6-kirigami-addons-devel
 %doc *.md LICENSES
 
 %changelog
+* Fri Oct 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260905-alt1
+- updated to git.08e13cf129
+- changed URL && Vcs
+- fixed: Karton process does not complete (thnx rider@) (ALT #56270)
+
 * Tue Aug 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260804-alt1
 - updated to git.bd0e933af4
 
