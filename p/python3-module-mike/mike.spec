@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.2.0
-Release: alt1
+Release: alt2
 Summary: Deploy multiple versions of your MkDocs
 License: MIT
 Group: Development/Python3
@@ -15,6 +15,7 @@ Vcs: https://github.com/jimporter/mike
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: %name-%version-alt.patch
 # manually manage runtime dependencies with metadata
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -33,6 +34,7 @@ to creating and executing
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
@@ -51,6 +53,9 @@ to creating and executing
 %_bindir/mike
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 2.2.0-alt2
+- Replaced verspec with inversion.
+
 * Tue Apr 14 2026 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.4 -> 2.2.0.
 
