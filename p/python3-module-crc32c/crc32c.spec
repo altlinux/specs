@@ -9,7 +9,7 @@
 %none_python3_modules_rename
 
 Name: python3-module-%pypi_name
-Version: 2.9
+Version: 2.9.post0
 Release: alt1
 Summary: Exposes the Intel SSE4.2 CRC32C instruction
 License: LGPLv2.1
@@ -57,6 +57,9 @@ instruction set of Intel CPUs.
 %exclude %python3_sitelibdir/%mod_name/ext/*.c
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 2.9.post0-alt1
+- 2.9 -> 2.9.post0
+
 * Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 2.9-alt1
 - 2.8 -> 2.9
 
