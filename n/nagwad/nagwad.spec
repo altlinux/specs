@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.12
+Version:  0.11.13
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -270,6 +270,10 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Fri Oct 16 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.13-alt1
+- Version 0.11.13.
+- Make 'avc' check available with Nagios (Fixes: OVE-20261016-0001).
+
 * Fri Oct 16 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.12-alt1
 - Version 0.11.12.
 - Fix: Install avc.regexp to /etc/nagwad/.
