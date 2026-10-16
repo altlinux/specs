@@ -1,10 +1,10 @@
 %define module_name	ipt_netflow
 %define module_version	2.8.0
 
-%define module_release alt1
+%define module_release alt2
 
 %define flavour		6.18
-%define karch %ix86 x86_64 aarch64 riscv64 loongarch64
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.18
 
@@ -16,11 +16,12 @@ Summary: Netflow iptables module for Linux kernel
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
-License: GPL
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
+Patch0: ipt_netflow-Fix-for-6.18.57.patch
 ExclusiveOS: Linux
 URL: https://github.com/nuclearcat/ipt-netflow
 BuildRequires(pre): rpm-build-kernel
@@ -44,6 +45,8 @@ This is netfilter/iptables module adding support for NETFLOW target.
 rm -rf %module_name-%{module_version}*
 tar xf %kernel_src/%module_name-%module_version.tar.*
 %setup -D -T -n %module_name-%module_version
+
+%patch0 -p1
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -70,6 +73,9 @@ install ipt_NETFLOW.ko %buildroot/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct 16 2026 Alexei Takaseev <taf@altlinux.org> 2.8.0-alt2
+- Fix FTBS with kernel 6.18.57
 
 * Thu Jul 09 2026 Alexei Takaseev <taf@altlinux.org> 2.8.0-alt1
 - v2.8.0
