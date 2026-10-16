@@ -7,7 +7,7 @@
 %endif
 
 Name: libayatana-appindicator
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Ayatana application indicators library
@@ -29,7 +29,6 @@ BuildRequires(pre): rpm-build-gir
 BuildRequires: cmake
 BuildRequires: gtk-doc
 
-BuildRequires: libayatana-indicator3-devel
 BuildRequires: libdbusmenu-gtk3-devel
 BuildRequires: libgtk+3-gir-devel
 
@@ -165,6 +164,12 @@ for %{name}3.
 %_datadir/gtk-doc/html/%{name}3/
 
 %changelog
+* Fri Oct 16 2026 Nazarov Denis <nenderus@altlinux.org> 0.6.1-alt1
+- New version 0.6.1.
+- Fall back to tray icon when StatusNotifierHost is not available.
+- indicator-desktop-shortcuts is vendorized from libayatana-indicator
+  project, drop libayatana-indicator3-devel BR.
+
 * Sun Sep 20 2026 Nazarov Denis <nenderus@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 - Add gtk-doc documentation subpackage.
