@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: The little ASGI framework that shines
 License: BSD-3-Clause
@@ -28,6 +28,8 @@ BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-typing-extensions
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-zstandard
+# for Python < 3.14
+BuildRequires: python3-module-httpx2+zstd
 %pyproject_builddeps_metadata_extra full
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -75,6 +77,9 @@ It is production-ready, and gives you the following:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
+- NMU: added missing tests dependency on httpx2+zstd (Python < 3.14).
+
 * Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.7.0-alt1
 - Updated to 1.7.0.
 
