@@ -17,8 +17,8 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%mod_name
-Version: 2.8.0
-Release: alt2
+Version: 2.9.0
+Release: alt1
 Epoch: 1
 Summary: DNS toolkit
 License: ISC
@@ -84,6 +84,9 @@ direct manipulation of DNS zones, messages, names, and records.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1:2.9.0-alt1
+- 2.8.0 -> 2.9.0
+
 * Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 1:2.8.0-alt2
 - Fixed FTBFS (idna 3.20).
 
