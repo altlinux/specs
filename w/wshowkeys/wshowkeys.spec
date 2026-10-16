@@ -1,14 +1,14 @@
 Name: wshowkeys
-Version: 0.1
+Version: 1.0
 Release: alt1
 
 Summary: Displays keypresses on screen on Wayland
 License: GPL-3.0
 Group: Graphical desktop/Other
 
-Url: https://github.com/ammgws/wshowkeys
+Url: https://git.sr.ht/~sircmpwn/wshowkeys
 
-# Source-url: https://github.com/ammgws/wshowkeys/archive/refs/tags/%version.tar.gz
+# Source-url: https://git.sr.ht/~sircmpwn/wshowkeys/archive/%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
@@ -46,5 +46,9 @@ permissions after startup.
 %attr(4711,root,root) %_bindir/%name
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- new version 1.0
+- switch to the maintained upstream URL (git.sr.ht/~sircmpwn, as in Debian)
+
 * Tue Jan 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus
