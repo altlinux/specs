@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 1.3.1
+Version: 3.0.0
 Release: alt1
 Summary: Decorators to deprecate old python classes, functions or methods
 License: MIT
@@ -22,8 +22,8 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%add_pyproject_deps_check_filter 'bump2version$'
-%pyproject_builddeps_metadata_extra dev
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -35,6 +35,9 @@ methods.
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup dev
+%endif
 
 %build
 %pyproject_build
@@ -46,11 +49,13 @@ methods.
 %pyproject_run_pytest -ra tests
 
 %files
-%doc README.md CHANGELOG.rst
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 15 2026 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 1.3.1 -> 3.0.0
+
 * Tue Dec 09 2025 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.2.18 -> 1.3.1.
 
