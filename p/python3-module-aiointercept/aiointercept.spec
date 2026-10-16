@@ -1,5 +1,5 @@
 Name: python3-module-aiointercept
-Version: 0.1.10
+Version: 1.0.0
 Release: alt1
 
 Summary: Mock aiohttp HTTP requests by routing them through a real aiohttp.web
@@ -39,13 +39,21 @@ export PBR_VERSION=%version
 
 %check
 # some are online
-%pyproject_run_pytest -m "not network" -o=addopts= tests
+# [localhost-localhost.] needs DNS resolution of the FQDN "localhost." - no resolver in the chroot
+%pyproject_run_pytest -m "not network" -o=addopts= \
+	--deselect "tests/test_aiointercept.py::test_passthrough_host_is_allowed[localhost-localhost.]" tests
 
 %files
 %python3_sitelibdir/aiointercept
 %python3_sitelibdir/aiointercept-%version.dist-info
 
 %changelog
+* Thu Oct 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
+- 1.0.0 released
+
+* Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.12-alt1
+- 0.1.12 released
+
 * Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.1.10-alt1
 - 0.1.10 released
 
