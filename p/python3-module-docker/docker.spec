@@ -1,30 +1,40 @@
-%define oname docker
+%define _unpackaged_files_terminate_build 1
+%define pypi_name docker
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
-Version: 7.1.0
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 7.2.0
 Release: alt1
 
-Summary: Python client for Docker.
+Summary: Python client for Docker
 
 License: %asl
 Group: Development/Python3
-Url: https://github.com/docker/docker-py
-
-Source: %oname-%version.tar
+Url: https://pypi.org/project/docker
+Vcs: https://github.com/docker/docker-py
 BuildArch: noarch
-
+Source: %name-%version.tar
+Source1: %pyproject_deps_config_name
+AutoReq: yes, nopython3
+%pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-pip
-BuildRequires: python3-module-setuptools python3-module-setuptools_scm
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-hatchling python3-module-hatch-vcs
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%if_with check
+%pyproject_builddeps_metadata_extra ssh
+%pyproject_builddeps_metadata_extra dev
+%endif
 
 %description
 An API client for docker written in Python
 
 %prep
-%setup -n %oname-%version
+%setup
+%pyproject_scm_init
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -32,17 +42,18 @@ An API client for docker written in Python
 %install
 %pyproject_install
 
-%filter_from_requires /python3[(]six.moves[)]/d
+%check
+# .github/workflows/ci.yml
+%pyproject_run_pytest -vra tests/unit
 
 %files
-%doc LICENSE README.md
-# Exclude Windows specific stuff
-%exclude %python3_sitelibdir/%oname/transport/npipesocket.py
-%exclude %python3_sitelibdir/%oname/transport/npipeconn.py
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-*.dist-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 7.2.0-alt1
+- 7.1.0 -> 7.2.0
+
 * Thu May 30 2024 Vladimir Didenko <cow@altlinux.ru> 7.1.0-alt1
 - 7.1.0
 
