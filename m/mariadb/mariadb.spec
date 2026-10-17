@@ -50,13 +50,13 @@
 %def_with cracklib
 %def_with jemalloc
 
-%ifnarch %ix86
+%ifnarch %ix86 %e2k
 %def_with duckdb
 %endif
 
 Name: mariadb
 Version: 12.3.3
-Release: alt2
+Release: alt3
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -157,6 +157,9 @@ BuildRequires: libnuma-devel
 %{?_with_cracklib:BuildRequires: cracklib-devel cracklib-words}
 %{?_with_sphinx:BuildRequires: sphinx libsphinxclient-devel}
 %{?_with_cassandra:BuildRequires: cassandra thrift-devel}
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 %description
 MariaDB is a community developed branch of MySQL - a multi-user, multi-threaded
@@ -456,13 +459,10 @@ patch -p1 -d ./storage/duckdb/third_parties/duckdb < ./storage/duckdb/patches/du
 
 %ifarch %e2k
 %patch2000 -p1
-sed -i 's|-fno-sanitize=shift|""|' \
-  plugin/auth_ed25519/CMakeLists.txt \
-  libmariadb/plugins/auth/CMakeLists.txt
-sed -i 's|WSREP_NORETURN|__attribute__((noreturn))|' \
-  wsrep-lib/include/wsrep/thread_service.hpp
-sed -i 's|xmlGetLastError|(xmlErrorPtr)&|' \
-	storage/connect/libdoc.cpp
+# Error evaluating generator expression: $<:-Wno-missing-declarations>
+sed -i 's/$<${have_C__W.*> \\/\\/' storage/connect/CMakeLists.txt
+# undefined reference to `llvm.readcyclecounter'
+sed -i 's/__has_builtin(__builtin_readcyclecounter)/0/' include/my_rdtsc.h
 %endif
 
 # Replace that horror.
@@ -496,6 +496,10 @@ export CFLAGS CXXFLAGS
     -DINSTALL_LAYOUT=RPM \
     -DRPM="fedora29" \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+%ifarch %e2k
+    -DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+    -DCMAKE_C{,XX}_FLAGS_RELWITHDEBINFO="-O2 -DNDEBUG" \
+%endif
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
     -DCMAKE_C_FLAGS:STRING="$CFLAGS" \
@@ -1144,6 +1148,9 @@ fi
 %endif
 
 %changelog
+* Fri Oct 16 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.3.3-alt3
+- e2k build fix
+
 * Tue Oct 13 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt2
 - Fix issue #257749
 - Cleanup garbage requires
