@@ -7,14 +7,14 @@
 %define app_id org.guayadeque.Guayadeque
 
 Name: guayadeque
-Version: 0.7.7
+Version: 1.0.2
 Release: alt1
 Summary: Music player
 License: GPL-3.0-or-later and BSD and LGPL-2.0-or-later and wxWidgets
 URL: https://guayadeque.org/
 VCS: https://codeberg.org/thothix/guayadeque.git
 Group: Sound
-# Source-url: https://codeberg.org/thothix/guayadeque/archive/refs/tags/v%version.tar.gz
+
 Source: %name-%version.tar
 Patch: xdg-open.patch
 
@@ -74,6 +74,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%app_id.metai
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Sat Oct 17 2026 Anton Midyukov <antohami@altlinux.org> 1.0.2-alt1
+- New version 1.0.2.
+
 * Sun Sep 27 2026 Anton Midyukov <antohami@altlinux.org> 0.7.7-alt1
 - New version 0.7.7.
 
