@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.4
+Version: 6.5
 Release: alt1
 
 Summary: Metaclass for subclassable extension types
@@ -75,6 +75,9 @@ Tests for ExtensionClass, ComputedAttribute and MethodObject.
 
 
 %changelog
+* Sat Oct 17 2026 Anton Vyatkin <toni@altlinux.org> 6.5-alt1
+- New version 6.5.
+
 * Mon Aug 24 2026 Anton Vyatkin <toni@altlinux.org> 6.4-alt1
 - New version 6.4.
 
