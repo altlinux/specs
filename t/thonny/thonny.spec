@@ -1,6 +1,6 @@
 Name: thonny
 Version: 5.0.0
-Release: alt1
+Release: alt2
 License: MIT
 Summary: Python IDE for beginners
 Group: Development/Python3
@@ -8,6 +8,7 @@ BuildArch: noarch
 Url: https://github.com/thonny/thonny
 
 Source: %name-%version.tar
+Patch0: thonny-remove-politics.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel
@@ -28,6 +29,7 @@ Thonny is a Python IDE meant for learning programming.
 
 %prep
 %setup
+%patch0 -p1
 # Remove vendoring libraries
 rm -rf \
   thonny/plugins/circuitpython \
@@ -66,6 +68,9 @@ done
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sat Oct 17 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt2
+- Removed political appeals.
+
 * Fri Oct 16 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
 - New version (ALT #44839).
 - New URL https://github.com/thonny/thonny.
