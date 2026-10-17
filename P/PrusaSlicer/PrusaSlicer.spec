@@ -5,18 +5,14 @@
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 Version: 2.9.6
-Release: alt2
+Release: alt3
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://www.prusa3d.com/prusaslicer/
 VCS: https://github.com/prusa3d/PrusaSlicer
 
-# Source-url: https://github.com/prusa3d/PrusaSlicer/archive/refs/tags/version_%version.tar.gz
 Source: %name-%version.tar
-
-ExcludeArch: %ix86
-
-Provides: prusa-slicer
+Patch: %name-%version-%release.patch
 
 Patch1: PrusaSlicer-2.9.0-pr13081-cgal6.0.patch
 Patch2: PrusaSlicer-2.9.1-pr14214-egl-support.patch
@@ -30,8 +26,13 @@ Patch30: PrusaSlicer-2.9.2-boost-1.88.patch
 Patch31: PrusaSlicer-2.9.3-boost-1.89.0-asio.patch
 Patch32: PrusaSlicer-2.9.3-boost-1.89.patch
 
+ExcludeArch: %ix86
+
+Provides: prusa-slicer
+
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-intro
+BuildRequires: dos2unix
 BuildRequires: libblosc-devel
 BuildRequires: cereal-devel
 BuildRequires: cgal-devel >= 5.6
@@ -102,10 +103,8 @@ all those based on the Marlin, Prusa, Sprinter and Repetier firmware.
 It also works with Mach3, LinuxCNC and Machinekit controllers.
 
 %prep
-%setup -n %name-%version
-sed -i 's/\r$//' src/slic3r/GUI/GCodeViewer.cpp
-sed -i 's/\r$//' src/slic3r/GUI/GLCanvas3D.cpp
-sed -i 's/\r$//' src/slic3r/GUI/Gizmos/GLGizmoBase.cpp
+%setup
+dos2unix src/slic3r/GUI/{GCodeViewer.cpp,GLCanvas3D.cpp,Gizmos/GLGizmoBase.cpp}
 %autopatch -p1
 
 # this is not prusaslicer specific, space mouse users install it themselves
@@ -177,6 +176,10 @@ popd
 %doc README.md doc/
 
 %changelog
+* Fri Oct 16 2026 Valery Zabrovsky <brow@altlinux.org> 2.9.6-alt3
+- Fix FTBFS with catch 3.16.
+- Switch to build from Gear tags.
+
 * Wed Jul 22 2026 Valery Zabrovsky <brow@altlinux.org> 2.9.6-alt2
 - Fix FTBFS with boost 1.91.0.
 - Rebuild with libcap-devel.
