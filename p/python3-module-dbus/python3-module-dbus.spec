@@ -1,5 +1,7 @@
+#https://bugzilla.altlinux.org/60500
 %define _libexecdir %_prefix/libexec
 %define modname dbus-python
+%define pypi_name dbus_python
 
 %def_enable doc
 %def_enable check
@@ -7,7 +9,7 @@
 #%%add_findreq_skiplist %_libexecdir/installed-tests/%modname/test/*.py
 
 Name: python3-module-dbus
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Python bindings for D-BUS library
@@ -15,11 +17,15 @@ License: MIT
 Group: Development/Python3
 Url: https://www.freedesktop.org/wiki/Software/DBusBindings
 
-Source: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.xz
+Vcs: https://gitlab.freedesktop.org/dbus/dbus-python
+
+Source: https://dbus.freedesktop.org/releases/%modname/%pypi_name-%version.tar.gz
 
 %define dbus_ver 1.8
 %define glib_ver 2.40
 %define python3_ver 3.7
+
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson libdbus-devel >= %dbus_ver libgio-devel >= %glib_ver
@@ -69,7 +75,7 @@ This package provides tests programs that can be used to verify
 the functionality of the installed python-dbus package.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
 %meson \
@@ -113,6 +119,9 @@ the functionality of the installed python-dbus package.
 %endif
 
 %changelog
+* Sat Oct 17 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Fri Mar 14 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
