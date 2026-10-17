@@ -1,6 +1,6 @@
 Name: xmount
-Version: 0.7.6
-Release: alt2.1
+Version: 1.3.1
+Release: alt1
 Summary: A on-the-fly convert for multiple hard disk image types
 
 Group: Archiving/Other
@@ -13,7 +13,7 @@ Patch0: xmount-suffix.patch
 Patch1: xmount-cflags.patch
 
 BuildRequires: gcc-c++
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: libewf-devel
 BuildRequires: libaff-devel
 BuildRequires: zlib-devel
@@ -60,6 +60,10 @@ chmod -x src/xmount.*
 
 
 %changelog
+* Sat Oct 17 2026 Artyom Bystrov <arbars@altlinux.org> 1.3.1-alt1
+- Update version
+- Switch ro libfuse3
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.7.6-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
