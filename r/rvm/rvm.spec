@@ -2,7 +2,7 @@
 
 Name:          rvm
 Version:       1.29.12.126
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -122,7 +122,7 @@ install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/%name.sh
 ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 %files
-%attr(755,root,root) %config(noreplace) %_sysconfdir/bashrc.d/%name.sh
+%attr(755,root,root) %_sysconfdir/bashrc.d/%name.sh
 %config(noreplace) %_sysconfdir/%name
 %_bindir/*
 %_libexecdir/%name
@@ -142,6 +142,10 @@ ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 
 %changelog
+* Sat Oct 17 2026 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.3
+- ! fixed waste messages when some disorders in rvm symlink structure were found
+- - disabled noreplace for bashrc.d script
+
 * Wed Nov 12 2025 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.2
 - + added explicit dep to /proc for %%name-devel to make ruby compilable on e2k
 
