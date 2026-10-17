@@ -3,38 +3,33 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Python/numpy interface to netCDF library (versions 3 and 4)
-License: BSD / MIT
+License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/netCDF4/
 Vcs: https://github.com/Unidata/netcdf4-python.git
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-%pyproject_runtimedeps_metadata
 
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 
-BuildRequires(pre): rpm-build-pyproject
-BuildRequires: libnetcdf-devel
-BuildRequires: zlib-devel
-BuildRequires: libjpeg-devel
-BuildRequires: libcurl-devel
-BuildRequires: libnumpy-py3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-Cython
 BuildRequires: libhdf5-devel
+BuildRequires: libnetcdf-devel
+BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-cftime
+BuildRequires: python3-module-certifi
 # For generating documentation.
 BuildRequires: python3-module-pdoc3
 
-%pyproject_builddeps_build
-
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra tests
+BuildRequires: python3-module-pytest
 BuildRequires: netcdf-tools
-BuildRequires: python3-module-numpy-testing
 %endif
 
 Conflicts: python-module-%pypi_name
@@ -83,8 +78,6 @@ This package contains documentation for %pypi_name.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
 
 %build
 %pyproject_build
@@ -112,6 +105,9 @@ popd
 %doc docs/netCDF4/index.html
 
 %changelog
+* Sat Oct 17 2026 Anton Vyatkin <toni@altlinux.org> 1.7.5-alt1
+- New version 1.7.5.
+
 * Mon Jan 12 2026 Anton Vyatkin <toni@altlinux.org> 1.7.4-alt1
 - New version 1.7.4.
 
