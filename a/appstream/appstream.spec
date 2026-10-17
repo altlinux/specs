@@ -11,18 +11,22 @@
 
 Name:    appstream
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
 License: GPL-2.0+ and LGPL-2.0+
 Group:   System/Configuration/Packaging
-Packager: Andrey Cherepanov <cas@altlinux.org>
 Url:     http://www.freedesktop.org/wiki/Distributions/AppStream/
 # VCS:   https://github.com/ximion/appstream
 Source:  appstream-%version.tar
 
+# https://bugzilla.altlinux.org/61096
+Requires: libvips-modules
+
 BuildRequires(pre): meson
+BuildRequires: rpm-build-gir
+BuildRequires: rpm-build-vala
 BuildRequires: gcc-c++
 BuildRequires: ctest
 BuildRequires: gettext
@@ -61,6 +65,7 @@ BuildRequires: libblake3-devel
 BuildRequires: bash-completion
 BuildRequires: docbook5-style-xsl
 BuildRequires: libvips-devel
+BuildRequires: vala-tools
 
 #Requires: appstream-data
 
@@ -174,7 +179,8 @@ sed -i "s|'AppStreamQt'|'AppStreamQt6'|" qt/meson.build
 %endif
 	-Dstemming=true \
 	-Dmediaworker-dir=libexecdir \
-	-Dcompose=true
+	-Dcompose=true \
+	-Dvapi=true
 %ifarch %e2k
 export LD_LIBRARY_PATH=$(pwd)/%__builddir/src
 %endif
@@ -231,6 +237,8 @@ ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 %_libdir/libappstream.so
 %_libdir/pkgconfig/appstream.pc
 %_datadir/gir-1.0/AppStream-1.0.gir
+%_vapidir/appstream.deps
+%_vapidir/appstream.vapi
 
 %files -n %libappstreamqt6
 %_libdir/libAppStreamQt6.so.*
@@ -269,6 +277,11 @@ ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Sat Oct 17 2026 Vladimir Romanov <rirusha@altlinux.org> 1.2.1-alt2
+- Added vapi build (Closes #56084).
+- Added runtume dependency on libvips-modules (Closes #61096).
+- Fixed provides generation for gir and vala.
+
 * Wed Sep 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
 - NMU: new version
 
