@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -34,6 +34,10 @@ install -Dm755 %name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Sat Oct 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
+- added a Ctrl+C execution reset
+- added visualization of exporting in silent mode
+
 * Fri Oct 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.0-alt1
 - take outed a separate line in write function
 - changed export format for TG
