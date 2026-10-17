@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname io.github.cxong.cdogs-sdl
 
 Name: cdogs-sdl
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: C-Dogs is an arcade shoot-em-up
@@ -77,6 +78,9 @@ subst 's|SoundReconfigure(s);|//SoundReconfigure(s);|' src/cdogs/sounds.c
 %_datadir/metainfo/%oname.appdata.xml
 
 %changelog
+* Sat Oct 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.0-alt1
+- 2.4.0 -> 2.5.0
+
 * Fri Jan 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.4.0-alt1
 - 2.3.2 -> 2.4.0
 - spec cleanup
