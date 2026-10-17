@@ -1,6 +1,6 @@
 Name: lightdm-webkit2-greeter
 Version: 3.5.2
-Release: alt1.3
+Release: alt1.4
 
 Summary: A modern, visually appealing greeter for LightDM
 License: GPL-3.0
@@ -24,6 +24,7 @@ Patch: lightdm-webkit2-greeter-3.4.1-makefile.patch
 Patch1: lightdm-webkit2-greeter-3.4.1-basedir.patch
 Patch2: lightdm-webkit2-greeter-3.4.1-opt.patch
 Patch3: lightdm-webkit2-greeter-3.5.1-dia.patch
+Patch4: lightdm-webkit2-greeter-3.5.2-typescript6.patch
 
 %add_python3_path   %_libdir/web-greeter
 %add_python3_req_skip gi.repository.GLib
@@ -67,6 +68,7 @@ Also, check out nody-greeter, a greeter made in Node.js with Electron! (Actually
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %__subst 's,\<lib\>,%_lib,g' Makefile
 
@@ -113,6 +115,9 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 %doc *.md
 
 %changelog
+* Sat Oct 17 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.5.2-alt1.4
+- NMU: Fix FTBFS with TS 6.0 by silencing node10 module resolution deprecation.
+
 * Thu Jul 31 2025 Aleksandr Shamaraev <shad@altlinux.org> 3.5.2-alt1.3
 - NMU: FTBFS: exclude i586 arch due to idle time limit exceeded.
 
