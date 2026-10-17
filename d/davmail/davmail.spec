@@ -3,7 +3,7 @@
 %define java_version java
 
 Name:     davmail
-Version:  7.0.0
+Version:  7.1.0
 Release:  alt1
 Summary:  POP/IMAP/SMTP/Caldav/Carddav/LDAP gateway for Microsoft Exchange
 URL:      http://davmail.sourceforge.net/
@@ -73,6 +73,9 @@ sed -i 's/\r//' releaseguide.txt
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Oct 17 2026 Andrey Cherepanov <cas@altlinux.org> 7.1.0-alt1
+- New version.
+
 * Sun Sep 20 2026 Andrey Cherepanov <cas@altlinux.org> 7.0.0-alt1
 - New version.
 
