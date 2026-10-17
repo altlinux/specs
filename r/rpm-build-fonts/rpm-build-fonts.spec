@@ -1,6 +1,6 @@
 Name: rpm-build-fonts
 Version: 0.7
-Release: alt3
+Release: alt4
 
 Summary: RPM helper scripts for building font packages
 
@@ -59,6 +59,9 @@ install -D -m755 fontconfig.prov.files %buildroot/usr/lib/rpm/fontconfig.prov.fi
 %_rpmmacrosdir/fonts
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt4
+- fontconfig.prov: restored fontlang(<lang>) provides with a direct fc-query language query (closes: #48174).
+
 * Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.7-alt3
 - egrep is obsolescent; using grep -E
 
