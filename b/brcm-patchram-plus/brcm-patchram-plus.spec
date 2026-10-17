@@ -1,6 +1,6 @@
 Name: brcm-patchram-plus
 Version: 1.1.20161117
-Release: alt1
+Release: alt2
 
 Summary: Tool to patch Broadcom Bluetooth chips.
 License: Apache-2.0
@@ -19,7 +19,7 @@ and other utility functions.
 %setup
 
 %build
-gcc -o brcm_patchram_plus brcm_patchram_plus.c
+gcc %optflags -o brcm_patchram_plus brcm_patchram_plus.c
 
 %install
 %__install -Dp -m0755 brcm_patchram_plus %buildroot%_bindir/brcm_patchram_plus
@@ -28,6 +28,10 @@ gcc -o brcm_patchram_plus brcm_patchram_plus.c
 %_bindir/brcm_patchram_plus
 
 %changelog
+* Sat Oct 17 2026 Nazarov Denis <nenderus@altlinux.org> 1.1.20161117-alt2
+- Fixed FTBFS with modern GCC (C23): fixed PFI function pointer typedef
+- Build with %%optflags
+
 * Tue Mar 18 2025 Nazarov Denis <nenderus@altlinux.org> 1.1.20161117-alt1
 - Update to 1.1 20161117
 - Build without systemd service
