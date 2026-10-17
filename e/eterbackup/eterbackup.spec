@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -48,6 +48,10 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10-alt1
+- eterpack: allow repeatable --exclude option (closes: #32816)
+- eterpack: fix packing root files with spaces and special chars in names
+
 * Mon Feb 18 2019 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt1
 - eterpack: add --rollback option
 - eterpack: improve and fix status support (add .last-updated)
