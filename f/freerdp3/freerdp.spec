@@ -11,7 +11,7 @@
 %define oname freerdp
 
 Name: freerdp%sover
-Version: 3.32.1
+Version: 3.32.2
 Release: alt1
 
 Group: Networking/Remote access
@@ -566,6 +566,24 @@ install -Dpm0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/freerdp-server
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Sat Oct 17 2026 Andrey Cherepanov <cas@altlinux.org> 3.32.2-alt1
+- New version (fixes: GHSA-4g67-jhpc-q5xp, GHSA-799q-hjgw-g55g,
+  GHSA-cg4f-57hc-v7w7, GHSA-rrp5-666j-g6gp, GHSA-wg7g-gx9g-r96c,
+  GHSA-f53w-3364-jr35, GHSA-66mr-7wc7-23vc, GHSA-hqf8-95c7-6r92,
+  GHSA-8g9g-hqqp-fw69, GHSA-jq25-3374-4262, GHSA-7qw2-8h66-pvpw,
+  GHSA-5j39-x36c-x9pm, GHSA-6p3w-fv52-cf24, GHSA-4qq4-qwxq-49m8,
+  GHSA-x7w3-32ch-x2jq, GHSA-v3q2-qjvf-7rqw, GHSA-4vh4-3pc3-32p7,
+  GHSA-x4x6-2hrm-hvq9, GHSA-8rjm-m7xg-mg6m, GHSA-xc85-4mqc-xgcx,
+  GHSA-v85m-wg84-5ffh, GHSA-6wqx-rv3q-vcxp, GHSA-fg78-v8j5-8697,
+  GHSA-983v-jp34-f3fm, GHSA-2557-79qc-6gfr, GHSA-xjhw-2r55-m95g,
+  GHSA-m59q-wm7v-mp57, GHSA-x26g-fp9v-c2pg, GHSA-c426-ppvf-jpfg,
+  GHSA-5qqp-5ffm-m3p9, GHSA-fqcj-rwww-2498, GHSA-r387-jjq3-87hv,
+  GHSA-2c9x-4gr7-hrwx, GHSA-x8vp-ff7m-294g, GHSA-3pg4-5r42-wxvj,
+  GHSA-qw7w-hhxq-763c, GHSA-w897-ffhv-5j7g, GHSA-3hf9-w6hr-hf9j,
+  GHSA-j536-qc58-pmf8, GHSA-fqw6-jf2h-6fj6, GHSA-cx9c-q4jc-wm6c,
+  GHSA-wffv-rjv2-h2x2, GHSA-jqf4-4p68-4p43, GHSA-q82v-5wjg-6h57,
+  GHSA-m7xq-5f7v-hjvw).
+
 * Fri Oct 02 2026 Andrey Cherepanov <cas@altlinux.org> 3.32.1-alt1
 - New version (fixes: GHSA-9qqc-m43j-g4r2, GHSA-3m9q-g533-rqjq,
   GHSA-262p-h989-vmpv, GHSA-5xjc-c64q-m8r6, GHSA-f3vg-h45x-6wgf,
