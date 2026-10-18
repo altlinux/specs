@@ -3,8 +3,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.2
-Release: alt1
+Version: 4.3.2
+Release: alt0.1
 
 Summary: Developer-friendly asynchrony for Django
 License: BSD-3-Clause
@@ -15,7 +15,6 @@ VCS: https://github.com/django/channels
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
-Patch: channels-4.2.2-test-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -35,7 +34,6 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 
 %prep
 %setup -n %pypi_name-%version
-%patch -p1
 
 %build
 %pyproject_build
@@ -43,8 +41,12 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 %install
 %pyproject_install
 
+# upstream installs its tests as a top-level package
+rm -rv %buildroot%python3_sitelibdir/tests
+
 %check
-%pyproject_run_pytest -v
+# selenium tests need a browser
+%pyproject_run_pytest -v --ignore=tests/sample_project/tests/test_selenium.py
 
 %files
 %doc README.*
@@ -52,6 +54,12 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.2-alt0.1
+- NMU: new version 4.3.2.
+- Dropped test-fix patch (applied upstream).
+- Skip selenium tests in %%check (need a browser).
+- Do not package top-level tests module.
+
 * Fri Aug 01 2025 Anton Vyatkin <toni@altlinux.org> 4.2.2-alt1
 - New version 4.2.2.
 
