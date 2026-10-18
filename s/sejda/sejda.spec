@@ -1,9 +1,9 @@
-%define milestone M6
+%define milestone M7
 %define upstream_version %version.%milestone
 
 Name: sejda
 Version: 6.0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: An extendible and configurable PDF manipulation layer library written in java
 
@@ -62,6 +62,9 @@ subst 's/requires com.drew.metadata;/requires metadata.extractor;/' sejda-sambox
 %doc --no-dereference LICENSE
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt0.2
+- NMU: update to 6.0.0.M7.
+
 * Wed Sep 09 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.0-alt0.1
 - NMU: update to 6.0.0.M6.
 - Fix attachment extraction path traversal and harden XML configuration parsing.

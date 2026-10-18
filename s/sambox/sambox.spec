@@ -1,9 +1,9 @@
-%define milestone M7
+%define milestone M8
 %define upstream_version %version.%milestone
 
 Name: sambox
 Version: 4.0.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: A PDFBox fork intended to be used as PDF processor for Sejda and PDFsam
 
@@ -25,6 +25,7 @@ BuildRequires: mvn(org.sejda:sejda-io)
 BuildRequires: mvn(org.bouncycastle:bcmail-jdk18on)
 BuildRequires: fontbox2
 BuildRequires: mvn(org.apache.pdfbox:xmpbox)
+BuildRequires: mvn(org.brotli:dec)
 
 %description
 An Apache PDFBox fork intended to be used as PDF processor
@@ -52,6 +53,10 @@ for Sejda and PDFsam related projects.
 %doc --no-dereference LICENSE NOTICE.txt
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt0.2
+- NMU: update to 4.0.0.M8.
+- Added BuildRequires: mvn(org.brotli:dec) (BrotliDecode filter support).
+
 * Wed Sep 09 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt0.1
 - NMU: update to 4.0.0.M7.
 

@@ -1,5 +1,5 @@
 Name: pdfsam
-Version: 6.0.5
+Version: 6.0.6
 Release: alt1
 
 Summary: PDFsam Basic - split, merge and rotate PDF documents
@@ -31,6 +31,7 @@ BuildRequires: mvn(org.sejda:sejda-core)
 BuildRequires: mvn(org.sejda:sejda-conversion)
 BuildRequires: mvn(org.sejda:sejda-sambox)
 BuildRequires: mvn(org.sejda:sejda-commons)
+BuildRequires: mvn(org.brotli:dec)
 BuildRequires: mvn(org.openjfx:javafx-base)
 BuildRequires: mvn(org.openjfx:javafx-controls)
 BuildRequires: mvn(org.openjfx:javafx-graphics)
@@ -100,6 +101,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.6-alt1
+- New version 6.0.6 (closes: #55225).
+- Added BuildRequires: mvn(org.brotli:dec) (new dependency of pdfsam-service).
+
 * Wed Sep 09 2026 Vitaly Lipatov <lav@altlinux.ru> 6.0.5-alt1
 - Update to PDFsam Basic 6.0.5 (ALT bug 56168).
 - Build with Maven and system Java libraries, Java 25 and JavaFX 25.
