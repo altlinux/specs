@@ -14,19 +14,19 @@
 %define _enable_test 1
 
 Name: perl-Tie-Filehandle-Preempt-Stdin
-Version: 0.02
-Release: alt1
+Version: 0.03
+Release: alt1.1
 
 Summary: Preempt STDIN during testing
 
 License: Artistic
 Group: Development/Perl
-Url: http://www.cpan.org
+Url: https://www.cpan.org
 
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JK/JKEENAN/Tie-Filehandle-Preempt-Stdin-0.02.tar.gz
+Source: http://www.cpan.org/authors/id/J/JK/JKEENAN/Tie-Filehandle-Preempt-Stdin-0.03.tar.gz
 
 # Automatically added by buildreq on Thu Feb 08 2007
 BuildRequires: perl-devel
@@ -62,6 +62,9 @@ filehandle STDIN; hence, the module's name.
 
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 0.03-alt1.1
+- updated to 0.03 (no functional changes upstream).
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - automated CPAN update
 
