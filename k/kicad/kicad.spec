@@ -4,8 +4,8 @@
 %define majver 9.0
 
 Name: kicad
-Version: 10.0.6
-Release: alt2
+Version: 10.0.7
+Release: alt1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -201,6 +201,9 @@ done
 %dir %_datadir/kicad/template
 
 %changelog
+* Sat Oct 17 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.7-alt1
+- New version 10.0.7.
+
 * Tue Sep 08 2026 Anton Midyukov <antohami@altlinux.org> 1:10.0.6-alt2
 - Do not use EDITOR variable (Closes: 60400).
 
