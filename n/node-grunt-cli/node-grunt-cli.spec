@@ -1,7 +1,7 @@
 %define pname grunt-cli
 
 Name: node-grunt-cli
-Version: 1.3.2
+Version: 1.5.0
 Release: alt1
 
 Summary: Grunt's command line interface
@@ -37,7 +37,11 @@ The Grunt command line interface.
 %build
 %npm_build
 npm test
-npm prune --production
+# npm prune wants network here, so remove the devDependencies by hand
+npm ls --omit=dev --all --parseable --offline | sed -n "s|^$PWD/node_modules/||p" | grep -v / | sort -u >prod.list
+ls node_modules | grep -vxFf prod.list | xargs -r -I{} rm -rv node_modules/{}
+find node_modules/.bin -xtype l -print -delete
+rm -v prod.list
 
 %install
 %npm_install
@@ -54,5 +58,8 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/node_modules/resolve/test/
 %nodejs_sitelib/%pname/
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0
+
 * Thu May 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt1
 - initial build for ALT Sisyphus
