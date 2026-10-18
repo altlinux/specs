@@ -8,7 +8,7 @@
 %define sover   7
 Name: ayatana-indicator-application
 Version: 26.6.0
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Indicator that takes StatusNotifiers and puts them in the panel
 License: GPLv3
@@ -20,46 +20,12 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: at-spi2-atk-devel
-BuildRequires: ayatana-cmake-modules
-BuildRequires: ayatana-indicator-common
-BuildRequires: bzlib-devel
-BuildRequires: cmake
-BuildRequires: intltool
-BuildRequires: libat-spi2-core-devel
-BuildRequires: libayatana-appindicator3-devel
-BuildRequires: libblkid-devel
-BuildRequires: libbrotli-devel
-BuildRequires: libdatrie-devel
-BuildRequires: libdbus-glib-devel
-BuildRequires: libdbusmenu-gtk3-devel
-BuildRequires: libepoxy-devel
-BuildRequires: libexpat-devel
-BuildRequires: libffi-devel
-BuildRequires: libfribidi-devel
-BuildRequires: libjpeg-devel
-BuildRequires: libjson-glib-devel
-BuildRequires: libmount-devel
-BuildRequires: libpcre2-devel
-BuildRequires: libpcre-devel
-BuildRequires: libpixman-devel
-BuildRequires: libselinux-devel
-BuildRequires: libsystemd-devel
-BuildRequires: libthai-devel
-BuildRequires: libtiff-devel
-BuildRequires: libuuid-devel
-BuildRequires: libwayland-cursor-devel
-BuildRequires: libwayland-egl-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libXdmcp-devel
-BuildRequires: libXi-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libxkbcommon-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libXtst-devel
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(ayatana-indicator3-0.4)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(dbusmenu-gtk3-0.4)
 BuildRequires: libayatana-appindicator-glib-devel
+BuildRequires: pkgconfig(systemd)
 
 %if_with check
 BuildRequires: ctest
@@ -110,6 +76,9 @@ find %buildroot -type f -name "*.la" -delete -print
 %_userunitdir/%name.service
 
 %changelog
+* Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt2
+- Fixed FTBFS by updating build-requires.
+
 * Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 26.6.0-alt1
 - New version 26.6.0.
 
