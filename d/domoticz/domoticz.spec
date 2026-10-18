@@ -1,6 +1,6 @@
 Name: domoticz
 Version: 2026.4
-Release: alt2
+Release: alt3
 
 Summary: Open source Home Automation System
 
@@ -185,6 +185,9 @@ usermod -a -G uucp domoticz || :
 %_unitdir/%name.service
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.4-alt3
+- Escape the server message before ShowNotify in show-ajax-errors patch (upstream PR #7155).
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.4-alt2
 - Show server error messages when adding a switch or a scene fails (HTTP 400 had no ajax error handler) (closes: #61067).
 - Remove __pycache__ and editor backup files from the package (repocop buildroot, backup-file-in-package).
