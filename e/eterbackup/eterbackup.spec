@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 1.10
+Version: 1.12
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -48,6 +48,30 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
+- eterpack: do not write metafiles to the source tree, save attrs inside followed links
+- tests: read-only source, reserved metafile names, old backups, --followlinks attributes
+- README, CLAUDE.md: describe metafiles location and drop fixed limitations
+
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
+- etertimemachine: do not sync with --inplace (it changed files of the previous snapshot)
+- etertimemachine: fix --method number
+- eterremove: --size removes the oldest files, not the newest
+- eterremove: never remove the working dir and its parents
+- eterpack: fix source path with spaces (only root files were packed)
+- eterpack: fix --password with spaces
+- eterpack: make compare work and exit with 1 if there are differences
+- eterpack: fail extract on zpaq errors and on dirs without archives
+- eterpack: fix --singlearchive with --depth 2 and more
+- eterpack: store --followlinks dirs under the link names
+- eterpack: support names started with '-'
+- eterpack: keep empty dirs above the packing depth
+- eterpack: mark removed files and dirs as removed in the backup
+- eterpack: do not run two updates of the same backup at once
+- eterattrstore: save special files in sv4cpio format (no ustar name limits)
+- rewrite tests on bats, run them in a container (make check)
+- README: describe what is used and the limitations
+
 * Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10-alt1
 - eterpack: allow repeatable --exclude option (closes: #32816)
 - eterpack: fix packing root files with spaces and special chars in names
