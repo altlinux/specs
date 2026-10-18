@@ -2,7 +2,7 @@
 %define _name org.aegisub.Aegisub
 
 Name: aegisub
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary:  Cross-platform advanced subtitle editor
@@ -79,6 +79,9 @@ rm -vr %buildroot%_datadir/man
 %doc *.md LICENCE
 
 %changelog
+* Sun Oct 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.5.1-alt1
+- 3.5.0 -> 3.5.1
+
 * Mon Oct 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 3.5.0-alt1
 - 3.4.2 -> 3.5.0
 
