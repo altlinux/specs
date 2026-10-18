@@ -3,7 +3,7 @@
 %define oname envisage
 
 Name: python3-module-envisage
-Version: 7.0.4
+Version: 8.0.1
 Release: alt1
 
 Summary: Extensible Application Framework
@@ -14,9 +14,9 @@ Url: https://docs.enthought.com/envisage/
 
 BuildArch: noarch
 
-# Source-url: %__pypi_url %oname
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 Patch1: %oname-alt-docs.patch
@@ -25,8 +25,7 @@ Patch2: envisage-6.1.0-alt-fix-mistake-in-menu-group-specification.patch
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
+BuildRequires: python3(uv_build)
 
 %add_findprov_skiplist %python3_sitelibdir/%oname/plugins/*
 %add_findreq_skiplist  %python3_sitelibdir/%oname/plugins/*
@@ -90,10 +89,16 @@ This package contains development documentation for Envisage.
 
 %files
 %doc image_LICENSE*.txt LICENSE.txt
-%doc CHANGES.rst README.rst
+%doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.1-alt1
+- new version 8.0.1
+- switch to uv_build backend
+- added BuildRequires: python3(uv_build) (new build backend)
+- removed BuildRequires: python3-module-setuptools, python3-module-wheel (not needed by uv_build)
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 7.0.4-alt1
 - new version 7.0.4
 
