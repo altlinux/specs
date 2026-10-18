@@ -3,7 +3,7 @@
 %def_without check
 
 Name: tauno-monitor
-Version: 0.3.5
+Version: 0.3.8
 Release: alt1
 
 Summary: Simple serial port monitor
@@ -48,6 +48,7 @@ Features:
 sed -i "s|https://raw.githubusercontent.com/taunoe/tauno-monitor/main/data/icons/|%_iconsdir/|" README.md
 sed -i "s|data/||g" README.md
 sed -i "s|Categories=.*|Categories=Qt;Development;Debugger;Electronics;|" data/art.taunoerik.tauno-monitor.desktop.in
+sed -i "s|plugdev|uucp|g" src/guide.py README.md
 
 %build
 %meson
@@ -77,6 +78,9 @@ chmod a+x %buildroot%_bindir/tauno-monitor
 %_datadir/tauno-monitor/*
 
 %changelog
+* Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.8-alt1
+- New version 0.3.8.
+
 * Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.5-alt1
 - New version 0.3.5.
 
