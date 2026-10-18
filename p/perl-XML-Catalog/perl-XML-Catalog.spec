@@ -1,16 +1,18 @@
 %define dist XML-Catalog
 Name: perl-%dist
 Version: 1.03
-Release: alt1
+Release: alt1.1
 
 Summary: Resolve public identifiers and remap system identifiers
 License: %perl_license
 Group: Development/Perl
 Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
-URL: %CPAN %dist
+URL: https://metacpan.org/release/XML-Catalog
 # http://search.cpan.org/CPAN/authors/id/E/EB/EBOHLMAN/XML-Catalog-0.02.tar.gz
 Source: %dist-%version.tar
+# Fedora: CPAN RT#176391, fix with XML-Parser >= 2.48
+Patch: XML-Catalog-1.03-Adapt-to-changes-in-XML-Parser-2.48.patch
 
 BuildArch: noarch
 
@@ -29,6 +31,7 @@ XML syntax.
 
 %prep
 %setup -n %dist-%version
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -41,6 +44,10 @@ XML syntax.
 %perl_vendor_privlib/XML/
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.03-alt1.1
+- NMU: fix build with XML-Parser >= 2.48 (patch from Fedora, CPAN RT#176391)
+- update URL
+
 * Tue Feb 23 2016 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update (closes: #31781)
 
