@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name tilingshell
-%define git_ver 17.3
+%define git_ver 18.0
 %define ego_ver 99
 %define beta %nil
 %define uuid tilingshell@ferrarodomenico.com
@@ -22,7 +22,7 @@ Url: https://github.com/domferr/tilingshell
 
 Vcs: https://github.com/domferr/tilingshell.git
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 BuildArch: noarch
 
 %if_disabled snapshot
@@ -32,7 +32,7 @@ Source: %_name-%git_ver%beta.tar
 %endif
 Source1: %_name-%git_ver-npm.tar
 
-Requires: gnome-shell >= 44
+Requires: gnome-shell >= 42
 Requires: typelib(Adw) = 1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
@@ -51,7 +51,7 @@ Can be installed on Gnome Shells on X11 and Wayland.
 npm install --force && npm audit fix --force &&
 npm install --cpu ia32 esbuild &&
 #npm install --cpu aarch64 esbuild &&
-npm install --cpu arm64 esbuild &&
+npm install --cpu arm64 esbuild
 tar -cf %_name-%git_ver-npm.tar node_modules && \
 mv %_name-%git_ver-npm.tar %_sourcedir/}
 
@@ -77,6 +77,9 @@ popd
 %doc README.md
 
 %changelog
+* Sat Oct 17 2026 Yuri N. Sedunov <aris@altlinux.org> 1:18.0-alt1
+- 18.0 (GNOME 51 supported)
+
 * Sun Feb 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1:17.3-alt1
 - 17.3
 
