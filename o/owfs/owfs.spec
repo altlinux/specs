@@ -1,21 +1,20 @@
 %def_disable static
 
 Name: owfs
-Version: 3.2p2
-Release: alt4
+Version: 3.2p4
+Release: alt1
 
 Summary: 1-Wire Virtual File System
 License: GPLv2
 Group: System/Kernel and hardware
 
-Url: http://sourceforge.net/projects/owfs
+Url: https://github.com/owfs/owfs
 Source: %name-%version.tar.gz
 #Patch: owfs-2.9-alt-gcc5.patch
 Patch0: owfs-tcl-req.patch
 Patch1: owfs-initscript.patch
-Patch2: owfs-0002-include-sys-sysmacros.h-for-major.patch
 Patch3: owfs-3.2p2-alt-systemd-fix-broken-paths.patch
-Patch4: owfs-multiple_definition.patch
+Patch4: owfs-3.2p4-upstream-owhttpd-memleak.patch
 
 BuildRequires: chrpath
 BuildRequires: service
@@ -173,7 +172,6 @@ owserver, owftpd, owshell, owperl, owtcl) and also all the supported
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %patch3 -p2
 %patch4 -p1
 sed -i- 's/) Makefile.PL/& INSTALLDIRS=vendor/' module/*/perl5/Makefile.am
@@ -265,7 +263,7 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %_libdir/libow-*.so*
 
 %files -n lib%name-devel
-%doc README NEWS ChangeLog AUTHORS
+%doc README.md NEWS ChangeLog AUTHORS
 %_includedir/owfs/owfs_config.h
 %_libdir/libow.so
 
@@ -275,6 +273,7 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 %files -n lib%name-capi-devel
 %_includedir/owfs/owcapi.h
 %_libdir/libowcapi.so
+%_pkgconfigdir/owcapi.pc
 
 %files -n libownet
 %_libdir/libownet-*.so*
@@ -341,6 +340,14 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/OW/OW.so
 #python_sitelibdir/*
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2p4-alt1
+- new version (3.2p4)
+- drop sysmacros and multiple definition patches (fixed in upstream)
+- update Url
+- fix README name (README.md)
+- package owcapi.pc
+- add upstream fix for owhttpd memory leak on concurrent requests (Debian patch, issue #41)
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2p2-alt4
 - fix BR, disable python module
 
