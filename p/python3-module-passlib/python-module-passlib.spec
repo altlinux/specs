@@ -1,7 +1,7 @@
 %define oname passlib
 
 Name:		python3-module-%oname
-Version:	1.9.3
+Version:	1.9.4
 Release:	alt1
 
 Summary:	Comprehensive password hashing framework supporting over 30 schemes
@@ -60,6 +60,9 @@ pytest
 %python3_sitelibdir/libpass-%version.dist-info/
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.4-alt1
+- new version 1.9.4
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.3-alt1
 - new version 1.9.3 (maintained fork of passlib, published as libpass on PyPI)
 - switch to pyproject build (hatchling)
