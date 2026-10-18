@@ -1,15 +1,34 @@
 Name: pear-core
-Version: 1.10.13
+Version: 1.10.18
 Release: alt1
 
 Summary: PHP Extension and Application Repository
 
 License: PHP
 Group: Development/Other
-Url: http://pear.php.net
+Url: https://pear.php.net
 
 Packager: Denis Klimov <zver@altlinux.ru>
-Source: %name-%version.tar
+%define getopt_ver 1.4.3
+%define graph_ver 1.2.0
+%define arctar_ver 1.6.1
+%define xmlutil_ver 1.4.5
+
+# Sources are the same release tarballs as in Fedora php-pear (pear.php.net, rpmgs repacks them)
+# Source-url: http://download.pear.php.net/package/PEAR-%version.tgz
+Source: PEAR-%version.tar
+# Source1-url: http://download.pear.php.net/package/Console_Getopt-%getopt_ver.tgz
+Source1: Console_Getopt-%getopt_ver.tar
+# Source2-url: http://download.pear.php.net/package/Structures_Graph-%graph_ver.tgz
+Source2: Structures_Graph-%graph_ver.tar
+# Source3-url: http://download.pear.php.net/package/XML_Util-%xmlutil_ver.tgz
+Source3: XML_Util-%xmlutil_ver.tar
+# Archive_Tar 1.6.1 is released on GitHub only (installable without --force on PEAR >= 1.10.10)
+# Source4-url: https://github.com/pear/Archive_Tar/archive/refs/tags/%arctar_ver.tar.gz
+Source4: Archive_Tar-%arctar_ver.tar
+Source10: pear.sh
+Source11: pecl.sh
+Source12: peardev.sh
 
 BuildArch: noarch
 Requires: /usr/bin/php
@@ -24,10 +43,10 @@ Obsoletes: pear < 1.3.4-alt1.1
 Provides: pear
 
 Provides: pear-PEAR = %version
-Provides: pear-Console_Getopt = 1.4.1
-Provides: pear-Structures_Graph = 1.1.1
-Provides: pear-Archive_Tar = 1.4.2
-Provides: pear-XML_Util = 1.4.1
+Provides: pear-Console_Getopt = %getopt_ver
+Provides: pear-Structures_Graph = %graph_ver
+Provides: pear-Archive_Tar = %arctar_ver
+Provides: pear-XML_Util = %xmlutil_ver
 Obsoletes: pear-XML_Util < 1.3
 
 %description
@@ -38,7 +57,18 @@ This package contains also
 Console_Getopt, Structures_Graph, Archive_Tar modules.
 
 %prep
-%setup
+%setup -cT
+# unpack every module to its own dir with package.xml
+unpack_module()
+{
+    tar xf "$2"
+    test -f "$1/package.xml"
+}
+unpack_module PEAR %SOURCE0
+unpack_module Console_Getopt %SOURCE1
+unpack_module Structures_Graph %SOURCE2
+unpack_module XML_Util %SOURCE3
+unpack_module Archive_Tar %SOURCE4
 
 %build
 
@@ -56,9 +86,9 @@ php -C -q $INCARG -d output_buffering=1 -d variables_order=EGPCS -d open_basedir
     PEAR/scripts/pearcmd.php install --force --offline --packagingroot=%buildroot $XMLLIST
 
 # Replace /usr/bin/* with simple scripts:
-install -m 755 scripts/pear.sh %buildroot%_bindir/pear
-install -m 755 scripts/pecl.sh %buildroot%_bindir/pecl
-install -m 755 scripts/peardev.sh %buildroot%_bindir/peardev
+install -m 755 %SOURCE10 %buildroot%_bindir/pear
+install -m 755 %SOURCE11 %buildroot%_bindir/pecl
+install -m 755 %SOURCE12 %buildroot%_bindir/peardev
 
 %files
 %pear_dir/
@@ -67,6 +97,16 @@ install -m 755 scripts/peardev.sh %buildroot%_bindir/peardev
 %_bindir/peardev
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.18-alt1
+- new version 1.10.18
+- new versions of modules:
+  + Archive_Tar 1.6.1
+  + Console_Getopt 1.4.3
+  + Structures_Graph 1.2.0
+  + XML_Util 1.4.5
+- download all module tarballs from pear.php.net and GitHub with rpmgs
+  (SourceN-url), like Fedora php-pear does
+
 * Thu Sep 09 2021 Vitaly Lipatov <lav@altlinux.ru> 1.10.13-alt1
 - use /usr/bin/php
 - new versions:
