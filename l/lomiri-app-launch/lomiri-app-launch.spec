@@ -7,7 +7,7 @@
 
 Name: lomiri-app-launch
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: User space daemon for launching applications
 License: GPL-3.0
@@ -22,7 +22,6 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-macros-systemd
 
-BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(gobject-introspection-1.0)
@@ -155,6 +154,11 @@ to generate dynamic bindings for liblomiri-app-launch0.
 %_typelibdir/LomiriAppLaunch-0.typelib
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1.1
+- NMU: build C code with -std=gnu11 instead of gnu99: lttng tracepoints include
+  urcu headers, which need C11 since libuserspace-rcu 0.15.7-alt2
+- Drop BuildRequires: cmake (rpm-build-cmake already pulls it)
+
 * Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.0-alt1
 - New version 0.2.0.
 
