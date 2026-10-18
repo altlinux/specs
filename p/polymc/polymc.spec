@@ -1,6 +1,6 @@
 Name: polymc
 Version: 8.1
-Release: alt1
+Release: alt2
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -47,6 +47,8 @@ a simple interface.
 %prep
 %setup -a1
 %__subst 's|share/jars|share/polymc/jars|' CMakeLists.txt launcher/Application.cpp
+# java.applet is removed from JDK 26+, but still present in the --release 8 API
+%__subst 's|-target 8 -source 8|--release 8|' libraries/launcher/CMakeLists.txt
 
 %build
 %cmake \
@@ -75,6 +77,9 @@ a simple interface.
 #_datadir/qlogging-categories6/*.categories
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 8.1-alt2
+- fix build with JDK 25+ (java.applet API is unavailable): compile the launcher with --release 8
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 8.1-alt1
 - new version 8.1
 - drop Qt 6.9 patch (applied upstream)
