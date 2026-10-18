@@ -1,6 +1,6 @@
 Name: libsolv
-Version: 0.7.39
-Release: alt1.5
+Version: 0.7.40
+Release: alt1
 
 Summary: Library for solving packages and reading repositories
 License: BSD
@@ -95,6 +95,9 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.40-alt1
+- New version 0.7.40.
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.39-alt1.5
 - Do not treat a missing vendor as a difference of identical packages
   when the build times match (APT-RPM pkglist has no Vendor tag): fixes

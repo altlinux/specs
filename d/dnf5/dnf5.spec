@@ -3,8 +3,8 @@
 %define libdnf5_dir %_sharedstatedir/libdnf5
 
 Name: dnf5
-Version: 5.4.3.0
-Release: alt9
+Version: 5.4.6.0
+Release: alt1
 
 Summary: Command-line package manager
 
@@ -28,6 +28,9 @@ Patch8: %name-alt-apt-plugin.patch
 Patch9: %name-alt-config-manager-plugin-repos.patch
 Patch10: %name-alt-rpm-4.13-signature-whole-package.patch
 Patch11: %name-alt-apt-pinning.patch
+Patch12: %name-alt-apt-cache-cleanup.patch
+Patch13: %name-alt-bash-completion-dnf5.patch
+Patch14: %name-alt-apt-metadata-refresh.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake >= 3.21
@@ -173,6 +176,17 @@ treats RPM::Allow-Duplicated packages (kernels) as installonly, keeps
 kernels and RPM::Hold packages on upgrade and distro-sync without arguments
 (as apt-get dist-upgrade) and protects Essential, Important and Required
 packages of /etc/apt/pkgpriorities.
+
+%package -n libdnf5-plugin-systemd-inhibit
+Summary: Libdnf5 plugin to inhibit system shutdown during transactions
+Group: System/Libraries
+License: LGPL-2.1-or-later
+Requires: systemd
+
+%description -n libdnf5-plugin-systemd-inhibit
+Libdnf5 plugin that inhibits system shutdown, sleep and hibernate while
+a dnf5 transaction is running. Uses systemd-inhibit to prevent data loss
+during package installation.
 
 %package -n libdnf5-plugin-python-plugins-loader
 Summary: Libdnf5 plugin that allows loading Python plugins
@@ -410,6 +424,10 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %_libdir/libdnf5/plugins/apt.*
 %config %_sysconfdir/dnf/libdnf5-plugins/apt.conf
 
+%files -n libdnf5-plugin-systemd-inhibit
+%_libdir/libdnf5/plugins/systemd-inhibit.*
+%config %_sysconfdir/dnf/libdnf5-plugins/00-systemd-inhibit.conf
+
 %files -n libdnf5-plugin-python-plugins-loader
 %_libdir/libdnf5/plugins/python_plugins_loader.*
 %config %_sysconfdir/dnf/libdnf5-plugins/python_plugins_loader.conf
@@ -418,6 +436,9 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.6.0-alt1
+New version 5.4.6.0
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.3.0-alt9
 - apt plugin: APT pinning of sources ("Package: *" records of preferences
   and preferences.d with "Pin: release" or "Pin: origin"): the APT priority
