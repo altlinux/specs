@@ -6,7 +6,7 @@
 Name: qtmir
 # NOTE: use .gear/tagit.sh to get a tag name
 Version: 0.8.0_git20260226.fb30a11
-Release: alt1
+Release: alt1.1
 
 Summary: Qt platform abstraction (QPA) plugin for a Mir server
 License: GPL-3.0
@@ -22,7 +22,6 @@ BuildRequires(pre): rpm-build-cmake
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires(pre): rpm-build-qml
 
-BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel
 BuildRequires: pkgconfig(Qt5Qml)
@@ -153,6 +152,12 @@ the QtMir QPA.
 %_datadir/qtmir/qtmir-demo-shell/*
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 0.8.0_git20260226.fb30a11-alt1.1
+- NMU: build C code as C17 instead of gnu99 (from upstream commit 929ad8c6):
+  lttng tracepoints include urcu headers, which need C11 since
+  libuserspace-rcu 0.15.7-alt2
+- Drop BuildRequires: cmake (rpm-build-cmake already pulls it)
+
 * Sun Jun 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.0_git20260226.fb30a11-alt1
 - Updated to allow build with mir 2.28.0.
 
