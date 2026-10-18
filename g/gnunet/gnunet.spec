@@ -1,6 +1,6 @@
 %def_with postgresql
 Name: gnunet
-Version: 0.26.2
+Version: 0.29.0
 Release: alt1
 
 Summary: Peer-to-peer framework
@@ -13,8 +13,6 @@ Packager: ALT QA Team <qa@packages.altlinux.org>
 Source: http://ftpmirror.gnu.org/gnunet/%name-%version.tar
 
 Source3: gnunetd.sysusers
-
-Patch2: gnunet-0.11.0-alt-mysql8-transition.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -73,13 +71,24 @@ applications which will use %name.
 
 %find_lang %name
 
-#install -D -m0644 contrib/services/systemd/gnunet.service %buildroot%_unitdir/gnunetd.service
+install -D -m0644 contrib/services/systemd/gnunet.service %buildroot%_unitdir/gnunet.service
+sed -i "s|/usr/lib/gnunet/libexec/|%_libdir/gnunet/libexec/|" %buildroot%_unitdir/gnunet.service
+# the system account has no usable home directory: GNUnet keeps its data in $HOME/.local/share/gnunet
+sed -i "/^StateDirectoryMode=/a Environment=HOME=%_localstatedir/gnunet" %buildroot%_unitdir/gnunet.service
 install -D -m0644 %SOURCE3 %buildroot%_sysusersdir/gnunetd.conf
+echo "# GNUnet system-wide configuration, see gnunet.conf(5)" > gnunet.conf
+install -D -m0644 gnunet.conf %buildroot%_sysconfdir/gnunet.conf
 
 rm -rv %buildroot%_infodir/
 # unpackaged files found
 #rm -v %buildroot%_docdir/gnunet/COPYING %buildroot%_docdir/gnunet/README
 #rm -rv %buildroot%_datadir/gnunet/services/
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README
@@ -116,6 +125,7 @@ rm -rv %buildroot%_infodir/
 %_bindir/gnunet-publish
 %_bindir/gnunet-resolver
 %_bindir/gnunet-reclaim
+%_bindir/gnunet-regex
 #%_bindir/gnunet-rsa
 %_bindir/gnunet-search
 %_bindir/gnunet-scalarproduct
@@ -123,7 +133,7 @@ rm -rv %buildroot%_infodir/
 #_bindir/gnunet-template
 #%_bindir/gnunet-testing
 #%_bindir/gnunet-testing-run-service
-#_bindir/gnunet-transport
+%_bindir/gnunet-transport
 %_bindir/gnunet-transport-certificate-creation
 %_bindir/gnunet-unindex
 %_bindir/gnunet-uri
@@ -159,12 +169,23 @@ rm -rv %buildroot%_infodir/
 #_libexecdir/gnunet/libexec/gnunet-service-conversation
 
 %_datadir/gnunet/
-#_unitdir/gnunetd.service
-%config %_sysusersdir/gnunetd.conf
+%_unitdir/gnunet.service
+%config(noreplace) %_sysconfdir/gnunet.conf
 %_desktopdir/gnunet-uri.desktop
 
+%pre -n lib%name
+%sysusers_create_package gnunetd %SOURCE3
+
 %files -n lib%name
+%config %_sysusersdir/gnunetd.conf
 %_libdir/gnunet/
+# upstream modes (debian/gnunet.postinst): 4750 root:gnunet, 4750 root:gnunetdns, 2750 gnunet:gnunetdns;
+# sisyphus_check forbids readable suid/sgid files, so the group read bit is dropped
+# gnunet-helper-exit and gnunet-helper-vpn are shipped without suid, as before
+%attr(4710,root,gnunet) %_libdir/gnunet/libexec/gnunet-helper-nat-client
+%attr(4710,root,gnunet) %_libdir/gnunet/libexec/gnunet-helper-nat-server
+%attr(4710,root,gnunetdns) %_libdir/gnunet/libexec/gnunet-helper-dns
+%attr(2710,gnunet,gnunetdns) %_libdir/gnunet/libexec/gnunet-service-dns
 %_libdir/libgnunetarm.so.*
 #_libdir/libgnunetats.so.*
 %_libdir/libgnunetabd.so.*
@@ -260,6 +281,16 @@ rm -rv %buildroot%_infodir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.29.0-alt1
+- new version 0.29.0
+- package gnunet-regex and gnunet-transport binaries
+- install gnunet.service systemd unit with an empty default /etc/gnunet.conf (closes: #55144)
+- run gnunet.service with HOME=/var/lib/gnunet and set that home in the sysusers file
+- add post_service/preun_service scriptlets for gnunet.service
+- restrict the nat-client/nat-server and dns suid helpers to the gnunet and gnunetdns groups
+- create the gnunet users in the libgnunet pre scriptlet, as it owns the files with their group
+- drop the unused mysql8 transition patch
+
 * Tue May 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26.2-alt1
 - new version 0.26.2
 
