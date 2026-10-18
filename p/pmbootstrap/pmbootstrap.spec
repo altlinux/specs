@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pmbootstrap
-Version: 3.11.1
+Version: 3.12.1
 Release: alt1
 
 Summary: Sophisticated chroot/build/flash tool to develop and install postmarketOS
@@ -36,5 +36,8 @@ BuildArch: noarch
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Oct 17 2026 David Sultaniiazov <x1z53@altlinux.org> 3.12.1-alt1
+- 3.12.1.
+
 * Sat Aug 15 2026 David Sultaniiazov <x1z53@altlinux.org> 3.11.1-alt1
 - Initial build.
