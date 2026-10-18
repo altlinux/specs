@@ -1,7 +1,7 @@
 %define oname PrismLauncher
 Name: prismlauncher
 Version: 11.1.1
-Release: alt1
+Release: alt2
 
 Summary: Minecraft launcher with ability to manage multiple instances
 
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: zlib-devel bzlib-devel libGLU-devel
 BuildRequires: qt6-base-devel qt6-svg-devel qt6-networkauth-devel qt6-5compat-devel
 
-BuildRequires: cmake gcc-c++ extra-cmake-modules
+BuildRequires: rpm-build-cmake gcc-c++ extra-cmake-modules
 
 BuildRequires: java-devel >= 17
 
@@ -46,7 +46,8 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 
 %prep
 %setup -a1
-%__subst 's| -target 7 -source 7| -target 8 -source 8|' libraries/launcher/CMakeLists.txt libraries/javacheck/CMakeLists.txt
+# --release 8 compiles against the Java 8 API (ct.sym): java.applet is gone from JDK 26+ runtime classes
+%__subst 's| -target 7 -source 7| --release 8|' libraries/launcher/CMakeLists.txt libraries/javacheck/CMakeLists.txt
 
 %build
 %cmake \
@@ -74,6 +75,10 @@ A custom launcher for Minecraft that allows you to easily manage multiple instal
 %_datadir/qlogging-categories6/
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 11.1.1-alt2
+- fix FTBFS with JDK 26+: compile java parts with --release 8 (java.applet API)
+- replaced BuildRequires: cmake with rpm-build-cmake
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 11.1.1-alt1
 - new version 11.1.1
 
