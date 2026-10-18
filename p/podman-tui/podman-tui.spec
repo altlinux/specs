@@ -3,7 +3,7 @@
 %def_with check
 
 Name: podman-tui
-Version: 1.11.3
+Version: 2.0.0
 Release: alt1
 Summary: Podman Terminal User Interface
 License: Apache-2.0
@@ -55,5 +55,8 @@ go test -mod=vendor \
 %_bindir/%name
 
 %changelog
+* Sun Sep 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.0-alt1
+- Updated to version 2.0.0.
+
 * Sun Aug 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.11.3-alt1
 - Initial build for ALT.
