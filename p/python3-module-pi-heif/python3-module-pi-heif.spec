@@ -3,13 +3,13 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Python interface for libheif library
 
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/bigcat88/pillow_heif
+Url: https://pypi.org/project/pi-heif/
 
 # Source-url: %__pypi_url %mod_name
 Source: %name-%version.tar
@@ -41,6 +41,9 @@ save operations.
 %python3_sitelibdir/%mod_name-%version.dist-info/
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
+- fix Url to PyPI page (the project is built from pillow_heif repository)
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0
 
