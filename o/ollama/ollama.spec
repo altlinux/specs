@@ -19,7 +19,7 @@
 %{!?_priority_distbranch:%global _priority_distbranch sisyphus}
 
 Name: ollama
-Version: 0.40.3
+Version: 0.40.6
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -225,6 +225,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Sun Oct 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.40.6-alt1
+- Updated to version 0.40.6.
+
 * Mon Oct 12 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.40.3-alt1
 - Updated to version 0.40.3.
 
