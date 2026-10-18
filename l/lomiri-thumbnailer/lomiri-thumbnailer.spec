@@ -7,7 +7,7 @@
 
 Name: lomiri-thumbnailer
 Version: 3.1.3
-Release: alt1
+Release: alt2
 
 Summary: D-Bus service for out of process thumbnailing
 License: GPL-3.0-only
@@ -37,6 +37,7 @@ BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(libapparmor)
 BuildRequires: pkgconfig(libpersistent-cache-cpp)
 BuildRequires: ayatana-cmake-modules
+BuildRequires: /usr/bin/lsb_release
 
 %if_with check
 BuildRequires: ctest
@@ -135,6 +136,9 @@ This package provides the development files for the library.
 %_libdir/liblomiri-thumbnailer-qt.so
 
 %changelog
+* Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.3-alt2
+- Fixed FTBFS.
+
 * Fri Jul 17 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.3-alt1
 - New version 3.1.3.
 
@@ -152,3 +156,4 @@ This package provides the development files for the library.
 
 * Thu Jul 17 2025 Nikolay Strelkov <snk@altlinux.org> 3.0.4-alt1
 - Initial build for Sisyphus
+
