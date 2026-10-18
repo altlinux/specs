@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Date/Format.pm) perl(Date/Parse.pm) perl(Email/Simple.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Font/Metrics/TimesRoman.pm) perl(HTML/FormatPS.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(IO/Scalar.pm) perl(MIME/Base64.pm) perl(MIME/Entity.pm) perl(MIME/Parser.pm) perl(MIME/Types.pm) perl(Mail/Address.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Test/More.pm) perl(Text/Autoformat.pm) perl(Time/Zone.pm) perl(URI.pm) perl(User/Identity.pm)
+BuildRequires: perl(Date/Format.pm) perl(Hash/Case/Preserve.pm) perl(IO/Lines.pm) perl(Log/Report.pm) perl(String/Print.pm) perl(Date/Parse.pm) perl(Email/Simple.pm) perl(Encode.pm) perl(Encode/CN.pm) perl(Encode/JP.pm) perl(Encode/KR.pm) perl(Encode/TW.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Font/Metrics/TimesRoman.pm) perl(HTML/FormatPS.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(IO/Scalar.pm) perl(MIME/Base64.pm) perl(MIME/Entity.pm) perl(MIME/Parser.pm) perl(MIME/Types.pm) perl(Mail/Address.pm) perl(Scalar/Util.pm) perl(Sys/Hostname.pm) perl(Test/More.pm) perl(Text/Autoformat.pm) perl(Time/Zone.pm) perl(URI.pm) perl(User/Identity.pm)
 # END SourceDeps(oneline)
 %define module_name Mail-Message
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.017
+Version: 4.05
 Release: alt1
 Summary: MIME message handling
 Group: Development/Perl
@@ -41,10 +41,15 @@ There are various ways to install this module:
 %perl_vendor_install
 
 %files
-%doc README ChangeLog README.md
+%doc ChangeLog README.md
 %perl_vendor_privlib/M*
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 4.05-alt1
+- new version 4.05
+- added BuildRequires: perl(Hash/Case/Preserve.pm), perl(IO/Lines.pm), perl(Log/Report.pm), perl(String/Print.pm) (new dependencies)
+- fixed %doc: README is gone upstream
+
 * Thu Apr 24 2025 Igor Vlasenko <viy@altlinux.org> 3.017-alt1
 - automated CPAN update
 

@@ -1,12 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Mail-Box
-# true for 3.010
-# ERROR: spam-assassin version 4.000000 is not supported (only versions 2.x)
-%def_disable spamassasin
-%def_without test
 
 Name: perl-%dist
-Version: 3.012
+Version: 4.02
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -19,29 +15,16 @@ Source0: http://www.cpan.org/authors/id/M/MA/MARKOV/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Jan 23 2011 (-bi)
+BuildRequires: perl(Log/Report.pm) perl(String/Print.pm) perl(Mail/Message.pm) perl(Mail/Transport.pm)
 BuildRequires: perl-Email-Simple perl-File-FcntlLock perl-File-Remove perl-Font-AFM perl-IO-stringy perl-MIME-Types perl-MIME-tools perl-Mail-IMAPClient perl-Mail-Transport-Dbx perl-Object-Realize-Later perl-Storable perl-Test-Pod perl-Text-Autoformat perl-User-Identity perl(Devel/GlobalDestruction.pm) perl(HTML/TreeBuilder.pm) perl(Mail/Box/Parser/Perl.pm) perl(Mail/Message/Head/Complete.pm)
-%if_enabled spamassasin
-BuildRequires: perl-Mail-SpamAssassin
-%endif
 
 %description
 The Mail::Box folder is a modern mail-folder manager.  It is written
 to be a replacement of MailTools and Mail::Folder, an alternative to
 the Email::* set of modules.
 
-%package -n perl-Mail-Box-SpamAssassin
-Summary: SpamAssassin support for Mail::Box
-Group: Development/Perl
-Requires: perl-Mail-Box = %EVR
-
-%description -n perl-Mail-Box-SpamAssassin
-SpamAssassin support for Mail::Box
-
 %prep
 %setup -q -n %{dist}-%{version}
-
-# https://rt.cpan.org/Public/Bug/Display.html?id=150141
-[ "%version" = 3.010 ] && rm t/505parser-bodymp.t
 
 %build
 %perl_vendor_build
@@ -49,26 +32,17 @@ SpamAssassin support for Mail::Box
 %install
 %perl_vendor_install
 
-%if_disabled spamassasin
-rm %buildroot%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.{pm,pod}
-rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
-%endif
-
 %files
 %doc ChangeLog README.todo examples README.md
 %perl_vendor_privlib/Mail/
-%if_enabled spamassasin
-%exclude %perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.p*
-%exclude %perl_vendor_privlib/Mail/Box/Search/SpamAssassin.p*
-%endif
-
-%if_enabled spamassasin
-%files -n perl-Mail-Box-SpamAssassin
-%perl_vendor_privlib/Mail/Message/Wrapper/SpamAssassin.p*
-%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.p*
-%endif
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 4.02-alt1
+- new version 4.02
+- dropped SpamAssassin subpackage and removed BuildRequires: perl-Mail-SpamAssassin (removed upstream)
+- added BuildRequires: perl(Log/Report.pm), perl(String/Print.pm), perl(Mail/Message.pm), perl(Mail/Transport.pm) (new dependencies)
+- enabled tests
+
 * Fri Mar 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.012-alt1
 - new version 3.012
 - disable tests (network-dependent, fail in hasher)

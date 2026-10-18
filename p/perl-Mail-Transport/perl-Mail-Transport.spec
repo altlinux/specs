@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp.pm) perl(Errno.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Lines.pm) perl(IO/Socket.pm) perl(List/Util.pm) perl(Mail/Reporter.pm) perl(Net/SMTP.pm)
+BuildRequires: perl(Carp.pm) perl(Log/Report.pm) perl(String/Print.pm) perl(Errno.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Lines.pm) perl(IO/Socket.pm) perl(List/Util.pm) perl(Mail/Reporter.pm) perl(Net/SMTP.pm)
 # END SourceDeps(oneline)
 %define module_name Mail-Transport
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 3.007
+Version: 4.01
 Release: alt1
 Summary: Email message exchange
 Group: Development/Perl
@@ -41,10 +41,15 @@ There are various ways to install this module:
 %perl_vendor_install
 
 %files
-%doc README ChangeLog README.md
+%doc ChangeLog README.md
 %perl_vendor_privlib/M*
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 4.01-alt1
+- new version 4.01
+- added BuildRequires: perl(Log/Report.pm), perl(String/Print.pm) (new dependencies)
+- fixed %doc: README is gone upstream
+
 * Wed Sep 17 2025 Igor Vlasenko <viy@altlinux.org> 3.007-alt1
 - automated CPAN update
 
