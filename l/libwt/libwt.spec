@@ -5,8 +5,8 @@
 %define oname wt
 
 Name: libwt
-Version: 4.10.3
-Release: alt1.1
+Version: 4.14.4
+Release: alt1
 Summary: Wt (pronounced as witty) is a C++ library for developing web applications.
 License: GPL
 Group: Development/C++
@@ -15,11 +15,9 @@ Url: https://www.webtoolkit.eu
 # Source-url: https://github.com/emweb/wt/archive/%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: libwt-alt-boost-1.85.0-compat.patch
 Patch2: libwt-alt-gcc11-compat.patch
 
-BuildRequires: rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++ rpm-build-cmake
 BuildRequires: libsqlite3-devel libmariadb-devel libunixODBC-devel
 BuildRequires: libssl-devel zlib-devel libpcre-devel
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-interprocess-devel boost-program_options-devel
@@ -146,7 +144,6 @@ you can focus on actual functionality with a rich set of feature-complete widget
 
 %prep
 %setup
-%patch1 -p2
 #patch2 -p2
 
 %build
@@ -190,6 +187,7 @@ you can focus on actual functionality with a rich set of feature-complete widget
 %files devel
 %dir %_includedir/Wt/
 %_includedir/Wt/*
+%_includedir/thirdparty/
 %_libdir/lib*.so
 %exclude %_libdir/lib*test*.so
 %dir %_sysconfdir/wt/
@@ -199,6 +197,12 @@ you can focus on actual functionality with a rich set of feature-complete widget
 #files docs
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 4.14.4-alt1
+- new version 4.14.4
+- drop boost 1.85 compat patch (fixed upstream)
+- package bundled thirdparty/qrcodegen header in devel
+- BuildRequires: replace cmake and rpm-macros-cmake with rpm-build-cmake
+
 * Thu May 02 2024 Ivan A. Melnikov <iv@altlinux.org> 4.10.3-alt1.1
 - fix build with boost 1.85.0
 
