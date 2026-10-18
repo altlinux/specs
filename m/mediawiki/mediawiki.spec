@@ -4,7 +4,7 @@
 
 Name: mediawiki
 Version: %major.2
-Release: alt3
+Release: alt4
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -525,6 +525,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt4
+- mediawiki-apache2: escape '?' in the short URL rewrite (fix 403 on Apache 2.4.60+ for page titles with '?').
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46.2-alt3
 - mediawiki-common: obsolete dead extensions removed from Sisyphus (Dia, DoubleWiki,
   FileSync, FreeMind, MultiCategorySearch, SpecialNamespaces, Validator, WebStore):
