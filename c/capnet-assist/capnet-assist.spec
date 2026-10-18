@@ -3,7 +3,7 @@
 %define appname io.elementary.capnet-assist
 
 Name: capnet-assist
-Version: 8.0.2
+Version: 9.0.0
 Release: alt1
 
 Summary: Captive Portal Assistant
@@ -54,7 +54,12 @@ Written in Vala and using WebkitGtk+.
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
 %_iconsdir/hicolor/*/apps/%{appname}.svg
 %_datadir/metainfo/%{appname}.metainfo.xml
+%exclude %_datadir/locale/zh_HANS/LC_MESSAGES/%{appname}.mo
+%exclude %_datadir/locale/zh_HANT/LC_MESSAGES/%{appname}.mo
 
 %changelog
+* Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 9.0.0-alt1
+- New version 9.0.0.
+
 * Sun Dec 28 2025 Nikolay Strelkov <snk@altlinux.org> 8.0.2-alt1
 - Initial build for Sisyphus
