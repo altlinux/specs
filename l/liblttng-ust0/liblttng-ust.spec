@@ -1,0 +1,137 @@
+%define oname liblttng-ust
+%define abiversion 0
+
+Name: %oname%abiversion
+Version: 2.12.2
+Release: alt3
+
+Summary: Linux Trace Toolkit Userspace Tracer library (legacy)
+
+License: GPLv2
+Group: System/Legacy libraries
+Url: http://lttng.org
+
+# Source-url: http://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
+Source: %name-%version.tar
+Patch100: lttng-gen-tp-shebang.patch
+
+BuildRequires(pre): rpm-build-python3
+
+BuildRequires: gcc-c++
+BuildRequires: libuserspace-rcu-devel
+BuildRequires: libuuid-devel
+BuildRequires: libnuma-devel
+
+# for man pages
+BuildRequires: asciidoc xmlto
+
+%description
+Legacy version of LTTng-UST shared libraries (soname %abiversion).
+
+%package devel
+
+Summary: Linux Trace Toolkit Userspace Tracer library
+Group: Development/C++
+Requires: %name = %version-%release
+Requires: libuserspace-rcu-devel
+
+%description devel
+This library provides support for developing programs using LTTng userspace tracing.
+
+%package docs
+
+Summary: Linux Trace Toolkit Userspace Tracer Documentation
+Group: Development/C++
+Requires: %name = %version-%release
+
+%description docs
+This package includes documentation and examples for developing programs using LTTng userspace tracing.
+
+%prep
+%setup
+%patch100 -p1
+%ifarch %e2k
+# this is wrong code, but GCC allows it
+sed -i '/asm volatile/s|)\[0\])|)[0][0])|' liblttng-ust/lttng-context-procname.c
+%endif
+
+%build
+# to fix rpath
+%autoreconf
+%configure --docdir=%_docdir/%name --disable-static --disable-maintainer-mode
+%make_build
+
+%install
+%makeinstall_std
+rm -vf %buildroot%_libdir/*.la
+rm -rf %buildroot/tmp/lttng-ust-divert
+# devel files, docs and liblttng-ust-ctl are provided by the main liblttng-ust package
+rm -v %buildroot%_libdir/*.so
+rm -v %buildroot%_libdir/liblttng-ust-ctl.so.*
+rm -rv %buildroot%_includedir/
+rm -rv %buildroot%_pkgconfigdir/
+rm -rv %buildroot%_bindir/
+rm -rv %buildroot%_docdir/%name/
+rm -rv %buildroot%_mandir/
+
+%files
+%_libdir/%oname.so.%abiversion
+%_libdir/%oname.so.%abiversion.*
+%_libdir/%oname-tracepoint.so.%abiversion
+%_libdir/%oname-tracepoint.so.%abiversion.*
+%_libdir/%oname-cyg-profile.so.%abiversion
+%_libdir/%oname-cyg-profile.so.%abiversion.*
+%_libdir/%oname-cyg-profile-fast.so.%abiversion
+%_libdir/%oname-cyg-profile-fast.so.%abiversion.*
+%_libdir/%oname-dl.so.%abiversion
+%_libdir/%oname-dl.so.%abiversion.*
+%_libdir/%oname-fd.so.%abiversion
+%_libdir/%oname-fd.so.%abiversion.*
+%_libdir/%oname-fork.so.%abiversion
+%_libdir/%oname-fork.so.%abiversion.*
+%_libdir/%oname-libc-wrapper.so.%abiversion
+%_libdir/%oname-libc-wrapper.so.%abiversion.*
+%_libdir/%oname-pthread-wrapper.so.%abiversion
+%_libdir/%oname-pthread-wrapper.so.%abiversion.*
+
+%changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt3
+- legacy library package liblttng-ust.so.0 for compatibility (2.12.2)
+
+* Tue Sep 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.12.2-alt2
+- fixed build for Elbrus
+
+* Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt1
+- new version 2.12.2 (with rpmrb script)
+
+* Tue Mar 31 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
+- new version 2.11.1 (with rpmrb script)
+
+* Thu Feb 20 2020 Vitaly Lipatov <lav@altlinux.ru> 2.11.0-alt1
+- new version 2.11.0 (with rpmrb script)
+
+* Wed Jun 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.10.4-alt1
+- 2.10.4
+- switch to use python3
+
+* Mon Dec 10 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.2-alt2
+- drop ExclusiveArch (ALT bug 35661)
+
+* Sat Nov 24 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.2-alt1
+- new version 2.10.2 (with rpmrb script)
+
+* Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 2.10.1-alt1
+- new version 2.10.1 (with rpmrb script)
+
+* Sun Nov 12 2017 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1.1
+- autorebuild with libuserspace-rcu.git=0.10.0-alt1
+
+* Fri Jul 14 2017 Vitaly Lipatov <lav@altlinux.ru> 2.8.3-alt1
+- new version 2.8.3 (with rpmrb script)
+- fix dl linking (see https://github.com/lttng/lttng-ust/pull/48)
+
+* Mon Apr 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
+- new version 2.8.0 (with rpmrb script)
+
+* Mon Apr 10 2017 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- initial build for ALT Linux Sisyphus

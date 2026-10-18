@@ -1,6 +1,9 @@
+%define abiversion 1
+%define ctlabiversion 6
+
 Name: liblttng-ust
-Version: 2.12.2
-Release: alt2
+Version: 2.16.0
+Release: alt1
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 
@@ -8,9 +11,10 @@ License: GPLv2
 Group: Development/C++
 Url: http://lttng.org
 
-# Source-url: http://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
+# Source-url: https://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
 Source: %name-%version.tar
 Patch100: lttng-gen-tp-shebang.patch
+Patch101: liblttng-ust-ctl-default-sigbus-state.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -25,11 +29,30 @@ BuildRequires: asciidoc xmlto
 %description
 This library may be used by user space applications to generate tracepoints within the kernel LTT subsystem.
 
+%package -n %name%abiversion
+Summary: Linux Trace Toolkit Userspace Tracer library
+Group: System/Libraries
+Provides: %name = %EVR
+# liblttng-ust 2.12.2 contained all libraries (.so.0 is now in legacy liblttng-ust0)
+Obsoletes: %name < %EVR
+
+%description -n %name%abiversion
+This library may be used by user space applications to generate tracepoints
+within the kernel LTT subsystem.
+
+%package -n liblttng-ust-ctl%ctlabiversion
+Summary: Linux Trace Toolkit Userspace Tracer control library
+Group: System/Libraries
+
+%description -n liblttng-ust-ctl%ctlabiversion
+This package contains the LTTng UST control library used by lttng-tools.
+
 %package devel
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name%abiversion = %EVR
+Requires: liblttng-ust-ctl%ctlabiversion = %EVR
 Requires: libuserspace-rcu-devel
 
 %description devel
@@ -39,17 +62,21 @@ This library provides support for developing programs using LTTng userspace trac
 
 Summary: Linux Trace Toolkit Userspace Tracer Documentation
 Group: Development/C++
-Requires: %name = %version-%release
+BuildArch: noarch
 
 %description docs
 This package includes documentation and examples for developing programs using LTTng userspace tracing.
 
+# liblttng-ust-ctl uses urcu symbols provided by its user (lttng-sessiond/consumerd)
+%add_verify_elf_skiplist %_libdir/liblttng-ust-ctl.so.%ctlabiversion.*
+
 %prep
 %setup
 %patch100 -p1
+%patch101 -p1
 %ifarch %e2k
 # this is wrong code, but GCC allows it
-sed -i '/asm volatile/s|)\[0\])|)[0][0])|' liblttng-ust/lttng-context-procname.c
+sed -i '/__asm__ __volatile__/s|)\[0\])|)[0][0])|' src/lib/lttng-ust/lttng-context-procname.c
 %endif
 
 %build
@@ -63,35 +90,52 @@ sed -i '/asm volatile/s|)\[0\])|)[0][0])|' liblttng-ust/lttng-context-procname.c
 rm -vf %buildroot%_libdir/*.la
 rm -rf %buildroot/tmp/lttng-ust-divert
 
-%files
-%_libdir/*.so.*
+%files -n %name%abiversion
+%_libdir/liblttng-ust.so.%abiversion
+%_libdir/liblttng-ust.so.%abiversion.*
+%_libdir/liblttng-ust-common.so.%abiversion
+%_libdir/liblttng-ust-common.so.%abiversion.*
+%_libdir/liblttng-ust-tracepoint.so.%abiversion
+%_libdir/liblttng-ust-tracepoint.so.%abiversion.*
+%_libdir/liblttng-ust-cyg-profile.so.%abiversion
+%_libdir/liblttng-ust-cyg-profile.so.%abiversion.*
+%_libdir/liblttng-ust-cyg-profile-fast.so.%abiversion
+%_libdir/liblttng-ust-cyg-profile-fast.so.%abiversion.*
+%_libdir/liblttng-ust-dl.so.%abiversion
+%_libdir/liblttng-ust-dl.so.%abiversion.*
+%_libdir/liblttng-ust-fd.so.%abiversion
+%_libdir/liblttng-ust-fd.so.%abiversion.*
+%_libdir/liblttng-ust-fork.so.%abiversion
+%_libdir/liblttng-ust-fork.so.%abiversion.*
+%_libdir/liblttng-ust-libc-wrapper.so.%abiversion
+%_libdir/liblttng-ust-libc-wrapper.so.%abiversion.*
+%_libdir/liblttng-ust-pthread-wrapper.so.%abiversion
+%_libdir/liblttng-ust-pthread-wrapper.so.%abiversion.*
+
+%files -n liblttng-ust-ctl%ctlabiversion
+%_libdir/liblttng-ust-ctl.so.%ctlabiversion
+%_libdir/liblttng-ust-ctl.so.%ctlabiversion.*
 
 %files devel
 %_bindir/lttng-gen-tp
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/lttng-ust*.pc
+%_includedir/lttng/
+%_libdir/liblttng-ust*.so
+%_pkgconfigdir/lttng-ust.pc
+%_pkgconfigdir/lttng-ust-ctl.pc
 
 %files docs
-%dir %_docdir/%name/
-%_docdir/%name/ChangeLog
-%_docdir/%name/README.md
-%_docdir/%name/COPYING
-%_docdir/%name/LICENSE
-%dir %_docdir/%name/examples
-%_docdir/%name/examples/*
-%_docdir/%name/java-agent.txt
+%_docdir/%name/
 %_man1dir/lttng-gen-tp.1.*
-%_man3dir/lttng-ust.3.*
-%_man3dir/lttng-ust-cyg-profile.3.*
-%_man3dir/lttng-ust-dl.3.*
-%_man3dir/do_tracepoint.3.*
-%_man3dir/tracef.3.*
-%_man3dir/tracelog.3.*
-%_man3dir/tracepoint.3.*
-%_man3dir/tracepoint_enabled.3.*
+%_man3dir/*.3.*
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.16.0-alt1
+- new version 2.16.0 (SONAME liblttng-ust.so.0 -> liblttng-ust.so.1)
+- split libraries to liblttng-ust1 and liblttng-ust-ctl6 (Shared Libs Policy)
+- docs: make noarch
+- update Elbrus build fix for the new source layout
+- liblttng-ust-ctl: define default lttng_ust_sigbus_state (no unresolved symbols)
+
 * Tue Sep 21 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.12.2-alt2
 - fixed build for Elbrus
 
