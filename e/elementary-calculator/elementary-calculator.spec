@@ -5,7 +5,7 @@
 
 Name: elementary-calculator
 Version: 9.0.0
-Release: alt1
+Release: alt2
 
 Summary: Calculator app designed for elementary OS
 License: GPL-3.0-or-later
@@ -49,9 +49,12 @@ BuildRequires: pkgconfig(granite-7)
 %_iconsdir/hicolor/*/apps/%{appname}.svg
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
 %_datadir/metainfo/%{appname}.metainfo.xml
-%_datadir/locale/zh_Hant/LC_MESSAGES/%{appname}.mo
+%exclude %_datadir/locale/zh_Hant/LC_MESSAGES/%{appname}.mo
 
 %changelog
+* Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 9.0.0-alt2
+- Applied repocop fix for altlinux-find-lang-mo.
+
 * Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 9.0.0-alt1
 - New version 9.0.0.
 
