@@ -2,7 +2,7 @@
 %define  modulename psd_tools
 
 Name:    python3-module-psd-tools
-Version: 1.17.4
+Version: 1.25.0
 Release: alt1
 
 Summary: Python package for reading Adobe Photoshop PSD files
@@ -27,7 +27,6 @@ BuildRequires: gcc-c++
 %py3_use aggdraw
 %py3_use numpy
 %py3_use scipy
-%py3_use scikit-image
 
 # Source-url: https://github.com/psd-tools/psd-tools/archive/v%version.tar.gz
 Source: %name-%version.tar
@@ -56,6 +55,16 @@ must be built with LITTLECMS or LITTLECMS2 support.
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.25.0-alt1
+- new version 1.25.0
+- security fixes:
+  + GHSA-r6c8-3pw3-m54g: fix external smart object reads outside the document directory.
+  + GHSA-7m55-42q7-888r: fix unbounded allocation from thumbnail dimensions.
+  + GHSA-mg89-vfv6-5pm4: fix unbounded canvas allocation in composite().
+  + GHSA-v7vq-grqq-m352: fix resource exhaustion on malformed structures and compressed data.
+  + GHSA-72jg-v7jq-m6p3: fix allocation from the unvalidated pattern rectangle.
+  + GHSA-vq54-2qvv-mf8w: fix unhandled exceptions on malformed PSD files.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.17.4-alt1
 - new version 1.17.4
 - SECURITY: fix arbitrary file write/read via smart-object filename (CVE-2026-49836)
