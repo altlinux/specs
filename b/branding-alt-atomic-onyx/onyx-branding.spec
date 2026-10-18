@@ -15,7 +15,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20260909
+Version: 20261018
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -24,7 +24,7 @@ ExcludeArch: i586
 Group: Graphics
 Summary: System/Base
 License: GPL-3.0-or-later
-URL: https://atomic.alt-gnome.ru/
+URL: https://alt-atomic.org/
 VCS: https://altlinux.space/alt-atomic/onyx-branding.git
 
 Source: %name-%version.tar
@@ -163,6 +163,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sun Oct 18 2026 Vladimir Romanov <rirusha@altlinux.org> 20261018-alt1
+- Fixed package URL with os-release HOME_URL.
+
 * Wed Sep 09 2026 Vladimir Romanov <rirusha@altlinux.org> 20260909-alt1
 - Dropped language step.
 
