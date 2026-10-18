@@ -2,12 +2,12 @@
 %def_with check
 
 Name: python3-module-jeepney
-Version: 0.8.0
-Release: alt2
+Version: 0.9
+Release: alt1
 License: MIT
 Group: Development/Python3
 Url: https://gitlab.com/takluyver/jeepney
-Source: jeepney-%version.tar
+Source: %name-%version.tar
 
 Summary: Pure Python DBus interface
 BuildRequires(pre): rpm-build-python3
@@ -39,7 +39,7 @@ Summary: Extra dependencies of jeepney
 Extra dependencies for jeepney, namely tests and trio I/O
 
 %prep
-%setup -n jeepney-%version
+%setup
 
 %build
 %pyproject_build
@@ -52,8 +52,7 @@ Extra dependencies for jeepney, namely tests and trio I/O
 %tox_check_pyproject
 
 %files
-%python3_sitelibdir_noarch/jeepney/
-%python3_sitelibdir_noarch/%{pyproject_distinfo jeepney}/
+%python3_sitelibdir_noarch/jeepney*
 %exclude %python3_sitelibdir_noarch/jeepney/io/trio.py
 %exclude %python3_sitelibdir_noarch/jeepney/tests
 %exclude %python3_sitelibdir_noarch/jeepney/io/tests
@@ -64,6 +63,9 @@ Extra dependencies for jeepney, namely tests and trio I/O
 %python3_sitelibdir_noarch/jeepney/io/tests
 
 %changelog
+* Sun Oct 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9-alt1
+- 0.8.0 -> 0.9
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2
 - Fixed FTBFS (flit_core 3.7.1).
 
