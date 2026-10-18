@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Text-CSV_XS
 Name: perl-%dist
-Version: 1.64
+Version: 1.65
 Release: alt1
 
 Summary: Comma-separated values manipulation routines
@@ -34,6 +34,18 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_autolib/Text
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.65-alt1
+- version to 1.65.
+- security fixes:
+  + CVE-2026-110759: fix handling of trailing lone CR in parse (EOF stored as 0xFF).
+  + CVE-2026-110758: fix stripping beyond field start under allow_whitespace.
+  + CVE-2026-110757: fix quoting decision in combine (use bytes, not NV flags).
+  + CVE-2026-110756: fix flushing of saved bytes in Combine.
+  + CVE-2026-110755: fix AHEAD re-use with \r instead of copying.
+  + CVE-2026-110754: fix leak of result array when getline parse fails.
+  + CVE-2026-110753: fix freeing of bound column scalar in skip_empty_rows.
+  + CVE-2026-110752: fix memory sizing by selector integers in fragment.
+
 * Fri Jul 03 2026 Alexander Danilov <admsasha@altlinux.org> 1.64-alt1
 - Version to 1.64.
 
