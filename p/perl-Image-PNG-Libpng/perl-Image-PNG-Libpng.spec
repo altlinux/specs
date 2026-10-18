@@ -2,8 +2,8 @@
 %define module_name Image-PNG-Libpng
 
 Name: perl-Image-PNG-Libpng
-Version: 0.59
-Release: alt2
+Version: 0.60
+Release: alt1
 
 Summary: Perl interface to libpng
 
@@ -53,6 +53,9 @@ rm -f get-pixel.pl nicemake.pl
 %_bindir/*
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 0.60-alt1
+- new version 0.60
+
 * Mon Mar 02 2026 Vitaly Lipatov <lav@altlinux.ru> 0.59-alt2
 - add pkgconfig(zlib) to BuildRequires (fixes FTBFS)
 
