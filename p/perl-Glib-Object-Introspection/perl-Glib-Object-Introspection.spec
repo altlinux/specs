@@ -7,7 +7,7 @@
 BuildRequires: perl-podlators
 Name: perl-Glib-Object-Introspection
 Version: 0.052
-Release: alt1
+Release: alt1.1
 
 Summary: Dynamically create Perl language bindings
 Group: Development/Perl
@@ -17,6 +17,8 @@ Url: %CPAN Glib-Object-Introspection
 Vcs: https://gitlab.gnome.org/GNOME/perl-glib-object-introspection.git
 
 Source: %_name-%version.tar
+# https://gitlab.gnome.org/GNOME/perl-glib-object-introspection/-/work_items/8
+Patch: Glib-Object-Introspection-0.052-Handle-caller-allocated-scalar-outputs.patch
 
 BuildRequires: gobject-introspection-devel libcairo-gobject-devel perl-devel
 BuildRequires: perl-ExtUtils-Depends perl-Glib-devel perl-ExtUtils-PkgConfig perl(XML/LibXML.pm)
@@ -41,6 +43,7 @@ scripts for %name
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 # some Glib functions fail with LANG=C
@@ -60,6 +63,10 @@ export LANG=ru_RU.UTF-8
 %_man1dir/perli11ndoc.1*
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 0.052-alt1.1
+- NMU: fixed FTBFS (test crash on caller-allocated scalar outputs with new glib/gobject-introspection)
+  by applying upstream fix "Handle caller-allocated scalar outputs"
+
 * Thu Sep 04 2025 Yuri N. Sedunov <aris@altlinux.org> 0.052-alt1
 - 0.052
 
