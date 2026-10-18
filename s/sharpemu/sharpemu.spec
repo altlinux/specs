@@ -10,7 +10,7 @@
 
 Name: sharpemu
 Version: 0.0.5
-Release: alt1%{version_suffix}
+Release: alt2%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
@@ -31,6 +31,9 @@ Source2: ffmpeg-%ffmpeg_version.tar
 Source3: %name.desktop
 # https://github.com/sharpemu/ffmpeg-core/raw/%ffmpeg_tag/bink2.patch
 Patch0: bink2.patch
+# Store user-writable data (GUI settings, caches, saves, logs) in the XDG
+# data directory on Linux instead of the read-only install directory.
+Patch1: sharpemu-datadir.patch
 
 BuildRequires: /proc
 BuildRequires: dotnet-sdk-10.0
@@ -56,6 +59,7 @@ It uses AOT compilation and high-level emulation to run PS5 games.
 %prep
 %setup -n %name-%version%{upstream_suffix} -a 1 -b 2
 %patch0 -p1 -d ../ffmpeg-%ffmpeg_version
+%patch1 -p1
 
 %build
 # Build FFmpeg with only the codecs used by SharpEmu
@@ -160,6 +164,10 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Sun Oct 18 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.5-alt2.nexus.release.2
+- Store user-writable data (settings, caches, saves, logs) in the XDG data
+  directory on Linux instead of the read-only install directory
+
 * Fri Oct 09 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.5-alt1.nexus.release.2
 - Update to v0.0.5-nexus-release.2
 
