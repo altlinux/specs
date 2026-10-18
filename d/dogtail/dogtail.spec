@@ -1,7 +1,7 @@
 %define pypi_name dogtail
 
 Name: dogtail
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: GUI test tool and automation framework
@@ -54,6 +54,9 @@ find examples -type f -exec chmod 0644 {} \;
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version 2.1.0
 - build with pyproject from the PyPI tarball, drop obsolete py2-to-py3 patch
