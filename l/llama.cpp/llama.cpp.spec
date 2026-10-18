@@ -11,7 +11,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 Epoch: 2
 Summary: LLM inference in C/C++
@@ -210,10 +210,11 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/bin PATH+=:$PWD/%_cmake__builddir/
 llama-server --version
 llama-server --version |& grep -Ex 'version: %version \(build 0, commit \S+ \[%release\]\)'
 # test-eval-callback and test-tokenizers-ggml-vocabs want network.
-# test-save-load-state/-state-restore-fragmented require the test-download-model fixture (no network).
+# test-save-load-state/-state-restore-fragmented/-llama-context-model require test-download-model (no network).
 # test-thread-safety requires GPU; test-recurrent-state-rollback (MTP) is not runnable w/o CUDA.
 # test-generate-models (target test-llama-archs) needs a loadable ggml backend, absent in %check.
-%ctest -E 'test-download-model|test-eval-callback|test-tokenizers-ggml-vocabs|test-state-restore-fragmented|test-save-load-state|test-generate-models|test-thread-safety|test-recurrent-state-rollback'
+# test-llama-context reads the models that fixture writes; the regex also covers test-llama-context-model.
+%ctest -E 'test-download-model|test-eval-callback|test-tokenizers-ggml-vocabs|test-state-restore-fragmented|test-save-load-state|test-generate-models|test-llama-context|test-thread-safety|test-recurrent-state-rollback'
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Hello" -s 42 -n 500 2>/dev/null
 llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time" -s 55 -n 33 2>/dev/null |
 	grep "Once upon a time, in a tidy cat, there was a little girl named Lily."
@@ -282,6 +283,9 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Sat Oct 17 2026 Anton Farygin <rider@altlinux.org> 2:0.7.0-alt1
+- Update to v0.7.0.
+
 * Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2:0.6.0-alt1
 - Update to v0.6.0.
 
