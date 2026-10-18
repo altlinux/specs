@@ -3,8 +3,8 @@
 %def_without docs
 
 Name: python3-module-py%oname
-Version: 1.5.0
-Release: alt2
+Version: 1.8.3
+Release: alt1
 
 Summary: Python bindings for the remote Jenkins API
 License: BSD
@@ -16,14 +16,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: git-core python3-module-coverage
+BuildRequires: git-core python3-module-pbr python3-module-coverage
 BuildRequires: python3-module-subunit
 
 %if_with docs
 BuildRequires: python3-module-sphinx
 %endif
 
-%py3_requires pbr six
 %add_python3_req_skip requests.packages.urllib3.exceptions
 
 Conflicts: python3-module-%oname
@@ -97,6 +96,10 @@ cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
+- New version 1.8.3
+- Fix FTBFS: add BR: python3-module-pbr (setup_requires), drop unused six requires
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt2
 - drop unneeded BR: python3-module-subunit-tests
 
