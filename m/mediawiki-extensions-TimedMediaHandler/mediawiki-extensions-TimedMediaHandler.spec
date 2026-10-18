@@ -5,7 +5,7 @@
 
 Name: mediawiki-extensions-%oname
 Version: 1.46
-Release: alt1
+Release: alt2
 
 Summary: MediaWiki extension to display audio and video files in wiki pages
 
@@ -42,12 +42,25 @@ for scheduling transcoding jobs.
 %mediawiki_ext_install 50 %oname
 # remove development files
 rm -rv %buildroot%mediawiki_ext_dir/{tests,Gruntfile.js,package.json,package-lock.json,jsdoc.json,composer.lock}
-# no transcoding without ffmpeg configured by the administrator
-echo '$wgEnableTranscode = false;' >> %buildroot%_mediawiki_settings_dir/50-%oname.php
+# playing and uploading of ogg/mp3/wav/flac/opus works without ffmpeg (the
+# original file is played by the browser, getID3 reads the metadata);
+# ffmpeg is needed only for transcoding and video thumbnails
+cat >> %buildroot%_mediawiki_settings_dir/50-%oname.php <<'EOF'
+
+// Transcoding is off: it needs ffmpeg (apt-get install ffmpeg) and a running
+// job queue. Audio and video are played from the uploaded original files.
+// To enable transcodes and video thumbnails install ffmpeg and set:
+// $wgEnableTranscode = true;
+// $wgFFmpegLocation = '/usr/bin/ffmpeg';
+$wgEnableTranscode = false;
+EOF
 
 %files -f %oname.files
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt2
+- document in the package config that ffmpeg is needed only for transcoding and video thumbnails (ogg/mp3 play and upload without it)
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.46-alt1
 - update to REL1_46 snapshot 632d48c (MediaWiki 1.46)
 - dependency on mediawiki-common >= 1.46 comes from the setup macro, no Requires: mediawiki
