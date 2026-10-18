@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: gcovr
-Version: 8.6
+Version: 8.7
 Release: alt1
 
 Summary: A Python script for summarizing gcov data
@@ -58,6 +58,9 @@ Python.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Sun Oct 18 2026 Yuri N. Sedunov <aris@altlinux.org> 8.7-alt1
+- 8.7
+
 * Fri May 08 2026 Yuri N. Sedunov <aris@altlinux.org> 8.6-alt1
 - 8.6
 

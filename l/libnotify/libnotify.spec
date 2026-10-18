@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: libnotify
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Desktop notification library
@@ -145,6 +145,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Sun Oct 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
+- 0.8.9
+
 * Fri Jan 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
 - 0.8.8
 
