@@ -3,7 +3,7 @@
 
 Summary: A strictly RFC 4511 conforming LDAP V3 pure Python 3 client - Python 2 compatible
 Name: python3-module-%oname
-Version: 2.9
+Version: 2.9.1
 Release: alt1
 License: LGPLv3
 Group: Development/Python3
@@ -42,6 +42,9 @@ rm -f ldap3/utils/ordDict.py
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.1-alt1
+- new version 2.9.1 (with rpmrb script)
+
 * Sun Apr 25 2021 Vitaly Lipatov <lav@altlinux.ru> 2.9-alt1
 - new version 2.9
 
