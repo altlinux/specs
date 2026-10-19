@@ -1,7 +1,7 @@
 %define oname re
 %define sover 45
 Name: libre
-Version: 4.11.0
+Version: 4.12.0
 Release: alt1
 
 Summary: Generic library for real-time communications with async IO support
@@ -13,8 +13,7 @@ Url: https://github.com/baresip/re
 # Source-url: %url/archive/refs/tags/v%version.tar.gz
 Source: %oname-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
+BuildRequires: rpm-build-cmake gcc-c++ libssl-devel zlib-devel
 
 %description
 Libre is a portable and generic library for real-time communications
@@ -53,6 +52,10 @@ rm -f %buildroot/%_libdir/%name.a
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.12.0-alt1
+- new version 4.12.0
+- use rpm-build-cmake instead of cmake in BuildRequires
+
 * Fri Sep 04 2026 Ilya Demyanov <turbid@altlinux.org> 4.11.0-alt1
 - new version 4.11.0
 

@@ -1,6 +1,6 @@
-%define sover 28
+%define sover 29
 Name: baresip
-Version: 4.11.0
+Version: 4.12.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -12,9 +12,8 @@ Url: https://github.com/baresip/baresip
 # Source-url: https://github.com/baresip/baresip/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 4.11.0
+BuildRequires: rpm-build-cmake gcc-c++ libssl-devel zlib-devel
+BuildRequires: libre-devel >= 4.12.0
 
 Obsoletes: %{name}-mpa < 4.3.0
 Obsoletes: %{name}-g726 < 4.8.0
@@ -32,13 +31,24 @@ winwave, opensles and sndio audio drivers, the audio filters, av1, h264, h265,
 vp8, vp9 video codec, avformat, acvapture and v4l2 video sources, sdl2,
 and x11 video display drivers, and srtp media encoding.
 
-%package devel
+%package -n lib%name%sover
+Summary: Shared library of baresip SIP User-Agent
+Group: System/Libraries
+
+%description -n lib%name%sover
+Baresip is a portable and modular SIP User-Agent with audio and video support
+
+This package contains the libbaresip shared library.
+
+%package -n lib%name-devel
 Summary: Development files for %name library
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: lib%name%sover = %EVR
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
-%description devel
-The %name-devel package includes libraries and header files for developing
+%description -n lib%name-devel
+The lib%name-devel package includes libraries and header files for developing
 appications which use the baresip C library.
 
 %package aac
@@ -362,7 +372,6 @@ This module provides the X11 video output driver.
 %files
 %doc CHANGELOG.md LICENSE README.md docs/examples/*
 %_bindir/%name
-%_libdir/lib%name.so.%{sover}*
 %dir %_libdir/%name/
 %dir %_libdir/%name/modules/
 %_libdir/%name/modules/account.so
@@ -408,7 +417,11 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/vumeter.so
 %_datadir/%name
 
-%files devel
+%files -n lib%name%sover
+%_libdir/lib%name.so.%sover
+%_libdir/lib%name.so.%sover.*
+
+%files -n lib%name-devel
 %_includedir/%name.h
 %_libdir/lib%name.so
 %_pkgconfigdir/lib%name.pc
@@ -424,7 +437,7 @@ This module provides the X11 video output driver.
 
 %files av1
 %_libdir/%name/modules/av1.so
-	
+
 %files avcodec
 %_libdir/%name/modules/avcodec.so
 
@@ -497,6 +510,12 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.12.0-alt1
+- new version 4.12.0
+- move libbaresip.so.29 to libbaresip29 subpackage (Shared Libs Policy)
+- rename baresip-devel to libbaresip-devel
+- use rpm-build-cmake instead of cmake in BuildRequires
+
 * Fri Sep 04 2026 Ilya Demyanov <turbid@altlinux.org> 4.11.0-alt1
 - new version 4.11.0
 
