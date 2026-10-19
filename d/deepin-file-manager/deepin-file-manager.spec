@@ -6,7 +6,7 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.5.131
+Version: 6.6.6
 Release: alt1
 
 Summary: Deepin File Manager
@@ -21,7 +21,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 # Source-url: https://github.com/linuxdeepin/dde-file-manager/archive/%version/%repo-%version.tar.gz
 Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: deepin-file-manager-6.5.131-alt-fixes-paths.patch
+Patch1: deepin-file-manager-6.6.6-alt-fixes-paths.patch
 
 # /usr/include/dqt6/QtCore/qhash.h:65:33:
 # error: static assertion failed:
@@ -30,10 +30,10 @@ ExcludeArch: i586
 
 Provides: %repo = %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
 # Automatically added by buildreq on Tue Apr 01 2025
 # optimized out: boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libX11-devel libdde-shell0 libdeepin-pdfium1 libdeepin-qdbus-service0 libdfm6-burn1 libdfm6-io1 libdfm6-mount1 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-sql libdqt6-svg libdqt6-svgwidgets libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libdtk6widget-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libicu-devel libjson-c5 libp11-kit libpng-devel libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libpoppler2-cpp libqt6-core libqt6-gui libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-devel sh5 vulkan-headers xorg-proto-devel zlib-devel
-BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-dqt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel libdfm6-search-devel libheif-devel libappimage-devel librsvg-devel libappimage-devel-static kf6-syntax-highlighting-devel
+BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libdtk6ocr-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-dqt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel libdfm6-search-devel libheif-devel libappimage-devel librsvg-devel libappimage-devel-static libminizip-devel dkf6-syntax-highlighting-devel dkf6-kidletime-devel
 BuildRequires: dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-concurrent libdqt6-test
 BuildRequires: deepin-gettext-tools deepin-desktop-base libfreetype-devel libpng-devel
 
@@ -150,6 +150,9 @@ cmake --build %__builddir -j%__nprocs
 DESTDIR=%buildroot cmake --install %__builddir --verbose
 chmod +x %buildroot%_sysconfdir/deepin/dde-file-manager/dfm-dlnfs-automount
 chmod +x %buildroot%_bindir/dde-property-dialog
+# found separate qt6 and kf6 libs
+patchelf %buildroot%_libdir/deepin-service-manager/libdde-filemanager-textindex.so --add-rpath %_dqt6_libdir
+patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_libdir
 
 %files
 %doc README.md LICENSE debian/changelog
@@ -161,12 +164,15 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_bindir/dde-select-dialog-wayland
 %_bindir/dde-file-dialog
 %_bindir/deepin-diskencrypt-service
+%_bindir/dde-usb-repair-dialog
 %_bindir/file-manager.sh
 %_bindir/dfm-trash.sh
 %_libexecdir/%repo
 %_libexecdir/%repo-preview
+%_libexecdir/%repo-extractor
 %_datadir/%repo/
 %_desktopdir/%repo.desktop
+%_desktopdir/dfm-reencrypt.desktop
 %_sysconfdir/X11/Xsession.d/99dfm-dlnfs-automount
 %dir %_sysconfdir/deepin/
 %dir %_sysconfdir/deepin/dde-file-manager/
@@ -183,13 +189,13 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.MountControl.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.UserShareManager.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.TPMControl.service
-%_datadir/dbus-1/system-services/org.deepin.Filemanager.OpticalShare.service
+%_datadir/dbus-1/system-services/org.deepin.Filemanager.UsbRepair.service
 %_datadir/dbus-1/system.d/org.deepin.filemanager.accesscontrol.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.diskencrypt.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.mountcontrol.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.usersharemanager.conf
 %_datadir/dbus-1/system.d/org.deepin.filemanager.tpmcontrol.conf
-%_datadir/dbus-1/system.d/org.deepin.filemanager.opticalshare.conf
+%_datadir/dbus-1/system.d/org.deepin.filemanager.usbrepair.conf
 %_userunitdir/dde-file-manager.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/dde-file-manager.service
@@ -200,6 +206,8 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_unitdir/deepin-service-plugin@org.deepin.Filemanager.MountControl.service.d/security-hardening.conf
 %dir %_unitdir/deepin-service-plugin@org.deepin.Filemanager.UserShareManager.service.d/
 %_unitdir/deepin-service-plugin@org.deepin.Filemanager.UserShareManager.service.d/security-hardening.conf
+%dir %_unitdir/deepin-service-plugin@org.deepin.Filemanager.UsbRepair.service.d/
+%_unitdir/deepin-service-plugin@org.deepin.Filemanager.UsbRepair.service.d/security-hardening.conf
 %dir %_sysconfdir/systemd/system/deepin-service-group@.service.d/
 %_sysconfdir/systemd/system/deepin-service-group@.service.d/dde-file-manage-service-override.conf
 %_tmpfilesdir/deepin-diskencrypt-tmpfiles.conf
@@ -213,6 +221,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/polkit-1/actions/org.deepin.filemanager.mountcontrol.policy
 %_datadir/polkit-1/actions/com.deepin.filemanager.vault.policy
 %_datadir/polkit-1/actions/org.deepin.filemanager.tpmcontrol.policy
+%_datadir/polkit-1/actions/org.deepin.filemanager.usbrepair.policy
 %_datadir/polkit-1/rules.d/99-dde-file-manager-encrypt.rules
 %_udev_rulesdir/99-dfm-encrypt.rules
 %_datadir/applications/context-menus/.readme
@@ -249,7 +258,7 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/deepin-service-manager/system/dde-filemanager-mountcontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-sharecontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-tpmcontrol.json
-%_datadir/deepin-service-manager/system/dde-filemanager-opticalshare.json
+%_datadir/deepin-service-manager/system/dde-filemanager-usbrepair.json
 %_datadir/deepin-service-manager/user/dde-filemanager-textindex.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
@@ -308,6 +317,10 @@ chmod +x %buildroot%_bindir/dde-property-dialog
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Oct 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.6.6-alt1
+- New version 6.6.6.
+- Built on separate kf6 libs.
+
 * Mon Apr 13 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.131-alt1
 - New version 6.5.131.
 
