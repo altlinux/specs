@@ -2,7 +2,7 @@ Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Mail
 License: AGPL-3.0
@@ -14,6 +14,8 @@ Source1: %name.watch
 Patch1: 0001-Do-not-show-loose-matches.patch
 Patch2: 0002-Hide-from-thread-missing-messages.patch
 Patch4: 0004-Make-PublicInbox-MIME-unloadable-and-make-perl.req-h.patch
+Patch5: 0005-searchidx-fix-split-shards-with-SWIG-Xapian.pm.patch
+Patch6: 0006-t-lei-index-ignore-pct-in-m-vs-mid-queries.patch
 
 BuildArch: noarch
 
@@ -48,7 +50,7 @@ BuildRequires: perl-Mail-SpamAssassin
 BuildRequires: perl-Parse-RecDescent
 BuildRequires: perl-Plack
 BuildRequires: perl-Plack-Middleware-ReverseProxy
-BuildRequires: perl-Search-Xapian
+BuildRequires: perl(Xapian.pm)
 BuildRequires: perl-Template-GD
 BuildRequires: perl-TimeDate
 BuildRequires: perl-URI
@@ -68,7 +70,10 @@ Requires: perl-Encode-JP
 Requires: perl-Encode-KR
 Requires: perl-Encode-TW
 Requires: perl-Plack-Middleware-ReverseProxy
-Requires: perl-Search-Xapian
+Requires: perl(Xapian.pm)
+
+# PublicInbox/TestCommon.pm is for tests only and loads Test::More lazily
+%filter_from_requires /^perl.Test.More.pm/d
 
 %description
 public-inbox implements the sharing of an email inbox via git to
@@ -131,6 +136,15 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1.1
+- NMU: Requires and BuildRequires: perl-Search-Xapian -> perl(Xapian.pm)
+  (SWIG Xapian.pm from perl-Xapian; perl-Search-Xapian is incompatible
+  with Xapian 2).
+- Add upstream fixes for Xapian.pm and Xapian 2 (searchidx --split-shards,
+  t/lei-index.t).
+- Do not require perl(Test/More.pm) (used only by PublicInbox/TestCommon.pm
+  for tests) (closes: #49935).
+
 * Wed Aug 26 2026 Ivan A. Melnikov <iv@altlinux.org> 2.0.0-alt1
 - New version (2.0.0).
 

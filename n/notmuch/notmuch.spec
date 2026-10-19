@@ -1,6 +1,6 @@
 Name: notmuch
 Version: 0.38.3
-Release: alt1
+Release: alt1.1
 
 Summary: new email reading system called notmuch
 
@@ -104,6 +104,8 @@ install -m0755 emacs/notmuch-emacs-mua %buildroot%_bindir/notmuch-emacs-mua
 
 # cleanup
 rm -rvf %buildroot%_datadir/applications/mimeinfo.cache
+# nmbug (notmuch-git alias) is not installed
+rm -v %buildroot%_man1dir/nmbug.1*
 
 %files
 %_bindir/%name
@@ -132,6 +134,10 @@ rm -rvf %buildroot%_datadir/applications/mimeinfo.cache
 %_libdir/lib%name.so
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.38.3-alt1.1
+- NMU: rebuild with libxapian45 (xapian-core 2.1.0).
+- Fix FTBFS: do not package nmbug.1 (nmbug is not installed).
+
 * Thu Feb 20 2025 Ivan A. Melnikov <iv@altlinux.org> 0.38.3-alt1
 - 0.38.3
 

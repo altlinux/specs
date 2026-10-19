@@ -14,7 +14,7 @@
 
 Name: zeitgeist
 Version: %major.4
-Release: alt2
+Release: alt3
 
 Summary: Framework providing Desktop activity awareness
 Group: Office
@@ -29,6 +29,7 @@ Vcs: https://gitlab.freedesktop.org/zeitgeist/zeitgeist.git
 Source: %name-%version.tar
 %endif
 Patch: %name-1.0.4-alt-python-import.patch
+Patch1: %name-1.0.4-alt-xapian-2.patch
 
 Requires: lib%name%api_ver = %EVR
 
@@ -133,6 +134,7 @@ This package contains development documentation for the Zeitgeist library.
 %prep
 %setup
 %patch -b .imp
+%patch1 -p1
 subst 's/_have/have/' data/completions/%name-daemon
 
 %build
@@ -200,6 +202,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt3
+- fix build with Xapian 2.x (rebuild with libxapian45).
+
 * Tue Aug 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt2
 - updated to v1.0.4-2-g33ab4cce
 - fixed build against newer rpm-build-python3 (ALT #47206)

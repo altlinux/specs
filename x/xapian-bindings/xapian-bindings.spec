@@ -4,6 +4,7 @@
 %set_verify_elf_method strict,unresolved=normal
 
 %def_with python3
+%def_with perl
 %ifarch %e2k
 # needs thorough update, esp. rpm-macros-ruby
 %def_without ruby
@@ -13,8 +14,8 @@
 %def_without doc
 
 Name: xapian-bindings
-Version: 1.4.31
-Release: alt2
+Version: 2.1.0
+Release: alt1
 Summary: Xapian search engine bindings
 License: GPL-2.0-or-later
 Group: Development/Databases
@@ -24,6 +25,8 @@ Vcs: git://git.xapian.org/xapian
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar
 Source100: xapian-bindings.watch
 Patch1: xapian-bindings-1.4.27-alt-no-docs.patch
+# Build perl module with Perl ccflags -D options (ABI on 32-bit)
+Patch2: xapian-bindings-2.1.0-alt-perl-cppflags.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libruby-devel
@@ -36,6 +39,9 @@ BuildRequires: rpm-build-ruby
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
+%endif
+%if_with perl
+BuildRequires: perl-devel perl(Pod/Html.pm)
 %endif
 %if_with doc
 BuildRequires: python3-module-sphinx
@@ -80,11 +86,26 @@ and also supports a rich set of boolean query operators.
 This package provides the files needed for developing Ruby scripts
 which use Xapian.
 
+%package -n perl-Xapian
+Summary: Perl bindings for Xapian search engine
+Group: Development/Perl
+Requires: %libxapianEVR
+
+%description -n perl-Xapian
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models
+and also supports a rich set of boolean query operators.
+
+This package provides the files needed for developing Perl scripts
+which use Xapian (the Xapian module, successor of Search::Xapian).
+
 %prep
 %setup
 %if_without doc
 %patch1 -p2
 %endif
+%patch2 -p2
 # Link to the libruby for a proper dependency.
 sed -i '/_xapian_la_LDFLAGS/s/$/ -lruby/' ruby/Makefile.am
 
@@ -100,7 +121,9 @@ sed -i '/_xapian_la_LDFLAGS/s/$/ -lruby/' ruby/Makefile.am
 export RUBY_LIB=%ruby_vendorlibdir
 export RUBY_LIB_ARCH=%ruby_vendorarchdir
 export RDOC=$(PATH=/usr/lib/ruby/bin:$PATH type -p rdoc)
-%configure %{subst_with python3} %{subst_with ruby}
+export PERL_ARCH=%perl_vendor_archlib
+export PERL_LIB=%perl_vendor_archlib
+%configure %{subst_with python3} %{subst_with ruby} %{subst_with perl} XAPIAN_CONFIG=xapian-config
 %make_build
 
 %install
@@ -111,6 +134,9 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %if_with ruby
   ruby -Iruby -Iruby/.libs -rxapian -e '(p Xapian.version_string) == "%version"'
   make -C ruby check VERBOSE=1
+%endif
+%if_with perl
+  make -C perl check VERBOSE=1
 %endif
 %if_with python3
   make -C python3 check VERBOSE=1
@@ -129,9 +155,29 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %ruby_vendorlibdir/xapian.rb
 %endif
 
+%if_with perl
+%files -n perl-Xapian
+%doc README perl/docs/*
+%perl_vendor_archlib/Xapian.pm
+%perl_vendor_archlib/Xapian/
+%perl_vendor_archlib/auto/Xapian/
+%endif
+
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- NMU: new version 2.1.0 (for xapian-core 2.1.0).
+- Build perl-Xapian (Xapian Perl bindings, replaces perl-Search-Xapian
+  that is incompatible with Xapian 2), add BuildRequires: perl-devel,
+  perl(Pod/Html.pm) for it.
+- Build perl module with -D options from Perl ccflags (-D_FILE_OFFSET_BITS=64
+  on 32-bit): fixes perl data corruption with Xapian.pm on i586.
+- Python2 bindings are dropped upstream since 2.0.0 (closes: #59081).
+
 * Mon May 11 2026 Vitaly Chikunov <vt@altlinux.org> 1.4.31-alt2
 - Do not package Python2's python-module-xapian (ALT#59081).
+
+* Fri Mar 20 2026 Vitaly Chikunov <vt@altlinux.org> 2.0.0-alt1
+- Update to 2.0.0 (2026-03-17).
 
 * Tue Feb 24 2026 Vitaly Chikunov <vt@altlinux.org> 1.4.31-alt1
 - Update to 1.4.31 (2026-02-23).

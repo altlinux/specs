@@ -3,9 +3,9 @@
 %set_verify_elf_method strict
 
 Name: xapian-core
-Version: 1.4.31
+Version: 2.1.0
 Release: alt1
-%define sover 30
+%define sover 45
 Summary: Xapian is an open source search engine library
 License: GPL-2.0-or-later
 Group: Development/Databases
@@ -102,11 +102,12 @@ rm -rf %buildroot%_datadir/doc/xapian-core/
 
 %check
 unset MAKEFLAGS
+# skip CPU-time scaling tests: they are flaky on a loaded build host
+export AUTOMATED_TESTING=1
 time %make_build check
 
 %files
 %_bindir/copydatabase
-%_bindir/quest
 %_bindir/simpleexpand
 %_bindir/simpleindex
 %_bindir/simplesearch
@@ -116,13 +117,14 @@ time %make_build check
 %_bindir/xapian-metadata
 %_bindir/xapian-pos
 %_bindir/xapian-progsrv
+%_bindir/xapian-quest
 %_bindir/xapian-replicate
 %_bindir/xapian-replicate-server
 %_bindir/xapian-tcpsrv
 %_datadir/xapian-core/
 %_man1dir/*.1*
 %exclude %_man1dir/xapian-config.1*
-%doc AUTHORS ChangeLog* NEWS PLATFORMS README
+%doc AUTHORS ChangeLog* NEWS README
 
 %files -n libxapian%sover
 %_libdir/*.so.%sover
@@ -144,6 +146,14 @@ time %make_build check
 %doc HACKING
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
+- Update to 2.1.0.
+- Run %%check with AUTOMATED_TESTING=1 (skip CPU-time dependent tests).
+- Do not package PLATFORMS (removed by upstream).
+
+* Fri Mar 20 2026 Vitaly Chikunov <vt@altlinux.org> 2.0.0-alt1
+- Update to 2.0.0 (2026-03-17).
+
 * Tue Feb 24 2026 Vitaly Chikunov <vt@altlinux.org> 1.4.31-alt1
 - Update to 1.4.31 (2026-02-23).
 
