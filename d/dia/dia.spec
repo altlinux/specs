@@ -5,7 +5,7 @@
 
 Name: dia
 Version: 0.98.0
-Release: alt0.01.2
+Release: alt1
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -105,6 +105,10 @@ ln -s en %buildroot%_datadir/%name/help/ru
 %_man1dir/%name.1.*
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 0.98.0-alt1
+- support libxml2 older than 2.13 (to build in p11),
+  lower libxml2 requirement to 2.12
+
 * Fri May 01 2026 Anton Midyukov <antohami@altlinux.org> 0.98.0-alt0.01.2
 - New snapshot from commit ad68cc37.
 
