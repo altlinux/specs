@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: libinstpatch
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: MIDI instrument patch library
@@ -24,7 +24,7 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: astyle cmake libgio-devel libsndfile-devel
+BuildRequires: astyle cmake libgio-devel >= 2.68 libsndfile-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: ctest}
@@ -74,6 +74,9 @@ This package includes the development libraries and header files for
 %doc examples/*.c
 
 %changelog
+* Mon Oct 19 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1
+- 1.1.8 (fixed CVE-2026-111136)
+
 * Thu May 22 2025 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
 - 1.1.7
 

@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blur-my-shell
-%define ver_major 73
+%define ver_major 76
 %define beta %nil
 %define uuid %_name@aunetx
 %define xdg_name org.gnome.shell.extensions.%_name
@@ -30,7 +30,7 @@ Source: %_name-%version%beta.tar
 
 Requires: gnome-shell >= 46
 Requires: typelib(Adw) = 1
-Requires: typelib(Blur) = 1.0
+#Requires: typelib(Blur) = 1.0
 
 BuildRequires: /usr/bin/glib-compile-schemas
 
@@ -74,6 +74,9 @@ popd
 %doc README.md
 
 %changelog
+* Sun Oct 18 2026 Yuri N. Sedunov <aris@altlinux.org> 76-alt1
+- 76
+
 * Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 73-alt1
 - 73
 

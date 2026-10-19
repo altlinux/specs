@@ -15,7 +15,7 @@
 %def_enable sandboxed
 
 Name: %_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Library for parsing and writing .ipuz puzzle files
@@ -33,7 +33,7 @@ Source: %_name-%version.tar
 Source1: %name-%version-cargo.tar
 
 BuildRequires(pre): rpm-macros-meson rpm-build-rust %{?_enable_introspection:rpm-build-gir}
-BuildRequires: meson rust-cargo
+BuildRequires: meson rust-cargo >= 1.92
 BuildRequires: pkgconfig(json-glib-1.0)
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(Json) = 1.0}
@@ -140,6 +140,9 @@ popd}
 
 
 %changelog
+* Mon Oct 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1
+- 0.5.6
+
 * Tue Jul 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
 - 0.5.5
 
