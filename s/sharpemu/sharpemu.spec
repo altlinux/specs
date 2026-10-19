@@ -10,7 +10,7 @@
 
 Name: sharpemu
 Version: 0.0.6
-Release: alt1%{version_suffix}
+Release: alt2%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
@@ -164,6 +164,10 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Mon Oct 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.6-alt2.mono
+- Update the user data directory patch: also route the trophy cache, game
+  art cache, .zar cache and downloaded game patches there
+
 * Mon Oct 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.6-alt1.mono
 - Update to v0.0.6-mono
 - Enable FFmpeg built-in Opus decoder (AJM audio jobs, ffmpeg-core e95fc79)
