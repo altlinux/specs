@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 4.30.0
+Version: 4.32.1
 Release: alt1
 
 Summary: Property-based testing framework for Open API and GraphQL based apps
@@ -23,6 +23,9 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# not packaged in Sisyphus
+%add_pyproject_deps_check_filter webfuzzing-commons
+
 %pyproject_builddeps_metadata_extra tests
 BuildRequires: python3-module-aiohttp-tests
 BuildRequires: curl
@@ -73,6 +76,9 @@ test/
 %_bindir/st
 
 %changelog
+* Mon Oct 19 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.32.1-alt1
+- New version (4.32.1).
+
 * Fri Oct 09 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.30.0-alt1
 - New version (4.30.0).
 
