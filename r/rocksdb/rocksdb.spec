@@ -14,9 +14,11 @@
 %def_with liburing
 %def_disable static
 
+%define abiversion 11
+
 Name: rocksdb
-Version: 7.9.3
-Release: alt1.2
+Version: 11.8.1
+Release: alt0.1
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: Databases
 # License is changed from "BSD-plus-Patents" (BSD-3-Clause) to GPL-2.0 AND Apache-2.0 in 2017.
@@ -28,8 +30,9 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
-BuildRequires: libgtest-devel libgflags-devel cmake >= 3.10
+BuildRequires: libgtest-devel libgflags-devel
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_java:BuildRequires: java-devel}
 %{?_with_snappy:BuildRequires: libsnappy-devel}
@@ -52,6 +55,7 @@ specially suitable for storing multiple terabytes of data in a single database.
 %package -n %name-tools
 Summary: A Persistent Key-Value Store for Flash and RAM Storage (tools)
 Group: System/Libraries
+Conflicts: mariadb-rocksdb-engine
 
 %description -n %name-tools
 Administration and Data Access Tools
@@ -60,11 +64,13 @@ Administration and Data Access Tools
   commands.
 - sst_dump tool can be used to gain insights about a specific SST file.
 
-%package -n lib%name
+%package -n lib%name%abiversion
 Summary: A Persistent Key-Value Store for Flash and RAM Storage
 Group: System/Libraries
+Provides: lib%name = %EVR
+Obsoletes: lib%name < %EVR
 
-%description -n lib%name
+%description -n lib%name%abiversion
 Rocksdb is a library that forms the core building block for a fast key value
 server, especially suited for storing data on flash drives. It has a
 Log-Structured-Merge-Database (LSM) design with flexible trade offs between
@@ -75,7 +81,7 @@ specially suitable for storing multiple terabytes of data in a single database.
 %package -n lib%name-devel
 Summary: Development files for rocksdb
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: lib%name%abiversion = %EVR
 
 %description -n lib%name-devel
 Development files for rocksdb
@@ -139,8 +145,9 @@ rm -f %buildroot%_libdir/*.a
 %_bindir/ldb
 %_bindir/sst_dump
 
-%files -n lib%name
-%_libdir/*.so.*
+%files -n lib%name%abiversion
+%_libdir/lib%name.so.%abiversion
+%_libdir/lib%name.so.%abiversion.*
 
 %files -n lib%name-devel
 %_libdir/*.so
@@ -154,6 +161,13 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 11.8.1-alt0.1
+- NMU: new version 11.8.1 (fixes FTBFS with gcc 15)
+- Renamed librocksdb to librocksdb11 according to Shared Libs Policy
+- Added Conflicts: mariadb-rocksdb-engine to rocksdb-tools (/usr/bin/sst_dump)
+- Replaced BuildRequires: cmake with rpm-build-cmake
+- Fixed build on i586 (upstream InjectedErrorLog::Entry padding fix)
+
 * Sat Sep 23 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 7.9.3-alt1.2
 - NMU: fixed FTBFS on LoongArch.
 
