@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: CapyPDF is a library for generating PDF files
@@ -24,14 +24,14 @@ Source: %url/releases/download/%version/%_name-%version.tar.xz
 Source: %_name-%version.tar
 %endif
 
-ExcludeArch: %ix86
+#ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson >= 1.5.1 gcc-c++
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(lcms2)
-BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libturbojpeg) >= 3.2
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(libtiff-4)
 %{?_enable_devtools:BuildRequires: pkgconfig(harfbuzz)
@@ -94,6 +94,9 @@ sed -i 's|/usr/share/color/icc/ghostscript/a98.icc|/usr/share/ghostscript/%gs_ve
 
 
 %changelog
+* Mon Oct 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
+- 0.22.0
+
 * Fri May 29 2026 Yuri N. Sedunov <aris@altlinux.org> 0.21.0-alt1
 - 0.21.0
 
