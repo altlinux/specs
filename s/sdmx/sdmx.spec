@@ -7,7 +7,7 @@
 
 Name: sdmx
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: SDMX schemas, documentation and BaseALT policy templates
 License: AGPL-3.0+
@@ -26,6 +26,7 @@ BuildRequires: typst >= 0.13.1
 BuildRequires: fonts-otf-mozilla-fira
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: fonts-ttf-liberation
+BuildRequires: /proc
 %endif
 
 Source0: %name-%version.tar
@@ -106,6 +107,9 @@ sh scripts/validate
 %endif
 
 %changelog
+* Mon Oct 19 2026 Korney Gedert <kiper@altlinux.org> 1.0.0-alt2
+- Require /proc for Typst documentation builds on p11 (Danila Skachedubov).
+
 * Thu Oct 01 2026 Korney Gedert <kiper@altlinux.org> 1.0.0-alt1
 - Release SDMX/SDML 1.0
 - Package versioned XML schemas and build the PDF documentation with Typst
