@@ -5,17 +5,16 @@
 
 %define brand alt
 %define theme atomic
-%define Variant Onyx
 %define variant onyx
 %define altbranch sisyphus
 %define flavour %brand-%theme
 %define flavour_onyx %flavour-onyx
-%define pname ALT Atomic
+%define pname ALT Atomic Onyx
 %define bugtracker https://altlinux.space/alt-atomic/onyx/issues
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20261018
+Version: 20261019
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -126,7 +125,7 @@ Requires: ready-set-plugin-atomic-finalize
 %build
 %meson \
   -Dname='%pname' \
-  -Dpretty_name='%pname %Variant' \
+  -Dpretty_name='%pname' \
   -Dtheme=%theme \
   -Dbranch=%altbranch \
   -Dbrand=%brand \
@@ -134,7 +133,6 @@ Requires: ready-set-plugin-atomic-finalize
   -Dbugtracker=%bugtracker \
   -Dflavour=%flavour \
   -Ddocpage=%docpage \
-  -Dvariant=%Variant \
   -Dvariant_id=%variant \
   -Dversion=%version
 %meson_build
@@ -163,6 +161,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Mon Oct 19 2026 Vladimir Romanov <rirusha@altlinux.org> 20261019-alt1
+- Changed some data for appstream competability.
+
 * Sun Oct 18 2026 Vladimir Romanov <rirusha@altlinux.org> 20261018-alt1
 - Fixed package URL with os-release HOME_URL.
 

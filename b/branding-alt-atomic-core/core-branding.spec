@@ -5,17 +5,16 @@
 
 %define brand alt
 %define theme atomic
-%define Variant Core
 %define variant core
 %define altbranch sisyphus
 %define flavour %brand-%theme
 %define flavour_core %flavour-core
-%define pname ALT Atomic
+%define pname ALT Atomic Core
 %define bugtracker https://altlinux.space/alt-atomic/core/issues
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-core
-Version: 20260926
+Version: 20261019
 Release: alt1
 
 Group: Graphics
@@ -57,7 +56,7 @@ Conflicts: altlinux-release-%altbranch
 %build
 %meson \
   -Dname='%pname' \
-  -Dpretty_name='%pname %Variant' \
+  -Dpretty_name='%pname' \
   -Dtheme=%theme \
   -Dbranch=%altbranch \
   -Dbrand=%brand \
@@ -65,7 +64,6 @@ Conflicts: altlinux-release-%altbranch
   -Dbugtracker=%bugtracker \
   -Dflavour=%flavour \
   -Ddocpage=%docpage \
-  -Dvariant=%Variant \
   -Dvariant_id=%variant \
   -Dversion=%version
 %meson_build
@@ -78,6 +76,9 @@ Conflicts: altlinux-release-%altbranch
 %_prefix/lib/os-release
 
 %changelog
+* Mon Oct 19 2026 Vladimir Romanov <rirusha@altlinux.org> 20261019-alt1
+- Changed some data for appstream competability.
+
 * Sat Sep 26 2026 Vladimir Romanov <rirusha@altlinux.org> 20260926-alt1
 - Updated URL. (thx x1z53@)
 
