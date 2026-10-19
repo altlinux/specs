@@ -1,13 +1,13 @@
 Group: Development/Java
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          msv
 Epoch:         1
 Version:       2013.6.1
-Release:       alt3_19jpp11
+Release:       alt3_19jpp11.1
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
 URL:           http://msv.java.net/
@@ -175,7 +175,9 @@ done
 %mvn_package ":%{name}{,-core}::{}:" %{name}-msv
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+# JDKImpl uses JDK internal xerces regex classes (tested in FactoryTest)
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 \
+    -DargLine="--add-exports=java.xml/com.sun.org.apache.xerces.internal.impl.xpath.regex=ALL-UNNAMED"
 
 %install
 %mvn_install
@@ -245,6 +247,11 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 %{_datadir}/%{name}
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2013.6.1-alt3_19jpp11.1
+- NMU: fix FTBFS: replaced BuildRequires: jpackage-11-compat with jpackage-17-compat
+  (maven-bundle-plugin requires Java 17)
+- export JDK internal xerces regex package to tests (FactoryTest on Java 17).
+
 * Wed Aug 30 2023 Igor Vlasenko <viy@altlinux.org> 1:2013.6.1-alt3_19jpp11
 - scripts bugfix: changed classpath to compat relaxngDatatype2011.1
 - (closes: #47389)
