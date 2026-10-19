@@ -1,5 +1,5 @@
 Name:    flyline
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: A Bash plugin that provides a modern line editing interface
@@ -38,11 +38,6 @@ git = "https://github.com/HalFrgrd/ansi-to-tui.git"
 branch = "main"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/HalFrgrd/flash.git?rev=59af2ab94aaa6b7a407d09549605b1d3bc81256c"]
-git = "https://github.com/HalFrgrd/flash.git"
-rev = "59af2ab94aaa6b7a407d09549605b1d3bc81256c"
-replace-with = "vendored-sources"
-
 [source."git+https://github.com/HalFrgrd/flycomp.git?rev=754be16d7a2130ad12b6d038d42a8933c92c103f"]
 git = "https://github.com/HalFrgrd/flycomp.git"
 rev = "754be16d7a2130ad12b6d038d42a8933c92c103f"
@@ -58,9 +53,9 @@ git = "https://github.com/HalFrgrd/skim"
 rev = "7908ee85a5f6cd49575925fcc0bdef3999409d26"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/HalFrgrd/termina.git?rev=5b67693f2c5173c61a13d18517e2cebfc96a6a9d"]
+[source."git+https://github.com/HalFrgrd/termina.git?rev=dfa34e768a46d298e4b06fff6242c3d571f7061f"]
 git = "https://github.com/HalFrgrd/termina.git"
-rev = "5b67693f2c5173c61a13d18517e2cebfc96a6a9d"
+rev = "dfa34e768a46d298e4b06fff6242c3d571f7061f"
 replace-with = "vendored-sources"
 EOF
 
@@ -77,6 +72,9 @@ install -Dm 755 target/release/libflyline.so %buildroot%_libdir/%name/libflyline
 %_libdir/%name/libflyline.so
 
 %changelog
+* Mon Oct 19 2026 Sergey Palcheh <minergenon@altlinux.org> 1.10.0-alt1
+- new version 1.10.0
+
 * Mon Sep 21 2026 Sergey Palcheh <minergenon@altlinux.org> 1.9.0-alt1
 - new version 1.9.0
 
