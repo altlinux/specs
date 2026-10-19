@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.7.1
-Release: alt1
+Release: alt1.1
 
 Summary: Multidicts are useful for working with HTTP headers, URL query args etc
 
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/multidict
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
+Patch: multidict-6.7.1-alt-drop-coverage-options.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
@@ -24,7 +25,6 @@ BuildRequires: python3-module-wheel
 BuildRequires: /proc
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-pytest-codspeed
 BuildRequires: python3-module-objgraph
 %endif
@@ -35,6 +35,7 @@ It behaves mostly like a dict but it can have several values for the same key.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -55,6 +56,11 @@ py.test-3 -v --ignore tests/test_circular_imports.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 6.7.1-alt1.1
+- NMU: fix FTBFS with python 3.14: drop pytest-cov options from pytest.ini
+  (CoverageWarning about sysmon core was turned into a test error)
+- Removed BuildRequires: python3-module-pytest-cov (no longer used by tests)
+
 * Tue Jan 27 2026 Grigory Ustinov <grenka@altlinux.org> 6.7.1-alt1
 - Automatically updated to 6.7.1.
 
