@@ -1,6 +1,8 @@
+%define commit bce258674b2d544f981da4bf149244a76e8126c9
+
 Name: websocketpp
 Version: 0.8.2
-Release: alt1.1
+Release: alt2.gitbce2586
 
 Summary: C++ WebSocket Protocol Library
 
@@ -10,19 +12,23 @@ Url: http://www.zaphoyd.com/websocketpp
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/zaphoyd/websocketpp/archive/%version.tar.gz
+# Source-url: https://github.com/zaphoyd/websocketpp/archive/%commit.tar.gz
 Source: %name-%version.tar
 Source1: websocketpp.pc
 
 BuildArch: noarch
 
-# put cmake files in share/cmake instead of lib/cmake
-Patch1: websocketpp-0.4.0-cmake_noarch.patch
-Patch2: websocketpp-0.8.2-boost-1.87-compat.patch
+# Boost 1.87+/1.90 io_context port
+# https://github.com/zaphoyd/websocketpp/pull/1190
+Patch1: websocketpp-boost-1.90-pr1190.patch
+# OpenSSL 4.0 fix for examples
+# https://github.com/zaphoyd/websocketpp/pull/1195
+Patch2: websocketpp-openssl-4.0-pr1195.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: boost-program_options-devel
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake ctest gcc-c++
+BuildRequires: boost-devel boost-asio-devel boost-program_options-devel
+BuildRequires: zlib-devel libssl-devel
 BuildRequires: pkg-config
 
 %description
@@ -47,15 +53,19 @@ iostreams and one based on Boost Asio.
 %prep
 %setup
 
-%patch1 -p1 -b .cmake_noarch
+%patch1 -p1
 %patch2 -p1
 
 %build
-%cmake
+# put cmake files in share/cmake instead of lib/cmake (noarch)
+%cmake -DINSTALL_CMAKE_DIR=%_datadir/cmake/websocketpp -DBUILD_TESTS=ON
 %cmake_build
 
 %install
-%cmakeinstall_std install/fast
+%cmake_install
+
+%check
+%ctest --parallel 1
 
 %files devel
 %doc COPYING changelog.md readme.md roadmap.md
@@ -64,6 +74,15 @@ iostreams and one based on Boost Asio.
 %_datadir/cmake/websocketpp/
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.8.2-alt2.gitbce2586
+- build git snapshot of develop branch (bce2586, 2026-05-04)
+- enforce max_message_size in permessage-deflate decompression (upstream #1192)
+- C++20 build fix, SNI and TCP_NODELAY fixes from upstream develop
+- replace Boost 1.87 compat patch with Boost 1.90 port (upstream PR #1190)
+- add OpenSSL 4.0 fix for examples (upstream PR #1195)
+- drop cmake_noarch patch, set INSTALL_CMAKE_DIR instead
+- build and run upstream tests in %%check
+
 * Thu Sep 11 2025 Grigory Ustinov <grenka@altlinux.org> 0.8.2-alt1.1
 - NMU: fixed incompatibility with Boost 1.87
 
