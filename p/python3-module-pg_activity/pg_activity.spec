@@ -4,15 +4,15 @@
 
 Name:    python3-module-%pypi_name
 Version: 3.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: Top like application for PostgreSQL server activity monitoring
 License: PostgreSQL
 Group:   Monitoring
 URL:     https://github.com/dalibo/pg_activity
 
-Provides: pg_activity = %EVR
-Provides: pg-activity = %EVR
+%add_python3_path %_datadir/%pypi_name
+%add_findprov_skiplist %_datadir/%pypi_name/*
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
@@ -30,13 +30,22 @@ BuildRequires: python3(typing_extensions)
 BuildRequires: pkgconfig(libpq)
 %endif
 
-Requires: python3-module-psycopg2
-
 BuildArch: noarch
 
 Source: %name-%version.tar
 
+%package -n %pypi_name
+Summary: Top like application for PostgreSQL server activity monitoring
+Group:   Monitoring
+Provides: pg-activity = %EVR
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+Requires: python3-module-psycopg2
+
 %description
+%pypi_name is a top like application for PostgreSQL server activity monitoring.
+
+%description -n %pypi_name
 %pypi_name is a top like application for PostgreSQL server activity monitoring.
 
 %prep
@@ -47,19 +56,36 @@ Source: %name-%version.tar
 
 %install
 %pyproject_install
+# the application modules are private: do not provide python3(pgactivity)
+mkdir -p %buildroot%_datadir/%pypi_name
+mv -v %buildroot%python3_sitelibdir/pgactivity %buildroot%_datadir/%pypi_name/
+cat > %buildroot%_bindir/%pypi_name <<'EOF'
+#!/usr/bin/python3
+import sys
+sys.path.insert(0, '%_datadir/%pypi_name')
+from pgactivity.cli import main
+if __name__ == '__main__':
+    sys.exit(main())
+EOF
+install -Dm644 docs/man/%pypi_name.1 %buildroot%_man1dir/%pypi_name.1
 
 %check
 # XXX: Exclude tests which requires orphaned and early removed modules
-export PYTHONPATH=%buildroot%python3_sitelibdir
+export PYTHONPATH=%buildroot%_datadir/%pypi_name:%buildroot%python3_sitelibdir
 %pyproject_run_pytest
 
-%files
+%files -n %pypi_name
 %doc *.md LICENSE.txt
 %_bindir/%pypi_name
-%python3_sitelibdir/pgactivity
+%_man1dir/%pypi_name.1*
+%_datadir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.6.2-alt1.1
+- NMU: move the application modules to private /usr/share/pg_activity, so python3(pgactivity) is no longer provided (conflicts with python3-module-django-pgactivity)
+- NMU: rename the binary package to pg_activity (closes: #61090)
+
 * Tue May 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 3.6.2-alt1
 - New version.
 
