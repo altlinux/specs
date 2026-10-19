@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 27.1.0
+Version: 27.2.0
 Release: alt1
 
 Summary: Software library for fast, message-based applications
@@ -25,7 +25,7 @@ BuildRequires: python3-module-Cython
 BuildRequires: python3-module-packaging
 BuildRequires: python3-module-tornado
 BuildRequires: python3-module-scikit-build-core
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
 %if_without bootstrap
 BuildRequires: python3-module-cffi
@@ -135,6 +135,10 @@ rm -v zmq/__init__.py
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 27.2.0-alt1
+- New version 27.2.0.
+- Replaced BuildRequires: cmake with rpm-build-cmake.
+
 * Tue Oct 14 2025 Grigory Ustinov <grenka@altlinux.org> 27.1.0-alt1
 - Automatically updated to 27.1.0.
 
