@@ -7,7 +7,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.1.0
-Release: alt1.1
+Release: alt1.2
 Summary: A sphinx extension which renders HTML help files
 License: BSD
 Group: Development/Python3
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/sphinxcontrib-htmlhelp
 Vcs: https://github.com/sphinx-doc/sphinxcontrib-htmlhelp
 BuildArch: noarch
 Source0: %name-%version.tar
+Patch0: sphinxcontrib-htmlhelp-2.1.0-alt-sphinx9-keyword-index.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-flit-core
@@ -31,6 +32,7 @@ BuildRequires: python3-module-sphinx-tests
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -48,6 +50,9 @@ BuildRequires: python3-module-sphinx-tests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1.2
+- NMU: fix tests with Sphinx 9 (keyword index entry is removed from Sphinx).
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1.1
 - Demodernized packaging.
 
