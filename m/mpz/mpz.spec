@@ -1,7 +1,7 @@
 %def_without qt5
 
 Name: mpz
-Version: 2.1.7
+Version: 2.1.8
 Release: alt1
 
 Summary: Music player for the large local collections
@@ -70,6 +70,9 @@ rm -v %buildroot/usr/share/licenses/mpz/license.txt
 %_iconsdir/hicolor/scalable/apps/org.mpz_player.mpz.svg
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.8-alt1
+- new version 2.1.8
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.7-alt1
 - new version 2.1.7
 - use upstream reverse-DNS desktop/icon names, pack AppStream metainfo
