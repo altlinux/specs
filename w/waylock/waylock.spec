@@ -2,11 +2,9 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lint=relaxed
 
-%global _zig_cache_dir %_builddir/zig-cache
-
 Name: waylock
 Summary: A small, secure Wayland screenlocker
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 License: GPL-3.0
 Group: Graphical desktop/Other
@@ -31,14 +29,16 @@ unlocked.
 
 %prep
 %setup -a1
-mv ./vendor %_zig_cache_dir
+mv ./vendor %_zig_vendor_dir
 
 %build
 %zig_build \
+    -Dllvm \
     -Dpie
 
 %install
 %zig_install \
+    -Dllvm \
     -Dpie
 
 %files
@@ -48,6 +48,11 @@ mv ./vendor %_zig_cache_dir
 /usr/share/man/man1/waylock.1.xz
 
 %changelog
+* Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1
+- New version 1.6.0 (FTBFS fix: Zig 0.16)
+- Use zig-pkg as Zig package directory for Zig 0.16.
+- Build with the LLVM backend (-Dllvm): the default self-hosted backend hangs on aarch64.
+
 * Wed Oct 22 2025 Ilya Sorochan <k0tran@altlinux.org> 1.5.0-alt1
 - Update version.
 
