@@ -2,22 +2,22 @@
 BuildRequires: fonts-ttf-liberation
 %define _unpackaged_files_terminate_build 1
 %define module_name Devel-PerlySense
-%add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense.pm
-%add_findreq_skiplist %perl_vendor_privlib/Devel/PerlySense*.pm
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(App/Ack.pm) perl(Cache/Cache.pm) perl(Cache/FileCache.pm) perl(Carp.pm) perl(Class/MethodMaker.pm) perl(Cwd.pm) perl(Data/Dumper.pm) perl(Devel/CoverX/Covered.pm) perl(Devel/CoverX/Covered/Db.pm) perl(Exception/Class.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Corresponding.pm) perl(File/Corresponding/Config/Find.pm) perl(File/Find.pm) perl(File/Find/Rule.pm) perl(File/Path.pm) perl(File/Slurp.pm) perl(File/Spec.pm) perl(File/Spec/Functions.pm) perl(File/Temp.pm) perl(File/chdir.pm) perl(Getopt/Long.pm) perl(Graph/Easy.pm) perl(HTTP/Date.pm) perl(IO/String.pm) perl(List/MoreUtils.pm) perl(List/Util.pm) perl(Module/Pluggable.pm) perl(Moose.pm) perl(POSIX.pm) perl(PPI.pm) perl(PPI/Document.pm) perl(PPI/Dumper.pm) perl(Path/Class.pm) perl(Perl/Critic.pm) perl(Perl/Tidy.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spiffy.pm) perl(Storable.pm) perl(Test/Differences.pm) perl(Test/Exception.pm) perl(Test/More.pm) perl(Text/Table.pm) perl(Time/HiRes.pm) perl(YAML/Tiny.pm) perl(base.pm) perl(strict.pm) perl(utf8.pm) perl(warnings.pm) perl(List/AllUtils.pm) perl(Tree/Parser.pm)
 # END SourceDeps(oneline)
+BuildRequires: perl(Path/Tiny.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators /usr/bin/dot
 
 Name: perl-%module_name
 Version: 0.0223
-Release: alt1
+Release: alt1.1
 Summary: Perl IDE backend with Emacs frontend.
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
+%set_perl_req_method relaxed
 Source0: http://www.cpan.org/authors/id/J/JO/JOHANL/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
@@ -60,6 +60,10 @@ rm t/PerlySense-call-tree-visualize.t
 %_bindir/*
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0.0223-alt1.1
+- NMU: fixed build (added BuildRequires: perl(Path/Tiny.pm))
+- dropped add_findreq_skiplist and used relaxed perl.req method to get runtime dependencies
+
 * Thu Apr 10 2025 Igor Vlasenko <viy@altlinux.org> 0.0223-alt1
 - automated CPAN update
 

@@ -8,13 +8,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators perl(Test/Fatal.pm)
 
 Name: perl-%module_name
 Version: 1.12.2
-Release: alt2
+Release: alt2.1
 Summary: Pure Perl implementation of MongoDB's BSON serialization
 Group: Development/Perl
 License: apache
 URL: https://github.com/mongodb/mongo-perl-bson
 
 Source0: http://www.cpan.org/authors/id/M/MO/MONGODB/%{module_name}-v%{version}.tar.gz
+Patch1: BSON-v1.12.2-Adapt-tests-to-JSON-PP-4.17.patch
 BuildArch: noarch
 
 %description
@@ -22,6 +23,7 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{module_name}-v%{version}
+%patch1 -p1
 
 %build
 %perl_vendor_build
@@ -34,6 +36,9 @@ BuildArch: noarch
 %perl_vendor_privlib/B*
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12.2-alt2.1
+- NMU: fix tests for JSON-PP 4.17+ (JSON::PP::object renamed to _object)
+
 * Mon Aug 23 2021 Igor Vlasenko <viy@altlinux.org> 1.12.2-alt2
 - fixed build
 

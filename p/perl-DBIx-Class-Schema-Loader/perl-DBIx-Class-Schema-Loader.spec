@@ -2,7 +2,7 @@
 %define dist DBIx-Class-Schema-Loader
 Name: perl-%dist
 Version: 0.07053
-Release: alt1
+Release: alt2
 
 Summary: Dynamic definition of a DBIx::Class::Schema
 License: GPL or Artistic
@@ -14,7 +14,7 @@ Source0: http://www.cpan.org/authors/id/V/VE/VEESH/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Carp-Clan perl-Class-Unload perl-DBD-SQLite perl-Data-Dump perl-Pod-Parser perl-SQL-Abstract perl-String-CamelCase perl-String-ToIdentifier-EN perl-Task-Weaken perl-Test-Exception perl-Test-Pod perl-Test-Warn perl(DBIx/Class/IntrospectableM2M.pm) perl(Test/Differences.pm) perl(curry.pm)
+BuildRequires: perl-Carp-Clan perl-Class-Unload perl-DBD-SQLite perl-Data-Dump perl-Pod-Parser perl-SQL-Abstract perl-String-CamelCase perl-String-ToIdentifier-EN perl-Task-Weaken perl-Test-Deep perl-Test-Exception perl-Test-Pod perl-Test-Warn perl(DBIx/Class/IntrospectableM2M.pm) perl(Test/Differences.pm) perl(curry.pm)
 
 %description
 DBIx::Class::Schema::Loader automates the definition of a
@@ -37,6 +37,9 @@ setting up the columns, primary keys, and relationships.
 %perl_vendor_privlib/DBIx
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0.07053-alt2
+- fix FTBFS: added BuildRequires: perl-Test-Deep
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 0.07053-alt1
 - automated CPAN update
 
