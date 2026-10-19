@@ -4,7 +4,7 @@
 
 Name: python3-module-xkbcommon
 Version: 1.5.1
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for libxkbcommon using cffi
 License: MIT
@@ -24,6 +24,7 @@ BuildRequires: libxkbcommon-x11-devel
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: xkeyboard-config
+BuildRequires: libX11-locales
 %endif
 
 %description
@@ -52,6 +53,9 @@ mv %buildroot%python3_sitelibdir/xkbcommon/_ffi.abi3.so %buildroot%python3_sitel
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.1-alt1.1
+- NMU: fix FTBFS: add BuildRequires: libX11-locales (Compose files for tests)
+
 * Tue Feb 18 2025 Egor Ignatov <egori@altlinux.org> 1.5.1-alt1
 - New version 1.5.1.
 
