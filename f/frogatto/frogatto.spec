@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install libglvnd-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt3_25
+Release:        alt3_25.1
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -42,6 +42,9 @@ Patch6:         %{name}-1.3.3-stack-overflow.patch
 # This needs to be removed once sdl12-compat > 1.2.52 is released
 # Patch by Ingo van Lil
 Patch7:         %{name}-1.3.3-sdl.patch
+# Port Boost.Asio to Boost 1.90 (io_service, resolver::query/iterator removed)
+# Based on Debian fix-ftbfs-boost-1.90.patch
+Patch8:         %{name}-1.3-boost-1.90.patch
 
 # We have problems with these architectures
 # https://lists.rpmfusion.org/archives/list/rpmfusion-developers@lists.rpmfusion.org/thread/LQXC5S37G6S4NRZNB7KKGD2Q25OKXSEV/
@@ -99,12 +102,16 @@ Game data for frogatto.
 %patch5 -p0
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 # Fix locale file path
 sed -i 's!"./locale/"!"%{_datadir}/locale/"!' src/i18n.cpp
 
 # Edit BASE_CXXFLAGS
 sed -i 's/BASE_CXXFLAGS += -g -fno-inline-functions -fthreadsafe-statics -Wnon-virtual-dtor -Werror -Wignored-qualifiers -Wformat -Wswitch/BASE_CXXFLAGS += -fno-inline-functions -fthreadsafe-statics -Wno-narrowing/' Makefile
+
+# libboost_system is header-only stub since Boost 1.89 and no longer shipped
+sed -i "s/ -lboost_system//" Makefile
 
 
 %build
@@ -180,6 +187,10 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.3-alt3_25.1
+- NMU: fix build with Boost 1.90 (io_context, resolver results_type)
+- do not link with libboost_system (removed in Boost 1.89)
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 1.3.3-alt3_25
 - update to new release by fcimport
 
