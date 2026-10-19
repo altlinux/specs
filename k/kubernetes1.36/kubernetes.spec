@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     36
-%define kubernetes_patch     1
+%define kubernetes_patch     5
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -53,7 +53,7 @@ Conflicts: %prog_name > %EVR
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires(pre): golang >= 1.24
+BuildRequires(pre): golang >= 1.26.0
 BuildRequires: /proc
 BuildRequires: rpm-build-golang
 BuildRequires: rsync
@@ -86,7 +86,7 @@ Provides: %prog_name-unit-test = %EVR
 Conflicts: %prog_name-unit-test < %EVR
 Conflicts: %prog_name-unit-test > %EVR
 
-Requires: golang >= 1.20
+Requires: golang >= 1.26.0
 Requires: etcd >= 2.0.9
 Requires: hostname
 Requires: rsync
@@ -395,6 +395,23 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Oct 14 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.36.5-alt1
+- 1.36.1 -> 1.36.5.
+- Known compatibility issue with Go 1.27: requests with a large number
+  of header values may be rejected with HTTP 431. Partial upstream fixes
+  have not been backported because a comprehensive solution is not yet
+  available.
+- Fixes:
+  + CVE-2026-2270: StatefulSet and ControllerRevision write permissions allow cross-namespace pod creation
+  + CVE-2026-25680: Invoking denial of service when parsing arbitrary HTML in golang.org/x/net/html
+  + CVE-2026-25681: Invoking incorrect handling of character references in DOCTYPE nodes in golang.org/x/net/html
+  + CVE-2026-27136: Invoking duplicate attributes can cause XSS in golang.org/x/net/html
+  + CVE-2026-33814: Infinite loop in HTTP/2 transport when given bad SETTINGS_MAX_FRAME_SIZE in net/http/internal/http2 in golang.org/x/net
+  + CVE-2026-39821: Invoking failure to reject ASCII-only Punycode-encoded labels in golang.org/x/net/idna
+  + CVE-2026-42502: Invoking incorrect handling of HTML elements in foreign content in golang.org/x/net/html
+  + CVE-2026-42506: Invoking incorrect handling of namespaced elements in foreign content in golang.org/x/net/html
+  + CVE-2026-56852: Infinite loop on invalid input in golang.org/x/text
+
 * Mon Jun 01 2026 Alexander Stepchenko <geochip@altlinux.org> 1.36.1-alt1
 - 1.35.5 -> 1.36.1.
 

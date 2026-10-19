@@ -7,7 +7,7 @@
 %define prog_name            kubernetes
 %define kubernetes_major     1
 %define kubernetes_minor     33
-%define kubernetes_patch     12
+%define kubernetes_patch     13
 
 Name: %prog_name%kubernetes_major.%kubernetes_minor
 Version: %kubernetes_major.%kubernetes_minor.%kubernetes_patch
@@ -53,7 +53,7 @@ Conflicts: %prog_name > %EVR
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
-BuildRequires(pre): golang >= 1.24
+BuildRequires(pre): golang >= 1.24.0
 BuildRequires: /proc
 BuildRequires: rpm-build-golang
 BuildRequires: rsync
@@ -86,7 +86,7 @@ Provides: %prog_name-unit-test = %EVR
 Conflicts: %prog_name-unit-test < %EVR
 Conflicts: %prog_name-unit-test > %EVR
 
-Requires: golang >= 1.20
+Requires: golang >= 1.24.0
 Requires: etcd >= 2.0.9
 Requires: hostname
 Requires: rsync
@@ -395,6 +395,15 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Wed Oct 14 2026 Vladislav Tsarev <tyaplyapych@altlinux.org> 1.33.13-alt1
+- 1.33.12 -> 1.33.13.
+- Known compatibility issue with Go 1.27: requests with a large number
+  of header values may be rejected with HTTP 431. Partial upstream fixes
+  have not been backported because a comprehensive solution is not yet
+  available.
+- Fixes:
+  + CVE-2026-2270: StatefulSet and ControllerRevision write permissions allow cross-namespace pod creation
+
 * Wed May 27 2026 Alexander Stepchenko <geochip@altlinux.org> 1.33.12-alt1
 - 1.33.9 -> 1.33.12.
 
