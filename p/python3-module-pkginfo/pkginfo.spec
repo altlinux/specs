@@ -5,17 +5,16 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.13
+Version: 1.13.3
 Release: alt1
 Summary: Query metadatdata from sdists / bdists / installed packages
 License: MIT
 Group: Development/Python
 Url: https://pypi.org/project/pkginfo/
+Vcs: https://github.com/tseaver/pkginfo
 BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
-# https://bugs.launchpad.net/pkginfo/+bug/2170746
-Patch0: tests-sync-expected-release-version-for-pkginfo.patch
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -56,6 +55,9 @@ mv %buildroot%_bindir/pkginfo{,.py3}
 %exclude %python3_sitelibdir/%mod_name/tests
 
 %changelog
+* Mon Oct 19 2026 Stanislav Levin <slev@altlinux.org> 1.13.3-alt1
+- 1.13 -> 1.13.3
+
 * Mon Aug 31 2026 Stanislav Levin <slev@altlinux.org> 1.13-alt1
 - 1.12.1.2 -> 1.13.
 
