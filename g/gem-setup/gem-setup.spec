@@ -2,7 +2,7 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.13
+Version:       5.999.14
 Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
@@ -76,6 +76,12 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Oct 15 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.14-alt1
+- + added default gem group behaviour to ski
+- ! fixed to reconstruct Gemfile deps defaulting blank group to test
+- ! syntax typo for command module
+- ! fixed excessive symlinking into ext folder
+
 * Tue Sep 29 2026 Pavel Skrylev <majioa@altlinux.org> 5.999.13-alt1
 - * relaxed dep requirement for specified gem
 - ! fixed hoe spec parser extras data evaluation
