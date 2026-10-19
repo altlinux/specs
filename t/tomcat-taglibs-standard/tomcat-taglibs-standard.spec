@@ -3,18 +3,18 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global short_name      taglibs-standard
 
 Name:           tomcat-taglibs-standard
 Version:        1.2.5
-Release:        alt1_12jpp11
+Release:        alt1_12jpp11.1
 Epoch:          0
 Summary:        Apache Standard Taglib
 License:        ASL 2.0
-URL:            http://tomcat.apache.org/taglibs/
+URL:            https://tomcat.apache.org/taglibs/
 Source0:        http://apache.cbox.biz/tomcat/taglibs/taglibs-standard-%{version}/taglibs-standard-%{version}-source-release.zip
 Patch0: servlet31.patch
 
@@ -68,6 +68,10 @@ Javadoc for %{name}.
 %doc NOTICE
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0:1.2.5-alt1_12jpp11.1
+- NMU: BR jpackage-17-compat instead of jpackage-11-compat
+- use https in URL
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2.5-alt1_12jpp11
 - update
 
