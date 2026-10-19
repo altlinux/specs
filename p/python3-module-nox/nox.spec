@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2026.2.9
-Release: alt1
+Version: 2026.08.17
+Release: alt0.1
 
 Summary: Flexible test automation for Python
 
@@ -33,6 +33,7 @@ BuildRequires: python3-module-humanize
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: nox-tox-to-nox-ignore-new-tox-env.patch
 
 %description
 nox is a command-line tool that automates testing in multiple Python
@@ -41,6 +42,7 @@ for configuration.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -63,9 +65,14 @@ for configuration.
 %_bindir/nox
 %_bindir/tox-to-nox
 %python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-%version.dist-info
+%python3_sitelibdir/%pypi_name-*.dist-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.08.17-alt0.1
+- NMU: new version 2026.08.17.
+- NMU: fixed FTBFS: tox_to_nox tests failed with new tox (ignore tox-specific
+  set_env variables)
+
 * Wed Feb 11 2026 Grigory Ustinov <grenka@altlinux.org> 2026.2.9-alt1
 - Automatically updated to 2026.2.9.
 

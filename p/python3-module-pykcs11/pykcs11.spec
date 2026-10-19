@@ -1,5 +1,5 @@
 Name: python3-module-pykcs11
-Version: 1.5.18
+Version: 1.5.20
 Release: alt1
 
 Summary: A complete PKCS#11 wrapper for Python
@@ -53,6 +53,10 @@ This package contains documentation.
 %doc README.md samples/
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5.20-alt1
+- New version 1.5.20.
+- Fixed FTBFS (PyInt_FromLong with new swig).
+
 * Wed Sep 03 2025 Grigory Ustinov <grenka@altlinux.org> 1.5.18-alt1
 - Automatically updated to 1.5.18.
 

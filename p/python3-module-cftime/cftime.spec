@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.6.5
+Version: 1.6.6.1
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python
@@ -14,8 +14,12 @@ URL:     https://pypi.org/project/cftime
 VCS:     https://github.com/Unidata/cftime
 
 Source:  %name-%version.tar
+Patch:   cftime-1.6.6.1-alt-fix-can-use-python-datetime.patch
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
+
+# numpy is imported at runtime by the Cython module, autoreq does not see it
+Requires: python3(numpy)
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
@@ -35,6 +39,7 @@ BuildRequires: python3-module-numpy-testing
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -55,6 +60,11 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.6.1-alt1
+- New version 1.6.6.1
+- Fix FTBFS: rewrite _can_use_python_datetime (miscompiled by Cython 3.3)
+- Add missing runtime dependency on numpy
+
 * Tue Oct 14 2025 Grigory Ustinov <grenka@altlinux.org> 1.6.5-alt1
 - Automatically updated to 1.6.5.
 
