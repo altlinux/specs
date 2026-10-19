@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 17.4.0
+Version: 18.1.1
 Release: alt1
 
 Summary: OpenStack Oslo Database library
@@ -122,6 +122,9 @@ install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
 %endif
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 18.1.1-alt1
+- NMU: new version (fixes FTBFS with SQLAlchemy 2.1, psycopg default driver in tests)
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 17.4.0-alt1
 - Automatically updated to 17.4.0.
 
