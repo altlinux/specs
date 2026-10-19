@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Debug plugin for LLM providing an echo model
@@ -57,6 +57,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- New version 0.5.
+
 * Wed Apr 08 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4-alt1
 - Updated to 0.4.
 
