@@ -1,7 +1,7 @@
 %define _iconsscaldir  %_iconsdir/hicolor/scalable/apps
 
 Name: byobu
-Version: 6.14
+Version: 7.22
 Release: alt1
 
 Summary: Light-weight, configurable window manager built upon GNU screen
@@ -13,6 +13,9 @@ Url: https://www.byobu.org/
 BuildArch: noarch
 
 Obsoletes: screen-profiles
+
+# byobu-config (F9 menu) imports snack lazily, autodep ignores it
+Requires: python3(snack)
 
 # Source-url: https://github.com/dustinkirkland/byobu/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
@@ -30,6 +33,21 @@ Patch1: byobu-python.patch
 %filter_from_requires /snapd/d
 %filter_from_requires /dpkg/d
 
+# Tools and files below are used only if present (checked at run time)
+%filter_from_requires /^\/etc\//d
+%filter_from_requires /^\/sbin\/route$/d
+%filter_from_requires /^\/usr\/bin\/\(vim\|perl\)$/d
+%filter_from_requires /^\(bc\|diffutils\|lsb-release\|man-db\|net-tools\|perl-base\|psmisc\|screen\|time\|vim\|zsh\)$/d
+
+# Status indicators and Ubuntu-specific helpers run optional tools only when
+# they are present (command checks at run time), so do not pull them in
+%add_findreq_skiplist %_libexecdir/%name/[!i]* %_libexecdir/%name/ip_address
+%add_findreq_skiplist %_datadir/%name/tests/*
+%add_findreq_skiplist %_bindir/col1 %_bindir/ctail %_bindir/manifest
+%add_findreq_skiplist %_bindir/wifi-status %_bindir/whats-my-public-ip
+
+%add_python3_path %_prefix/lib/trustmux
+
 BuildRequires: rpm-build-python3
 BuildRequires: desktop-file-utils
 
@@ -41,6 +59,17 @@ Byobu now includes an enhanced profiles, convenient keybindings,
 configuration utilities, and toggle-able system status notifications
 for both the GNU Screen window manager and the more modern Tmux terminal multiplexer,
 and works on most Linux, BSD, and Mac distributions.
+
+%package trustmux
+Summary: Trustmux mobile companion daemon for Byobu
+Group: Terminals
+Requires: %name = %EVR
+# imported inside functions, not seen by autodep (TLS certificate generation)
+Requires: python3(cryptography)
+
+%description trustmux
+Trustmux is a web (PWA) companion for Byobu and tmux: a daemon that gives
+access to tmux sessions from a mobile browser over an encrypted connection.
 
 %prep
 %setup
@@ -75,6 +104,10 @@ desktop-file-install usr/share/%{name}/desktop/%{name}.desktop --dir %{buildroot
 rm %buildroot%_bindir/vigpg
 rm %buildroot%_man1dir/vigpg.1
 
+# remove purge-old-kernels (Debian/Ubuntu kernel packages only)
+rm -v %buildroot%_bindir/purge-old-kernels
+rm -v %buildroot%_man1dir/purge-old-kernels.1
+
 # add icon into %_iconsdir/hicolor/scalable/apps/ from %_datadir/byobu/pixmaps/byobu.svg
 mkdir -p %buildroot%_iconsscaldir
 cp -p usr/share/byobu/pixmaps/byobu.svg %buildroot%_iconsscaldir
@@ -82,6 +115,8 @@ cp -p usr/share/byobu/pixmaps/byobu.svg %buildroot%_iconsscaldir
 %find_lang %name
 
 %files -f %name.lang
+%exclude %_bindir/trustmux*
+%exclude %_man1dir/trustmux*
 %_docdir/%name/
 %config %_sysconfdir/%name
 %_bindir/*
@@ -91,8 +126,24 @@ cp -p usr/share/byobu/pixmaps/byobu.svg %buildroot%_iconsscaldir
 %_desktopdir/%name.desktop
 %_datadir/dbus-1/services/us.kirkland.terminals.byobu.service
 %_iconsscaldir/*.svg
+%_datadir/sounds/%name/
+
+%files trustmux
+%_bindir/trustmux*
+%_man1dir/trustmux*
+%_prefix/lib/trustmux/
+%_datadir/trustmux/
+%_datadir/bash-completion/completions/trustmux
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 7.22-alt1
+- New version 7.22
+- Move Trustmux mobile companion into the separate byobu-trustmux subpackage.
+- Drop automatic requires of optional tools (status indicators, helper utilities, optional editors and shells, system files): they are used only if present.
+- Refresh byobu-python.patch.
+- Add python3(snack) requires for byobu-config.
+- Remove purge-old-kernels (works with Debian/Ubuntu kernel packages only).
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 6.14-alt1
 - new version 6.14
 
