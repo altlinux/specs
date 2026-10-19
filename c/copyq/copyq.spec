@@ -1,6 +1,6 @@
 Name: copyq
 Version: 17.0.0
-Release: alt1
+Release: alt2
 
 Summary: CopyQ - Advanced clipboard manager
 
@@ -8,13 +8,14 @@ License: GPL-3.0-or-later
 Group: Text tools
 Url: https://github.com/hluk/CopyQ/
 
-# Source-url: https://github.com/hluk/CopyQ/archive/refs/tags/v%version.tar.gz
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: https://github.com/hluk/CopyQ/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch1: alt-x11-default-editor-fallback.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake, extra-cmake-modules, gcc-c++
+BuildRequires: rpm-build-cmake, extra-cmake-modules, gcc-c++
 
 BuildRequires: libXtst-devel, libXfixes-devel
 BuildRequires: qt6-tools-devel qt6-svg-devel
@@ -29,6 +30,7 @@ support for image formats, command line control and more.
 
 %prep
 %setup
+%patch1 -p1
 %__subst '/DQT_RESTRICTED_CAST_FROM_ASCII/d' CMakeLists.txt
 
 %build
@@ -63,6 +65,9 @@ support for image formats, command line control and more.
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 17.0.0-alt2
+- Add patch to use an installed text editor by default instead of missing gedit (closes: #45699).
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 17.0.0-alt1
 - new version 17.0.0
 
