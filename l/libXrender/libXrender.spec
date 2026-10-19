@@ -1,8 +1,8 @@
 Name: libXrender
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 Summary: X Render Library
-License: MIT/X11
+License: MIT X11
 Group: System/Libraries
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 0.9.13-alt1
+- 0.9.13
+
 * Tue Feb 04 2025 Valery Inozemtsev <shrek@altlinux.ru> 0.9.12-alt1
 - 0.9.12
 

@@ -1,8 +1,8 @@
 Name: libXtst
-Version: 1.2.4
+Version: 1.2.6
 Release: alt1
 Summary: The Xtst Library
-License: MIT/X11
+License: MIT X11
 Group: System/Libraries
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -50,6 +50,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Mon Oct 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.2.6-alt1
+- 1.2.6
+
 * Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.2.4-alt1
 - 1.2.4
 

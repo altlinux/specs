@@ -1,8 +1,8 @@
 Name: libXpm
-Version: 3.5.19
+Version: 3.5.20
 Release: alt1
 Summary: X Pixmap Library
-License: MIT/X11
+License: MIT X11
 Group: System/Libraries
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -57,6 +57,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Oct 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.5.20-alt1
+- 3.5.20
+
 * Wed Apr 22 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.5.19-alt1
 - 3.5.19 (fixes: CVE-2026-4367)
 

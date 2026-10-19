@@ -1,14 +1,14 @@
 Name: libX11
-Version: 1.8.13
+Version: 1.8.14
 Release: alt1
 Epoch: 3
 Summary: X11 Library
-License: MIT/X11
+License: MIT X11
 Group: System/Libraries
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-PreReq: filesystem > 2.3.1-alt1
+Requires(pre,postun): filesystem > 2.3.1-alt1
 Requires: %name-locales = %version-%release
 Provides: %name-ccache = %version-%release
 Obsoletes: %name-ccache < %version-%release
@@ -85,6 +85,9 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_datadir/X11/locale
 
 %changelog
+* Mon Oct 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 3:1.8.14-alt1
+- 1.18.14
+
 * Mon Feb 09 2026 Valery Inozemtsev <shrek@altlinux.ru> 3:1.8.13-alt1
 - 1.8.13
 
