@@ -1,5 +1,5 @@
 Name: apitrace
-Version: 13.0
+Version: 14.0
 Release: alt1
 
 Summary: Tools for tracing OpenGL
@@ -8,19 +8,16 @@ License: MIT
 Group: Graphics
 Url: http://apitrace.github.io/
 
-# Source-url: https://github.com/apitrace/apitrace/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/apitrace/apitrace.git
 Source: %name-%version.tar
 Source1: qapitrace.desktop
 Source2: qapitrace.appdata.xml
-
-# fix building with CMakeLists.txt from subdirectory
-Patch1: apitrace-11.1-disabled-check-subdirectory.patch
 
 # internal
 %add_python3_req_skip highlight
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake ctest
+BuildRequires: rpm-build-cmake ctest
 BuildRequires: zlib-devel libpng-devel libbrotli-devel
 BuildRequires: libsnappy-devel
 BuildRequires: desktop-file-utils
@@ -62,11 +59,6 @@ This package contains qapitrace, the Graphical frontend for apitrace.
 %setup
 # fix WRAPPER_DIR
 %__subst "s|dpkg-architecture|no-dpkg-architecture|" CMakeLists.txt
-%patch1 -p2
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1507659
-# Remove bundled libraries, except khronos headers, md5, crc32c and CMakeLists.txt file
-rm -rf `ls -1d thirdparty/* | grep -Ev "(khronos|md5|crc32c|CMakeLists.txt)"`
 
 # Fix spurious-executable-perm
 chmod -x retrace/glretrace_main.cpp
@@ -112,6 +104,10 @@ make check
 %_datadir/appdata/qapitrace.appdata.xml
 
 %changelog
+* Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 14.0-alt1
+- new version (14.0) via gear-uupdate
+- replace BuildRequires: cmake with rpm-build-cmake
+
 * Tue Mar 03 2026 Vitaly Lipatov <lav@altlinux.ru> 13.0-alt1
 - new version 13.0
 
