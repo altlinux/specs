@@ -1,12 +1,14 @@
 %def_disable snapshot
 
-%define ver_major 0.10
+%define ver_major 0.11
 %define api_ver_major 1
 %define api_ver %api_ver_major.0
 %define soname 0
 %define namespace Xdp
 %define xdg_name org.gnome.Portal
 
+%def_enable qt5
+%def_enable qt6
 %def_enable introspection
 %def_enable vala
 %def_enable docs
@@ -33,15 +35,16 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir} %{?_enable_vala:rpm-build-vala}
 BuildRequires: meson libgio-devel >= %glib_ver
-BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools
-BuildRequires: pkgconfig(Qt6Core) pkgconfig(Qt6Gui) pkgconfig(Qt6Widgets)
+%{?_enable_qt5:BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools}
+%{?_enable_qt6:BuildRequires: pkgconfig(Qt6Core) pkgconfig(Qt6Gui) pkgconfig(Qt6Widgets) qt6-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(Gtk) = 3.0 gir(Gtk) = 4.0}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_test:BuildRequires: libgtk+3-devel libgjs-devel pkgconfig(gstreamer-audio-1.0)}
 %{?_enable_check:BuildRequires: xvfb-run
-BuildRequires: pkgconfig(Qt5Test) pkgconfig(Qt6Test)
-#BuildRequires: python3(pytest) python3(dbus) python3(dbusmock)
+%{?_enable_qt5:BuildRequires: pkgconfig(Qt5Test) libdqt5-test qt5-declarative-devel}
+%{?_enable_qt6:BuildRequires: pkgconfig(Qt6Test) libdqt6-test qt6-declarative-devel}
+BuildRequires: python3(pytest) python3(dbus) python3(dbusmock)
 }
 
 %description
@@ -217,11 +220,16 @@ sed -E -i 's/g_autofree ([ a-z]*) \*/g_autofree_edg(\1) /' \
 
 %build
 %meson \
+    %{subst_enable_meson_feature qt5 backend-qt5} \
+    %{subst_enable_meson_feature qt6 backend-qt6} \
     %{subst_enable_meson_bool introspection introspection} \
     %{subst_enable_meson_bool vala vapi} \
+    %{subst_enable_meson_bool check tests} \
     %{subst_enable_meson_bool test portal-tests}
 %nil
 %meson_build
+%{?_enable_check:%meson_build %{?_enable_qt5:tests/qt5/qt5-test} \
+    %{?_enable_qt6:tests/qt6/qt6-test}}
 
 %install
 %meson_install
@@ -240,11 +248,13 @@ xvfb-run %__meson_test
 %files gtk4
 %_libdir/%name-gtk4.so.*
 
+%{?_enable_qt5:
 %files qt5
-%_libdir/%name-qt5.so.*
+%_libdir/%name-qt5.so.*}
 
+%{?_enable_qt6:
 %files qt6
-%_libdir/%name-qt6.so.*
+%_libdir/%name-qt6.so.*}
 
 %files devel
 %_includedir/%name
@@ -319,6 +329,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.11.0-alt1
+- 0.11.0
+
 * Thu Jun 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.10.0-alt1
 - 0.10.0
 
