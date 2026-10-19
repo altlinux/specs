@@ -2,7 +2,7 @@
 
 Name: veracrypt
 Version: 1.26.29
-Release: alt1
+Release: alt2
 
 Summary: Disk encryption software
 
@@ -12,6 +12,8 @@ Url: https://www.veracrypt.fr
 
 # Source-url: https://github.com/veracrypt/VeraCrypt/archive/VeraCrypt_%version.tar.gz?/VeraCrypt_%version.tar.gz
 Source: %name-%version.tar
+# ALT bug #48560: mount to the TMPDIR of the user who started sudo
+Patch1: veracrypt-user-tmpdir.patch
 
 ExcludeArch: %ix86 ppc64le
 
@@ -23,11 +25,15 @@ BuildRequires: gcc-c++
 BuildRequires: yasm
 BuildRequires: nasm
 
+# executed via sudo for mounting by a non-root user (ALT bug #48561)
+Requires: /usr/bin/sudo
+
 %description
 Free disk encryption software based on TrueCrypt.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %make_build NOSTRIP=1 DEBUGGER=1 -C src
@@ -53,6 +59,11 @@ rm -rv %buildroot%_bindir/%name-uninstall.sh
 
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26.29-alt2
+- fix mounted volumes not shown to a non-root user with pam_mktemp:
+  pass the user TMPDIR to the sudo core service and mount there (closes: #48560)
+- add Requires: /usr/bin/sudo, used for mounting by a non-root user (closes: #48561)
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26.29-alt1
 - new version 1.26.29
 
