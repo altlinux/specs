@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 7.2.1
+Version: 8.3.2
 Release: alt1
 
 Summary: OpenStack Oslo Log library
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/oslo.log
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+Patch: %oname-alt-packages-find.patch
 
 BuildArch: noarch
 
@@ -71,6 +72,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -116,6 +118,10 @@ install -pDm 644 man/oslolog.1 %buildroot%_man1dir/oslolog.1
 %endif
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 8.3.2-alt1
+- New version 8.3.2
+- Added patch to include oslo_log subpackages in the wheel
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt1
 - Automatically updated to 7.2.1.
 
