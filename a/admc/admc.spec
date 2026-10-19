@@ -10,7 +10,7 @@
 %endif
 
 Name: admc
-Version: 0.25.0
+Version: 0.26.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -126,6 +126,28 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Mon Oct 19 2026 Semyon Knyazev <samael@altlinux.org> 0.26.1-alt1
+- Fix p10 build fail.
+
+* Tue Oct 13 2026 Semyon Knyazev <samael@altlinux.org> 0.26.0-alt1
+- Add inline validation for invalid characters in the user creation
+  dialog, with validation errors displayed directly below the corresponding
+  input field immediately during editing.
+- Add a name filter field to the Attributes tab in object properties.
+- Fix issues with loading and displaying queries in the queries subtree.
+- Add the ability to change an expired Kerberos password.
+- Add the ability to authenticate using Kerberos enterprise principal
+  names. ADMC now automatically retries authentication using the enterprise
+  principal format when regular Kerberos authentication fails.
+- Implemented renaming for Password Settings Objects (PSOs).
+- Improved object move logging to include the full target container path instead
+  of only its name, avoiding ambiguity when containers with identical names exist
+  in different locations.
+- Add persistent tree state between application sessions, including expanded nodes
+  and the currently selected item. The state is saved when the application closes and
+  restored on the next launch for the same user and domain.
+- Fix tree item icons display issues.
+
 * Thu Sep 03 2026 Semyon Knyazev <samael@altlinux.org> 0.25.0-alt1
 - Add user photo to the user's properties.
 - Update icon themes.
