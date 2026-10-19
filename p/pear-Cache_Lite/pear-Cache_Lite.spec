@@ -1,7 +1,7 @@
 %define pear_name Cache_Lite
 
 Name: pear-Cache_Lite
-Version: 1.8.3
+Version: 2.0.0
 Release: alt1
 
 Summary: Fast and Safe little cache system
@@ -12,7 +12,8 @@ Url: http://pear.php.net/package/Cache_Lite
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://pear.php.net/get/Cache_Lite-%version.tar
+# Source-url: https://github.com/pear/Cache_Lite/archive/refs/tags/v%version.tar.gz
+Source: Cache_Lite-%version.tar
 
 BuildArchitectures: noarch
 
@@ -26,26 +27,25 @@ fast and safe (because it uses file locking and/or anti-corruption tests).
 %prep
 %setup -c
 
-%build
-%pear_build
-
 %install
-%pear_install_std
+mkdir -p %buildroot%pear_dir
+cp -a Cache %buildroot%pear_dir/
 
-%post
-%register_pear_module
-
-%preun
-%unregister_pear_module
+%check
+for f in $(find Cache -name '*.php') ; do
+    php -l $f
+done
+php -d include_path=.:%pear_dir -r 'require "Cache/Lite.php"; $d = sys_get_temp_dir()."/cl".getmypid()."/"; mkdir($d); $c = new Cache_Lite(array("cacheDir" => $d, "lifeTime" => 60)); $c->save("hello", "id1"); if ($c->get("id1") !== "hello") exit(1);'
 
 %files
-%doc LICENSE CHANGELOG
-%pear_testdir/Cache_Lite/
+%doc LICENSE README.md TODO composer.json docs
 %pear_dir/Cache/
-%pear_docdir/%pear_name/
-%pear_xmldir/%pear_name.xml
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0
+- switch to GitHub source (upstream dropped package.xml), install files directly
+
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
 - new version 1.8.3 (with rpmrb script)
 
