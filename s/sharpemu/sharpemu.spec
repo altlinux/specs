@@ -1,16 +1,16 @@
-%define ffmpeg_tag 3b502d4
+%define ffmpeg_tag e95fc79
 %define ffmpeg_version 7.1.2
 
 # ALT release suffix (e.g. .release.4, .hotfix.2, .rc1).
 # Set to %nil when the upstream version has no suffix.
-%define version_suffix .nexus.release.2
+%define version_suffix .mono
 # Upstream tag/source-tarball suffix, dash-separated (e.g. -release.4, -hotfix.2, -rc1).
 # Set to %nil when the upstream version has no suffix.
-%define upstream_suffix -nexus-release.2
+%define upstream_suffix -mono
 
 Name: sharpemu
-Version: 0.0.5
-Release: alt2%{version_suffix}
+Version: 0.0.6
+Release: alt1%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
@@ -78,7 +78,7 @@ pushd ../ffmpeg-%ffmpeg_version
     --disable-x86asm \
     --disable-autodetect \
     --disable-everything \
-    --enable-decoder=aac,aac_latm,atrac3,atrac3p,atrac9,bink,bink2,binkaudio_dct,binkaudio_rdft,mp3,pcm_s16le,pcm_s8,h264,hevc,mpeg4,mpeg2video,mjpeg,mjpegb \
+    --enable-decoder=aac,aac_latm,atrac3,atrac3p,atrac9,bink,bink2,binkaudio_dct,binkaudio_rdft,mp3,opus,pcm_s16le,pcm_s8,h264,hevc,mpeg4,mpeg2video,mjpeg,mjpegb \
     --enable-encoder=pcm_s16le,ffv1,mpeg4,ljpeg,mjpeg \
     --enable-muxer=avi \
     --enable-demuxer=bink,h265,h264,m4v,mp3,mpegvideo,mpegps,mjpeg,mov,avi,aac,pmp,oma,pcm_s16le,pcm_s8,wav \
@@ -164,6 +164,10 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Mon Oct 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.6-alt1.mono
+- Update to v0.0.6-mono
+- Enable FFmpeg built-in Opus decoder (AJM audio jobs, ffmpeg-core e95fc79)
+
 * Sun Oct 18 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.5-alt2.nexus.release.2
 - Store user-writable data (settings, caches, saves, logs) in the XDG data
   directory on Linux instead of the read-only install directory
