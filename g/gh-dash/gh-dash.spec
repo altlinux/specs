@@ -1,10 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/dlvhdr/gh-dash/v4
-%global commit_hash b137662
-%global build_date 20261012
+%global commit_hash 12feb7f
+%global build_date 20261016
 
 Name: gh-dash
-Version: 4.26.1
+Version: 4.26.2
 Release: alt1
 
 Summary: A rich terminal UI for GitHub that doesn't break your flow
@@ -57,6 +57,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Fri Oct 16 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.26.2-alt1
+- Updated to version 4.26.2.
+
 * Mon Oct 12 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.26.1-alt1
 - Updated to version 4.26.1.
 
