@@ -1,24 +1,33 @@
 Name: python3-module-androidtv
-Version: 0.0.72
+Version: 0.0.75
 Release: alt1
 
-Summary: State information and control of Android TV  devices via ADB
+Summary: State information and control of Android TV devices via ADB
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/androidtv/
+URL: https://pypi.org/project/androidtv
+VCS: https://github.com/JeffLIrion/python-androidtv
 
-Source0: %name-%version-%release.tar
+Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile venv_requirements.txt
 
 %build
 %pyproject_build
@@ -26,11 +35,19 @@ BuildRequires: python3(wheel)
 %install
 %pyproject_install
 
+%check
+# test_no_underscores needs a real git checkout (git grep); the gear
+# tarball has no .git, so it can never run in the build env
+%pyproject_run_pytest -o addopts= -k "not test_no_underscores" tests
+
 %files
 %python3_sitelibdir/androidtv
 %python3_sitelibdir/androidtv-%version.dist-info
 
 %changelog
+* Thu Oct 23 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 0.0.75-alt1
+- 0.0.75 released
+
 * Wed Sep 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.72-alt1
 - 0.0.72 released
 
