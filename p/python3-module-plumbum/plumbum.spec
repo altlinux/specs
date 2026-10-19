@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.10.0
+Version: 2.0.2
 Release: alt1
 
 Summary: Plumbum: shell combinators library
@@ -23,15 +23,19 @@ BuildRequires: python3-module-hatch-vcs
 
 %if_with docs
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-autodoc-typehints
+BuildRequires: python3-module-furo
 %endif
 
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-psutil
 BuildRequires: /proc
+BuildRequires: /bin/mount
 %endif
 
 BuildArch: noarch
@@ -131,6 +135,12 @@ cp -fR experiments %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
+- NMU: New version 2.0.2 (fixes FTBFS).
+- Added BuildRequires: python3-module-pytest-asyncio (tests)
+- Added BuildRequires: python3-module-sphinx-autodoc-typehints, python3-module-furo (docs)
+- Added BuildRequires: /bin/mount (test_mounts)
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.10.0-alt1
 - Automatically updated to 1.10.0.
 
