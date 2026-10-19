@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: fotema
-Version: 2.5.1
+Version: 2.5.2
 Release: alt1
 
 Summary: A photo gallery for GNOME
@@ -102,6 +102,9 @@ export CFLAGS="-O0 -g"
 %doc README* THUMBNAILS*
 
 %changelog
+* Mon Oct 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.2-alt1
+- 2.5.1 -> 2.5.2
+
 * Thu Oct 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.1-alt1
 - 2.5.0 -> 2.5.1
 
@@ -162,6 +165,4 @@ export CFLAGS="-O0 -g"
 
 * Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
 - first build for Sisyphus (v1.18.2-21-g38ac8e9)
-
-
 
