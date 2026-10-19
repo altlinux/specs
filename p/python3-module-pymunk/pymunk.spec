@@ -5,7 +5,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 7.3.0
+Version: 7.3.1
 Release: alt1
 Summary: Pymunk is a easy-to-use pythonic 2d physics library
 License: MIT
@@ -66,6 +66,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 19 2026 Stanislav Levin <slev@altlinux.org> 7.3.1-alt1
+- 7.3.0 -> 7.3.1
+
 * Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 7.3.0-alt1
 - 7.2.0 -> 7.3.0
 
