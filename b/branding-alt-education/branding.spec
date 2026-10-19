@@ -36,7 +36,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt4
+Release: alt5
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -45,7 +45,7 @@ BuildRequires: qt6-base-devel
 # for licenses
 BuildRequires: distro-licenses >= 1.3-alt1
 
-BuildRequires: ImageMagick-tools fontconfig bc libGConf-devel fribidi fonts-ttf-dejavu
+BuildRequires: ImageMagick-tools fontconfig libGConf-devel fribidi fonts-ttf-dejavu
 
 Source: branding.tar
 
@@ -463,6 +463,15 @@ fi
 %_datadir/branding-%flavour/xdg-data/
 
 %changelog
+* Mon Oct 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt5
+- Lowercase the codename in os-release: it came out as FalcoVeswertinls.
+- Slides:
+  + Fix the wrong preposition on a Russian slide.
+  + Name the video service Dzen, not Yandex Dzen.
+  + Fix the nested quotes and the spacing after a year.
+- Keep the license agreement icon off the KDE desktop of new users.
+- Drop the unused colour values computed with bc, and the bc build dependency.
+
 * Tue Oct 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt4
 - Highlight the module link with keyboard focus on the main page
   of the classic control center (Closes: 60963).
