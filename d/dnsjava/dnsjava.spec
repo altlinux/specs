@@ -1,32 +1,25 @@
 Epoch: 0
 Group: System/Libraries
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# Test of properly function library need DNS querys. It work perfectly on my machine and pass all tests.
-# But internet access is not allowed from mock chroot. So, I need disable it by default. Yo may enable it if you want.
-%global do_not_test 1
+BuildRequires: jpackage-default
 
 Name:          dnsjava
-Version:       2.1.3
-Release:       alt3_18jpp8
+Version:       3.6.3
+Release:       alt1
 Summary:       Java DNS implementation
-License:       BSD and MIT
-URL:           http://www.dnsjava.org/
-Source0:       http://www.dnsjava.org/download/%{name}-%{version}.tar.gz
-Source1:       %{name}-%{version}.pom
-# bz#842582
-Patch0:        dnsjava-2.0.6-java1.5.target.patch
 
-BuildRequires: ant
-BuildRequires: aqute-bnd4
-# see https://fedorahosted.org/released/javapackages/doc/#_add_maven_depmap_macro_2
-BuildRequires: javapackages-local
-# For tests
-BuildRequires: ant-junit
+License:       BSD-3-Clause
+URL:           https://github.com/dnsjava/dnsjava
+VCS:           https://github.com/dnsjava/dnsjava
+
+Source0:       https://github.com/dnsjava/dnsjava/archive/v%{version}.tar.gz
 BuildArch:     noarch
-Source44: import.info
+
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.projectlombok:lombok-maven-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.openjdk.jcstress:jcstress-core)
 
 %description
 dnsjava is an implementation of DNS in Java. It supports all of the common
@@ -49,58 +42,32 @@ well as allowing additional resolver properties to be set.
 A 'dig' clone and a dynamic update program are included, as well as a
 primary-only server.
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
 %prep
-%setup -q
-rm -rf doc/
-find -name "*.class" -print -delete
-find -name "*.jar" -print -delete
+%setup
 
-%patch0 -p0 -b .java1.5
-
-iconv -f iso8859-1 -t utf8 Changelog > Changelog.tmp
-touch -r Changelog Changelog.tmp
-mv -f Changelog.tmp Changelog
-# install in _javadir
-%mvn_file %{name}:%{name} %{name}
+%pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :japicmp-maven-plugin
+%pom_remove_plugin :spotless-maven-plugin
+%pom_remove_plugin :jacoco-maven-plugin
+%pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :properties-maven-plugin
 
 %build
-
-export CLASSPATH=%(build-classpath jce aqute-bnd4)
-ant -Dj2se.javadoc=%{_javadocdir}/java clean docsclean bundle docs
-
-#mvn_artifact %{SOURCE1} org.xbill.dns_%{version}.jar
+%mvn_build -f -j
 
 %install
-#mvn_install -J doc
-install -D -m644 org.xbill.dns_%{version}.jar %buildroot%_javadir/%name.jar
+%mvn_install
 
-%if ! 0%{?do_not_test}
-%check
-export CLASSPATH='%(build-classpath junit):%{name}-%{version}.jar'
-ant -Dj2se.javadoc=%{_javadocdir}/java compile_tests
-ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
-%endif
-
-%files
-#-f .mfiles
+%files -f .mfiles
 %doc --no-dereference LICENSE
-%doc Changelog README USAGE examples.html *.java
-%_javadir/%name.jar
-
-%if 0
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-%endif
 
 %changelog
+* Fri Oct 16 2026 Anton Meleshnikov <alton@altlinux.org> 0:3.6.3-alt1
+- new version
+- added vcs tag
+- removed import.info
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.3-alt3_18jpp8
 - build w/o xmvn to support xmvn4
 
