@@ -1,6 +1,6 @@
-%define dbeaver_common_commit 5658d5409f14f6d99aa76d42692960666029ede9
+%define dbeaver_common_commit 995fc034cc88f1328d2e4be27feda5ba5578d5ab
 %define equinox_commit 12022c26e62ce76e376f6f9b22001b9aa0f969a7
-%define datadam_api_commit afb5477ab9ab6f90ba8aad27fb0231c6e1727ca3
+%define datadam_api_commit d1158c848c99a51c58fbd5153c5195ae69b11984
 
 %ifarch x86_64
 %define jna_arch linux-x86-64
@@ -10,7 +10,7 @@
 %endif
 
 Name: dbeaver
-Version: 26.2.2
+Version: 26.2.3
 Release: alt1
 
 Summary: Universal Database Manager
@@ -140,6 +140,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Mon Oct 19 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.3-alt1
+- Version 26.2.3
+
 * Sun Oct 04 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.2-alt1
 - Version 26.2.2
 
