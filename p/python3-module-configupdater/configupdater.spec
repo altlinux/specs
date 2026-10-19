@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2
-Release: alt1.1
+Version: 4.0
+Release: alt1
 Summary: Parser like ConfigParser but for updating configuration files
 License: MIT
 Group: Development/Python3
@@ -15,11 +15,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
+AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata_extra testing
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 %endif
 
 %description
@@ -36,6 +38,9 @@ writing new ones.
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%if_with check
+%pyproject_deps_resync_check_depgroup test
+%endif
 
 %build
 %pyproject_build
@@ -47,11 +52,13 @@ writing new ones.
 %pyproject_run_pytest -ra
 
 %files
-%doc README.rst
 %python3_sitelibdir/configupdater/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 19 2026 Stanislav Levin <slev@altlinux.org> 4.0-alt1
+- 3.2 -> 4.0
+
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 3.2-alt1.1
 - NMU: fixed FTBFS (setuptools 75.8.1)
 
