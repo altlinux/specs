@@ -28,10 +28,11 @@
 
 %define mc_user  meshcentral
 %define mc_group meshcentral
+%define mc_migration_dir %_localstatedir/meshcentral-migration
 
 Name:    meshcentral
 Version: 1.2.5
-Release: alt2
+Release: alt3
 
 Summary: A complete web-based remote monitoring and management web site
 License: Apache-2.0
@@ -46,6 +47,7 @@ Source2: %name.service
 # Pinned MeshAgent source used to build native agent binaries.
 Source3: meshagent.tar
 Source4: README.ALT
+Source5: meshcentral-migrate-state.sh
 
 # MeshCentral packaging integration.
 Patch1: meshcentral-1.2.5-alt-fix-module-lookup.patch
@@ -59,6 +61,10 @@ Patch6: meshagent-20260216-upstream-linux-compile-fix.patch
 Patch7: meshagent-20260602-upstream-fix-validate-mesh-server-signature.patch
 Patch8: meshagent-20260917-alt-backport-fix-stack-allocation-size.patch
 Patch9: meshagent-20260215-alt-use-system-zlib.patch
+# Restore extra backup folders to their configured destinations (PR #8098).
+Patch10: meshcentral-1.2.5-alt-fix-backup-restore-paths.patch
+# Allow the service to use a writable global recordings directory.
+Patch11: meshcentral-1.2.5-alt-fix-recordings-path.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires: libssl-devel
@@ -83,13 +89,14 @@ and you can take control of it. MeshCentral includes full web-based
 remote desktop, terminal and file management capability.
 The ALT package provides MeshAgent binaries built from source for the
 native architecture. Administrators can provide agents for additional
-platforms via /var/lib/meshcentral/data/agents/. See README.ALT for
+platforms via /var/lib/meshcentral/meshcentral-data/agents/. See README.ALT for
 details.
 
 %prep
 %setup -a 1 -a 3
 
 cp -p %SOURCE4 README.ALT
+cp -p %SOURCE5 meshcentral-migrate-state.sh
 
 # Remove upstream prebuilt MeshAgent binaries. Native agents for the
 # current architecture are built from Source3 below.
@@ -101,6 +108,8 @@ rm -f \
 
 %patch1 -p1
 %patch2 -p1
+%patch10 -p1
+%patch11 -p1
 
 pushd meshagent
 %patch3 -p1
@@ -125,7 +134,7 @@ make -j1 linux \
     NOTURBOJPEG=1 \
     STRIP=: \
     SYMBOLCP=: \
-    PACKAGING_CFLAGS="%optflags" 
+    PACKAGING_CFLAGS="%optflags"
 
 %ifarch %ix86 x86_64
 # Also provide the upstream variant without KVM support.
@@ -136,7 +145,7 @@ make -j1 linux \
     NOTURBOJPEG=1 \
     STRIP=: \
     SYMBOLCP=: \
-    PACKAGING_CFLAGS="%optflags" 
+    PACKAGING_CFLAGS="%optflags"
 %endif
 
 popd
@@ -174,32 +183,44 @@ ln -sr \
     %buildroot%nodejs_sitelib/%name/bin/%name \
     %buildroot%_bindir/%name
 
-# Use the upstream sample as the system configuration and only adjust
-# the backup path to the writable ALT state directory.
-install -d %buildroot%_sysconfdir/%name
-install -Dm0644 sample-config-advanced.json %buildroot%_sysconfdir/%name/config.json
+# Keep configuration in the data directory so it is included in backups.
+# Provide the conventional /etc entry point through an absolute symlink.
+install -d %buildroot%_localstatedir/%name
+install -d %buildroot%_localstatedir/%name/meshcentral-data
+install -d %buildroot%_localstatedir/%name/meshcentral-files
+install -d %buildroot%_localstatedir/%name/meshcentral-backups
+install -d %buildroot%_localstatedir/%name/meshcentral-recordings
+
+install -Dm0640 sample-config-advanced.json \
+    %buildroot%_localstatedir/%name/meshcentral-data/config.json
 
 sed -i \
     -e 's/"_autoBackup"[[:space:]]*:/"autoBackup":/' \
-    -e 's#"_backupPath"[[:space:]]*:[[:space:]]*"[^"]*"#"backupPath": "%_localstatedir/%name/backups"#' \
-    %buildroot%_sysconfdir/%name/config.json
+    -e 's#"_backupPath"[[:space:]]*:[[:space:]]*"[^"]*"#"backupPath": "%_localstatedir/%name/meshcentral-backups"#' \
+    %buildroot%_localstatedir/%name/meshcentral-data/config.json
 
-install -d %buildroot%_localstatedir/%name
-install -d %buildroot%_localstatedir/%name/data
-install -d %buildroot%_localstatedir/%name/files
-install -d %buildroot%_localstatedir/%name/backups
+install -d %buildroot%_sysconfdir/%name
+ln -s %_localstatedir/%name/meshcentral-data/config.json \
+    %buildroot%_sysconfdir/%name/config.json
 
 install -Dp -m0644 %SOURCE2 %buildroot%_unitdir/%name.service
 
-%pre
+%pre -f meshcentral-migrate-state.sh
+set -e
+umask 077
 getent group %mc_group >/dev/null || groupadd -r %mc_group
 getent passwd %mc_user >/dev/null || \
     useradd -r -g %mc_group -s /sbin/nologin \
     -d %_localstatedir/%name -c "MeshCentral service user" %mc_user
-exit 0
+meshcentral_migration_phase=pre
 
-%post
-%post_service %name
+%post -f %name-migrate-state.sh
+set -e
+umask 077
+# Reload the guarded unit before any migration operation can fail.
+# ALT defers the actual restart until the transaction has finished.
+%post_service_posttrans_restart %name
+meshcentral_migration_phase=post
 
 %preun
 %preun_service %name
@@ -209,13 +230,31 @@ exit 0
 %_bindir/%name
 %nodejs_sitelib/%name
 %_unitdir/%name.service
-%config(noreplace) %_sysconfdir/%name/config.json
+%dir %_sysconfdir/%name
+%_sysconfdir/%name/config.json
+
 %attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name
-%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/data
-%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/files
-%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/backups
+%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/meshcentral-data
+%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/meshcentral-files
+%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/meshcentral-backups
+%attr(0750,%mc_user,%mc_group) %dir %_localstatedir/%name/meshcentral-recordings
+
+%attr(0640,%mc_user,%mc_group) %config(noreplace) %_localstatedir/%name/meshcentral-data/config.json
 
 %changelog
+* Wed Oct 14 2026 Nikita Shmatko <nash@altlinux.org> 1.2.5-alt3
+- Added missing runtime dependencies to vendored Node.js modules,
+  including archiver-zip-encrypted (Closes: #60859).
+- Moved configuration into the data directory to include it in backups,
+  with a symlink from /etc/meshcentral/config.json.
+- Used upstream state directory names.
+- Fixed restoration of additional backup folders.
+- Stored session recordings in /var/lib/meshcentral/meshcentral-recordings.
+- Removed the Windows Pageant helper from vendored Node.js modules.
+- Fixed native binary detection in the vendor generation script.
+- Preserved configuration and server state when upgrading from the
+  previous directory layout.
+
 * Wed Oct 07 2026 Nikita Shmatko <nash@altlinux.org> 1.2.5-alt2
 - Fixed Node.js module lookup and disabled runtime
   npm installation (Closes: #60460).
