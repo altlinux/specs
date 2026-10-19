@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Mutable mapping tools
 
@@ -28,6 +28,7 @@ BuildRequires: python3-module-pytest-repeat
 BuildArch: noarch
 
 Source:  %name-%version.tar
+Patch:   zict-single-cpu-timeout.patch
 
 %description
 Zict builds abstract MutableMapping classes that consume and build on other
@@ -40,6 +41,7 @@ dictionary
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %python3_build
@@ -57,6 +59,9 @@ py.test-3 -ra
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt1.1
+- NMU: fix FTBFS, stress test hang on loaded builders (upstream PR #108).
+
 * Mon Apr 24 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 
