@@ -5,7 +5,7 @@
 %global _zig_cache_dir %_builddir/zig-cache
 
 Name: ly
-Version: 1.3.2
+Version: 1.4.1
 Release: alt1
 
 Summary: The Ly display manager
@@ -30,7 +30,7 @@ designed with portability in mind (e.g. it does not require systemd to run).
 
 %prep
 %setup -a1
-mv -f ./vendor %_zig_cache_dir
+mv -f ./vendor %_zig_vendor_dir
 
 %build
 %zig_build
@@ -41,12 +41,17 @@ mv -f ./vendor %_zig_cache_dir
 %files
 %_bindir/%name
 %_unitdir/%name@.service
-%_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/config.ini
+%_unitdir/%name-kmsconvt@.service
+%config(noreplace) %_sysconfdir/%name
 %_sysconfdir/pam.d/%name
 %_sysconfdir/pam.d/%name-autologin
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
+- NMU: Updated to 1.4.1 (fixes FTBFS with zig 0.16)
+- Use zig-pkg as the vendor directory
+- Packaged ly-kmsconvt@.service, languages, example files and custom-sessions
+
 * Thu Mar 12 2026 Anton Zhukharev <ancieg@altlinux.org> 1.3.2-alt1
 - Updated to 1.3.2.
 
