@@ -4,7 +4,7 @@
 
 Name: python3-module-urwid
 Version: 4.1.3
-Release: alt1
+Release: alt2
 
 Summary: Urwid is a console user interface library for Python.
 
@@ -38,6 +38,9 @@ BuildRequires: python3-modules-curses
 %add_python3_req_skip zmq
 
 %py3_provides %oname
+
+# upstream requires wcwidth>=0.4 (wcwidth.width), autodeps cannot express the version
+Requires: python3-module-wcwidth >= 0.4
 
 BuildArch:     noarch
 
@@ -78,6 +81,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.3-alt2
+- Add versioned requirement on python3-module-wcwidth >= 0.4
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.3-alt1
 - New version 4.1.3.
 - Run tests with pytest (upstream switched from unittest/tox).
