@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 7.0.0
+Version: 7.1.0
 Release: alt1
 
 Summary: Set of compression filters for h5py
@@ -67,6 +67,7 @@ export HDF5PLUGIN_NATIVE=False
 %ifarch %ix86
 sed -i '/_get_sz_plugin,/d' setup.py
 sed -i '/_get_sz3_plugin,/d' setup.py
+export HDF5PLUGIN_STRIP=htj2k
 export HDF5PLUGIN_SSE2=False
 export HDF5PLUGIN_AVX=False
 export HDF5PLUGIN_AVX512=False
@@ -89,6 +90,10 @@ python3 test/test.py
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 7.1.0-alt1
+- New version 7.1.0.
+- Disable htj2k plugin on %ix86 (vendored OpenJPH fails with target specific option mismatch).
+
 * Mon Jul 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.0.0-alt1
 - 6.0.0 -> 7.0.0.
 
