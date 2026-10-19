@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-17-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-artifact-resolver
 Version:        1.0
-Release:        alt3_25jpp11
+Release:        alt3_25jpp11.1
 # Epoch is added because the original package's version in maven-shared is 1.1-SNAPSHOT
 Epoch:          1
 Summary:        Maven Artifact Resolution API
@@ -77,6 +77,9 @@ rm src/test/java/org/apache/maven/shared/artifact/resolver/DefaultProjectDepende
 
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.0-alt3_25jpp11.1
+- NMU: build with JDK 17 (jpackage-17-compat instead of jpackage-11-compat) to fix FTBFS
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.0-alt3_25jpp11
 - update
 
