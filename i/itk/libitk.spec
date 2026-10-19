@@ -5,7 +5,7 @@
 
 Name: itk
 Version: %itkver.5
-Release: alt2
+Release: alt2.1
 
 Group: System/Libraries
 Summary: N-dimensional scientific image processing, segmentation, registration
@@ -84,12 +84,12 @@ Patch6: itk-5.4.2-alt-VkFFTBackend.patch
 Patch7: itk-5.4.2-alt-BioCell.patch
 Patch8: itk-5.4.2-upstream-LesionSizingToolkit.patch
 Patch9: itk-5.4.2-alt-netlib.patch
+Patch10: itk-5.4.5-alt-VtkGlue-target-prefix.patch
 
 BuildRequires(pre): rpm-build-cmake
 %{?_with_fftw:BuildRequires: libfftw3-devel}
 BuildRequires: castxml
 BuildRequires: cli11-devel
-BuildRequires: cmake
 BuildRequires: dcmtk
 BuildRequires: eigen3-devel
 BuildRequires: gcc-c++
@@ -1072,6 +1072,7 @@ pushd Modules/Remote/LesionSizingToolkit
 popd
 
 %patch9 -p1
+%patch10 -p1
 
 %ifarch %e2k
 # missing destructors as of lcc 1.29.06 (mcst#9134, mcst#9152)
@@ -1576,6 +1577,11 @@ install -D -m755 -t %buildroot%_libdir/itk-examples/ %_cmake__builddir/bin/*
 %doc %_docdir/itk/
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.5-alt2.1
+- NMU: fix FTBFS with VTK 9.5 and HDF5 2.x: do not leak _target_prefix from VtkGlue
+  module init (it broke the HDF5 target lookup in VTK's FindHDF5).
+- Drop redundant BuildRequires: cmake (rpm-build-cmake is in BuildRequires(pre)).
+
 * Wed Jul 29 2026 Michael Shigorin <mike@altlinux.org> 5.4.5-alt2
 - E2K: fix headers wrt alizams ftbfs (ilyakurdyukov@).
 
