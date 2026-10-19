@@ -1,8 +1,8 @@
 %def_without dbus
 
 Name: FlightGear
-Version: 2024.1.1
-Release: alt2
+Version: 2024.1.7
+Release: alt0.1
 
 Summary: Libre flight simulator
 License: GPL-2.0-or-later
@@ -14,6 +14,7 @@ Source0: %name-%version.tar
 Patch1: 0001-check-to-be-sure-that-n-is-not-being-set-as-format-t.patch
 Patch6: 0006-make-fglauncher-a-static-library.patch
 Patch7: 0006-fgviewer-fix-crash-on-exit.patch
+Patch8: 0008-NasalSGPath-return-value-from-f_standardLocation.patch
 
 Requires: FlightGear-data = %version
 #Requires: fgrun >= 1.6.1
@@ -28,7 +29,7 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libcurl-devel
 
 # TODO: fltk??
-BuildRequires: rpm-macros-cmake cmake gcc-c++ imake libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel
+BuildRequires: rpm-build-cmake gcc-c++ imake libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel
 
 BuildRequires: libpng-devel libfltk-devel libudev-devel
 BuildRequires: libXres-devel libXi-devel libXmu-devel
@@ -99,6 +100,8 @@ rm -rf \
 
 rm -rf %buildroot%_datadir/locale
 rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
+# AppImage staging tree (install COMPONENT packaging), not for the system
+rm -rv %buildroot%prefix/appdir
 
 %files
 %_bindir/*
@@ -108,6 +111,12 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2024.1.7-alt0.1
+- NMU: new version 2024.1.7 (fixes FTBFS with gcc 15).
+- replaced rpm-macros-cmake and cmake with rpm-build-cmake in BuildRequires.
+- added missing return in NasalSGPath f_standardLocation (FTBFS with -Werror=return-type).
+- removed AppImage staging tree /usr/appdir from the package.
+
 * Fri Feb 06 2026 Pavel Petrykin <silverducks@altlinux.org> 2024.1.1-alt2
 - Adjust BuildRequires due to OSG 3.6.5-alt5 changes.
 

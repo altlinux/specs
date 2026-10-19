@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: FlightGear-data
-Version: 2024.1.1
-Release: alt1
+Version: 2024.1.7
+Release: alt0.1
 
 Summary: Data pack for FlightGear flight simulator
 License: GPL-2.0-or-later
 Group: Games/Arcade
 
 Url: http://www.flightgear.org
-# Source-url: https://sourceforge.net/projects/flightgear/files/release-2020.3/FlightGear-%version-data.txz/download
+# Source-url: https://sourceforge.net/projects/flightgear/files/release-2024.1/FlightGear-%version-data.txz/download
 Source: %name-%version.tar
 # NB: ignore *-update-data.txz, it's just a diff (better rely on a full version)
 
@@ -67,6 +67,9 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2024.1.7-alt0.1
+- NMU: new version 2024.1.7.
+
 * Wed May 21 2025 Constantin Sunzow <protvin@altlinux.org> 2024.1.1-alt1
 - New version.
 

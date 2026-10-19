@@ -3,8 +3,8 @@
 %def_enable openmp
 
 Name: SimGear
-Version: 2024.1.1
-Release: alt1
+Version: 2024.1.7
+Release: alt0.1
 
 Summary: Simulator Construction Tools
 License: GPL-2.0-or-later
@@ -17,8 +17,8 @@ Patch0: simgear-3.2.0-fedora-format.patch
 Patch1: simgear-3.6.0-fedora-aarch64.patch
 
 BuildRequires: boost-devel-headers
-BuildRequires: cmake
-BuildRequires: cmake libapr1-devel
+BuildRequires: rpm-build-cmake
+BuildRequires: libapr1-devel
 BuildRequires: gcc-c++
 BuildRequires: libGLU-devel
 BuildRequires: libOpenSceneGraph-devel
@@ -122,6 +122,10 @@ rm -rf \
 %_libdir/cmake/%name/
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2024.1.7-alt0.1
+- NMU: new version 2024.1.7 (fixes FTBFS of FlightGear with gcc 15).
+- replaced cmake with rpm-build-cmake in BuildRequires.
+
 * Sat Jul 12 2025 Constantin Sunzow <protvin@altlinux.org> 2024.1.1-alt1
 - Fixes:
   + CVE-2025-0781 Bypass the sandboxing of Nasal scripts.
