@@ -4,8 +4,8 @@
 %define mname pyfltk
 
 Name: python3-module-%mname
-Version: 1.3.8
-Release: alt1.2
+Version: 1.3.9
+Release: alt1
 
 Summary: Python wrapper for the FLTK
 
@@ -17,13 +17,11 @@ Url: https://pyfltk.sourceforge.io/
 # Source-url: https://master.dl.sourceforge.net/project/pyfltk/pyfltk/pyFltk-%version/pyFltk-%version.tar.gz
 Source: %oname-%version.tar
 
-# from Debian
-Patch: build-with-swig-4.1.patch
-
-Patch1: 0001-Adjustments-for-swig-V4.2.patch
+# adapted from Debian: swig 4.5 dropped the Python 2 compat macros; ignore Fl_XFont_On_Demand (value() not exported by libfltk)
+Patch: build-with-swig-4.5.patch
 
 BuildRequires(pre): rpm-macros-python3
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: gcc-c++
@@ -77,6 +75,12 @@ rm -r %buildroot%python3_sitelibdir/fltk/docs/
 %python3_sitelibdir/%{pyproject_distinfo %mname}/
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.9-alt1
+- New version 1.3.9
+- Dropped swig patches applied upstream
+- Fixed FTBFS with swig 4.5 (Python 2 compat macros removed)
+- Fixed import error: ignore unexported Fl_XFont_On_Demand
+
 * Tue Sep 16 2025 Grigory Ustinov <grenka@altlinux.org> 1.3.8-alt1.2
 - NMU: fixed FTBFS.
 
