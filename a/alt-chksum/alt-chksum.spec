@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-chksum
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: ALT distro checksum downloader
@@ -38,6 +38,9 @@ shellcheck %name
 %_bindir/%name
 
 %changelog
+* Mon Oct 19 2026 Michael Shigorin <mike@altlinux.org> 0.1.9-alt1
+- Add 7E08B439 key on e2k.
+
 * Mon Jul 06 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.8-alt1
 - Require verify-checksums >= 1.0.19.
 - Call verify-checksums with --dir and --list for each branch.
