@@ -4,7 +4,7 @@
 
 Name: python3-module-%modulename
 Version: 18.10.0
-Release: alt3
+Release: alt3.1
 
 Summary: CherryPy is a pythonic, object-oriented web development framework
 
@@ -26,7 +26,6 @@ BuildRequires: python3-module-cheroot
 BuildRequires: python3-module-portend
 BuildRequires: python3-module-zc.lockfile
 BuildRequires: python3-module-jaraco.collections
-BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-cheroot-tests
 BuildRequires: python3-module-path
 BuildRequires: python3-module-pytest-services
@@ -47,6 +46,8 @@ but it's possible to run a CherryPy application behind it.
 %prep
 %setup
 %patch -p1
+# coverage options are not needed for the tests (as in Fedora/Debian)
+sed -i '/cov/d' pytest.ini
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -68,6 +69,11 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 %exclude %python3_sitelibdir/%modulename/test
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 18.10.0-alt3.1
+- NMU: Fixed FTBFS (coverage 7.16 warning turned into an error by
+  filterwarnings=error): dropped pytest-cov options from pytest.ini.
+- Removed BuildRequires: python3-module-pytest-cov (no longer used).
+
 * Wed Feb 04 2026 Grigory Ustinov <grenka@altlinux.org> 18.10.0-alt3
 - Fixed FTBFS.
 
@@ -75,7 +81,7 @@ mv %buildroot%_bindir/cherryd %buildroot%_bindir/cherryd3
 - Fixed FTBFS.
 
 * Wed Apr 02 2025 Stanislav Levin <slev@altlinux.org> 18.10.0-alt1.1
-- NMU: fixed FTBFS (setuptools 75.8.1)
+- NMU: Fixed FTBFS (setuptools 75.8.1)
 
 * Tue Jul 16 2024 Grigory Ustinov <grenka@altlinux.org> 18.10.0-alt1
 - Automatically updated to 18.10.0.
