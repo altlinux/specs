@@ -16,7 +16,7 @@
 
 Name: arrow
 Version: 23.0.1
-Release: alt1
+Release: alt1.1
 Summary: Apache Arrow is a data processing library for analysis
 Group: Development/C++
 
@@ -24,6 +24,7 @@ License: Apache-2.0
 Url: https://arrow.apache.org/
 VCS: https://github.com/apache/arrow.git
 Source: %name-%version.tar
+Patch1: arrow-pyarrow-kms-config-copy.patch
 ExcludeArch: %arm
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-meson rpm-build-vala rpm-build-gir rpm-macros-python3
@@ -31,7 +32,7 @@ BuildRequires: bison
 BuildRequires: boost-devel
 BuildRequires: libbrotli-devel
 BuildRequires: libcares-devel
-BuildRequires: cmake meson ninja-build
+BuildRequires: rpm-build-cmake meson ninja-build
 %{?_enable_s3:BuildRequires: libcurl-devel}
 BuildRequires: flex
 BuildRequires: gcc-c++
@@ -47,7 +48,7 @@ BuildRequires: liblz4-devel
 BuildRequires: zlib-devel
 BuildRequires: libsnappy-devel
 BuildRequires: openssl-devel libssl-devel
-BuildRequires: python3-devel python3-module-numpy libnumpy-py3-devel python3-module-cffi python3-module-Cython
+BuildRequires: rpm-build-python3 python3-devel python3-module-numpy libnumpy-py3-devel python3-module-cffi python3-module-Cython
 BuildRequires: %pyproject_buildrequires
 BuildRequires: python3-module-setuptools python3-module-setuptools_scm python3-module-wheel
 BuildRequires: xsimd-devel
@@ -458,6 +459,7 @@ Development files for python3-pyarrow
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 sed -i '/Unknown system processor/c set(ARROW_CPU_FLAG "e2k")' \
 	cpp/cmake_modules/SetupCxxFlags.cmake
@@ -771,14 +773,24 @@ rm -f %buildroot%_datadir/arrow-glib/README.md
 %files -n python3-module-pyarrow
 %python3_sitelibdir/pyarrow
 %python3_sitelibdir/pyarrow-*.dist-info
+%exclude %python3_sitelibdir/pyarrow/lib.h
 %exclude %python3_sitelibdir/pyarrow/lib_api.h
 %exclude %python3_sitelibdir/pyarrow/include
+%exclude %python3_sitelibdir/pyarrow/src
 
 %files -n python3-module-pyarrow-devel
+%python3_sitelibdir/pyarrow/lib.h
 %python3_sitelibdir/pyarrow/lib_api.h
 %python3_sitelibdir/pyarrow/include
+%python3_sitelibdir/pyarrow/src
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 23.0.1-alt1.1
+- NMU: fixed FTBFS with Cython 3.3 (pyarrow KmsConnectionConfig.wrap)
+- fixed BuildRequires: rpm-build-cmake instead of cmake, added rpm-build-python3
+- python3-module-pyarrow: moved C++ sources and headers to -devel, so no
+  longer requires arrow-devel (closes: #59303)
+
 * Sun Apr 12 2026 Anton Farygin <rider@altlinux.org> 23.0.1-alt1
 - updated from 12.0.0 to 23.0.1
 
