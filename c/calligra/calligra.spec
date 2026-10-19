@@ -11,7 +11,7 @@
 
 Name: %rname
 Version: 26.08.2
-Release: alt1
+Release: alt2
 #Epoch: 0
 %K6init no_altplace
 
@@ -67,7 +67,7 @@ BuildRequires: kde6-kdiagram-devel
 #BuildRequires: marble-devel
 BuildRequires: kf6-kcalendarcore-devel akonadi-devel akonadi-contacts-devel
 BuildRequires: okular-devel
-#BuildRequires: LibreOffice-still-sdk
+BuildRequires: libreoffice-sdk
 BuildRequires: fontconfig-devel libfreetype-devel
 
 %description
@@ -431,6 +431,9 @@ done
 %_K6lib/libkookularGenerator_odt.so.*
 
 %changelog
+* Mon Oct 19 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
+- build with OOo formats support
+
 * Tue Oct 13 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
