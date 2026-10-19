@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: codex
-Version: 0.160.0
+Version: 0.163.0
 Release: alt1
 Summary: Lightweight coding agent that runs in terminal
 License: Apache-2.0
@@ -126,6 +126,9 @@ codex --version | grep -Fx '%name-cli %version'
 %_man1dir/codex.1*
 
 %changelog
+* Mon Oct 19 2026 Alexey Shabalin <shaba@altlinux.org> 0.163.0-alt1
+- updated from 0.160.0 to 0.163.0
+
 * Tue Oct 06 2026 Alexey Shabalin <shaba@altlinux.org> 0.160.0-alt1
 - updated from 0.156.1 to 0.160.0
 
