@@ -1,7 +1,7 @@
 %global import_path github.com/aquasecurity/trivy-operator
 
 Name:    trivy-operator
-Version: 0.30.1
+Version: 0.35.0
 Release: alt1
 
 Summary: Kubernetes-native security toolkit
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Wed Oct 14 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.35.0-alt1
+- New version.
+
 * Wed Apr 22 2026 Aleksandr Gamzin <gamzin@altlinux.org> 0.30.1-alt1
 - 0.30.1 (Fixes: #58074)
 - Change trivy and trivy-db modules source to altlinux.space.
