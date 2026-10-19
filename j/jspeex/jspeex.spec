@@ -4,10 +4,10 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 %filter_from_requires /^java-headless/d
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-17-compat
 Name:           jspeex
 Version:        0.9.7
-Release:        alt2_8jpp8
+Release:        alt2_8jpp8.1
 Summary:        Java Implementation of Speex
 
 Group:          Development/Other
@@ -22,6 +22,7 @@ BuildRequires:  proguard
 BuildRequires:  junit
   
 Source44: import.info
+Patch1: jspeex-0.9.7-alt-no-applet.patch
 
 %description
 JSpeex is a Java port of the Speex speech Codec (Open Source/Free Software
@@ -38,6 +39,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
+%patch1 -p2
 # Make sure to remove any prebuilt jars and classes
 find . \( -name '*.class' -o -name '*.jar' \) -exec rm -f '{}' \;
 # Remove doc dir if it is already there
@@ -65,6 +67,13 @@ cp -rp doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt2_8jpp8.1
+- NMU: fix build with new JDK:
+  + do not build the applets (JApplet is removed)
+  + disable javadoc doclint
+  + replace BuildRequires: jpackage-generic-compat with jpackage-17-compat
+    (identical noarch javadoc on all arches)
+
 * Sun Nov 05 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2_8jpp8
 - updated dependencies
 
