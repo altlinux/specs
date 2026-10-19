@@ -1,5 +1,5 @@
 Name: eterbackup
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: Etersoft backup tools for journaling backup
@@ -48,6 +48,38 @@ See detailed russian description here: http://wiki.etersoft.ru/Eterbackup
 #%_sysconfdir/bash_completion.d/erc
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt1
+- eterpack, eterremove: remove obsolete TODO comments
+- check_code.sh: drop unneeded SC2154 and SC2002 exclusions
+- TODO: remove done items
+- etertimemachine: sync symlinks pointing outside the tree (do not use rsync --safe-links)
+- tests: etertimemachine syncs symlinks pointing outside the tree
+- eterpack: do not keep parts without changes (zpaq adds a 104 bytes part on every run)
+- tests: updates without changes add no parts
+- eterpack: add compact command to remove empty parts
+- tests: eterpack compact
+- README, CLAUDE.md, TODO: describe empty parts, compact and --rollback N
+- eterpack: stop when the index is missing or a part would follow a gap (do not move valid parts to .broken)
+- tests: update with a missing index or missing parts
+- TODO: merge the compact and zpaq rotation items
+- eterpack, eterattrstore: remove CHECKME notes (eterattrstore does not use rhas)
+- eterpack: skip dirs below an excluded path in dirs.list
+- eterpack, eterattrstore: do not save special files in excluded dirs
+- eterpack, eterattrstore: compare owner/group, mode and special files with the saved metadata
+- eterpack: test checks that every dir from dirs.list has its archive
+- eterpack: add --exclude-from option
+- eterpack: add info command (archives with their versions and sizes)
+- etertimemachine: set the rotate status only while rotating (rotate --force left it set)
+- etertimemachine: lock the target dir and continue interrupted rotate, sync and delete
+- etertimemachine: add --thinner lastN (keep N last dated dirs)
+- eterremove: rename remove_short_paths to keep_deepest_paths
+- tests: compare of attributes and special files, special files in excluded dirs
+- tests: eterpack --exclude-from, info, check of dirs.list
+- tests: etertimemachine interrupted runs, lock and --thinner lastN
+- tests: run the POSIX sh scripts with dash (TEST_SH=dash)
+- README, CLAUDE.md: describe compare of attributes, info, --exclude-from and etertimemachine recovery
+- TODO: remove done and obsolete items
+
 * Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.12-alt1
 - eterpack: do not write metafiles to the source tree, save attrs inside followed links
 - tests: read-only source, reserved metafile names, old backups, --followlinks attributes
