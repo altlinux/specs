@@ -1,11 +1,12 @@
 Name: muse
-Version: 4.2.1
-Release: alt2
+Version: 4.3.0
+Release: alt1
 
 Summary: MIDI/Audio sequencer
 License: GPLv2
 Group: Sound
-Url: https://github.com/muse-sequencer/muse
+URL: https://muse-sequencer.github.io/
+VCS: https://github.com/muse-sequencer/muse
 
 Source: %name-%version.tar
 
@@ -68,6 +69,9 @@ rm -fr %buildroot%_datadir/muse/pybridge
 %_man1dir/grepmidi.1*
 
 %changelog
+* Tue Oct 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.3.0-alt1
+- 4.3.0 released
+
 * Fri Nov 07 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 4.2.1-alt2
 - 4.2.1-95-gd92fa959
 
