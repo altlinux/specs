@@ -1,31 +1,30 @@
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: java-17-openjdk-devel
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 Name:          javaparser
-Version:       3.26.2
-Release:       alt2
-Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
+Version:       3.28.0
+Release:       alt1
+
+Summary:       Java 1 to 25 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or Apache-2.0
+Group:         Development/Java
 URL:           https://javaparser.org
+VCS:           https://github.com/javaparser/javaparser
+
 Source0:       https://github.com/javaparser/javaparser/archive/%{name}-parent-%{version}.tar.gz
 
 BuildRequires:  maven-local
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+
 BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
 BuildRequires:  mvn(net.java.dev.javacc:javacc)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.javassist:javassist)
 BuildRequires:  mvn(org.checkerframework:checker-qual)
-
 BuildArch:     noarch
-Source44: import.info
 
 %description
-This package contains a Java 1 to 13 Parser with AST generation and
+This package contains a Java 1 to 25 Parser with AST generation and
 visitor support. The AST records the source code structure, javadoc
 and comments. It is also possible to change the AST nodes or create new
 ones to modify the source code.
@@ -46,6 +45,7 @@ sed -i 's/\r//' readme.md
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin -r :jacoco-maven-plugin
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :central-publishing-maven-plugin
 
 # Compatibility alias
 %mvn_alias :javaparser-core com.google.code.javaparser:javaparser
@@ -100,6 +100,11 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Mon Oct 19 2026 Anton Meleshnikov <alton@altlinux.org> 3.28.0-alt1
+- new version
+- added vcs tag
+- removed import.info
+
 * Wed Jan 14 2026 Anton Meleshnikov <alton@altlinux.org> 3.26.2-alt2
 - enabled javaparser-symbol-solver-core module
 
