@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.2.1
-Release: alt8
+Release: alt9
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -38,6 +38,8 @@ Patch24: xdg-screensaver.in-add-xfce4-screensaver-support.patch
 # https://bugzilla.altlinux.org/45772
 Patch25: xdg-open-open_gnome3-try-gio-mount.patch
 Patch26: xdg-utils-add-phosh-support.patch
+# https://bugzilla.altlinux.org/45400
+Patch27: xdg-mime-fix-spaces-in-desktop-names.patch
 
 BuildArch: noarch
 
@@ -104,6 +106,7 @@ popd
 %patch24 -p1
 %patch25 -p2
 %patch26 -p2
+%patch27 -p2
 
 %build
 %autoreconf
@@ -130,6 +133,9 @@ rm -v %buildroot{%_bindir/xdg-su,%_man1dir/xdg-su*}
 %doc ChangeLog README* LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt9
+- xdg-mime: fix desktop file names with spaces (closes: #45400).
+
 * Fri Mar 27 2026 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt8
 - xdg-mime: fix find qtpaths (closes: 53770)
 
