@@ -23,7 +23,7 @@
 
 Name: dotnet-bootstrap-%_dotnet_major
 Version: %_dotnet_sdkversion
-Release: alt1
+Release: alt2
 
 Summary: .NET 10 SDK binaries
 
@@ -53,13 +53,10 @@ AutoProv: no
 
 BuildRequires(pre): rpm-macros-dotnet >= 6.0
 
-BuildRequires: libunwind >= 1.1
-BuildRequires: liblttng-ust >= 2.9.0
-BuildRequires: libcurl
-BuildRequires: libkrb5
+# libraries the prebuilt binaries are linked with (by soname: package names differ between branches)
+BuildRequires: liblttng-ust.so.0()(64bit)
 
-# for System.Security.Cryptography.Native.OpenSsl.so
-# but already required by libkrb5
+# for System.Security.Cryptography.Native.OpenSsl.so (dlopen)
 #Requires: libcrypto10 libssl10
 
 # it is not linked directly (need the same version like in libicu-devel)
@@ -139,6 +136,10 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.402-alt2
+- BuildRequires by soname: liblttng-ust.so.0()(64bit).
+- dropped unused BuildRequires: libunwind, libcurl, libkrb5.
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.402-alt1
 - .NET SDK 10.0.402 and runtime 10.0.13
 - security fixes:

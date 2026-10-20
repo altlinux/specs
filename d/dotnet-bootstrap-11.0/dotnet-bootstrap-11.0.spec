@@ -24,7 +24,7 @@
 
 Name: dotnet-bootstrap-%_dotnet_major
 Version: %_dotnet_sdkversion
-Release: alt1
+Release: alt2
 
 Summary: .NET 11 SDK binaries
 
@@ -61,7 +61,7 @@ AutoProv: no
 BuildRequires(pre): rpm-macros-dotnet >= 6.0
 
 BuildRequires: libunwind >= 1.1
-BuildRequires: liblttng-ust >= 2.9.0
+BuildRequires: liblttng-ust0
 BuildRequires: libcurl
 BuildRequires: libkrb5
 
@@ -156,6 +156,9 @@ export PATH="$DOTNET_ROOT:$PATH"
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rc.1.26425.128-alt2
+- Build with legacy liblttng-ust0 (prebuilt runtime needs liblttng-ust.so.0).
+
 * Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 11.0.100~rc.1.26425.128-alt1
 - Update to .NET SDK 11.0.100-rc.1.26425.128.
 
