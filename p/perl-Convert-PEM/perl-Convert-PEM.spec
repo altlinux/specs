@@ -15,7 +15,7 @@
 
 Name: perl-Convert-PEM
 Version: 0.13
-Release: alt1
+Release: alt2
 
 Summary: Convert-PEM - Read/write encrypted ASN.1 PEM files
 
@@ -30,6 +30,9 @@ Source: http://www.cpan.org/authors/id/B/BT/BTROTT/Convert-PEM-%version.tar.gz
 
 # Automatically added by buildreq on Sat Aug 27 2005
 BuildRequires: perl-Class-ErrorHandler perl-Convert-ASN1 perl-Crypt-DES perl-Crypt-DES_EDE3 perl-Encode perl-Math-BigInt perl-devel perl(Crypt/PRNG.pm) perl(Test/Exception.pm)
+
+# the cipher module is loaded dynamically (Convert::PEM::CBC), autodep does not see it
+Requires: perl(Crypt/DES_EDE3.pm)
 
 %description
 This is Convert::PEM, a module implementing read/write access
@@ -49,6 +52,9 @@ to ASN.1-encoded PEM files (with optional encryption).
 %perl_vendor_privlib/Convert/
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 0.13-alt2
+- add Requires: perl(Crypt/DES_EDE3.pm) (loaded dynamically)
+
 * Wed Apr 09 2025 Igor Vlasenko <viy@altlinux.org> 0.13-alt1
 - automated CPAN update
 
