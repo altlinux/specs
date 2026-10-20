@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 49
@@ -8,9 +8,11 @@
 
 %def_enable check
 
+%def_disable bootstrap
+
 Name: decibels
 Version: %ver_major.6.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Sound Player for GNOME
 Group: Sound
@@ -24,6 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version%beta.tar
 %endif
+Source1: %name-%version-npm.tar
 
 # build hangs on 32-bit
 ExcludeArch: %ix86
@@ -55,7 +58,11 @@ BuildRequires: pkgconfig(libadwaita-1)
 The GNOME application for play sound files.
 
 %prep
-%setup -n %name-%version%beta
+%setup -n %name-%version%beta %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+npm install && npm audit fix --force &&
+tar -cf %name-%version-npm.tar node_modules && \
+mv %name-%version-npm.tar %_sourcedir/}
 
 %build
 %meson
@@ -80,6 +87,9 @@ The GNOME application for play sound files.
 
 
 %changelog
+* Tue Oct 20 2026 Yuri N. Sedunov <aris@altlinux.org> 49.6.1-alt2
+- updated to 49.6.1-59-gf4576fc
+
 * Sun Apr 12 2026 Yuri N. Sedunov <aris@altlinux.org> 49.6.1-alt1
 - 49.6.1
 

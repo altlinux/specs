@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 1.0
 %define rdn_name app.drey.EarTag
@@ -7,7 +7,7 @@
 
 Name: eartag
 Version: %ver_major.3
-Release: alt1
+Release: alt3
 
 Summary: Small and simple audio file tag editor
 License: MIT
@@ -41,7 +41,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver typelib(Adw)
 BuildRequires: python3-module-pygobject3
 BuildRequires: python3(mutagen) python3(magic) python3-module-Pillow
 BuildRequires: python3(acoustid)}
-%{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils
+%{?_enable_check:BuildRequires: /proc /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: python3(aiofiles) python3(xxhash)
 BuildRequires: python3(filetype) python3(aiohttp)
 BuildRequires: python3(aiohttp_retry)
@@ -77,6 +77,12 @@ sed -i 's|"function"|function|' pytest.ini
 %doc README*
 
 %changelog
+* Tue Oct 20 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt3
+- 1.0.3-21-g7d6ac28
+
+* Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt2
+- 1.0.3-20-gad8eadd
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
