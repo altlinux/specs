@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: btrfs-assistant
-Version: 2.3.2
+Version: 3.0.0
 Summary: GUI management tool to make managing a Btrfs filesystem easier
 Release: alt1
 License: GPL-3.0
 Group: Archiving/Backup
 URL: https://gitlab.com/btrfs-assistant/btrfs-assistant
+VCS: https://gitlab.com/btrfs-assistant/btrfs-assistant
 
 Source: %name-%version.tar
 
@@ -61,16 +62,21 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.metainf
 
 %files -f btrfsassistant.lang
 %_bindir/%name
-%_bindir/%name-bin
-%_bindir/%name-launcher
+%_prefix/lib/%name
 %_sysconfdir/%name.conf
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%name.metainfo.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_datadir/polkit-1/actions/org.%name.pkexec.policy
+%_datadir/dbus-1/system.d/org.btrfsassistant.Helper1.conf
+%_datadir/dbus-1/system-services/org.btrfsassistant.Helper1.service
+%_unitdir/%name-helper.service
+%_datadir/polkit-1/actions/org.btrfsassistant.policy
 %_datadir/%name
 
 %changelog
+* Tue Oct 20 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.0-alt1
+- Updated to version 3.0.0.
+
 * Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.3.2-alt1
 - Updated to version 2.3.2.
 
