@@ -1,8 +1,8 @@
 %def_with system_locale
 
 Name:    nx-libs
-Version: 3.5.99.26.1
-Release: alt3.2
+Version: 3.5.99.27
+Release: alt1
 
 Summary: NX X11 protocol compression libraries
 
@@ -15,10 +15,9 @@ Source0: %name-%version.tar
 #Source1: Makefile.alt
 Source2: patches.etersoft.tar
 
-# riscv64 support (from https://github.com/ArcticaProject/nx-libs/pull/1023)
-Patch2: nx-libs-github-pull-1023-riscv64-support.patch
 # loongarch64 support (from https://github.com/ArcticaProject/nx-libs/pull/1062)
 Patch3: nx-libs-github-pull-1062-loongarch64-support.patch
+Patch4: nx-libs-xfont2-get-time-in-millis.patch
 Patch2000: nx-libs-e2k.patch
 
 BuildRequires: gcc-c++
@@ -139,8 +138,8 @@ This package provides the nxdialog helper script.
 
 %prep
 %setup
-%patch2 -p1
 %patch3 -p1
+%patch4 -p2
 %ifarch %e2k
 %patch2000 -p2
 %endif
@@ -336,6 +335,11 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.27-alt1
+- new version 3.5.99.27
+- drop patches applied upstream
+- fix build on i586: add patch for xfont2 get_time_in_millis callback type
+
 * Wed Nov 22 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.5.99.26.1-alt3.2
 - e2k patch
 
