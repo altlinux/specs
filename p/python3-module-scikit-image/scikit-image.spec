@@ -14,7 +14,7 @@
 
 Name: python3-module-%oname
 Version: 0.26.0
-Release: alt1
+Release: alt2
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
 Group: Development/Python3
@@ -22,6 +22,7 @@ Url: https://pypi.org/project/scikit-image/
 
 VCS: https://github.com/scikit-image/scikit-image.git
 Source: %name-%version.tar
+Patch: skimage-0.26.0-fix-minkowski.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-macros-sphinx3
@@ -105,6 +106,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 for file in ./src/skimage/_build_utils/*.py; do
     [[ "$(basename "$file")" == "version.py" ]] && continue
@@ -164,6 +166,9 @@ export SKIMAGE_TEST_STRICT_WARNINGS=0
 %endif
 
 %changelog
+* Tue Oct 20 2026 Anton Vyatkin <toni@altlinux.org> 0.26.0-alt2
+- Fixed FTBFS.
+
 * Fri Jan 30 2026 Anton Vyatkin <toni@altlinux.org> 0.26.0-alt1
 - New version 0.26.0.
 
