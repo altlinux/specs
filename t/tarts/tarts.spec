@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:     tarts
-Version:  0.1.25
+Version:  0.1.27
 Release:  alt1
 
 Summary:  Screen savers and visual effects for terminal
@@ -46,5 +48,8 @@ EOF
 %_bindir/%name
 
 %changelog
+* Tue Oct 20 2026 Dina Tagantseva <dinchik@altlinux.org> 0.1.27-alt1
+- New version (Closes: 60174).
+
 * Thu Jun 30 2026 Dina Tagantseva <dinchik@altlinux.org> 0.1.25-alt1
 - Initial build for Sisyphus.
