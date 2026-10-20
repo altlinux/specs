@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		e7da53eea21
+%define svnrev		0d6fa36d0a0
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.31
+Version: 7.0.32
 Release: alt1
 Epoch: 1
 
@@ -900,6 +900,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Tue Oct 20 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.32-alt1
+- 7.0.32 (Fixes: CVE-2026-59782, CVE-2026-59783, CVE-2026-59785, CVE-2026-59786, CVE-2026-59787)
+
 * Wed Sep 23 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.31-alt1
 - 7.0.31 (Fixes: CVE-2026-1199, CVE-2026-59781)
 
