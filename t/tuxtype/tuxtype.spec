@@ -1,6 +1,6 @@
 Name: tuxtype
 Version: 1.8.3
-Release: alt1
+Release: alt2
 
 Summary: An educational typing tutor game starring Tux
 
@@ -16,6 +16,9 @@ Source1: %name-48x48.xpm
 Source2: %name-32x32.xpm
 Source3: %name-16x16.xpm
 Source4: ru.po
+Patch1: 0001-select-language-from-locale.patch
+Patch2: 0002-fold-cyrillic-case-in-fish-cascade.patch
+Patch3: 0003-fix-theme-locales-and-ukrainian-word.patch
 
 BuildRequires: t4k_common-devel
 BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libSDL_pango-devel
@@ -32,7 +35,12 @@ spell.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 cp %SOURCE4 po/
+# the tarball ships stamp-po: without removing it no .gmo catalogs are built
+rm -v po/stamp-po
 # fix install
 subst 's|	chown root:games|#&|' Makefile.am
 
@@ -83,6 +91,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %attr(0755,root,games) %config(noreplace) %_localstatedir/games/tuxtype
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt2
+- build the gettext catalogs (the tarball stamp-po skipped them)
+- select the language from the locale on the first run (closes: #26071)
+- fold lowercase Cyrillic to capitals in Fish Cascade (closes: #60424)
+- fix wrong locales of the armenian and jamaican themes, a Ukrainian word
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
 - new version 1.8.3 (with rpmrb script)
 
