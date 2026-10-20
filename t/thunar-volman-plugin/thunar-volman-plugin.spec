@@ -1,7 +1,7 @@
 %define base thunar-volman
 Name: %base-plugin
 Version: 4.20.0
-Release: alt1
+Release: alt2
 
 Summary: Thunar volume manager plugin
 Summary (ru): Дополнение Thunar для управления подключенными устройствами
@@ -58,6 +58,9 @@ application and import the new pictures from your camera.
 %_desktopdir/*.desktop
 
 %changelog
+* Sun Oct 18 2026 Ajrat Makhmutov <rauty@altlinux.org> 4.20.0-alt2
+- Pass the disc to the default video disc player (Closes: 60822).
+
 * Mon Dec 16 2024 Mikhail Efremov <sem@altlinux.org> 4.20.0-alt1
 - Updated to 4.20.0.
 
