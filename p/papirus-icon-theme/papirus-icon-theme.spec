@@ -1,7 +1,7 @@
 Name:     papirus-icon-theme
 
 Version:  20260801
-Release:  alt1
+Release:  alt2
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -9,6 +9,8 @@ Group:    Other
 Url:      https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
 
 Source:   %name-%version.tar
+# https://github.com/PapirusDevelopmentTeam/papirus-icon-theme/pull/4360
+Patch:    %name-translated-comment.patch
 
 BuildArch: noarch
 
@@ -103,6 +105,7 @@ Requires: icon-theme-Papirus-Remix
 
 %prep
 %setup
+%patch -p1
 
 %build
 # Make network menu item in ALT looks like upstream Internet menu item
@@ -115,7 +118,7 @@ color=orange
 THEME_DIR=Papirus-Edu
 mkdir $THEME_DIR
 cp Papirus-Light/index.theme $THEME_DIR
-subst 's/Light/Education/g; s/bright themes/ALT Education/g; s/breeze/orange/g' $THEME_DIR/index.theme
+subst 's/Light/Education/g; s/bright themes/ALT Education/g; /^Comment\[/{/^Comment\[ru\]/!d}; s/светлых тем/Альт Образование/' $THEME_DIR/index.theme
 
 # Total copy all directory from Papirus as symlinks except 'places'
 for dir in Papirus/*; do
@@ -161,19 +164,18 @@ ln -s ../../Papirus-Light/22x22/panel $THEME_DIR/22x22/panel
 rm -rf $THEME_DIR/16x16/panel
 ln -s ../../Papirus-Light/16x16/panel $THEME_DIR/16x16/panel
 
-# Make file manager icon (org.kde.dolphin, system-file-manager) look like the
-# orange Education folder. apps/ and categories/ are wholesale symlinks to the
-# base Papirus theme (blue), so the icon cannot be replaced in place. Instead
-# add a dedicated apps-edu directory listed *before* apps/categories in
-# index.theme, so the freedesktop icon lookup picks the orange folder there first.
 for size in 16 22 24 32 48 64; do
 	d=$THEME_DIR/${size}x${size}/apps-edu
 	mkdir $d
 	for icon in org.kde.dolphin system-file-manager; do
 		ln -s ../places/folder.svg $d/$icon.svg
 	done
+	src=Papirus/${size}x${size}/apps/cs-desktop.svg
+	grep -q '#1e88e5' $src || { echo "$src: no #1e88e5 to recolour" >&2; exit 1; }
+	sed 's/#1e88e5/#ee923a/' $src > $d/org.xfce.panel.showdesktop.svg
 done
-subst 's#^Directories=#Directories=16x16/apps-edu,22x22/apps-edu,24x24/apps-edu,32x32/apps-edu,48x48/apps-edu,64x64/apps-edu,#' $THEME_DIR/index.theme
+edu_dirs=16x16/apps-edu,22x22/apps-edu,24x24/apps-edu,32x32/apps-edu,48x48/apps-edu,64x64/apps-edu
+subst "s#^Directories=\(.*\)#Directories=$edu_dirs,\1,$edu_dirs#" $THEME_DIR/index.theme
 for size in 16 22 24 32 48 64; do
 	cat >> $THEME_DIR/index.theme <<EOF
 
@@ -278,7 +280,8 @@ for style in Dark Light; do
 		mkdir $THEME_DIR
 		cp Papirus-$style/index.theme $THEME_DIR
 		subst "s/Name=Papirus-$style/Name=$THEME_DIR/g; \
-		s/Comment=Papirus/Comment=Papirus-$theme/g" $THEME_DIR/index.theme
+		s/Comment=Papirus/Comment=Papirus-$theme/g; \
+		s/^\(Comment\[[^]]*\]=.*\)Papirus/\1Papirus-$theme/" $THEME_DIR/index.theme
 
 		for dir in Papirus-$style/*; do
 			[ -d "$dir" ] || continue
@@ -363,6 +366,15 @@ cp -a Papirus* %buildroot%_iconsdir
 %_iconsdir/Papirus-Light-*
 
 %changelog
+* Mon Oct 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 20260801-alt2
+- Fall back to breeze in Papirus-Education for icons
+  missing in Papirus (Closes: 58212, 59313, 60913).
+- Translate the icon theme descriptions (upstream PR 4360; Closes: 46609).
+- Make the orange file manager icon of Papirus-Education
+  show up in GTK desktops too, not only in KDE.
+- Paint the Xfce show desktop icon orange
+  in Papirus-Education (Closes: 44887).
+
 * Mon Aug 03 2026 Kirill Izmestev <felixz@altlinux.org> 20260801-alt1
 - New version 20260801.
 
