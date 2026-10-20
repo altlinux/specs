@@ -1,6 +1,6 @@
 Name: clamtk
 Version: 6.18
-Release: alt2
+Release: alt3
 
 Summary: Easy to use front-end for ClamAV
 Summary(ru_RU.UTF-8): Простой в использовании интерфейс для антивируса ClamAV
@@ -17,8 +17,16 @@ BuildArch: noarch
 # Source-url: https://github.com/dave-theunsub/clamtk/releases/download/v%version/clamtk-%version.tar.xz
 Source: %name-%version.tar
 Patch: alt-ru-mirrors.patch
+Patch1: alt-reset-freshclam-cooldown.patch
+Patch2: alt-iconview-unselect-on-leave.patch
+Patch3: alt-redraw-after-update.patch
+Patch4: alt-ru-translation.patch
 
 Requires: clamav >= 0.95
+# the signatures are updated by its cron job (the default "shared" mode)
+Requires: clamav-freshclam
+# the Scheduler works through crontab
+Requires: /usr/bin/crontab
 Requires: gnome-icon-theme gnome-icon-theme-extras libcanberra-gtk3
 Requires(post,postun): desktop-file-utils
 
@@ -41,6 +49,8 @@ ClamTk - графический интерфейс для ClamAV, разрабо
 %prep
 %setup
 %autopatch -p1
+# the prebuilt ru.mo is out of date: build it from the patched ru.po
+msgfmt -o po/ru.mo po/ru.po
 
 %install
 install -D -m755 %name %buildroot%_bindir/%name
@@ -66,6 +76,14 @@ done
 %_man1dir/*
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 6.18-alt3
+- require /usr/bin/crontab for the Scheduler (closes: #58936)
+- remove freshclam.dat before an update from a private mirror (closes: #47083)
+- unselect icon view items on pointer leave (closes: #40760)
+- require clamav-freshclam for the automatic signatures update (closes: #58937)
+- redraw the window after the signatures update (closes: #40761)
+- add the missing Russian translations
+
 * Thu Apr 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 6.18-alt2
 - Delete unused patch;
 - Add available in Russia mirrors.
