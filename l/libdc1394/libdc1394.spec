@@ -1,7 +1,7 @@
 %define abiversion 26
 Name: libdc1394
 Version: 2.2.7
-Release: alt1
+Release: alt2
 
 Summary: Library for 1394 Digital Camera Specification
 
@@ -15,6 +15,7 @@ Source: http://prdownloads.sf.net/%name/%name-%version.tar
 
 Patch1: libdc1394-13b85d2d23548682b617ddc1196f5560a27998bd.patch
 Patch2: libdc1394-2.1.3-alt-v4l.patch
+Patch3: libdc1394-2.2.7-flir.patch
 Patch2000: libdc1394-e2k.patch
 
 %define libraw1394_ver 2.0.4
@@ -75,6 +76,7 @@ sed -i 's/iso\.i/iso->i/g' dc1394/juju/capture.c
 
 #patch1 -p2
 #patch2 -p2
+%patch3 -p2
 
 %build
 %__subst "s|runpath_var=.*|runpath_var=|g" configure
@@ -101,6 +103,9 @@ sed -i 's/iso\.i/iso->i/g' dc1394/juju/capture.c
 %_man1dir/*
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.7-alt2
+- add support for FLIR cameras (closes: #34715)
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.7-alt1
 - new version 2.2.7
 - rename libdc1394-22 subpackage to libdc1394_26 per Shared Libs Policy
