@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 Name: dictd
 Version: 1.13.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Url: http://www.dict.org/
@@ -17,6 +17,8 @@ Source6: dictd-control
 Source7: dictd-README.ALT-ru_RU.UTF-8
 Source8: dictd.service
 Source9: dictd.filetrigger
+Patch1: dictd-1.13.3-alt-dict-raw-log.patch
+Patch2: dictd-1.13.3-alt-lazy-reverse-dns.patch
 
 # -------  dictd package description ----- #
 
@@ -99,6 +101,7 @@ easy to use.
 # Name: dictd
 Summary: script for colorizing plain text sent to terminal emulator.
 Group: Text tools
+Requires: /usr/bin/m4
 
 %description -n colorit
 colorit is a script for markuping text input and sending a result to
@@ -124,6 +127,8 @@ dict_lookup on a keyboard shortcut in the window manager.
 # --------------- real part ----------------  #
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 cp %SOURCE7 README.ALT-ru_RU.UTF-8
 
 %build
@@ -238,6 +243,11 @@ fi
 %_man1dir/colorit.1*
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.13.3-alt2
+- dict: make -r/--raw and --debug output work (closes: #17019)
+- dictd: resolve client hostname only for hostname ACL rules (closes: #35335)
+- colorit: add /usr/bin/m4 requirement (closes: #52229)
+
 * Sat Nov 16 2024 Aleksey Cheusov <cheusov@altlinux.ru> 1:1.13.3-alt1
 - 1.13.3
 
