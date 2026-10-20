@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 9.15.0
+Version: 9.16.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -19,6 +19,8 @@ Source: %name-%version.tar
 Patch1: calibre-no-update.patch
 Patch2: calibre-nodisplay.patch
 Patch4: alt-drop-pykakasi.patch
+Patch5: alt-import-foreign-parent.patch
+Patch6: alt-desktop-ru.patch
 
 AutoProv:no
 
@@ -46,7 +48,7 @@ BuildRequires(pre): rpm-macros-qt6-webengine
 
 #BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libjpeg-devel libsqlite3-devel
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 
 BuildRequires: xdg-utils >= 1.0.2
 
@@ -66,6 +68,8 @@ BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-wayland-devel
 # needs for smiles and emojicons
 Requires: qt6-imageformats
+# the bundled QPA plugin (headless) uses the Qt private API
+Requires: libqt6-core = %_qt6_version
 
 
 #BuildRequires: libpoppler-qt5-devel >= 0.20.2
@@ -116,6 +120,7 @@ BuildRequires: libjbig-devel >= 2.1
 BuildRequires: libtiff-devel
 #>= 4.6.0
 BuildRequires: libwebp-devel >= 1.3.2
+BuildRequires: libavif-devel
 BuildRequires: libfreetype-devel >= 2.13.2
 BuildRequires: libgraphite2-devel >= 1.3.4
 BuildRequires: fontconfig-devel >= 2.14.2
@@ -249,6 +254,8 @@ TXT, PDF, LRS и FB2.
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 # then drop pykakasi autoreq
 rm -f src/calibre/ebooks/unihandecode/jadecoder.py
 
@@ -314,6 +321,10 @@ rm -v %buildroot%_datadir/%name/calibre-portable.*
 
 rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 
+# repocop: freedesktop-categories needs an additional category
+sed -i 's/^Categories=Office;$/Categories=Qt;Office;Viewer;/' %buildroot%_desktopdir/calibre-gui.desktop
+grep -q '^Categories=Qt;' %buildroot%_desktopdir/calibre-gui.desktop
+
 
 #	rm debian/tmp/usr/share/calibre/calibre-portable.*
 #	rm debian/tmp/usr/lib/python*/site-packages/init_calibre.py
@@ -351,6 +362,15 @@ rm -v %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 9.16.0-alt1
+- new version 9.16.0
+- added BuildRequires: libavif-devel (new avif plugin)
+- replaced BuildRequires: cmake with rpm-build-cmake
+- add Qt and Viewer categories to calibre-gui.desktop
+- add Russian translations to the desktop files
+- ebook-edit: pass the parent window to the import dialog
+- require the Qt version the bundled headless QPA plugin is built with
+
 * Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 9.15.0-alt1
 - new version 9.15.0
 - build with podofo 1.1.2 (fixes FTBFS on podofo 0.10 API)
