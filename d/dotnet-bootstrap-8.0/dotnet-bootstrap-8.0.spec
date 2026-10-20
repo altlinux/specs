@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 8.0
-%define _dotnet_coreversion 8.0.31
-%define _dotnet_sdkversion 8.0.131
-%define _dotnet_corerelease 8.0.31
-%define _dotnet_corerelease1 8.0.31
+%define _dotnet_coreversion 8.0.32
+%define _dotnet_sdkversion 8.0.132
+%define _dotnet_corerelease 8.0.32
+%define _dotnet_corerelease1 8.0.32
 
 %define _dotnet_sdkmanifestsrelease 8.0.100
-%define _dotnet_sdkrelease 8.0.131
+%define _dotnet_sdkrelease 8.0.132
 %define _dotnet_aspnetcorerelease %_dotnet_corerelease1
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -52,13 +52,11 @@ AutoProv: no
 
 BuildRequires(pre): rpm-macros-dotnet >= 6.0
 
-BuildRequires: libunwind >= 1.1
-BuildRequires: liblttng-ust >= 2.8.0
-BuildRequires: libcurl
-BuildRequires: libkrb5
+# libraries the prebuilt binaries are linked with (by soname: package names differ between branches)
+BuildRequires: liblttng-ust.so.0()(64bit)
+BuildRequires: libz.so.1()(64bit)
 
-# for System.Security.Cryptography.Native.OpenSsl.so
-# but already required by libkrb5
+# for System.Security.Cryptography.Native.OpenSsl.so (dlopen)
 #Requires: libcrypto10 libssl10
 
 # it is not linked directly (need the same version like in libicu-devel)
@@ -134,6 +132,52 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.132-alt1
+- .NET SDK 8.0.132 and runtime 8.0.32
+- Security fixes:
+  + CVE-2026-66822, GHSA-wxxw-5cvc-53j7: Fix information disclosure.
+  + CVE-2026-58280, GHSA-mc4q-93x5-f6hj: Fix denial of service.
+  + CVE-2026-69651, GHSA-3rxq-g8rj-r2cf: Fix denial of service.
+  + CVE-2026-96958, GHSA-r955-8q5j-3h83: Fix denial of service.
+  + CVE-2026-96960, GHSA-7hqp-7c5m-4vq6: Fix denial of service.
+  + CVE-2026-96959, GHSA-c399-9853-6jmj: Fix denial of service.
+  + CVE-2026-84008, GHSA-846f-f764-76mx: Fix denial of service.
+  + CVE-2026-70174, GHSA-f749-vhgx-39h6: Fix remote code execution.
+  + CVE-2026-87697, GHSA-c27m-942f-rcfh: Fix remote code execution.
+  + CVE-2026-70035, GHSA-4j9v-h7pp-725h: Fix remote code execution.
+  + CVE-2026-83520, GHSA-4w5f-7jp2-w48g: Fix remote code execution.
+  + CVE-2026-96229, GHSA-5qr9-xxm9-6cmq: Fix information disclosure.
+  + CVE-2026-96232, GHSA-f8qh-mqg4-9939: Fix information disclosure.
+  + CVE-2026-96234, GHSA-fq6x-pvr9-888r: Fix information disclosure.
+  + CVE-2026-70007, GHSA-pfwj-2f93-rf42: Fix remote code execution.
+  + CVE-2026-96224, GHSA-xq57-crx4-g373: Fix remote code execution.
+  + CVE-2026-96235, GHSA-g44w-h65v-4cw9: Fix remote code execution.
+  + CVE-2026-85363, GHSA-f63g-mx39-3r38: Fix remote code execution.
+  + CVE-2026-96233, GHSA-87vj-4hqv-22p9: Fix denial of service.
+  + CVE-2026-70175, GHSA-x3vp-85cm-q97r: Fix elevation of privilege.
+  + CVE-2026-70196, GHSA-57xr-hfxx-jw5x: Fix denial of service.
+  + CVE-2026-70179, GHSA-vrrp-6v32-2p8g: Fix elevation of privilege.
+  + CVE-2026-70181, GHSA-w5qq-qrpp-rf4c: Fix denial of service.
+  + CVE-2026-96238: Fix security feature bypass.
+  + CVE-2026-96237: Fix remote code execution.
+  + CVE-2026-70159, GHSA-334f-vvp4-7g6p: Fix denial of service.
+  + CVE-2026-70186, GHSA-mf4x-w4gh-4656: Fix denial of service.
+  + CVE-2026-105016, GHSA-5gjq-3f94-rcf7: Fix remote code execution.
+  + CVE-2026-85790, GHSA-2mxg-prvg-9jfg: Fix information disclosure.
+  + CVE-2026-70162, GHSA-2fmv-rv2c-59x7: Fix denial of service.
+  + CVE-2026-70183, GHSA-494h-xx7x-5frh: Fix security feature bypass.
+  + CVE-2026-88092, GHSA-rv87-ccxw-8ggf: Fix security feature bypass.
+  + CVE-2026-70188, GHSA-fpq8-4vhr-rcxx: Fix security feature bypass.
+  + CVE-2026-96230, GHSA-qjpx-jqm5-h2c4: Fix remote code execution.
+  + CVE-2026-92707: Fix denial of service.
+  + CVE-2026-96222, GHSA-vrv5-2jg9-4mmr: Fix spoofing.
+  + CVE-2026-96231, GHSA-2j93-m82w-73j2: Fix elevation of privilege.
+  + CVE-2026-96225, GHSA-w6wh-p4g7-mpj2: Fix elevation of privilege.
+  + CVE-2026-70197, GHSA-4mpw-cpwj-hxxj: Fix remote code execution.
+  + CVE-2026-96236, GHSA-f4g7-52wc-p8x7: Fix denial of service.
+- BuildRequires by soname: liblttng-ust.so.0()(64bit), libz.so.1()(64bit).
+- Dropped unused BuildRequires: libunwind, libcurl, libkrb5.
+
 * Fri Sep 25 2026 Vitaly Lipatov <lav@altlinux.ru> 8.0.131-alt1
 - .NET SDK 8.0.131 and runtime 8.0.31
 - fixed CVEs:
