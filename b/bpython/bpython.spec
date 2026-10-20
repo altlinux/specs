@@ -6,7 +6,7 @@
 
 Name: bpython
 Version: 0.26
-Release: alt1
+Release: alt2
 
 Summary: Fancy curses interface to the Python 3 interactive interpreter
 
@@ -19,6 +19,7 @@ BuildArch: noarch
 
 # Source-url: https://github.com/bpython/bpython/archive/refs/tags/%version-release.tar.gz
 Source: %name-%version.tar
+Patch: bpython-urwid3-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -76,6 +77,7 @@ Urwid front-end for bpython
 
 %prep
 %setup
+%patch -p1
 echo "__version__ = '%version'" > bpython/_version.py
 
 %if_with doc
@@ -130,6 +132,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt2
+- fix compatibility with urwid >= 3.0 (backport upstream bbc9438a26)
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26-alt1
 - new version 0.26
 
