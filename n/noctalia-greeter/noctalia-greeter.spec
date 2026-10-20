@@ -4,7 +4,7 @@
 %def_with check
 
 Name: noctalia-greeter
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Minimal login greeter for greetd matching the look and feel of Noctalia Shell
@@ -43,6 +43,7 @@ BuildRequires: pkgconfig(glesv2)
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gobject-2.0)
 BuildRequires: pkgconfig(libinput)
+BuildRequires: pkgconfig(libjxl)
 BuildRequires: pkgconfig(librsvg-2.0)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(libxml-2.0)
@@ -99,5 +100,8 @@ chmod 644 %buildroot%_datadir/noctalia-greeter/greetd_setup_lib.sh
 %config(noreplace) %_sysconfdir/greetd/greeters/noctalia-greeter.toml
 
 %changelog
+* Tue Oct 20 2026 Egor Ignatov <egori@altlinux.org> 1.7.0-alt1
+- New version 1.7.0.
+
 * Mon Sep 28 2026 Egor Ignatov <egori@altlinux.org> 1.6.0-alt1
 - First build for ALT.
