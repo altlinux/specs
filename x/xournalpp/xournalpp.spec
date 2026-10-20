@@ -1,7 +1,7 @@
 %def_with gtest
 
 Name: xournalpp
-Version: 1.2.7
+Version: 1.3.8
 Release: alt1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
@@ -9,19 +9,18 @@ Group: Office
 License: GPLv2+
 Url: https://github.com/%name/%name
 Source: %name-%version.tar.gz
-Patch: 0001-Hack-test.patch
-Patch1: 0002-GCC-13.patch
 Patch100: 0003-32-bit-fix.patch
-Patch101: 0004-aarch64-fix.patch
 Requires: %name-plugins = %version-%release
 Requires: %name-ui = %version-%release
 %add_findreq_skiplist %_datadir/%name/plugins/Example/*
+%add_findreq_skiplist %_datadir/%name/plugins/ImageActions/*
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 # Automatically added by buildreq on Thu Sep 28 2023
 # optimized out: at-spi2-atk cmake-modules fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXrender-devel libalsa-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libp11-kit libpango-devel libpoppler8-glib libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libxcb-devel lua5.4 perl perl-Encode perl-Locale-gettext perl-parent pipewire-jack-libs pipewire-libs pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: cmake gcc-c++ git-core help2man libXi-devel libgtk+3-devel libpoppler-glib-devel libportaudio2-devel librsvg-devel libsndfile-devel libssl-devel libxml2-devel libzip-devel lsb-release lua-devel
+BuildRequires: rpm-build-cmake gcc-c++ git-core help2man libXi-devel libgtk+3-devel libpoppler-glib-devel libportaudio2-devel librsvg-devel libsndfile-devel libssl-devel libxml2-devel libzip-devel lsb-release lua-devel
+BuildRequires: pkgconfig(gtksourceview-4) libqpdf-devel
 
 %if_with gtest
 BuildRequires: libgtest-devel ctest
@@ -49,16 +48,13 @@ The %name-ui package contains a graphical user interface for  %name.
 
 %prep
 %setup
-%patch -p2
-%patch1 -p2
 %patch100 -p2
-%patch101 -p1
 
 %build
 %if_with gtest
-%cmake -DENABLE_GTEST=ON -DCPACK_STRIP_FILES=off
+%cmake -DENABLE_GTEST=ON -DCPACK_STRIP_FILES=off -DENABLE_CPPTRACE=OFF
 %else
-%cmake -DCPACK_STRIP_FILES=off
+%cmake -DCPACK_STRIP_FILES=off -DENABLE_CPPTRACE=OFF
 %endif
 
 %cmake_build
@@ -71,9 +67,13 @@ The %name-ui package contains a graphical user interface for  %name.
 %cmake_install
 
 %find_lang %name
+# add menu sub-categories (repocop freedesktop-categories)
+sed -i 's/^Categories=Office;GNOME;GTK;\?$/Categories=Office;Graphics;2DGraphics;GNOME;GTK;/' \
+	%buildroot%_desktopdir/com.github.%name.%name.desktop
 
 %check
-%cmake_build --target test
+export LC_ALL=C.UTF-8
+%ctest -E NOT_BUILT
 
 %files -f %name.lang
 %doc README.md AUTHORS
@@ -96,6 +96,17 @@ The %name-ui package contains a graphical user interface for  %name.
 %_datadir/%name/ui
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.8-alt1
+- NMU: new version 1.3.8
+- Drop test hack patches that no longer apply, refresh the 32-bit test fix
+- Disable cpptrace (needs a network fetch)
+- Added BuildRequires: pkgconfig(gtksourceview-4) (TeX editor highlighting)
+- Added BuildRequires: libqpdf-devel (QPDF export)
+- Run %%check with ctest in a UTF-8 locale, skip the never built GTK test
+- Skip requires of ImageActions plugin (LuaJIT ffi, not in lua5.4)
+- Added BuildRequires: rpm-build-cmake and rpm-macros-cmake instead of cmake
+- Add Graphics and 2DGraphics menu categories (repocop)
+
 * Tue May 13 2025 Fr. Br. George <george@altlinux.org> 1.2.7-alt1
 - Autobuild version bump to 1.2.7
 
