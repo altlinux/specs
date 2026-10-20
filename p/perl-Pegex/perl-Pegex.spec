@@ -8,7 +8,7 @@ BuildRequires: perl(IO/All.pm) perl(Mo.pm) perl(Term/ANSIColor.pm) perl(Test/Pod
 %define _localstatedir %{_var}
 Name:           perl-Pegex
 Version:        0.75
-Release:        alt1
+Release:        alt1.1
 Summary:        Pegex Parser Generator
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Pegex
@@ -30,6 +30,8 @@ BuildRequires:  perl(overload.pm)
 BuildRequires:  perl(re.pm)
 BuildRequires:  perl(Scalar/Util.pm)
 BuildRequires:  perl(YAML/XS.pm)
+# YAML::PP evals "use experimental" at run time (autodep misses it)
+BuildRequires:  perl(experimental.pm)
 # Tests
 BuildRequires:  perl(base.pm)
 BuildRequires:  perl(File/Basename.pm)
@@ -74,6 +76,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 0.75-alt1.1
+- NMU: fixed FTBFS (added BuildRequires: perl(experimental.pm) for YAML::PP)
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.75-alt1
 - automated CPAN update
 
