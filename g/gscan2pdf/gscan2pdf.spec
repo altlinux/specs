@@ -2,7 +2,7 @@
 
 Name: gscan2pdf
 Version: 2.13.5
-Release: alt3
+Release: alt4
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
 Group: Office
@@ -14,6 +14,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://prdownloads.sf.net/%name/%name/%version/%name-%version.tar
 
 #Patch: %name.patch
+Patch1: gscan2pdf-fix-open-session-filenames.patch
+Patch2: gscan2pdf-fix-save-image-utf8-filename.patch
+Patch3: gscan2pdf-ignore-unpaper-libav-messages.patch
+Patch4: gscan2pdf-fix-annotation-buttons.patch
+Patch5: gscan2pdf-fix-scan-options-race.patch
 
 BuildArch: noarch
 
@@ -58,6 +63,11 @@ Scanning is handled with SANE via scanimage. PDF conversion is done by libtiff.
 %prep
 %setup
 #patch -p2
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 %__subst "s|use Gtk3 0.028 -init;|use Gtk3 0.028; INIT { Gtk3->init; }|g" bin/%name
 %__subst "5iuse Gtk3;" lib/Gscan2pdf/Canvas.pm
 # djvu %_bindir/cjb2
@@ -93,6 +103,13 @@ find %buildroot -name .packlist | xargs rm -f
 %perl_vendor_privlib/Gscan2pdf/
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 2.13.5-alt4
+- fix reopening of a crashed session (closes: #43464)
+- fix double-encoded non-ASCII names when saving images (closes: #43420)
+- do not treat libav notices printed by unpaper as errors (closes: #43429)
+- fix annotation buttons: add without selection, delete (closes: #43451)
+- fix exception in scan dialog on quick device change (closes: #45076)
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.13.5-alt3
 - Drop perl-Sane from BuildRequires (replaced by perl-Image-Sane).
 
