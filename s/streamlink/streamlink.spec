@@ -2,7 +2,7 @@
 
 Name: streamlink
 Version: 8.6.2
-Release: alt1
+Release: alt2
 
 Summary: Python library for extracting streams from various websites
 
@@ -25,7 +25,7 @@ BuildArch: noarch
 AutoProv: no
 
 BuildRequires(pre): rpm-build-intro
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 
 BuildRequires: python3-module-wheel python3-module-setuptools
 BuildRequires: python3-module-exceptiongroup
@@ -73,9 +73,16 @@ BuildRequires: python3-module-exceptiongroup
 %py3_use websocket-client < 2
 %py3_use websocket-client >= 1.2.1
 
-
 # for completions
 BuildRequires: python3-module-shtab
+
+%if_disabled check
+%else
+# upstream tests (pytest addopts: -p trio -p requests_mock)
+BuildRequires: python3-module-pytest python3-module-pytest-trio
+BuildRequires: python3-module-requests-mock
+BuildRequires: python3-module-freezegun
+%endif
 
 # Recommends:     %_bindir/ffmpeg
 
@@ -127,6 +134,9 @@ install -Dm644 completions/zsh/_%srcname %buildroot%_datadir/zsh/site-functions/
 # fish completions are installed by the upstream wheel, not packaged
 rm -rv %buildroot%_datadir/fish
 
+%check
+%pyproject_run_pytest -p no:cacheprovider
+
 %files
 %doc README.md
 %doc LICENSE
@@ -147,6 +157,14 @@ rm -rv %buildroot%_datadir/fish
 #%license LICENSE
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.2-alt2
+- enable %%check (upstream tests)
+- added BuildRequires for %%check:
+  + python3-module-pytest
+  + python3-module-pytest-trio
+  + python3-module-requests-mock
+  + python3-module-freezegun
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.2-alt1
 - new version 8.6.2
 - security fixes:
