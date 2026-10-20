@@ -2,7 +2,7 @@
 %define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Simple local mirror switcher for ALT
@@ -45,7 +45,7 @@ Additional mirrors for %name.
 Summary: A terminal simple local mirror switcher for ALT
 Group: Other
 BuildArch: noarch
-BuildRequires: perl-String-Util perl-Date-Calc perl-Config-Tiny
+BuildRequires: perl-String-Util perl-Date-Calc perl-Config-Tiny perl(LWP/UserAgent.pm)
 %description cli
 A terminal simple local mirror switcher for ALT.
 
@@ -67,9 +67,14 @@ rm -r %buildroot%_datadir/%name/mirrors
 
 %find_lang %name --all-name
 
-%post
+%post lists-sisyphus
 if [ "$1" -eq 2 ]; then
-   python3 %_datadir/%name/ams_check.py
+   sh %_datadir/%name/restore.sh
+fi
+
+%post lists-branch
+if [ "$1" -eq 2 ]; then
+   sh %_datadir/%name/restore.sh
 fi
 
 %files -f %name.lang
@@ -89,6 +94,15 @@ fi
 %_bindir/ams
 
 %changelog
+* Tue Oct 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt1
+- added link for bugs issues && home page
+- minor improvements
+- cli: added measuring download speed from a mirror
+- reworked script for checking and restoring an additional mirror for the RPM package
+- gui: fixed: auto-change of hint on mirror name label
+- cli: deleted "active" command
+- cli: added "show-all" command
+
 * Fri Sep 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.1-alt1
 - 1.4.0 -> 1.4.1
 
