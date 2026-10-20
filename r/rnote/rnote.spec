@@ -2,8 +2,8 @@
 %def_enable check
 
 Name: rnote
-Version: 0.11.0
-Release: alt2
+Version: 0.14.2
+Release: alt1
 
 Summary: Sketch and take handwritten notes
 License: GPL-3.0-or-later
@@ -12,12 +12,12 @@ Group: Graphical desktop/GNOME
 Url: https://rnote.flxzt.net
 Vcs: https://github.com/flxzt/rnote
 Source0: %name-%version.tar
-Source1: %name-vendor.tar
+Source1: %name-development-%version.tar
 Source2: config.toml
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: rust-cargo
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(glib-2.0) >= 2.76
@@ -56,12 +56,16 @@ install -vD %SOURCE2 .cargo/config.toml
 # drop unknown languages, find known
 rm -r %buildroot%_datadir/locale/zh_Han{s,t}
 %find_lang --with-gnome %name
+# add menu sub-categories (repocop freedesktop-categories)
+sed -i 's/^Categories=GNOME;GTK;Graphics;$/Categories=GNOME;GTK;Graphics;2DGraphics;VectorGraphics;/' \
+	%buildroot%_desktopdir/%APP_ID.desktop
 
 %check
 %meson_test
 
 %files -f %name.lang
 %_bindir/%name
+%_bindir/%name-cli
 %_desktopdir/%APP_ID.desktop
 %_datadir/fonts/rnote-fonts
 %_datadir/glib-2.0/schemas/%{APP_ID}.gschema.xml
@@ -70,8 +74,15 @@ rm -r %buildroot%_datadir/locale/zh_Han{s,t}
 %_datadir/metainfo/%APP_ID.metainfo.xml
 %_datadir/mime/packages/%APP_ID.xml
 %_datadir/%name
+%_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14.2-alt1
+- NMU: new version 0.14.2
+- Package rnote-cli and the thumbnailer
+- Replace BuildRequires: cmake with rpm-build-cmake
+- Add 2DGraphics and VectorGraphics menu categories (repocop)
+
 * Wed Nov 20 2024 Oleg Shchavelev <oleg@altlinux.org> 0.11.0-alt2
 - Rebuild improved spec (ALT #51842)
 - Add macro %%meson_build, rename macro %%__meson_test -> %%meson_test
