@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -141,6 +141,29 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
+- new version 1.7.5
+- security: fix IMAP command injection via CRLF in _uid parameter
+- security: fix IMAP command injection via CRLF in _flag parameter
+- security: fix alias login not qualified by IMAP host
+- security: add a size limit to the CSS proxy content processing
+- security: fix SSRF filter (is_local_url()) bypass via NAT64
+- security: fix remote content blocking bypass via SVG SMIL by attribute
+- security: fix remote content blocking bypass via CSS escapes in FuncIRI
+- security: fix unsafe attachment content passed to ImageMagick on resize
+- security: fix mail header injection via From display-name in Bounce
+- security: fix mail header injection via References/In-Reply-To/Message-ID
+- security: fix mail header injection via subject of forwarded attachment
+- security: fix mail header injection via media type in inline image URI
+- security: fix object injection in rcube_session::unserialize()
+- security: fix ImageMagick limits bypass by GD fallback in thumbnails
+- security: fix CSS scoping bypass in HTML messages using at-rules
+- security: fix deprecated action aliases bypassing disabled_actions
+- security: fix CSRF validation bypass in the mark-as-junk action
+- security: fix XSS in handling of password driver error responses
+- security: fix Password Modoboa driver changing another account password
+- security: fix unsafe login name in SquirrelMail import file path
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.4-alt1
 - new version 1.7.4
 - fixes vulnerabilities:
