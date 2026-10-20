@@ -3,7 +3,7 @@
 
 Name: alt-mirror-switcher
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Simple local mirror switcher for ALT
 
@@ -17,6 +17,8 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 %add_python3_path %_datadir/%name
+
+Requires: xsel
 
 BuildRequires(pre): rpm-build-python3
 
@@ -94,6 +96,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Wed Oct 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt2
+- added xsel depensety
+
 * Tue Oct 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt1
 - added link for bugs issues && home page
 - minor improvements
