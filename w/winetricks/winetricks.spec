@@ -1,6 +1,6 @@
-%define commit e73c4d8f71801fe842c0276b603d9c8024d6d957
+%define commit 08304e81f9ac9a83c552a6bd78689040d174bf95
 Name: winetricks
-Version: 20260125
+Version: 20260530
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -18,12 +18,8 @@ Source: %name-%version.tar
 Patch2: 0001-winetricks-try-use-xvt-as-terminal.patch
 Patch3: 0001-winetricks-W_NO_WIN64_WARNINGS-1.patch
 
+Patch9: 0009-mdac-set-odbcad32-exe-native.patch
 Patch10: 0001-Remove-unuseful-binary-arch-detection.patch
-#Patch11: 0002-add-w_expand_env32-and-w_expand_env64-and-using-them.patch
-Patch12: 0001-Rename-w_try_regsvr-to-w_try_regsvr32.patch
-
-Patch21: 0006-install-correct-version-of-msvcp140.patch
-Patch22: 0001-ie8-removed-dll-that-cannot-be-registered.patch
 
 BuildArch: noarch
 
@@ -40,7 +36,6 @@ Requires: cabextract gzip unzip wget which
 # skip optional deps
 %filter_from_requires /^kde5-kdialog/d
 %filter_from_requires /^kdialog/d
-%filter_from_requires /^zenity/d
 
 
 #Requires: hicolor-icon-theme
@@ -60,9 +55,7 @@ or tweak various Wine settings individually.
 %patch2 -p1
 %patch3 -p1
 %patch10 -p1
-%patch12 -p1
-%patch21 -p1
-%patch22 -p1
+%patch9 -p1
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
@@ -94,6 +87,16 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/bash-completion/completions/winetricks
 
 %changelog
+* Thu Jun 04 2026 Vitaly Lipatov <lav@altlinux.ru> 20260530-alt1
+- new version (20260530, upstream commit 08304e8) with rpmgs script
+- drop patches accepted upstream: w_try_regsvr32, msvcp140.dll, ie8
+- mdac: set odbcad32.exe to native
+- do not filter zenity from requires (closes: #48389)
+- Notepad++ download is fixed upstream (GitHub releases) (closes: #57760)
+
+* Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 20260221-alt1
+- new version (20260221)
+
 * Mon Mar 09 2026 Vitaly Lipatov <lav@altlinux.ru> 20260125-alt1
 - new version 20260125
 
