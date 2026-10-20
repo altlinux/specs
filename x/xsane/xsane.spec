@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt9
+Release: alt10
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -24,6 +24,7 @@ Patch5: alt-gimp_acquire_menu-ru.patch
 Patch10: 0105-deb_gimp_acquire_menu.patch
 Patch11: 0125-desktop_file.patch
 Patch12: xsane-configure-add-stdlib-to-conftest.patch
+Patch13: xsane-0.999-alt-fix-email-password-xor.patch
 
 BuildRequires: libjpeg-devel libusb-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel liblcms2-devel
@@ -92,6 +93,7 @@ Documentation for XSANE
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 cp -f %SOURCE3 po/ru.po
 #__subst "s|\"/usr/local/share/sane/|\"%_docdir/sane/|" doc/sane-backends-doc.html
@@ -138,6 +140,10 @@ ln -s %_docdir/sane-backends/sane-backends.html %buildroot/%_docdir/%name/sane-b
 %_docdir/%name/
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt10
+- fix Russian translation of histogram/preview hotkey hints
+- fix e-mail password decoding key mismatch (closes: #33457)
+
 * Mon Jun 29 2026 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt9
 - fixed FTBFS with gcc 15: build with -std=gnu17 (pre-C23 prototypes)
 
