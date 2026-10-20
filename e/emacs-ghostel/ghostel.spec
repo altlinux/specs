@@ -1,5 +1,5 @@
 Name: emacs-ghostel
-Version: 0.57.0
+Version: 0.59.0
 Release: alt1
 
 Summary: Terminal emulator for Emacs
@@ -76,8 +76,11 @@ tar cf %SOURCE1 --exclude '*/rules' zig-pkg
 %_libdir/emacs/site-lisp/ghostel
 
 %changelog
+* Tue Oct 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.59.0-alt1
+- 0.59.0 released
+
 * Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.57.0-alt1
-- 0.57 released
+- 0.57.0 released
 
 * Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.56.0-alt1
 - 0.56.0 released
