@@ -2,7 +2,7 @@
 
 Name: hamr
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: Instant access to apps, calculations, clipboard history, and files
 License: MIT
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-macros-python3
 
 BuildRequires: rpm-build-rust
 BuildRequires: rpm-build-python3
-BuildRequires: libglycin-gtk4-devel
+BuildRequires: libglycin-2-gtk4-devel
 BuildRequires: libgtk4-layer-shell-devel
 
 %description
@@ -107,6 +107,9 @@ install -Dm 0644 systemd_daemon_config/hamr-gtk.service %buildroot%_userunitdir/
 %_bindir/hamr-tui
 
 %changelog
+* Tue Oct 20 2026 Dina Tagantseva <dinchik@altlinux.org> 1.1.0-alt2
+- Fixed FTBFS: replaced libglycin-gtk4-devel with libglycin-2-gtk4-devel in BuildRequires.
+
 * Wed May 20 2026 Dina Tagantseva <dinchik@altlinux.org> 1.1.0-alt1
 - New version.
 
