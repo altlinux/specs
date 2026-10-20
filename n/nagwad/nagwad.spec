@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.13
+Version:  0.11.14
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -270,6 +270,10 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Tue Oct 20 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.14-alt1
+- Version 0.11.14.
+- Added a eperm skip (PATH) filter for the 'exec-eacces' event.
+
 * Fri Oct 16 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.13-alt1
 - Version 0.11.13.
 - Make 'avc' check available with Nagios (Fixes: OVE-20261016-0001).
