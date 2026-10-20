@@ -1,6 +1,6 @@
 Name: vimpager
 Version: 2.06
-Release: alt1
+Release: alt1.1
 
 Summary: Pager using vim and less.vim
 License: BSD
@@ -15,6 +15,9 @@ Patch: vimpager-alt-fixes.patch
 BuildRequires: sharutils
 BuildRequires: pandoc
 Requires: vim-enhanced
+
+# the ksh fallback in the scripts is never used (bash is always present)
+%filter_from_requires /^\/bin\/ksh/d
 
 # "syntax error" parser crash workaround
 %add_findreq_skiplist %_bindir/vimcat
@@ -46,5 +49,8 @@ sed \
 %config(noreplace) %_sysconfdir/vimpagerrc
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.06-alt1.1
+- NMU: rebuild without the unused /bin/ksh requirement (pdksh is removed)
+
 * Fri May 05 2023 Artem Kurashov <saahriktu@altlinux.org> 2.06-alt1
 - Initial package
