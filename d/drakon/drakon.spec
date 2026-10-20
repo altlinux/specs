@@ -1,7 +1,7 @@
 %define oname drakon_editor
 Name: drakon
 Version: 1.31
-Release: alt2
+Release: alt3
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
@@ -11,6 +11,9 @@ Url: http://drakon-editor.sourceforge.net/
 
 # Source-url: http://prdownloads.sf.net/drakon-editor/%oname%{version}.zip
 Source: %name-%version.tar
+Source1: %name.desktop
+Source2: %name.xml
+Source3: %name.png
 
 AutoProv:yes,nopython,nopython3
 
@@ -23,6 +26,8 @@ AutoProv:yes,nopython,nopython3
 BuildRequires(pre): rpm-build-tcl tcl
 
 BuildRequires: tcl
+# for %check (unittest)
+BuildRequires: sqlite3-tcl
 
 Requires: sqlite3-tcl tcl-img
 
@@ -56,6 +61,10 @@ EOF
 
 chmod 755 %buildroot%_bindir/*
 
+install -m 0644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
+install -m 0644 -D %SOURCE2 %buildroot%_datadir/mime/packages/%name.xml
+install -m 0644 -D %SOURCE3 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+
 install -d %buildroot%_datadir/%name/
 cp -a . %buildroot%_datadir/%name/
 rm -f %buildroot%_datadir/%name/readme.html
@@ -69,15 +78,29 @@ rm -rf %buildroot%_datadir/%name/unittest/
 # included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
 
+%check
+# unittest.tcl exits with 0 even on failure, but prints "success" as the last line
+cd unittest
+tclsh ./unittest.tcl 2>&1 | tee check.log
+tail -n1 check.log | grep -qx success
+
 %files
 %doc readme.html
 # disappeared in 1.22:
 #%doc docs
 %_bindir/%name
 %_bindir/drakon_gen
+%_desktopdir/%name.desktop
+%_datadir/mime/packages/%name.xml
+%_iconsdir/hicolor/64x64/apps/%name.png
 %_datadir/%name/
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.31-alt3
+- add desktop file, MIME type and icon for *.drn files (closes: #31008)
+- run unit tests in %%check (closes: #30975)
+- added BuildRequires: sqlite3-tcl (for the unit tests)
+
 * Wed May 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.31-alt2
 - disable python provides
 
