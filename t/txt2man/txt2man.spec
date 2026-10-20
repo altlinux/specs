@@ -1,6 +1,6 @@
 Name: txt2man
 Version: 1.6.0
-Release: alt1
+Release: alt1.1
 Summary: Convert flat ASCII text to man page format
 
 Group: Text tools
@@ -10,6 +10,8 @@ Url: https://github.com/mvertes/txt2man
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+%filter_from_requires /^\/bin\/ksh/d
 
 %description
 tx2man is a shell script using gnu awk, that should run on any Unix-like
@@ -28,6 +30,9 @@ much like the output of the man(1) program.
 %_man1dir/*
 
 %changelog
+* Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.6.0-alt1.1
+- NMU: rebuild without the unused /bin/ksh requirement
+
 * Wed Nov 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.6.0-alt1
 - Updated to 1.6.0.
 
