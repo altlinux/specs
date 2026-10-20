@@ -10,7 +10,7 @@
 
 Name: %_name%abiversion
 Version: 5.9.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -40,7 +40,7 @@ Patch1: net-snmp-agent-smux-accept.patch
 BuildRequires: librpm-devel >= 4.0.4 libssl-devel
 BuildRequires: autoconf_2.71
 # Automatically added by buildreq on Wed Oct 13 2010
-BuildRequires: libnl-devel librpm-devel libsensors3-devel pdksh perl-devel python3-module-setuptools perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple perl-JSON perl-Mail-Sender
+BuildRequires: libnl-devel librpm-devel libsensors3-devel perl-devel python3-module-setuptools perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple perl-JSON perl-Mail-Sender
 %{?_enable_static:BuildRequires: glibc-devel-static}
 %{?_with_mysql:BuildRequires: libmysqlclient-devel}
 %{?_with_systemd:BuildRequires: systemd-devel}
@@ -567,6 +567,9 @@ LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 %doc python/README
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 5.9.5.2-alt1.1
+- NMU: drop unused pdksh from BuildRequires (pdksh is removed)
+
 * Sat Oct 10 2026 Andrey Cherepanov <cas@altlinux.org> 5.9.5.2-alt1
 - 5.9.5.2 (fixes: CVE-2025-68615, CVE-2026-89147).
 - New VCS: https://github.com/net-snmp/net-snmp.
