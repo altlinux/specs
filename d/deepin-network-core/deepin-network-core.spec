@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.99
+Version: 2.0.105
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -24,7 +24,7 @@ Requires: libdqt6-qml = %_dqt6_version
 Requires: libdqt6-gui = %_dqt6_version
 Requires: libdqt6-waylandclient = %_dqt6_version
 
-BuildRequires(pre): rpm-build-kf6 rpm-macros-dqt6 patchelf
+BuildRequires(pre): rpm-build-dkf6 rpm-macros-dqt6 patchelf
 %if_with clang
 BuildRequires: clang-devel
 %else
@@ -32,7 +32,7 @@ BuildRequires: gcc-c++
 %endif
 # Automatically added by buildreq on Fri Apr 04 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libdde-control-center6 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-printsupport libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgio-devel libglvnd-devel libgpg-error libnm-devel libp11-kit libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxkbcommon-devel ninja-build pkg-config python3 python3-base sh5 vulkan-headers
-BuildRequires: extra-cmake-modules deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel kf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-dqt6-devel libwayland-client-devel libdqt6-qmlcompiler libcurl-devel vulkan-headers wayland-protocols libpolkitqt6-dqt6-devel
+BuildRequires: deepin-extra-cmake-modules deepin-session-shell-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel dkf6-networkmanager-qt-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libgtest-devel libudev-devel dde-dock-devel libgsettings-dqt6-devel libwayland-client-devel libdqt6-qmlcompiler libcurl-devel vulkan-headers wayland-protocols libpolkitqt6-dqt6-devel
 
 %description
 Deepin desktop-environment - network core files.
@@ -62,6 +62,7 @@ sed -i 's|WaylandClientPrivate|WaylandClient|' \
   dock-network-plugin/CMakeLists.txt
 
 %build
+export ECM_DIR=%_datadir/DDE-ECM
 %if_with clang
 export CC="clang"
 export CXX="clang++"
@@ -83,7 +84,7 @@ $CPLUS_INCLUDE_PATH"
 %DQ6build \
   -DLIB_DESTINATION=%_lib \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
-  -DCMAKE_MODULE_LINKER_FLAGS='-L%_dqt6_libdir -L%_K6lib -L%_K6link' \
+  -DCMAKE_MODULE_LINKER_FLAGS='-L%_dqt6_libdir -L%_DK6lib -L%_DK6link' \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -160,6 +161,10 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Tue Oct 20 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.105-alt1
+- New version 2.0.105.
+- Built on separate kf6 libs.
+
 * Fri Aug 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.99-alt1
 - New version 2.0.99.
 
