@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 158.0
+Version: 158.0.1
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -388,6 +388,14 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Oct 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 158.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-113399: Incorrect boundary conditions in the SVG component
+  + CVE-2026-113470: Cryptographic issue in the Security Block-lists, Allow-lists, and other State component
+  + CVE-2026-113400: Uninitialized memory in the Audio/Video: cubeb component
+  + CVE-2026-113401: Denial-of-service in the PDF Viewer component
+
 * Tue Oct 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 158.0-alt1
 - New version.
 - Fixes:
