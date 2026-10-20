@@ -1,5 +1,5 @@
 Name: sonata
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary: Sonata is an elegant GTK+ music client for the Music Player Daemon (MPD).
@@ -101,6 +101,9 @@ install -m 644 %SOURCE3 %buildroot%_liconsdir/%name.png
 %python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Tue Oct 20 2026 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt1
+- Automatically updated to 1.7.4.
+
 * Wed Jan 28 2026 Grigory Ustinov <grenka@altlinux.org> 1.7.3-alt1
 - Automatically updated to 1.7.3.
 
