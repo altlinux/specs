@@ -1,7 +1,7 @@
 %global import_path github.com/mudler/LocalAI
 
 Name: localai
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 
 Summary: Open-source AI engine
@@ -76,6 +76,9 @@ export IGNORE_SOURCES=1
 
 
 %changelog
+* Tue Oct 13 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.11.0-alt1
+- Updated to 4.11.0.
+
 * Thu Oct 08 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.10.0-alt1
 - Updated to 4.10.0.
 - Switched the build to golang RPM macros; dropped the makefile patch and npm.
