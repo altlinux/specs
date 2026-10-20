@@ -10,7 +10,7 @@
 
 Name: spdk
 Version: 26.01
-Release: alt2
+Release: alt3
 
 Summary: Storage Performance Development Kit
 
@@ -80,6 +80,38 @@ applications. It achieves high performance by moving all of the necessary
 drivers into userspace and operating in a polled mode instead of relying
 on interrupts, which avoids kernel context switches and eliminates interrupt
 handling overhead.
+
+%package scripts
+Summary: SPDK scripts
+Group: Development/Tools
+# BuildArch: noarch
+
+%description scripts
+SPDK scripts
+
+%package scripts-pkgdep
+Summary: SPDK pkgdep scripts
+Group: Development/Tools
+AutoReq: no
+BuildArch: noarch
+
+%description scripts-pkgdep
+SPDK pkgdep scripts
+
+%package scripts-setup
+Summary: SPDK setup scripts
+Group: Development/Tools
+BuildArch: noarch
+
+%description scripts-setup
+SPDK setup scripts
+
+%package examples
+Summary: SPDK examples
+Group: Development/Tools
+
+%description examples
+SPDK examples
 
 %package devel
 Summary: SPDK development libraries and headers
@@ -447,11 +479,43 @@ patchelf %buildroot%_libexecdir/spdk/examples/* --add-rpath %_libdir/spdk/lib
 %_sysconfdir/profile.d/*
 %_sysconfdir/bash_completion.d/spdk
 %dir %_libexecdir/spdk/
-%_libexecdir/spdk/*
+%_libexecdir/spdk/bin/
+%dir %_libexecdir/spdk/scripts/
+%dir %_libexecdir/spdk/scripts/bash-completion/
+%_libexecdir/spdk/scripts/bash-completion/spdk
+
+%files scripts
+%dir %_libexecdir/spdk/
+%dir %_libexecdir/spdk/scripts/
+%dir %_libexecdir/spdk/scripts/bash-completion/
+%exclude %_libexecdir/spdk/scripts/bash-completion/spdk
+%exclude %_libexecdir/spdk/scripts/*setup.sh
+%exclude %_libexecdir/spdk/scripts/pkgdep/
+%exclude %_libexecdir/spdk/scripts/common/setup/interactive.sh
+%_libexecdir/spdk/scripts/*
+
+%files scripts-pkgdep
+%dir %_libexecdir/spdk/
+%dir %_libexecdir/spdk/scripts/
+%_libexecdir/spdk/scripts/pkgdep/
+
+%files scripts-setup
+%dir %_libexecdir/spdk/
+%dir %_libexecdir/spdk/scripts/
+%_libexecdir/spdk/scripts/*setup.sh
+%dir %_libexecdir/spdk/scripts/common/
+%dir %_libexecdir/spdk/scripts/common/setup/
+%_libexecdir/spdk/scripts/common/setup/interactive.sh
+
+%files examples
+%dir %_libexecdir/spdk/
+%_libexecdir/spdk/examples/
 
 %files devel
 %dir %_includedir/spdk/
 %_includedir/spdk/*
+%dir %_libexecdir/spdk/
+%_libexecdir/spdk/include/
 %_pkgconfigdir/*.pc
 %if_enabled shared
 %_libdir/lib*.so
@@ -473,6 +537,9 @@ patchelf %buildroot%_libexecdir/spdk/examples/* --add-rpath %_libdir/spdk/lib
 %python3_sitelibdir_noarch/%{name}-*
 
 %changelog
+* Tue Oct 20 2026 Leontiy Volodin <lvol@altlinux.org> 26.01-alt3
+- Packaged scripts and examples separately (ALT #54527).
+
 * Tue Sep 29 2026 Leontiy Volodin <lvol@altlinux.org> 26.01-alt2
 - Fixed compatibility with dpdk (ALT #60721).
 
