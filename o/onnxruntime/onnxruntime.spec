@@ -9,7 +9,7 @@
 
 Name: onnxruntime
 Version: 1.29.0
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform, high performance inference and training machine-learning accelerator
 
@@ -18,7 +18,7 @@ Group: Sciences/Computer science
 URL: https://github.com/microsoft/onnxruntime
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.28.0
+BuildRequires: rpm-build-cmake
 BuildRequires: chrpath
 BuildRequires: ninja-build
 BuildRequires: gcc-c++ >= 9.1
@@ -129,6 +129,22 @@ built-in operators and standard data types.
 
 This package contains the Python 3 bindings for onnxruntime.
 
+%package -n python3-module-onnxruntime-tools
+Summary: Model tools for onnxruntime Python 3 bindings
+Group: Development/Python3
+Requires: python3-module-onnxruntime = %EVR
+
+%description -n python3-module-onnxruntime-tools
+Open Neural Network Exchange (ONNX) is an open ecosystem that empowers AI
+developers to choose the right tools as their project evolves. ONNX provides an
+open source format for AI models, both deep learning and traditional ML. It
+defines an extensible computation graph model, as well as definitions of
+built-in operators and standard data types.
+
+This package contains the onnxruntime model tools that need the onnx module:
+onnxruntime.backend, onnxruntime.quantization, onnxruntime.tools,
+onnxruntime.transformers and the onnxruntime_test utility.
+
 %package -n libonnxruntime-providers
 Summary: Execution provider plugins for onnxruntime
 Group: Sciences/Computer science
@@ -155,6 +171,8 @@ subst '/NAMES absl/s![0-9]\{8\} !!g' cmake/external/abseil-cpp.cmake
 
 # Use system nlohmann-json.
 subst '/NAMES nlohmann_json/s!3.10 !!g' cmake/external/onnxruntime_external_deps.cmake
+# Use system Microsoft GSL 5.x (its config is SameMajorVersion).
+subst '/NAMES Microsoft.GSL/s!4.0 !!g' cmake/external/onnxruntime_external_deps.cmake
 
 # Patch Boost detection, which worked well for us in 1.22.1.
 subst '/^if(NOT TARGET Boost::mp11)/ifind_package(Boost REQUIRED)' cmake/external/onnxruntime_external_deps.cmake
@@ -258,9 +276,23 @@ rm -rf %buildroot%python3_sitelibdir/onnxruntime/transformers/__pycache__
 %_libdir/libonnxruntime.so.%soname
 
 %files -n python3-module-onnxruntime
-%_bindir/onnxruntime_test
-%python3_sitelibdir/onnxruntime/
+%dir %python3_sitelibdir/onnxruntime/
+%python3_sitelibdir/onnxruntime/*.py
+%python3_sitelibdir/onnxruntime/__pycache__/
+%python3_sitelibdir/onnxruntime/LICENSE
+%python3_sitelibdir/onnxruntime/Privacy.md
+%python3_sitelibdir/onnxruntime/ThirdPartyNotices.txt
+%python3_sitelibdir/onnxruntime/capi/
+%python3_sitelibdir/onnxruntime/datasets/
 %python3_sitelibdir/onnxruntime-%version.dist-info/
+
+# The model tools import onnx; keep them out of the inference module.
+%files -n python3-module-onnxruntime-tools
+%_bindir/onnxruntime_test
+%python3_sitelibdir/onnxruntime/backend/
+%python3_sitelibdir/onnxruntime/quantization/
+%python3_sitelibdir/onnxruntime/tools/
+%python3_sitelibdir/onnxruntime/transformers/
 
 %files -n libonnxruntime-providers
 %_includedir/onnxruntime/provider_options.h
@@ -290,6 +322,12 @@ rm -rf %buildroot%python3_sitelibdir/onnxruntime/transformers/__pycache__
 
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.29.0-alt1.1
+- NMU: fix build with Microsoft GSL 5.x (find_package without the 4.0 version).
+- use rpm-build-cmake instead of cmake in BuildRequires
+- move model tools (backend, quantization, tools, transformers) needing onnx
+  to python3-module-onnxruntime-tools subpackage
+
 * Sun Aug 16 2026 Anton Farygin <rider@altlinux.org> 1.29.0-alt1
 - 1.28.0 -> 1.29.0
 

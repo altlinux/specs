@@ -23,7 +23,7 @@
 
 Name:    telegram-desktop
 Version: 7.3.1
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -34,6 +34,7 @@ Vcs: https://github.com/telegramdesktop/tdesktop
 
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
+Patch1: telegram-desktop-gsl-5.patch
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
 #Source1: %name-gsl-%version.tar
@@ -66,7 +67,7 @@ BuildRequires: libstdc++%__gcc_version_major-devel-static
 BuildRequires: python3
 
 # cmake 3.16 as in CMakeLists.txt
-BuildRequires: cmake >= 3.16
+BuildRequires: rpm-build-cmake
 BuildRequires: extra-cmake-modules
 
 BuildRequires(pre): rpm-macros-qt6
@@ -81,6 +82,9 @@ BuildRequires: qt6-shadertools-devel
 %{?_with_wayland:BuildRequires: qt6-wayland-devel}
 # needs for smiles and emojicons
 Requires: qt6-imageformats
+# xdg-shell plugin for the Qt wayland platform plugin: without it
+# the application aborts on start in a Wayland session
+Requires: libqt6-wlshellintegration
 
 BuildRequires: libenchant2-devel
 BuildRequires: libhunspell-devel
@@ -254,6 +258,7 @@ or business messaging needs.
 
 %prep
 %setup
+%patch1 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -374,6 +379,11 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.1-alt2
+- fix build with Microsoft GSL 5.x (find_package without the 4.x version).
+- use rpm-build-cmake instead of cmake in BuildRequires
+- add Requires: libqt6-wlshellintegration (fails to start on Wayland without it)
+
 * Sat Oct 10 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.1-alt1
 - new version 7.3.1
 

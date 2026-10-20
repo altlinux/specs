@@ -24,7 +24,7 @@
 
 Name: ayugram-desktop
 Version: 7.2.9
-Release: alt1
+Release: alt2
 
 Summary: Desktop Telegram client with good customization and Ghost mode
 
@@ -46,6 +46,7 @@ Patch2: telegram-desktop-set-native-window-frame.patch
 #Patch5: telegram-desktop-fix-missed-cstdint.patch
 #Patch7: telegram-desktop-fix-build-with-make.patch
 #Patch8: telegram-desktop-use-external-gsl.patch
+Patch9: telegram-desktop-gsl-5.patch
 #Patch9: telegram-desktop-try-fix-circular-deps.patch
 
 # lacks few build deps, still
@@ -272,6 +273,7 @@ We are not responsible for the possible blocking of your account. Use the client
 #%%patch1 -p2
 %patch2 -p2
 #%%patch3 -p1
+%patch9 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -404,6 +406,9 @@ ln -s AyuGram %buildroot%_bindir/%oname
 %doc README.md
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.9-alt2
+- fix build with Microsoft GSL 5.x (find_package without the 4.x version).
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.9-alt1
 - new version 7.2.9.
 - use system libtlottie instead of the dropped rlottie backend.

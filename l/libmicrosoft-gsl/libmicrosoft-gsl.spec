@@ -1,5 +1,5 @@
 Name: libmicrosoft-gsl
-Version: 4.2.2
+Version: 5.0.1
 Release: alt1
 Epoch: 1
 
@@ -19,7 +19,7 @@ Patch: 09938e870420b69a01f55c755207c871bc20b4e5.patch
 
 BuildArch: noarch
 
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++ rpm-build-cmake
 %if_with test
 #ctest catch2-devel >= 2.11.0-alt2
 BuildRequires: libgtest-devel
@@ -77,6 +77,10 @@ make test
 /usr/share/cmake/Microsoft.GSL/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1:5.0.1-alt1
+- new version 5.0.1
+- use rpm-build-cmake instead of cmake in BuildRequires
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1:4.2.2-alt1
 - new version 4.2.2
 
