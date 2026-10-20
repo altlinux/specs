@@ -1,6 +1,6 @@
 %define module_name lsadrv
 %define module_version 1.2.3
-%define module_release	alt3
+%define module_release	alt3.1
 
 %define module_source	%module_name-%module_version.tar
 
@@ -20,6 +20,7 @@ BuildArch: noarch
 BuildRequires: kernel-build-tools
 
 Source0: %module_source
+Patch0: lsadrv-linux-5.19-usb_maxpacket.patch
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 %description
@@ -31,6 +32,7 @@ This is usable for Hitachi StarBoard interactive whiteboard.
 
 %prep
 %setup -n %module_name-%module_version
+%patch0 -p1
 
 %install
 mkdir -p %kernel_srcdir
@@ -43,6 +45,9 @@ tar -c  kernel-source-%module_name-%module_version | %__bzip2 -c > \
 %_usrsrc/*
 
 %changelog
+* Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.2.3-alt3.1
+- NMU: Fix compilation with kernels >= 5.19 (6.12, 6.18).
+
 * Wed Feb 05 2020 Anton V. Boyarshinov <boyarsh@altlinux.org> 1:1.2.3-alt3
 - Fix compilation with kernels >= 5.0
 
