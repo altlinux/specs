@@ -1,5 +1,5 @@
 Name: midish
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: MIDI sequencer/filter
 Group: Sound
@@ -51,6 +51,9 @@ mv %buildroot/usr/share/doc/midish inst_docs
 %doc README manual.html examples
 
 %changelog
+* Tue Oct 20 2026 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Mon Jan 19 2026 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Automatically updated to 1.4.1.
 
