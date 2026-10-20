@@ -4,7 +4,7 @@
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: An asynchronous networking framework written in Python
 
@@ -314,12 +314,14 @@ rm -rfv docs/core/man docs/lore/man docs/mail/man docs/conch/man \
 	docs/words/man
 
 ln -s trial %buildroot%_bindir/trial-3
+ln -s twistd %buildroot%_bindir/twistd-3
 
 %check
 
 %files -n twisted-core-tools
 %_bindir/twist
 %_bindir/twistd
+%_bindir/twistd-3
 %_bindir/pyhtmlizer
 %_man1dir/pyhtmlizer.1*
 %_man1dir/twistd.1*
@@ -517,6 +519,9 @@ ln -s trial %buildroot%_bindir/trial-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 26.4.0-alt2
+- add twistd-3 symlink for twistd (closes: #60925)
+
 * Sat Oct 03 2026 Vitaly Lipatov <lav@altlinux.ru> 26.4.0-alt1
 - new version 26.4.0 (with rpmrb script)
 - (CVE-2026-42304) SECURITY: fix DoS in twisted.names via DNS compression pointer chains
