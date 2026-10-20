@@ -3,12 +3,12 @@
 
 Name: gpoa-plugin-udev
 Version: 0.0.4
-Release: alt1
+Release: alt2
 
 Summary: USB device control plugin for gpupdate via udev rules
 License: GPLv3+
 Group: System/Configuration/Other
-Url: https://github.com/altlinux/gpupdate-plugin-udev
+Url: https://altlinux.space/danila-skachedubov/gpoa-plugin-udev.git
 BuildArch: noarch
 AutoReqProv: no
 
@@ -75,6 +75,9 @@ done
 %_destdir
 
 %changelog
+* Tue Oct 20 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.4-alt2
+- fix: correct url
+
 * Mon Sep 14 2026 Danila Skachedubov <skachedubov@altlinux.org> 0.0.4-alt1
 - build: require /proc for restoration tests
 - docs: clarify USB policy behavior in ADML
