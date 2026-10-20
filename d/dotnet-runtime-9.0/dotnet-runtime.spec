@@ -3,11 +3,11 @@
 
 %define _dotnet_major 9.0
 #%define preview %nil
-%define _dotnet_coreversion 9.0.20
-%define _dotnet_sdkversion 9.0.318
-%define _dotnet_corerelease 9.0.20
+%define _dotnet_coreversion 9.0.21
+%define _dotnet_sdkversion 9.0.319
+%define _dotnet_corerelease 9.0.21
 # used for build
-%define _dotnet_sdkrelease 9.0.318
+%define _dotnet_sdkrelease 9.0.319
 
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
@@ -59,7 +59,7 @@ BuildRequires: clang llvm
 BuildRequires: python3 >= 3.7.1
 
 # cmake_minimum_required for Native and mono
-BuildRequires: cmake >= 3.14.5
+BuildRequires: rpm-build-cmake
 
 BuildRequires: libstdc++-devel
 %if_with libunwind
@@ -397,6 +397,53 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.21-alt1
+- .NET Runtime 9.0.21
+- BR: use rpm-build-cmake instead of plain cmake
+- security fixes:
+  + CVE-2026-66822, GHSA-wxxw-5cvc-53j7: .NET and Visual Studio Information Disclosure Vulnerability
+  + CVE-2026-58280, GHSA-mc4q-93x5-f6hj: .NET and Visual Studio Denial of Service Vulnerability
+  + CVE-2026-69651, GHSA-3rxq-g8rj-r2cf: .NET and Visual Studio Denial of Service Vulnerability
+  + CVE-2026-96958, GHSA-r955-8q5j-3h83: .NET and Visual Studio Denial of Service Vulnerability
+  + CVE-2026-96960, GHSA-7hqp-7c5m-4vq6: .NET and Visual Studio Denial of Service Vulnerability
+  + CVE-2026-96959, GHSA-c399-9853-6jmj: .NET and Visual Studio Denial of Service Vulnerability
+  + CVE-2026-84008, GHSA-846f-f764-76mx: .NET Denial of Service Vulnerability
+  + CVE-2026-70174, GHSA-f749-vhgx-39h6: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-87697, GHSA-c27m-942f-rcfh: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-70035, GHSA-4j9v-h7pp-725h: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-83520, GHSA-4w5f-7jp2-w48g: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-96229, GHSA-5qr9-xxm9-6cmq: .NET and Visual Studio Information Disclosure Vulnerability
+  + CVE-2026-96232, GHSA-f8qh-mqg4-9939: .NET and Visual Studio Information Disclosure Vulnerability
+  + CVE-2026-96234, GHSA-fq6x-pvr9-888r: .NET and Visual Studio Information Disclosure Vulnerability
+  + CVE-2026-70007, GHSA-pfwj-2f93-rf42: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-96224, GHSA-xq57-crx4-g373: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-96235, GHSA-g44w-h65v-4cw9: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-85363, GHSA-f63g-mx39-3r38: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-96233, GHSA-87vj-4hqv-22p9: .NET and Visual Studio Denial of Service Vulnerability
+  + CVE-2026-70175, GHSA-x3vp-85cm-q97r: ASP.NET Core Elevation of Privilege Vulnerability
+  + CVE-2026-70196, GHSA-57xr-hfxx-jw5x: ASP.NET Core Denial of Service Vulnerability
+  + CVE-2026-70179, GHSA-vrrp-6v32-2p8g: ASP.NET Core Elevation of Privilege Vulnerability
+  + CVE-2026-70181, GHSA-w5qq-qrpp-rf4c: ASP.NET Core Denial of Service Vulnerability
+  + CVE-2026-70161: .NET SDK Elevation of Privilege Vulnerability
+  + CVE-2026-70165: .NET SDK Elevation of Privilege Vulnerability
+  + CVE-2026-70190: .NET SDK Elevation of Privilege Vulnerability
+  + CVE-2026-96238: .NET SDK Security Feature Bypass Vulnerability
+  + CVE-2026-96237: .NET SDK Remote Code Execution Vulnerability
+  + CVE-2026-70159, GHSA-334f-vvp4-7g6p: ASP.NET Core Denial of Service Vulnerability
+  + CVE-2026-70186, GHSA-mf4x-w4gh-4656: ASP.NET Core Denial of Service Vulnerability
+  + CVE-2026-105016, GHSA-5gjq-3f94-rcf7: microsoft QUIC Remote Code Execution Vulnerability
+  + CVE-2026-85790, GHSA-2mxg-prvg-9jfg: .NET Information Disclosure Vulnerability
+  + CVE-2026-70162, GHSA-2fmv-rv2c-59x7: .NET Denial of Service Vulnerability
+  + CVE-2026-70183, GHSA-494h-xx7x-5frh: ASP.NET Core Security Feature Bypass Vulnerability
+  + CVE-2026-88092, GHSA-rv87-ccxw-8ggf: ASP.NET Core Security Feature Bypass Vulnerability
+  + CVE-2026-70188, GHSA-fpq8-4vhr-rcxx: ASP.NET Core Security Feature Bypass Vulnerability
+  + CVE-2026-96230, GHSA-qjpx-jqm5-h2c4: ASP.NET Core Remote Code Execution Vulnerability
+  + CVE-2026-92707: ASP.NET Core Denial of Service Vulnerability
+  + CVE-2026-96231, GHSA-2j93-m82w-73j2: .NET and Visual Studio Elevation of Privilege Vulnerability
+  + CVE-2026-96225, GHSA-w6wh-p4g7-mpj2: .NET and Visual Studio Elevation of Privilege Vulnerability
+  + CVE-2026-70197, GHSA-4mpw-cpwj-hxxj: .NET and Visual Studio Remote Code Execution Vulnerability
+  + CVE-2026-96236, GHSA-f4g7-52wc-p8x7: ASP.NET Core Denial of Service Vulnerability
+
 * Sat Sep 26 2026 Vitaly Lipatov <lav@altlinux.ru> 9.0.20-alt1
 - .NET Runtime 9.0.20
 - fixed CVEs:
