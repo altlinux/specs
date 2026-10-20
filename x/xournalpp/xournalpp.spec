@@ -2,7 +2,7 @@
 
 Name: xournalpp
 Version: 1.3.8
-Release: alt1
+Release: alt2
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
 
@@ -23,6 +23,7 @@ BuildRequires: rpm-build-cmake gcc-c++ git-core help2man libXi-devel libgtk+3-de
 BuildRequires: pkgconfig(gtksourceview-4) libqpdf-devel
 
 %if_with gtest
+BuildRequires: fonts-ttf-dejavu
 BuildRequires: libgtest-devel ctest
 %endif
 
@@ -96,6 +97,9 @@ export LC_ALL=C.UTF-8
 %_datadir/%name/ui
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.8-alt2
+- Added BuildRequires: fonts-ttf-dejavu (text layout tests need a font).
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.8-alt1
 - NMU: new version 1.3.8
 - Drop test hack patches that no longer apply, refresh the 32-bit test fix
