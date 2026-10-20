@@ -1,6 +1,6 @@
 Name: smem
 Version: 1.5
-Release: alt3
+Release: alt4
 
 Summary: Report application memory usage in a meaningful way
 
@@ -13,7 +13,7 @@ Url: http://www.selenic.com/smem
 Source0: http://www.selenic.com/smem/download/%name-%version.tar
 Source1: http://www.selenic.com/smem/index.html
 
-Conflicts: secure_delete
+Conflicts: secure_delete < 3.1-alt5.1
 
 BuildRequires: rpm-build-python3
 
@@ -55,6 +55,10 @@ install -pDm644 smem.8 %buildroot%_man8dir/smem.8
 
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt4
+- conflict only with secure_delete < 3.1-alt5.1, its smem is now sdmem
+  (closes: #55407).
+
 * Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt3
 - add BR: rpm-build-python3
 

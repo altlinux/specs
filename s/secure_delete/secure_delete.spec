@@ -3,7 +3,7 @@
 
 Name: secure_delete
 Version: 3.1
-Release: alt5
+Release: alt5.1
 
 Summary: Utilities for secure deleting data
 Summary(ru_RU.UTF-8): Утилиты для надёжного удаления данных
@@ -26,6 +26,7 @@ Patch9:  secure_delete-3.1-alt-srm_fix_file_descriptor_leak.patch
 Patch10:  secure_delete-3.1-alt-sfill_split_path_handling_into_dir_and_tmppath_variables.patch
 Patch11:  secure_delete-3.1-alt-sfill_replace_VLA_with_fixed_PATH_MAX_buffer_built_via_snprintf.patch
 Patch12:  secure_delete-3.1-alt-sfill_fix_directory_descriptor_leak.patch
+Patch13:  secure_delete-3.1-alt-rename_smem_to_sdmem.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -60,6 +61,7 @@ THC Secure Delete - набор четырёх утилит  для безопа�
 %patch10 -p2
 %patch11 -p2
 %patch12 -p2
+%patch13 -p2
 
 %build
 make sdel-lib.o srm sfill sswap smem
@@ -68,21 +70,27 @@ make sdel-lib.o srm sfill sswap smem
 mkdir -p -- %buildroot%_bindir
 mkdir -p -- %buildroot%_man1dir
 
-cp -- srm sfill smem sswap %buildroot%_bindir
-cp -- srm.1 sfill.1 smem.1 sswap.1 %buildroot%_man1dir
+cp -- srm sfill sswap %buildroot%_bindir
+cp -- srm.1 sfill.1 sswap.1 %buildroot%_man1dir
+# smem is renamed to sdmem to avoid a clash with the smem package (as in Debian)
+cp -- smem %buildroot%_bindir/sdmem
+cp -- smem.1 %buildroot%_man1dir/sdmem.1
 
 %files
 %doc CHANGES README usenix6-gutmann.doc secure_delete.doc the_cleaner.sh
 %_bindir/sfill
-%_bindir/smem
+%_bindir/sdmem
 %_bindir/srm
 %_bindir/sswap
 %_man1dir/srm.1.*
 %_man1dir/sfill.1.*
-%_man1dir/smem.1.*
+%_man1dir/sdmem.1.*
 %_man1dir/sswap.1.*
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt5.1
+- NMU: rename smem to sdmem, fix conflict with smem (closes: #55407).
+
 * Mon Oct 12 2026 Sergey Zhidkih <rx1513@altlinux.org> 3.1-alt5
 - Fix several memory and descriptor leaks, OOB read and write.
 - Fix warning message for sdel.
