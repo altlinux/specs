@@ -1,16 +1,15 @@
 Name: rpmrebuild
-Version: 2.11
-Release: alt6
-License: GPLv2+
+Version: 2.21
+Release: alt1
+License: GPL-2.0+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
 Source: %name-%version.tar.gz
-Patch: rpmrebuild-2.9-alt-tmpdir.patch
-Patch1: rpmrebuild-2.11-alt-toonewtags.patch
-Patch2: rpmrebuild-2.11-correctly-quote-rpmargs.patch
-Patch3: rpmrebuild-2.11-CommandLineParsing-allow-more-than-9-arguments.patch
-Patch4: rpmrebuild-alt-remove-SendBugReport.patch
+Patch0: rpmrebuild-2.21-alt-tmpdir.patch
+Patch1: rpmrebuild-2.21-correctly-quote-rpmargs.patch
 Url: http://rpmrebuild.sourceforge.net/
+
+BuildArch: noarch
 
 Requires: /usr/bin/rpmbuild
 # due to rpmrebuild.sh
@@ -20,51 +19,35 @@ Requires: setarch
 Rpmrebuild is a tool to build an RPM file from a package that has
 already been installed in a basic use, rpmrebuild use do not require any
 rpm building knowledge (On debian, the equivalent product is
-dpkg-repack)
-
-%package un_prelink
-Group: Development/Other
-Summary: An prelink -u plugin for %name
-Requires: %name = %version-%release
-
-%description un_prelink
-Rpmrebuild plugin for automatically un-prelinking package content.
+dpkg-repack).
 
 %prep
 %setup -c %name-%version
-%patch -p2
-%patch1 -p1
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
+%patch0 -p2
+%patch1 -p2
 
 %build
 %make
 
 %install
 %makeinstall_std
-
+/bin/rm %buildroot%_man1dir/un_prelink.plug* \
+        %buildroot%_mandir/*/*/un_prelink.plug* \
+        %buildroot%_libexecdir/%name/plugins/un_prelink*
 %find_lang --with-man --output %name.lang ".*"
 
 %files -f %name.lang
-%doc Changelog News README Release Todo VERSION Version
-%exclude %_man1dir/un_prelink.plug*
-%exclude %_mandir/*/*/un_prelink.plug*
-%exclude %prefix/lib/%name/plugins/un_prelink*
-
+%doc Changelog News README Release Todo
 %_bindir/*
 %dir %prefix/lib/%name
 %prefix/lib/%name/*
 %_man1dir/*
 
-%ifarch %ix86 alpha sparc sparc64 s390 s390x x86_64 ppc ppc64
-%files un_prelink
-%_man1dir/un_prelink.plug*
-%_mandir/*/*/un_prelink.plug*
-%prefix/lib/%name/plugins/un_prelink*
-%endif
-
 %changelog
+* Mon Oct 19 2026 Andrey Cherepanov <cas@altlinux.org> 2.21-alt1
+- New version (ALT #35167).
+- Removed rpmrebuild-un_prelink (ALT #56683).
+
 * Wed Nov 18 2020 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt6
 - rpmrebuild: fixed handling of more than 9 arguments.
 
