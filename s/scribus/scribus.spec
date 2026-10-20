@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.7.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -14,10 +14,13 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 # Source-url: http://prdownloads.sf.net/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
+Patch2: scribus-1.7.3-docpath.patch
+Patch3: scribus-1.7.3-image-editor-gimp3.patch
+Patch4: scribus-1.7.3-render-frame-i18n.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cmake >= 3.16
+BuildRequires: rpm-build-cmake
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel
@@ -132,6 +135,9 @@ BuildArch: noarch
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 # hack to ignore new broken checking
 subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
@@ -206,6 +212,12 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.3-alt2
+- point DocPath in desktop file to the installed HTML help (closes: #42503)
+- use rpm-build-cmake instead of cmake in BuildRequires
+- find GIMP 3 (gimp-3) as the default image editor (closes: #56750)
+- make Render Frame warning translatable, add ru translation (closes: #39150)
+
 * Thu Apr 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.3-alt1
 - new version 1.7.3 (with rpmrb script)
 - drop obsolete patches (poppler / Qt fixes already in upstream 1.7.3)
