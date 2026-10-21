@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: iotas
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Simple note taking with Nextcloud Notes
@@ -93,6 +93,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.10-alt1
+- 2026.10
+
 * Sat Oct 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2026.9-alt1
 - 2026.9
 
