@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.0
+Version: 8.1
 Release: alt1
 
 Summary: Programmable browser for functional black-box tests
@@ -61,6 +61,9 @@ rm -r %buildroot%python3_sitelibdir/zope/testbrowser/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 8.1-alt1
+- 8.0 -> 8.1
+
 * Thu Apr 09 2026 Stanislav Levin <slev@altlinux.org> 8.0-alt1
 - 7.0.1 -> 8.0.
 
