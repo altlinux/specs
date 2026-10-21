@@ -1,6 +1,6 @@
 Name: stardict-kazakh-CoulD
 Version: 0.1
-Release: alt1
+Release: alt1.1
 Summary: Kazakh-Russian and Russian-Kazakh dictionaries for stardict
 Summary(ru_RU.UTF-8): Казахско-русский (46972 слов) и Русско-казахский (7716 слов) словари
 License: GPL2
@@ -42,7 +42,7 @@ tar xf %SOURCE1
 %build
 for d in kazrus ruskaz; do
 	dictd2dic $d | tee dictd2dic.out
-	rename dictd_www.dict.org_ '' dictd_www.dict.org_*
+	rename dictd_freedict2_ '' dictd_freedict2_*
 	WORDCOUNT=`grep ^wordcount: dictd2dic.out | sed 's|^wordcount: ||'`
 	IDXFILESIZE=`wc -c < $d.idx`
 	subst "s|@WORDCOUNT@|$WORDCOUNT|;
@@ -60,5 +60,8 @@ install -m 644 *.dz *.idx.gz *.ifo %buildroot%_datadir/stardict/dic/
 %doc README*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1.1
+- NMU: adapt dictionary conversion to current stardict-tools.
+
 * Fri Oct 15 2010 Ildar Mulyukov <ildar@altlinux.ru> 0.1-alt1
 - 1st build for ALTLinux

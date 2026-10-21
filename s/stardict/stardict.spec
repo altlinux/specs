@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.7
-Release: alt2
+Release: alt2.1
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
@@ -41,6 +41,7 @@ Patch17: stardict-3.0.7-alt-fix-google-translate-api.patch
 Patch18: stardict-3.0.7-alt-fix-locale-initialization.patch
 Patch19: stardict-3.0.7-alt-fix-stale-gio-source-ids.patch
 Patch20: stardict-3.0.7-alt-remove-http-debug-printf.patch
+Patch21: stardict-3.0.7-dictd2dic-index-width.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -54,6 +55,7 @@ Obsoletes: %name-gnome < %version
 %def_disable youdaodict
 %def_disable dictdotcn
 
+BuildRequires: xvfb-run
 BuildRequires: gcc-c++ yelp-tools hardlink imake intltool libgtk+3-devel libcanberra-gtk3-devel libSM-devel libenchant-devel libespeak-ng-devel libexpat-devel libgucharmap-devel libjson-glib-devel libmariadb-devel libsigc++2-devel libxml2-devel xorg-cf-files
 
 %description
@@ -174,6 +176,7 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
@@ -198,8 +201,13 @@ export CPPFLAGS="$(getconf LFS_CFLAGS)"
  #
 %make_build
 
+%check
+xvfb-run -a %make_build check
+
 %install
 %makeinstall_std scrollkeeper_localstate_dir=%buildroot%_var/lib/scrollkeeper
+install -d %buildroot%_iconsdir/hicolor/64x64/apps
+mv %buildroot%_pixmapsdir/stardict.png %buildroot%_iconsdir/hicolor/64x64/apps/
 find %buildroot%_libdir -name '*.la' -delete
 
 cd tools/src
@@ -221,7 +229,7 @@ hardlink -cv %buildroot%_datadir
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name
-%_pixmapsdir/*
+%_iconsdir/hicolor/64x64/apps/stardict.png
 %_desktopdir/%name.desktop
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
@@ -271,6 +279,10 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt2.1
+- NMU: fix dictd2dic index fields on 64-bit systems.
+- Move the application icon to the hicolor theme.
+
 * Mon Aug 31 2026 Mikhail Efremov <sem@altlinux.org> 3.0.7-alt2
 - Removed leftover debug output of raw HTTP response in parse_response.
 - Fixed GLib criticals about GIO source removal in HttpClient.
