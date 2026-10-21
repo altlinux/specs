@@ -6,7 +6,7 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -81,6 +81,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.2-alt1
+- new version 4.6.2
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
 - new version 4.6.1
 - switch build system to meson (upstream dropped autotools in 4.6)

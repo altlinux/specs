@@ -1,7 +1,7 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 4.6.1
+Version: 4.6.2
 Release: alt1
 
 Summary: Media player which uses a skinned interface
@@ -14,10 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://distfiles.audacious-media-player.org/%name-%version%rel.tar
 
-Patch: audacious-0.1.2-default-alsa.patch
-Patch1: %name-as-needed.patch
-#Patch2: %name-%version-lib.patch
-Patch3: %name-2.5.0-alt-DSO.patch
 
 # Typical environment for GNOME program
 Requires(post,postun): desktop-file-utils
@@ -87,7 +83,7 @@ Development files required to develop plugins for audacious.
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.metainfo.xml
 %_datadir/%name/
-%_iconsdir/hicolor/48x48/apps/audacious.png
+%_iconsdir/hicolor/*/apps/audacious.png
 %_iconsdir/hicolor/scalable/apps/audacious.svg
 %_man1dir/*
 
@@ -110,6 +106,11 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.2-alt1
+- new version 4.6.2
+- package all upstream icon sizes
+- remove unused legacy patches
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.6.1-alt1
 - new version 4.6.1
 - switch build system to meson (upstream dropped autotools in 4.6)
