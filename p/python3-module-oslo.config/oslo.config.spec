@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 10.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Configuration API
 
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/oslo.config
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+Patch: oslo.config-python314-test.patch
 
 BuildArch: noarch
 
@@ -80,6 +81,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -126,6 +128,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.0-alt1.1
+- NMU: fix subcommand test with Python 3.14.
+
 * Thu Aug 21 2025 Grigory Ustinov <grenka@altlinux.org> 10.0.0-alt1
 - Automatically updated to 10.0.0.
 
