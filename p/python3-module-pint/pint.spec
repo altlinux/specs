@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.25.3
+Version: 0.26.2
 Release: alt1
 Summary: Physical quantities module
 License: BSD
@@ -56,5 +56,8 @@ rm -r %buildroot%python3_sitelibdir/%mod_name/testsuite/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 0.26.2-alt1
+- 0.25.3 -> 0.26.2
+
 * Wed May 27 2026 Stanislav Levin <slev@altlinux.org> 0.25.3-alt1
 - Initial build for sisyphus.
