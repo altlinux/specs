@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	rts5139
 %define module_version  1.05
-%define git 8093764
+%define git 528b24b
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt2.g%{git}
+Release: alt3.g%{git}
 Provides: kernel-source-%module_name-%module_version
 Summary: Realtek RTS5139/29 USB card reader driver
 License: GPL-3
@@ -56,6 +56,11 @@ tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %_sysconfdir/modprobe.d/blacklist-%{module_name}.conf
 
 %changelog
+* Wed Oct 21 2026 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt3.g528b24b
+- GIT 528b24b (Fixes for 7.0+ kernels):
+  - trace.h: replace deprecated strncpy with strscpy.
+  - rts51x_scsi.h: Change the return type of the .queuecommand() callback
+
 * Fri Aug 15 2025 L.A. Kostis <lakostis@altlinux.ru> 1.05-alt2.g8093764
 - GIT 8093764.
 

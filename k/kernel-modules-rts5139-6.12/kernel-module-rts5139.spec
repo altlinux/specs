@@ -1,9 +1,10 @@
 %define module_name	rts5139
-%define git 8093764
+%define git 528b24b
 %define module_version	1.05
-%define module_release	alt3.g%{git}
+%define module_release	alt4.g%{git}
 
 %define flavour		6.12
+
 %define karch %ix86 x86_64 aarch64
 BuildRequires(pre): kernel-headers-modules-6.12
 %setup_kernel_module %flavour
@@ -22,7 +23,7 @@ ExclusiveOS: Linux
 Url: https://github.com/asymingt/rts5139.git
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version-alt2.g%{git}
+BuildRequires: kernel-source-%module_name = %module_version-alt3.g%{git}
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %EVR
@@ -34,9 +35,6 @@ Requires: %{module_name}-blacklist
 
 ExclusiveArch: %karch
 
-# due kernel upstream change 0ea163a18b17f9e0f8350bb348ae69c4a376be66
-Patch: 6.15.patch
-
 %description
 This is a temporary fix for RTS5129/RTS5139 USB MMC card reader on Linux 3.16+
 kernels.
@@ -47,9 +45,13 @@ work just fine.
 %prep
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%patch -p1
 
 %build
+if [ -n "%flavour" -a "%flavour" == 'lks-wks' ]; then
+echo 'got wks flavour, applying llvm macros'
+%{?_setup_llvm_env: %setup_llvm_env}
+%setup_llvm_env
+fi
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
 
 %install
@@ -63,6 +65,10 @@ install %{module_name}.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Oct 21 2026 L.A. Kostis <lakostis@altlinux.org> 1.05-alt4.gdcdd576
+- GIT 528b24b.
+- Use updated kernel source (including fixes for 7.0+ kernels).
 
 * Fri Aug 15 2025 L.A. Kostis <lakostis@altlinux.org> 1.05-alt3.g8093764
 - GIT 8093764.
