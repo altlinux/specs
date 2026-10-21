@@ -1,6 +1,6 @@
 Name: flexdock
 Version: 1.2.5
-Release: alt1
+Release: alt1.1
 Epoch: 1
 Summary: Docking framework for Java Swing GUI apps
 
@@ -12,6 +12,7 @@ VCS: https://gitlab.com/scilab/forge/flexdock
 
 Source0: %name-master.tar.gz
 Patch0: flexdock-use-libraries.patch
+Patch1: flexdock-no-applet.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc rpm-build-java
@@ -37,9 +38,7 @@ Swing applications.
 %prep
 %setup -n %name-master
 %patch0 -p1
-
-#Override the build file's default hard-coded paths
-echo "sdk.home=%{java_home}" > workingcopy.properties
+%patch1 -p1
 
 #JAR "dependency" handling
 find ./ -name \*.jar -exec rm {} \;
@@ -73,6 +72,10 @@ install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.2.5-alt1.1
+- NMU: remove obsolete Applet support for JDK 26 and later.
+- remove unused SDK path override with an undefined macro.
+
 * Tue Apr 22 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.2.5-alt1
 - New version.
 
