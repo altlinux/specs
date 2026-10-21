@@ -1,5 +1,5 @@
 Name: liquidsfz
-Version: 0.4.1
+Version: 0.4.2
 Release: alt1
 
 Summary: SFZ sampler
@@ -75,6 +75,9 @@ This package contains liquidsfz as LV2 plugin.
 %_libdir/lv2/liquidsfz.lv2
 
 %changelog
+* Wed Oct 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.2-alt1
+- 0.4.2 released
+
 * Wed Apr 08 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.1-alt1
 - 0.4.1 released
 
