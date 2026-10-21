@@ -1,6 +1,6 @@
 Name: httperf
 Version: 0.9.0
-Release: alt4.git3209c7f9
+Release: alt4.git3209c7f9.1
 
 Summary: Tool for measuring web server performance
 License: GPLv2+ with exceptions
@@ -9,7 +9,7 @@ Group: Networking/WWW
 URL:  https://github.com/httperf/httperf
 #URL: http://www.hpl.hp.com/research/linux/httperf
 Source0: %name-%version.tar
-Patch0:  %name-%version-%release.patch
+Patch0: httperf-gcc15-signal.patch
 Source1: %name-paper-html.tar
 Source2: ftp://ftp.hpl.hp.com/pub/httperf/httperf-paper.ps
 
@@ -71,6 +71,9 @@ cp -a html icons %buildroot%pkgdocdir
 %pkgdocdir/httperf-paper.ps.gz
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt4.git3209c7f9.1
+- NMU: fix SIGINT handler type for GCC 15.
+
 * Thu Sep 20 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.9.0-alt4.git3209c7f9
 - Fix build with OpenSSL 1.1.0i
 
