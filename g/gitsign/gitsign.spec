@@ -2,7 +2,7 @@
 %def_with check
 
 Name: gitsign
-Version: 0.17.1
+Version: 0.18.0
 Release: alt1
 
 Summary: Keyless Git signing using Sigstore
@@ -88,6 +88,9 @@ sed -i 's|^ExecStart=.*|ExecStart=%_bindir/gitsign-credential-cache --systemd-so
 %_userunitdir/gitsign-credential-cache.socket
 
 %changelog
+* Wed Oct 21 2026 Egor Ignatov <egori@altlinux.org> 0.18.0-alt1
+- New version 0.18.0.
+
 * Fri Aug 14 2026 Egor Ignatov <egori@altlinux.org> 0.17.1-alt1
 - New version 0.17.1.
 
