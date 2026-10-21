@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    satellite-dish
-Version: 2.1.0
+Version: 2.1.6
 Release: alt1
 
 Summary: Satellite wireless-gamepad server for Dish clients
@@ -16,6 +16,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ pkgconf
 BuildRequires: libsodium-devel libssl-devel libopus-devel libcurl-devel
 BuildRequires: libayatana-appindicator3-devel libgtk+3-devel libnotify-devel
+Requires: xdg-utils
 
 Conflicts: satellite
 
@@ -36,6 +37,7 @@ paired Dish client.
 %build
 %cmake \
     -DCMAKE_INSTALL_DOCDIR=%_docdir/%name \
+    -DSATELLITE_RELEASE_VERSION=%version \
     -DSATELLITE_SANDBOXED=OFF
 
 %cmake_build
@@ -50,16 +52,9 @@ if [ -x /usr/bin/udevadm ]; then
     /usr/bin/udevadm control --reload-rules >/dev/null 2>&1 || :
     /usr/bin/udevadm trigger --subsystem-match=misc --action=change >/dev/null 2>&1 || :
 fi
+
 if command -v modprobe >/dev/null 2>&1; then
     modprobe uinput 2>/dev/null || :
-fi
-if [ -n "${SUDO_USER:-}" ] && [ "${SUDO_USER}" != "root" ]; then
-    if getent group input >/dev/null 2>&1; then
-        if ! id -nG "${SUDO_USER}" | tr ' ' '\n' | grep -qx input; then
-            usermod -aG input "${SUDO_USER}" 2>/dev/null || :
-            echo "satellite-dish: added ${SUDO_USER} to the 'input' group; log out and back in."
-        fi
-    fi
 fi
 :; exit 0
 
@@ -84,6 +79,9 @@ fi
 %_modulesloaddir/satellite.conf
 
 %changelog
+* Wed Oct 21 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.6-alt1
+- new version 2.1.6
+
 * Tue Sep 22 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.0-alt1
 - new version 2.1.0
 
