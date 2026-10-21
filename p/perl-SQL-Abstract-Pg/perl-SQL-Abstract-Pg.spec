@@ -1,3 +1,7 @@
+# Automatically added by buildreq on Wed Oct 21 2026 (-bi)
+# optimized out: elfutils libgpg-error perl perl-CPAN-Meta-Requirements perl-Encode perl-Moo perl-Sub-Quote perl-devel perl-parent python3 python3-base rpm-build-file sh5
+BuildRequires: perl-SQL-Abstract perl-Test-Deep
+
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(SQL/Abstract.pm) perl(parent.pm)
 # END SourceDeps(oneline)
@@ -7,7 +11,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.0
-Release: alt2
+Release: alt2.1
 Summary: PostgreSQL features for SQL::Abstract
 Group: Development/Perl
 License: artistic_2
@@ -33,6 +37,9 @@ the SQL::Abstract::Pg manpage extends the SQL::Abstract manpage with a few Postg
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2.1
+- NMU: regenerated BuildRequires: perl-SQL-Abstract, perl-Test-Deep.
+
 * Wed Feb 24 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2
 - to Sisyphus as Mojo-Pg dep
 
