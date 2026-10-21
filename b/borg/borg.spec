@@ -1,6 +1,6 @@
 Name: borg
 Version: 1.4.5
-Release: alt1
+Release: alt2
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -10,9 +10,12 @@ Url: https://borgbackup.github.io/borgbackup/
 
 # Source-url: https://github.com/borgbackup/borg/archive/%version.tar.gz
 Source: %name-%version.tar
-Patch1: borg-unbundle-xxhash-1.1.10.patch
+Patch2: borg-1.4.5-allow-msgpack-1.2.3.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# the test modules only use pytest; selftest needs stdlib unittest
+%add_python3_req_skip pytest
 
 BuildRequires: gcc-c++
 BuildRequires: libacl-devel ipython3 python3-module-Cython libssl-devel python3-dev
@@ -35,10 +38,7 @@ fully trusted targets.
 
 %prep
 %setup
-#patch1 -p1
-
-#rm -rfv src/borg/algorithms/{lz4,xxh64,zstd,blake2}/
-#rm -rfv src/borg/algorithms/{lz4,zstd,blake2}/
+%patch2 -p1
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
@@ -72,6 +72,11 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt2
+- allow msgpack up to 1.2.3 (fix FTBFS: unsupported msgpack version in check).
+- drop the runtime requirement on pytest (closes: #39360).
+- remove the unused xxhash unbundle patch.
+
 * Tue Jul 28 2026 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.4.5-alt1
 - 1.4.5 release
 
