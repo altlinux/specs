@@ -1,6 +1,6 @@
 Name: pdksh
 Version: 5.2.14
-Release: alt5
+Release: alt5.1
 Epoch: 1
 
 Summary: A public domain clone of the Korn shell (ksh)
@@ -13,6 +13,7 @@ Patch0: pdksh-5.2.14-manloc.patch
 Patch1: pdksh-5.2.14-debian.patch
 Patch2: pdksh-child_max.patch
 Patch3: pdksh-5.2.14-fix-str-fmt.patch
+Patch4: pdksh-modern-configure.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Provides: /bin/ksh
@@ -32,6 +33,7 @@ shell.
 %patch1 -p1 -b .debian
 %patch2 -p1 -b .jobs
 %patch3 -p0 -b .str
+%patch4 -p1
 
 %build
 CFLAGS="%optflags -D_FILE_OFFSET_BITS=64 -DDEBIAN " \
@@ -56,6 +58,9 @@ ln -s ksh %buildroot/bin/%name
 %doc BUG-REPORTS ChangeLog* CONTRIBUTORS LEGAL NEWS NOTES PROJECTS README
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.14-alt5.1
+- NMU: fix configure checks with modern GCC.
+
 * Wed Feb 22 2017 Michael Shigorin <mike@altlinux.org> 1:5.2.14-alt5
 - built with current gcc
   + synced patches/build with mageia package
