@@ -1,7 +1,7 @@
 %define import_path github.com/timescale/timescaledb-tune
 
 Name:     timescaledb-tune
-Version:  0.12.0
+Version:  0.19.0
 Release:  alt1
 Summary:  is a program for tuning a TimescaleDB database
 License:  Apache-2.0
@@ -47,5 +47,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Wed Oct 21 2026 Alexei Takaseev <taf@altlinux.org> 0.19.0-alt1
+- 0.19.0
+
 * Tue Mar 01 2022 Alexei Takaseev <taf@altlinux.org> 0.12.0-alt1
 - Initial build for Sisyphus
