@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -22,10 +22,10 @@ Group: System/Servers
 License: GPL-3.0-or-later and LGPL-2.1-or-later
 Url: https://source.puri.sm/Librem5/feedbackd
 
-Vcs: https://gitlab.freedesktop.org/agx/feedbackd.git
+Vcs: https://gitlab.freedesktop.org/feedbackd/feedbackd.git
 
 %if_disabled snapshot
-Source: https://gitlab.freedesktop.org/agx/feedbackd/-/archive/v%version/%name-v%version.tar.gz
+Source: https://gitlab.freedesktop.org/feedbackd/feedbackd/-/archive/v%version/%name-v%version.tar.gz
 %else
 Source: %name-%version.tar
 %endif
@@ -64,7 +64,7 @@ License: LGPL-2.1-or-later
 Group: System/Libraries
 
 %description -n %libname
-The lib%name package contains libraries for %name
+The %libname package contains libraries for %name
 
 %package -n %libname-devel
 Summary: Development files for %libname
@@ -153,6 +153,9 @@ sed -i 's|-G %name|-G users|' data/72-feedbackd.rules
 %endif
 
 %changelog
+* Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.10-alt1
+- 0.8.10
+
 * Sat Feb 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
 - 0.8.9
 
