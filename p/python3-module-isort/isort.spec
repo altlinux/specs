@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.0.1
+Version: 9.0.2
 Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
@@ -74,6 +74,9 @@ mv %buildroot%_bindir/isort{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 9.0.2-alt1
+- 9.0.1 -> 9.0.2
+
 * Fri Sep 04 2026 Stanislav Levin <slev@altlinux.org> 9.0.1-alt1
 - 8.0.1 -> 9.0.1
 
