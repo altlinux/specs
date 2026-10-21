@@ -2,7 +2,7 @@
 %def_with check
 
 Name: hyprlax
-Version: 2.2.5
+Version: 2.2.7
 Release: alt1
 
 Summary: Buttery smooth parallax wallpaper daemon for wayland compositors
@@ -50,6 +50,9 @@ install -Dpm 755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Sep 30 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.2.7-alt1
+- new version
+
 * Mon Jul 20 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.2.5-alt1
 - new version
 
