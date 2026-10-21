@@ -1,6 +1,6 @@
 %define abiversion 7
 Name: libwmf
-Version: 0.2.16
+Version: 0.2.17
 Release: alt1
 
 Summary: A library to convert wmf files
@@ -11,6 +11,7 @@ VCS: https://github.com/caolanm/libwmf.git
 Requires: fonts-type1-urw
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 BuildRequires: libICE-devel libexpat-devel libfreetype-devel libgdk-pixbuf-devel libjpeg-devel libpng-devel
 BuildRequires: libxml2-devel
 
@@ -63,6 +64,7 @@ support.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -102,6 +104,9 @@ install -pD -m644 fonts/fontmap %buildroot%_datadir/%name/fontmap
 %_includedir/%name
 
 %changelog
+* Tue Oct 20 2026 Anton Farygin <rider@altlinux.org> 0.2.17-alt1
+- 0.2.16 -> 0.2.17
+
 * Sun Sep 06 2026 Anton Farygin <rider@altlinux.org> 0.2.16-alt1
 - 0.2.15 -> 0.2.16
 
