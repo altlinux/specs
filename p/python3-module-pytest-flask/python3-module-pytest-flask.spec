@@ -4,9 +4,9 @@
 
 %def_with check
 
-Name: python3-module-%pypi_name
+Name: python3-module-pytest-flask
 Version: 1.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: A set of pytest fixtures to test Flask applications
 License: MIT
@@ -18,6 +18,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch: pytest-flask-fork-context.patch
 
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
@@ -35,6 +36,7 @@ and applications.
 
 %prep
 %setup
+%patch -p1
 %pyproject_scm_init
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -57,6 +59,9 @@ and applications.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1.1
+- NMU: fix live server startup with Python 3.14.
+
 * Tue Dec 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
