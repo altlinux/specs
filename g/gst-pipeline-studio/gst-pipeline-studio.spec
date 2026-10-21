@@ -1,7 +1,7 @@
 %def_enable snapshot
 
 %define _name GstPipelineStudio
-%define ver_major 0.6
+%define ver_major 0.7
 %define rdn_name dev.mooday.%_name
 
 %def_disable bootstrap
@@ -74,6 +74,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* ChangeLog*
 
 %changelog
+* Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
