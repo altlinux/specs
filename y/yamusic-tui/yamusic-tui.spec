@@ -1,5 +1,5 @@
 Name: yamusic-tui
-Version: 0.7.1
+Version: 0.8.0
 Release: alt1
 License: GPL-3.0
 
@@ -37,5 +37,8 @@ install -D -m 0755 ./%name %buildroot/%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Oct 21 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
 * Sun Jun 15 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.7.1-alt1
 - Initial build
