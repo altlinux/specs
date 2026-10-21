@@ -7,7 +7,7 @@
 # %%python3_set_limited_api is not supported yet
 
 Name: python3-module-%pypi_name
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
@@ -63,6 +63,9 @@ ln -s "$(%pyproject_run -- python -P -c 'from pathlib import Path; import %mod_n
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
+- 4.0.1 -> 4.0.2
+
 * Thu Sep 03 2026 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
 - 3.8.0 -> 4.0.1
 
