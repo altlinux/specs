@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.10
+%define ver_major 1.11
 %define beta %nil
 %define rdn_name com.system76.Cosmic
 
@@ -62,6 +62,9 @@ just rootdir=%buildroot install
 %_datadir/cosmic/com.system76.CosmicSettings.WindowRules/v1/tiling_exception_defaults
 
 %changelog
+* Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
+- 1.11.0
+
 * Wed Oct 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
