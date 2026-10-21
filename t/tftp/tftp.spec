@@ -1,11 +1,12 @@
 Name: tftp
-Version: 5.2
-Release: alt4
+Version: 7.2
+Release: alt1
 
 Summary: The client for the Trivial File Transfer Protocol (TFTP)
 License: BSD
 Group: Networking/File transfer
-Url: https://git.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
+URL: https://git.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
+VCS: https://git.kernel.org/pub/scm/network/tftp/tftp-hpa.git/
 
 Source0: %name-%version.tar
 
@@ -22,7 +23,6 @@ for TFTP, which allows users to transfer files to and from a remote
 machine. This program, and TFTP, provide very little security, and
 should not be enabled unless it is expressly needed.
 
-
 %package -n tftpd
 Summary: The server for the Trivial File Transfer Protocol (TFTP)
 Group: System/Servers
@@ -35,7 +35,6 @@ booting diskless workstations. This package provides the server for
 TFTP, which allows users to transfer files to and from a remote
 machine. TFTP provides very little security, and should not be enabled
 unless it is expressly needed.
-
 
 %package server-standalone
 Summary: The server for the Trivial File Transfer Protocol (TFTP) - standalone mode
@@ -52,7 +51,6 @@ machine. TFTP provides very little security, and should not be enabled
 unless it is expressly needed.
 This package provides script for run TFTP server in standalone mode
 with /sbin/service, disabled by default on a ALT Linux systems.
-
 
 %package server-xinetd
 Summary: The server for the Trivial File Transfer Protocol (TFTP) - xinetd mode
@@ -72,7 +70,6 @@ unless it is expressly needed.
 This package provides script for run TFTP server via xinetd, disabled
 by default on a ALT Linux systems.
 
-
 %package doc
 Summary: Documentation for TFTP server and client
 Group: Documentation
@@ -89,13 +86,11 @@ This package provides documentation for TFTP client and server.
 
 %build
 %define _optlevel s
-%add_optflags -fcommon
-%autoreconf
+./autogen.sh
 %configure \
-    --enable-largefile \
-    --with-readline \
-    --with-remap \
-    --with-ipv6
+    --enable-readline \
+    --enable-remap \
+    --enable-ipv6
 
 %make_build
 
@@ -117,7 +112,6 @@ install    -m 0644 tftp.socket %buildroot%_unitdir/tftp.socket
 install -d -m 0755 %buildroot{%bootdir,%_docdir/%name-%version}
 install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 
-
 %post -n tftpd
 %_sbindir/groupadd -rf %sys_group ||:
 %_sbindir/useradd -r -g %sys_group -d /dev/null -s /dev/null -n %sys_user &>/dev/null ||:
@@ -128,11 +122,9 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 %preun server-standalone
 %preun_service tftpd ||:
 
-
 %files
 %_bindir/*
 %_man1dir/*
-
 
 %files -n tftpd
 %_unitdir/*
@@ -140,21 +132,20 @@ install -m 0644 CHANGES.* README* %buildroot%_docdir/%name-%version/
 %_man8dir/*
 %dir %bootdir
 
-
 %files server-standalone
 %config(noreplace) %_sysconfdir/sysconfig/*
 %_initdir/*
 
-
 %files server-xinetd
 %config(noreplace) %_sysconfdir/xinetd.d/*
-
 
 %files doc
 %_docdir/%name-%version
 
-
 %changelog
+* Wed Oct 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.2-alt1
+- 7.2 released
+
 * Thu Oct 31 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 5.2-alt4
 - fixed build with gcc14
 
