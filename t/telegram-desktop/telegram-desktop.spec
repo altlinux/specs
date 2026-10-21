@@ -22,8 +22,8 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 7.3.1
-Release: alt2
+Version: 7.3.2
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -379,6 +379,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.2-alt1
+- new version 7.3.2
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.1-alt2
 - fix build with Microsoft GSL 5.x (find_package without the 4.x version).
 - use rpm-build-cmake instead of cmake in BuildRequires
