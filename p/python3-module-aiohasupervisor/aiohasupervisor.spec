@@ -1,5 +1,5 @@
 Name: python3-module-aiohasupervisor
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Client Library for Home Assistant Supervisor
@@ -44,6 +44,9 @@ sed -ri '/^version\s+=/ s,"[^"]+","%version",' pyproject.toml
 %python3_sitelibdir/aiohasupervisor-%version.dist-info
 
 %changelog
+* Wed Oct 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.8.0-alt1
+- 0.8.0 released
+
 * Thu Oct 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.0-alt1
 - 0.7.0 released
 
