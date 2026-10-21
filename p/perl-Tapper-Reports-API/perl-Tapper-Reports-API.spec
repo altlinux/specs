@@ -12,12 +12,12 @@ BuildRequires: perl(DBIx/Class/InflateColumn/Object/Enum.pm) perl(Hash/Merge/Sim
 
 Name:       perl-%{upstream_name}
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_1.1
 
 Summary:    Tapper - Remote network API for result evaluation
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
+Url:        https://metacpan.org/dist/%{upstream_name}
 Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Class/C3.pm)
@@ -75,6 +75,10 @@ This package provides Tapper's Remote network API for result evaluation.
 
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.5-alt1_1.1
+- NMU: rebuild with fixed Net::Server address-family probing.
+- update the homepage URL.
+
 * Thu Aug 03 2017 Igor Vlasenko <viy@altlinux.ru> 5.0.5-alt1_1
 - update by mgaimport
 

@@ -2,7 +2,6 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
 # END SourceDeps(oneline)
-%add_findreq_skiplist %perl_vendor_privlib/Tapper/Config.pm
 BuildRequires: perl-Tapper
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -11,15 +10,17 @@ BuildRequires: perl-Tapper
 
 %{?perl_default_filter}
 
-Name:       perl-%{upstream_name}
+Name:       perl-Tapper-Config
 Version:    %{upstream_version}
-Release:    alt1_1
+Release:    alt1_1.1
 
 Summary:    Tapper - Context sensitive configuration hub for all Tapper libs
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
+Url:        https://metacpan.org/dist/%{upstream_name}
 Source0:    http://www.cpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
+
+Patch0: Tapper-Config-5.0.4-load-time-config.patch
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/ShareDir.pm)
@@ -38,6 +39,7 @@ libraries.
 
 %prep
 %setup -q -n %{upstream_name}-%{upstream_version}
+%patch0 -p1
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -55,6 +57,11 @@ libraries.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.4-alt1_1.1
+- NMU: initialize configuration at module load time.
+- restore automatic runtime dependency detection.
+- update the homepage URL.
+
 * Tue Oct 30 2018 Igor Vlasenko <viy@altlinux.ru> 5.0.4-alt1_1
 - update by mgaimport
 

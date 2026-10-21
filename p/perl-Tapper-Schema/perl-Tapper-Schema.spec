@@ -10,15 +10,17 @@ BuildRequires: perl(DBD/SQLite.pm) perl(Hash/Merge/Simple.pm)
 
 %{?perl_default_filter}
 
-Name:       perl-%{upstream_name}
+Name:       perl-Tapper-Schema
 Version:    5.0.12
-Release:    alt1
+Release:    alt1.1
 
 Summary:    Database schemas for Tapper
 License:    GPL+ or Artistic
 Group:      Development/Perl
-Url:        http://search.cpan.org/dist/%{upstream_name}
+Url:        https://metacpan.org/dist/%{upstream_name}
 Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+
+Patch0: Tapper-Schema-5.0.12-required-components.patch
 
 BuildRequires: perl(Carp.pm)
 BuildRequires: perl(Class/C3.pm)
@@ -68,23 +70,24 @@ Database schemas for Tapper.
 
 %prep
 %setup -q -n %{upstream_name}-%{version}
+%patch0 -p1
 
 %build
-/usr/bin/perl Makefile.PL INSTALLDIRS=vendor
-
-%make
-
-%check
-%make test
+%perl_vendor_build
 
 %install
-%makeinstall_std
+%perl_vendor_install
 
 %files
 %doc Changes META.json META.yml README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.12-alt1.1
+- NMU: explicitly load mandatory DBIx components for dependency detection.
+- use standard Perl build and install macros.
+- update the homepage URL.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 5.0.12-alt1
 - automated CPAN update
 
