@@ -1,5 +1,5 @@
 Name: python3-module-luma-oled
-Version: 3.15.0
+Version: 3.16.0
 Release: alt1
 
 Summary: Small OLED display library
@@ -18,6 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 Python 3 library interfacing OLED matrix displays with the SSD1306, SSD1309,
@@ -28,6 +29,7 @@ using I2C/SPI/Parallel on any linux-based single-board computer.
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync check metadata_extra test
 
 %build
 %pyproject_build
@@ -35,11 +37,17 @@ using I2C/SPI/Parallel on any linux-based single-board computer.
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest tests
+
 %files
 %python3_sitelibdir/luma
 %python3_sitelibdir/luma_oled-%version.dist-info
 
 %changelog
+* Wed Oct 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.16.0-alt1
+- 3.16.0 released
+
 * Tue Sep 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.15.0-alt1
 - 3.15.0 released
 
