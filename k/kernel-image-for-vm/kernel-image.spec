@@ -2,7 +2,7 @@ Name: kernel-image-for-vm
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel 	.57
+%define kernel_sublevel 	.58
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -669,6 +669,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 21 2026 Anton Farygin <rider@altlinux.org> 6.18.58-alt1
+- 6.18.57 -> 6.18.58
+
 * Thu Oct 15 2026 Anton Farygin <rider@altlinux.org> 6.18.57-alt1
 - 6.18.56 -> 6.18.57
 
