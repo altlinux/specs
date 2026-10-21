@@ -3,7 +3,7 @@
 
 Name: alterator-usbguard
 Version: 0.2.4
-Release: alt1
+Release: alt2
 
 Summary: alterator module to control usb devices
 Group: System/Configuration/Other
@@ -47,6 +47,9 @@ Alterator Module to control USB devices via USBGuard.
 %_sysconfdir/usbguard/android_vidpid.json
 
 %changelog
+* Tue Oct 20 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.2.4-alt2
+- fix typo in translations(Closes: #60965)
+
 * Mon May 25 2026 Oleg Proskurin <proskur@altlinux.org> 0.2.4-alt1
 - New Version
   + Use C++20 compiler by default
