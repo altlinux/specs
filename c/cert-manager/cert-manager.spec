@@ -2,11 +2,11 @@
 
 %global _unpackaged_files_terminate_build 1
 
-# git rev-parse v1.19.4^{commit}
-%define git_commit 83820a03ce3e6b8a1084fa765d77a6b5b98e6943
+# git rev-parse v1.20.2^{commit}
+%define git_commit e5b7b18450dd2c4b993b95bcd680b1a057205b00
 
 Name: cert-manager
-Version: 1.19.4
+Version: 1.20.2
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -76,6 +76,9 @@ mv %buildroot%_bindir/startupapicheck-binary %buildroot%_bindir/startupapicheck
 %_bindir/startupapicheck
 
 %changelog
+* Wed Oct 21 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.20.2-alt1
+- 1.19.4 -> 1.20.2.
+
 * Sun Mar 01 2026 Alexander Stepchenko <geochip@altlinux.org> 1.19.4-alt1
 - 1.19.3 -> 1.19.4.
 - Fixes:
