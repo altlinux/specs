@@ -16,14 +16,14 @@
 
 Name: perl-Module-Starter-Smart
 Epoch: 1
-Version: 0.0.9
+Version: 0.0.10
 Release: alt1
 
 Summary: Add new modules into an existing distribution with this plugin
 
 License: Artistic
 Group: Development/Perl
-Url: %CPAN %m_distro
+Url: https://github.com/rueycheng/Module-Starter-Smart
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
@@ -55,6 +55,10 @@ recreate the manifest file accordingly.
 %doc Changes README
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.0.10-alt1
+- NMU: new version 0.0.10 with tests fixed for Module::Starter::Simple.
+- update the homepage URL.
+
 * Sat Nov 25 2017 Igor Vlasenko <viy@altlinux.ru> 1:0.0.9-alt1
 - automated CPAN update
 
