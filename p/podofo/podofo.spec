@@ -3,7 +3,7 @@
 
 Name: podofo
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
@@ -16,9 +16,13 @@ URL: https://github.com/podofo/podofo
 
 # Source-url: https://github.com/podofo/podofo/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+Patch1: podofo-1.1.2-alt-txt2pdf-lines.patch
+Patch2: podofo-1.1.2-alt-color-load-file.patch
+Patch3: podofo-1.1.2-alt-sign-output.patch
+Patch4: podofo-1.1.2-alt-imgextract-flate-dct.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libfmt-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel
@@ -31,6 +35,8 @@ BuildRequires: bzlib-devel
 %define libname lib%name%abiversion
 
 Requires: %libname = %EVR
+# podofocrop runs gs to get the bounding boxes
+Requires: /usr/bin/gs
 
 %description
 PoDoFo is a library and a set of tools to work with the PDF file format.
@@ -63,6 +69,10 @@ Development files for the PoDoFo library.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 subst "s|@PODOFO_VERSION@|%version|" src/podofo/libpodofo.pc.in
 # fix broken copying rule
 #mkdir test/TokenizerTest/objects
@@ -75,10 +85,13 @@ subst "s|@PODOFO_VERSION@|%version|" src/podofo/libpodofo.pc.in
 
 %install
 %cmakeinstall_std
+# upstream does not install the man pages of the tools
+install -m 644 -D -t %buildroot%_man1dir man/*.1
 
 %files
 %doc README.md
 %_bindir/podofo*
+%_man1dir/podofo*.1*
 
 %files -n %libname
 %doc README.md AUTHORS.md CHANGELOG.md
@@ -92,6 +105,15 @@ subst "s|@PODOFO_VERSION@|%version|" src/podofo/libpodofo.pc.in
 %_libdir/libpodofo.so
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt2
+- podofotxt2pdf: fix text conversion (closes: #54605)
+- podofocolor: fix reading of the input file (closes: #54606)
+- podofoimgextract: fix Flate+DCT images (closes: #54610)
+- podofosign: fix signing and output file (closes: #54612)
+- install man pages of the tools (closes: #54604)
+- require gs for podofocrop (closes: #47496)
+- BuildRequires: use rpm-build-cmake instead of cmake
+
 * Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.2-alt1
 - new version 1.1.2
 - build lib package as libpodofo4 (soname changed from 2 to 4)
