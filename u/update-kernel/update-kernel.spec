@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.24
+Version: 1.25
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,19 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.25-alt1
+- Fix update-kernel to select the next numeric flavour by kernel version,
+  not by uname with the flavour name (closes: #51945).
+- Call ldconfig by full path in update-kernel (closes: #40428).
+- Install kernel headers of the selected build in update-kernel when they
+  are in RPM::Allow-Duplicated (closes: #36936).
+- Take release files into account in the update-kernel APT database age
+  check, apt-get update does not rewrite unchanged pkglists.
+- Keep the previous kernel with uptime of more than a day as the backup in
+  remove-old-kernels when the booted kernel has it too (closes: #53849).
+- Allow to list kernels to remove on the remove-old-kernels command line
+  (closes: #55852).
+
 * Sun Jan 04 2026 Vitaly Chikunov <vt@altlinux.org> 1.24-alt1
 - Quickfix installing kernel-headers-modules.
 
