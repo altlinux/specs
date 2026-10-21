@@ -1,6 +1,6 @@
 Name: python3-module-ruamel-yaml
 Version: 0.19.1
-Release: alt1
+Release: alt2
 
 Summary: is a YAML 1.2 loader/dumper package for Python
 
@@ -11,7 +11,7 @@ Url: https://pypi.org/project/ruamel.yaml
 # Source-url: %__pypi_url ruamel_yaml
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-devel >= 3.7
 BuildRequires: python3-module-setuptools python3-module-wheel
 
@@ -33,6 +33,8 @@ seq/map flow style, and map key order.
 %install
 export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 %pyproject_install
+# upstream ships the clibz extension build helper (setup.py), not a module
+rm -rv %buildroot%python3_sitelibdir/ruamel/yaml/clibz
 
 %files
 %doc LICENSE CHANGES README.md
@@ -40,6 +42,9 @@ export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 %python3_sitelibdir/%{pyproject_distinfo ruamel-yaml}/
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt2
+- dropped clibz build helper from the package (closes: #61159)
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt1
 - new version 0.19.1
 
