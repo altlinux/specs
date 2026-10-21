@@ -2,8 +2,8 @@
 %def_with gtk3
 
 Name: 	 solvespace
-Version: 3.2
-Release: alt2
+Version: 3.3
+Release: alt1
 Epoch:   1
 
 Summary: SolveSpace parametric 2d/3d CAD
@@ -121,6 +121,9 @@ tar xf %SOURCE1
 %_includedir/slvs.h
 
 %changelog
+* Wed Oct 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.3-alt1
+- New version.
+
 * Tue Mar 24 2026 Andrey Cherepanov <cas@altlinux.org> 1:3.2-alt2
 - New version.
 
