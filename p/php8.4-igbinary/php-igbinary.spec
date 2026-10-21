@@ -54,7 +54,7 @@ install -D -m 644 -- %SOURCE1 %buildroot/%php_extconf/%php_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %check
-make test
+make test TESTS="--show-diff"
 
 %post
 %php_extension_postin
