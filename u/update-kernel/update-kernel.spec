@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: update-kernel
-Version: 1.25
+Version: 1.26
 Release: alt1
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
@@ -59,6 +59,10 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26-alt1
+- Do not select an older build of another flavour in update-kernel when
+  the booted kernel flavour is gone: compare versions without disttag.
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.25-alt1
 - Fix update-kernel to select the next numeric flavour by kernel version,
   not by uname with the flavour name (closes: #51945).
