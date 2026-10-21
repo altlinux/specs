@@ -1,6 +1,6 @@
 Name: alterator-module-backend3
-Version: 0.2.3
-Release: alt3
+Version: 0.2.4
+Release: alt1
 
 Summary: Module for using backend3 scripts
 License: %gpl2only
@@ -33,6 +33,14 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Wed Oct 21 2026 Ivan Savin <svn17@altlinux.org> 0.2.4-alt1
+- Substituting the parameters "action" and "_objects" made it possible to
+  execute code that the creator of the method had not intended to be run. For
+  example, through such a substitution, it was possible to execute code
+  requiring administrator privileges from within a method that did not require
+  them. Now, such substitution is only possible within methods that require
+  administrator privileges (the-nexi@).
+
 * Wed Sep 09 2026 Ivan Savin <svn17@altlinux.org> 0.2.3-alt3
 - Migrate to new runners in .forgejo/workflows/clang-format.yml and
   .forgejo/workflows/secrets-check.yaml.
