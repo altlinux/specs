@@ -1,5 +1,5 @@
 %define module_name	evdi
-%define module_version	1.15.0
+%define module_version	1.15.1
 %define module_release	alt1
 
 %define flavour		6.18
@@ -45,7 +45,11 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 
 %build
-#%%setup_llvm_env
+if [ -n "%flavour" -a "%flavour" == 'lks-wks' ]; then
+%setup_llvm_env
+echo 'got wks flavour, applying llvm macros'
+%{?_setup_llvm_env: %setup_llvm_env}
+fi
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
 
 %install
@@ -59,6 +63,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Oct 20 2026 L.A. Kostis <lakostis@altlinux.org> 1.15.1-alt1
+- Updated to 1.15.1.
 
 * Sun Jul 26 2026 L.A. Kostis <lakostis@altlinux.org> 1.15.0-alt1
 - Updated to 1.15.0.
