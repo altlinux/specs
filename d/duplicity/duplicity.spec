@@ -1,5 +1,5 @@
 Name: duplicity
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 
 Summary: Untrusted/encrypted backup using rsync algorithm
@@ -72,6 +72,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%name-*.egg-info
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt1
+- new version 3.2.2
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt1
 - new version 3.2.1
 - pack docs from upstream-installed %%_docdir/%%name/
