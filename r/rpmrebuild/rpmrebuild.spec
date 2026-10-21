@@ -1,12 +1,16 @@
 Name: rpmrebuild
 Version: 2.21
-Release: alt1
+Release: alt2
 License: GPL-2.0+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
 Source: %name-%version.tar.gz
 Patch0: rpmrebuild-2.21-alt-tmpdir.patch
 Patch1: rpmrebuild-2.21-correctly-quote-rpmargs.patch
+Patch2: rpmrebuild-2.21-optional-man.patch
+Patch3: rpmrebuild-alt-remove-SendBugReport.patch
+Patch4: rpmrebuild-2.21-optional-rpm2archive.patch
+Patch5: rpmrebuild-2.21-plugin-dir-before-options.patch
 Url: http://rpmrebuild.sourceforge.net/
 
 BuildArch: noarch
@@ -25,6 +29,10 @@ dpkg-repack).
 %setup -c %name-%version
 %patch0 -p2
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
+%patch5 -p2
 
 %build
 %make
@@ -44,6 +52,11 @@ dpkg-repack).
 %_man1dir/*
 
 %changelog
+* Wed Oct 21 2026 Anton Farygin <rider@altlinux.org> 2.21-alt2
+- Initialize plugin directory before parsing options to fix rpmrebuild-arepo.
+- Remove dependencies on optional tools to reduce arepo chroot size (ALT #61153).
+- Restore removal of SendBugReport.
+
 * Mon Oct 19 2026 Andrey Cherepanov <cas@altlinux.org> 2.21-alt1
 - New version (ALT #35167).
 - Removed rpmrebuild-un_prelink (ALT #56683).
