@@ -2,7 +2,7 @@
 %define nameD markitdown
 
 Name: %nameD
-Version: 0.1.8
+Version: 0.1.9
 Release: alt1
 
 Summary: Python tool for converting files and office documents to Markdown
@@ -51,6 +51,9 @@ popd
 %python3_sitelibdir/%{pyproject_distinfo %nameD}
 
 %changelog
+* Thu Oct 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.9-alt1
+- 0.1.8 -> 0.1.9
+
 * Wed Sep 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.8-alt1
 - 0.1.7 -> 0.1.8
 
