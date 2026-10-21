@@ -3,8 +3,8 @@
 %define nameS org.gnome.shell.extensions.netspeedsimplified
 
 Name: gnome-shell-extension-netspeedsimplified
-Version: 46
-Release: alt2
+Version: 49
+Release: alt1
 
 Summary: Net speed Simplified
 
@@ -25,7 +25,7 @@ A Net Speed monitor With Loads of Customization.
 %prep
 %setup -n %nameU-%version
 
-subst 's|"50"|"50", "51"|' metadata.json
+#subst 's|"50"|"50", "51"|' metadata.json
 
 %build
 %install
@@ -41,6 +41,9 @@ cp -a *.js *.json *.css LICENSE %buildroot%_datadir/gnome-shell/extensions/%exID
 %doc *.md LICENSE 
 
 %changelog
+* Thu Oct 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 49-alt1
+- 46 -> 49
+
 * Sun Sep 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 46-alt2
 - added support GNOME 51
 
