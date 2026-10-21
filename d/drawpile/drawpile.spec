@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: drawpile
-Version: 2.3.0
-Release: alt3
+Version: 2.3.1
+Release: alt1
 
 Summary: A collaborative drawing program
 Summary(ru_RU.UTF-8): Программа для совместного рисования
@@ -10,17 +12,12 @@ Group: Graphics
 Url: https://%name.net
 Vcs: https://github.com/%name/Drawpile
 
-# Source-url: https://github.com/%name/Drawpile/archive/%version/Drawpile-%version.tar.gz
-Source0: Drawpile-%version.tar
-# cargo vendor
+Source: %name-%version.tar
 Source1: vendor.tar
-Source2: config
 
-Patch0: %name-2.2.2-alt-desktop.patch
-Patch1: qt6_build_fix.patch
+Patch: %name-2.2.2-alt-desktop.patch
 
-BuildRequires(pre): rpm-macros-cmake
-
+BuildRequires(pre): rpm-macros-cmake rpm-macros-rust
 BuildRequires: git-core
 BuildRequires: libavfilter-devel
 BuildRequires: libavformat-devel
@@ -55,10 +52,8 @@ Drawpile поддерживает формат файла изображения
 работает с такими приложениями, как MyPaint, Krita и GIMP.
 
 %prep
-%setup -n Drawpile-%version
-tar xf %SOURCE1
-%__mkdir_p cargo
-%__cp %SOURCE2 cargo
+%setup -a1
+%rust_prep
 %autopatch -p1
 
 %build
@@ -83,11 +78,13 @@ export CARGO_HOME=${PWD}/cargo
 %_iconsdir/hicolor/*/apps/%name.*
 %_iconsdir/hicolor/*/mimetypes/*
 %_datadir/metainfo/net.%name.%name.appdata.xml
-%_datadir/mime/application/vnd.%name.canvas.xml
-%_datadir/mime/application/vnd.%name.recording.xml
+%_datadir/mime/application/vnd.%name.*.xml
 %_datadir/mime/text/vnd.%name.recording.xml
 
 %changelog
+* Thu Oct 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.1-alt1
+- 2.3.0 -> 2.3.1
+
 * Wed Jul 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.3.0-alt3
 - fixed FTBFS
 
