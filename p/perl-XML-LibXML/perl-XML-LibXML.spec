@@ -1,38 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXML
-%def_without bootstrap
 Name: perl-%dist
 Version: 2.0213
-Release: alt2
+Release: alt3
 
 Summary: Perl binding for libxml2
-License: Artistic-1.0 OR GPL-2.0-or-later
+License: (Artistic-1.0-Perl OR GPL-1.0-or-later) AND MIT
 Group: Development/Perl
 
 URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/S/SH/SHLOMIF/%{dist}-%{version}.tar.gz
-Patch: XML-LibXML-2.0207-alt-at-autoreq.patch
+Patch: XML-LibXML-2.0213-alt-optional-threads.patch
 
 # To reduce dependencies replace Alien::Libxml2 with pkg-config
-Patch101: XML-LibXML-2.0208-Use-pkgconfig-instead-of-Alien-Libxml2.patch
+Patch101: XML-LibXML-2.0213-Use-pkgconfig-instead-of-Alien-Libxml2.patch
 #BuildRequires: perl-Alien-Libxml2
+BuildRequires: libxml2-devel perl-Devel-CheckLib perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport
+BuildRequires: perl-XML-SAX
 
 Provides: perl-XML-LibXML-Common = 0.13-alt99
 Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
-# Since the version of libxml2 is embedded into
-# XML::LibXML::LIBXML_VERSION() at build time, this package
-# has to be rebuilt every time the version of libxml2 is changed.
-Requires: %(rpmquery --qf '%%{NAME} = %%{VERSION}' libxml2_16)
-
-# Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libxml2-devel perl-Devel-CheckLib perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport
-
-%if_with bootstrap
-BuildRequires: perl-XML-SAX-Base
-%define _without_test 1
-%else
-BuildRequires: perl-XML-SAX
-%endif
+Requires: perl-XML-SAX
 
 %description
 This module is an interface to the Gnome libxml2 DOM and SAX parser and
@@ -43,32 +31,43 @@ providing access to the XPath API in libxml2.
 %setup -q -n %{dist}-%{version}
 %autopatch -p1
 
-%if_with bootstrap
-# bootstrap: disable build dependency on XML::SAX
-mv t/14sax.t t/14sax.t.orig
-mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
-%endif
-
 %build
+export SKIP_SAX_INSTALL=1
 %perl_vendor_build INC=-I/usr/include/libxml2 LIBS=-lxml2
 
 %install
 %perl_vendor_install
 
+%triggerin -- perl-XML-SAX
+for parser in XML::LibXML::SAX::Parser XML::LibXML::SAX; do
+    perl -MXML::SAX -e "XML::SAX->add_parser(q($parser))->save_parsers()" || :
+done
+
+%preun
+if [ "$1" -eq 0 ]; then
+    for parser in XML::LibXML::SAX::Parser XML::LibXML::SAX; do
+        perl -MXML::SAX -e "XML::SAX->remove_parser(q($parser))->save_parsers()" || :
+    done
+fi
+
 %files
-%doc	Changes README.md HACKING.txt docs example
-%dir	%perl_vendor_archlib/XML
-	%perl_vendor_archlib/XML/LibXML.pm
-%doc	%perl_vendor_archlib/XML/LibXML.pod
-%dir	%perl_vendor_archlib/XML/LibXML
-	%perl_vendor_archlib/XML/LibXML/*.pm
-%doc	%perl_vendor_archlib/XML/LibXML/*.pod
-%dir	%perl_vendor_archlib/XML/LibXML/SAX
-	%perl_vendor_archlib/XML/LibXML/SAX/*.pm
-%doc	%perl_vendor_archlib/XML/LibXML/SAX/*.pod
-	%perl_vendor_autolib/XML
+%doc Changes README.md HACKING.txt docs example
+%dir %perl_vendor_archlib/XML
+%perl_vendor_archlib/XML/LibXML.pm
+%doc %perl_vendor_archlib/XML/LibXML.pod
+%dir %perl_vendor_archlib/XML/LibXML
+%perl_vendor_archlib/XML/LibXML/*.pm
+%doc %perl_vendor_archlib/XML/LibXML/*.pod
+%dir %perl_vendor_archlib/XML/LibXML/SAX
+%perl_vendor_archlib/XML/LibXML/SAX/*.pm
+%doc %perl_vendor_archlib/XML/LibXML/SAX/*.pod
+%perl_vendor_autolib/XML
 
 %changelog
+* Wed Oct 21 2026 Alexey Shabalin <shaba@altlinux.org> 2.0213-alt3
+- Drop bootstrap mode after removing the XML-SAX dependency cycle.
+- Register SAX drivers on installation and unregister them on removal.
+
 * Tue Jul 07 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.0213-alt2
 - NMU: fix FTBFS with new libxml2
 

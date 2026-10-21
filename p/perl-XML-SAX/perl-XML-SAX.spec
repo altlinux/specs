@@ -2,10 +2,10 @@
 %define dist XML-SAX
 Name: perl-%dist
 Version: 1.02
-Release: alt1
+Release: alt2
 
 Summary: Simple API for XML
-License: GPL or Artistic
+License: Artistic-1.0-Perl OR GPL-1.0-or-later
 Group: Development/Perl
 
 URL: %CPAN %dist
@@ -13,12 +13,6 @@ Source0: http://www.cpan.org/authors/id/G/GR/GRANTM/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
-# default SAX driver
-Requires: perl(XML/LibXML/SAX.pm)
-# break dependency loop
-Requires: perl-XML-LibXML
-
-# Automatically added by buildreq on Thu Oct 06 2011
 BuildRequires: perl-Encode perl-XML-NamespaceSupport perl-XML-SAX-Base perl-autodie perl-devel
 
 %description
@@ -38,22 +32,27 @@ sed -i- '/^sub MY::install/s/MY/notMY/' Makefile.PL
 %install
 %perl_vendor_install
 
-cat >%buildroot%perl_vendor_privlib/XML/SAX/ParserDetails.ini <<EOF
-[XML::LibXML::SAX]
-http://xml.org/sax/features/namespaces = 1
-EOF
+touch %buildroot%perl_vendor_privlib/XML/SAX/ParserDetails.ini
+
+%post
+if [ ! -s %perl_vendor_privlib/XML/SAX/ParserDetails.ini ]; then
+    perl -MXML::SAX -e 'XML::SAX->add_parser(q(XML::SAX::PurePerl))->save_parsers()' 2>/dev/null || :
+fi
 
 %files
-%doc	README Changes
-%dir	%perl_vendor_privlib/XML
-%dir	%perl_vendor_privlib/XML/SAX
-	%perl_vendor_privlib/XML/SAX.pm
-	%perl_vendor_privlib/XML/SAX/*.pm
-	%perl_vendor_privlib/XML/SAX/PurePerl*
-%doc	%perl_vendor_privlib/XML/SAX/*.pod
-%config	%perl_vendor_privlib/XML/SAX/ParserDetails.ini
+%doc README Changes
+%doc %perl_vendor_privlib/XML/SAX/*.pod
+%dir %perl_vendor_privlib/XML
+%dir %perl_vendor_privlib/XML/SAX
+%perl_vendor_privlib/XML/SAX.pm
+%perl_vendor_privlib/XML/SAX/*.pm
+%perl_vendor_privlib/XML/SAX/PurePerl*
+%ghost %perl_vendor_privlib/XML/SAX/ParserDetails.ini
 
 %changelog
+* Wed Oct 21 2026 Alexey Shabalin <shaba@altlinux.org> 1.02-alt2
+- Remove the dependency on XML-LibXML and register PurePerl by default.
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
