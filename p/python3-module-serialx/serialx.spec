@@ -1,5 +1,5 @@
 Name: python3-module-serialx
-Version: 1.11.0
+Version: 1.14.0
 Release: alt1
 
 Summary: Serial communication library
@@ -10,49 +10,50 @@ VCS: https://github.com/puddly/serialx
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
-Source2: crates.tar
 
 Autoreq: yes, nopython3
 %pyproject_runtimedeps_metadata
 
+BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject >= 0.2.0
-BuildRequires: /dev/pts, socat
+BuildRequires: /dev/pts, /proc, socat
 %add_pyproject_deps_check_filter codespell
 %add_pyproject_deps_check_filter prek
+%add_pyproject_deps_check_filter 'uv$'
+%add_pyproject_deps_check_filter '^types-'
+%add_pyproject_deps_check_filter 'pytest-github-actions-annotate-failures'
+%add_pyproject_deps_check_filter 'setuptools-rust'
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra dev
 %pyproject_builddeps_check
-
-%python3_set_limited_api 3.10
 
 %description
 %summary
 
 %prep
-%setup -a2
-%ifdef bootstrap
-cargo vendor
-tar cf %SOURCE2 .cargo vendor
-%endif
+%setup
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_depgroup dev
 %pyproject_build
 
 %install
 %pyproject_install
 
 %check
-%pyproject_run_pytest -o addopts=  tests
+%pyproject_run_pytest -o addopts= tests
 
 %files
 %python3_sitelibdir/serialx
 %python3_sitelibdir/serialx-%version.dist-info
 
 %changelog
+* Mon Oct 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.14.0-alt1
+- 1.14.0 released
+
 * Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.11.0-alt1
 - 1.11.0 released
 
