@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: unbound
-Version: 1.26.1
+Version: 1.26.2
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -238,6 +238,10 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Wed Oct 21 2026 Alexei Takaseev <taf@altlinux.org> 1.26.2-alt1
+- 1.26.2 (Fixes: CVE-2026-35501, CVE-2026-50106, CVE-2026-96405,
+                 CVE-2026-97206, CVE-2026-109125)
+
 * Mon Sep 21 2026 Alexei Takaseev <taf@altlinux.org> 1.26.1-alt1
 - 1.26.1 (Fixes: CVE-2026-77860, CVE-2026-77955, CVE-2026-78227,
                  CVE-2026-80225, CVE-2026-81634, CVE-2026-81642,
