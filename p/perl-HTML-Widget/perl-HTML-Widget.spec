@@ -2,13 +2,13 @@
 
 Name: perl-%m_distro
 Version: 1.11
-Release: alt3
+Release: alt3.1
 
 Summary: HTML Widget And Validation Framework
 
 License: Artistic
 Group: Development/Perl
-Url: %CPAN %m_distro
+Url: https://metacpan.org/dist/HTML-Widget
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
@@ -51,6 +51,9 @@ This Module is very powerful, don't misuse it as a template system!
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt3.1
+- NMU: update the homepage URL.
+
 * Fri Aug 18 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11-alt3
 - Applied patch from debian to fix tests.
 - Updated build requirements.

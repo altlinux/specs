@@ -15,18 +15,20 @@
 
 Name: perl-Module-Pluggable-Fast
 Version: 0.19
-Release: alt1.1
+Release: alt1.2
 
 Summary: Fast plugins with instantiation
 
 License: Artistic
 Group: Development/Perl
-Url: http://search.cpan.org/dist/Module-Pluggable-Fast/
+Url: https://metacpan.org/dist/Module-Pluggable-Fast
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/M/MR/MRAMBERG/Module-Pluggable-Fast-0.19.tar.gz
+
+Patch: inc-snapshot.patch
 
 # Automatically added by buildreq on Fri Jun 13 2008
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl-UNIVERSAL-require
@@ -37,6 +39,7 @@ found, useful for code generators like "Class::DBI::Loader".
 
 %prep
 %setup -q -n %m_distro-%version
+%patch -p1
 %build
 %perl_vendor_build
 
@@ -48,6 +51,10 @@ found, useful for code generators like "Class::DBI::Loader".
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 0.19-alt1.2
+- NMU: snapshot include paths before loading plugins.
+- update the homepage URL.
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
