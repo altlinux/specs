@@ -1,12 +1,13 @@
 %global import_path github.com/sigstore/cosign/v3
 %global _unpackaged_files_terminate_build 1
 
-%define revision 11926fa5bbbbde47e88fc006b625a17769b743b2
+# git rev-parse v3.1.4^{commit}
+%define revision 0e48502cf5ef34e2e60bbd3617aa19945712f705
 
 %def_with check
 
 Name:    cosign
-Version: 3.1.3
+Version: 3.1.4
 Release: alt1
 
 Summary: Container Signing, Verification and Storage in an OCI registry
@@ -21,7 +22,8 @@ Source1: vendor.tar
 Patch: %name-%version.patch
 
 BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.26.0
+BuildRequires: rpm-build-golang
+BuildRequires: golang >= 1.27
 BuildRequires: libpcsclite-devel
 BuildRequires: /proc
 
@@ -71,8 +73,11 @@ export BUILDDIR="$PWD/.gopath"
 %_bindir/%name
 
 %changelog
+* Wed Oct 21 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.1.4-alt1
+- New version 3.1.4.
+
 * Mon Aug 10 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.1.3-alt1
-- New version 3.1.2 (Fixes: GHSA-fx35-mq7g-6g98).
+- New version 3.1.3 (Fixes: GHSA-fx35-mq7g-6g98).
 
 * Tue Aug 04 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 3.1.2-alt1
 - New version 3.1.2.
