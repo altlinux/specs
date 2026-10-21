@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    wayvr
-Version: 26.7.1
+Version: 26.8.0
 Release: alt1
 
 Summary: Your way to enjoy VR on Linux
@@ -21,10 +21,12 @@ BuildRequires: libssl-devel libalsa-devel pipewire-libs-devel clang-devel git-co
 BuildRequires: python3-dev libshaderc-devel libdbus-devel libxkbcommon-devel
 BuildRequires: libxcb-devel libX11-devel libXext-devel libXrandr-devel fontconfig-devel
 BuildRequires: libxkbcommon-x11-devel openxr-devel libglvnd-devel libdav1d-devel
-BuildRequires: libvulkan-devel glslc libopenvr-devel
+BuildRequires: libvulkan-devel glslc libopenvr-devel libudev-devel libinput-devel
 
 Requires: libopenxr
 Requires: libopenvr2
+Requires: libudev1
+Requires: libinput
 Requires: xwayland-satellite
 
 ExclusiveArch: x86_64
@@ -92,9 +94,8 @@ sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 %build
 export OPENVR_NO_VENDOR=1
 export SHADERC_LIB_DIR=%_libdir
-export CARGO_PROFILE_RELEASE_DEBUG=2
 
-cargo build --release --offline
+%rust_build
 
 %install
 install -Dm755 target/release/%name -t %buildroot%_bindir/
@@ -113,6 +114,9 @@ install -Dm644 %name/%name.svg -t %buildroot%_iconsdir/hicolor/scalable/apps/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Wed Oct 21 2026 Sergey Palcheh <minergenon@altlinux.org> 26.8.0-alt1
+- new version 26.8.0
+
 * Wed Jul 15 2026 Sergey Palcheh <minergenon@altlinux.org> 26.7.1-alt1
 - new version 26.7.1
 
