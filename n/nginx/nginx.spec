@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.30.5
+Version: 1.30.6
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -471,6 +471,11 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Wed Oct 21 2026 Anton Farygin <rider@altlinux.org> 1.30.6-alt1
+- 1.30.5 -> 1.30.6 (Fixes: CVE-2026-15176, CVE-2026-93479, CVE-2026-95101,
+  CVE-2026-97629, CVE-2026-97205)
+- enabled gzip for JavaScript, JSON and SVG MIME types (closes: #61091)
+
 * Tue Sep 15 2026 Anton Farygin <rider@altlinux.org> 1.30.5-alt1
 - 1.30.4 -> 1.30.5
 - added brotli module (closes: #60425)
