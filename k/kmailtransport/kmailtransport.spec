@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: LGPL-2.1-or-later
 
 Source: %rname-%version.tar
+Patch1: alt-select-def-out-transport.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -56,6 +57,7 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build
@@ -80,6 +82,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Wed Oct 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
+- fix changing the default transport (closes: #61139)
+
 * Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
