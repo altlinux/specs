@@ -3,13 +3,13 @@
 
 Name: %oname%abiversion
 Version: 2.12.2
-Release: alt3
+Release: alt4
 
 Summary: Linux Trace Toolkit Userspace Tracer library (legacy)
 
 License: GPLv2
 Group: System/Legacy libraries
-Url: http://lttng.org
+Url: https://lttng.org
 
 # Source-url: http://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
 Source: %name-%version.tar
@@ -26,6 +26,15 @@ BuildRequires: libnuma-devel
 BuildRequires: asciidoc xmlto
 
 %description
+Legacy version of LTTng-UST shared libraries (soname %abiversion).
+
+%package -n %oname
+Summary: Linux Trace Toolkit Userspace Tracer library (legacy)
+Group: System/Legacy libraries
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description -n %oname
 Legacy version of LTTng-UST shared libraries (soname %abiversion).
 
 %package devel
@@ -74,7 +83,7 @@ rm -rv %buildroot%_bindir/
 rm -rv %buildroot%_docdir/%name/
 rm -rv %buildroot%_mandir/
 
-%files
+%files -n %oname
 %_libdir/%oname.so.%abiversion
 %_libdir/%oname.so.%abiversion.*
 %_libdir/%oname-tracepoint.so.%abiversion
@@ -95,6 +104,9 @@ rm -rv %buildroot%_mandir/
 %_libdir/%oname-pthread-wrapper.so.%abiversion.*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt4
+- restore the original binary package name for the legacy ABI.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt3
 - legacy library package liblttng-ust.so.0 for compatibility (2.12.2)
 

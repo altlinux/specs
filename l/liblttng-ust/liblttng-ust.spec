@@ -3,13 +3,13 @@
 
 Name: liblttng-ust
 Version: 2.16.0
-Release: alt1
+Release: alt2
 
 Summary: Linux Trace Toolkit Userspace Tracer library
 
 License: GPLv2
 Group: Development/C++
-Url: http://lttng.org
+Url: https://lttng.org
 
 # Source-url: https://lttng.org/files/lttng-ust/lttng-ust-%version.tar.bz2
 Source: %name-%version.tar
@@ -32,9 +32,6 @@ This library may be used by user space applications to generate tracepoints with
 %package -n %name%abiversion
 Summary: Linux Trace Toolkit Userspace Tracer library
 Group: System/Libraries
-Provides: %name = %EVR
-# liblttng-ust 2.12.2 contained all libraries (.so.0 is now in legacy liblttng-ust0)
-Obsoletes: %name < %EVR
 
 %description -n %name%abiversion
 This library may be used by user space applications to generate tracepoints
@@ -129,6 +126,9 @@ rm -rf %buildroot/tmp/lttng-ust-divert
 %_man3dir/*.3.*
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 2.16.0-alt2
+- keep the legacy ABI package installable alongside the new ABI.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.16.0-alt1
 - new version 2.16.0 (SONAME liblttng-ust.so.0 -> liblttng-ust.so.1)
 - split libraries to liblttng-ust1 and liblttng-ust-ctl6 (Shared Libs Policy)
