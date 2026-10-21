@@ -13,7 +13,7 @@ BuildRequires: jpackage-default
 
 Name:           batik
 Version:        1.19
-Release:        alt1
+Release:        alt2
 Summary:        Scalable Vector Graphics for Java
 License:        Apache-2.0 and W3C
 URL:            https://xmlgraphics.apache.org/batik/
@@ -31,6 +31,7 @@ BuildRequires:  mvn(org.apache.xmlgraphics:xmlgraphics-commons)
 BuildRequires:  mvn(xalan:xalan)
 BuildRequires:  mvn(xml-apis:xml-apis)
 BuildRequires:  mvn(xml-apis:xml-apis-ext)
+BuildRequires:  mvn(org.mozilla:rhino)
 Source44: import.info
 #19119
 Provides: xmlgraphics-batik = 0:%version-%release
@@ -209,16 +210,16 @@ done
 %pom_disable_module batik-test-old
 
 # Remove optional deps on rhino and jython
-%pom_remove_dep :rhino batik-{bridge,script}
+#%pom_remove_dep :rhino batik-{bridge,script}
 %pom_remove_dep :jython batik-script
-rm -rf batik-script/src/main/java/org/apache/batik/script/{jpython,rhino}
-rm batik-bridge/src/main/java/org/apache/batik/bridge/BatikWrapFactory.java
-rm batik-bridge/src/main/java/org/apache/batik/bridge/SVG12RhinoInterpreter.java
-rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreter.java
-rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreterFactory.java
-rm batik-bridge/src/main/java/org/apache/batik/bridge/EventTargetWrapper.java
-rm batik-bridge/src/main/java/org/apache/batik/bridge/GlobalWrapper.java
-rm batik-bridge/src/main/java/org/apache/batik/bridge/WindowWrapper.java
+rm -rf batik-script/src/main/java/org/apache/batik/script/jpython
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/BatikWrapFactory.java
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/SVG12RhinoInterpreter.java
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreter.java
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/RhinoInterpreterFactory.java
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/EventTargetWrapper.java
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/GlobalWrapper.java
+#rm batik-bridge/src/main/java/org/apache/batik/bridge/WindowWrapper.java
 
 %mvn_package :batik-squiggle squiggle
 %mvn_package :batik-squiggle-ext squiggle
@@ -249,10 +250,10 @@ subst 's,maxmemory="128m",maxmemory="512m",' build.xml
 %install
 %mvn_install
 
-%jpackage_script org.apache.batik.apps.svgbrowser.Main '' '' %{classpath}:rhino squiggle true
+%jpackage_script org.apache.batik.apps.svgbrowser.Main '' '' %{classpath} squiggle true
 %jpackage_script org.apache.batik.apps.svgpp.Main '' '' %{classpath} svgpp true
 %jpackage_script org.apache.batik.apps.ttf2svg.Main '' '' %{classpath} ttf2svg true
-%jpackage_script org.apache.batik.apps.rasterizer.Main '' '' %{classpath}:rhino rasterizer true
+%jpackage_script org.apache.batik.apps.rasterizer.Main '' '' %{classpath} rasterizer true
 %jpackage_script org.apache.batik.apps.slideshow.Main '' '' %{classpath} slideshow true
 
 # Demo
@@ -310,6 +311,9 @@ touch $RPM_BUILD_ROOT/etc/ttf2svg.conf
 
 
 %changelog
+* Wed Oct 21 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.19-alt2
+- added BuildRequires: rhino (ALT #31945)
+
 * Thu Feb 12 2026 Anton Meleshnikov <alton@altlinux.org> 0:1.19-alt1
 - new version
 
