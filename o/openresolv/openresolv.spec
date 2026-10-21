@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.14.1
-Release: alt1
+Release: alt1.1
 
 Summary: A framework for managing DNS information 
 License: BSD-2-Clause
@@ -18,7 +18,7 @@ BuildArch: noarch
 Requires: filesystem >= 2.3.5
 
 # pdnsd support
-%def_with pdnsd
+%def_without pdnsd
 # PowerDNS Recursor support
 %def_without pdns
 
@@ -145,6 +145,9 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 3.14.1-alt1.1
+- NMU: build without pdnsd subscriber (pdnsd is removed from Sisyphus)
+
 * Thu Apr 10 2025 Mikhail Efremov <sem@altlinux.org> 3.14.1-alt1
 - Updated to 3.14.1.
 
