@@ -9,7 +9,7 @@
 
 Name: NetworkManager-sstp
 Version: 1.3.2
-Release: alt2.1
+Release: alt2.2
 
 Summary:  NetworkManager VPN plugin for SSTP
 License: GPLv2+
@@ -19,6 +19,8 @@ Url: https://github.com/enaess/network-manager-sstp/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: %name-const-qualifier.patch
+Patch2: %name-tls-ext-default.patch
+Patch3: %name-cve-2026-91838.patch
 
 BuildRequires: ppp-devel libsstp-devel >= 1.0.10
 BuildRequires: libnm-devel >= %nm_version
@@ -66,6 +68,8 @@ This package contains files for GTK4 applications to use %name.
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
@@ -114,6 +118,11 @@ rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %endif
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt2.2
+- NMU: Enable TLS hostname extension (SNI) by default
+- Security fixes:
+  + CVE-2026-91838: Fix local root command injection via pppd pty.
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt2.1
 - NMU: Fix FTBFS with new glibc (const-correct strchr/strrchr results)
 - Remove %config from a file in /usr (repocop)
