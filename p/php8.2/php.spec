@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 34
+%define _php_release_version 35
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -500,6 +500,9 @@ rm -f /etc/php/%_php_suffix/*/php.d/openssl.ini ||:
 %doc tests run-tests.php 
 
 %changelog
+* Wed Oct 21 2026 Anton Farygin <rider@altlinux.org> 8.2.35-alt1
+- 8.2.34 -> 8.2.35 (Fixes: CVE-2026-109618, CVE-2026-109619)
+
 * Sun Oct 04 2026 Anton Farygin <rider@altlinux.org> 8.2.34-alt1
 - 8.2.33 -> 8.2.34 (Fixes: CVE-2026-91768, CVE-2025-1218, CVE-2026-91769,
   CVE-2026-91767, CVE-2026-6103, CVE-2026-91765, CVE-2025-14181, CVE-2026-92842,
