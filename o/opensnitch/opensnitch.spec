@@ -12,19 +12,19 @@
 %endif
 
 # Pseudouser
-%define _pseudouser_user _%name
-%define _pseudouser_group _%name
-%define _pseudouser_home %_localstatedir/%{name}d
+%define _pseudouser_user _opensnitch
+%define _pseudouser_group _opensnitch
+%define _pseudouser_home %_localstatedir/opensnitchd
 
 Name: opensnitch
 Version: 1.8.0
-Release: alt1.gitf2ce074
+Release: alt2.gitf2ce074
 
 Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewall
 License: GPL-3.0-or-later
 Group: Networking/Other
-Url: https://github.com/evilsocket/opensnitch
-Vcs: https://github.com/evilsocket/opensnitch.git
+URL: https://github.com/evilsocket/opensnitch
+VCS: https://github.com/evilsocket/opensnitch.git
 
 Source0: %name-%version.tar
 Source1: vendor.tar
@@ -33,7 +33,8 @@ Source2: protoc-gen-go-grpc.tar
 ExclusiveArch: %go_arches
 
 # opensnitch-daemon
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-golang
+BuildRequires: rpm-build-golang
 BuildRequires: libnetfilter_queue-devel
 BuildRequires: protobuf-compiler
 BuildRequires: protobuf-go
@@ -46,8 +47,9 @@ BuildRequires: libelf-devel
 BuildRequires: llvm
 
 # opensnitch-ui
-BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3
 BuildRequires: python3-module-configargparse
 BuildRequires: python3-module-grpcio
@@ -120,7 +122,7 @@ pushd ebpf_prog
 	KERNEL_VER="%kver" \
 	KERNEL_DIR="%kbuild_dir" \
 	KERNEL_HEADERS="%kbuild_dir" \
-	EXTRA_FLAGS="-Wno-microsoft-anon-tag -fms-extensions"
+	EXTRA_FLAGS="-Wno-microsoft-anon-tag -fms-extensions -DCC_USING_FENTRY"
 popd
 
 # Build the opensnitch-ui
@@ -207,6 +209,9 @@ rm -rv %buildroot%python3_sitelibdir_noarch/tests
 %python3_sitelibdir_noarch/%{name}_ui-%version.dist-info
 
 %changelog
+* Wed Oct 21 2026 Ulysses Apokin <ulysses@altlinux.org> 1.8.0-alt2.gitf2ce074
+- fixed FTBFS
+
 * Wed Apr 01 2026 Ulysses Apokin <ulysses@altlinux.org> 1.8.0-alt1.gitf2ce074
 - new version
 - removed installation of unnecessary files (ALT #57612)
