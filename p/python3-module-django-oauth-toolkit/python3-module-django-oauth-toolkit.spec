@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 3.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: OAuth2 goodies for the Djangonauts
 License: BSD-2-Clause
@@ -31,12 +31,14 @@ BuildRequires: python3-module-requests
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: django-oauth-toolkit-django-compat.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
+%patch -p1
 
 %build
 %pyproject_build
@@ -54,6 +56,9 @@ export DJANGO_SETTINGS_MODULE=tests.settings
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1.1
+- NMU: fix compatibility with pytest-django 4.14 and Django 6.1.
+
 * Tue Apr 28 2026 Anton Vyatkin <toni@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
