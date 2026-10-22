@@ -1,7 +1,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define sover 1.4.0
+%define sover 1.5.0
 
 %def_with devel
 
@@ -12,7 +12,7 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
@@ -114,6 +114,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
+- 1.4.1 -> 1.5.0
+
 * Fri Aug 07 2026 Anton Farygin <rider@altlinux.org> 1.4.1-alt1
 - 1.4.0 -> 1.4.1
 
