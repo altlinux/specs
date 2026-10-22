@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define libname libvsgXchange
-%define sover 1
+%define sover 3
 
 Name:    vsgXchange
-Version: 1.1.9
+Version: 1.1.14
 Release: alt1
 
 Summary: Utility library for converting data+materials to/from VulkanSceneGraph
 License: MIT
 Group:   Other
 Url:     https://github.com/vsg-dev/vsgXchange
+VCS:     https://github.com/vsg-dev/vsgXchange.git
 
 Source: %name-%version.tar
 
@@ -28,10 +29,9 @@ BuildRequires: libosg2vsg-devel
 BuildRequires: libminizip-devel
 BuildRequires: libvsg-devel
 BuildRequires: osg2vsg-plugins
-BuildRequires: libpoly2tri-devel,
+BuildRequires: libpoly2tri-devel
 BuildRequires: libpugixml-devel
 BuildRequires: vulkan-devel
-%{?_with_chek:BuildRequires: ctest}
 
 %description
 vsgXchange contains source code that can directly read a range of
@@ -59,7 +59,6 @@ Group: Development/C++
 
 %prep
 %setup
-sed -i 's/set(VSGXCHANGE_SOVERSION 2)/set(VSGXCHANGE_SOVERSION 1)/' CMakeLists.txt
 
 %build
 %cmake -DBUILD_SHARED_LIBS=ON
@@ -76,9 +75,8 @@ sed -i 's/set(VSGXCHANGE_SOVERSION 2)/set(VSGXCHANGE_SOVERSION 1)/' CMakeLists.t
 %_bindir/*
 
 %files -n %libname%sover
-%_libdir/%libname.so.%sover.*
+%_libdir/%libname.so.%version
 %_libdir/%libname.so.%sover
-
 
 %files -n %libname-devel
 %_includedir/*
@@ -86,5 +84,8 @@ sed -i 's/set(VSGXCHANGE_SOVERSION 2)/set(VSGXCHANGE_SOVERSION 1)/' CMakeLists.t
 %_cmakedir/*
 
 %changelog
+* Fri Oct 16 2026 Artem Semenov <savoptik@altlinux.org> 1.1.14-alt1
+- New version 1.1.14.
+
 * Wed Oct 07 2026 Artem Semenov <savoptik@altlinux.org> 1.1.9-alt1
 - Initial build for Sisyphus.

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define libname libvsgQt
-%define sover 0
+%define sover 3
 
 Name:    vsgQt
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: Qt integration with VulkanSceneGraph
 License: MIT
@@ -21,7 +21,6 @@ BuildRequires: gcc-c++
 BuildRequires: libvsg-devel
 BuildRequires: qt5-base-devel
 BuildRequires: vulkan-devel
-%{?_with_chek:BuildRequires: ctest}
 
 %description
 vsgQt provides full Vulkan support through the VulkanSceneGraph's built
@@ -36,6 +35,7 @@ providing multiple windows without blowing up GPU memory usage.
 %package -n %libname%sover
 Summary: Lib files fore %name
 Group: System/Libraries
+Conflicts: libvsgQt0 = 0.5.0-alt1
 
 %description -n %libname%sover
 %summary.
@@ -49,7 +49,6 @@ Group: Development/C++
 
 %prep
 %setup
-sed -i 's/set(VSGQT_SOVERSION 3)/set(VSGQT_SOVERSION 0)/' CMakeLists.txt
 
 %build
 %cmake -DBUILD_SHARED_LIBS=ON
@@ -65,7 +64,7 @@ sed -i 's/set(VSGQT_SOVERSION 3)/set(VSGQT_SOVERSION 0)/' CMakeLists.txt
 %_bindir/*
 
 %files -n %libname%sover
-%_libdir/%libname.so.%sover.*
+%_libdir/%libname.so.%version
 %_libdir/%libname.so.%sover
 
 %files -n %libname-devel
@@ -74,5 +73,8 @@ sed -i 's/set(VSGQT_SOVERSION 3)/set(VSGQT_SOVERSION 0)/' CMakeLists.txt
 %_cmakedir/*
 
 %changelog
+* Wed Oct 21 2026 Artem Semenov <savoptik@altlinux.org> 0.5.0-alt2
+- Fixed sover.
+
 * Wed Oct 07 2026 Artem Semenov <savoptik@altlinux.org> 0.5.0-alt1
 - Initial build for Sisyphus.

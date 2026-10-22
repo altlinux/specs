@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define sover 1
+%define sover 17
 %define libname libvsg
 
 Name: VulkanSceneGraph
 Version: 1.1.16
-Release: alt1
+Release: alt2
 
 Summary: Vulkan & C++17 based Scene Graph Project
 License: MIT
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: libvulkan-devel
 BuildRequires: glslang-devel
@@ -29,6 +30,7 @@ C++17, and follows the CppCoreGuidelines and FOSS Best Practices.
 %package -n %libname%sover
 Summary: Lib files fore %name
 Group: System/Libraries
+Conflicts: libvsg1 = 1.1.16-alt1
 
 %description -n %libname%sover
 %summary.
@@ -44,8 +46,6 @@ Provides: %name-devel = %EVR
 %prep
 %setup
 
-%__subst 's/set(VSG_SOVERSION 17)/set(VSG_SOVERSION 1)/' CMakeLists.txt
-
 %build
 %cmake -DBUILD_SHARED_LIBS=ON
 %cmake_build
@@ -53,8 +53,11 @@ Provides: %name-devel = %EVR
 %install
 %cmakeinstall_std
 
+%check
+%ctest
+
 %files -n %libname%sover
-%_libdir/%libname.so.%sover.*
+%_libdir/%libname.so.%version
 %_libdir/%libname.so.%sover
 
 %files -n %libname-devel
@@ -63,5 +66,9 @@ Provides: %name-devel = %EVR
 %_cmakedir/*
 
 %changelog
+* Tue Oct 20 2026 Artem Semenov <savoptik@altlinux.org> 1.1.16-alt2
+- Enabled check.
+- Fixed sover.
+
 * Tue Oct 06 2026 Artem Semenov <savoptik@altlinux.org> 1.1.16-alt1
 - Initial build for Sisyphus.

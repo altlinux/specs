@@ -5,12 +5,13 @@
 
 Name: osg2vsg
 Version: 0.4.0
-Release: alt1
+Release: alt2
 
 Summary: Adapter library for converting OpenSceneGraph Images and 3D models to VulkanSceneGraph
 License: MIT
 Group:   Other
 Url:     https://github.com/vsg-dev/osg2vsg
+VCS:     https://github.com/vsg-dev/osg2vsg.git
 
 Source: %name-%version.tar
 
@@ -77,5 +78,8 @@ Group: Other
 %_libdir/osgPlugins-%pluginsVersion/*.so
 
 %changelog
+* Wed Oct 21 2026 Artem Semenov <savoptik@altlinux.org> 0.4.0-alt2
+- Added VCS tag.
+
 * Wed Oct 07 2026 Artem Semenov <savoptik@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus.
