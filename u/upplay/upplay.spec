@@ -1,5 +1,5 @@
 Name: upplay
-Version: 1.9.12
+Version: 1.9.13
 Release: alt1
 
 Summary: UPnP/OpenHome audio Control Point
@@ -10,7 +10,7 @@ VCS: https://framagit.org/medoc92/upplay
 
 ExcludeArch: i586
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: jsoncpp-devel libcurl-devel libexpat-devel libupnpp-devel
@@ -40,6 +40,9 @@ make install INSTALL_ROOT=%buildroot
 %_pixmapsdir/upplay.png
 
 %changelog
+* Thu Oct 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.13-alt1
+- 1.9.13 released
+
 * Mon Sep 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.12-alt1
 - 1.9.12 released
 
