@@ -2,7 +2,7 @@
 %global import_path github.com/gogatekeeper/gatekeeper
 
 Name: gatekeeper
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: An OpenID / Proxy service
@@ -72,6 +72,9 @@ install -d %buildroot%_logdir/%name
 %dir %attr(750,_%name,_%name) %_logdir/%name
 
 %changelog
+* Thu Oct 22 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 5.0.1-alt1
+- New version (5.0.1).
+
 * Thu Oct 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 5.0.0-alt1
 - New version (5.0.0).
 
