@@ -3,7 +3,7 @@
 
 Name:    multispeech
 Version: 4.6.6
-Release: alt1
+Release: alt2
 
 Summary: Multilingual speech server for Emacspeak
 License: GPL-2.0
@@ -18,6 +18,7 @@ Requires: %name-common
 Requires: ru_tts
 Requires: mbrola-voices-en1
 
+BuildRequires(pre): rpm-macros-spd
 BuildRequires: libsndfile-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libsoundtouch-devel
@@ -51,15 +52,17 @@ Summary: Multilingual speech server - core shared library
 %description -n lib%name%sover
 This package provides core shared library.
 
-%package -n speech-dispatcher-module-%name
+%package -n %spdmoduleprefix-%name
 Summary: Multilingual Speech Dispatcher backend
 Group: Sound
 Requires: speech-dispatcher
 Requires: %name-common
 Requires: ru_tts
 Requires: mbrola-voices-en1
+Provides: speech-dispatcher-module-%name = %EVR
+Obsoletes: speech-dispatcher-module-%name < %EVR
 
-%description -n speech-dispatcher-module-%name
+%description -n %spdmoduleprefix-%name
 This module provides multilingual speech output for Speech Dispatcher
 using software TTS engines such as mbrola, espeak, ru_tts, etc.
 It is based on the Multispeech speech server.
@@ -112,25 +115,28 @@ ln -s %_bindir/%name %buildroot%_datadir/emacs/site-lisp/emacspeak/servers/multi
 %_bindir/%name
 %_datadir/emacs/site-lisp/emacspeak/blurbs/%name.blurb
 %_datadir/emacs/site-lisp/emacspeak/servers/multispeech
+%_man1dir/*
 
 %files -n lib%name%sover
 %_libdir/lib%name.so.%sover
 %_libdir/lib%name.so.%sover.*
 
-%files -n speech-dispatcher-module-%name
-%_libdir/speech-dispatcher-modules/sd_%name
+%files -n %spdmoduleprefix-%name
+%_spdmoduledir/sd_%name
 
 %files doc
 %doc AUTHORS doc/interface.txt doc/prehistory.ChangeLog LICENSE README README.md
-%_man1dir/*
-%_man5dir/*
 %dir %_datadir/doc/%name
 %_datadir/doc/%name/*
 
 %files common
 %config(noreplace) %_sysconfdir/%name.conf
+%_man5dir/*
 
 %changelog
+* Tue Sep 08 2026 Artem Semenov <savoptik@altlinux.org> 4.6.6-alt2
+- Renamed spd module to short name.
+
 * Tue Aug 04 2026 Artem Semenov <savoptik@altlinux.org> 4.6.6-alt1
 - Updated to new version 4.6.6
 

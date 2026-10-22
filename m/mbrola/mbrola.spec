@@ -3,7 +3,7 @@
 
 Name: mbrola
 Version: 3.3
-Release: alt4
+Release: alt5
 
 Summary: MBROLA is a speech synthesizer based on the concatenation of diphones
 License: AGPL-3.0
@@ -54,9 +54,12 @@ fdupes %buildroot%_datadir/%name
 %doc README.md
 %doc --no-dereference LICENSE
 %_bindir/mbrola
-%_datadir/%name
+%dir %_datadir/%name
 
 %changelog
+* Fri Sep 04 2026 Artem Semenov <savoptik@altlinux.org> 3.3-alt5
+- Add %%dir %%_datadir/%%name fore clean uninstall
+
 * Sat Nov 16 2024 Ilya Mashkin <oddity@altlinux.ru> 3.3-alt4
 - fix build on Elbrus (Returned the fixline back in spec)
 

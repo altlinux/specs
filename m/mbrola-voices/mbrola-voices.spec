@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define githash fe05a0c
 
 Name:    mbrola-voices
 Version: 20200332
-Release: alt3
+Release: alt4.%githash
+
 BuildArch: noarch
 
 Summary: Data files of mbrola speech synthesizer voices
@@ -150,6 +152,9 @@ installVoice() {
 %install_voices
 
 %changelog
+* Fri Sep 04 2026 Artem Semenov <savoptik@altlinux.org> 20200332-alt4.fe05a0c
+- Add githash.
+
 * Mon Nov 11 2024 Artem Semenov <savoptik@altlinux.org> 20200332-alt3
 - Add conflict to old packages
 

@@ -4,7 +4,7 @@
 
 Name: tgspeechbox
 Version: 3.01
-Release: alt1
+Release: alt2
 Summary: Formant speech synthesis engine (LF glottal model, 26+ languages)
 Summary(ru_RU.UTF-8): Формантный синтезатор речи с LF-моделью голосового источника и поддержкой 26+ языков
 
@@ -53,15 +53,17 @@ used by tgsbRender and the native Speech Dispatcher module.
 Архитектурно-независимые данные фонем и языковых пакетов (YAML),
 используемые tgsbRender и нативным модулем Speech Dispatcher.
 
-%package -n speech-dispatcher-module-tgspeechbox
+%package -n spd-module-%name
 Summary: Speech Dispatcher integration for TGSpeechBox (generic + native module)
 Summary(ru_RU.UTF-8): Интеграция TGSpeechBox с Speech Dispatcher (generic и нативный модуль)
 Group: Sound
 License: GPLv3
 Requires: %name = %EVR
 Requires: speech-dispatcher
+Provides: speech-dispatcher-module-%name = %EVR
+Obsoletes: speech-dispatcher-module-%name < %EVR
 
-%description -n speech-dispatcher-module-tgspeechbox
+%description -n spd-module-%name
 Speech Dispatcher integration for TGSpeechBox: the persistent native
 module (sd_tgsb), which loads the engine once at startup instead of
 spawning a process per utterance, and the generic-mode config
@@ -69,7 +71,7 @@ spawning a process per utterance, and the generic-mode config
 module is GPLv3 because it functionally depends on espeak-ng at
 runtime, unlike the MIT core engine.
 
-%description -n speech-dispatcher-module-tgspeechbox -l ru_RU.UTF-8
+%description -n spd-module-%name -l ru_RU.UTF-8
 Интеграция TGSpeechBox с Speech Dispatcher: постоянный нативный
 модуль (sd_tgsb), загружающий движок один раз при старте, без
 порождения процесса на каждую фразу, и generic-конфиг
@@ -119,13 +121,15 @@ rm -f "$tmpfile"
 %dir %_datadir/%name
 %_datadir/%name/packs
 
-%files -n speech-dispatcher-module-tgspeechbox
+%files -n spd-module-%name
 %doc COPYING.GPLv3
 %speechd_moduledir/sd_tgsb
 %speechd_confdir/tgsb-generic.conf
 %speechd_confdir/tgsb-native.conf
 
 %changelog
+* Tue Sep 15 2026 Dina Tagantseva <dinchik@altlinux.org> 3.01-alt2
+- Renamed spd module to short name.
+
 * Fri Jul 31 2026 Dina Tagantseva <dinchik@altlinux.org> 3.01-alt1
 - Initial build for Sisyphus.
-

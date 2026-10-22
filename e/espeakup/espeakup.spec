@@ -2,7 +2,7 @@
 
 Name:    espeakup
 Version: 0.90
-Release: alt3
+Release: alt4
 
 Summary: A light weight connector for espeak-ng and speakup
 License: GPL-3.0
@@ -23,7 +23,10 @@ Patch4: error
 # ALT patches
 Patch10: change-to-start-with-script.patch
 
-BuildRequires(pre): rpm-build-ninja
+Requires: espeak-ng-data
+
+BuildRequires(pre): rpm-macros-ninja-build
+BuildRequires: rpm-build-ninja
 BuildRequires: meson
 BuildRequires: cmake 
 BuildRequires: libespeak-ng-devel
@@ -70,6 +73,9 @@ install -Dm 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %_mandir/man8/%name.8.xz
 
 %changelog
+* Sat Oct 03 2026 Artem Semenov <savoptik@altlinux.org> 0.90-alt4
+- Added req to espeak-ng-data.
+
 * Thu Jan 15 2026 Artem Semenov <savoptik@altlinux.org> 0.90-alt3
 - Added autodidect language
 

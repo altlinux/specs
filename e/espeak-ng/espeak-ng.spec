@@ -5,7 +5,7 @@
 
 Name: espeak-ng
 Version: 1.52.0
-Release: alt3
+Release: alt4
 
 Summary: eSpeak NG Text-to-Speech
 
@@ -30,6 +30,8 @@ Patch10: th_dict
 Patch11: compile-reproducibility
 Patch12: espeak-stdin
 Patch13: piper
+
+Requires: %name-data
 
 BuildRequires: gcc-c++
 BuildRequires: ronn
@@ -65,9 +67,6 @@ This package contains compatibility links that makes it a drop-in replacement
 %package -n %libname
 Group: System/Libraries
 Summary: Lib files for espeak-ng
-Requires: %name-data = %EVR
-Provides: libespeak-ng = %EVR
-Obsoletes: libespeak-ng < %EVR
 
 %description -n %libname
 Lib files for espeak-ng
@@ -75,8 +74,6 @@ Lib files for espeak-ng
 %package -n lib%name-libespeak%sover
 Group: System/Libraries
 Summary: Links fore libespeak
-Provides: libespeak = %EVR
-Obsoletes: libespeak < %EVR
 Provides: libespeak%sover = %EVR
 Obsoletes: libespeak%sover < %EVR
 
@@ -134,6 +131,15 @@ BuildArch: noarch
 This package contains necessary synthesizer data files needed
  for the %name program and the shared library.
 
+
+%package mbrola-data
+Summary: Data files fore %name-mbrola
+Group: Other
+BuildArch: noarch
+
+%description mbrola-data
+%summary
+
 %prep
 %setup
 # Remove unused files to make sure we've got the License tag right
@@ -176,7 +182,21 @@ ESPEAK_DATA_PATH=`pwd` LD_LIBRARY_PATH=src:${LD_LIBRARY_PATH} src/espeak-ng ...
 %doc COPYING COPYING.* README *.md *.html ChangeLog.md AUTHORS INSTALL NEWS docs
 
 %files data
-%_datadir/espeak-ng-data
+%dir %_datadir/espeak-ng-data
+%_datadir/espeak-ng-data/*_dict
+%_datadir/espeak-ng-data/intonations
+%_datadir/espeak-ng-data/phondata
+%_datadir/espeak-ng-data/phondata-manifest
+%_datadir/espeak-ng-data/phonindex
+%_datadir/espeak-ng-data/phontab
+%dir %_datadir/espeak-ng-data/lang/
+%_datadir/espeak-ng-data/lang/*
+%dir %_datadir/espeak-ng-data/voices
+%_datadir/espeak-ng-data/voices/*
+
+%files mbrola-data
+%dir %_datadir/espeak-ng-data/mbrola_ph
+%_datadir/espeak-ng-data/mbrola_ph/*
 
 %files -n %libname
 %_libdir/libespeak-ng.so.%sover
@@ -201,6 +221,10 @@ ESPEAK_DATA_PATH=`pwd` LD_LIBRARY_PATH=src:${LD_LIBRARY_PATH} src/espeak-ng ...
 %_datadir/vim/vimfiles/syntax/espeakrules.vim
 
 %changelog
+* Fri Sep 18 2026 Artem Semenov <savoptik@altlinux.org> 1.52.0-alt4
+- Moved mbrola data to subpackage.
+- Moved data req to espeak-ng package fore sharedname policy.
+
 * Wed Feb 11 2026 Artem Semenov <savoptik@altlinux.org> 1.52.0-alt3
 - Builded with sonic support
 

@@ -7,7 +7,7 @@
 
 Name:    RHVoice
 Version: 1.18.4
-Release: alt1
+Release: alt2
 
 Summary: a free and open source speech synthesizer for Russian and other languages
 License: %progectlicense
@@ -17,6 +17,7 @@ VCS: https://github.com/RHVoice/RHVoice.git
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-spd
 BuildRequires: scons
 BuildRequires: gcc-c++        
 BuildRequires: libgio-devel
@@ -39,14 +40,43 @@ RHVoice uses statistical parametric synthesis. It relies on existing open
  by combining segments of the recordings themselves, they are still very
  intelligible and resemble the speakers who recorded the source material.
 
+%package common
+Summary: _common files fore %name
+Group: Other
+Provides: %name = %EVR
+Obsoletes: %name < %EVR
+
+%description common
+%summary
+
+%files common
+%dir %_sysconfdir/RHVoice/
+%config(noreplace) %_sysconfdir/RHVoice/RHVoice.conf
+%dir %_datadir/%name
+%dir %_datadir/%name/languages
+%dir %_datadir/%name/voices
+
+%package -n %spdmoduleprefix-rhvoice
+Summary: SPD module fore %name
+Group: Sound
+Requires: %name-common
+Requires: speech-dispatcher
+Provides: sd-module-%name = %EVR
+Provides: speech-dispatcher-module-rhvoice = %EVR
+Provides: speech-dispatcher-module-%name = %EVR
+Obsoletes: sd-module-%name < %EVR
+Obsoletes: speech-dispatcher-module-rhvoice < %EVR
+Obsoletes: speech-dispatcher-module-%name < %EVR
+
+%description -n %spdmoduleprefix-rhvoice
+%summary
+
+%files -n %spdmoduleprefix-rhvoice
+%_spdmoduledir/sd_rhvoice
 
 %package -n lib%name%sover
 Summary: Lib files for %name
 Group: System/Libraries
-Provides: RHVoice = %EVR
-Obsoletes: RHVoice < %EVR
-Provides: libRHVoice = %EVR
-Obsoletes: libRHVoice < %EVR
 
 %description -n lib%name%sover
 %summary
@@ -54,9 +84,6 @@ Obsoletes: libRHVoice < %EVR
 %files -n lib%name%sover
 %_libdir/lib%name.so.%sover
 %_libdir/lib%name.so.%sover.*
-%dir %_sysconfdir/RHVoice/
-%config(noreplace) %_sysconfdir/RHVoice/RHVoice.conf
-%_libdir/speech-dispatcher-modules/sd_rhvoice
 
 %package -n lib%{name}_audio%audiosover
 Summary: Audio lib files for %name
@@ -83,7 +110,6 @@ Group: System/Libraries
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %EVR
 
 %description -n lib%name-devel
 Development files for %name
@@ -98,19 +124,17 @@ Development files for %name
 %package bin
 Summary: Test bin for %name
 Group: Other
-Requires: %name = %EVR
 
 %description bin
 %summary
 
 %files bin
-%_bindir/*
+%_bindir/%name-test
 
 %package doc
 Summary: Doc for %name
 Group: Other
 BuildArch: noarch
-Requires: %name = %EVR
 
 %description doc
 %summary
@@ -126,7 +150,7 @@ Summary: %1 language for  %name \
 Group: Sound \
 License: %2 \
 BuildArch: noarch \
-Requires: %name = %EVR \
+Requires: %name-common \
 \
 %description %1 \
 %1 language for  %name \
@@ -372,6 +396,11 @@ scons install \
   servicedir=default
 
 %changelog
+* Fri Sep 04 2026 Artem Semenov <savoptik@altlinux.org> 1.18.4-alt2
+- Moved spd module to subpackage.
+- Moved config to common subpackage.
+- Added %%dir for clean uninstall.
+
 * Wed Apr 01 2026 Artem Semenov <savoptik@altlinux.org> 1.18.4-alt1
 - Packaged luxembourgish romanian and voices
 - Updated to new version 1.18.4
