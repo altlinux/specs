@@ -1,5 +1,5 @@
 Name: czkawka
-Version: 11.0.1
+Version: 12.0.2
 Release: alt1
 License: MIT
 Group: File tools
@@ -16,11 +16,6 @@ BuildRequires: libraw-devel
 BuildRequires: libheif-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libfreetype-devel
-BuildRequires: pkgconfig(gdk-pixbuf-2.0)
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(graphene-gobject-1.0)
-BuildRequires: pkgconfig(gtk4)
-BuildRequires: pkgconfig(pango)
 
 ExcludeArch: %ix86 armh aarch64
 
@@ -37,9 +32,10 @@ Summary:        CLI frontend of Czkawka
 CLI frontend of Czkawka.
 
 %package -n %name-krokiet
-License:        MIT
 Group:          File tools
 Summary:        Slint frontend of Czkawka
+Provides:       %name = %version-%release
+Obsoletes:      %name < %version-%release
 
 %description -n %name-krokiet
 Krokiet is new Czkawka frontend written in Slint, which uses Rust in
@@ -74,24 +70,14 @@ tar -xf %SOURCE1 -C .
 cp -f clear_icons-%version/* krokiet/icons/
 
 %build
-cargo build %_smp_mflags --offline --release
+cargo build %_smp_mflags --offline --release -p czkawka_cli -p krokiet
 
 %install
-install -Dm755 target/release/%{name}_{cli,gui} -t %buildroot%_bindir
+install -Dm755 target/release/czkawka_cli -t %buildroot%_bindir
 install -Dm755 target/release/krokiet -t %buildroot%_bindir
-install -Dm644 data/icons/com.github.qarmin.czkawka-symbolic.svg -t %buildroot%_datadir/icons/hicolor/symbolic/apps
-install -Dm644 data/icons/com.github.qarmin.czkawka.svg -t %buildroot%_datadir/icons/hicolor/scalable/apps
 install -Dm644 data/icons/io.github.qarmin.krokiet.svg -t %buildroot%_datadir/icons/hicolor/scalable/apps
-install -Dm644 data/com.github.qarmin.czkawka.desktop -t %buildroot%_datadir/applications
-install -Dm644 data/com.github.qarmin.czkawka.metainfo.xml -t %buildroot%_datadir/metainfo
-
-%files
-%doc %{name}_gui/LICENSE_* README.md instructions/Instruction.md Changelog.md
-%_bindir/%{name}_gui
-%_datadir/icons/hicolor/scalable/apps/*.svg
-%_datadir/icons/hicolor/symbolic/apps/*.svg
-%_datadir/applications/com.github.qarmin.czkawka.desktop
-%_datadir/metainfo/com.github.qarmin.czkawka.metainfo.xml
+install -Dm644 data/io.github.qarmin.krokiet.desktop -t %buildroot%_datadir/applications
+install -Dm644 data/io.github.qarmin.krokiet.metainfo.xml -t %buildroot%_datadir/metainfo
 
 %files -n %name-cli
 %doc %{name}_cli/README.md
@@ -100,8 +86,14 @@ install -Dm644 data/com.github.qarmin.czkawka.metainfo.xml -t %buildroot%_datadi
 %files -n %name-krokiet
 %doc krokiet/LICENSE_* krokiet/README.md
 %_bindir/krokiet
+%_datadir/icons/hicolor/scalable/apps/io.github.qarmin.krokiet.svg
+%_datadir/applications/io.github.qarmin.krokiet.desktop
+%_datadir/metainfo/io.github.qarmin.krokiet.metainfo.xml
 
 %changelog
+* Wed Oct 21 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 12.0.2-alt1
+- update version, stop package deprecating gtk gui
+
 * Mon Apr 06 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 11.0.1-alt1
 - update version
 
