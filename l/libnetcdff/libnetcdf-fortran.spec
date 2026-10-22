@@ -3,7 +3,7 @@
 %define sover 7
 
 Name: libnetcdff
-Version: 4.6.2
+Version: 4.6.4
 Release: alt1
 Summary: Libraries to use the Unidata network Common Data Form (netCDF), Fortran interface
 License: NetCDF
@@ -12,6 +12,7 @@ Url: https://www.unidata.ucar.edu/software/netcdf/
 
 VCS: https://github.com/Unidata/netcdf-fortran.git
 Source: %name-%version.tar
+Patch0: libnetcdff-inquiry-error.patch
 
 # Automatically added by buildreq on Sun Jan 18 2009
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
@@ -153,6 +154,7 @@ Documentation for NetCDF library, Fortran interface.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -168,7 +170,7 @@ Documentation for NetCDF library, Fortran interface.
 %makeinstall_std
 
 %check
-%make check
+%make check VERBOSE=yes
 
 %files -n %name%sover
 %doc COPYRIGHT README.md
@@ -187,6 +189,9 @@ Documentation for NetCDF library, Fortran interface.
 %doc docs/*.pdf docs/*.txt docs/*.html
 
 %changelog
+* Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 4.6.4-alt1
+- 4.6.2 -> 4.6.4
+
 * Thu Sep 25 2025 Anton Farygin <rider@altlinux.com> 4.6.2-alt1
 - 4.6.1 -> 4.6.2
 
