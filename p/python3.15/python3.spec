@@ -104,7 +104,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.0.1
+Version: %{pybasever}.1
 Release: alt1
 
 %if 0%{?_python3_standalone:1}
@@ -357,7 +357,7 @@ Requires: %name-modules-sqlite3 = %EVR
 Requires: %name-tools = %EVR
 %add_python3_req_skip test.test_warnings.data msvcrt _winapi winreg
 # LoL
-%add_python3_req_skip missing_dependency_for_lazy_import_test
+%add_python3_req_skip missing_dependency_for_lazy_import_test _dataclass_test_missing_module
 # Unpacked generates from tests
 %add_python3_req_skip foo
 %add_python3_self_prov_path %buildroot%pylibdir/test/test_import/
@@ -1237,6 +1237,9 @@ python3%_python3_standalone -c "import pyxcrypt; pyxcrypt.crypt('LedZeppelinRock
 %endif
 
 %changelog
+* Thu Oct 22 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15.1-alt1
+- Update to upstream 3.15.1 release
+
 * Mon Oct 12 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15.0.1-alt1
 - Update to upstream 3.15.0 release
 
