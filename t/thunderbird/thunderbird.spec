@@ -19,7 +19,7 @@
 %define tbird_develdir   %tbird_prefix-devel
 
 Name: thunderbird
-Version: 158.0
+Version: 158.0.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -51,6 +51,10 @@ Patch010: 0010-Restore-the-task-tree-observers-when-its-frame-is-re.patch
 Patch011: 0011-Add-patch-taking-EWS-well-known-folder-names-from-th.patch
 Patch012: 0012-Adjust-address-autofill-regions-for-ALT.patch
 Patch013: 0013-gfx-thebes-Keep-the-generic-of-fontconfig-generic-al.patch
+Patch014: 0014-Stop-transitioning-the-text-color-of-calendar-list-i.patch
+Patch015: 0015-Account-Hub-On-first-run-users-should-be-able-to-ope.patch
+Patch016: 0016-Default-the-spellchecker-dictionary-to-the-UI-language.patch
+Patch017: 0017-Fix-calendar-event-description-text-color-in-dark-mo.patch
 ### End Patches
 
 Provides: mailclient
@@ -200,6 +204,10 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch11 -p2
 %patch12 -p2
 %patch13 -p2
+%patch14 -p2
+%patch15 -p2
+%patch16 -p2
+%patch17 -p2
 
 python3 %SOURCE2 %patched_rust_crates
 
@@ -404,6 +412,25 @@ xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Oct 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 158.0.1-alt1
+- New version.
+- Fix the selected calendar name turning invisible while
+  the calendar deletion prompt is open (Closes: 57477).
+- Fix Add Address Book reopening the account setup on
+  the first run without accounts (Closes: 61039).
+- Default the spellchecker dictionary to the interface
+  language instead of English (Closes: 40015).
+- Fix black event and task description text in the dark theme (Closes: 61166).
+- Fixes:
+  + CVE-2026-113866: Account password sent unencrypted during Exchange account setup
+  + CVE-2026-113867: Stanza injection in XMPP chat
+  + CVE-2026-113868: Uninitialized memory disclosure and out-of-bounds read in POP3 and SMTP NTLM authentication
+  + CVE-2026-113869: Use-after-free in S/MIME decryption during a security device password prompt
+  + CVE-2026-113399: Incorrect boundary conditions in the SVG component
+  + CVE-2026-113470: Cryptographic issue in the Security Block-lists, Allow-lists, and other State component
+  + CVE-2026-113400: Uninitialized memory in the Audio/Video: cubeb component
+  + CVE-2026-113401: Denial-of-service in the PDF Viewer component
+
 * Wed Oct 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 158.0-alt1
 - New version.
 - Fix emoji drawn in black and white when the system font
