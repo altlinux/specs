@@ -2,7 +2,7 @@
 %define app_id ru.basealt.WeatherAdw
 
 Name: alt-weather-adw
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 # Missing alt-identify-client on i586
@@ -66,6 +66,11 @@ affect correct operation of the application.
 %doc README.md
 
 %changelog
+* Thu Oct 22 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.3-alt1
+- show corrent forecast time
+- fixed long auto reload
+- fixed location switching
+
 * Wed Oct 21 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.2-alt1
 - improved caching
 
