@@ -2,13 +2,10 @@
 %def_without java
 
 %def_with qt6
-%if_without qt6
-%def_without qt
-%endif
 
 Name: zbar
-Version: 0.23.93
-Release: alt2
+Version: 0.23.95
+Release: alt1
 %define libname libzbar
 
 Summary: A library for scanning and decoding bar codes
@@ -19,7 +16,8 @@ Url: https://github.com/mchehab/zbar
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: glibc-devel-static libImageMagick-devel libdbus-devel libgtk+3-devel libjpeg-devel libv4l-devel python3-dev xmlto
+BuildRequires: meson ninja-build cmake gettext-tools gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: libImageMagick-devel libdbus-devel libgtk+3-devel libjpeg-devel libv4l-devel python3-dev xmlto
 
 %if_with qt6
 BuildRequires: pkgconfig(Qt6Core) pkgconfig(Qt6Gui) pkgconfig(Qt6Widgets)
@@ -197,21 +195,35 @@ scanning widget.
 %patch0 -p1
 
 %build
-%autoreconf
-export LIBS=-lm
-%configure \
-	%{subst_with qt} \
-	%{subst_with qt6} \
-	%{subst_with java} \
-	--with-python=python3 \
-	--with-gtk=gtk3 \
-	--with-gir=yes \
+%meson \
+	-Ddefault_library=both \
+	-Dlibrary_type=both \
+%if_with qt6
+	-Dqt=true \
+	-Dqt6=true \
+%else
+	-Dqt=false \
+	-Dqt6=false \
+%endif
+%if_with java
+	-Djava=enabled \
+%else
+	-Djava=disabled \
+%endif
+	-Dpython=python3 \
+	-Dpython.platlibdir=%python3_sitelibdir \
+	-Dgtk=gtk3 \
+	-Dgir=true \
+	-Ddbus=enabled \
+	-Ddbusconfdir=%_sysconfdir \
+	-Dimagemagick=enabled \
+	-Dnls=enabled \
+	-Ddocdir=%_docdir/%name
 
-%make_build
+%meson_build
 
 %install
-%make_install DESTDIR=%buildroot install
-rm -f %buildroot%python3_sitelibdir/*.la
+%meson_install
 %find_lang %name
 
 %files -f %name.lang
@@ -222,7 +234,6 @@ rm -f %buildroot%python3_sitelibdir/*.la
 
 %files -n %libname
 %_libdir/%libname.so.*
-%doc %_docdir/%name/ABOUT-NLS
 %doc %_docdir/%name/COPYING
 %doc %_docdir/%name/[^H]*.md
 
@@ -242,11 +253,13 @@ rm -f %buildroot%python3_sitelibdir/*.la
 
 %files -n %libname-gtk3
 %_libdir/libzbargtk.so.*
+%_libdir/girepository-1.0/ZBar-1.0.typelib
 
 %files -n %libname-gtk3-devel
 %_libdir/libzbargtk.so
 %_pkgconfigdir/zbar-gtk.pc
 %_includedir/%name/*gtk.h
+%_datadir/gir-1.0/ZBar-1.0.gir
 
 %files -n %libname-gtk3-devel-static
 %_libdir/libzbargtk.a
@@ -274,6 +287,11 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 0.23.95-alt1
+- 0.23.93 -> 0.23.95
+- Switched to Meson/Ninja build.
+- Fixed Qt6 X11 renderer compatibility.
+
 * Tue Jul 21 2026 Anton Farygin <rider@altlinux.org> 0.23.93-alt2
 - Built with qt6 (closes: #59887).
 
