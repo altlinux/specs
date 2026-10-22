@@ -4,7 +4,7 @@ ExcludeArch: %ix86
 
 Name: inspircd
 Version: 4.12.1
-Release: alt1
+Release: alt2
 
 Summary: InspIRCd is a modular Internet Relay Chat (IRC) server 
 Group: Networking/IRC
@@ -22,6 +22,9 @@ Patch0: alt-main-mk.patch
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: pkg-config
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 %description
 It was created from scratch to be stable, modern and lightweight.
@@ -42,6 +45,9 @@ making it customisable to the needs of many different users.
 %build
 %add_optflags %optflags_shared
 export CXXFLAGS='%optflags'
+%ifarch %e2k
+export CXX=clang++
+%endif
 
 # handmade perl configure; CXXFLAGS already appended by upstream makefile
 ./configure \
@@ -105,6 +111,9 @@ rm -f %buildroot%_bindir/%name-testssl \
 %doc README.md
 
 %changelog
+* Thu Oct 22 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.12.1-alt2
+- e2k build fix
+
 * Wed Oct 07 2026 Anton Farygin <rider@altlinux.org> 4.12.1-alt1
 - 4.12.0 -> 4.12.1
 
