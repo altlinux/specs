@@ -4,7 +4,7 @@
 %def_without check
 
 Name: symbolical
-Version: 0.9.0.0
+Version: 0.9.0.1
 Release: alt1
 
 Summary: Math document application
@@ -83,6 +83,9 @@ sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %bu
 %exclude %_datadir/licenses/symbolical
 
 %changelog
+* Thu Oct 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.0.1-alt1
+- New version 0.9.0.1.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.0.0-alt1
 - New version 0.9.0.0.
 
