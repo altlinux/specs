@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.13.4
+Version: 0.13.5
 Release: alt1
 
 Summary: Hypothesis strategies for GraphQL queries
@@ -52,6 +52,9 @@ They expose edge cases in your code that are unlikely to be found otherwise.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 22 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.13.5-alt1
+- New version (0.13.5).
+
 * Wed Oct 21 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.13.4-alt1
 - New version (0.13.4).
 

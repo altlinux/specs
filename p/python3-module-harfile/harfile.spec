@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.0
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: This package provides zero dependency writer for building HAR (HTTP Archive) files in Python
 License: MIT
@@ -50,6 +50,9 @@ HAR (HTTP Archive) files in Python.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 22 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.6.0-alt1
+- New version (0.6.0).
+
 * Mon Aug 24 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.5.0-alt2
 - Dropped the dependency on hypothesis-jsonschema.
 
