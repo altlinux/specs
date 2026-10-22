@@ -1,17 +1,17 @@
-Name: altlinux-repos-additional
-Version: 1.1
+Name: alterator-mirror-additional-repo
+Version: 1.2
 Release: alt1
-Summary: Additional local repository
+Summary: Additional local repository for alterator-mirror
 Group: System/Configuration/Other
 License: GPL-2.0-or-later
 
 BuildArch: noarch
 
 Requires: apt-repo-tools
-Provides: alterator-mirror-additional-repo
-Obsoletes: alterator-mirror-additional-repo < 0.7.1-alt2
+Provides: altlinux-repos-additional = %EVR
+Obsoletes: altlinux-repos-additional < %EVR
 
-%description -n altlinux-repos-additional
+%description
 %summary.
 
 %install
@@ -37,6 +37,9 @@ EOF
 %_sysconfdir/apt/repositories/additional.desktop
 
 %changelog
+* Thu Oct 22 2026 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- Returned more suitable name alterator-mirror-additional-repo.
+
 * Wed Mar 25 2026 Arseniy Romenskiy <romenskiy@altlinux.org> 1.1-alt1
 - Add support for noarch repo (ALT #58343).
 
