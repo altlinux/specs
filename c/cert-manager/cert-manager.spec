@@ -2,11 +2,11 @@
 
 %global _unpackaged_files_terminate_build 1
 
-# git rev-parse v1.20.2^{commit}
-%define git_commit e5b7b18450dd2c4b993b95bcd680b1a057205b00
+# git rev-parse v1.21.2^{commit}
+%define git_commit 922a06aa49ee4bb802db268ef72a174af70edd32
 
 Name: cert-manager
-Version: 1.20.2
+Version: 1.21.2
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -76,6 +76,11 @@ mv %buildroot%_bindir/startupapicheck-binary %buildroot%_bindir/startupapicheck
 %_bindir/startupapicheck
 
 %changelog
+* Thu Oct 22 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.21.2-alt1
+- 1.20.2 -> 1.21.2.
+- Fixes:
+  + CVE-2026-62290: Direct ACME Challenge resources can bypass Issuer DNS01 solver policy and use ClusterIssuer DNS credentials
+
 * Wed Oct 21 2026 Ivan Pepelyaev <fl0pp5@altlinux.org> 1.20.2-alt1
 - 1.19.4 -> 1.20.2.
 
