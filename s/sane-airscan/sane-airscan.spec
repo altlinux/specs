@@ -2,7 +2,7 @@
 %def_with check
 
 Name: sane-airscan
-Version: 0.99.37
+Version: 0.99.38
 Release: alt1
 
 Summary: This package contains SANE backend for AirScan (eSCL) and WSD document scanners
@@ -72,6 +72,9 @@ sed -i 's/-Werror/-Wno-error/g' Makefile
 %_man5dir/*.5.xz
 
 %changelog
+* Thu Aug 13 2026 Nikolai Kostrigin <nickel@altlinux.org> 0.99.38-alt1
+- 0.99.37 -> 0.99.38
+
 * Sun Mar 15 2026 Nikolai Kostrigin <nickel@altlinux.org> 0.99.37-alt1
 - 0.99.36 -> 0.99.37
 
