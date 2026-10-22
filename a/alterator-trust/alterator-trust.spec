@@ -2,7 +2,7 @@
 
 Name: alterator-trust
 Version: 0.6.2.2
-Release: alt1
+Release: alt2
 
 Summary: alterator module for setting one-way trust relationships
 Group: System/Configuration/Other
@@ -12,6 +12,7 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
+Requires: %name-utils = %EVR
 Requires: alterator >= 4.6-alt3
 Requires: alterator-l10n >= 2.4-alt4
 Requires: libshell >= 0.0.7
@@ -21,7 +22,15 @@ Conflicts: alterator-root < 0.8
 BuildPreReq: alterator >= 4.6-alt3
 
 %description
-alterator module for setting one-way trust relationships
+alterator module for setting one-way trust relationships.
+
+%package utils
+Summary: Utils for setting one-way trust relationships
+Group: System/Configuration/Other
+Conflicts: %name <= 0.6.2.2-alt1
+
+%description utils
+Utils for setting one-way trust relationships.
 
 %prep
 %setup
@@ -41,7 +50,6 @@ touch %buildroot%_localstatedir/%name/{id_dsa{,.pub},known_hosts{,.old}}
 %_datadir/alterator/design/trust-key.pub
 %_datadir/alterator/design/images/trust
 %_alterator_backend3dir/*
-%_bindir/*
 %dir %_localstatedir/%name
 %attr(700,root,root) %dir %_libexecdir/alterator/hooks/trust.d
 %attr(600,root,root) %ghost %verify(not md5 size mtime) %config(missingok,noreplace) %_localstatedir/%name/id_dsa
@@ -49,7 +57,13 @@ touch %buildroot%_localstatedir/%name/{id_dsa{,.pub},known_hosts{,.old}}
 %ghost %verify(not md5 size mtime) %config(missingok,noreplace) %_localstatedir/%name/known_hosts
 %ghost %verify(not md5 size mtime) %config(missingok,noreplace) %_localstatedir/%name/known_hosts.old
 
+%files utils
+%_bindir/*
+
 %changelog
+* Thu Oct 22 2026 Anton Midyukov <antohami@altlinux.org> 0.6.2.2-alt2
+- Separate subpackages alterator-trust-utils (e.g. needed for alterator-ca).
+
 * Fri Oct 07 2016 Andrey Cherepanov <cas@altlinux.org> 0.6.2.2-alt1
 - Fix URL replace with CSRF preventing token
 
