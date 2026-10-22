@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 2.1.20
+Version: 3.2.0
 Release: alt1
 
 Summary: cChardet is high speed universal character encoding detector
@@ -13,6 +13,7 @@ License: GPL-2.0 and LGPL-2.1 and MPL-1.1
 Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/faust-streaming/cChardet.git
+
 Source: https://pypi.io/packages/source/f/%pypi_name/%pypi_name-%version.tar.gz
 
 Obsoletes: python3-module-%_name < %version
@@ -20,10 +21,10 @@ Provides: python3-module-%_name = %EVR
 
 Requires: uchardet
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ python3-devel python3-module-Cython
-BuildRequires: python3-module-setuptools python3-module-wheel
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-chardet}
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson gcc-c++ python3-devel python3-module-Cython
+BuildRequires: python3(wheel) python3(mesonpy)
+%{?_enable_check:BuildRequires: python3(pytest) python3(chardet)}
 
 %description
 cChardet is high speed universal character encoding detector - binding to
@@ -36,6 +37,7 @@ original project is no longer maintained.
 %setup -n %pypi_name-%version
 
 %build
+%meson
 %pyproject_build
 
 %install
@@ -45,7 +47,7 @@ original project is no longer maintained.
 export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd src
 %__python3 tests/%{_name}_test.py
-#%__python3 tests/bench.py
+%__python3 tests/bench.py
 popd
 
 %files
@@ -55,6 +57,9 @@ popd
 %doc CHANGES* README*
 
 %changelog
+* Thu Oct 22 2026 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Fri Jul 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.1.20-alt1
 - 2.1.20
 
