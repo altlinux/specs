@@ -5,7 +5,7 @@
 %add_verify_elf_skiplist %_libdir/*.so
 
 Name:           dd_rescue
-Version: 1.99.22
+Version: 1.99.25
 Release: alt1
 Summary:        Fault tolerant "dd" utility for rescuing data from bad media
 Group:          File tools
@@ -66,6 +66,9 @@ install -D -m 755 dd_rhelp-%{rhelp_version}/dd_rhelp %{buildroot}%{_bindir}/dd_r
 %_man1dir/ddr_lzma.1*
 
 %changelog
+* Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 1.99.25-alt1
+- 1.99.22 -> 1.99.25
+
 * Sat Dec 20 2025 Anton Farygin <rider@altlinux.org> 1.99.22-alt1
 - 1.99.21 -> 1.99.22
 
