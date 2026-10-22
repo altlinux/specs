@@ -7,7 +7,7 @@
 %define optflags_lto %nil
 
 Name: nss
-Version: 3.131
+Version: 3.132
 Release: alt1
 
 Summary: Netscape Network Security Services(NSS)
@@ -277,6 +277,13 @@ popd
 %files -n libnss-nssckbi-checkinstall
 
 %changelog
+* Thu Oct 22 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.132-alt1
+- New version.
+- Certificate Authority Changes:
+  + Remove CN=emSign ECC Root CA - C3
+  + Remove CN=emSign ECC Root CA - G3
+  + Remove CN=emSign Root CA - C1
+
 * Thu Oct 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.131-alt1
 - New version.
 
