@@ -1,8 +1,8 @@
-%define xdg_name com.github.opengamingcollective.cardwire
+%define xdg_name org.opengamingcollective.cardwire
 %define _unpackaged_files_terminate_build 1
 
 Name: cardwire
-Version: 0.11.1
+Version: 0.12.3
 Release: alt1
 
 Summary: A GPU Manager for linux that uses eBPF LSM hooks to block GPUs
@@ -17,9 +17,13 @@ Source1: %name-development-%version.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+BuildRequires: rust-bpfel-unknown-none-target
+BuildRequires: libsqlite3-devel
 BuildRequires: libudev-devel
 BuildRequires: libbpf-devel
 BuildRequires: clang-devel
+BuildRequires: libxcb-devel
+BuildRequires: bpf-linker
 
 ExcludeArch: i586
 
@@ -52,6 +56,9 @@ directory = "vendor"
 EOF
 
 %build
+export LIBSQLITE3_SYS_USE_PKG_CONFIG=1
+# aya-ebpf needs unstable BPF asm; remove when supported on stable.
+export RUSTC_BOOTSTRAP=aya_ebpf
 %rust_build
 
 %install
@@ -63,31 +70,32 @@ install -Dm755 target/release/cardwire-gui %buildroot%_bindir/cardwire-gui
 
 # service
 install -Dm644 assets/cardwired.service %buildroot%_unitdir/cardwired.service
+install -Dm644 assets/99-cardwired.preset %buildroot%_presetdir/99-cardwired.preset
 install -Dm644 assets/%xdg_name.conf %buildroot%_datadir/dbus-1/system.d/%xdg_name.conf
+install -Dm644 assets/%xdg_name.metainfo.xml %buildroot%_datadir/metainfo/%xdg_name.metainfo.xml
 
 # desktop and icons
 install -Dm644 assets/cardwire-gui.desktop %buildroot%_desktopdir/cardwire-gui.desktop
-install -Dm644 assets/icons/%xdg_name.tray.svg %buildroot%_iconsdir/hicolor/scalable/apps/%xdg_name.tray.svg
-install -Dm644 assets/icons/%xdg_name.tray-hybrid.svg %buildroot%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-hybrid.svg
-install -Dm644 assets/icons/%xdg_name.tray-integrated.svg %buildroot%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-integrated.svg
-install -Dm644 assets/icons/%xdg_name.tray-manual.svg %buildroot%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-manual.svg
-install -Dm644 assets/icons/%xdg_name.tray-smart.svg %buildroot%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-smart.svg
+for icon in assets/icons/*.svg; do
+    install -Dm644 "$icon" "%buildroot%_iconsdir/hicolor/scalable/apps/$(basename "$icon")"
+done
 
 %files
 %_bindir/cardwire
 %_bindir/cardwired
 %_unitdir/cardwired.service
+%_presetdir/99-cardwired.preset
 %_datadir/dbus-1/system.d/%xdg_name.conf
+%_datadir/metainfo/%xdg_name.metainfo.xml
 
 %files gui
 %_bindir/cardwire-gui
 %_desktopdir/cardwire-gui.desktop
-%_iconsdir/hicolor/scalable/apps/%xdg_name.tray.svg
-%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-hybrid.svg
-%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-integrated.svg
-%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-manual.svg
-%_iconsdir/hicolor/scalable/apps/%xdg_name.tray-smart.svg
+%_iconsdir/hicolor/scalable/apps/%{xdg_name}*.svg
 
 %changelog
+* Wed Oct 21 2026 Boris Yumankulov <boria138@altlinux.org> 0.12.3-alt1
+- new version 0.12.3 (ALT bug: 60739)
+
 * Sun Aug 09 2026 Boris Yumankulov <boria138@altlinux.org> 0.11.1-alt1
 - initial build for ALT Sisyphus
