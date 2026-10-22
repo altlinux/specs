@@ -5,7 +5,7 @@
 %def_with check
 
 Name: bookup
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: A markdown note-taking application for Gnome
@@ -88,6 +88,9 @@ sed -i "s/\%lu/\%u/" src/bookup-window.c
 %_datadir/mime/packages/%{appname}.xml
 
 %changelog
+* Thu Oct 22 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.7-alt1
+- New version 1.1.7.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.6-alt1
 - New version 1.1.6.
 
