@@ -11,7 +11,7 @@
 %def_without staticlibs
 # Build a fresh libjvm.so for use in a copy of the bootstrap JDK (bootstrap)
 %def_without fresh_libjvm
-%def_with prev_jdk
+%def_without prev_jdk
 # Build with system libraries
 %def_with system_libs
 
@@ -296,8 +296,8 @@
 # New Version-String scheme-style defines
 %define featurever 27
 %define interimver 0
-%define updatever 0
-%define patchver 35
+%define updatever 1
+%define patchver 2
 %define buildver 1
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -362,7 +362,7 @@
 %endif
 
 Name: java-27-openjdk
-Version: 27.0.0.35.1
+Version: %featurever.%interimver.%updatever.%patchver.%buildver
 Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
@@ -1976,5 +1976,8 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Oct 22 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.2.1-alt1
+- New version (fixes: CVE-2026-914034).
+
 * Wed Oct 14 2026 Artem Semenov <savoptik@altlinux.org> 27.0.0.35.1-alt1
 - Initial build fore sisyphus.
