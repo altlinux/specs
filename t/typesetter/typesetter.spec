@@ -2,7 +2,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.16.4
+Version: 0.16.5
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -76,6 +76,9 @@ rm %buildroot%_datadir/fonts/RobotoFlex[GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,
 %_datadir/%name
 
 %changelog
+* Fri Oct 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.5-alt1
+- 0.16.4 -> 0.16.5
+
 * Thu Oct 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.4-alt1
 - 0.16.3 -> 0.16.4
 
