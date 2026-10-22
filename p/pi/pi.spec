@@ -2,7 +2,7 @@
 
 Name: pi
 Epoch:1 
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Terminal AI coding agent with read, bash, edit and write tools
@@ -18,11 +18,11 @@ Source3: %name-%version-coding-agent-node_modules.tar
 Source4: %name-%version-model-data.tar
 Source5: copy-production-tree.mjs
 # pi is managed by RPM: no online version check, no self-update.
-Patch0: pi-0.84.3-alt-disable-update-check.patch
+Patch0: pi-1.4.0-alt-disable-update-check.patch
 # The esbuild bundle is only for npm distribution; we ship the unbundled
 # dist + node_modules. Vendored esbuild is linux-x64 only and breaks the
 # noarch rebuild on other arches.
-Patch1: pi-0.86.0-alt-no-esbuild-bundle.patch
+Patch1: pi-1.4.0-alt-no-esbuild-bundle.patch
 
 BuildArch: noarch
 
@@ -105,6 +105,9 @@ node packages/coding-agent/dist/cli.js --help >/dev/null
 %nodejs_sitelib/%name/
 
 %changelog
+* Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 1:1.4.0-alt1
+- 1.3.0 -> 1.4.0
+
 * Fri Oct 16 2026 Anton Farygin <rider@altlinux.org> 1:1.3.0-alt1
 - 1.2.0 -> 1.3.0
 
