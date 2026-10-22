@@ -48,7 +48,7 @@
 
 Name: libwebkitgtk4
 Version: %ver_major.6
-Release: alt1
+Release: alt1.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -57,6 +57,7 @@ Url: https://www.webkitgtk.org/
 
 Source: %url/releases/%_name-%version.tar.xz
 Source1: webkit2gtk.env
+Patch10: webkitgtk-2.50.6-alt-cmake.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -254,6 +255,7 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -n %_name-%version
+%patch10 -b .old
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
 %endif
@@ -395,6 +397,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Thu Oct 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.50.6-alt1.1
+- fixed FTBFS
+
 * Mon Jun 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.50.6-alt1
 - 2.50.6 (last release)
 
