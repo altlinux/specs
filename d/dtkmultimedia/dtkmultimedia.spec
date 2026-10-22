@@ -6,8 +6,8 @@
 %def_without docs
 
 Name: dtkmultimedia
-Version: 6.0.4
-Release: alt3
+Version: 6.0.5
+Release: alt1
 
 Summary: Deepin tool kit multimedia modules
 
@@ -22,15 +22,16 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dtkmultimedia
 Vcs: https://github.com/linuxdeepin/dtkmultimedia
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dtkmultimedia/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: %name-6.0.5-alt-ffmpeg9.patch
 
 BuildRequires(pre): rpm-macros-dqt6
 %if_enabled clang
 BuildRequires(pre): rpm-macros-llvm-common
 %endif
-BuildRequires: cmake dqt6-base-devel dqt6-multimedia-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libdtk6widget-devel libcups-devel glib2-devel libncnn-devel libopencv-devel libudev-devel libavcodec-devel libavformat-devel libswresample-devel libswscale-devel libffmpegthumbnailer-devel libavdevice-devel libusb-devel libportaudio2-devel libv4l-devel libmpv-devel gstreamer1.0-devel gst-plugins1.0-devel libXtst-devel
+BuildRequires: cmake dqt6-base-devel dqt6-multimedia-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libdtk6widget-devel libcups-devel glib2-devel libncnn-devel libopencv-devel libudev-devel libavcodec-devel libavformat-devel libswresample-devel libswscale-devel libffmpegthumbnailer-devel libavdevice-devel libusb-devel libportaudio2-devel libv4l-devel libmpv-devel gstreamer1.0-devel gst-plugins1.0-devel libXtst-devel libonnxruntime-devel
 BuildRequires: libdqt6-openglwidgets libdqt6-concurrent
 %if_with docs
 BuildRequires: dqt6-base-doc doxygen
@@ -99,6 +100,29 @@ BuildArch: noarch
 %description -n libdtk6ocr-data
 Data files for libdtk6ocr.
 
+%package -n libdtk6tablerecognizer%sover
+Summary: Libraries for %name
+Group: System/Libraries
+
+%description -n libdtk6tablerecognizer%sover
+Deepin tool kit core modules.
+Libraries for %name.
+
+%package -n libdtk6tablerecognizer-devel
+Summary: Development package for libdtk6tablerecognizer
+Group: Development/KDE and QT
+
+%description -n libdtk6tablerecognizer-devel
+Header files and libraries for libdtk6tablerecognizer.
+
+%package -n libdtk6tablerecognizer-data
+Summary: Data files for libdtk6tablerecognizer
+Group: Graphics
+BuildArch: noarch
+
+%description -n libdtk6tablerecognizer-data
+Data files for libdtk6tablerecognizer.
+
 %if_with docs
 %package -n libdtk6multimedia-doc
 Summary: %name documantation
@@ -112,6 +136,9 @@ This package provides %name documantation.
 %prep
 %setup
 %patch0 -p1
+%if "%(rpmquery --qf '%%{VERSION}' libavcodec-devel)" >= "9"
+%patch1 -p2
+%endif
 
 %build
 %if_enabled clang
@@ -168,12 +195,32 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %_libdir/pkgconfig/dtk6ocr.pc
 %_dqt6_mkspecsdir/modules/qt_lib_dtk6ocr.pri
 
+%files -n libdtk6tablerecognizer%sover
+%doc README.md LICENSES/*
+%_libdir/libdtk6tablerecognizer.so.%sover
+%_libdir/libdtk6tablerecognizer.so.%version
+
+%files -n libdtk6tablerecognizer-data
+%dir %_datadir/libdtk6tablerecognizer/
+%_datadir/libdtk6tablerecognizer/models/
+
+%files -n libdtk6tablerecognizer-devel
+%_libdir/libdtk6tablerecognizer.so
+%_includedir/dtk6tablerecognizer/
+%_libdir/cmake/dtk6tablerecognizer/
+%_libdir/pkgconfig/dtk6tablerecognizer.pc
+%_dqt6_mkspecsdir/modules/qt_lib_dtk6tablerecognizer.pri
+
 %if_with docs
 %files -n libdtk6multimedia-doc
 %_datadir/doc/dqt6/dtk6multimedia.qch
 %endif
 
 %changelog
+* Thu Oct 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
+- New version 6.0.5.
+- Fixed build with ffmpeg 9.
+
 * Wed Jun 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt3
 - Fixed build with Qt 6.10.3.
 
