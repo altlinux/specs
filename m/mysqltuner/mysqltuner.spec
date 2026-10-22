@@ -1,6 +1,6 @@
 Name: mysqltuner
-Version: 2.9.2
-Release: alt2
+Version: 2.9.3
+Release: alt1
 
 Summary: High Performance MySQL Tuning Script
 License: GPLv3+
@@ -50,6 +50,9 @@ perl -c %name.pl
 %doc LICENSE *.md *.png
 
 %changelog
+* Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 2.9.3-alt1
+- 2.9.2 -> 2.9.3
+
 * Sat Sep 12 2026 Anton Farygin <rider@altlinux.org> 2.9.2-alt2
 - Added Requires: perl-JSON so --json/--prettyjson work (closes: #60507)
 - Disabled --checkversion/--updateversion for packaged install (closes: #60509)
