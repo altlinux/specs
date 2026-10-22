@@ -2,7 +2,7 @@
 
 Name: ghostwriter
 Version: 26.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Editors
@@ -18,6 +18,7 @@ ExcludeArch: %not_qt6_qtwebengine_arches
 # Source-url: https://github.com/KDE/ghostwriter/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 Patch1: alt-crash.patch
+Patch2: ghostwriter-fix-ui-bugs.patch
 
 BuildRequires(pre): rpm-macros-qt6 rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: qt6-declarative-devel qt6-5compat-devel qt6-tools-devel
@@ -40,6 +41,7 @@ or your novel.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K6build \
@@ -60,6 +62,12 @@ or your novel.
 
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 26.08.2-alt2
+- fixed backup folder reset on cancelling the folder dialog (closes: #54132).
+- fixed "Show unnamed drafts" button opening a wrong URL (closes: #44935).
+- fixed insertion of images with spaces in their file name (closes: #44934).
+- fixed folder view theme in dark/light mode (closes: #59361).
+
 * Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
