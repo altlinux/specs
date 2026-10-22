@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 26.2.1
+Version: 26.2.2
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -71,6 +71,9 @@ BuildArch: noarch
 # remove bundled exes
 rm -f ./src/%mod_name/_vendor/distlib/*.exe
 
+# don't ship tests of bundled certifi
+rm -r src/%mod_name/_vendor/certifi/tests/
+
 # never unbundle vendored packages
 # built wheel being installed into virtualenv will lack of unbundled packages
 
@@ -125,6 +128,9 @@ export NO_LATEST_WHEELS=YES
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Wed Oct 21 2026 Stanislav Levin <slev@altlinux.org> 26.2.2-alt1
+- 26.2.1 -> 26.2.2
+
 * Mon Aug 17 2026 Stanislav Levin <slev@altlinux.org> 26.2.1-alt1
 - 26.2 -> 26.2.1
 
