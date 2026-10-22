@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: startup-config-qualcomm
-Version: 5
+Version: 6
 Release: alt1
 Summary: Startup script for qualcomm
 License: MIT
@@ -33,6 +33,7 @@ install -m 0644 configure-firmware-path.service %buildroot%_unitdir
 install -m 0644 configure-q6voiced.service %buildroot%_unitdir
 install -m 0644 90-setup-userdata-subparts.rules %buildroot%_udevdir/initramfs-rules.d
 install -Dm 0644 wait-for-mm.override.conf %buildroot%_unitdir/NetworkManager.service.d/wait-for-mm.override.conf
+install -Dm 0644 qcom_disable_rand_mac.conf %buildroot%prefix/lib/NetworkManager/conf.d/qcom_disable_rand_mac.conf
 
 %files
 %_sbindir/configure-firmware-path
@@ -41,8 +42,12 @@ install -Dm 0644 wait-for-mm.override.conf %buildroot%_unitdir/NetworkManager.se
 %_unitdir/configure-q6voiced.service
 %_unitdir/NetworkManager.service.d/wait-for-mm.override.conf
 %_udevdir/initramfs-rules.d/90-setup-userdata-subparts.rules
+%prefix/lib/NetworkManager/conf.d/qcom_disable_rand_mac.conf
 
 %changelog
+* Fri Oct 16 2026 Vasiliy Doylov <neko@altlinux.org> 6-alt1
+- Add MAC randomization disable.
+
 * Wed Sep 30 2026 Vasiliy Doylov <neko@altlinux.org> 5-alt1
 - Add ModemManager -> NetworkManager order sort.
 

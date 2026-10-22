@@ -2,7 +2,7 @@
 
 Name: bootmac
 Version: 0.7.1
-Release: alt1
+Release: alt2
 Summary: Configures the MAC addresses of WLAN and Bluetooth interfaces at boot
 License: GPLv3
 Group: System/Kernel and hardware
@@ -11,6 +11,7 @@ VCS: https://gitlab.postmarketos.org/postmarketOS/bootmac.git
 ExclusiveArch: aarch64
 
 Source: %name-%version.tar
+Patch0: v0.7.1-neko-udev-support-wlan-interfaces-with-any-name.patch
 
 Requires: bluez
 Requires: bluez-btmgmt
@@ -29,6 +30,7 @@ Android bootloaders through /proc/cmdline or /etc/machine-id with prefix 02:00.
 
 %prep
 %setup
+%autopatch -p 1
 
 %build
 %meson -Dsystemd_units=true
@@ -44,5 +46,8 @@ Android bootloaders through /proc/cmdline or /etc/machine-id with prefix 02:00.
 %_udevrulesdir/*
 
 %changelog
+* Fri Oct 16 2026 Vasiliy Doylov <neko@altlinux.org> 0.7.1-alt2
+- Add support for interfaces with any name
+
 * Mon Apr 20 2026 Vasiliy Doylov <neko@altlinux.org> 0.7.1-alt1
 - Initial package
