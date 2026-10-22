@@ -16,7 +16,7 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 1.19.3
+Version: 1.19.4
 Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
@@ -289,6 +289,9 @@ grep -q '"desktopName": "%name-desktop.desktop"' \
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Thu Oct 22 2026 Nazarov Denis <nenderus@altlinux.org> 1.19.4-alt1
+- Update to 1.19.4
+
 * Fri Oct 16 2026 Nazarov Denis <nenderus@altlinux.org> 1.19.3-alt1
 - Update to 1.19.3
 
