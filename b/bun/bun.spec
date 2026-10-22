@@ -1,12 +1,12 @@
 # 1.4.0 is the first release written in Rust (1.3.14 was the last in Zig).
-# git_commit is the bun-v1.4.3 tag peel, used as GIT_SHA for `bun --revision`;
+# git_commit is the bun-v1.4.4 tag peel, used as GIT_SHA for `bun --revision`;
 # it is not part of the RPM version.
-%define git_commit c6da4a4d3010e5553438c60f6bd76d981976867c
-%define git_short c6da4a4d
+%define git_commit 38afee6c84fcf48c0edb2466aa4b27d287a59c30
+%define git_short 38afee6c
 # The WebKit revision Source1 was made from. Checked against
 # scripts/build/deps/webkit.ts in %%prep, so a version bump cannot leave the
 # engine behind.
-%define webkit_commit 0c06faadf65bf8e8c8ad3a5a8aca83e1e9ed653f
+%define webkit_commit d6375c72affe0f70222cdcb45012b10f0bf3a9d5
 # The SQLite amalgamation in Bun's tree. Used for both the bundled() Provides
 # and the %%check that asserts it against sqlite_version(), so the two cannot
 # drift apart on a version bump.
@@ -30,7 +30,7 @@
 %def_without rust_nightly
 
 Name: bun
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary: Fast all-in-one JavaScript runtime and toolkit
@@ -98,6 +98,9 @@ Patch4: bun-system-libs.patch
 # Lower the LLVM version bun pins (23 upstream) to the one the distribution
 # ships; rustc here is built against the same major.
 Patch5: bun-llvm-22.patch
+# One struct derives Default over std::sync::Once, whose Default impl is newer
+# than the released compiler; spell the impl out with Once::new() instead.
+Patch6: bun-once-default.patch
 
 BuildRequires: rust-cargo
 # The C/C++ toolchain and the linker the ALT wrapper selects (ALTWRAP_LLVM_VERSION
@@ -193,6 +196,7 @@ runner, and Node.js-compatible package manager.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # The WebKit source must be the revision bun is written against: its
 # JavaScriptCore C++ API is private and unversioned.
@@ -502,6 +506,9 @@ EOF
 %_bindir/%{name}x
 
 %changelog
+* Thu Oct 22 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.4-alt1
+- Update to 1.4.4
+
 * Sat Oct 10 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.3-alt1
 - Update to 1.4.3
 
