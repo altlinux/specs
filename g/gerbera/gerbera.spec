@@ -8,7 +8,7 @@
 
 Name: gerbera
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: UPnP Media Server
 Group: System/Servers
@@ -40,6 +40,7 @@ BuildRequires: libmatroska-devel >= 1.6.3
 BuildRequires: libmysqlclient21-devel
 BuildRequires: jsoncpp-devel
 BuildRequires: libicu-devel
+BuildRequires: zlib-devel
 
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: ctest libgtest-devel}}
@@ -140,6 +141,10 @@ useradd -r -n -g %name -d %_localstatedir/%name -s /dev/null \
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.1-alt2
+- fixed check: tolerate onnxruntime cpuinfo noise without /sys
+- added explicit zlib-devel build dependency
+
 * Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1
 - New version 3.2.1.
 
