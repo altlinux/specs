@@ -2,16 +2,15 @@
 
 Name: kumir2
 Version: 2.1.0
-Release: alt13.gita1a0c7da
+Release: alt14.gita1a0c7da
 
 Summary: New version of Kumir - simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Новая версия системы Кумир - простого учебного языка программирования и среды разработки
 
 License: GPL-2.0
 Group: Education
-URL:  https://www.niisi.ru/kumir/
-VCS: https://github.com/a-a-maly/kumir2/
-Packager: Andrey Cherepanov <cas@altlinux.org>
+URL: https://github.com/a-a-maly/kumir2
+VCS: https://github.com/a-a-maly/kumir2.git
 
 BuildRequires(pre): cmake rpm-build-python3
 BuildRequires(pre): rpm-build-ninja
@@ -25,11 +24,19 @@ BuildRequires: python3 >= 3.2
 BuildRequires: git-core
 BuildRequires: boost-devel
 BuildRequires: bzlib-devel
+BuildRequires: zlib-devel
 
 Source: %name-%version.tar
 Patch1: kumir2-alt-fix-LIB_BASENAME.patch
 Patch2: port-to-python3.patch
 Patch3: kumir2-use-Xwayland.patch
+Patch4: kumir2-alt37683-desktop-names.patch
+Patch5: kumir2-alt38140-system-zlib.patch
+Patch6: kumir2-alt45176-x11-keyboard-guard.patch
+Patch7: kumir2-alt53337-git-timestamp.patch
+Patch8: kumir2-alt53386-grasshopper-colors.patch
+Patch9: kumir2-alt61178-turtle-first-run.patch
+Patch10: kumir2-alt61179-draw-initial-view.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -68,9 +75,18 @@ Development files for Kumir.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
 sed -i "s/^Categories=.*$/Categories=Education;Qt;ComputerScience;/" *.desktop
 # Remove bundled boost
 rm -rf src/3rdparty/boost*
+# Remove bundled zlib
+rm -rf src/tools/pictomir2course/3rdparty/zlib
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -105,6 +121,17 @@ export PATH=%_qt5_bindir:$PATH
 %endif
 
 %changelog
+* Fri Oct 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.1.0-alt14.gita1a0c7da
+- Add version 2 to the menu entry names (Closes: 37683).
+- Link pictomir2course against the system zlib (Closes: 38140).
+- Fix the editor crash on Wayland and on layout switch (Closes: 45176).
+- Show the real last modified date instead of 1970 (Closes: 53337).
+- Apply the Grasshopper color settings (Closes: 53386).
+- Show the Turtle and its trail after the first run (Closes: 61178).
+- Keep the Draw picture inside the field after the first run (Closes: 61179).
+- Drop the deprecated Packager tag.
+- Point URL at the upstream GitHub repository, use the clonable VCS URL.
+
 * Tue Feb 24 2026 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt13.gita1a0c7da
 - New snapshot.
 
