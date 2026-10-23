@@ -1,11 +1,11 @@
 Name: live555
-Version: 20230724
-Release: alt2
+Version: 20261023
+Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
 License: LGPLv3
 Group: System/Libraries
-Url: http://www.live555.com/liveMedia/
+URL: https://download.live555.com/
 
 Source: %name-%version-%release.tar
 
@@ -91,6 +91,15 @@ done
 %_pkgconfigdir/live555.pc
 
 %changelog
+* Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20261023-alt1
+- 2026.10.23 released
+
+* Thu Jul 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20260723-alt1
+- 2026.07.23 released
+
+* Mon Dec 01 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 20251106-alt1
+- 2025.11.06 released
+
 * Fri Oct 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20230724-alt2
 - add pkgconfig file
 
