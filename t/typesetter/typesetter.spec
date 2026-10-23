@@ -2,7 +2,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.16.5
+Version: 0.16.6
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -38,6 +38,15 @@ Typesetter is a lightweight desktop application for creating beautiful documents
 - Document statistics: Easily calculate page, word, and character counts.
 - Fast and native: Built in Rust and GTK following the GNOME human interface guidelines.
 
+%package -n nautilus-%name
+Summary: Nautilus extension: mount/unmount .typz (Typesetter) files with fuse-zip
+Group: Graphical desktop/GNOME
+Requires: %name = %EVR
+Requires: nautilus-python
+Requires: fuse-zip
+%description -n nautilus-%name
+Nautilus extension: mount/unmount .typz (Typesetter) files with fuse-zip
+
 %prep
 %setup -a1
 %rust_prep
@@ -57,8 +66,9 @@ export ZSTD_SYS_USE_PKG_CONFIG=1
 
 %install
 %meson_install
-
 rm %buildroot%_datadir/fonts/RobotoFlex[GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght].ttf
+install -d %buildroot%_datadir/nautilus-python/extensions
+cp -a tools/nautilus/mount_typz.py %buildroot%_datadir/nautilus-python/extensions/
 
 %find_lang %name --all-name
 
@@ -75,7 +85,14 @@ rm %buildroot%_datadir/fonts/RobotoFlex[GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,
 %_datadir/mime/packages/%oname.mime.xml
 %_datadir/%name
 
+%files -n nautilus-%name
+%_datadir/nautilus-python/extensions/mount_typz.py
+
 %changelog
+* Fri Oct 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.6-alt1
+- 0.16.5 -> 0.16.6
+- added nautilus-typesetter subpackage
+
 * Fri Oct 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.5-alt1
 - 0.16.4 -> 0.16.5
 
