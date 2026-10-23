@@ -4,12 +4,12 @@
 %define pypi_name pyproject-fmt
 %define mod_name pyproject_fmt
 # see for details pyproject-fmt/Cargo.toml
-%python3_set_limited_api 3.10
+%python3_set_limited_api 3.11
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.29.4
+Version: 2.30.3
 Release: alt1
 Summary: Format pyproject.toml file
 License: MIT
@@ -75,6 +75,9 @@ cd pyproject-fmt
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 2.30.3-alt1
+- 2.29.4 -> 2.30.3
+
 * Wed Sep 09 2026 Stanislav Levin <slev@altlinux.org> 2.29.4-alt1
 - 2.29.3 -> 2.29.4
 
