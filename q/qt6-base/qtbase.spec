@@ -36,7 +36,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.11.2
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -284,6 +284,7 @@ Core library for the Qt%major toolkit
 Summary: GUI support library for the Qt%major toolkit
 Group: System/Libraries
 Requires: %name-common
+Requires: libqt6-wlshellintegration
 %description -n lib%gname-gui
 GUI support library for the Qt%major toolkit
 
@@ -859,6 +860,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Fri Oct 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- update requires
+
 * Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
 - new version
 
