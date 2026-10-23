@@ -1,5 +1,5 @@
 Name: portainer-agent
-Version: 2.45.2
+Version: 2.45.3
 Release: alt1
 
 Summary: Agent for portainer
@@ -41,6 +41,13 @@ install -Dm755 dist/agent %buildroot%_bindir/portainer-agent
 %_bindir/portainer-agent
 
 %changelog
+* Fri Oct 23 2026 Leontiy Volodin <lvol@altlinux.org> 2.45.3-alt1
+- New LTS version 2.45.3 (Fixes: CVE-2026-78663, CVE-2026-111943,
+  CVE-2026-97032, CVE-2026-97031, CVE-2026-94440, CVE-2026-94439,
+  CVE-2026-78669, CVE-2026-78667, CVE-2026-78660, CVE-2026-78659,
+  CVE-2026-56866, CVE-2026-94448, CVE-2026-97030, CVE-2026-39821,
+  CVE-2026-50163).
+
 * Thu Oct 08 2026 Leontiy Volodin <lvol@altlinux.org> 2.45.2-alt1
 - New LTS version 2.45.2 (Fixes: CVE-2026-56865, CVE-2026-56864,
   CVE-2026-56854, CVE-2026-78662, CVE-2026-56855, CVE-2026-84304,
