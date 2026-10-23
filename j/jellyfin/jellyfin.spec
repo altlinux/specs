@@ -2,7 +2,7 @@
 %define OutputPath64 server
 
 Name:    jellyfin
-Version: 12.1
+Version: 12.3
 Release: alt1
 
 Summary: The Free Software Media System - Server Backend & API
@@ -89,6 +89,9 @@ fi
 %dir %attr(2770,%name,%name) %_sharedstatedir/%name
 
 %changelog
+* Fri Oct 23 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.3-alt1
+- New version.
+
 * Tue Sep 29 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.1-alt1
 - SDK version update.
 
