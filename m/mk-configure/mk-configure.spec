@@ -5,7 +5,7 @@
 %define clang_arches %ix86 x86_64 aarch64 ppc64el armh mipsel
 
 Name: mk-configure
-Version: 0.40.2
+Version: 0.40.3
 Release: alt1
 
 Summary: Build system on top of bmake
@@ -128,6 +128,9 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Fri Oct 23 2026 Aleksey Cheusov <cheusov@altlinux.org> 0.40.3-alt1
+- 0.40.3
+
 * Sun Oct 18 2026 Aleksey Cheusov <cheusov@altlinux.org> 0.40.2-alt1
 - 0.40.2
 
