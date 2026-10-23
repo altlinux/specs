@@ -22,7 +22,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     6
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -32,6 +32,9 @@
 
 %define libpq_name    libpq%libpq_major
 %define libecpg_name  libecpg%libecpg_major
+
+%define llvm_ver      22.1
+%define llvm_major    22
 
 Name: %prog_name%postgresql_major
 Version: %postgresql_major.%postgresql_minor
@@ -49,12 +52,13 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 Source0: %name-%version.tar
 
-Patch0: 0007-e2k.patch
-Patch3: 0003-Use-terminfo-not-termcap.patch
-Patch4: 0004-Setup-logging.patch
-Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
-Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
-Patch9: 0008-Add_event-id_to_jsonlog.patch
+Patch0001: 0001-e2k.patch
+Patch0002: 0002-Add-autoconfiguration.patch
+Patch0003: 0003-Use-terminfo-not-termcap.patch
+Patch0004: 0004-Setup-logging.patch
+Patch0006: 0006-Workaround-for-will-always-overflow-destination-buff.patch
+Patch0008: 0008-Add-postgresql-startup-method-through-service-1-to-i.patch
+Patch0009: 0009-Add_event-id_to_jsonlog.patch
 
 Provides: %prog_name = %EVR
 Conflicts: %{prog_name}13
@@ -71,13 +75,13 @@ BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm20.1-devel clang20.1-devel gcc-c++
+BuildRequires: llvm%llvm_ver-devel clang%llvm_ver-devel gcc-c++
 %endif
 %if_without devel
 BuildRequires: libpq5
 %endif
 # Need for make check
-BuildRequires: rpm-build-vm rpm-build-vm-createimage
+BuildRequires: rpm-build-vm
 %if_with coverage
 BuildRequires: lcov
 %endif
@@ -345,7 +349,7 @@ Group: Development/Databases
 Requires: %libpq_name-%postgresql_major-devel
 Requires: %libecpg_name-%postgresql_major-devel
 %if_with jit
-Requires: llvm20.1-devel clang20.1-devel gcc-c++
+Requires: llvm%llvm_ver-devel clang%llvm_ver-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
@@ -469,7 +473,6 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm20.1
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -482,12 +485,13 @@ goal of accelerating analytics queries.
 %prep
 %setup
 
-%patch0 -p1
-%patch3 -p2
-%patch4 -p1
-%patch6 -p2
-%patch8 -p1
-%patch9 -p1
+%patch0001 -p1
+%patch0002 -p1
+%patch0003 -p2
+%patch0004 -p1
+%patch0006 -p2
+%patch0008 -p1
+%patch0009 -p1
 
 %ifarch %e2k
 # disable SSE4.2 emulation
@@ -499,8 +503,8 @@ export CC=%__cc
 export CXX=%__cxx
 
 %if_with jit
-export LLVM_CONFIG=/usr/bin/llvm-config-20
-export CLANG=/usr/bin/clang-20
+export LLVM_CONFIG=/usr/bin/llvm-config-%llvm_major
+export CLANG=/usr/bin/clang-%llvm_major
 %endif
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -554,8 +558,10 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 	-e "s,http://docbook.sourceforge.net/release/xsl/current,/usr/share/xml/docbook/xsl-stylesheets,g" --
 %make_build -C doc all
 
+%ifarch x86_64
 %check
-vm-run --rootfs --user --sudo --cpu=4 "sudo mount -o remount,size=1024M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+vm-run --user --sudo --cpu=4 "sudo mount -o remount,size=1024M /dev/shm; make check pkglibdir=%_libdir/%PGSQL"
+%endif
 
 %install
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL
@@ -1162,6 +1168,13 @@ fi
 %endif
 
 %changelog
+* Fri Oct 23 2026 Alexei Takaseev <taf@altlinux.org> 18.6-alt2
+- Remove BR rpm-build-vm-createimage and option --rootfs
+- Tests only x86_64
+- Added auto-configuration for system parameters
+- Use LLVM 22.1
+- Delete unneeded requires to llvm in postgresqlXY-llvmjit (ALT #61183)
+
 * Thu Aug 13 2026 Alexei Takaseev <taf@altlinux.org> 18.6-alt1
 - 18.6 (Fixes CVE-2026-6464,  CVE-2026-6469,  CVE-2026-6470,  CVE-2026-6471,
               CVE-2026-14662, CVE-2026-14663, CVE-2026-14664, CVE-2026-14666,
