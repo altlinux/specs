@@ -17,7 +17,7 @@
 
 Name: %{_name}2
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: The Geoinformation Service
 Group: System/Libraries
@@ -38,6 +38,8 @@ Source: %_name-%version.tar
 
 # if 3G or modem GPS sources enabled
 Requires: ModemManager
+# https://bugzilla.altlinux.org/61192
+Requires: avahi-daemon
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson yelp-tools gtk-doc libgio-devel >= %glib_ver
@@ -211,6 +213,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Fri Oct 23 2026 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1.1
+- require avahi-daemon (ALT #61192)
+
 * Fri Jul 03 2026 Yuri N. Sedunov <aris@altlinux.org> 2.8.2-alt1
 - 2.8.2
 
