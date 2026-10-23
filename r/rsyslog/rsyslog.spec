@@ -28,8 +28,8 @@
 %def_enable libcap_ng
 
 Name: rsyslog
-Version: 8.2502.0
-Release: alt4.1
+Version: 8.2610.0
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: Apache-2.0 AND GPL-3.0-or-later
@@ -38,8 +38,14 @@ Url: http://www.rsyslog.com
 # https://github.com/rsyslog/rsyslog.git
 Source: %name-%version.tar
 Patch0: %name-%version.patch
-Patch1: %name-%version-alt-config-fix.patch
 
+BuildRequires: autoconf-archive
+BuildRequires: pkgconfig(yaml-0.1)
+BuildRequires: pkgconfig(libprotobuf-c)
+BuildRequires: pkgconfig(rdkafka)
+BuildRequires: pkgconfig(snappy)
+BuildRequires: protobuf-c-compiler
+BuildRequires: rpm-build-python3
 BuildRequires: flex
 BuildRequires: zlib-devel
 BuildRequires: libdbi-devel
@@ -78,6 +84,8 @@ BuildRequires: liblognorm-devel >= 2.0.3
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
+
+%filter_from_provides /^\/bin\/sh/d
 
 %define mod_dir %_libdir/%name
 
@@ -172,6 +180,14 @@ mongo database support to rsyslog.
 
  o ommongodb.so - This is the implementation of the build-in output module for
                 MongoDB.
+
+%package kafka
+Summary: Provides the omkafka module
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description kafka
+The rsyslog-kafka package provides module for Apache Kafka output.
 
 %package gssapi
 Summary: GSS-API support for rsyslog
@@ -324,7 +340,7 @@ feed logs directly into Elasticsearch.
  o omelasticsearch.so - This module provides the capability for rsyslog to feed logs directly into
 Elasticsearch.
 
-%package clickhouse 
+%package clickhouse
 Summary: clickhouse output module for rsyslog
 Group: System/Kernel and hardware
 Requires: %name = %version-%release
@@ -390,7 +406,6 @@ all other functions:
 %prep
 %setup -q
 %patch0 -p1
-%patch1
 
 %build
 %autoreconf
@@ -446,6 +461,9 @@ export HIREDIS_LIBS=-lhiredis
 	%{subst_enable imhiredis} \
 	--enable-omjournal \
 	%{subst_enable ommongodb} \
+	--enable-imkafka \
+	--enable-omkafka \
+	--disable-omkinesis \
 	--enable-omprog \
 	--enable-omruleset \
 	--enable-omstdout \
@@ -536,8 +554,10 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/lmtcpsrv.so
 %mod_dir/ommail.so
 %mod_dir/omruleset.so
+%mod_dir/mmleefparse.so
 
 %_sbindir/rsyslogd
+%_bindir/rsyslog-segqueue
 %_mandir/man?/rsyslog*
 
 %files classic
@@ -573,6 +593,11 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mongo.conf
 %mod_dir/ommongodb.so
 %endif
+
+%files kafka
+%config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_kafka.conf
+%mod_dir/imkafka.so
+%mod_dir/omkafka.so
 
 %if_enabled gssapi
 %files gssapi
@@ -638,7 +663,7 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %endif
 
 %if_enabled clickhouse
-%files clickhouse 
+%files clickhouse
 %mod_dir/omclickhouse.so
 %endif
 
@@ -689,6 +714,10 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Thu Oct 22 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.2610.0-alt1
+- NMU: New version 8.2610.0 (Closes: #61127).
+- Added omkafka module (Closes: #58517).
+
 * Tue Oct 14 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.2502.0-alt4.1
 - Added read permission for adm group to whole directory /var/log/syslog.
 - Added umask for service process instead of default 0066 (ALT #55643).
