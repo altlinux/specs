@@ -3,8 +3,8 @@
 %define soname 2
 
 Name: c-ares
-Version: 1.34.8
-Release: alt2
+Version: 1.34.9
+Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
 License: MIT
@@ -14,7 +14,8 @@ Url: https://c-ares.org/
 VCS: https://github.com/c-ares/c-ares.git
 Source: c-ares-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: c-ares-1.34.8-revert-5d2d2d2.patch
+Patch1: c-ares-1.34.9-sock-state-loopback.patch
+Patch2: c-ares-1.34.9-failover-test-timing.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -49,6 +50,7 @@ compile applications or shared objects that use c-ares.
 %setup -n c-ares-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %cmake -DCARES_BUILD_TESTS:BOOL=ON
@@ -76,6 +78,12 @@ compile applications or shared objects that use c-ares.
 %_man3dir/*
 
 %changelog
+* Fri Oct 23 2026 Anton Farygin <rider@altlinux.org> 1.34.9-alt1
+- 1.34.8 -> 1.34.9
+- dropped SRV compression revert patch (fixed upstream)
+- use loopback in socket-state tests to support network-isolated builds
+- increase event-thread failover test timing margins for busy builders
+
 * Tue Sep 01 2026 Anton Farygin <rider@altlinux.org> 1.34.8-alt2
 - reverted upstream commit 5d2d2d28 breaking SSSD/Samba AD via
   SRV compression check (closes: #60151)
