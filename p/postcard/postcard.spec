@@ -3,8 +3,8 @@
 %def_with check
 
 Name: postcard
-Version: 1.13.0
-Release: alt2
+Version: 1.14.1
+Release: alt1
 
 Summary: A modern email client for GNOME
 License: GPL-3.0
@@ -24,6 +24,7 @@ BuildRequires: gettext-tools
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(sqlite3)
+BuildRequires: python3(cairosvg)
 %endif
 
 BuildArch: noarch
@@ -63,6 +64,9 @@ PYTHONPATH=src python3 -m pytest -q
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Tue Oct 20 2026 Vladislav Eliseev <general@altlinux.org> 1.14.1-alt1
+- New version 1.14.1.
+
 * Thu Oct 08 2026 Vladislav Eliseev <general@altlinux.org> 1.13.0-alt2
 - Added build requires python3(sqlite3) for tests.
 
