@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.51.0
+Version: 1.52.0
 Release: alt1
 Summary: Easy, practical library for making terminal apps
 License: MIT
@@ -60,6 +60,9 @@ export TEST_QUICK=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 21 2026 Stanislav Levin <slev@altlinux.org> 1.52.0-alt1
+- 1.51.0 -> 1.52.0
+
 * Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1.51.0-alt1
 - 1.50.0 -> 1.51.0
 
