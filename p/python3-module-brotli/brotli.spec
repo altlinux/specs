@@ -2,12 +2,17 @@
 %define pypi_name brotli
 %define mod_name %pypi_name
 
+# limited api is not supported
+# %%python3_set_limited_api
+# some C extensions *unintentionally* contain only abi3 symbols
+%none_python3_modules_rename
+
 %def_with check
 %def_with system_libbrotli
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
-Release: alt2
+Version: 1.2.1
+Release: alt1
 Summary: Brotli compression format
 License: MIT
 Group: Development/Python3
@@ -59,13 +64,15 @@ The specification of the Brotli Compressed Data Format is defined in RFC 7932.
 %pyproject_run_unittest discover -v -p '*_test.py' -s python/
 
 %files
-%doc README.*
 %python3_sitelibdir/_%mod_name.*.so
 %python3_sitelibdir/%mod_name.py
 %python3_sitelibdir/__pycache__/%mod_name.*.pyc
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 23 2026 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.2.0 -> 1.2.1
+
 * Fri Dec 12 2025 Ivan A. Melnikov <iv@altlinux.org> 1.2.0-alt2
 - NMU: Build with system libbrotli (fixes FTBFS on loongarch64).
 
