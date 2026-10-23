@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.46
+Release: alt0.47
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,15 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Fri Oct 23 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.47
+- Settings: fixed AltHA launch via pkexec (ALT #60815).
+- SSH settings: added SSH public key support.
+- SSH settings: added user selection.
+- SSH settings: added SSH public key authentication option.
+- SSH settings: added SSH protocol version setting.
+- Added password password policy plugin from alt_protection.
+- Added password change plugin from alt_protection.
+
 * Mon Oct 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.46
 - SSH settings: added SSH empty password setting.
 - SSH settings: added SSH host authentication settings.
