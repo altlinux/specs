@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.13.3
+%define uv_version 0.13.5
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -145,6 +145,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Fri Oct 23 2026 Stanislav Levin <slev@altlinux.org> 0.13.5-alt1
+- 0.13.3 -> 0.13.5
+
 * Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 0.13.3-alt1
 - 0.13.1 -> 0.13.3
 
