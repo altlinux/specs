@@ -1,7 +1,8 @@
 %global import_path github.com/juicedata/juicefs
+%define jfs_cachedir /var/cache/%name
 
 Name: juicefs
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Distributed POSIX file system built on top of Redis and S3
@@ -22,6 +23,7 @@ ExcludeArch: %ix86
 
 %prep
 %setup
+sed -i -e 's!/var/jfsCache!%jfs_cachedir!g' `grep -rl /var/jfsCache cmd docs`
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -39,12 +41,18 @@ export IGNORE_SOURCES=1
 
 %golang_install
 ln -s juicefs %buildroot%_bindir/mount.juicefs
+mkdir -p %buildroot%jfs_cachedir
 
 %files
 %doc README.md
 %_bindir/*
+%attr(0700,root,root) %jfs_cachedir
 
 %changelog
+* Fri Oct 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.2-alt1
+- v1.4.2
+- set default cache-dir to /var/cache/juicefs (Closes: #61200)
+
 * Mon Aug 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.1-alt1
 - v1.4.1
 
