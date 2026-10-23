@@ -21,7 +21,7 @@
 
 Name: strongswan
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: strongSwan IPsec implementation
 License: GPLv2+
@@ -201,6 +201,7 @@ PT-TLS to support TNC over TLS.
 	--enable-tnccs-20 \
 	--enable-tnccs-11 \
 	--enable-tnccs-dynamic \
+	--enable-ikev1 \
 	--enable-imc-test \
 	--enable-imv-test \
 	--enable-imc-scanner \
@@ -346,6 +347,9 @@ fi
 # - review configurables (see also fedora-proposed spec)
 
 %changelog
+* Fri Oct 16 2026 Andrey Cherepanov <cas@altlinux.org> 6.1.0-alt2
+- NMU: built with --enable-ikev1 (ALT #60664)
+
 * Fri Sep 11 2026 Ilya Mashkin <oddity@altlinux.ru> 6.1.0-alt1
 - 6.1.0
 - Fixes:
