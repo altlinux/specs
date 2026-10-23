@@ -363,7 +363,7 @@
 
 Name: java-27-openjdk
 Version: %featurever.%interimver.%updatever.%patchver.%buildver
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1976,6 +1976,21 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Fri Oct 23 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.2.1-alt2
+- New release (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-83395,
+  CVE-2026-91394, CVE-2026-87291, CVE-2026-91332,
+  CVE-2026-91452, CVE-2026-91409, CVE-2026-87292,
+  CVE-2026-101516, CVE-2026-91375, CVE-2026-87294,
+  CVE-2026-83374, CVE-2026-83381, CVE-2026-91333,
+  CVE-2026-87290, CVE-2026-83400, CVE-2026-87367,
+  CVE-2026-83387, CVE-2026-91462, CVE-2026-91463,
+  CVE-2026-91464, CVE-2026-83380, CVE-2026-91453,
+  CVE-2026-91418, CVE-2026-91334, CVE-2026-83378,
+  CVE-2026-91487, CVE-2026-87255, CVE-2026-91374,
+  CVE-2026-91397, CVE-2026-91379, CVE-2026-91380,
+  CVE-2026-83376, CVE-2026-91461, CVE-2026-91400,
+  CVE-2026-91335).
+
 * Thu Oct 22 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.2.1-alt1
 - New version (fixes: CVE-2026-914034).
 
