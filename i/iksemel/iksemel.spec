@@ -1,17 +1,16 @@
 Name: iksemel
-Version: 1.4
-Release: alt6
+Version: 1.5
+Release: alt1
 
 Summary: iksemel Jabber Library
 Group: Development/C
 License: LGPL-2.1
-Url: http://code.google.com/p/iksemel/
+URL: https://github.com/meduketto/iksemel/
 
 Source: %name-%version.tar
-Patch0: iksemel-1.3-gnutls-2.8.patch
+Patch0: iksemel-1.5-texinfo.patch
 
-# Automatically added by buildreq on Tue May 23 2006
-BuildRequires: gcc-c++ libgnutls-devel
+BuildRequires: gcc-c++ libgnutls-devel texinfo
 
 %package -n lib%name
 Group: %group
@@ -33,11 +32,11 @@ Requires: lib%name = %version-%release
 
 %prep
 %setup
-%patch0 -p0
+%patch0 -p1
 
 %build
 %autoreconf
-%configure --disable-static --with-gnutls
+%configure --disable-static --with-gnutls --disable-python
 %make
 
 %install
@@ -58,6 +57,9 @@ rmdir %buildroot%_infodir
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5-alt1
+- 1.5 released
+
 * Tue Nov 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4-alt6
 - fix packaging with lto on
 
