@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -34,6 +34,11 @@ install -Dm755 %name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Fri Oct 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.2-alt1
+- replacing an en dash with an em dash
+- fixed: added a line break before displaying bugs information
+- slightly changed display information about the maintainer
+
 * Sat Oct 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.1-alt1
 - added a Ctrl+C execution reset
 - added visualization of exporting in silent mode
