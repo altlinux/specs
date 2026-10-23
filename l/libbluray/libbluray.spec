@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 1.4.1
+Version: 1.5.1
 Release: alt1
 
 Summary: Blu-Ray Discs handling library
@@ -18,7 +18,7 @@ BuildRequires: pkgconfig(libudfread) >= 1.2.0
 %description
 %summary
 
-%package -n libbluray3
+%package -n libbluray4
 Summary: BD library
 Group: System/Libraries
 
@@ -30,7 +30,7 @@ Group: Development/C
 Summary: Utilities using %name
 Group: File tools
 
-%description -n libbluray3
+%description -n libbluray4
 Blu-Ray Discs handling library.
 
 %description devel
@@ -51,7 +51,7 @@ This package contains various utilities using libbluray library.
 %install
 %meson_install
 
-%files -n libbluray3
+%files -n libbluray4
 %_libdir/*.so.*
 
 %files devel
@@ -63,6 +63,9 @@ This package contains various utilities using libbluray library.
 %_bindir/*
 
 %changelog
+* Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.1-alt1
+- 1.5.1 released
+
 * Thu Feb 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt1
 - 1.4.1 released
 

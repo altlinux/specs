@@ -1,0 +1,123 @@
+Name: libbluray3
+Version: 1.4.1
+Release: alt2
+
+Summary: Blu-Ray Discs handling library
+License: LGPLv2.1
+Group: System/Legacy libraries
+Url: http://www.videolan.org/developers/libbluray.html
+
+Source: %name-%version-%release.tar
+
+BuildRequires: meson
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(libxml-2.0) >= 2.6
+BuildRequires: pkgconfig(libudfread) >= 1.2.0
+
+%description
+%summary
+
+%prep
+%setup
+
+%build
+%meson
+%meson_build
+
+%install
+%meson_install
+
+%files
+%_libdir/*.so.*
+
+%changelog
+* Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt2
+- rebuilt as legacy library
+
+* Thu Feb 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.1-alt1
+- 1.4.1 released
+
+* Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
+- 1.4.0 released
+
+* Wed Nov 19 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.4-alt2
+- rebuilt as legacy library
+
+* Wed Nov 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.4-alt1
+- 1.3.4 released
+
+* Wed Sep 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.3-alt1
+- 1.3.3 released
+
+* Fri Aug 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.2-alt1
+- 1.3.2 released
+
+* Wed Mar 16 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.1-alt1
+- 1.3.1 released
+
+* Mon Sep 20 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt1
+- 1.3.0 released
+
+* Tue Jan 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
+- 1.2. released
+
+* Wed Jul 01 2020 Anton Farygin <rider@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
+* Mon Sep 30 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.2-alt2
+- fix ftbfs by actually disable bdjava jar build
+
+* Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
+* Mon Jan 11 2016 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt1
+- 0.9.2 released
+
+* Tue Oct 06 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.0-alt1
+- 0.9.0 released
+
+* Tue Aug 04 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.1-alt1
+- 0.8.1 released
+
+* Wed Apr 08 2015 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.0-alt1
+- 0.7.0 released
+
+* Wed Dec 10 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.2-alt1
+- 0.6.2 released
+
+* Tue May 27 2014 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt1
+- 0.6.0 released
+
+* Tue Sep 17 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.0-alt1
+- 0.4.0 released
+
+* Tue Apr 30 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.3.0-alt1
+- 0.3.0 released
+
+* Sat Feb 23 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt2
+- rebuilt with java 1.7.0
+
+* Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt1
+- 0.2.3 released
+
+* Wed Mar 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.2-alt1
+- 0.2.2 released
+
+* Mon Dec 12 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt2
+- examples packaged (closes: #26693)
+
+* Fri Dec 02 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.1-alt1
+- 0.2.1 released
+
+* Wed Oct 26 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2-alt0.3
+- updated from git.e037110f
+
+* Fri Aug 26 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2-alt0.2
+- updated from git.8e5d241e
+
+* Wed May 11 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2-alt0.1
+- updated from git
+
+* Thu Oct 14 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1-alt0.1
+- initial
