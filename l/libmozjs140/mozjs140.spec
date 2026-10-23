@@ -18,7 +18,7 @@
 %endif
 
 Name: libmozjs%ver_major
-Version: %ver_major.16.0
+Version: %ver_major.17.0
 Release: alt1
 
 Summary: JavaScript interpreter and libraries
@@ -47,6 +47,7 @@ Patch5: Fix-math_private.h-for-i386-FTBFS.patch
 Patch6: mozjs-python-3.14.patch
 # https://bugzilla.mozilla.org/show_bug.cgi?id=2053518
 # based on https://github.com/mozilla-firefox/firefox/commit/1ecaa12836a6
+# upstreamed since 140.17.0
 Patch10: firefox-154.1-up-rust-1.98-for-140.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -103,7 +104,7 @@ interface to the JavaScript engine.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch10 -p1
+#%%patch10 -p1
 
 %build
 [ ! -d _build ] && mkdir _build && \
@@ -191,6 +192,9 @@ cp -p js/src/js-config.h %buildroot/%_includedir/mozjs-%ver_major
 %_libdir/*.a
 
 %changelog
+* Fri Oct 23 2026 Yuri N. Sedunov <aris@altlinux.org> 140.17.0-alt1
+- 140.17.0
+
 * Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 140.16.0-alt1
 - 140.16.0
 
