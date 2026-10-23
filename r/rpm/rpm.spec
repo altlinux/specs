@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt47
+Release: alt48
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -581,6 +581,15 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Wed Oct 21 2026 Arseny Maslennikov <arseny@altlinux.org> 4.13.0.1-alt48
+- ancieg@:
+  + Backported %%dnl and %%{shrink:...} special forms (ALT#60006).
+- krosh@:
+  + Fixed %%expand-like double expansion by the %%{shrink:} special form.
+  + Improved tests.
+- Both change authors have submitted the entire work for review independently
+  around the same time.
+
 * Mon Aug 31 2026 Arseny Maslennikov <arseny@altlinux.org> 4.13.0.1-alt47
 - Taught RPM to install sysusers entries present in packages.
 - Added more minor fixes.

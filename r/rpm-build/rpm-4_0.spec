@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.215
+Version: 4.0.4.216
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -454,6 +454,10 @@ fi
 %files checkinstall
 
 %changelog
+* Thu Oct 22 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.216-alt1
+- krosh@:
+  + Fixed re-expansion of %%shrink output.
+
 * Mon Sep 14 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 4.0.4.215-alt1
 - Added libgcc-devel to the list of generic devel deps.
 
