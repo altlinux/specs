@@ -1,11 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: libxslt
-Version: 1.1.43
+Version: 1.1.45
 Release: alt1
 
 Summary: Library providing XSLT support
 License: MIT
 Group: System/Libraries
-Url: http://xmlsoft.org/
+Url: https://gitlab.gnome.org/GNOME/libxslt
+Vcs: https://gitlab.gnome.org/GNOME/libxslt.git
 
 %def_disable static
 %def_without python
@@ -17,7 +21,7 @@ Source: %srcname.tar
 # git://git.altlinux.org/gears/l/libxslt.git
 Patch: %name-%version-%release.patch
 
-BuildRequires: libxml2-devel
+BuildRequires: libxml2-devel >= 2.15.1
 %if_with crypto
 BuildRequires: libgcrypt-devel
 %endif
@@ -155,7 +159,7 @@ make check
 %_libdir/*.sh
 %_includedir/*
 %_libdir/cmake/libxslt
-%_libdir/pkgconfig/*
+%_pkgconfigdir/*
 
 %files devel-doc
 %_man3dir/*
@@ -183,8 +187,11 @@ make check
 %endif # enabled python
 
 %changelog
+* Fri Oct 23 2026 Alexey Shabalin <shaba@altlinux.org> 1.1.45-alt1
+- Updated to v1.1.45 (Fixed: CVE-2025-11731, CVE-2025-7424, CVE-2025-9714).
+
 * Fri Oct 24 2025 Alexander Danilov <admsasha@altlinux.org> 1.1.43-alt1
-- v1.1.39 -> v1.1.43.
+- v1.1.39 -> v1.1.43 (Fixed: CVE-2025-24855, CVE-2024-55549).
 
 * Sun May 26 2024 Arseny Maslennikov <arseny@altlinux.org> 1.1.39-alt1
 - v1.1.37 -> v1.1.39.
@@ -196,7 +203,7 @@ make check
 - devel: Packed cmake files.
 
 * Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.35-alt1
-- Updated to v1.1.35.
+- Updated to v1.1.35 (Fixed: CVE-2021-30560).
 
 * Fri Jun 25 2021 Alexey Shabalin <shaba@altlinux.org> 1.1.34-alt3
 - Build without crypto.

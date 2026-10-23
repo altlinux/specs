@@ -6,8 +6,8 @@
 %define libname %{rname}_%abiversion
 
 Name: libxml2
-Version: 2.14.6
-Release: alt4
+Version: 2.15.4
+Release: alt1
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -16,6 +16,9 @@ Group: System/Libraries
 Url: https://gitlab.gnome.org/GNOME/libxml2
 Vcs: https://gitlab.gnome.org/GNOME/libxml2.git
 
+%def_with python
+%def_with docs
+%def_with schematron
 %def_without python2
 %def_disable static
 %def_without legacy
@@ -40,6 +43,8 @@ BuildRequires: python-devel python-module-setuptools
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
+# required to generate doc/libxml2-api.xml for the python bindings
+BuildRequires: doxygen
 
 %package -n %libname
 Summary: %summary
@@ -176,6 +181,8 @@ mkdir -p fuzz
 export PYTHON="%__python3"
 %configure \
     %{subst_with python} \
+    %{subst_with docs} \
+    %{subst_with schematron} \
     %{subst_enable static} \
     %{subst_with legacy} \
     %{subst_with icu} \
@@ -252,9 +259,20 @@ rm -rf %buildroot%_defaultdocdir/%rname
 %files doc
 %dir %pkgdocdir
 %pkgdocdir/*.html
-%_datadir/gtk-doc/html/libxml2
+%pkgdocdir/html
 
 %changelog
+* Thu Oct 22 2026 Alexey Shabalin <shaba@altlinux.org> 1:2.15.4-alt1
+- Update to 2.15.4 (Fixed: CVE-2025-8732, CVE-2026-0989, CVE-2026-0990,
+  CVE-2026-0992, CVE-2026-1757, CVE-2026-11979, CVE-2026-74860,
+  CVE-2026-76781, CVE-2026-86137, CVE-2026-86138, CVE-2026-86139,
+  CVE-2026-86140, CVE-2026-86141, CVE-2026-86142, CVE-2026-86143,
+  CVE-2026-86144).
+- Backport additional fixes from upstream master, not yet assigned CVEs:
+  + race condition in xmlCatalogResolveCache
+  + regexp character classes and ranges fixes
+  + pass validation context to xmlSchemaSAXHandleReference
+
 * Wed May 13 2026 Anton Midyukov <antohami@altlinux.org> 1:2.14.6-alt4
 - NMU: rebuild without python2 module (Closes: 59086).
 
