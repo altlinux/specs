@@ -3,7 +3,7 @@
 
 Name: lact
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: Linux GPU Control Application
 License: MIT
@@ -31,6 +31,10 @@ BuildRequires: libadwaita-devel
 BuildRequires: libdisplay-info-devel
 BuildRequires: llvm-devel
 BuildRequires: rust-cargo
+
+# The daemon fetches OpenCL/Vulkan info via external tools (see also flatpak manifest)
+Requires: clinfo
+Requires: vulkan-tools
 
 %description
 This application allows you to control your AMD, Nvidia or Intel GPU on a Linux system.
@@ -82,6 +86,10 @@ DESTDIR=%buildroot PREFIX=%prefix make install
 %_unitdir/%{name}d.service
 
 %changelog
+* Sat Oct 24 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.1-alt2
+- Require clinfo and vulkan-tools for OpenCL/Vulkan info
+  (ALT #60485, #55618, #55622)
+
 * Mon Aug 31 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.1-alt1
 - New version 0.10.1.
 
