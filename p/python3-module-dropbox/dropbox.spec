@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 12.2.3
+Version: 12.2.4
 Release: alt1
 
 Summary: A Python SDK for integrating with the Dropbox API v2
@@ -53,6 +53,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 
 
 %changelog
+* Sat Oct 24 2026 Anton Vyatkin <toni@altlinux.org> 12.2.4-alt1
+- new version 12.2.4
+
 * Thu Oct 08 2026 Anton Vyatkin <toni@altlinux.org> 12.2.3-alt1
 - new version 12.2.3
 
