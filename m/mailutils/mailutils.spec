@@ -20,15 +20,15 @@ Name: mailutils
 
 %define baseversion 3.17.90
 
-%if %snapshot
+%if ! %snapshot
+Version: 3.17.90
+Release: alt2
+%define srcdir %name-%version
+%else
 %define snapshotdate 20200913
-Version: %baseversion
+Version: 3.17.90
 Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
-%else
-Version: %baseversion
-Release: alt1
-%define srcdir %name-%version
 %endif
 
 Summary: GNU Mailutils
@@ -44,7 +44,7 @@ Source0:        %name-%version.tar.gz
 URL: http://www.gnu.org/software/%{name}/%{name}.html
 Group: Networking/Mail
 
-Patch1: mailutils-2.0.90-pkg-config-hack.diff
+Patch1: mailutils-fix-sighandler-type.diff
 
 # errata patches
 #Patch10:
@@ -257,7 +257,7 @@ python-module-mailutils.
 %setup -q
 %endif
 
-#patch1 -p0
+%patch1 -p1
 
 # errata patches
 #patch10 -p1
@@ -469,6 +469,9 @@ done
 %endif
 
 %changelog
+* Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 3.17.90-alt2
+- Fix build with GCC 15.
+
 * Sun Oct 20 2024 Sergey Y. Afonin <asy@altlinux.org> 3.17.90-alt1
 - New version (git 20241010)
 
