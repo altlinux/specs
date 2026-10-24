@@ -1,8 +1,8 @@
 %define rev 403d516
 
 Name: kraft
-Version: 2.0.0
-Release: alt0.git%rev
+Version: 2.1.0
+Release: alt1
 
 Summary: Kraft - Software for small business
 Summary(ru_RU.UTF-8): Kraft — программное обеспечение для малого бизнеса
@@ -63,6 +63,9 @@ echo "%rev" > .tag
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 2.1.0-alt1
+- New version.
+
 * Fri Nov 21 2025 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt0.git403d516
 - New snapshot.
 - Built with KF6.
