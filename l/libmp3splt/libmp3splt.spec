@@ -2,7 +2,7 @@
 
 Name: libmp3splt
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: library for mp3splt, a mp3/ogg/flac splitter
 License: GPLv2+
@@ -14,6 +14,7 @@ Source: http://prdownloads.sourceforge.net/mp3splt/%name-%version.tar.gz
 BuildRequires: libltdl-devel libpcre-devel libmad-devel libogg-devel
 BuildRequires: libvorbis-devel libid3tag-devel libflac-devel
 BuildRequires: doxygen graphviz
+Patch0: libmp3splt-gcc15-prototype.patch
 
 %description
 Core library for mp3splt, a mp3/ogg/glac splitter.
@@ -28,6 +29,7 @@ Development files for libmp3splt.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -53,6 +55,9 @@ Development files for libmp3splt.
 %_datadir/doc/%name/
 
 %changelog
+* Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1.1
+- NMU: Fix Ogg handler prototype for GCC 15.
+
 * Sat Jul 11 2015 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
 - 0.9.2
 
