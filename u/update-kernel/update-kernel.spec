@@ -2,7 +2,7 @@
 
 Name: update-kernel
 Version: 1.26
-Release: alt1
+Release: alt2
 Summary: Update kernel and modules
 License: GPL-2.0-or-later
 Group: System/Kernel and hardware
@@ -59,6 +59,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sun Oct 25 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26-alt2
+- Fix remove-old-kernels check with ShellCheck 0.10.0.
+
 * Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26-alt1
 - Do not select an older build of another flavour in update-kernel when
   the booted kernel flavour is gone: compare versions without disttag.
