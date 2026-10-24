@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-language-tags
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: This project is a Python version of the language-tags Javascript project
@@ -47,6 +47,9 @@ registry.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Oct 24 2026 Anton Vyatkin <toni@altlinux.org> 1.3.2-alt1
+- new version 1.3.2
+
 * Sat May 09 2026 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
 - migrate to pyproject macros
