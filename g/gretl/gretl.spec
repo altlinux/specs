@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2026b
+Version: 2026c
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -15,6 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: http://downloads.sourceforge.net/%name/%name-%version.tar.xz
 Source: %name-%version.tar
+Patch0: 0001-Guard-OpenMP-helper-call.patch
 
 BuildRequires: bash-completion
 
@@ -53,13 +54,15 @@ Requires: gnuplot
 A cross-platform software package for econometric analysis,
 written in the C programming language.
 
-%package devel
+%package -n lib%name-devel
 Group: Development/C
 Summary: Development files for %name
 Requires: %name = %EVR
 Requires: pkg-config
+Provides: %name-devel = %EVR
+Obsoletes: %name-devel < %EVR
 
-%description devel
+%description -n lib%name-devel
 This package contains the development files for %name.
 
 %package openmpi
@@ -76,6 +79,7 @@ This package contains the binary openmpi files for %name.
 
 %prep
 %setup
+%patch0 -p1
 
 # GCC 15: implicit-function-declaration is now an error;
 # LIMIT_THREADS code calls omp_set_num_threads() but omp.h is only included
@@ -157,7 +161,7 @@ desktop-file-install						\
 
 %doc ChangeLog CompatLog README
 
-%files devel
+%files -n lib%name-devel
 %_pkgconfigdir/gretl.pc
 %_libdir/libgretl*.so
 %_includedir/%name/
@@ -168,6 +172,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2026c-alt1
+- new version 2026c with MPI build fix and libgretl-devel rename.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 2026b-alt1
 - new version 2026b
 
