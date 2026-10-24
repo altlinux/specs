@@ -17,7 +17,7 @@
 
 Name: opencode
 Version: 1.19.4
-Release: alt1
+Release: alt2
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
 # %%__strip at the top), so the binary is deliberately without debuginfo: keep
@@ -69,6 +69,10 @@ Patch5: %name-desktop-no-updater.patch
 # Desktop client: bundle the production dependencies into the main chunk
 # instead of shipping a node_modules tree next to the app.
 Patch6: %name-desktop-bundle-deps.patch
+# Desktop client: reveal the main window even when electron never fires the
+# ready-to-show event, which happens on native Wayland since Electron 38 and
+# leaves the window invisible (upstream PR #42681).
+Patch7: %name-desktop-wayland-reveal.patch
 
 BuildRequires: bun
 # Bun's shell resolves its own executable through /proc; without this the
@@ -130,6 +134,7 @@ The client does not update itself: updates arrive with the package.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # This bunfig only configures `bun test`/dev preloads; bun 1.4.2 crashes
 # loading it, and the build does not need it.
@@ -289,6 +294,10 @@ grep -q '"desktopName": "%name-desktop.desktop"' \
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Sat Oct 24 2026 Nazarov Denis <nenderus@altlinux.org> 1.19.4-alt2
+- Backport upstream fix for the window not showing up in a Wayland session
+  (closes: 61196)
+
 * Thu Oct 22 2026 Nazarov Denis <nenderus@altlinux.org> 1.19.4-alt1
 - Update to 1.19.4
 
