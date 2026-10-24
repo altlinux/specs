@@ -2,7 +2,7 @@
 
 Name: SDL2_mixer
 Version: 2.8.2
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: Zlib
@@ -13,6 +13,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/libsdl-org/SDL_mixer/archive/release-%version/SDL_mixer-release-%version.tar.gz
 Source: SDL_mixer-release-%version.tar
+Patch1: alt-freepats-path.patch
 
 BuildRequires: libSDL2-devel
 BuildRequires: libflac-devel
@@ -50,6 +51,7 @@ libraries.
 
 %prep
 %setup -n SDL_mixer-release-%version
+%patch1 -p1
 
 %build
 %configure \
@@ -83,6 +85,10 @@ libraries.
 %_libdir/cmake/%name
 
 %changelog
+* Sat Oct 24 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.2-alt2
+- Also try /usr/share/timidity/freepats.cfg for the built-in timidity
+  (fixes MIDI on systems without TiMidity++) (closes: 44572)
+
 * Tue May 12 2026 Nazarov Denis <nenderus@altlinux.org> 2.8.2-alt1
 - New version 2.8.2.
 
