@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Client Configuration Library
 
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/os-client-config
 
 Source: %oname-%version.tar.gz
 Source1: %oname.watch
+Patch0: 0001-Fix-assertItemsEqual-removed-in-Python-3.12.patch
 
 BuildArch: noarch
 
@@ -69,6 +70,7 @@ Documentation for the os-client-config library.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -89,6 +91,9 @@ Documentation for the os-client-config library.
 %python3_sitelibdir/os_client_config/tests
 
 %changelog
+* Fri Oct 23 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt2
+- Fix tests with Python 3.12.
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 
