@@ -1,15 +1,15 @@
 # If you want to suggest changes, please send PR on
-# https://altlinux.space/alt-atomic/apm to altlinux branch 
+# https://altlinux.space/alt-atomic/apm to altlinux branch
 
 %define _unpackaged_files_terminate_build 1
 
 %define service_id org.altlinux.APM
 
 Name: apm
-Version: 0.6.3
+Version: 0.7.1
 Release: alt1
 
-Summary: Atomic Package Manager 
+Summary: Atomic Package Manager
 License: GPL-3.0-or-later
 Group: System/Configuration/Packaging
 URL: https://altlinux.space/alt-atomic/apm
@@ -80,6 +80,39 @@ done
 %doc README.ru.md
 
 %changelog
+* Sun Oct 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.1-alt1
+- New version: 0.7.1.
+- Reworked APT transactions around a plan/apply flow; execution now applies
+  exactly the changes shown by the plan.
+- Added apt-get-style selectors, glob patterns, file paths, local RPMs, and an
+  idempotent mode with skipped-package reporting.
+- Fixed package lookup precedence: file lookup is attempted only when no
+  package matches the argument.
+- APT cache state is now restored after planning, download-only operations,
+  and recoverable failures.
+- Fixed concurrent transaction option updates and shared package marking
+  between planning and execution.
+- Atomic systems are now detected by their actual OSTree or ComposeFS boot
+  state; containers are excluded.
+- APM no longer creates or modifies /var/lib/apm during startup.
+- Base-image updates now compare the remote image ID with the parent of the
+  deployed or staged image.
+- `fix-nss` now normalizes GIDs of retained group overlays and reports the
+  affected groups.
+- `libnss-altfiles` detection now queries RPM directly.
+- Branding generation now produces consistent `os-release` metadata for
+  stable, nightly, variant, and NVIDIA images.
+- Fixed duplicated `Nightly` branding and incorrect `ID`, `ID_LIKE`,
+  `VERSION_ID`, `IMAGE_ID`, `IMAGE_VERSION`, and `CPE_NAME` values.
+- Empty branding overrides now remove their corresponding fields.
+- Conditional `include` entries no longer fail validation when their condition
+  is set and the local target is absent.
+- ALT repository and archive URLs now use rsync.altlinux.org.
+- ARM64 nightly RPM builds were removed from CI.
+- Full release note here:
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.7.0
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.7.1
+
 * Sun Aug 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.3-alt1
 - New version: 0.6.3.
 - Fixed marking of requested packages: they are now marked before dependency
