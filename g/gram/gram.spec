@@ -1,5 +1,5 @@
 Name: gram
-Version: 3.3.0
+Version: 3.4.1
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 Source1: crates.tar
 
 BuildRequires: gcc-c++ clang cmake
-BuildRequires: rust-cargo cargo-about /proc
+BuildRequires: rust-cargo /proc
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(libgit2)
@@ -39,10 +39,6 @@ tar cf %SOURCE1 .cargo vendor
 
 %build
 export OPENSSL_NO_VENDOR=1
-export ALLOW_MISSING_LICENSES=1
-sed -ri "/^CARGO_ABOUT_VERSION/ s,=.+\$,=\"$(rpmquery --qf %%{version} cargo-about)\"," \
-	script/generate-licenses
-./script/generate-licenses
 cargo build --release --offline --package gram --package cli
 
 %define _libexecdir /usr/libexec
@@ -65,6 +61,9 @@ install -pm0644 -D gram.desktop %buildroot%_desktopdir/gram.desktop
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Sat Oct 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.4.1-alt1
+- 3.4.1 released
+
 * Sat Aug 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.3.0-alt1
 - 3.3.0 released
 
