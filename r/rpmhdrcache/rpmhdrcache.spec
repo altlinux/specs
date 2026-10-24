@@ -1,6 +1,6 @@
 Name: rpmhdrcache
 Version: 0.3.2
-Release: alt1
+Release: alt2
 
 Summary: Cached reading of rpm package headers
 License: GPLv2+
@@ -8,6 +8,7 @@ Group: System/Configuration/Packaging
 
 URL: http://git.altlinux.org/gears/r/rpmhdrcache.git
 Source: %name-%version.tar
+Patch0: snappy-pointer-types.patch
 
 Requires: libqacache = %version-%release
 
@@ -23,6 +24,7 @@ caches the result using libqacache library.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 gcc -shared -fPIC -D_GNU_SOURCE %optflags -o libqacache.so.0 -Wl,-soname,libqacache.so.0 cache.c \
@@ -72,6 +74,9 @@ are stored in a Berkeley DB, larger entries are backed by filesystem.
 %_libdir/libqacache.so
 
 %changelog
+* Fri Oct 23 2026 Vitaly Lipatov <lav@altlinux.ru> 0.3.2-alt2
+- fixed build with current Snappy headers.
+
 * Thu Dec 23 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.2-alt1
 - Fixed build on e2k architectures.
 
