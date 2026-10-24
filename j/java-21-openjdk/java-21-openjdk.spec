@@ -289,9 +289,9 @@
 # New Version-String scheme-style defines
 %global featurever 21
 %global interimver 0
-%global updatever 12
-%global patchver 1
-%global buildver 1
+%global updatever 13
+%global patchver 0
+%global buildver 9
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -1985,6 +1985,18 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.13.0.9-alt1
+- New version (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-91382,
+  CVE-2026-91411, CVE-2026-83395, CVE-2026-87294, CVE-2026-91394,
+  CVE-2026-87290, CVE-2026-83387, CVE-2026-91462, CVE-2026-83374,
+  CVE-2026-91410, CVE-2026-87291, CVE-2026-91332, CVE-2026-91451,
+  CVE-2026-91373, CVE-2026-83380, CVE-2026-83400, CVE-2026-91463,
+  CVE-2026-91464, CVE-2026-91453, CVE-2026-91452, CVE-2026-91418,
+  CVE-2026-83378, CVE-2026-91487, CVE-2026-83381, CVE-2026-91374,
+  CVE-2026-91375, CVE-2026-91379, CVE-2026-91380, CVE-2026-91333,
+  CVE-2026-91334, CVE-2026-87367, CVE-2026-87292, CVE-2026-83376,
+  CVE-2026-91461, CVE-2026-91397, CVE-2026-91400, CVE-2026-91335). 
+
 * Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.12.1.1-alt1
 - New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
 
