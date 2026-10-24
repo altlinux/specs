@@ -1,6 +1,6 @@
 Name: keyfuzz
 Version: 0.2
-Release: alt1
+Release: alt1.1
 
 Epoch: 1
 
@@ -16,7 +16,6 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name-%version.tar
 
-BuildRequires: libsigsegv-devel
 
 # Automatically added by buildreq on Wed Nov 16 2022
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-XML-Parser sh4
@@ -76,6 +75,9 @@ rm -rf %buildroot%_sysconfdir/init.d
 %_initdir/*
 
 %changelog
+* Fri Oct 23 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.2-alt1.1
+- NMU: Drop the unused libsigsegv-devel build requirement.
+
 * Tue Dec 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.2-alt1
 - Fix Alt Bugs (ALT #44610, #44611, #44612)
 
