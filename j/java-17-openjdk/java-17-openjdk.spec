@@ -277,9 +277,9 @@
 # New Version-String scheme-style defines
 %global featurever 17
 %global interimver 0
-%global updatever 20
-%global patchver 1
-%global buildver 1
+%global updatever 21
+%global patchver 0
+%global buildver 9
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -312,8 +312,8 @@
 
 # Strip up to 6 trailing zeros in newjavaver, as the JDK does, to get the correct version used in filenames
 # TODO hardcoded
-%global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
-#global filever %{featurever}.%{interimver}.%{updatever}
+#global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
+%global filever %{featurever}.%{interimver}.%{updatever}
 
 # The tag used to create the OpenJDK tarball
 %global vcstag jdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}
@@ -2014,6 +2014,18 @@ fi
 %endif
 
 %changelog
+* Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.21.0.9-alt1
+- New version (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-91382,
+  CVE-2026-91411, CVE-2026-83395, CVE-2026-87294, CVE-2026-91394,
+  CVE-2026-87290, CVE-2026-83387, CVE-2026-91462, CVE-2026-83374,
+  CVE-2026-91410, CVE-2026-91332, CVE-2026-91451, CVE-2026-91373,
+  CVE-2026-83380, CVE-2026-83400, CVE-2026-91463, CVE-2026-91464,
+  CVE-2026-91453, CVE-2026-91452, CVE-2026-91418, CVE-2026-91487,
+  CVE-2026-83381, CVE-2026-91374, CVE-2026-91375, CVE-2026-91379,
+  CVE-2026-91380, CVE-2026-91334, CVE-2026-87367, CVE-2026-87292,
+  CVE-2026-83376, CVE-2026-91461, CVE-2026-91397, CVE-2026-91400,
+  CVE-2026-91335).
+
 * Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.20.1.1-alt1
 - New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
 
