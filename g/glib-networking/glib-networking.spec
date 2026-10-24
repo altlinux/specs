@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Networking support for GIO
@@ -121,6 +121,10 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Sat Oct 24 2026 Yuri N. Sedunov <aris@altlinux.org> 2.90.1-alt1
+- 2.90.1 (fixed CVE-2026-103963, CVE-2026-113622,
+  CVE-2026-113623, CVE-2026-113624)
+
 * Fri Sep 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.90.0-alt1
 - 2.90.0 (fixed CVE-2025-60018, CVE-2026-2574, CVE-2026-10028)
 

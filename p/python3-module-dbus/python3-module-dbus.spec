@@ -2,14 +2,15 @@
 %define _libexecdir %_prefix/libexec
 %define modname dbus-python
 %define pypi_name dbus_python
+%define __meson_test_timeout_multiplier 2
 
 %def_enable doc
 %def_enable check
 %def_disable installed_tests
-#%%add_findreq_skiplist %_libexecdir/installed-tests/%modname/test/*.py
+
 
 Name: python3-module-dbus
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Python bindings for D-BUS library
@@ -88,12 +89,12 @@ the functionality of the installed python-dbus package.
 %meson_install
 
 %check
-%__meson_test -t 2
+%__meson_test
 
 %files
 %python3_sitelibdir/*.so
 %python3_sitelibdir/dbus/
-%doc AUTHORS COPYING NEWS
+%doc AUTHORS COPYING NEWS SECURITY*
 
 %exclude %python3_sitelibdir/dbus/gi_service.py
 %exclude %python3_sitelibdir/dbus/__pycache__/gi_service.*.pyc
@@ -119,6 +120,9 @@ the functionality of the installed python-dbus package.
 %endif
 
 %changelog
+* Sat Oct 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Sat Oct 17 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
