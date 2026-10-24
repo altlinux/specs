@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     vokoscreenNG
-Version:  4.10.0
+Version:  4.11.0
 Release:  alt1
 
 Summary:  VokscreenNG is a user friendly Open Source screencaster for Linux and Windows
@@ -14,11 +14,17 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 Patch0:   %name-alt-mkv-playback.patch
 
+ExclusiveArch: %qt6_qtwebengine_arches
+
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: gcc-c++
 BuildRequires: intltool
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-multimedia-devel
+BuildRequires: qt6-webchannel-devel
+BuildRequires: qt6-webengine-devel
+BuildRequires: qt6-websockets-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: libgstreamermm1.0-devel
 BuildRequires: libpulseaudio-devel
@@ -47,6 +53,9 @@ install -Dpm0644 src/applications/%name.png %buildroot%_pixmapsdir/%name.png
 %_pixmapsdir/%name.png
 
 %changelog
+* Sat Oct 03 2026 Andrey Cherepanov <cas@altlinux.org> 4.11.0-alt1
+- New version.
+
 * Sat Jun 27 2026 Andrey Cherepanov <cas@altlinux.org> 4.10.0-alt1
 - New version.
 
