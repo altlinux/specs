@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 45.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Integration Testing
 
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/tempest
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+Patch0: fix-testtools-skipped.patch
 
 BuildArch: noarch
 
@@ -85,6 +86,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -145,6 +147,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %endif
 
 %changelog
+* Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 45.0.0-alt1.1
+- Fix skipped tests with current testtools.
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 45.0.0-alt1
 - Automatically updated to 45.0.0.
 
