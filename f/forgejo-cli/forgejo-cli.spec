@@ -2,7 +2,7 @@
 %define features locale.ru
 
 Name: forgejo-cli
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 Url: https://codeberg.org/forgejo-contrib/forgejo-cli
 Vcs: https://codeberg.org/forgejo-contrib/forgejo-cli.git
@@ -44,6 +44,9 @@ BuildRequires: rpm-build-rust libssl-devel
 %_datadir/fish/vendor_completions.d/fj.fish
 
 %changelog
+* Sun Oct 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.7.0-alt1
+- updated from 0.6.0 to 0.7.0
+
 * Sun Jul 19 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.6.0-alt1
 - New version 0.6.0.
 
