@@ -3,8 +3,8 @@
 %def_with check
 
 Name: contour-terminal
-Version: 0.7.0.8982
-Release: alt2
+Version: 0.8.0.9335
+Release: alt1
 
 Summary: Modern C++ Terminal Emulator
 License: Apache-2.0
@@ -14,6 +14,7 @@ Url: https://github.com/contour-terminal/contour
 Source: %name-%version.tar
 
 BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-systemd
 
 BuildRequires: gcc-c++
 BuildRequires: libmicrosoft-gsl-devel
@@ -31,11 +32,15 @@ BuildRequires: pkgconfig(Qt6ShaderTools)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: /usr/bin/tic
 BuildRequires: libutempter-devel
+BuildRequires: pkgconfig(libsystemd)
 
 %if_with check
 BuildRequires: ctest
 BuildRequires: catch-devel
+BuildRequires: libqt6-core5compat
 %endif
+
+ExcludeArch: %ix86
 
 Requires: libqt6-core5compat
 Requires: libqt6-qml
@@ -70,7 +75,7 @@ sed -i "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-nc
 %cmake_install
 
 %check
-%ctest -E "vtconformance_test|contour_gui_test|contour_e2e_lifecycle|contour_e2e_vt_stream|contour_e2e_custom_config"
+%ctest -E "vtpty_test|vtconformance_test|vthost_test|contour_gui_test|contour_e2e_lifecycle|contour_e2e_vt_stream|contour_e2e_custom_config|contour_test"
 
 %files
 %doc LICENSE.txt README.md docs/screenshots/contour-notcurses-ncneofetch.png
@@ -84,6 +89,7 @@ sed -i "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-nc
 %_datadir/contour/shell-integration/shell-integration.fish
 %_datadir/contour/shell-integration/shell-integration.tcsh
 %_datadir/contour/shell-integration/shell-integration.zsh
+%_datadir/contour/shell-integration/shell-integration.pwsh
 %_iconsdir/hicolor/128x128/apps/org.contourterminal.Contour.png
 %_iconsdir/hicolor/256x256/apps/org.contourterminal.Contour.png
 %_iconsdir/hicolor/32x32/apps/org.contourterminal.Contour.png
@@ -92,8 +98,16 @@ sed -i "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-nc
 %_datadir/kio/servicemenus/org.contourterminal.Contour.OpenHere.desktop
 %_datadir/kio/servicemenus/org.contourterminal.Contour.RunIn.desktop
 %_datadir/metainfo/org.contourterminal.Contour.metainfo.xml
+%_userunitdir/app-glib-org.contourterminal.Contour-.scope.d/50-oom-policy.conf
+%_userunitdir/app-gnome-org.contourterminal.Contour-.scope.d/50-oom-policy.conf
+%_userunitdir/app-org.contourterminal.Contour-.scope.d/50-oom-policy.conf
+%_userunitdir/app-org.contourterminal.Contour@.service.d/50-oom-policy.conf
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.0.9335-alt1
+- New version 0.8.0.9335.
+- Exclude %%ix86 arch as not buildable.
+
 * Tue Aug 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0.8982-alt2
 - Build with libssh2.
 
