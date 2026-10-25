@@ -5,7 +5,7 @@
 %def_with check
 
 Name: ngraph-gtk
-Version: 6.09.11
+Version: 6.10.00
 Release: alt1
 
 Summary: Tool for creating scientific 2-dimensional graphs
@@ -21,6 +21,8 @@ BuildRequires: pkgconfig(gtksourceview-5)
 BuildRequires: pkgconfig(gsl)
 BuildRequires: ruby
 BuildRequires: gcc-c++
+BuildRequires: pkgconfig(minizip)
+BuildRequires: pkgconfig(expat)
 
 Requires: libngraph = %{version}-%{release}
 Requires: ngraph-gtk-data = %{version}-%{release}
@@ -142,5 +144,8 @@ install -Dm644 misc/ngraph.applications %buildroot%_datadir/application-registry
 %_datadir/ngraph-gtk/gtksourceview/ngraph-math.lang
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 6.10.00-alt1
+- New version 6.10.00.
+
 * Thu Jan 15 2026 Nikolay Strelkov <snk@altlinux.org> 6.09.11-alt1
 - Initial build for Sisyphus
