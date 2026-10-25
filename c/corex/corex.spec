@@ -5,7 +5,7 @@
 %def_with check
 
 Name: corex
-Version: 1.0.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Real-time hardware monitoring with an always-on-top overlay widget
@@ -68,5 +68,8 @@ install -Dm 644 corex/assets/corex_icon.svg %buildroot%_iconsdir/hicolor/scalabl
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 2.3.1-alt1
+- new version 2.3.1 (with rpmrb script)
+
 * Sun Apr 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus
