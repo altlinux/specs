@@ -14,7 +14,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20261024
+Version: 20261025
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -161,6 +161,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sun Oct 25 2026 Vladimir Romanov <rirusha@altlinux.org> 20261025-alt1
+- Changed ID to appstream version.
+
 * Sat Oct 24 2026 Vladimir Romanov <rirusha@altlinux.org> 20261024-alt1
 - Updated for ready-set 0.15.
 

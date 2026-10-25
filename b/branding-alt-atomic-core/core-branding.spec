@@ -14,7 +14,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-core
-Version: 20261019
+Version: 20261025
 Release: alt1
 
 Group: Graphics
@@ -76,6 +76,9 @@ Conflicts: altlinux-release-%altbranch
 %_prefix/lib/os-release
 
 %changelog
+* Sun Oct 25 2026 Vladimir Romanov <rirusha@altlinux.org> 20261025-alt1
+- Changed ID to appstream version.
+
 * Mon Oct 19 2026 Vladimir Romanov <rirusha@altlinux.org> 20261019-alt1
 - Changed some data for appstream competability.
 
