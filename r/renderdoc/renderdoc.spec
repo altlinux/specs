@@ -1,6 +1,11 @@
+# LTO merges the per-object-file static constructors into partitions, which breaks
+# renderdoc's contract that posix_libentry's library_loaded() runs last (after
+# logfile/m_Config initialisation) - the library then segfaults on load (ALT #52363)
+%define optflags_lto %nil
+
 Name: renderdoc
 Version: 1.46
-Release: alt1
+Release: alt2
 
 Summary: A frame-capture based graphics debugger
 License: MIT
@@ -40,7 +45,7 @@ available for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development.
 %setup
 
 %build
-%add_optflags -Wno-error=odr -Wno-error=lto-type-mismatch -Wno-error=stringop-overread -Wno-error=alloc-size-larger-than= -Wno-error=stringop-overflow -I%_includedir/pcre
+%add_optflags -Wno-error=odr -Wno-error=lto-type-mismatch -Wno-error=stringop-overread -Wno-error=alloc-size-larger-than= -Wno-error=stringop-overflow -Wno-error=array-bounds -Wno-error=string-compare -Wno-error=free-nonheap-object -Wno-error=uninitialized -I%_includedir/pcre
 %cmake \
 	-DQMAKE_QT5_COMMAND:STRING=qmake-qt5 \
 	-DVULKAN_LAYER_FOLDER:PATH=%_datadir/vulkan/implicit_layer.d \
@@ -69,6 +74,11 @@ available for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development.
 %_includedir/renderdoc_app.h
 
 %changelog
+* Sun Oct 25 2026 Nazarov Denis <nenderus@altlinux.org> 1.46-alt2
+- Disable LTO: it reorders static initialisers, breaking the guarantee that
+  posix_libentry's library_loaded() runs last, which segfaulted the library
+  on load (ALT #52363)
+
 * Sat Sep 19 2026 Nazarov Denis <nenderus@altlinux.org> 1.46-alt1
 - New version 1.46.
 
