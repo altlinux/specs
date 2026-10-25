@@ -6,7 +6,7 @@
 %define sover 3.4
 
 Name: calamares
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 
 Summary: Distribution-independent installer framework
@@ -129,5 +129,8 @@ install -Dm0644 io.calamares.calamares.appdata.xml \
 %_K6lib/cmake/Calamares/
 
 %changelog
+* Sun Oct 25 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.4.3-alt1
+- updated from 3.4.2 to 3.4.3
+
 * Wed Jun 24 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.4.2-alt1
 - Initial build for Sisyphus.
