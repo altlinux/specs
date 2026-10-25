@@ -14,7 +14,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-onyx
-Version: 20261019
+Version: 20261024
 Release: alt1
 
 # ptyxis doesn't support i586
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-branding
 BuildRequires(pre): rpm-macros-ready-set
 BuildRequires: meson
-BuildRequires: pkgconfig(libready-set-0.14)
+BuildRequires: pkgconfig(libready-set-0.15)
 
 %description
 %summary.
@@ -161,6 +161,9 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sat Oct 24 2026 Vladimir Romanov <rirusha@altlinux.org> 20261024-alt1
+- Updated for ready-set 0.15.
+
 * Mon Oct 19 2026 Vladimir Romanov <rirusha@altlinux.org> 20261019-alt1
 - Changed some data for appstream competability.
 

@@ -15,7 +15,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-phosphophyllite
-Version: 20260925
+Version: 20261025
 Release: alt1
 
 Group: Graphics
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-branding
 BuildRequires(pre): rpm-macros-ready-set
 BuildRequires: meson
-BuildRequires: pkgconfig(libready-set-0.14)
+BuildRequires: pkgconfig(libready-set-0.15)
 
 %description
 %summary.
@@ -156,5 +156,8 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sun Oct 25 2026 David Sultaniiazov <x1z53@altlinux.org> 20261025-alt1
+- Update ready-set version.
+
 * Fri Sep 25 2026 David Sultaniiazov <x1z53@altlinux.org> 20260925-alt1
 - Initial build.

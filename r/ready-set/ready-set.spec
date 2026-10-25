@@ -7,16 +7,13 @@
 %define _libexecdir %_prefix/libexec
 %define libname lib%name
 %define girname ReadySet
-%define ser_name %name-service
-%define ser_libname %libname-service
-%define ser_girname %{girname}Service
-%define soversion 0.14
-%define minor_version 2
+%define soversion 0.15
+%define minor_version 1
 %define gis_name gnome-initial-setup
 
 Name: ready-set
 Version: %soversion.%minor_version
-Release: alt2
+Release: alt1
 
 Summary: Modular (System Installer | Initial Setup Wizard)
 License: GPL-3.0-or-later
@@ -49,6 +46,7 @@ BuildRequires: gir(NM) = 1.0
 BuildRequires: gir(Peas) = 2
 BuildRequires: gir(Serialize) = 7
 BuildRequires: gir(Tuner) = 1
+BuildRequires: gir(Vte) = 2.91
 BuildRequires: typelib(Case) = 0
 BuildRequires: pkgconfig(accountsservice)
 BuildRequires: pkgconfig(flatpak)
@@ -70,6 +68,7 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(tuner-1)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libapi-base-7)
+BuildRequires: pkgconfig(vte-2.91-gtk4)
 
 %description
 %summary.
@@ -78,10 +77,10 @@ BuildRequires: pkgconfig(libapi-base-7)
 Summary: Files needed for work as initial-setup in gdm
 Group: Graphical desktop/Other
 
-BuildArch: noarch
 Requires: %name = %EVR
 Requires: gdm
 Conflicts: %gis_name
+Conflicts: %name-phrog
 
 %description gdm
 %summary.
@@ -90,7 +89,6 @@ Conflicts: %gis_name
 Summary: Files needed for work as initial-setup in phrog
 Group: Graphical desktop/Other
 
-BuildArch: noarch
 Requires: %name = %EVR
 Requires: phrog
 
@@ -130,41 +128,6 @@ BuildArch: noarch
 Requires: %libname%soversion-gir = %EVR
 
 %description -n %libname-gir-devel
-%summary.
-
-%package -n %ser_libname%soversion
-Summary: %ser_name library
-Group: System/Libraries
-
-%description -n %ser_libname%soversion
-%summary.
-
-%package -n %ser_libname-devel
-Summary: %ser_name development files
-Group: Development/C
-
-Requires: %ser_libname%soversion = %EVR
-
-%description -n %ser_libname-devel
-%summary.
-
-%package -n %ser_libname%soversion-gir
-Summary: %ser_name GIR introspection files
-Group: System/Libraries
-
-Requires: %ser_libname%soversion = %EVR
-
-%description -n %ser_libname%soversion-gir
-%summary.
-
-%package -n %ser_libname-gir-devel
-Summary: %ser_name GIR introspection development files
-Group: Development/GNOME and GTK+
-
-BuildArch: noarch
-Requires: %ser_libname%soversion-gir = %EVR
-
-%description -n %ser_libname-gir-devel
 %summary.
 
 %package plugin-network
@@ -315,8 +278,6 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_iconsdir/hicolor/*/apps/%{app_id}*
 %_datadir/applications/%{app_id}*
 %_datadir/polkit-1/rules.d/%app_id.rules
-%_userunitdir/gnome-session.target.wants/%name-existing-user.service
-%_userunitdir/%name-existing-user.service
 %_libexecdir/%app_id
 %_sysconfdir/%name
 %dir %_datadir/%name
@@ -357,27 +318,18 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_userunitdir/%gis_name.service
 %_userunitdir/gnome-session@%gis_name.target.d
 %_sysusersdir/%gis_name.conf
+%_libdir/%name/plugins/post-act/gdm-login.plugin
+%_libdir/%name/plugins/post-act/libgdm-login.so
+%_userunitdir/gnome-session.target.wants/%name-existing-user-gnome.service
+%_userunitdir/%name-existing-user-gnome.service
 
 %files phrog
 %_sysconfdir/dconf/db/local.d/50_org.altlinux.ReadySet.phrog_first-run
 %_sysusersdir/%name-phrog.conf
-
-%files -n %ser_libname%soversion
-%_libdir/%ser_libname-%soversion.so.%soversion
-%_libdir/%ser_libname-%soversion.so.%soversion.*
-
-%files -n %ser_libname-devel
-%_pkgconfigdir/%ser_libname-%soversion.pc
-%_libdir/%ser_libname-%soversion.so
-%_includedir/%ser_libname-%soversion.h
-%_vapidir/%ser_libname-%soversion.deps
-%_vapidir/%ser_libname-%soversion.vapi
-
-%files -n %ser_libname%soversion-gir
-%_typelibdir/%ser_girname-%soversion.typelib
-
-%files -n %ser_libname-gir-devel
-%_girdir/%ser_girname-%soversion.gir
+%_libdir/%name/plugins/post-act/phrog-first-run-unset.plugin
+%_libdir/%name/plugins/post-act/libphrog-first-run-unset.so
+%_userunitdir/gnome-session.target.wants/%name-existing-user-phrog.service
+%_userunitdir/%name-existing-user-phrog.service
 
 %files -n %libname%soversion
 %_libdir/%libname-%soversion.so.%soversion
@@ -465,6 +417,33 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sun Oct 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.15.1-alt1
+- New version: 0.15.1.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.15.1
+
+* Sat Oct 24 2026 Vladimir Romanov <rirusha@altlinux.org> 0.15.0-alt1
+- New version: 0.15.0 (closes #60735, #60683).
+- Added dedicated post-act plugins for GNOME Initial Setup and Phrog,
+  including support for the `existing-user` workflow.
+- Added merging of configuration fragments from `config.d` directories.
+- Added vendor CSS support through the `style` option.
+- Added pulse progress reporting and asynchronous installer stage reporting.
+- Moved `ServiceAddin` to `libready-set` and removed the separate
+  `libready-set-service` library.
+- Network: added WPA Enterprise, editing of known Wi-Fi networks, FQDN and
+  collision-resistant hostname generation; updated connection editor to 51;
+  removed WEP; improved behavior when NetworkManager is unavailable.
+- Software: identify Flatpak remotes by repository URL, handle remote name
+  conflicts and ignore invalid source configurations in Tuner.
+- Date and Time: show autodetection only when NTP is available and use the
+  compilation timestamp when the system clock is too old.
+- Redesigned Welcome and completion pages; added installer stage statuses,
+  pulse progress and a validated reboot action.
+- Added Russian README files.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.15.0
+
 * Wed Sep 16 2026 Vladimir Romanov <rirusha@altlinux.org> 0.14.2-alt2
 - Disabled `fatal-warnings` valac arg.
   There is new libadwaita that deprecate EnumList, but gtk vapi doesn't
