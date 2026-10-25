@@ -8,7 +8,7 @@
 
 %define pypi_name gp-sphinx
 %define module_name gp_sphinx
-%define version_alpha a37
+%define version_alpha a39
 
 %define src_dir packages/%pypi_name
 %define tests_dir ../../tests
@@ -82,5 +82,8 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Oct 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.1.0-alt1.a39
+- Updated to 0.1.0a39.
+
 * Tue Aug 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.1.0-alt1.a37
 - Initial build for ALT Sisyphus.
