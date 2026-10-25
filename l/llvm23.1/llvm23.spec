@@ -8,7 +8,7 @@
 
 %global v_major 23
 %global v_majmin %v_major.1
-%global v_full %v_majmin.3
+%global v_full %v_majmin.4
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -152,6 +152,11 @@ Patch108: llvm-alt-libc-loongarch64-support.patch
 Patch111: RH-0003-PATCH-clang-Don-t-install-static-libraries.patch
 
 # ispc patches
+
+# upstream PR/fixes
+# https://github.com/llvm/llvm-project/pull/219877
+# https://github.com/llvm/llvm-project/issues/206307
+Patch200: llvm-CodeGen-MachineScheduler-219877.patch
 
 # debian patches for openmp
 Patch300: deb-openmp-riscv64.patch
@@ -794,6 +799,9 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch111 -p1
 
 # upstream patches for loongarch
+
+# upstream PR/fixes
+%patch200 -p1
 
 # ispc patches
 
@@ -1597,6 +1605,10 @@ ninja -C %builddir check-all || :
 %endif
 
 %changelog
+* Fri Oct 23 2026 L.A. Kostis <lakostis@altlinux.ru> 23.1.4-alt0.1
+- 23.1.4.
+- llvm: apply fix from PR#219877 (CodeGen/MachineScheduler asm inlining issues).
+
 * Fri Oct 09 2026 L.A. Kostis <lakostis@altlinux.ru> 23.1.3-alt0.1
 - 23.1.3.
 - Update/rediffed -alt patches.
