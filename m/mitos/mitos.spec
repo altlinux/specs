@@ -2,8 +2,8 @@
 %def_with check
 
 Name: mitos
-Version: 0.1.0
-Release: alt2
+Version: 0.1.2
+Release: alt1
 Summary: Mitos is a fast and minimal modal text editor
 License: MPL-2.0
 Group: Editors
@@ -91,6 +91,9 @@ export CARGO_PROFILE_RELEASE_STRIP=false
 %_libdir/%name/grammars/*.so
 
 %changelog
+* Sun Oct 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.2-alt1
+- Updated to version 0.1.2.
+
 * Mon Oct 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.0-alt2
 - Added mitos-grammars subpackage with tree-sitter grammars.
 
