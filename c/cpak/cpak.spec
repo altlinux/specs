@@ -3,7 +3,7 @@
 %global import_path github.com/Containerpak/cpak
 
 Name: cpak
-Version: 2.14.8
+Version: 2.14.11
 Release: alt1
 
 Summary: Fast, decentralized, portable, powerful and low-memory footprint package format for Linux
@@ -78,6 +78,9 @@ echo "      Run 'cpak system setup' and 'cpak doctor' to apply and check the con
 %_datadir/zsh/site-functions/_%{name}
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 2.14.11-alt1
+- New version 2.14.11.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 2.14.8-alt1
 - New version 2.14.8.
 
