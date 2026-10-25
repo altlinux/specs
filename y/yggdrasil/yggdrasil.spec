@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: yggdrasil
-Version: 0.5.14
+Version: 0.5.15
 Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
@@ -43,7 +43,6 @@ over either IPv4 or IPv6.
 sed -i '/chmod/s|/usr||' contrib/systemd/yggdrasil-default-config.service
 
 %build
-export GO111MODULE=off
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
@@ -80,6 +79,9 @@ install -pD -m0644 {,%buildroot%_unitdir/}yggdrasil-default-config.service
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Sun Oct 25 2026 Anton Zhukharev <ancieg@altlinux.org> 0.5.15-alt1
+- Updated to 0.5.15.
+
 * Thu Jul 02 2026 Anton Zhukharev <ancieg@altlinux.org> 0.5.14-alt1
 - Updated to 0.5.14.
 
