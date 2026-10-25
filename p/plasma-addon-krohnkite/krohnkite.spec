@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: plasma-addon-krohnkite
-Version: 0.9.9.2
-Release: alt3
+Version: 0.9.10.0
+Release: alt1
 
 Summary: A dynamic tiling extension for KWin 6 only
 License: MIT
@@ -14,7 +16,7 @@ Source1: node_modules.tar
 
 ExcludeArch: i586
 
-BuildRequires(Pre): rpm-macros-make
+BuildRequires(Pre): rpm-macros-make rpm-build-python3
 BuildRequires: git npm node
 
 %description
@@ -47,6 +49,9 @@ done
 %_datadir/kwin/scripts/krohnkite
 
 %changelog
+* Mon Oct 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.10.0-alt1
+- 0.9.9.2 -> 0.9.10.0
+
 * Sun Jun 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.9.2-alt3
 - changed VCS
 
