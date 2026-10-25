@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: lomiri-weather-app
-Version: 6.2.0
-Release: alt2
+Version: 6.3.0
+Release: alt1
 
 Summary: Weather App for Lomiri Operating Environment
 License: GPL-3.0-only
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 
 ExcludeArch: loongarch64 riscv64
 
+# sync with version 6.3.0-1 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -50,12 +51,14 @@ This package provides Lomiri's Weather App.
 
 %build
 %cmake \
-       -DCLICK_MODE=OFF \
-       -DINSTALL_TESTS=OFF
+       -DCLICK_MODE=OFF
 %cmake_build
 
 %install
 %cmake_install
+
+mkdir -p %buildroot%_qt5_qmldir/
+mv -v %buildroot/LomiriWeather %buildroot/%_qt5_qmldir/
 
 %find_lang %name --all-name
 
@@ -75,6 +78,9 @@ This package provides Lomiri's Weather App.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-weather-app.mo
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 6.3.0-alt1
+- New version 6.3.0.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt2
 - Exclude loongarch64 and riscv64 arches as not buildable.
 

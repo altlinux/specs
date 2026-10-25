@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lomiri-gallery-app
-Version: 3.1.1
+Version: 3.2.0
 Release: alt1
 
 Summary: Gallery App for Lomiri Operating Environment
@@ -12,7 +12,7 @@ Url: https://gitlab.com/ubports/development/apps/lomiri-gallery-app
 
 Source: %name-%version.tar
 
-# sync with version 3.1.1-1 from Debian unstable + local fixes
+# sync with version 3.2.0-1 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -25,6 +25,8 @@ BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(exiv2)
 BuildRequires: pkgconfig(libmediainfo)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: rpm-build-python3
 
 Requires: lomiri-gallery-app-common
 
@@ -93,5 +95,8 @@ This package provides the arch-indep files of Lomiri's Gallery App.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-gallery-app.mo
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Fri Jul 25 2025 Nikolay Strelkov <snk@altlinux.org> 3.1.1-alt1
 - Initial build for Sisyphus

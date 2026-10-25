@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-system-settings
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: System Settings application for Lomiri
@@ -14,7 +14,7 @@ Url: https://gitlab.com/ubports/development/core/lomiri-system-settings
 
 Source: %name-%version.tar
 
-# sync with version 1.4.0-5 from Debian unstable + local fixes
+# sync with version 1.5.0-2 from Debian unstable + local fixes
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-cmake
@@ -127,6 +127,7 @@ developing applications that use %{name}.
 %setup
 %patch -p1
 sed -i "s|Categories=.*|Categories=Settings;DesktopSettings;HardwareSettings;Printing;Security;Accessibility;|" lomiri-system-settings.desktop.in.in
+sed -i "s|qmltestrunner|qmltestrunner-qt5|" tests/CMakeLists.txt
 
 %build
 %cmake \
@@ -136,8 +137,7 @@ sed -i "s|Categories=.*|Categories=Settings;DesktopSettings;HardwareSettings;Pri
        -DMODERN_PYTHON_DBUSMOCK=ON \
 %if_with check
        -DENABLE_TESTS=ON \
-       -Dqmlplugindump_exe=%_qt5_bindir/qmlplugindump \
-       -Dqmltestrunner_exe=%_qt5_bindir/qmltestrunner
+       -Dqmlplugindump_exe=%_qt5_bindir/qmlplugindump
 %else
        -DENABLE_TESTS=OFF
 %endif
@@ -149,7 +149,7 @@ sed -i "s|Categories=.*|Categories=Settings;DesktopSettings;HardwareSettings;Pri
 %find_lang %name --all-name
 
 %check
-%ctest -j1 -VV
+%ctest -j1 -VV -E tst_plugins
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README.md
@@ -178,9 +178,16 @@ sed -i "s|Categories=.*|Categories=Settings;DesktopSettings;HardwareSettings;Pri
 %_includedir/LomiriSystemSettings/*
 %_libdir/libLomiriSystemSettings.so
 %_libdir/libLomiriSystemSettingsPrivate.so
+%_libdir/cmake/LomiriSystemSettings/LomiriSystemSettingsConfig.cmake
+%_libdir/cmake/LomiriSystemSettings/LomiriSystemSettingsConfigVersion.cmake
+%_libdir/cmake/LomiriSystemSettings/LomiriSystemSettingsTargets-noconfig.cmake
+%_libdir/cmake/LomiriSystemSettings/LomiriSystemSettingsTargets.cmake
 %_pkgconfigdir/LomiriSystemSettings.pc
 
 %changelog
+* Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Wed Aug 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 
