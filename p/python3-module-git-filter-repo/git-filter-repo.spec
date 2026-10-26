@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.47.0
-Release: alt1
+Release: alt3
 
 Summary: Quickly rewrite git repository history (filter-branch replacement)
 License: GPL-2.0-or-later OR MIT OR CC0-1.0
@@ -17,10 +17,12 @@ Vcs: https://github.com/newren/git-filter-repo
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-pyproject
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools-scm
+Requires: /usr/bin/git
 
 %description
 git filter-repo is a versatile tool for rewriting history.
@@ -31,6 +33,7 @@ that scales usability-wise beyond trivial rewriting cases
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_scm_init
 
 %build
@@ -50,5 +53,11 @@ that scales usability-wise beyond trivial rewriting cases
 %python3_sitelibdir_noarch/__pycache__/%mod_name.*
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2.47.0-alt3
+- Added runtime dependency on /usr/bin/git (closes: #59035).
+
+* Thu Aug 06 2026 Dmitry Mihalchenko <tascad@altlinux.org> 2.47.0-alt2
+- Fixed FTBFS.
+
 * Tue Feb 03 2026 Dmitry Mihalchenko <tascad@altlinux.org> 2.47.0-alt1
 - Initial build for ALT Sisyphus.
