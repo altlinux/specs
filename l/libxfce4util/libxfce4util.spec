@@ -4,7 +4,7 @@
 
 Name: libxfce4util
 Version: 4.21.0
-Release: alt1
+Release: alt2.gf12d6d6
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
@@ -87,6 +87,7 @@ Vala bindings for %name.
 %prep
 %setup
 %patch -p1
+%xfce4_cleanup_version
 
 %build
 %meson \
@@ -130,6 +131,9 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Mon Oct 26 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt2.gf12d6d6
+- Updated from upstream git: fixed vala bindings.
+
 * Fri Oct 09 2026 Mikhail Efremov <sem@altlinux.org> 4.21.0-alt1
 - Added devel-doc subpackage.
 - Switched to meson build.
