@@ -1,5 +1,5 @@
 Name:    netplan
-Version: 1.2
+Version: 1.2.2
 Release: alt1
 
 Summary: Backend-agnostic network configuration in YAML
@@ -69,7 +69,7 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_sbindir/%name
 %_gen_dir/%name
 %_libexecdir/%name
-%_libdir/libnetplan.so.1
+%_libdir/libnetplan.so.*
 %_datadir/bash-completion/completions/%name
 %_datadir/%name
 %_defaultdocdir/%name
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
+- New version 1.2.2.
+
 * Tue Dec 23 2025 Maxim Slipenko <maks1ms@altlinux.org> 1.2-alt1
 - New version 1.2.
 
