@@ -2,7 +2,7 @@
 %def_with check
 
 Name: newt
-Version: 1.18.1
+Version: 1.19.0
 Release: alt1
 
 Summary: Tunneled network connector for Pangolin
@@ -42,6 +42,9 @@ install -vDm 755 ./bin/newt \
 %_bindir/newt
 
 %changelog
+* Mon Oct 26 2026 Egor Ignatov <egori@altlinux.org> 1.19.0-alt1
+- New version 1.19.0.
+
 * Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 1.18.1-alt1
 - New version 1.18.1.
 
