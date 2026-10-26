@@ -2,7 +2,7 @@
 %define app_name QPasswordChecker
 
 Name: qpasswordchecker
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Group: System/Configuration/Other
@@ -41,6 +41,9 @@ Qt application and background service for password expiry notifications.
 %_iconsdir/hicolor/*/apps/qpasswordchecker.*
 
 %changelog
+* Mon Oct 26 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
+- fix to start service
+
 * Fri Oct 23 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.0-alt1
 - port to Qt 6
 - rename to qpasswordchecker
