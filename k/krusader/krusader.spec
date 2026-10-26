@@ -1,6 +1,6 @@
 Name: krusader
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: Advanced KDE twin-panel file-manager
 License: GPLv3+
@@ -11,6 +11,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://download.kde.org/stable/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
+
+Patch1: krusader-language-menu.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires(pre): rpm-build-kf6
@@ -53,6 +55,7 @@ published under the GNU General Public Licence
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %add_optflags -fpermissive
@@ -76,6 +79,12 @@ published under the GNU General Public Licence
 %_datadir/metainfo/org.kde.%name.appdata.xml
 
 %changelog
+* Mon Oct 26 2026 Nazarov Denis <nenderus@altlinux.org> 2.9.0-alt2
+- Add "switch_application_language" action to the Settings menu: since KF6
+  the standard entry lives in the Settings menu, which krusader declares
+  with noMerge="1", so the item disappeared and the language could not be
+  switched (ALT #34924)
+
 * Sun Mar 23 2025 Nazarov Denis <nenderus@altlinux.org> 2.9.0-alt1
 - Version 2.9.0:
   + Port to KDE Frameworks 6 (ALT #51852)
