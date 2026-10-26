@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stplr-dbus
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: D-Bus service for Stapler
@@ -41,5 +41,8 @@ BuildRequires: libpolkitqt6-qt6-devel
 %_datadir/polkit-1/actions/org.alt.stplr.policy
 
 %changelog
+* Mon Oct 26 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.1.1-alt1
+- change the package build scheme
+
 * Wed Oct 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.1.0-alt1
 - initial build for ALT Linux
