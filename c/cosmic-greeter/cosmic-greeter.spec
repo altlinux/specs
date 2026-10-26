@@ -8,7 +8,7 @@
 
 Name: cosmic-greeter
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -24,7 +24,9 @@ Source: %url/archive/%git_ver/%name-%version%beta.tar.gz
 Source: %name-%version%beta.tar
 %endif
 Source1: %name-%version%beta-cargo.tar
+Source2: cosmic-locker.pam
 Patch1: %name-1.9.0-alt-no-check-login.defs.patch
+Patch2: %name-1.11.0-alt-locker-pam-service.patch
 
 Requires: greetd
 Requires: cosmic-comp
@@ -54,6 +56,7 @@ COSMIC greeter for greetd, which can be run inside cosmic-comp.
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %patch1 -b .no_login.defs
+%patch2 -p0 -b .locker_pam
 
 %build
 export VERGEN_GIT_SHA=%version
@@ -79,6 +82,8 @@ install -Dm 644 debian/%name{.service,-daemon.service} -t %buildroot%_unitdir/
 # PAM config
 install -d %buildroot%_sysconfdir/pam.d
   ln -s greetd %buildroot%_sysconfdir/pam.d/%name
+# screen locker
+install -pm 644 %SOURCE2 %buildroot%_sysconfdir/pam.d/cosmic-locker
 
 %check
 export VERGEN_GIT_SHA=%version
@@ -88,7 +93,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %files
 %_sysconfdir/greetd/greeters/%name.toml
 %_sysconfdir/pam.d/%name
-%_bindir/%name
+%config(noreplace) %_sysconfdir/pam.d/cosmic-locker
+# screen locker runs in user session, pam_tcb needs chkpwd helper
+%attr(2711, root, chkpwd) %_bindir/%name
 %_bindir/%name-start
 %_bindir/%name-daemon
 #%attr(2711, root, chkpwd) %_bindir/%name-daemon
@@ -101,6 +108,13 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Mon Oct 26 2026 Vladimir Didenko <cow@altlinux.org> 1.11.0-alt2
+- fixed screen unlocking with tcb:
+  + use separate "cosmic-locker" PAM service for the screen locker
+    with pam_permit in the account phase (like other screen lockers)
+  + made /usr/bin/cosmic-greeter setgid chkpwd to let pam_tcb
+    use tcb_chkpwd
+
 * Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 
