@@ -4,11 +4,10 @@
 %def_disable docs
 %def_enable tests
 
-%define _libexec %prefix/libexec
-
 Name: gnuradio
 Version: 3.10.12.0
-Release: alt2
+Release: alt3
+
 Summary: Software defined radio framework
 License: GPL-2.0-or-later
 Group: Engineering
@@ -21,18 +20,17 @@ Patch0: fix-gnuradio-qtgui.pc.patch
 # https://github.com/gnuradio/gnuradio/pull/7918
 Patch1: boost-1.89-system.patch
 
-# uhd not available for i586, armh
-# also segfault when build on ppc64le
-ExcludeArch: %ix86 %arm ppc64le
-
 Requires: typelib(Gtk) = 3.0
 
 %add_python3_path %_datadir/%name
 %add_findreq_skiplist %_datadir/%name/examples/*.grc
 
-BuildRequires(pre): rpm-macros-cmake rpm-macros-python3
-BuildRequires: rpm-build-python3 rpm-build-gir
-BuildRequires: gcc-c++ cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: rpm-build-gir
+BuildRequires: gcc-c++
+BuildRequires: cmake
 BuildRequires: liborc-devel
 BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgmpxx-devel
@@ -77,18 +75,25 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: mathjax
-#BuildRequires: texlive
+BuildRequires: xdg-utils
 BuildRequires: libspdlog-devel
 BuildRequires: SoapySDR-devel
 
 %if_enabled tests
+BuildRequires: ctest
 BuildRequires: pkgconfig(cppunit)
-%endif #tests
+BuildRequires: python3-module-zmq
+%endif
+
 %if_enabled docs
-BuildRequires: doxygen python3-module-sphinx
-BuildRequires: /usr/bin/latex /usr/bin/dvips tex(dvips.def)
-%endif #docs
-BuildRequires: desktop-file-utils xdg-utils
+BuildRequires: doxygen
+BuildRequires: python3-module-sphinx
+BuildRequires: texlive
+BuildRequires: /usr/bin/latex
+BuildRequires: /usr/bin/dvips
+BuildRequires: tex(dvips.def)
+%endif
+
 %add_python3_req_skip PyQt5.Qwt
 %add_python3_req_skip gnuradio.ctrlport.GNURadio
 %add_python3_req_skip Generate_LDPC_matrix_functions
@@ -98,37 +103,39 @@ Obsoletes: libgnuradio < 3.8
 Obsoletes: gnuradio-examples < 3.9.2.0-alt2
 
 %description
-GNU Radio is a collection of software that when combined with minimal
-hardware, allows the construction of radios where the actual waveforms
-transmitted and received are defined by software. What this means is
-that it turns the digital modulation schemes used in today's high
-performance wireless devices into software problems.
+GNU Radio is a free & open-source signal processing runtime and signal
+processing software development toolkit. Originally developed for use
+with software-defined radios and for simulating wireless communications,
+it's robust capabilities have led to adoption in hobbyist, academic,
+and commercial environments. GNU Radio has found use in software-defined
+radio, digital communications, nuclear physics, high-energy particle
+physics, astrophysics, radio astronomy and more!
 
 %package libs
 Summary: GNU Radio shared libraries
 Group: System/Libraries
 
 %description libs
-GNU Radio shared libraries.
+%summary.
 
 %package docs
-Summary: GNU Radio Documentation
+Summary: GNU Radio documentation
 Group: Engineering
 Buildarch: noarch
 Requires: %name = %EVR
 
 %description docs
-GNU Radio Documentation.
+%summary.
 
 %package devel
 Group: Development/C++
-Summary: GNU Radio Headers
+Summary: Development files for GNU Radio
 Requires: %name = %EVR
 Requires: cmake boost-program_options-devel
 Provides: libgnuradio-devel = %EVR
 
 %description devel
-GNU Radio Headers.
+%summary.
 
 %prep
 %setup
@@ -139,11 +146,7 @@ GNU Radio Headers.
 	-DENABLE_INTERNAL_VOLK=OFF \
 	-DGR_PYTHON_DIR=%python3_sitelibdir \
 	-DPYTHON_EXECUTABLE=%__python3 \
-%if_enabled tests
-	-DENABLE_TESTING=ON
-%else
-	-DENABLE_TESTING=OFF
-%endif #tests
+	-DENABLE_TESTING=%{?_enable_tests:ON}%{!?_enable_tests:OFF}
 %cmake_build
 
 %install
@@ -155,15 +158,13 @@ rm %buildroot%_datadir/%name/examples/qt-gui/display_qt
 rm %buildroot%_datadir/%name/examples/uhd/tags_demo
 
 # fix *.grc files permissions
-find %buildroot%_datadir/ -name '*.grc' | xargs \
+find %buildroot%_datadir/ -name '*.grc' -print0 | xargs -r0 \
 	chmod 644
 
-# fix shebang
-find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
-	-e 's:/usr/bin/env python$:%__python3:'
+%python3_fix_shebang %buildroot%_datadir/%name
 
 # desktop file
-desktop-file-install --dir=%buildroot%_datadir/applications \
+desktop-file-install --dir=%buildroot%_desktopdir \
   grc/scripts/freedesktop/gnuradio-grc.desktop
 # mime
 install -Dp grc/scripts/freedesktop/gnuradio-grc.xml \
@@ -174,28 +175,36 @@ install -Dp grc/scripts/freedesktop/org.gnuradio.grc.metainfo.xml \
 # icons
 for i in 16 24 32 48 64 128 256; do
   install -Dp grc/scripts/freedesktop/grc-icon-${i}.png \
-    %buildroot%_datadir/icons/hicolor/${i}x${i}/apps/gnuradio-grc.png
+    %buildroot%_iconsdir/hicolor/${i}x${i}/apps/gnuradio-grc.png
 done
+
+%if_enabled tests
+%check
+# for GUI test
+export QT_QPA_PLATFORM=offscreen
+# Few tests hang completely on the server but run OK locally
+%ctest --timeout 60 ||:
+%endif
 
 %files
 %_bindir/*
 %_sysconfdir/%name
+%_datadir/%name
 %_iconsdir/hicolor/*/apps/gnuradio-grc.png
 %_desktopdir/gnuradio-grc.desktop
-%_datadir/mime/packages/*
-%_datadir/%name
-%_docdir/%name-%version
-%python3_sitelibdir/%name
-%python3_sitelibdir/pmt
-%if_enabled docs
-%exclude %_docdir/%name-%version/xml
-%exclude %_docdir/%name-%version/html
-%endif #docs
 %_datadir/metainfo/org.gnuradio.grc.metainfo.xml
-%_man1dir/*.1.*
+%_datadir/mime/packages/*
 %_datadir/bash-completion/completions/gr_modtool
 %_datadir/zsh/site-functions/_gr_modtool
 %_datadir/fish/vendor_completions.d/gr_modtool.fish
+%python3_sitelibdir/%name
+%python3_sitelibdir/pmt
+%_man1dir/*.1.*
+%_docdir/%name-%version
+%if_enabled docs
+%exclude %_docdir/%name-%version/xml
+%exclude %_docdir/%name-%version/html
+%endif
 
 %files libs
 %_libdir/*.so.*
@@ -204,7 +213,7 @@ done
 %files docs
 %_docdir/%name-%version/xml
 %_docdir/%name-%version/html
-%endif #docs
+%endif
 
 %files devel
 %_libdir/*.so
@@ -214,6 +223,12 @@ done
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 23 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.12.0-alt3
+- Update descriptions.
+- Drop ExcludeArch.
+- Add check section.
+- Minor spec cleanup.
+
 * Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 3.10.12.0-alt2
 - Fix FTBFS with boost 1.91.0.
 

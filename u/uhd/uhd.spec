@@ -6,24 +6,16 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 
-# NEON support is by default disabled on ARMs
-# building with --with=neon will enable auto detection
-%ifarch %arm
-%def_without neon
-%else
-%def_with neon
-%endif
-
-%ifarch %arm aarch64
-%if ! %{with neon}
-%global have_neon -DNEON_SIMD_ENABLE:BOOL=OFF
-%endif
+# Excess precision results in failing tests; force IEEE-754 compliance
+%ifarch %ix86
+%global optflags %optflags -ffloat-store
 %endif
 
 Name: uhd
-Version: 4.10.0.0
-Release: alt3
-Summary: Universal Hardware Driver for Ettus Research products
+Version: 4.11.0.0
+Release: alt1
+
+Summary: The USRP(TM) (Universal Software Radio Peripheral) Hardware Driver
 License: GPL-3.0-or-later
 Group: Engineering
 URL: https://uhd.ettus.com
@@ -36,16 +28,43 @@ Source1: %name-limits.conf
 # Source2-url: https://github.com/EttusResearch/uhd/releases/download/v%version/uhd-images_%version.tar.xz
 Source2: images.tar
 
-# Tests fail on i586, armh
-ExcludeArch: %ix86 %arm
-
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-python3
-BuildRequires: ctest cmake
-BuildRequires: boost-interprocess-devel gcc-c++ boost-asio-devel boost-context-devel boost-coroutine-devel boost-devel boost-program_options-devel boost-devel-headers boost-filesystem-devel boost-flyweight-devel boost-geometry-devel boost-graph-parallel-devel boost-interprocess-devel boost-locale-devel boost-lockfree-devel boost-log-devel boost-math-devel boost-mpi-devel boost-msm-devel boost-polygon-devel boost-program_options-devel boost-python3-devel boost-signals-devel boost-wave-devel libusb-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libgps-devel libudev-devel
+BuildRequires: gcc-c++
+BuildRequires: cmake
+BuildRequires: boost-interprocess-devel
+BuildRequires: boost-asio-devel
+BuildRequires: boost-context-devel
+BuildRequires: boost-coroutine-devel
+BuildRequires: boost-devel
+BuildRequires: boost-program_options-devel
+BuildRequires: boost-devel-headers
+BuildRequires: boost-filesystem-devel
+BuildRequires: boost-flyweight-devel
+BuildRequires: boost-geometry-devel
+BuildRequires: boost-graph-parallel-devel
+BuildRequires: boost-interprocess-devel
+BuildRequires: boost-locale-devel
+BuildRequires: boost-lockfree-devel
+BuildRequires: boost-log-devel
+BuildRequires: boost-math-devel
+BuildRequires: boost-mpi-devel
+BuildRequires: boost-msm-devel
+BuildRequires: boost-polygon-devel
+BuildRequires: boost-python3-devel
+BuildRequires: boost-signals-devel
+BuildRequires: boost-wave-devel
+BuildRequires: libusb-devel
+BuildRequires: libncurses++-devel
+BuildRequires: libncurses-devel
+BuildRequires: libncursesw-devel
+BuildRequires: libtic-devel
+BuildRequires: libtinfo-devel
+BuildRequires: libgps-devel
+BuildRequires: libudev-devel
 BuildRequires: dpdk-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-setuptools
@@ -56,55 +75,71 @@ BuildRequires: doxygen
 BuildRequires: graphviz
 BuildRequires: libpcap-devel
 BuildRequires: python3-module-mako
-Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+BuildRequires: libprotobuf-devel
+BuildRequires: libgrpc-devel
+BuildRequires: grpc-plugins
+BuildRequires: libre2-devel
+BuildRequires: libcares-devel
+BuildRequires: ctest
+BuildRequires: python3-module-requests
+
+Requires(pre): shadow-change
+Requires(pre): shadow-check
+Requires(pre): shadow-convert
+Requires(pre): shadow-edit
+Requires(pre): shadow-groups
+Requires(pre): shadow-log
+Requires(pre): shadow-submap
+Requires(pre): shadow-utils
 Requires: lib%name = %EVR
 Requires: python3-module-%name = %EVR
 Requires: python3-module-usrp_mpm = %EVR
 Requires: %name-firmware = %EVR
 
 %description
-The UHD is the universal hardware driver for Ettus Research products.
-The goal of the UHD is to provide a host driver and API for current and
-future Ettus Research products. It can be used standalone without GNU Radio.
+UHD is the free & open-source software driver and API for the Universal
+Software Radio Peripheral (USRP(TM)) SDR platform, created and sold
+by Ettus Research.  It supports all Ettus Research USRP(TM) hardware,
+including all motherboards and daughterboards, and the combinations thereof.
 
 %package firmware
-Summary: Firmware files for UHD
+Summary: Firmware files for the USRP(TM) Hardware Driver (UHD)
 Group: Engineering
 BuildArch: noarch
 
 %description firmware
-Firmware files for the Universal Hardware driver (UHD).
+%summary.
 
 %package -n lib%name
 Group: Engineering
-Summary: Libraries for UHD
+Summary: Libraries for the USRP(TM) Hardware Driver (UHD)
 
 %description -n lib%name
-Libraries for the Universal Hardware driver (UHD).
+%summary.
 
 %package devel
 Group: Development/Other
-Summary: Development files for UHD
+Summary: Development files for the USRP(TM) Hardware Driver (UHD)
 Requires: lib%name = %EVR
 
 %description devel
-Development files for the Universal Hardware Driver (UHD).
+%summary.
 
 %package doc
 Group: Documentation
-Summary: Documentation files for UHD
+Summary: Documentation files for the USRP(TM) Hardware Driver (UHD)
 BuildArch: noarch
 
 %description doc
-Documentation for the Universal Hardware Driver (UHD).
+%summary.
 
 %package tools
 Group: Engineering
-Summary: Tools for working with / debugging USRP device
+Summary: Tools for working with and/or debugging USRP(TM) devices
 Requires: %name = %EVR
 
 %description tools
-Tools that are useful for working with and/or debugging USRP device.
+%summary.
 
 %package -n python3-module-%name
 Group: Development/Python3
@@ -113,7 +148,7 @@ Requires: lib%name = %EVR
 %add_python3_req_skip usrp_mpm.chips.ic_reg_maps.lmx2572_regs
 
 %description -n python3-module-%name
-Python 3 API for %name.
+%summary.
 
 %package -n python3-module-usrp_mpm
 Group: Development/Python3
@@ -128,24 +163,17 @@ Requires: lib%name = %EVR
 %add_python3_self_prov_path %buildroot%python3_sitelibdir/usrp_mpm/
 
 %description -n python3-module-usrp_mpm
-Python 3 module for usrp (part %name).
+%summary.
 
 %prep
 %setup
 %autopatch -p1
 
-# fix python shebangs
-find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
-
-# Disable -march=native on ppc64le
-%ifarch ppc64le
-find . -type f -name 'CMakeLists.txt' -print0 |
-	xargs -r0 sed -i -e's![ \t]*-march=native!!g'
-%endif
+%python3_fix_shebang .
 
 %build
 pushd host
-%cmake %{?have_neon} \
+%cmake \
         %_cmake_skip_rpath \
         -DENABLE_GPSD=ON \
         -DENABLE_E300=ON \
@@ -156,7 +184,7 @@ popd
 
 %check
 pushd host
-%cmake_build --target test || :
+%cmake_build --target test
 popd
 
 %install
@@ -243,6 +271,11 @@ install -Dpm 0755 tools/usrp_x3xx_fpga_jtag_programmer.sh %buildroot%_bindir/usr
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Wed Oct 14 2026 Valery Zabrovsky <brow@altlinux.org> 4.11.0.0-alt1
+- New version 4.11.0.0.
+- Update summaries and descriptions.
+- Fix failing tests and drop ExcludeArch.
+
 * Mon Jul 27 2026 Valery Zabrovsky <brow@altlinux.org> 4.10.0.0-alt3
 - Fix the fix for generated CMake config.
   + The Boost components list was not actually exported.
