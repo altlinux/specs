@@ -7,7 +7,7 @@
 %{?python3_set_limited_api}
 
 Name: python3-module-%pypi_name
-Version: 1.12.0
+Version: 1.13.0
 Release: alt1
 
 Summary: Python bindings for jq
@@ -61,6 +61,9 @@ export JQPY_USE_SYSTEM_LIBS=1
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 26 2026 Anton Zhukharev <ancieg@altlinux.org> 1.13.0-alt1
+- Updated to 1.13.0.
+
 * Mon Jul 13 2026 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
 - Updated to 1.12.0.
 
