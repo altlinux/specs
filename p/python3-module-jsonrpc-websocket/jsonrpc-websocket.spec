@@ -1,5 +1,5 @@
 Name: python3-module-jsonrpc-websocket
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: JSON-RPC websocket client library for asyncio
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/jsonrpc_websocket-%version.dist-info
 
 %changelog
+* Mon Oct 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.0-alt1
+- 4.1.0 released
+
 * Tue Oct 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.0-alt1
 - 4.0.0 released
 
