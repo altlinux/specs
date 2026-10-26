@@ -15,7 +15,7 @@
 
 Name: perl-SRU
 Version: 1.01
-Release: alt1.1
+Release: alt2
 
 Summary: Search and Retrieve URL Service
 
@@ -28,8 +28,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 BuildArch: noarch
 Source: http://www.cpan.org/authors/id/B/BR/BRICAS/SRU-%{version}.tar.gz
 
-# Automatically added by buildreq on Thu Sep 04 2008
-BuildRequires: perl-CGI-Application perl-CQL-Parser perl-Catalyst-Runtime perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Simple
+BuildRequires: perl-CGI-Application perl-CQL-Parser perl-Catalyst-Runtime perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Simple perl-XML-LibXML
 
 %description
 The SRU package provides a framework for working with the Search and Retrieval
@@ -88,6 +87,9 @@ http://www.ockham.org.
 %perl_vendor_privlib/SRU.pm
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.01-alt2
+- fixed FTBFS (add BR: perl-XML-LibXML)
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1.1
 - dropped deprecated BR: perl-Module-Install
 

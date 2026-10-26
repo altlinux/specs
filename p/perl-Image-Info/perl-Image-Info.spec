@@ -2,7 +2,7 @@
 %define dist Image-Info
 Name: perl-%dist
 Version: 1.45
-Release: alt1
+Release: alt2
 
 Summary: Extract meta information from image files
 License: GPL or Artistic
@@ -16,8 +16,7 @@ Patch1: Image-Info-1.31-alt-req-zlib.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Sep 26 2012
-BuildRequires: perl-IO-Compress perl-Image-Xbm perl-Image-Xpm perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Simple
+BuildRequires: perl-IO-Compress perl-Image-Xbm perl-Image-Xpm perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Simple perl-XML-LibXML
 
 %description
 This Perl extention allows you to extract meta information from
@@ -49,6 +48,9 @@ formats are supported:
 %exclude %perl_vendor_privlib/Bundle/Image
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.45-alt2
+- fix FTBFS (add BR: perl-XML-LibXML)
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.45-alt1
 - automated CPAN update
 
