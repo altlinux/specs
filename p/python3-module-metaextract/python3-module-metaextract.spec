@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.0.9
-Release: alt4
+Release: alt5
 
 Summary: Get metadata for python modules
 License: Apache-2.0
@@ -56,6 +56,9 @@ grep -rl "distutils.core" | xargs sed -i 's/distutils.core/setuptools/'
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Sun Oct 25 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.9-alt5
+- Fixed tests for setuptools extension metadata.
+
 * Tue Dec 10 2024 Anton Vyatkin <toni@altlinux.org> 1.0.9-alt4
 - Fixed FTBFS.
 
