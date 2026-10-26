@@ -20,7 +20,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -42,6 +42,7 @@ Requires: glib-networking >= 2.70
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 %define zstd_ver 1.4.0
+%define brotli_ver 1.1.0
 
 BuildRequires(pre): rpm-macros-meson
 %{?_enable_python:BuildRequires(pre): rpm-build-python3}
@@ -58,7 +59,7 @@ BuildRequires: gobject-introspection-devel >= %gi_ver}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
-%{?_enable_brotli:BuildRequires: libbrotli-devel}
+%{?_enable_brotli:BuildRequires: libbrotli-devel >= %brotli_ver}
 %{?_enable_zstd:BuildRequires: pkgconfig(libzstd) > %zstd_ver}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_docs:BuildRequires: gi-docgen}
@@ -197,6 +198,9 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %endif
 
 %changelog
+* Mon Oct 26 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
+- 3.8.1
+
 * Thu Oct 01 2026 Yuri N. Sedunov <aris@altlinux.org> 3.8.0-alt1
 - 3.8.0 (fixed CVE-2026-85534, CVE-2026-3633, CVE-2026-15709,
   CVE-2026-15711, CVE-2026-3099)
