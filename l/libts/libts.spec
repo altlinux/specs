@@ -4,18 +4,20 @@
 %define libts libts%sover
 
 Name: libts
-Version: 1.22
-Release: alt3
+Version: 1.24
+Release: alt1
 
 Summary: tslib - touchscreen access library
 
-Url: http://developer.berlios.de/projects/tslib/
+Url: https://github.com/libts/tslib
 License: GPL
 Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://download.berlios.de/tslib/%oname-%version.tar
+# Source-url: %url/releases/download/%version/%oname-%version.tar.xz
+Source: %oname-%version.tar
+Patch0: tslib-fix-getopt-long-option-terminators.patch
 
 BuildRequires: gcc-c++ glibc-devel libSDL2-devel
 
@@ -46,6 +48,7 @@ Development files (headers etc.) for %name.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
 %__subst 's,^# module_raw input$,module_raw input,' etc/ts.conf
 # For quick verification during building:
 grep "module_raw input" etc/ts.conf
@@ -80,6 +83,12 @@ rm -f %buildroot%plugindir/*.la
 %_man3dir/*
 
 %changelog
+* Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 1.24-alt1
+- new version 1.24
+- update project and source URLs after the Berlios closure.
+- include upstream fixes for dejitter error cleanup and ts_conf input bounds.
+- fix SIGSEGV on unrecognised long options (getopt_long terminator).
+
 * Tue Oct 06 2020 Sergey V Turchin <zerg@altlinux.org> 1.22-alt3
 - fix requires
 
