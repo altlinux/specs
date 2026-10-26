@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    garage
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Summary: S3-compatible object store for small self-hosted geo-distributed deployments
@@ -56,6 +56,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc *.md doc
 
 %changelog
+* Mon Oct 26 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Wed Sep 09 2026 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.1-alt1
 - new version 2.4.1
 
