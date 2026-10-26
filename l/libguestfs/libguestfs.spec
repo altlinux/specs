@@ -21,8 +21,6 @@
 %def_disable erlang
 %def_disable lua
 %def_disable golang
-%def_enable introspection
-%def_enable vala
 %def_disable rust
 %def_disable static
 %def_enable bash_completion
@@ -30,7 +28,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.58.1
+Version: 1.60.1
 Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
@@ -52,7 +50,6 @@ BuildRequires: libgio-devel libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: gettext-tools
 BuildRequires: cpio gperf xorriso xml-utils db4-utils zip unzip
-BuildRequires: qemu-kvm qemu-system >= 1.3.0
 BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
 BuildRequires: libpcre2-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
 BuildRequires: libacl-devel libcap-devel
@@ -68,16 +65,7 @@ BuildRequires: libdbus-devel
 BuildRequires: libtirpc-devel
 BuildRequires: java-devel-default jpackage-utils
 BuildRequires: libjson-c-devel
-
-%if_enabled introspection
-BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel libgjs-devel
-%endif
-
-%if_enabled vala
-BuildRequires(pre): rpm-build-vala
-BuildRequires: vala-tools
-%endif
+BuildRequires: qemu-img
 
 %if_enabled fuse
 BuildRequires: libfuse-devel
@@ -159,31 +147,9 @@ network utilities, editors and debugging utilities.
 Summary: Header files for libguestfs library
 Group: Development/Other
 Requires: %name = %EVR
-Requires: %name-gobject = %EVR
-Requires: %name-gir = %EVR
-Provides: %name-gobject-devel = %EVR
-Obsoletes: %name-gobject-devel < %EVR
-Provides: %name-gir-devel = %EVR
-Obsoletes: %name-gir-devel < %EVR
 
 %description devel
 Header files for libguestfs library.
-
-%package gobject
-Summary: GObject'ified version of libguestfs API
-Group: System/Libraries
-Requires: %name = %EVR
-
-%description gobject
-GObject'ified version of libguestfs API
-
-%package gir
-Summary: GObject introspection data for the libguestf library
-Group: System/Libraries
-Requires: %name = %EVR
-
-%description gir
-GObject introspection data for the libguestfs library
 
 %package -n golang-guestfs
 Summary: Golang bindings for %name
@@ -325,16 +291,11 @@ export PYTHON=%__python3
 	%{subst_enable erlang} \
 	%{subst_enable lua} \
 	%{subst_enable goolang} \
-	%{subst_enable introspection} \
-	%{subst_enable vala} \
 	%{subst_enable rust} \
 	%{subst_enable static} \
 	--with-default-backend=direct \
 	--with-extra="ALTLinux,release=%version-%release,libvirt" \
-	--with-qemu="qemu-kvm qemu-system-%_arch qemu" \
-	--disable-silent-rules \
-	--disable-probes \
-	--disable-rpath
+	--disable-silent-rules
 
 %make INSTALLDIRS=vendor
 
@@ -457,25 +418,6 @@ fi
 %_includedir/guestfs.h
 %_pkgconfigdir/libguestfs.pc
 
-%if_enabled introspection
-%_libdir/libguestfs-gobject-*.so
-%_includedir/guestfs-gobject
-%_includedir/guestfs-gobject.h
-%_pkgconfigdir/libguestfs-gobject-1.0.pc
-%_man3dir/guestfs-gobject.3.*
-%_girdir/*.gir
-
-%if_enabled vala
-%_datadir/vala/vapi/libguestfs-gobject-1.0.*
-%endif
-
-%files gobject
-%_libdir/libguestfs-gobject-*.so.*
-
-%files gir
-%_typelibdir/*.typelib
-%endif #introspection
-
 %if_enabled golang
 %files -n golang-guestfs
 %doc golang/examples/*.go
@@ -560,6 +502,9 @@ fi
 %endif #erlang
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.60.1-alt1
+- 1.58.1 -> 1.60.1
+
 * Wed Feb 25 2026 Anton Farygin <rider@altlinux.org> 1.58.1-alt1
 - 1.54.1 -> 1.58.1
 
