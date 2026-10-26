@@ -1,5 +1,5 @@
 Name: megasync
-Version: 6.6.2.0
+Version: 6.7.0.3
 Release: alt1
 
 Summary: Easy automated syncing between your computers and your MEGA Cloud Drive
@@ -79,6 +79,9 @@ DESTDIR=%buildroot cmake --install %_cmake__builddir --prefix /
 %_datadir/%name/
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 6.7.0.3-alt1
+- new version 6.7.0.3
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.6.2.0-alt1
 - new version 6.6.2.0 (CMake build)
 - build with the installed MEGA SDK 10.19.0 (libmegasdk) instead of the submodule
