@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.3.0
+Version: 5.3.0
 Release: alt1
 
 Summary: OpenStack Orchestration API Client Library
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/python-heatclient
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+Patch0: python-heatclient-package-discovery.patch
 
 BuildArch: noarch
 
@@ -73,6 +74,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -123,6 +125,10 @@ install -pDm 644 tools/heat.bash_completion \
 %endif
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 5.3.0-alt1
+- New version 5.3.0.
+- Fix package discovery with current Python setuptools.
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Automatically updated to 4.3.0.
 
