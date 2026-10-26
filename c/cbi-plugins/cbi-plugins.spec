@@ -1,6 +1,6 @@
 Name: cbi-plugins
 Version: 1.1.7
-Release: alt2.1
+Release: alt2.3
 
 Summary: A set of helpers for Eclipse CBI
 License: EPL-1.0
@@ -9,6 +9,9 @@ Group: Development/Java
 Url: https://git.eclipse.org/c/cbi/org.eclipse.cbi.git/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 BuildArch: noarch
+# javadoc output differs between JDK versions used on different build arches,
+# which breaks the noarch cross-arch check; build the docs on a single arch
+ExclusiveArch: x86_64
 
 # https://git.eclipse.org/c/cbi/org.eclipse.cbi.git/snapshot/org.eclipse.cbi_maven-plugin-parent_%version.tar.gz
 Source: org.eclipse.cbi_maven-plugin-parent_%version.tar
@@ -17,7 +20,10 @@ BuildRequires: /proc
 BuildRequires: auto-value
 BuildRequires: java-devel >= 11.0.0
 BuildRequires: maven-plugin-plugin
+BuildRequires: javapackages-local
 BuildRequires: rpm-build-java
+# xmvn-mojo is a separate subpackage since xmvn 4.2 and is required by %mvn_build
+BuildRequires: xmvn-mojo
 BuildRequires: tycho
 
 %description
@@ -59,6 +65,12 @@ API documentation for %name.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Oct 26 2026 Nazarov Denis <nenderus@altlinux.org> 1.1.7-alt2.3
+- Rebuild with the current JDK toolchain: the regenerated javadoc search
+  index no longer produces "undefined" links (ALT #42340)
+- Build the docs on a single arch: javadoc output differs between the JDK
+  versions of different build arches, which breaks the noarch check
+
 * Mon Oct 18 2021 Andrey Cherepanov <cas@altlinux.org> 1.1.7-alt2.1
 - NMU: Rebuild with java-11-openjdk.
 
