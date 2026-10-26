@@ -3,7 +3,7 @@
 
 Name: libxslt
 Version: 1.1.45
-Release: alt1
+Release: alt2
 
 Summary: Library providing XSLT support
 License: MIT
@@ -187,6 +187,12 @@ make check
 %endif # enabled python
 
 %changelog
+* Sun Oct 25 2026 Arseny Maslennikov <arseny@altlinux.org> 1.1.45-alt2
+- Reverted "xsltLoadDocument: Reject xinclude when security enabled".
+  That is not a fix for CVE-2025-9714, which was resolved by earlier changes.
+  The mystery issue that commit had been addressing, if there even is one,
+  would likely involve substantial changes in coordination with libxml2.
+
 * Fri Oct 23 2026 Alexey Shabalin <shaba@altlinux.org> 1.1.45-alt1
 - Updated to v1.1.45 (Fixed: CVE-2025-11731, CVE-2025-7424, CVE-2025-9714).
 
