@@ -1,28 +1,24 @@
 Name: sqliteman
-Version: 1.2.2
-Release: alt2
+Version: 2.0.0
+Release: alt1
 
 Url: http://sqliteman.com/
-License: GPLv2-or-later
+License: GPL-3.0-or-later
 Group: Databases
 
 Summary: Lightweigth but powerfull Sqlite3 manager
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar
+# Source-url: https://github.com/pvanek/sqliteman/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
 
-Patch1: sqliteman-1.2.2-gentoo-qt5.patch
-Patch2: sqliteman-1.2.2-cmake.patch
+Patch1: sqliteman-desktop-ru.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-# Automatically added by buildreq on Wed Dec 10 2008
-BuildRequires: cmake gcc-c++
-BuildRequires: libqscintilla2-qt5-devel qt5-base-devel xorg-sdk
-
-Requires: sqlite3
-Requires: libqt5-sql qt5-sql-sqlite
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++ libqscintilla2-qt6-devel qt6-base-devel qt6-tools-devel libsqlite3-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -33,32 +29,37 @@ contains the most complette feature set of all tools available.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p2
-
-# remove bundled qscintilla2
-rm -rf sqliteman/qscintilla2
 
 %build
-%cmake \
-	-DQSCINTILLA_NAMES=qscintilla2_qt5 \
-	%nil
+%cmake -DSQLITEMAN_WITH_DOCS=OFF
 
 %cmake_build
 
 %install
 %cmake_install
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Development \
-	--add-category=Database \
-	%buildroot%_desktopdir/sqliteman.desktop
 
 %files
 %_bindir/sqliteman
-%_desktopdir/sqliteman.desktop
-%_datadir/sqliteman/
-%_pixmapsdir/sqliteman.png
+%_datadir/applications/cz.yarpen.sqliteman.desktop
+%_datadir/metainfo/cz.yarpen.sqliteman.metainfo.xml
+%_datadir/icons/hicolor/*/apps/cz.yarpen.sqliteman.png
+%_datadir/icons/hicolor/scalable/apps/cz.yarpen.sqliteman.svg
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- update to 2.0.0 with Qt 6
+- port to the Qt 6 based upstream build
+- build with Qt Help support
+- remove BuildRequires: libqscintilla2-qt5-devel and qt5-base-devel.
+- remove BuildRequires: xorg-sdk.
+- add BuildRequires: libqscintilla2-qt6-devel and qt6-base-devel.
+- add BuildRequires: qt6-tools-devel.
+- add BuildRequires: libsqlite3-devel.
+- replace BuildRequires: cmake with rpm-build-cmake.
+- replace BuildRequires: cmake with rpm-build-cmake.
+- fixes: desktop-file categories (closes: #24919).
+- add Russian desktop-file translations.
+
 * Tue Apr 08 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2
 - fix build with cmake 4.0.0
 
