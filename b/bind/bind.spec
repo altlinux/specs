@@ -25,7 +25,7 @@
 
 Name: bind
 Version: 9.18.50
-Release: alt2.bfc6e000ae
+Release: alt3.8c198236bc
 Summary: ISC BIND - DNS server
 License: MPL-2.0
 Group: System/Servers
@@ -593,6 +593,10 @@ fi
 %_man1dir/nsupdate.*
 
 %changelog
+* Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 9.18.50-alt3.8c198236bc
+- Synced to 8c198236bc (fixes: CVE-2026-19630, CVE-2026-94300, CVE-2026-96888,
+  CVE-2026-97313).
+
 * Tue Sep 29 2026 Stanislav Levin <slev@altlinux.org> 9.18.50-alt2.bfc6e000ae
 - Synced to bfc6e000ae (fixes: CVE-2026-10723, CVE-2026-10822, CVE-2026-11331,
   CVE-2026-11622, CVE-2026-11721, CVE-2026-12617, CVE-2026-13204,
