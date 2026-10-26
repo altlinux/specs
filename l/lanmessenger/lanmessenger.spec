@@ -1,5 +1,5 @@
 Name: lanmessenger
-Version: 1.3.9
+Version: 1.3.11
 Release: alt1
 
 Summary: LAN Messenger for Windows, Mac, Linux
@@ -55,6 +55,9 @@ rm -f %buildroot%_libdir/liblmcapp.so %buildroot%_qt5_libdatadir/liblmcapp.so
 %_libdir/liblmcapp.so.*
 
 %changelog
+* Mon Oct 26 2026 Andrey Cherepanov <cas@altlinux.org> 1.3.11-alt1
+- New version.
+
 * Tue Oct 20 2026 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
 - New version.
 
