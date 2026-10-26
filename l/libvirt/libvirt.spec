@@ -170,8 +170,8 @@
 %endif
 
 Name: libvirt
-Version: 12.6.0
-Release: alt2
+Version: 12.8.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: GPL-2.0-or-later AND LGPL-2.1-only AND LGPL-2.1-or-later AND OFL-1.1
 Group: System/Libraries
@@ -932,7 +932,7 @@ rm -f %buildroot%_sysconfdir/libvirt/lxc.conf
 rm -f %buildroot%_logrotatedir/libvirtd.lxc
 %endif
 %if_without nwfilter
-rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
+rm -rf %buildroot%_sysconfdir/libvirt/nwfilter.conf
 %endif
 %if_without libxl
 rm -f %buildroot%_logrotatedir/libvirtd.libxl
@@ -1236,7 +1236,7 @@ fi
 
 %if_with nwfilter
 %files daemon-config-nwfilter
-%dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
+%dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter.conf
 %config(noreplace) %attr(0600, root, root) %_sysconfdir/libvirt/nwfilter/*.xml
 %endif
 
@@ -1287,7 +1287,9 @@ fi
 %files daemon-driver-nwfilter
 %config(noreplace) %_sysconfdir/libvirt/virtnwfilterd.conf
 %_datadir/augeas/lenses/virtnwfilterd.aug
+%_datadir/augeas/lenses/libvirtd_nwfilter.aug
 %_datadir/augeas/lenses/tests/test_virtnwfilterd.aug
+%_datadir/augeas/lenses/tests/test_libvirtd_nwfilter.aug
 %_unitdir/virtnwfilterd*
 %_sbindir/virtnwfilterd
 %_libdir/%name/connection-driver/libvirt_driver_nwfilter.so
@@ -1538,6 +1540,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 12.8.0-alt1
+- updated from 12.6.0 to 12.8.0
+
 * Wed Aug 12 2026 Sergey Zhidkih <rx1513@altlinux.org> 12.6.0-alt2
 - Add state dir for secrets (thx andy@) (Fixes: 60139)
 
