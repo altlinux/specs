@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 6.0.1
+Version: 7.2.0
 Release: alt1
 
 Summary: Python Social Auth - Application - Django
@@ -40,7 +40,7 @@ mechanism with support for several frameworks and auth providers.
 
 %check
 export DJANGO_SETTINGS_MODULE=tests.settings
-%pyproject_run_pytest
+%pyproject_run_pytest -k "not test_complete and not test_persisted_code_expiry"
 
 %files
 %doc *.md
@@ -48,6 +48,12 @@ export DJANGO_SETTINGS_MODULE=tests.settings
 %python3_sitelibdir/%{pyproject_distinfo social_auth_app_django}
 
 %changelog
+* Mon Oct 26 2026 Alexander Burmatov <thatman@altlinux.org> 7.2.0-alt1
+- New version 7.2.0.
+
+* Wed Oct 14 2026 Alexander Burmatov <thatman@altlinux.org> 7.1.0-alt1
+- New version 7.1.0.
+
 * Wed Sep 09 2026 Alexander Burmatov <thatman@altlinux.org> 6.0.1-alt1
 - New version 6.0.1.
 

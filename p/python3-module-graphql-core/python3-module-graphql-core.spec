@@ -5,10 +5,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.2.11
+Version: 3.3.0
 Release: alt1
 
-Summary: A Python 3.7+ port of the GraphQL.js reference implementation of GraphQL
+Summary: GraphQL-core is a Python port of GraphQL.js, the JavaScript reference implementation for GraphQL
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/graphql-core/
@@ -26,23 +26,22 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+%add_pyproject_deps_check_filter pytest-
+BuildRequires: python3-module-pytest-describe
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
 
 %description
-GraphQL-core 3 is a Python 3.7+ port of GraphQL.js, the JavaScript
-reference implementation for GraphQL, a query language for APIs
-created by Facebook.
+GraphQL-core 3 is a Python 3.10+ port of GraphQL.js, the JavaScript reference
+implementation for GraphQL, a query language for APIs created by Facebook.
 
 %prep
 %setup
 %autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+%pyproject_deps_resync_check_depgroup test
 
 %build
 %pyproject_build
@@ -51,13 +50,16 @@ created by Facebook.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest tests --ignore=tests/benchmarks -vra -o=addopts=
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 16 2026 Anton Zhukharev <ancieg@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 3.2.11-alt1
 - Updated to 3.2.11.
 

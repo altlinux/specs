@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.0.6
-Release: alt2
+Version: 1.0.7
+Release: alt1
 
 Summary: Automatic documentation from sources, for MkDocs
 License: ISC
@@ -39,14 +39,12 @@ BuildRequires: python3-module-dirty-equals
 BuildArch: noarch
 
 Source:  %name-%version.tar
-Patch:   pygments221-tests.patch
 
 %description
 %summary.
 
 %prep
 %setup
-%autopatch -p1
 
 # setuptools_scm implements a file_finders entry point which returns all files
 # tracked by SCM.
@@ -66,7 +64,7 @@ fi
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k "not test_no_double_toc"
+%pyproject_run_pytest
 
 %files
 %doc *.md
@@ -74,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 13 2026 Alexander Burmatov <thatman@altlinux.org> 1.0.7-alt1
+- Update version to 1.0.7.
+
 * Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 1.0.6-alt2
 - Fixed FTBFS (Pygments 2.21 no longer escapes quotes in token text).
 

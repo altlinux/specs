@@ -1,9 +1,10 @@
 %define pypi_name social-core
+%define mod_name social_core
 
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.2.0
+Version: 6.2.0
 Release: alt1
 
 Summary: Python Social Auth - Core
@@ -42,14 +43,6 @@ Source: %pypi_name-%version.tar
 Python Social Auth is an easy to setup social authentication/registration
 mechanism with support for several frameworks and auth providers.
 
-%package tests
-Summary: Tests for %pypi_name
-Group: Development/Python3
-Requires: %name = %version-%release
-
-%description tests
-This package contains tests for %name.
-
 %prep
 %setup -n %pypi_name-%version
 rm -f social_core/tests/backends/test_shopify.py
@@ -61,21 +54,20 @@ rm -f social_core/tests/backends/test_shopify.py
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k "not test_steam.py"
+%pyproject_run_pytest
 
 %files
 %doc *.md
-%python3_sitelibdir/social_core/py.typed
-%python3_sitelibdir/social_core/*.py
-%python3_sitelibdir/social_core/__pycache__/
-%python3_sitelibdir/social_core/backends/
-%python3_sitelibdir/social_core/pipeline/
+%python3_sitelibdir/%mod_name
 %python3_sitelibdir/%{pyproject_distinfo social_auth_core}
 
-%files tests
-%python3_sitelibdir/social_core/tests/
-
 %changelog
+* Mon Oct 26 2026 Alexander Burmatov <thatman@altlinux.org> 6.2.0-alt1
+- Update to version 6.2.0.
+
+* Wed Oct 14 2026 Alexander Burmatov <thatman@altlinux.org> 6.1.1-alt1
+- Update to version 6.1.1.
+
 * Thu Oct 01 2026 Alexander Burmatov <thatman@altlinux.org> 5.2.0-alt1
 - Update to version 5.2.0.
 
