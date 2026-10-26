@@ -2,7 +2,7 @@
 %define targetdir %_libdir/powershell/runtimes/%_dotnet_rid/native
 
 Name: libpsl-native
-Version: 7.4.0
+Version: 700.0.1
 Release: alt1
 
 Summary: PowerShell Native library
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 Patch: libpsl-native-gtest.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-dotnet
-BuildRequires: cmake gcc-c++
+BuildRequires: rpm-build-cmake gcc-c++
 BuildRequires: libgtest-devel ctest
 
 %add_optflags %optflags_shared
@@ -41,7 +41,7 @@ subst 's| -fpie | |' src/libpsl-native/CMakeLists.txt
 
 %build
 pushd src/libpsl-native/
-%cmake_insource -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_FLAGS="%optflags %optflags_shared"
+%cmake_insource -DCMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_FLAGS="%optflags %optflags_shared -gdwarf-5"
 %make_build VERBOSE=1
 
 %install
@@ -67,6 +67,11 @@ LANG=en_US.utf8 LD_LIBRARY_PATH=$(pwd)/../powershell-unix/ ctest --verbose || tr
 %targetdir/libpsl-native.so
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 700.0.1-alt1
+- new version 700.0.1
+- retain the upstream DWARF-5 debug information flag
+- use the rpm-build-cmake build dependency
+
 * Sun Feb 18 2024 Vitaly Lipatov <lav@altlinux.ru> 7.4.0-alt1
 - new version 7.4.0 (with rpmrb script)
 
