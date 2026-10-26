@@ -2,7 +2,7 @@
 
 Name: alt-packages
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
 License: GPLv2+
@@ -29,6 +29,7 @@ BuildRequires: kf6-kcolorscheme-devel kf6-kconfig-devel
 BuildRequires: kf6-breeze-icons-devel
 BuildRequires: nlohmann-json-devel
 
+Requires: libqt6-quickcontrols2
 Requires: alterator-entry >= 0.4.13-alt1
 Requires: alterator-backend-packages >= 0.2.14-alt1
 Requires: alterator-backend-source >= 0.1.6-alt1
@@ -66,6 +67,9 @@ and package repositories through apt and rpm.
 %_K6dbus_srv/*.service
 
 %changelog
+* Fri Oct 23 2026 Andrey Alekseev <parovoz@altlinux.org> 0.7.0-alt2
+- Added missing dependency
+
 * Mon Sep 21 2026 Andrey Alekseev <parovoz@altlinux.org> 0.7.0-alt1
 - Added external sources support
 - Fixed ui blocking issues while package list reloading
