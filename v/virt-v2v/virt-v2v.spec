@@ -2,8 +2,8 @@
 %global source_directory 2.6-stable
 
 Name: virt-v2v
-Version: 2.6.0
-Release: alt2
+Version: 2.12.0
+Release: alt1
 Summary: Convert a virtual machine to run on KVM
 Group: Development/Other
 License: GPLv2+
@@ -15,25 +15,24 @@ Patch1: fixes-common.patch
 BuildRequires(pre): rpm-build-ocaml
 BuildRequires: /usr/bin/pod2man
 BuildRequires: gcc
-BuildRequires: ocaml >= 4.01 ocaml-findlib ocaml-ocamlbuild
+BuildRequires: ocaml >= 4.08 ocaml-findlib ocaml-ocamlbuild
 BuildRequires: ocaml-libguestfs-devel ocaml-libvirt-devel ocaml-libnbd-devel
 BuildRequires: ocaml-gettext-devel
 BuildRequires: ocaml-fileutils-devel
-BuildRequires: ocaml-ounit-devel
-BuildRequires: libguestfs-devel
-BuildRequires: libnbd-devel >= 1.10 /usr/bin/nbdinfo /usr/bin/nbdcopy /usr/bin/nbdkit
+BuildRequires: libguestfs-devel >= 1.59.7
+BuildRequires: libnbd-devel >= 1.14 /usr/bin/nbdinfo /usr/bin/nbdcopy nbdkit >= 1.45.11
 BuildRequires: /usr/bin/sqlite3
 BuildRequires: libaugeas-devel
 BuildRequires: bash-completion
 BuildRequires: gettext-tools
-BuildRequires: libjansson-devel
+BuildRequires: libjson-c-devel >= 0.14
 BuildRequires: libosinfo-devel
 BuildRequires: libcrypt-devel
-BuildRequires: libvirt-devel
+BuildRequires: libvirt-devel >= 0.10.2
 BuildRequires: libvirt-kvm
 BuildRequires: libxml2-devel
 BuildRequires: libpcre2-devel
-BuildRequires: perl-Sys-Guestfs
+BuildRequires: perl-Sys-Guestfs perl-IPC-Run3
 BuildRequires: /usr/bin/virsh
 BuildRequires: genisoimage zip unzip db4-utils
 #BuildRequires: nbdkit-python-plugin
@@ -85,6 +84,9 @@ find %buildroot -name '*.la' -delete
 %_datadir/bash-completion/completions/virt-v2v*
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 2.12.0-alt1
+- new version 2.12.0
+
 * Thu Mar 13 2025 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt2
 - Add nbdkit requires (ALT#53423)
 
