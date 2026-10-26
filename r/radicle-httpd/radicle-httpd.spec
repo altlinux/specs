@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.29.0
+Version: 0.30.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -39,31 +39,34 @@ This package contains webapp used with radicle-httpd daemon.
 %prep
 %setup -a1 -a2
 %ifdef bootstrap
-cargo vendor
+cargo vendor --manifest-path explorer/Cargo.toml
 tar cf %SOURCE1 .cargo vendor
 rm -rf npm-cache/*
-npm ci --cache npm-cache --cpu=arm64 --os=linux --libc=glibc
-npm ci --cache npm-cache --cpu=x64   --os=linux --libc=glibc
+npm ci --cache "$PWD/npm-cache" --cpu=arm64 --os=linux --libc=glibc --prefix explorer
+npm ci --cache "$PWD/npm-cache" --cpu=x64   --os=linux --libc=glibc --prefix explorer
 tar cf %SOURCE2 npm-cache
 %endif
-npm ci --offline --cache npm-cache
+npm ci --offline --cache "$PWD/npm-cache" --prefix explorer
 
 %build
-export GIT_HEAD=7acf0739
-cargo build %_smp_mflags --release --offline --manifest-path crates/radicle-httpd/Cargo.toml
-cargo build %_smp_mflags --release --offline --manifest-path crates/radicle-search/Cargo.toml
-VITE_RUNTIME_CONFIG=true npm run build
+export GIT_HEAD=86ba3917
+cargo build %_smp_mflags --release --offline --manifest-path explorer/crates/radicle-httpd/Cargo.toml
+cargo build %_smp_mflags --release --offline --manifest-path explorer/crates/radicle-search/Cargo.toml
+VITE_RUNTIME_CONFIG=true npm run build --prefix explorer
 
 %install
 mkdir -p %buildroot{%_bindir,%_man1dir}
-install -pm0755 -t %buildroot%_bindir target/release/radicle-{httpd,search}
-install -pm0644 -D crates/radicle-httpd/systemd/radicle-httpd.service %buildroot%_unitdir/radicle-httpd.service
-asciidoctor --doctype manpage --backend manpage --destination-dir=%buildroot%_man1dir crates/radicle-httpd/radicle-httpd.1.adoc
-cp -p crates/radicle-search/README.md README.radicle-search.md
-cp -a build %buildroot%_datadir/radicle-web
+install -pm0755 -t %buildroot%_bindir explorer/target/release/radicle-{httpd,search}
+install -pm0644 -D explorer/crates/radicle-httpd/systemd/radicle-httpd.service \
+	%buildroot%_unitdir/radicle-httpd.service
+asciidoctor --doctype manpage --backend manpage \
+	--destination-dir=%buildroot%_man1dir \
+	explorer/crates/radicle-httpd/radicle-httpd.1.adoc
+cp -p explorer/crates/radicle-search/README.md README.radicle-search.md
+cp -a explorer/build %buildroot%_datadir/radicle-web
 
 %files
-%doc CHANGELOG* LICENSE* README*
+%doc README* explorer/CHANGELOG.md explorer/LICENSE
 %_bindir/radicle-httpd
 %_bindir/radicle-search
 %_man1dir/radicle-httpd.1*
@@ -73,6 +76,9 @@ cp -a build %buildroot%_datadir/radicle-web
 %_datadir/radicle-web
 
 %changelog
+* Mon Oct 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.30.0-alt1
+- 0.30.0 released
+
 * Sun Oct 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.29.0-alt1
 - 0.29.0 released
 
