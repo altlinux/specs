@@ -1,5 +1,5 @@
 Name: budgie-backgrounds
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: Default set of background images for the Budgie Desktop
@@ -43,6 +43,9 @@ Default set of background images for the Budgie Desktop.
 %_datadir/gnome-background-properties/%name.xml
 
 %changelog
+* Sun Oct 25 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2-alt1
+- new version 4.2
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1-alt1
 - new version 4.1
 - update %%files for jxl backgrounds, add Requires: libjxl-pixbuf-loader
