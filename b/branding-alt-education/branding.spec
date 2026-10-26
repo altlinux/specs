@@ -11,7 +11,8 @@
 
 %define gtk_theme Breeze
 %define kde_theme Breeze
-%define icon_theme Papirus-Edu
+%define base_icon_theme Papirus-Edu
+%define icon_theme %flavour
 %define window_theme Smoothwall-Breeze
 %define xfce_default_background xfce-x.svg
 %define def_desktop_wallpaper /usr/share/design-current/backgrounds/default.png
@@ -36,7 +37,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt5
+Release: alt6
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -137,6 +138,7 @@ Provides: design-graphics-%theme
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
 Requires(post,preun): alternatives >= 0.2
+Requires: icon-theme-Papirus-Education
 %branding_add_conflicts %flavour graphics
 
 %description graphics
@@ -318,7 +320,7 @@ sed -i 's,#alt-education,&-e2k,' indexhtml/index-*.html.in
 
 %build
 autoconf
-THEME=%theme CTHEME=%Theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' BRANCH='%altbranch' ./configure
+THEME=%theme CTHEME=%Theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' PRODUCT_LOGO='%distro_logo' CODENAME='%codename' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' BASE_ICON_THEME='%base_icon_theme' WINDOW_THEME='%window_theme' XFWM4_COMPOSITING='%xfwm4_compositing' BRANCH='%altbranch' ./configure
 make
 
 %install
@@ -384,6 +386,7 @@ fi
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
 %_iconsdir/hicolor/*/apps/alt-%theme.svg
+%_iconsdir/%icon_theme
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
@@ -463,6 +466,12 @@ fi
 %_datadir/branding-%flavour/xdg-data/
 
 %changelog
+* Mon Oct 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt6
+- Open files and folders in KDE with a double click; single
+  click is still available in the system settings.
+- Show the edition logo instead of the generic ALT penguin
+  in the control centre (Closes: 60942).
+
 * Mon Oct 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 11.2-alt5
 - Lowercase the codename in os-release: it came out as FalcoVeswertinls.
 - Slides:
