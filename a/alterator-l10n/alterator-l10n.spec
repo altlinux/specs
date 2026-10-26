@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.193
+Version: 2.9.194
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,20 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Mon Oct 26 2026 Elena Mishina <lepata@altlinux.org> 2.9.194-alt1
+- alterator: update russian translation (closes #60954)
+- alterator-ahttpd: update help, russian translation (closes #60946, #60943)
+- alterator-net-domain: update help, russian translation (closes #60953)
+- alterator-grub: update help (closes #60949)
+- alterator-net-eth: help fix typo (closes #50472)
+- alterator-log: fix help (closes #60952)
+- alterator-net-iptables: fix help (closes #60956, #60957)
+- alterator-openvpn-server, alterator-net-openvpn: update help (closes #60958)
+- tzone-po: fix diacritic (closes #60940)
+- alterator-netinst: remove extra quote from module help (closes #60960)
+- alterator-root: fix typo (closes #60962)
+- alterator-mirror, alterator-snort, alterator-updates: fix typo (closes #60964)
+
 * Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 2.9.193-alt1
 - alterator-ca: update Russian translation.
 
