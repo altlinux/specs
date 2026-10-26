@@ -21,7 +21,7 @@
 %define nv_version 595
 %define nv_release 104
 %define nv_minor   02
-%define pkg_rel alt2
+%define pkg_rel alt3
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -192,7 +192,7 @@ performance per watt.
 %package -n nvidia-cuda-mps
 Group: System/Servers
 Summary: NVIDIA CUDA Multi Process Service (MPS)
-Requires: nvidia_glx_common
+Requires: nvidia_glx_common nvidia-persistenced
 %description -n nvidia-cuda-mps
 The Compute Unified Device Architecture (CUDA) enables NVIDIA
 graphics processing units (GPUs) to be used for massively parallel
@@ -295,6 +295,9 @@ install -m 0644 %SOURCE300 %buildroot/%_unitdir/
 %endif
 
 %changelog
+* Mon Oct 26 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt3
+- update requires (closes: 61188)
+
 * Wed Oct 14 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt2
 - package nvidia-cuda-mps
 
