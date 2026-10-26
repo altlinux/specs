@@ -3,7 +3,7 @@
 %def_with check
 
 Name: convey
-Version: 50.2
+Version: 51.0
 Release: alt1
 Summary: Email application built around conversations
 License: LGPL-2.1-or-later
@@ -87,5 +87,8 @@ with or endorsed by the GNOME Foundation.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Mon Oct 26 2026 Alexander Makeenkov <amakeenk@altlinux.org> 51.0-alt1
+- Updated to version 51.0.
+
 * Sat Sep 26 2026 Alexander Makeenkov <amakeenk@altlinux.org> 50.2-alt1
 - Initial build for ALT.
