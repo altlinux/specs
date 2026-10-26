@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 2.1.1
-Release: alt2
+Release: alt3
 %K6init
 
 Group:  Video
@@ -47,6 +47,9 @@ Simple camera application for mobile devices.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Oct 26 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt3
+- update russian translation
+
 * Mon Dec 22 2025 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt2
 - fix requires
 
