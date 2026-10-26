@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.0.0
-Release: alt1
+Release: alt2
 Summary: Collection of utilities for publishing packages on PyPI
 License: Apache-2.0
 Group: Development/Python3
@@ -59,6 +59,9 @@ export TERM=xterm
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 7.0.0-alt2
+- Fixed FTBFS (readme-renderer 46).
+
 * Tue Aug 18 2026 Stanislav Levin <slev@altlinux.org> 7.0.0-alt1
 - 6.2.0 -> 7.0.0
 
