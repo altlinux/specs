@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.13
+Version: 5.2.14
 Release: alt1
 
 Source:%name-%version.tar
@@ -85,6 +85,10 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Tue Oct 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 5.2.14-alt1
+- alterator-framework UI: sync validation rules with the Scheme
+  frontend (thx Oleg Chagaev).
+
 * Wed Sep 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 5.2.13-alt1
 - Add alterator-framework UI support (thx Oleg Chagaev).
 
