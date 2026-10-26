@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.2.20
+Version: 7.2.22
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -966,6 +966,9 @@ XDG_DATA_DIRS="%_datadir" update-desktop-database -q ||:
 %endif
 
 %changelog
+* Wed Oct 21 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.22-alt1
+- Update to newest version 7.2.22
+
 * Wed Sep 23 2026 Valery Sinelnikov <greh@altlinux.org> 7.2.20-alt1
 - Update to newest version 7.2.20
 
