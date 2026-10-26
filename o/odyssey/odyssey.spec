@@ -1,6 +1,6 @@
 Name:		odyssey
 Version:	1.5.2
-Release:	alt1
+Release:	alt2
 Summary:	Advanced multi-threaded PostgreSQL connection pooler and request router
 Group:		Databases
 License:	BSD-3-Clause
@@ -15,6 +15,9 @@ Advanced multi-threaded PostgreSQL connection pooler and request router
 
 %prep
 %setup -q
+%ifarch %e2k
+sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
+%endif
 
 %build
 #    -DBUILD_COMPRESSION=ON \
@@ -52,6 +55,9 @@ useradd  -r -g %name -s /sbin/nologin -c "Odyssey Server" -M -d /run/%name %name
 %_unitdir/*
 
 %changelog
+* Mon Oct 26 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.2-alt2
+- e2k build fix
+
 * Mon Sep 14 2026 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
