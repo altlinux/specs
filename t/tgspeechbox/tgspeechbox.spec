@@ -1,10 +1,8 @@
-%define speechd_moduledir %_libdir/speech-dispatcher-modules
-%define speechd_confdir   %_datadir/speech-dispatcher/modules
 %define tgsb_cxxflags %optflags -fPIC -Wall
 
 Name: tgspeechbox
 Version: 3.01
-Release: alt2
+Release: alt3
 Summary: Formant speech synthesis engine (LF glottal model, 26+ languages)
 Summary(ru_RU.UTF-8): Формантный синтезатор речи с LF-моделью голосового источника и поддержкой 26+ языков
 
@@ -16,6 +14,7 @@ Vcs: https://github.com/tgeczy/TGSpeechBox
 Source0: %name-%version.tar
 Source1: COPYING.GPLv3
 
+BuildRequires(pre): rpm-macros-spd
 BuildRequires: gcc-c++
 BuildRequires: make
 BuildRequires: libstdc++-devel-static
@@ -53,7 +52,7 @@ used by tgsbRender and the native Speech Dispatcher module.
 Архитектурно-независимые данные фонем и языковых пакетов (YAML),
 используемые tgsbRender и нативным модулем Speech Dispatcher.
 
-%package -n spd-module-%name
+%package -n %spdmoduleprefix-%name
 Summary: Speech Dispatcher integration for TGSpeechBox (generic + native module)
 Summary(ru_RU.UTF-8): Интеграция TGSpeechBox с Speech Dispatcher (generic и нативный модуль)
 Group: Sound
@@ -63,7 +62,7 @@ Requires: speech-dispatcher
 Provides: speech-dispatcher-module-%name = %EVR
 Obsoletes: speech-dispatcher-module-%name < %EVR
 
-%description -n spd-module-%name
+%description -n %spdmoduleprefix-%name
 Speech Dispatcher integration for TGSpeechBox: the persistent native
 module (sd_tgsb), which loads the engine once at startup instead of
 spawning a process per utterance, and the generic-mode config
@@ -71,7 +70,7 @@ spawning a process per utterance, and the generic-mode config
 module is GPLv3 because it functionally depends on espeak-ng at
 runtime, unlike the MIT core engine.
 
-%description -n spd-module-%name -l ru_RU.UTF-8
+%description -n %spdmoduleprefix-%name -l ru_RU.UTF-8
 Интеграция TGSpeechBox с Speech Dispatcher: постоянный нативный
 модуль (sd_tgsb), загружающий движок один раз при старте, без
 порождения процесса на каждую фразу, и generic-конфиг
@@ -88,17 +87,17 @@ install -pm644 %SOURCE1 COPYING.GPLv3
 
 %install
 mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%speechd_moduledir
-mkdir -p %buildroot%speechd_confdir
+mkdir -p %buildroot%_spdmoduledir
+mkdir -p %buildroot%_spdmoduleconfdir
 mkdir -p %buildroot%_datadir/%name/packs/lang
 mkdir -p %buildroot%_datadir/%name/packs/dict
 
 install -pm755 build/tgsbRender %buildroot%_bindir/
-install -pm755 build/sd_tgsb %buildroot%speechd_moduledir/
+install -pm755 build/sd_tgsb %buildroot%_spdmoduledir/
 
 install -pm755 extras/speech-dispatcher/tgsb-speak %buildroot%_bindir/
-install -pm644 extras/speech-dispatcher/tgsb-generic.conf %buildroot%speechd_confdir/
-install -pm644 extras/speech-dispatcher/tgsb-native.conf  %buildroot%speechd_confdir/
+install -pm644 extras/speech-dispatcher/tgsb-generic.conf %buildroot%_spdmoduleconfdir/
+install -pm644 extras/speech-dispatcher/tgsb-native.conf  %buildroot%_spdmoduleconfdir/
 
 install -pm644 packs/phonemes.yaml %buildroot%_datadir/%name/packs/
 cp -a packs/lang/*.yaml %buildroot%_datadir/%name/packs/lang/
@@ -121,13 +120,16 @@ rm -f "$tmpfile"
 %dir %_datadir/%name
 %_datadir/%name/packs
 
-%files -n spd-module-%name
+%files -n %spdmoduleprefix-%name
 %doc COPYING.GPLv3
-%speechd_moduledir/sd_tgsb
-%speechd_confdir/tgsb-generic.conf
-%speechd_confdir/tgsb-native.conf
+%_spdmoduledir/sd_tgsb
+%_spdmoduleconfdir/tgsb-generic.conf
+%_spdmoduleconfdir/tgsb-native.conf
 
 %changelog
+* Fri Oct 23 2026 Artem Semenov <savoptik@altlinux.org> 3.01-alt3
+- Used macroses fore spd module packaging.
+
 * Tue Sep 15 2026 Dina Tagantseva <dinchik@altlinux.org> 3.01-alt2
 - Renamed spd module to short name.
 
