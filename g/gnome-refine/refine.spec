@@ -2,7 +2,7 @@
 
 %define _name Refine
 %define __name refine
-%define ver_major 0.8
+%define ver_major 0.9
 %define beta %nil
 %define rdn_name page.tesk.%_name
 %def_enable check
@@ -74,6 +74,9 @@ sed -i 's|\(Exec=\)%__name|\1%rdn_name|' %buildroot%_desktopdir/%rdn_name.deskto
 %doc README*
 
 %changelog
+* Mon Oct 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Sun May 31 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 

@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: GNOME colors customizer
@@ -69,6 +69,9 @@ popular color schemes.
 %doc README.*
 
 %changelog
+* Mon Oct 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.8-alt1
+- 1.1.8
+
 * Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.7-alt1
 - 1.1.7
 
