@@ -1,6 +1,6 @@
 Name: manatee-open
-Version: 2.214.1
-Release: alt2
+Version: 2.238.7
+Release: alt1
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
@@ -12,6 +12,7 @@ Conflicts: finlib
 Obsoletes: finlib finlib-devel
 
 
+# Source-url: https://corpora.fi.muni.cz/noske/current/src/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -39,8 +40,18 @@ autoreconf -iv
 %python3_sitelibdir/*.py*
 %python3_sitelibdir/_manatee.so
 %doc doc/*
+%exclude %_includedir/*
+%exclude %_libdir/libhat-trie.a
+%exclude %_libdir/libmanatee.so
+%exclude %_libdir/pkgconfig/*
+%exclude %python3_sitelibdir/_manatee.la
+%exclude %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2.238.7-alt1
+- Update to version 2.238.7.
+- Exclude development files from the runtime package.
+
 * Thu Sep 21 2023 Artyom Bystrov <arbars@altlinux.org> 2.214.1-alt2
 - Fix build on GCC13
 
