@@ -1,5 +1,5 @@
 Name: timekpr-next
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 Summary: Keep control of computer usage
 Group: Graphical desktop/Other
@@ -66,6 +66,9 @@ getent group timekpr > /dev/null || /usr/sbin/groupadd -r timekpr
 %_sharedstatedir/timekpr
 
 %changelog
+* Mon Oct 26 2026 Andrey Cherepanov <cas@altlinux.org> 0.5.11-alt1
+- New version.
+
 * Thu Sep 24 2026 Andrey Cherepanov <cas@altlinux.org> 0.5.10-alt1
 - New version.
 
