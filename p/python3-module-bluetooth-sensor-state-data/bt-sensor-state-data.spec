@@ -1,34 +1,33 @@
-%def_with check
-
 Name: python3-module-bluetooth-sensor-state-data
-Version: 1.9.0
-Release: alt1.1
+Version: 1.9.2
+Release: alt1
 
 Summary: Models for storing and converting Bluetooth Sensor State Data
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/bluetooth-sensor-state-data
+URL: https://pypi.org/project/bluetooth-sensor-state-data
 VCS: https://github.com/Bluetooth-Devices/bluetooth-sensor-state-data
 
 Source0: %name-%version.tar
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
+%pyproject_runtimedeps_metadata
 
 BuildArch: noarch
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-poetry-core
-
-%if_with check
-BuildRequires: python3-module-bleak
-BuildRequires: python3-module-bluetooth-data-tools
-BuildRequires: python3-module-habluetooth
-BuildRequires: python3-module-sensor-state-data
-%endif
+BuildRequires(pre): rpm-build-pyproject
+%pyproject_builddeps_build
+%pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
 
 %prep
 %setup
+%pyproject_deps_resync_build
+%pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_poetry dev
 
 %build
 %pyproject_build
@@ -44,6 +43,9 @@ BuildRequires: python3-module-sensor-state-data
 %python3_sitelibdir/bluetooth_sensor_state_data-%version.dist-info
 
 %changelog
+* Tue Oct 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.2-alt1
+- 1.9.2 released
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1.1
 - Demodernized packaging.
 
