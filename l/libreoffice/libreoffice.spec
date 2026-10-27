@@ -53,7 +53,7 @@ Name: libreoffice
 %define hversion 26.8
 %define urelease 1.1
 Version: %hversion.%urelease
-Release: alt2
+Release: alt3
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
@@ -132,6 +132,7 @@ Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 # https://gerrit.libreoffice.org/c/core/+/212087
 Patch501: alt-tdf173885_Fix_for_Impress_crash_when_scrolling_through_slides.patch
 Patch502: 0005-tdf-172966-Don-t-add-attach-attachment-to-mailto-URI.patch
+Patch503: alt-tdf174010-fix-underlined-after-being-added-to-the-spelling-dictionary.patch
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -519,6 +520,7 @@ git apply %PATCH116
 %patch500 -p0
 %patch501 -p1
 %patch502 -p1
+%patch503 -p1
 
 %patch700 -p1
 
@@ -939,6 +941,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1.1-alt3
+- Fixed underlined after being added to the spelling dictionary (ALT #57049).
+
 * Fri Oct 16 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1.1-alt2
 - Didn't add attach=/attachment= to mailto URI (ALT #60829).
 
