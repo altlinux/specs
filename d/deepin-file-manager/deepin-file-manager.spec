@@ -6,7 +6,7 @@
 %def_without clang
 
 Name: deepin-file-manager
-Version: 6.6.6
+Version: 6.6.7
 Release: alt1
 
 Summary: Deepin File Manager
@@ -30,7 +30,7 @@ ExcludeArch: i586
 
 Provides: %repo = %EVR
 
-BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
+BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Tue Apr 01 2025
 # optimized out: boost-asio-devel boost-devel-headers boost-filesystem-devel cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libX11-devel libdde-shell0 libdeepin-pdfium1 libdeepin-qdbus-service0 libdfm6-burn1 libdfm6-io1 libdfm6-mount1 libdouble-conversion3 libdqt5-core libdqt5-dbus libdqt6-concurrent libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-sql libdqt6-svg libdqt6-svgwidgets libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libdtk6widget-devel libfreetype-devel libgio-devel libglvnd-devel libgpg-error libicu-devel libjson-c5 libp11-kit libpng-devel libpolkit-qt6-agent libpolkit-qt6-core libpolkit-qt6-gui libpoppler2-cpp libqt6-core libqt6-gui libsasl2-3 libsecret-devel libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libxcb-devel libxkbcommon-devel pkg-config python3 python3-base qt6-base-devel sh5 vulkan-headers xorg-proto-devel zlib-devel
 BuildRequires: dde-dock-devel deepin-shell dqt6-declarative-devel dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel dtk6-common-devel libdtk6ocr-devel libcryptsetup-devel libcups-devel libdde-shell-devel libdeepin-pdfium-devel libdeepin-qdbus-service-devel libdevmapper-devel libdfm6-burn-devel libdfm6-io-devel libdfm6-mount-devel libdmr-devel libdocparser-devel libffmpegthumbnailer-devel libjpeg-devel liblcms2-devel liblucene++-devel libmount-devel libopenjpeg2.0-devel libpcre-devel libpolkit-devel libpolkitqt6-dqt6-devel libpoppler-cpp-devel libtag-devel libxcbutil-icccm-devel libdfm6-search-devel libheif-devel libappimage-devel librsvg-devel libappimage-devel-static libminizip-devel dkf6-syntax-highlighting-devel dkf6-kidletime-devel
@@ -150,9 +150,6 @@ cmake --build %__builddir -j%__nprocs
 DESTDIR=%buildroot cmake --install %__builddir --verbose
 chmod +x %buildroot%_sysconfdir/deepin/dde-file-manager/dfm-dlnfs-automount
 chmod +x %buildroot%_bindir/dde-property-dialog
-# found separate qt6 and kf6 libs
-patchelf %buildroot%_libdir/deepin-service-manager/libdde-filemanager-textindex.so --add-rpath %_dqt6_libdir
-patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_libdir
 
 %files
 %doc README.md LICENSE debian/changelog
@@ -169,7 +166,6 @@ patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_li
 %_bindir/dfm-trash.sh
 %_libexecdir/%repo
 %_libexecdir/%repo-preview
-%_libexecdir/%repo-extractor
 %_datadir/%repo/
 %_desktopdir/%repo.desktop
 %_desktopdir/dfm-reencrypt.desktop
@@ -184,7 +180,6 @@ patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_li
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog_x11.service
 %_datadir/dbus-1/services/com.deepin.filemanager.filedialog_wayland.service
 %_datadir/dbus-1/services/org.deepin.Filemanager.Daemon.service
-%_datadir/dbus-1/services/org.deepin.Filemanager.TextIndex.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.DiskEncrypt.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.MountControl.service
 %_datadir/dbus-1/system-services/org.deepin.Filemanager.UserShareManager.service
@@ -199,8 +194,6 @@ patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_li
 %_userunitdir/dde-file-manager.service
 %dir %_userunitdir/dde-session-initialized.target.wants/
 %_userunitdir/dde-session-initialized.target.wants/dde-file-manager.service
-%dir %_userunitdir/deepin-service-plugin@org.deepin.Filemanager.TextIndex.service.d/
-%_userunitdir/deepin-service-plugin@org.deepin.Filemanager.TextIndex.service.d/memory-limit.conf
 %_unitdir/deepin-filemanager-diskencrypt.service
 %dir %_unitdir/deepin-service-plugin@org.deepin.Filemanager.MountControl.service.d/
 %_unitdir/deepin-service-plugin@org.deepin.Filemanager.MountControl.service.d/security-hardening.conf
@@ -252,14 +245,12 @@ patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_li
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/other/
 %dir %_datadir/deepin-service-manager/system/
-%dir %_datadir/deepin-service-manager/user/
 %_datadir/deepin-service-manager/other/deepin-diskencrypt-service.json
 %_datadir/deepin-service-manager/system/dde-filemanager-accesscontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-mountcontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-sharecontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-tpmcontrol.json
 %_datadir/deepin-service-manager/system/dde-filemanager-usbrepair.json
-%_datadir/deepin-service-manager/user/dde-filemanager-textindex.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -317,6 +308,9 @@ patchelf %buildroot%_libexecdir/dde-file-manager-extractor --add-rpath %_dqt6_li
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Oct 27 2026 Leontiy Volodin <lvol@altlinux.org> 6.6.7-alt1
+- New version 6.6.7.
+
 * Mon Oct 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.6.6-alt1
 - New version 6.6.6.
 - Built on separate kf6 libs.
