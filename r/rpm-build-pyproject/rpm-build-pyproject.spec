@@ -1,13 +1,28 @@
 %define _unpackaged_files_terminate_build 1
+# https://github.com/stanislavlevin/pyproject_installer/issues/179
+%define pyproject_installer_ver 0.6.1
+
+%def_with check
 
 Name: rpm-build-pyproject
-Version: 0.2.3
+Version: 0.3.0
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Development/Other
+Url: https://altlinux.space/slev/rpm-build-pyproject
+Vcs: https://altlinux.space/slev/rpm-build-pyproject.git
 BuildArch: noarch
 Source: %name-%version.tar
+
+%if_with check
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-pyproject-installer >= %pyproject_installer_ver
+# build and check real Python extensions
+BuildRequires: gcc
+BuildRequires: python3-dev
+BuildRequires: python3-module-abi3audit
+%endif
 
 # run command
 Requires: rpm-build-python3 >= 0.1.21-alt1
@@ -21,7 +36,7 @@ Summary: Extra RPM macros for packaging Python projects
 Group: Development/Other
 BuildArch: noarch
 Conflicts: %name < %version
-Requires: python3-module-pyproject-installer >= 0.5.5
+Requires: python3-module-pyproject-installer >= %pyproject_installer_ver
 
 %description -n rpm-macros-pyproject
 %summary.
@@ -32,19 +47,29 @@ Requires: python3-module-pyproject-installer >= 0.5.5
 %install
 install -pD -m0644 macros/pyproject -t %buildroot%_rpmmacrosdir/
 install -pD -m0644 macros/pyproject.env -t %buildroot%_rpmmacrosdir/
+install -pD -m0644 macros/pyproject-legacy -t %buildroot%_rpmmacrosdir/
 install -pD -m0755 scripts/pyproject.req -t %buildroot%_rpmlibdir/
 install -pD -m0755 scripts/pyproject.req.files -t %buildroot%_rpmlibdir/
+install -pD -m0755 user_scripts/pyproject_deps.py %buildroot%_bindir/pyproject-deps
+
+%check
+PYPROJECT_USE_SYSTEM_DEPS=1 tools/run_tests.sh
 
 %files -n rpm-macros-pyproject
 %_rpmmacrosdir/pyproject
 %_rpmmacrosdir/pyproject.env
+%_rpmmacrosdir/pyproject-legacy
 
 %files
-%doc docs/*
+%doc README.md docs/deps.md
+%_bindir/pyproject-deps
 %_rpmlibdir/pyproject.req
 %_rpmlibdir/pyproject.req.files
 
 %changelog
+* Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
+- 0.2.3 -> 0.3.0
+
 * Thu Feb 12 2026 Stanislav Levin <slev@altlinux.org> 0.2.3-alt1
 - Filtered coherent.licensed from build dependencies (closes: #57827).
 
