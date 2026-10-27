@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.110
+Version: 6.1.111
 Release: alt1
 Epoch: 2
 
@@ -93,7 +93,7 @@ sed -i 's|/etc/systemd/system/display-manager.service|%_unitdir/display-manager.
 sed -i 's|${DESTDIR}/etc/default/grub.d|${DESTDIR}%_sysconfdir/grub.d|g' Makefile
 sed -i 's|/etc/os-version|/etc/uos-version|g' \
     bin/dde-system-daemon/plymouth.go \
-    keybinding1/shortcuts/shortcut_manager.go \
+    session/eventlog/event_sdk.cpp \
     systeminfo1/utils.go
 
 # /bin
@@ -159,11 +159,6 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %dir %_libexecdir/deepin/
 %_libexecdir/deepin/dde-session-daemon
 %_libexecdir/deepin/langselector
-%dir %_libexecdir/%repo/
-%dir %_libexecdir/%repo/keybinding/
-%_libexecdir/%repo/keybinding/shortcut-dde-grand-search.sh
-%_libexecdir/%repo/keybinding/shortcut-dde-script.sh
-%_libexecdir/%repo/keybinding/shortcut-dde-switch-monitors.sh
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
@@ -205,6 +200,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Tue Oct 27 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.111-alt1
+- New version 6.1.111.
+
 * Fri Oct 23 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.110-alt1
 - New version 6.1.110.
 
