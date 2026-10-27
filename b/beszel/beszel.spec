@@ -9,12 +9,22 @@
 %define _beszel_group _beszel
 %define _beszel_home %_localstatedir/beszel
 
+%define beszel_add_user \
+%_sbindir/groupadd -r -f %_beszel_group 2>/dev/null || : \
+%_sbindir/useradd -r -g %_beszel_group \\\
+    -c "Beszel Service User" \\\
+    -d %_beszel_home \\\
+    -M \\\
+    -s /sbin/nologin \\\
+    %_beszel_user >/dev/null 2>&1 || : \
+%nil
+
 #Disabling tests due to the need to use the network,
 #but it is not available in the build environment.
 %def_without check
 
 Name: beszel
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 Summary: Lightweight server monitoring hub
 License: MIT
@@ -111,24 +121,10 @@ install -Dm644 %SOURCE7 %buildroot%_presetdir/50-beszel.preset
 %systemd_postun_with_restart %agent_service
 
 %pre hub
-%_sbindir/groupadd -r -f %_beszel_group 2>/dev/null || :
-
-%_sbindir/useradd -r -g %_beszel_group \
-    -c "Beszel Service User" \
-    -d %_beszel_home \
-    -M \
-    -s /sbin/nologin \
-    %_beszel_user >/dev/null 2>&1 || :
+%beszel_add_user
 
 %pre agent
-%_sbindir/groupadd -r -f %_beszel_group 2>/dev/null || :
-
-%_sbindir/useradd -r -g %_beszel_group \
-    -c "Beszel Service User" \
-    -d %_beszel_home \
-    -M \
-    -s /sbin/nologin \
-    %_beszel_user >/dev/null 2>&1 || :
+%beszel_add_user
 
 %check
 export GOEXPERIMENT=synctest
@@ -156,6 +152,9 @@ go test -tags=testing ./...
 %doc LICENSE readme.md
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.1-alt1
+- Updated to 0.21.1.
+
 * Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.0-alt1
 - Updated to 0.21.0 (Closes: #60518).
 
