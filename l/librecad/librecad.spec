@@ -1,5 +1,5 @@
 Name:     librecad
-Version:  2.2.1.5
+Version:  2.2.1.6
 Release:  alt1
 
 Summary:  Computer-aided design (CAD) system
@@ -112,6 +112,9 @@ install -Dm 644 desktop/graphics_icons_and_splash/Icon\ LibreCAD/Icon_Librecad.s
 %_libdir/%name/plugins/
 
 %changelog
+* Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.1.6-alt1
+- New version 2.2.1.6.
+
 * Mon Aug 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.1.5-alt1
 - New version 2.2.1.5.
 
