@@ -2,7 +2,7 @@
 
 Name:     timescaledb-tune
 Version:  0.19.0
-Release:  alt1
+Release:  alt2
 Summary:  is a program for tuning a TimescaleDB database
 License:  Apache-2.0
 Group:    Databases
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Tue Oct 27 2026 Alexei Takaseev <taf@altlinux.org> 0.19.0-alt2
+- Added an ALT-specific path to the configuration file (ALT #61228)
+
 * Wed Oct 21 2026 Alexei Takaseev <taf@altlinux.org> 0.19.0-alt1
 - 0.19.0
 
