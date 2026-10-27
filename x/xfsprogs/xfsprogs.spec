@@ -6,7 +6,7 @@
 %endif
 
 Name: xfsprogs
-Version: 7.2.0
+Version: 7.2.1
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -17,6 +17,7 @@ Url: https://xfs.wiki.kernel.org/
 VCS: https://git.kernel.org/pub/scm/fs/xfs/xfsprogs-dev.git
 Source: %name-%version-%release.tar
 Patch0: %name-%version-alt.patch
+Patch1: %name-i586-trans-mod-sb.patch
 
 Requires: libxfs = %EVR
 # makefiles are buggy
@@ -83,6 +84,9 @@ If you install libxfs-devel-static, you'll also want to install xfsprogs.
 %prep
 %setup
 %patch0 -p1
+%ifarch i586
+%patch1 -p1
+%endif
 
 %build
 export tagname=CC
@@ -150,6 +154,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Tue Oct 27 2026 Anton Farygin <rider@altlinux.org> 7.2.1-alt1
+- 7.2.0 -> 7.2.1
+
 * Thu Sep 24 2026 Anton Farygin <rider@altlinux.org> 7.2.0-alt1
 - 7.1.1 -> 7.2.0
 
