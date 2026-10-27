@@ -1,5 +1,5 @@
 Name: seafile-fuse
-Version: 3.0.26
+Version: 3.0.27
 Release: alt1
 
 Summary: SeaDrive daemon with FUSE interface
@@ -12,11 +12,12 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/haiwen/seadrive-fuse/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch0: %name-%version-rpc-relative-import.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 #BuildRequires: vala
 BuildRequires: libuuid-devel
 
@@ -52,6 +53,7 @@ The python3 module with Seafile fuse.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -69,6 +71,11 @@ The python3 module with Seafile fuse.
 
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.27-alt1
+- new version 3.0.27
+- use rpm-build-cmake for building.
+- fix import of the RPC client module.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.26-alt1
 - new version 3.0.26
 
