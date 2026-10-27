@@ -1,28 +1,24 @@
-%define _unpackaged_files_terminate_build 1
-
-%define pypi_name gpsoauth
-%define mod_name %pypi_name
-
-%def_with check
-
-Name: python3-module-%pypi_name
-Version: 1.1.1
+Name: python3-module-gpsoauth
+Version: 2.0.0
 Release: alt1
+
 Summary: Python API for google play services oauth
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/gpsoauth/
-Vcs: https://github.com/simon-weber/gpsoauth
-BuildArch: noarch
+URL: https://pypi.org/project/gpsoauth/
+VCS: https://github.com/simon-weber/gpsoauth
+
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
+Source1: pyproject_deps.json
+
+Autoreq: yes, nopython3
 %pyproject_runtimedeps_metadata
+
+BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
-%if_with check
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
-%endif
 
 %description
 %summary
@@ -31,9 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%if_with check
 %pyproject_deps_resync_check_poetry dev
-%endif
 
 %build
 %pyproject_build
@@ -42,13 +36,16 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_install
 
 %check
-%pyproject_run_pytest -ra
+%pyproject_run_pytest -o addopts= tests
 
 %files
-%python3_sitelibdir/%mod_name/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/gpsoauth
+%python3_sitelibdir/gpsoauth-%version.dist-info
 
 %changelog
+* Tue Oct 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
+- 2.0.0 released
+
 * Mon Jun 10 2024 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
 - 1.0.0 -> 1.1.1.
 
