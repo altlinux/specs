@@ -5,7 +5,7 @@
 %define mod_name develop
 
 Name: python3-module-%pypi_nname
-Version: 8.19.2
+Version: 9.1.0
 Release: alt1
 Summary: Development utilities
 License: MIT
@@ -20,8 +20,6 @@ Patch: %name-%version-alt.patch
 AutoReq: yes, nopython3
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
-# requires internet
-%add_pyproject_deps_build_filter coherent-licensed
 %pyproject_builddeps_build
 
 %description
@@ -49,6 +47,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 9.1.0-alt1
+- 8.19.2 -> 9.1.0
+
 * Mon Feb 09 2026 Stanislav Levin <slev@altlinux.org> 8.19.2-alt1
 - 8.17.6 -> 8.19.2.
 
