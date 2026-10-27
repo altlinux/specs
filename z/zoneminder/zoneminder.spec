@@ -2,11 +2,11 @@
 
 %define zmuser apache2
 %define zmgroup _webserver
-%define phpver 8.3
+%define phpver %php_defver
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.38.4
+Version: 1.38.6
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -26,7 +26,7 @@ Source101: %name-%version-web-api-app-Plugin-CakePHP-Enum-Behavior.tar
 Source102: %name-%version-web-api-app-Plugin-Crud.tar
 Source103: %name-%version-dep-CxxUrl.tar
 
-BuildRequires(pre): rpm-macros-webserver-common
+BuildRequires(pre): rpm-macros-webserver-common rpm-build-php
 Requires: libgnutls libgnutls-openssl zlib ffmpeg
 Requires: php%phpver-pdo_mysql php%phpver-openssl php%phpver-gd php%phpver-apcu php%phpver-intl
 Requires: php%phpver-sockets
@@ -193,6 +193,10 @@ find %buildroot%_libdir -type f -name '*.a' -delete
 %_datadir/%name/www/api
 
 %changelog
+* Tue Oct 27 2026 Anton Farygin <rider@altlinux.org> 1.38.6-alt1
+- 1.38.4 -> 1.38.6
+- use defined in rpm-build-php macros php_defver instead of php-8.3
+
 * Tue Aug 11 2026 Anton Farygin <rider@altlinux.org> 1.38.4-alt1
 - 1.38.3 -> 1.38.4
 
