@@ -1,5 +1,5 @@
 %define module_name             ixgbe
-%define module_version          6.4.5
+%define module_version          6.5.9
 %define module_release          alt1
 
 %define flavour 6.12
@@ -80,6 +80,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Oct 26 2026 Alexei Takaseev <taf@altlinux.org> 6.5.9-alt1
+- 6.5.9
 
 * Tue Jul 21 2026 Alexei Takaseev <taf@altlinux.org> 6.4.5-alt1
 - 6.4.5
