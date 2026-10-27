@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.12.5
+Version: 0.12.6
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -7,6 +7,7 @@ Summary: heavily refactored vim fork
 License: Apache-2.0 and Vim
 Group: Editors
 Url: https://neovim.io/
+Vcs: https://github.com/neovim/neovim
 
 # git://git.altlinux.org/gears/n/neovim.git
 Source: %name-%version-%release.tar
@@ -126,6 +127,9 @@ ln -s %_libdir/libtree-sitter-markdown_inline.so %buildroot/%neovim_ts_parsers_d
 %neovim_ts_parsers_dir/*
 
 %changelog
+* Tue Oct 27 2026 Aleksandr Dovydenkov <asd@altlinux.org> 0.12.6-alt1
+- new version
+
 * Mon Aug 24 2026 Vladimir Didenko <cow@altlinux.org> 0.12.5-alt1
 - new version
 
