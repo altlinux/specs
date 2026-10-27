@@ -2,7 +2,7 @@
 # odbcinst -i -d -f template
 
 Name: mysql-connector-odbc
-Version: 26.7.1
+Version: 26.10.0
 Release: alt1
 
 Summary: MySQL Connector/ODBC - ODBC driver for MySQL
@@ -28,7 +28,7 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Wed Aug 08 2018
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libncurses-devel libstdc++-devel libtinfo-devel libunixODBC-devel-compat python-base python-modules python3 python3-base python3-dev ruby
-BuildRequires: cmake gcc-c++ glibc-devel-static libsasl2-devel libssl-devel libunixODBC-devel
+BuildRequires: rpm-build-cmake gcc-c++ glibc-devel-static libsasl2-devel libssl-devel libunixODBC-devel
 BuildRequires: libmysqlclient21-devel
 
 %description
@@ -82,6 +82,10 @@ rm -vr %buildroot%_prefix/test/
 %_libdir/libmyodbc26w.so
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 26.10.0-alt1
+- new version 26.10.0
+- use rpm-build-cmake for CMake macros
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 26.7.1-alt1
 - new version 26.7.1
 - driver libraries renamed upstream to libmyodbc26[aw].so
