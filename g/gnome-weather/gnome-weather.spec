@@ -9,7 +9,7 @@
 
 Name: gnome-weather
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Access current weather conditions and forecasts
 Group: Graphical desktop/GNOME
@@ -23,6 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %else
 Source: %name-%version.tar
 %endif
+Patch10: %name-50.0-fc-ts6.patch
 
 # node hangs on 32-bit
 ExcludeArch: %ix86
@@ -62,6 +63,7 @@ access updated forecasts provided by various internet services.
 
 %prep
 %setup -n %name-%version%beta
+%patch10 -p1 -b .ts6
 
 %build
 %meson
@@ -89,6 +91,9 @@ access updated forecasts provided by various internet services.
 %doc NEWS README*
 
 %changelog
+* Tue Oct 27 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1.1
+- fixed build with ts6
+
 * Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 
