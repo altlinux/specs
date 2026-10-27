@@ -1,9 +1,9 @@
 %define module_name             accel-ppp
 %define module_version          1.14.1
-%define module_release          alt1
+%define module_release          alt2
 
 %define flavour		6.12
-%define karch	%ix86 x86_64 aarch64 riscv64 loongarch64
+%define karch	%ix86 x86_64 aarch64 ppc64le armh
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.12
@@ -22,6 +22,8 @@ Group: System/Kernel and hardware
 Url: https://accel-ppp.org/
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch0: Fix-build-with-6.12.114.patch
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel cmake libpcre2-devel libssl-devel
@@ -42,6 +44,8 @@ ExclusiveArch: %karch
 rm -rf %module_name-%module_version
 tar -jxvf %kernel_src/%module_name-%module_version.tar.bz2
 %setup -D -T -n %module_name-%module_version
+
+%patch0 -p1
 
 %build
 %cmake \
@@ -65,6 +69,9 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Oct 22 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt2
+- Fix FTBS with 6.12.114
 
 * Fri May 08 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt1
 - 1.14.1
