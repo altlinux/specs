@@ -2,7 +2,7 @@
 
 # TODO: add .pc-file to libhiredis-devel (to build with one)
 Name: rspamd
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 
 Summary: Fast and modular antispam system written in C
@@ -19,10 +19,9 @@ Source3: %name.service
 Source4: %name.sysconfig
 Source5: %name.logrotate
 
-Patch3500: rspamd-loongarch.patch
 
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: glib2-devel
 BuildRequires: libevent-devel liblua5-devel
 BuildRequires: libpcre2-devel libsqlite3-devel libicu-devel
@@ -57,7 +56,6 @@ anywhere in code.
 
 %prep
 %setup
-%patch3500 -p1
 
 %build
 %cmake_insource -DSYSTEMDDIR=%{_unitdir} \
@@ -142,6 +140,10 @@ install -pD -m 0644 %SOURCE5 %buildroot%_logrotatedir/%name
 %dir %attr(0770,root,rspamd) %_logdir/rspamd
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt1
+- new version 4.2.2
+- use rpm-build-cmake for package builds.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.1-alt1
 - new version 4.2.1
 
