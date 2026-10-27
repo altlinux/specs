@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.11.2
+Version: 4.11.4
 Release: alt1
 
 Summary: Open source computer monitoring and classroom management
@@ -141,6 +141,9 @@ fi
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Tue Oct 20 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.4-alt1
+- New version (Closes: 60478).
+
 * Tue Jul 21 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.2-alt1
 - New version.
 
