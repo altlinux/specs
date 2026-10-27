@@ -1,5 +1,5 @@
 Name: mpage
-Version: 2.5.7
+Version: 2.5.8
 Release: alt1
 
 Summary: A tool for printing multiple pages of text on each printed page
@@ -7,11 +7,13 @@ License: GPL
 Group: System/Configuration/Printing
 
 Url: http://www.mesa.nl/pub/mpage
+# Source-url: http://www.mesa.nl/pub/mpage/%name-%version.tgz
 Source: %name-%version.tar
 Patch0: mpage252-config.patch
 Patch1: mpage-2.5.1-newenc.patch
 Patch2: mpage-2.5.7-alt-tmpfile.patch
 Patch3: mpage-2.5.7-alt-no-japanese.patch
+Patch4: mpage-2.5.7-alt-fixdecl.patch
 
 %description
 The mpage utility takes plain text files or PostScript(TM) documents
@@ -30,6 +32,7 @@ long text documents without wasting paper.
 %patch1 -p1
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 
 %build
 %make_build BINDIR=%_bindir LIBDIR=%_datadir MANDIR=%_mandir/man1 PREFIX=%prefix
@@ -44,6 +47,10 @@ make PREFIX=%buildroot%prefix MANDIR=%buildroot%_mandir/man1 install
 %_datadir/%name
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.8-alt1
+- New version 2.5.8.
+- Fix build with current C compiler.
+
 * Mon May 28 2018 Grigory Ustinov <grenka@altlinux.org> 2.5.7-alt1
 - Build new version.
 
