@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.0
+Version: 1.9.6
 Release: alt1
 Summary: TOML Toolkit
 License: MIT
@@ -78,6 +78,9 @@ pushd python/tombi
 %_bindir/tombi
 
 %changelog
+* Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 1.9.6-alt1
+- 1.9.0 -> 1.9.6
+
 * Fri Oct 23 2026 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - 1.8.9 -> 1.9.0
 
