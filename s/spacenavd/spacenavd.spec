@@ -1,18 +1,18 @@
 Name:    spacenavd
-Version: 1.3.1
-Release: alt2
+Version: 1.4
+Release: alt1
 
-Summary: Free user-space driver for 6-dof space-mice.
-License: GPL-3.0
+Summary: Free user-space driver for 6-dof space-mice
+License: GPL-3.0-or-later
 Group:   System/Configuration/Hardware
-Url:     https://github.com/FreeSpacenav/spacenavd
+URL:     https://spacenav.sourceforge.net
+VCS:     https://github.com/FreeSpacenav/spacenavd
 
 Source:  %name-%version.tar
 Patch: spacenavd-fix-pidfile.patch
 
-BuildRequires: gcc-c++ git-core
+BuildRequires: gcc git-core
 BuildRequires: libXi-devel libXtst-devel libX11-devel libXext-devel
-
 
 %description
 Spacenavd is a free software replacement user-space driver (daemon) for
@@ -33,16 +33,30 @@ was written for the 3Dconnexion driver.
 install -Dm755 %name %buildroot%_sbindir/%name
 install -Dm644 contrib/systemd/%name.service %buildroot%_unitdir/%name.service
 install -Dm644 doc/example-spnavrc %buildroot%_sysconfdir/spnavrc
+mkdir -p %buildroot%_presetdir
+echo 'enable %name.service' > %buildroot%_presetdir/90-%name.preset
+
+%post
+%post_systemd %name.service
+
+%preun
+%preun_systemd %name.service
 
 %files
 %doc AUTHORS COPYING README.md
 %_bindir/%name
 %_bindir/spnavd_ctl
 %_sbindir/%name
-%_sysconfdir/spnavrc
+%config(noreplace) %_sysconfdir/spnavrc
+%dir %_presetdir
+%_presetdir/90-%name.preset
 %_unitdir/%name.service
 
 %changelog
+* Tue Oct 27 2026 Sergey Palcheh <minergenon@altlinux.org> 1.4-alt1
+- new version 1.4
+- update patch spacenavd-fix-pidfile
+
 * Tue May 19 2026 Sergey Palcheh <minergenon@altlinux.org> 1.3.1-alt2
 - spec cleanup
 
