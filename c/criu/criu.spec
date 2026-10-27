@@ -7,7 +7,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: criu
-Version: 4.2.1
+Version: 4.3
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
@@ -200,6 +200,9 @@ rm -f %buildroot%_libdir/criu/cuda_plugin.so
 %endif
 
 %changelog
+* Sat Oct 24 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.3-alt1
+- Updated to 4.3.
+
 * Wed Jul 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.2.1-alt1
 - Updated to 4.2.1.
 
