@@ -6,7 +6,7 @@
 %define oversion %version-%rockspecrev
 
 Name: lua%luaver-module-%oname
-Version: 36.3
+Version: 37.0
 Release: alt1.%rockspecrev
 
 Summary: Lua bindings for POSIX APIs
@@ -49,6 +49,9 @@ separately.
 %exclude %luarocks_dbdir/manifest
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 37.0-alt1.1
+- Updated to 37.0.
+
 * Mon Feb 17 2025 Alexandr Shashkin <dutyrok@altlinux.org> 36.3-alt1.1
 - Updated to 36.3.
 
