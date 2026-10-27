@@ -7,8 +7,8 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 4.1.3
-Release: alt2
+Version: 4.1.4
+Release: alt1
 
 Group: Networking/File transfer
 Summary: Llightweight BitTorrent client
@@ -30,7 +30,6 @@ Requires(post,postun): desktop-file-utils
 
 Source: http://download.m0k.org/%name/files/%name-%version.tar
 Patch2: %name-alt-extra-doc-disable.patch
-Patch3: %name-4.1.1-alt-fix-wayland-app-id.patch
 Patch4: %name-4.1.1-alt-use-psl-latest.patch
 Patch5: %name-4.1.1-alt-fix-gtk-action-lookup.patch
 Patch6: %name-4.1.1-alt-fix-magnet-options-dialog.patch
@@ -262,6 +261,10 @@ fi
 %attr(1770,root,_%dname) %dir %_logdir/%dname
 
 %changelog
+* Tue Oct 27 2026 Anton Farygin <rider@altlinux.org> 4.1.4-alt1
+- 4.1.3 -> 4.1.4
+- removed wayland app id patch merged upstream
+
 * Sun Jul 12 2026 Anton Farygin <rider@altlinux.org> 4.1.3-alt2
 - built with qt6
 
