@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 158.0.1
+Version: 159.0
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -388,6 +388,177 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Oct 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 159.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-117860: Same-origin policy bypass in the DOM: Navigation component
+  + CVE-2026-117861: Sandbox escape in the DOM: Navigation component
+  + CVE-2026-117862: Privilege escalation due to incorrect boundary conditions in the Networking component
+  + CVE-2026-117863: Information disclosure due to uninitialized memory in the Audio/Video component
+  + CVE-2026-117864: Sandbox escape in the Form Manager component
+  + CVE-2026-117865: Use-after-free in the JavaScript: GC component
+  + CVE-2026-117866: Privilege escalation due to use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-117867: Use-after-free in the Layout component
+  + CVE-2026-117868: Sandbox escape in the DOM: Networking component
+  + CVE-2026-117869: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117870: Use-after-free in the JavaScript Engine component
+  + CVE-2026-117871: Invalid pointer in the Graphics component
+  + CVE-2026-117872: Use-after-free in the JavaScript: Standard Library component
+  + CVE-2026-117873: Incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-118005: Use-after-free in the WebRTC: Signaling component
+  + CVE-2026-117874: Use-after-free in the Internationalization component
+  + CVE-2026-117875: Use-after-free in the Layout: Scrolling and Overflow component
+  + CVE-2026-117876: Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-118006: Privilege escalation due to use-after-free in the WebRTC: Signaling component
+  + CVE-2026-117877: Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-118007: Use-after-free in the JavaScript: GC component
+  + CVE-2026-117878: Other issue, use-after-free in the Storage: IndexedDB component
+  + CVE-2026-117879: Incorrect boundary conditions in the Layout: Tables component
+  + CVE-2026-118008: Privilege escalation in the DOM: Navigation component
+  + CVE-2026-117880: Use-after-free in the XML component
+  + CVE-2026-118009: Integer overflow, use-after-free in the Graphics: Text component
+  + CVE-2026-117881: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117882: Use-after-free in the Layout component
+  + CVE-2026-117883: Use-after-free in the DOM: HTML Parser component
+  + CVE-2026-117884: Use-after-free in the Networking component
+  + CVE-2026-117885: Use-after-free in the Layout: Grid component
+  + CVE-2026-117886: Incorrect boundary conditions in the Graphics: Text component
+  + CVE-2026-117887: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-118010: Use-after-free in the Disability Access APIs component
+  + CVE-2026-117888: Uninitialized memory in the Graphics: Canvas2D component
+  + CVE-2026-117889: Incorrect boundary conditions in the JavaScript Engine component
+  + CVE-2026-117890: JIT miscompilation in the JavaScript Engine: JIT component
+  + CVE-2026-117891: Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-117892: Privilege escalation due to use-after-free in the WebRTC: Networking component
+  + CVE-2026-117893: Incorrect boundary conditions in the Security: PSM component
+  + CVE-2026-117894: Incorrect boundary conditions in the WebRTC: Signaling component
+  + CVE-2026-117895: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117896: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117897: Incorrect boundary conditions in the Layout: Tables component
+  + CVE-2026-117898: Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-117899: Use-after-free in the Networking: HTTP component
+  + CVE-2026-117900: Use-after-free in the DOM: Editor component
+  + CVE-2026-117901: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117902: Use-after-free in the Layout: Text and Fonts component
+  + CVE-2026-117903: Use-after-free in the Audio/Video component
+  + CVE-2026-117904: Use-after-free in the JavaScript: GC component
+  + CVE-2026-117905: Use-after-free in the Audio/Video: Playback component
+  + CVE-2026-117906: Use-after-free in the CSS Parsing and Computation component
+  + CVE-2026-117907: Use-after-free in the Networking component
+  + CVE-2026-117908: Use-after-free in the Graphics: ImageLib component
+  + CVE-2026-117909: Use-after-free in the JavaScript: GC component
+  + CVE-2026-117910: Invalid pointer in the JavaScript Engine component
+  + CVE-2026-117911: Use-after-free in the Audio/Video: Playback component
+  + CVE-2026-117912: Same-origin policy bypass in the CSS Parsing and Computation component
+  + CVE-2026-117913: Use-after-free in the SVG component
+  + CVE-2026-117914: Use-after-free in the SVG component
+  + CVE-2026-117915: Incorrect boundary conditions in the Layout: Block and Inline component
+  + CVE-2026-117916: Use-after-free in the XSLT component
+  + CVE-2026-117917: Invalid pointer in the Graphics: WebRender component
+  + CVE-2026-117918: Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-117919: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117920: Use-after-free in the DOM: HTML Parser component
+  + CVE-2026-117921: Use-after-free in the CSS Parsing and Computation component
+  + CVE-2026-117922: Use-after-free in the Networking: WebSockets component
+  + CVE-2026-117923: Use-after-free in the Audio/Video component
+  + CVE-2026-117924: Use-after-free in the XSLT component
+  + CVE-2026-117925: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117926: Incorrect boundary conditions in the SVG component
+  + CVE-2026-117927: Use-after-free in the SVG component
+  + CVE-2026-117928: Same-origin policy bypass in the CSS Parsing and Computation component
+  + CVE-2026-117929: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117930: Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-117931: Use-after-free in the DOM: Events component
+  + CVE-2026-117932: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117933: Frame poisoning in the CSS Parsing and Computation component
+  + CVE-2026-117934: Use-after-free in the Layout component
+  + CVE-2026-118011: Frame poisoning in the CSS Parsing and Computation component
+  + CVE-2026-118012: Use-after-free in the DOM: Animation component
+  + CVE-2026-117935: Use-after-free in the DOM: Bindings (WebIDL) component
+  + CVE-2026-117936: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117937: Invalid pointer in the JavaScript Engine component
+  + CVE-2026-117938: Use-after-free in the Layout component
+  + CVE-2026-117939: Use-after-free in the XML component
+  + CVE-2026-117940: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-118013: Use-after-free in the Layout: Images, Video, and HTML Frames component
+  + CVE-2026-117941: Use-after-free in the DOM: CSS Object Model component
+  + CVE-2026-117942: Incorrect boundary conditions in the JavaScript Engine: JIT component
+  + CVE-2026-118014: Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-117943: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117944: Use-after-free in the Layout component
+  + CVE-2026-118015: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117945: Incorrect boundary conditions in the XML component
+  + CVE-2026-118016: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117946: Incorrect boundary conditions in the JavaScript Engine component
+  + CVE-2026-117947: Use-after-free in the XML component
+  + CVE-2026-117948: Use-after-free in the SVG component
+  + CVE-2026-117949: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117950: Incorrect boundary conditions in the DOM: Core & HTML component
+  + CVE-2026-117951: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117952: Uninitialized memory in the Networking component
+  + CVE-2026-117953: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-118017: Use-after-free in the SVG component
+  + CVE-2026-117954: Use-after-free in the Layout: Positioned component
+  + CVE-2026-118018: Spoofing issue in the Downloads component in Firefox for Android
+  + CVE-2026-118019: Race condition, use-after-free in the DOM: File component
+  + CVE-2026-117955: JIT miscompilation in the JavaScript: WebAssembly component
+  + CVE-2026-100801: Privilege escalation in the DLL Services component
+  + CVE-2026-117956: Invalid pointer in the Nimbus Desktop Client component
+  + CVE-2026-117957: Cryptographic issue in the WebRTC: Networking component
+  + CVE-2026-117958: Site isolation issue in the Networking: HTTP component
+  + CVE-2026-117959: Site isolation issue in the DOM: Service Workers component
+  + CVE-2026-117960: Spoofing issue in the DOM: Core & HTML component
+  + CVE-2026-117961: Incorrect boundary conditions in the Layout: Text and Fonts component
+  + CVE-2026-117962: Sandbox escape due to incorrect boundary conditions in the Storage: Quota Manager component
+  + CVE-2026-117963: Incorrect boundary conditions in the DOM: Service Workers component
+  + CVE-2026-117964: Use-after-free in the Panning and Zooming component
+  + CVE-2026-117965: Same-origin policy bypass in the Address Bar component
+  + CVE-2026-117966: Site isolation issue in the Networking: HTTP component
+  + CVE-2026-117967: Mitigation bypass in the DOM: Security component
+  + CVE-2026-118020: Use-after-free in the Layout component
+  + CVE-2026-117968: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-117969: Invalid pointer in the JavaScript Engine: JIT component
+  + CVE-2026-117970: Race condition in the Disability Access APIs component
+  + CVE-2026-117971: Sandbox escape due to use-after-free in the Print Preview component
+  + CVE-2026-117972: Use-after-free in the Graphics component
+  + CVE-2026-118021: Sandbox escape due to use-after-free in the XPCOM component
+  + CVE-2026-117973: Use-after-free in the Networking: DNS component
+  + CVE-2026-117974: Use-after-free in the XML component
+  + CVE-2026-117975: Sandbox escape due to invalid pointer in the Graphics: WebRender component
+  + CVE-2026-117976: Site isolation issue in the DOM: Navigation component
+  + CVE-2026-117977: Other issue in the Console component
+  + CVE-2026-117978: Incorrect boundary conditions in the Graphics component
+  + CVE-2026-117979: Incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-117980: Use-after-free in the Graphics component
+  + CVE-2026-117981: Privilege escalation in the Toolkit component
+  + CVE-2026-117982: Invalid pointer in the JavaScript Engine: JIT component
+  + CVE-2026-117983: Use-after-free in the Graphics component
+  + CVE-2026-118022: Sandbox escape due to use-after-free in the Disability Access APIs component
+  + CVE-2026-117984: Incorrect boundary conditions in the Layout: Scrolling and Overflow component
+  + CVE-2026-117985: Sandbox escape due to use-after-free in the Graphics component
+  + CVE-2026-117986: Use-after-free in the Graphics component
+  + CVE-2026-117987: Use-after-free in the Graphics component
+  + CVE-2026-117988: Sandbox escape due to incorrect boundary conditions in the Graphics: CanvasWebGL component
+  + CVE-2026-117989: Use-after-free in the Graphics component
+  + CVE-2026-118023: Sandbox escape due to use-after-free in the Graphics: WebRender component
+  + CVE-2026-117990: Sandbox escape due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-117991: Incorrect boundary conditions in the Layout: Text and Fonts component
+  + CVE-2026-117992: Information disclosure in the CSS Parsing and Computation component
+  + CVE-2026-117993: Integer overflow in the Graphics: Text component
+  + CVE-2026-117994: Use-after-free in the JavaScript: GC component
+  + CVE-2026-117995: Privilege escalation in the DOM: UI Events & Focus Handling component
+  + CVE-2026-117996: Incorrect boundary conditions in the WebRTC component
+  + CVE-2026-117997: Sandbox escape due to use-after-free in the Widget component
+  + CVE-2026-118024: Use-after-free in the Graphics: Text component
+  + CVE-2026-118025: Other issue in the SVG component
+  + CVE-2026-117998: Mitigation bypass in the DOM: Push Subscriptions component
+  + CVE-2026-117999: Race condition in the IPC component
+  + CVE-2026-118000: Information disclosure in the Networking: HTTP component
+  + CVE-2026-118002: Information disclosure due to race condition in the Networking component
+  + CVE-2026-118003: Information disclosure in the Networking: DNS component
+  + CVE-2026-118026: Invalid pointer in the JavaScript: GC component
+  + CVE-2026-118004: Incorrect boundary conditions in the CSS Transitions and Animations component
+
 * Tue Oct 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 158.0.1-alt1
 - New version.
 - Fixes:
