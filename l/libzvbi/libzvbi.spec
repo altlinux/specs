@@ -3,7 +3,7 @@
 %define oname zvbi
 
 Name: libzvbi
-Version: 0.2.45
+Version: 0.2.46
 Release: alt1
 
 Summary: Raw VBI, Teletext and Closed Caption decoding library
@@ -110,6 +110,9 @@ grep -q "^#define HAVE_LIBPNG 1$" config.h
 %endif
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2.46-alt1
+- New version 0.2.46.
+
 * Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2.45-alt1
 - new version 0.2.45.
 - (GHSA-86rm-g7qf-j2fh) SECURITY: fix out-of-bounds read and write.
