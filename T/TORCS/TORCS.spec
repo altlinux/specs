@@ -1,6 +1,6 @@
 Name: TORCS
-Version: 1.3.7
-Release: alt3
+Version: 1.3.10
+Release: alt1
 
 Summary: The Open Racing Car Simulator
 
@@ -11,6 +11,7 @@ Url: http://torcs.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+# Source-url: https://downloads.sourceforge.net/torcs/torcs-%version.tar.bz2
 Source1: %name.desktop
 Source2:  %name.appdata.xml
 
@@ -19,8 +20,6 @@ Source11: %name.16.xpm
 Source12: %name.32.xpm
 Source13: %name.48.xpm
 
-Patch0: torcs-1.3.6-gcc7.patch
-Patch1: torcs-1.3.7-isnan.patch
 
 Requires: %name-data = %version
 # hack for fix https://bugzilla.altlinux.org/show_bug.cgi?id=16145
@@ -52,8 +51,6 @@ Architecture independent data files for The Open Racing Car Simulator.
 %prep
 %setup
 
-%patch0 -p1
-%patch1 -p1
 
 # replace nonunicode symbols in all XMLs
 find ./ -name "*.xml" -print0 | xargs -0 sed -i "s|\xE9|e|g"
@@ -114,6 +111,10 @@ done
 %_gamesdatadir/torcs/*
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.10-alt1
+- New version 1.3.10
+- Drop patches merged upstream.
+
 * Tue Jan 20 2026 Artyom Bystrov <arbars@altlinux.org> 1.3.7-alt3
 - Add zlib-devel in BR
 
