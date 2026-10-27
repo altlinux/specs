@@ -1,5 +1,5 @@
 Name: python3-module-libsonic
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Provides: python3-module-py-sonic = %EVR
@@ -41,6 +41,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/py_sonic-%version.dist-info
 
 %changelog
+* Tue Oct 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
+- 1.2.0 released
+
 * Thu Apr 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.1-alt1
 - 1.1.1 released
 
