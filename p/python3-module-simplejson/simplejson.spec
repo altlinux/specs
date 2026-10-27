@@ -2,7 +2,7 @@
 %define oname simplejson
 
 Name: python3-module-%oname
-Version: 4.1.2
+Version: 4.2.0
 Release: alt1
 
 Summary: Simplejson is a simple, fast, extensible JSON encoder/decoder for Python
@@ -67,6 +67,9 @@ python3 -Wd simplejson/tests/__init__.py
 
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- New version 4.2.0.
+
 * Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.2-alt1
 - New version 4.1.2.
 - Build with pyproject macros and test both C and Python implementations.
