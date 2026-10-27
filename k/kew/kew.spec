@@ -1,6 +1,6 @@
 Name: kew
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
 Summary: A terminal music player
 License: GPL-2.0
@@ -21,6 +21,7 @@ BuildRequires: pkgconfig(opus)
 BuildRequires: pkgconfig(opusfile)
 BuildRequires: pkgconfig(taglib)
 BuildRequires: pkgconfig(vorbis)
+BuildRequires: pkgconfig(zlib)
 
 %description
 Listen to music in the terminal.
@@ -55,6 +56,9 @@ Features:
 %_man5dir/kewstaterc.5*
 
 %changelog
+* Tue Oct 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt2
+- added explicit zlib-devel builddep
+
 * Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.4.0-alt1
 - 4.4.0 released
 
