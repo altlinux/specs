@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fwupd-efi
-Version: 1.8
-Release: alt2
+Version: 1.9
+Release: alt1
 License: LGPLv2+
 
 Group: System/Configuration/Hardware
@@ -11,7 +11,9 @@ Summary: EFI Application used by uefi-capsule plugin in fwupd
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-ExclusiveArch: x86_64 aarch64 loongarch64 riscv64
+ExclusiveArch: %efi_arches
+
+BuildRequires(pre): rpm-macros-uefi
 
 BuildRequires: meson
 BuildRequires: gnu-efi
@@ -64,6 +66,9 @@ ln -svf "$fwupdefi" "%buildroot%_libdir/efi/$fwupdefi.signed"
 %endif
 
 %changelog
+* Tue Oct 27 2026 Egor Ignatov <egori@altlinux.org> 1.9-alt1
+- New version 1.9.
+
 * Tue Apr 07 2026 Egor Ignatov <egori@altlinux.org> 1.8-alt2
 - added fwupd*.efi.signed symlink
 
