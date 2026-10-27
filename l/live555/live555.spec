@@ -1,5 +1,5 @@
 Name: live555
-Version: 20261023
+Version: 20261024
 Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
@@ -91,6 +91,9 @@ done
 %_pkgconfigdir/live555.pc
 
 %changelog
+* Tue Oct 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20261024-alt1
+- 2026.10.24 released
+
 * Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20261023-alt1
 - 2026.10.23 released
 
