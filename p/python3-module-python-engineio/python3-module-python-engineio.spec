@@ -6,7 +6,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 4.14.0
+Version: 4.15.0
 Release: alt1
 
 Summary: Python Engine.IO server and client
@@ -72,6 +72,9 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Wed Oct 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.15.0-alt1
+- 4.14.0 -> 4.15.0
+
 * Mon Aug 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.14.0-alt1
 - 4.13.5 -> 4.14.0
 
