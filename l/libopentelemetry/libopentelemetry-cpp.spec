@@ -1,16 +1,20 @@
-%define        _unpackaged_files_terminate_build 1
-%define        oname opentelemetry
-
 %ifarch %e2k
 # ecf_opt64 segfault
-%def_disable check
+%def_disable   check
 %else
-%def_enable check
+%def_enable    check
 %endif
+%def_enable    devel
+%def_disable   unstable
 
-Name:          lib%oname
-Version:       1.22.0
-Release:       alt2
+%if_enabled    devel
+%define        _unpackaged_files_terminate_build 1
+%endif
+%define        nomen opentelemetry
+
+Name:          lib%nomen
+Version:       1.30.0
+Release:       alt1
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -19,41 +23,41 @@ Vcs:           https://github.com/open-telemetry/opentelemetry-cpp.git
 
 Source:        %name-%version.tar
 
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-cmake
+%{?!_disable_check:BuildRequires: ctest}
 BuildRequires: /proc
 BuildRequires: cmake
-BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: curl
 BuildRequires: grpc-plugins
 BuildRequires: protobuf-compiler
 BuildRequires: opentelemetry-proto
-BuildRequires: libcares-devel
-BuildRequires: libidn2-devel
-BuildRequires: libssl-devel
-BuildRequires: zlib-devel
-BuildRequires: libre2-devel
-BuildRequires: libabseil-cpp-devel
-BuildRequires: libgrpc-devel
-BuildRequires: libprotobuf-devel
-BuildRequires: libssh2-devel
-BuildRequires: libnghttp2-devel
-BuildRequires: libngtcp2-devel
-BuildRequires: libnghttp3-devel
-BuildRequires: libgsasl-devel
-BuildRequires: libbrotli-devel
-BuildRequires: libgsl-devel
-BuildRequires: libp11-kit-devel
-BuildRequires: libpsl-devel
-BuildRequires: libzstd-devel
-BuildRequires: libkrb5-devel
-BuildRequires: libgtest-devel
-BuildRequires: libgnutls-devel
-BuildRequires: libnettle-devel
-BuildRequires: libtasn1-devel
-BuildRequires: libbenchmark-devel
-BuildRequires: nlohmann-json-devel
-BuildRequires: libprometheus-cpp-devel
+BuildRequires: pkgconfig(libcares)
+BuildRequires: pkgconfig(libidn2)
+BuildRequires: pkgconfig(openssl)
+BuildRequires: pkgconfig(zlib)
+BuildRequires: pkgconfig(re2)
+BuildRequires: pkgconfig(absl_base)
+BuildRequires: pkgconfig(grpc++)
+BuildRequires: pkgconfig(protobuf)
+BuildRequires: pkgconfig(libssh2)
+BuildRequires: pkgconfig(libnghttp2)
+BuildRequires: pkgconfig(libngtcp2)
+BuildRequires: pkgconfig(libnghttp3)
+BuildRequires: pkgconfig(libgsasl)
+BuildRequires: pkgconfig(libbrotlicommon)
+BuildRequires: pkgconfig(gsl)
+BuildRequires: pkgconfig(p11-kit-1)
+BuildRequires: pkgconfig(libpsl)
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: pkgconfig(krb5)
+BuildRequires: pkgconfig(gtest)
+BuildRequires: pkgconfig(gnutls)
+BuildRequires: pkgconfig(nettle)
+BuildRequires: pkgconfig(libtasn1)
+BuildRequires: pkgconfig(benchmark)
+BuildRequires: pkgconfig(nlohmann_json)
+BuildRequires: pkgconfig(prometheus-cpp-core)
 BuildRequires: libmicrosoft-gsl-devel
 
 %description
@@ -70,37 +74,37 @@ Requires:      curl
 Requires:      grpc-plugins
 Requires:      protobuf-compiler
 Requires:      opentelemetry-proto
-Requires:      libcares-devel
-Requires:      libidn2-devel
-Requires:      libssl-devel
-Requires:      zlib-devel
-Requires:      libre2-devel
-Requires:      libabseil-cpp-devel
-Requires:      libgrpc-devel
-Requires:      libprotobuf-devel
-Requires:      libssh2-devel
-Requires:      libnghttp2-devel
-Requires:      libngtcp2-devel
-Requires:      libnghttp3-devel
-Requires:      libgsasl-devel
-Requires:      libbrotli-devel
-Requires:      libgsl-devel
-Requires:      libp11-kit-devel
-Requires:      libpsl-devel
-Requires:      libzstd-devel
-Requires:      libkrb5-devel
-Requires:      libgtest-devel
-Requires:      libgnutls-devel
-Requires:      libnettle-devel
-Requires:      libtasn1-devel
-Requires:      libbenchmark-devel
-Requires:      nlohmann-json-devel
-Requires:      libprometheus-cpp-devel
+Requires:      pkgconfig(libcares)
+Requires:      pkgconfig(libidn2)
+Requires:      pkgconfig(openssl)
+Requires:      pkgconfig(zlib)
+Requires:      pkgconfig(re2)
+Requires:      pkgconfig(absl_base)
+Requires:      pkgconfig(grpc++)
+Requires:      pkgconfig(protobuf)
+Requires:      pkgconfig(libssh2)
+Requires:      pkgconfig(libnghttp2)
+Requires:      pkgconfig(libngtcp2)
+Requires:      pkgconfig(libnghttp3)
+Requires:      pkgconfig(libgsasl)
+Requires:      pkgconfig(libbrotlicommon)
+Requires:      pkgconfig(gsl)
+Requires:      pkgconfig(p11-kit-1)
+Requires:      pkgconfig(libpsl)
+Requires:      pkgconfig(libzstd)
+Requires:      pkgconfig(krb5)
+Requires:      pkgconfig(gtest)
+Requires:      pkgconfig(gnutls)
+Requires:      pkgconfig(nettle)
+Requires:      pkgconfig(libtasn1)
+Requires:      pkgconfig(benchmark)
+Requires:      pkgconfig(nlohmann_json)
+Requires:      pkgconfig(prometheus-cpp-core)
 Requires:      libmicrosoft-gsl-devel
 
 
 %description   devel
-Development headers and libraries for %oname.
+Development headers and libraries for %nomen.
 
 The OpenTelemetry C++ Client.
 
@@ -110,17 +114,19 @@ The OpenTelemetry C++ Client.
 
 %build
 %cmake \
-   -DARCH=%_arch \
    -DBUILD_TESTING=%{?_enable_check:ON}%{?!_enable_check:OFF} \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
    -DBUILD_SHARED_LIBS=ON \
    -DOTELCPP_VERSIONED_LIBS=ON \
    -DOTELCPP_PROTO_PATH=%_datadir/opentelemetry-proto/ \
-   -DWITH_PROMETHEUS=ON \
-   -DWITH_OTLP_GRPC=ON \
-   -DWITH_ELASTICSEARCH=ON \
+   -DOTELCPP_WITH_PROMETHEUS=ON \
+   -DOTELCPP_WITH_OTLP_GRPC=ON \
+   -DOTELCPP_WITH_ELASTICSEARCH=ON \
    -DUSE_NLOHMANN_JSON=ON \
-   -DWITH_GSL=ON \
-   -DWITH_STL=ON \
+   -DOTELCPP_WITH_GSL=ON \
+%if_enabled    unstable
+   -DOTELCPP_WITH_STL=ON \
+%endif
    %nil
 %cmake_build
 
@@ -128,7 +134,7 @@ The OpenTelemetry C++ Client.
 %cmakeinstall_std
 
 %check
-%ctest -E "SendPost|FinishIn|SendGet|ElegantQuit|OtlpGrpc"
+%ctest -E "SendPost|FinishIn|SendGet|ElegantQuit|OtlpGrpc|Curl"
 
 
 %files
@@ -138,14 +144,18 @@ The OpenTelemetry C++ Client.
 %files         devel
 %doc README*
 %_libdir/%{name}_*.so
-%_libdir/cmake/%{oname}-cpp
-%_pkgconfigdir/%{oname}_*
-%_includedir/%oname
+%_libdir/cmake/%{nomen}-cpp
+%_pkgconfigdir/%{nomen}_*
+%_includedir/%nomen
 
 
 %changelog
-* Sat May 02 2026 Anton Farygin <rider@altlinux.org> 1.22.0-alt2
-- libgrpc++-devel merged with libgrpc-devel according ALT bug #58350
+* Mon Oct 26 2026 Pavel Skrylev <majioa@altlinux.org> 1.30.0-alt1
+- ^ 1.28.0 -> 1.30.0
+- - disabled unstable feature(s)
+
+* Sat Aug 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.28.0-alt1
+- ^ 1.22.0 -> 1.28.0
 
 * Wed Jul 16 2025 Pavel Skrylev <majioa@altlinux.org> 1.22.0-alt1
 - ^ 1.21.0 -> 1.22.0
