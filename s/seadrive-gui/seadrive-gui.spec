@@ -1,5 +1,5 @@
 Name: seadrive-gui
-Version: 3.0.26
+Version: 3.0.27
 Release: alt1
 
 Summary: Seafile Drive client
@@ -75,6 +75,9 @@ export PATH=%_qt6_bindir:$PATH
 %_pixmapsdir/*
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.27-alt1
+- new version 3.0.27
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.26-alt1
 - new version 3.0.26
 - switch to Qt6 (build with Qt6 WebEngine)
