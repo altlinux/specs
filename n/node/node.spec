@@ -29,7 +29,7 @@
 %define zlib_version 1.3.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.34.6
+%define c_ares_version 1.34.9
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 9.4.3
@@ -37,7 +37,8 @@
 %def_without systemhttpparser
 
 # check: openssl 3.0 inside (TODO: QUIC support, FIPS support)
-%define openssl_version 3.0.15
+%define openssl_version 3.5.9
+%define brotli_version 1.2.1
 %if_feature openssl3
 %def_with systemssl
 %endif
@@ -83,7 +84,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.3
+Version: %major.4
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -98,6 +99,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://nodejs.org/dist/v%version/node-v%version.tar.gz
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
+Source8: nodejs_native.req
 
 Patch1: node18-system-openssl.patch
 Patch2: npm-disable-internal-node-gyp.patch
@@ -109,7 +111,8 @@ BuildRequires(pre): rpm-macros-features
 
 BuildRequires: python3-devel gcc-c++
 BuildRequires: zlib-devel >= %zlib_version
-BuildRequires: libbrotli-devel
+BuildRequires: libbrotli-devel >= %brotli_version
+BuildRequires: libcares-devel >= %c_ares_version
 
 BuildRequires: gyp >= 0.18.3
 BuildRequires: python3-module-simplejson
@@ -119,10 +122,15 @@ BuildRequires: python3-module-simplejson
 BuildRequires: %libv8_package-devel >= %v8_version-devel
 %endif
 
+Requires: libbrotlidec >= %brotli_version
+Requires: libbrotlienc >= %brotli_version
+Requires: libcares >= %c_ares_version
+
 %if_with systemssl
 BuildRequires: openssl-devel >= %openssl_version openssl
 # for require strict library version
-Requires: openssl >= %openssl_version
+Requires: libssl3 >= %openssl_version
+Requires: libcrypto3 >= %openssl_version
 %endif
 
 %if_with systemuv
@@ -146,7 +154,6 @@ BuildRequires: libnghttp3-devel >= %libnghttp3_version
 BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
 %endif
 
-BuildRequires: libcares-devel >= %c_ares_version
 
 BuildRequires: curl
 
@@ -203,7 +210,7 @@ License:        MIT license
 #BuildArch:      noarch
 Provides:	nodejs-devel = %EVR
 Requires:	%name = %EVR
-Requires:       gcc-c++ zlib-devel libbrotli-devel libcares-devel
+Requires:       gcc-c++ zlib-devel libbrotli-devel >= %brotli_version libcares-devel >= %c_ares_version
 %if_with systemv8
 Requires:	%libv8_package-devel >= %v8_version
 %endif
@@ -236,7 +243,7 @@ Documentation files for %name.
 Version:	%npm_version
 Group:		Development/Tools
 Summary:	A package manager for node
-License:	MIT License
+License:	Artistic-2.0
 Requires:	node
 BuildArch:	noarch
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38130
@@ -441,7 +448,7 @@ rm -rv %buildroot%nodejs_sitelib/npm/bin/node-gyp-bin/
 # remove all node-gyp deps
 rm -rv %buildroot%nodejs_sitelib/npm/node_modules/@npmcli/run-script/lib/node-gyp-bin
 
-cat <<EOF >> %buildroot%nodejs_sitelib/npm/.npmrc
+cat <<EOF > %buildroot%nodejs_sitelib/npm/npmrc
 globalconfig=/etc/npmrc
 update-notifier=false
 EOF
@@ -452,11 +459,7 @@ EOF
 # ensure Requires are added to every native module that match the Provides from
 # the nodejs build in the buildroot
 install -Dpm0755 %{SOURCE7} %buildroot%_rpmlibdir/nodejs_native.req.files
-cat << EOF > %buildroot%_rpmlibdir/nodejs_native.req
-#!/bin/sh
-echo 'nodejs(abi) = %nodejs_abi'
-#echo 'nodejs(v8-abi) = %v8_version'
-EOF
+sed -e 's|@ABI@|%nodejs_abi|g' %SOURCE8 > %buildroot%_rpmlibdir/nodejs_native.req
 chmod 0755 %buildroot%_rpmlibdir/nodejs_native.req
 %endif
 
@@ -519,6 +522,24 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Thu Oct 22 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.4-alt1
+- new version 22.23.4
+- require c-ares 1.34.9 (was 1.34.6) and libbrotli-devel 1.2.1.
+- require openssl-devel 3.5.9 (was 3.0.15).
+- fixes:
+  + CVE-2026-105481: Node.js releases include security fixes.
+  + CVE-2026-105482: Node.js releases include security fixes.
+  + CVE-2026-106069: Node.js releases include security fixes.
+  + CVE-2026-106072: Node.js releases include security fixes.
+  + CVE-2026-106073: Node.js releases include security fixes.
+  + CVE-2026-106074: Node.js releases include security fixes.
+  + CVE-2026-111497: Node.js releases include security fixes.
+
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.3-alt2
+- npm: write builtin config to npmrc (npm does not read .npmrc)
+- npm: fix license to Artistic-2.0
+- nodejs_native.req: require nodejs(abi) only for node.h addons, not N-API
+
 * Tue Sep 29 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.3-alt1
 - new version 22.23.3
 - sync npm package version with bundled 10.9.9
