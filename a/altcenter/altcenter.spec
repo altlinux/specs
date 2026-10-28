@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.47
+Release: alt0.48
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,12 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Wed Oct 28 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.48
+- Policy: removed redundant SSH root login policy.
+- Policy: fixed invalid policy markers in LightDM and GDM (ALT #60826, ALT #60827).
+- SSH settings: fixed SSH error message overflow (ALT #61148).
+- SSH settings: fixed SSH Match block handling (ALT #61147).
+
 * Fri Oct 23 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.47
 - Settings: fixed AltHA launch via pkexec (ALT #60815).
 - SSH settings: added SSH public key support.
