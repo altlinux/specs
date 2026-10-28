@@ -2,7 +2,7 @@
 %define import_path github.com/nats-io/nats-top
 
 Name: nats-top
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Summary: A top-like tool for monitoring NATS servers
@@ -44,5 +44,8 @@ export IGNORE_SOURCES=1
 %_bindir/nats-top
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 0.6.5-alt1
+- Updated to 0.6.5.
+
 * Wed Jul 15 2026 Anton Zhukharev <ancieg@altlinux.org> 0.6.4-alt1
 - Packaged for ALT Sisyphus.
