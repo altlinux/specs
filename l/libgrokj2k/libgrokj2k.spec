@@ -1,7 +1,7 @@
 %define oname grok
 
 Name: libgrokj2k
-Version: 20.4.16
+Version: 20.4.20
 Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
@@ -14,9 +14,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/GrokImageCompression/grok/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
-# spdlog v2.x used as git submodule src/include/spdlog at v%version
+# spdlog 2.0.0 used as git submodule src/include/spdlog
 # from https://github.com/gabime/spdlog/tree/ce0424bb375805955c0c5482a32ddb821708eb47
-Source2: spdlog-%version.tar
+Source2: spdlog-2.0.0.tar
 Patch0: grok-use-system-highway.patch
 Patch1: grok-tests-mapped-offset-64bit.patch
 
@@ -84,6 +84,7 @@ rm -rf thirdparty/libz
         -DGRK_BUILD_LCMS2=OFF \
         -DGRK_BUILD_JPEG=OFF \
         -DBUILD_TESTING=ON \
+        -DGRK_USE_SYSTEM_HIGHWAY=ON \
         -DSPDLOG_FMT_EXTERNAL=ON \
         %nil
 %make_build
@@ -121,6 +122,10 @@ ctest --output-on-failure -j%__nprocs -E "$exclude"
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.20-alt1
+- update to 20.4.20.
+- make the Highway library choice configurable.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.16-alt1
 - new version 20.4.16
 - build with system highway
