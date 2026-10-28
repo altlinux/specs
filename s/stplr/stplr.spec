@@ -4,7 +4,7 @@
 %define builder_group stapler-builder
 
 Name: stplr
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Universal package build and management system for Linux
@@ -21,6 +21,7 @@ Patch: %name-%version-%release.patch
 
 Requires: apt
 Requires: sysctl-conf-userns
+Requires: shadow-submap
 # for %_bindir/%name migrate
 Requires: /proc
 
@@ -52,6 +53,9 @@ touch %buildroot%_cachedir/%name/db
 %_sbindir/useradd -M -r -d %_cachedir/%name -s /sbin/nologin -c "Stapler Builder" -g %builder_group %builder_user >/dev/null 2>&1 ||:
 
 %post
+# Allocates subordinate ids for the sandbox, idempotent.
+%_bindir/%name setup >/dev/null 2>&1 ||:
+
 if [ $1 -eq 2 ]; then
     # upgrade from < 0.1.1
     # https://bugzilla.altlinux.org/58950
@@ -82,6 +86,9 @@ fi
 %doc README.md
 
 %changelog
+* Wed Oct 28 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.2.0-alt1
+- New version 0.2.0.
+
 * Sat May 02 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.1.1-alt1
 - New version 0.1.1.
 - Fix db created with wrong ownership (closes ALT#58950)
