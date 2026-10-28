@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 0.141.1
+Version: 0.148.0
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -44,6 +44,10 @@ BuildRequires: rpm-build-pyproject
 # See https://github.com/fastapi/fastapi/pull/13917
 BuildRequires: python3-module-argon2-cffi
 BuildRequires: python3-module-pytest-timeout
+# anyio[trio] maps to plain anyio: no anyio+trio subpackage exists.
+BuildRequires: python3-module-trio
+# test_translate.py drives the git binary in a scratch repository.
+BuildRequires: git-core
 %pyproject_builddeps_metadata
 %pyproject_builddeps_metadata_extra all
 %pyproject_builddeps_check
@@ -110,6 +114,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.148.0-alt1
+- Updated to 0.148.0.
+
 * Thu Jul 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.141.1-alt1
 - Updated to 0.141.1.
 

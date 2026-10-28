@@ -6,7 +6,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.65b0
-Release: alt4
+Release: alt5
 
 Summary: OpenTelemetry instrumentation for Python modules
 License: Apache-2.0 and BSD-3-Clause
@@ -147,6 +147,92 @@ framework.
 auto-instrumentation using the opentelemetry-instrumentation package is also
 supported.
 
+%package -n python3-module-%mod_name-instrumentation-aiohttp-client
+Summary: OpenTelemetry AIOHTTP Client Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-aiohttp-client
+This library allows tracing HTTP requests made by the aiohttp client library.
+
+%package -n python3-module-%mod_name-instrumentation-aiohttp-server
+Summary: OpenTelemetry AIOHTTP Server Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-aiohttp-server
+This library allows tracing requests for aiohttp server applications.
+
+%package -n python3-module-%mod_name-instrumentation-asyncpg
+Summary: OpenTelemetry Asyncpg Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-asyncpg
+This library allows tracing PostgreSQL queries made by the asyncpg library.
+
+%package -n python3-module-%mod_name-instrumentation-aws-lambda
+Summary: OpenTelemetry AWS Lambda Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-aws-lambda
+This library provides an AwsLambdaInstrumentor to trace AWS Lambda
+invocations.
+
+%package -n python3-module-%mod_name-instrumentation-flask
+Summary: OpenTelemetry Flask Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-flask
+This library allows tracing of requests made to Flask applications.
+
+%package -n python3-module-%mod_name-instrumentation-mysql
+Summary: OpenTelemetry MySQL Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-mysql
+This library allows tracing MySQL queries made by the mysql-connector
+library.
+
+%package -n python3-module-%mod_name-instrumentation-psycopg
+Summary: OpenTelemetry Psycopg Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-psycopg
+This library allows tracing PostgreSQL queries made by the psycopg library.
+
+%package -n python3-module-%mod_name-instrumentation-pymongo
+Summary: OpenTelemetry Pymongo Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-pymongo
+This library allows tracing MongoDB queries made by the pymongo library.
+
+%package -n python3-module-%mod_name-instrumentation-sqlalchemy
+Summary: OpenTelemetry SQLAlchemy Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-sqlalchemy
+This library allows tracing queries made by SQLAlchemy.
+
+%package -n python3-module-%mod_name-instrumentation-sqlite3
+Summary: OpenTelemetry Sqlite3 Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-sqlite3
+This library allows tracing SQLite queries made by the sqlite3 library.
+
+%package -n python3-module-%mod_name-instrumentation-starlette
+Summary: OpenTelemetry Starlette Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-starlette
+This library allows tracing requests for Starlette applications.
+
+%package -n python3-module-%mod_name-instrumentation-urllib
+Summary: OpenTelemetry Urllib Instrumentation
+Group: Development/Python3
+
+%description -n python3-module-%mod_name-instrumentation-urllib
+This library allows tracing HTTP requests made by the urllib library.
+
 %package -n python3-module-%mod_name-propagator-aws-xray
 Summary: OpenTelemetry Propagator for AWS X-Ray Service
 Group: Development/Python3
@@ -195,8 +281,12 @@ pushd ./%mod_name-distro
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics,fastapi}; do
-    pushd $idir
+for idir in \
+    asgi celery dbapi django httpx psycopg2 requests wsgi botocore \
+    logging redis system-metrics fastapi aiohttp-client aiohttp-server \
+    asyncpg aws-lambda flask mysql psycopg pymongo sqlalchemy sqlite3 \
+    starlette urllib; do
+    pushd ./instrumentation/%mod_name-instrumentation-$idir
         %pyproject_build
     popd
 done
@@ -222,8 +312,12 @@ pushd ./%mod_name-distro
 popd
 
 # Instrumentations pkg sources
-for idir in ./instrumentation/%mod_name-instrumentation-{asgi,celery,dbapi,django,httpx,psycopg2,requests,wsgi,botocore,logging,redis,system-metrics,fastapi}; do
-    pushd $idir
+for idir in \
+    asgi celery dbapi django httpx psycopg2 requests wsgi botocore \
+    logging redis system-metrics fastapi aiohttp-client aiohttp-server \
+    asyncpg aws-lambda flask mysql psycopg pymongo sqlalchemy sqlite3 \
+    starlette urllib; do
+    pushd ./instrumentation/%mod_name-instrumentation-$idir
         %pyproject_install
     popd
 done
@@ -351,6 +445,66 @@ done
 %python3_sitelibdir/%mod_name/instrumentation/fastapi
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-fastapi}
 
+%files -n python3-module-%mod_name-instrumentation-aiohttp-client
+%doc instrumentation/%mod_name-instrumentation-aiohttp-client/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/aiohttp_client
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-aiohttp-client}
+
+%files -n python3-module-%mod_name-instrumentation-aiohttp-server
+%doc instrumentation/%mod_name-instrumentation-aiohttp-server/README.rst
+%python3_sitelibdir/%mod_name/instrumentation/aiohttp_server
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-aiohttp-server}
+
+%files -n python3-module-%mod_name-instrumentation-asyncpg
+%doc instrumentation/%mod_name-instrumentation-asyncpg/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/asyncpg
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-asyncpg}
+
+%files -n python3-module-%mod_name-instrumentation-aws-lambda
+%doc instrumentation/%mod_name-instrumentation-aws-lambda/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/aws_lambda
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-aws-lambda}
+
+%files -n python3-module-%mod_name-instrumentation-flask
+%doc instrumentation/%mod_name-instrumentation-flask/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/flask
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-flask}
+
+%files -n python3-module-%mod_name-instrumentation-mysql
+%doc instrumentation/%mod_name-instrumentation-mysql/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/mysql
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-mysql}
+
+%files -n python3-module-%mod_name-instrumentation-psycopg
+%doc instrumentation/%mod_name-instrumentation-psycopg/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/psycopg
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-psycopg}
+
+%files -n python3-module-%mod_name-instrumentation-pymongo
+%doc instrumentation/%mod_name-instrumentation-pymongo/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/pymongo
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-pymongo}
+
+%files -n python3-module-%mod_name-instrumentation-sqlalchemy
+%doc instrumentation/%mod_name-instrumentation-sqlalchemy/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/sqlalchemy
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-sqlalchemy}
+
+%files -n python3-module-%mod_name-instrumentation-sqlite3
+%doc instrumentation/%mod_name-instrumentation-sqlite3/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/sqlite3
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-sqlite3}
+
+%files -n python3-module-%mod_name-instrumentation-starlette
+%doc instrumentation/%mod_name-instrumentation-starlette/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/starlette
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-starlette}
+
+%files -n python3-module-%mod_name-instrumentation-urllib
+%doc instrumentation/%mod_name-instrumentation-urllib/{LICENSE,README.rst}
+%python3_sitelibdir/%mod_name/instrumentation/urllib
+%python3_sitelibdir/%{pyproject_distinfo %mod_name-instrumentation-urllib}
+
 %files -n python3-module-%mod_name-propagator-aws-xray
 %doc propagator/%mod_name-propagator-aws-xray/{LICENSE,README.rst}
 %python3_sitelibdir/%mod_name/propagators/aws
@@ -372,6 +526,11 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %mod_name-distro}
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.65b0-alt5
+- NMU: Package instrumentation for aiohttp-client, aiohttp-server,
+  asyncpg, aws-lambda, flask, mysql, psycopg, pymongo, sqlalchemy,
+  sqlite3, starlette and urllib.
+
 * Wed Sep 30 2026 Anton Zhukharev <ancieg@altlinux.org> 0.65b0-alt4
 - NMU: Package instrumentation for fastapi.
 

@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.48.0
-Release: alt1
+Release: alt2
 
 Summary: Google Auth Python Library
 License: Apache-2.0
@@ -17,6 +17,10 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+
+# The PyPI distribution is google-auth; rpm-build-pyproject maps a
+# google-auth requirement to this name.
+Provides: python3-module-google-auth = %EVR
 
 %add_python3_req_skip requests.packages.urllib3.util.ssl_
 
@@ -40,6 +44,9 @@ sed -i -e 's|cachetools>=2.0.0,<6.0|cachetools>=2.0.0|' setup.py
 %doc *.md
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.48.0-alt2
+- NMU: Added python3-module-google-auth provides for the PyPI name.
+
 * Tue Jan 27 2026 Andrey Cherepanov <cas@altlinux.org> 2.48.0-alt1
 - New version.
 

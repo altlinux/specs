@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.1.1
-Release: alt2
+Version: 8.3.0
+Release: alt1
 Summary: Automatically mock your HTTP interactions to simplify and speed up testing
 License: MIT
 Group: Development/Python3
@@ -22,6 +22,9 @@ AutoReq: yes, nopython3
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+# httpx-curl-cffi and pyreqwest are not packaged in ALT.
+%add_pyproject_deps_check_filter '^httpx-curl-cffi$'
+%add_pyproject_deps_check_filter '^pyreqwest$'
 %pyproject_builddeps_metadata_extra tests
 %endif
 
@@ -52,6 +55,9 @@ export REQUESTS_CA_BUNDLE=`python3 -m pytest_httpbin.certs`
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 8.3.0-alt1
+- Updated to 8.3.0.
+
 * Wed Jun 10 2026 Stanislav Levin <slev@altlinux.org> 8.1.1-alt2
 - Fixed FTBFS (aiohttp 3.14.0).
 
