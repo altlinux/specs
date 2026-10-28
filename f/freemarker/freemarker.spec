@@ -2,7 +2,7 @@
 
 Name: freemarker
 Version: 2.3.32
-Release: alt1
+Release: alt2
 
 Summary: The Apache FreeMarker Template Engine
 Group: Development/Java
@@ -20,6 +20,8 @@ Patch1: javacc-7.patch
 # Support for the modern JSP 3.0+ will be made in the next version 2.3.33,
 # which we cannot build yet due to the inability to build .kt plugins by gradle
 Patch2: disable-jsp.patch
+Patch3: ivy-no-doctype.patch
+Patch4: java11-rmic.patch
 
 BuildRequires(pre): rpm-build-java
 BuildRequires: /proc
@@ -90,7 +92,7 @@ rm src/main/java/freemarker/ext/jython/_Jython25VersionAdapter.java
 %mvn_file : %{name}
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local -Dsun.boot.class.path=%{_jvmdir}/jre-1.8.0/lib/rt.jar jar maven-pom
+ant -Djava11.home=%{_jvmdir}/java-11-openjdk -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local -Dsun.boot.class.path=%{_jvmdir}/jre-1.8.0/lib/rt.jar jar maven-pom
 
 %install
 %mvn_artifact build/pom.xml build/freemarker.jar
@@ -101,6 +103,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local 
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.3.32-alt2
+- fix building with current JDK and secure XML parser.
+
 * Mon Mar 30 2026 Arseniy Kostevich <faux@altlinux.org> 2.3.32-alt1
 - new version
 - fix FTBFS:
