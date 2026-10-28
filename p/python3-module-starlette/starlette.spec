@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: The little ASGI framework that shines
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://www.starlette.io
-Vcs: https://github.com/encode/starlette
+Url: https://pypi.org/project/starlette/
+Vcs: https://github.com/Kludex/starlette
 
 BuildArch: noarch
 
@@ -69,7 +69,7 @@ It is production-ready, and gives you the following:
 %pyproject_install
 
 %check
-%pyproject_run_pytest -Wignore -q --timeout 120
+%pyproject_run_pytest --session-timeout=600 -Wignore -q --timeout 120
 
 %files
 %doc README.*
@@ -77,6 +77,9 @@ It is production-ready, and gives you the following:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.10.0-alt1
+- Updated to 1.10.0.
+
 * Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1.7.0-alt2
 - NMU: added missing tests dependency on httpx2+zstd (Python < 3.14).
 
