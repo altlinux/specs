@@ -1,5 +1,5 @@
 Name: snapshot-cleaner-background
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 Summary: Cleanup old on-demand Timeshift btrfs snapshots
 License: MIT
@@ -50,5 +50,8 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 %_unitdir/btrfs-snapshot-clean.timer
 
 %changelog
+* Tue Oct 27 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.1.1-alt1
+- clean up snapshots created only by packagekit
+
 * Mon Oct 19 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 0.1.0-alt1
 - initial build
