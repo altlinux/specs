@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.36.0
+Version: 0.36.1
 Release: alt1
 
 Summary: Create and update inline snapshots in your python tests
@@ -25,6 +25,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-dirty-equals
 BuildRequires: python3-module-mypy
 BuildRequires: python3-module-black
@@ -52,7 +53,7 @@ BuildRequires: python3-module-isort
 %pyproject_install
 
 %check
-%pyproject_run_pytest -k "not pyright and not test_compare"
+%pyproject_run_pytest --session-timeout=600 -k "not pyright and not test_compare"
 
 %files
 %doc README.md LICENSE
@@ -60,6 +61,9 @@ BuildRequires: python3-module-isort
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.36.1-alt1
+- Updated to 0.36.1.
+
 * Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.36.0-alt1
 - Updated to 0.36.0.
 

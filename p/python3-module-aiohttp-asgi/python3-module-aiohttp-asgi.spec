@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.1
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Summary: Run ASGI application with aiohttp
 License: Apache-2.0
@@ -22,14 +22,18 @@ Patch: %name-%version-alt.patch
 
 %py3_provides %pypi_name
 
+# forklib is not packaged; without it only the --workers option is off.
+%add_pyproject_deps_runtime_filter forklib
 %pyproject_runtimedeps_metadata
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %add_pyproject_deps_check_filter coveralls
 %add_pyproject_deps_check_filter pylava
 %add_pyproject_deps_check_filter types-
+%add_pyproject_deps_check_filter forklib
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -41,11 +45,13 @@ and aiohttp together.
 %prep
 %setup
 %autopatch -p1
+# Upstream sets the release version from the tag only in CI.
+sed -i '/^version/s/= .*$/= "%version"/' pyproject.toml
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -55,7 +61,8 @@ and aiohttp together.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+# benchmarks/ is a separate uv project with its own dependencies.
+%pyproject_run_pytest --session-timeout=600 -vra tests
 
 %files
 %doc LICENSE.md README.md
@@ -64,6 +71,9 @@ and aiohttp together.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.7.1-alt1
+- Updated to 0.7.1.
+
 * Fri Sep 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.6.1-alt2
 - Fixed importing an ASGI application module from the current working
   directory in the CLI (Closes: #57108).

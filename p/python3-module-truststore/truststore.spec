@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: Verify certificates using OS trust stores
@@ -26,6 +26,7 @@ BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_check
 %endif
 
@@ -72,7 +73,7 @@ luck!
 # it needs dns resolving, but there's no it within hasher chroot.
 # Deselect tests/test_api.py::test_wrong_host_succeeds_with_hostname_verification_disabled because of
 # it needs dns resolving, but there's no it within hasher chroot.
-%pyproject_run_pytest -Wignore -m "not internet" \
+%pyproject_run_pytest --session-timeout=600 -Wignore -m "not internet" \
     --deselect="tests/test_inject.py::test_requests_works_with_inject" \
     --deselect="tests/test_api.py::test_wrong_host_succeeds_with_hostname_verification_disabled"
 
@@ -82,6 +83,9 @@ luck!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.5-alt1
+- Updated to 0.10.5.
+
 * Wed Sep 03 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.10.4-alt1
 - Updated to 0.10.4.
 

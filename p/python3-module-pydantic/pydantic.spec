@@ -3,8 +3,19 @@
 %define pypi_name pydantic
 %define pydantic_core_ver %(%SOURCE2 pydantic-core %SOURCE1)
 
+%define _add_python_extra() \
+%{expand:%%package -n %%name+%1 \
+Summary: %%summary \
+Group: Development/Python3 \
+Requires: %%name \
+%%pyproject_runtimedeps_metadata_extra %1 \
+%%description -n %%name+%1 \
+Extra "%1" for %%pypi_name. \
+%%files -n %%name+%1 \
+}
+
 Name: python3-module-%pypi_name
-Version: 2.14.0
+Version: 2.14.1
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -26,6 +37,7 @@ BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %add_pyproject_deps_check_filter eval-type-backport
 %add_pyproject_deps_check_filter pytest-codspeed
 %add_pyproject_deps_check_filter pytest-memray
@@ -47,6 +59,8 @@ Data validation and settings management using Python type hints.
 Fast and extensible, pydantic plays nicely with your linters/IDE/brain.
 Define how data should be in pure, canonical Python 3.7+; validate it
 with pydantic.
+
+%_add_python_extra email
 
 %prep
 %setup
@@ -78,7 +92,7 @@ with pydantic.
 # Note: tests/mypy/test_mypy.py stays skipped (upstream runs it only with the
 # `--test-mypy` flag): with mypy 2.3.1 most of these tests fail, because the
 # recorded expected output does not match the newer mypy diagnostics.
-%pyproject_run_pytest \
+%pyproject_run_pytest --session-timeout=600 \
 	--ignore='tests/test_docs.py' \
 	--ignore='tests/pydantic_core' \
 	--benchmark-skip
@@ -89,6 +103,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.14.1-alt1
+- Updated to 2.14.1.
+
 * Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.14.0-alt1
 - Updated to 2.14.0.
 

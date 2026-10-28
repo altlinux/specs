@@ -17,7 +17,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.13.1
+Version: 2.16.0
 Release: alt1
 
 Summary: A next generation HTTP client for Python
@@ -39,6 +39,7 @@ BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-brotli
 %add_pyproject_deps_check_filter 'trio-typing$'
 %pyproject_builddeps_metadata
@@ -86,7 +87,7 @@ cd -
 
 %check
 cd %src_dir
-%pyproject_run_pytest %tests_dir \
+%pyproject_run_pytest --session-timeout=600 %tests_dir \
     --ignore=%tests_dir/models/test_whatwg.py \
     -m 'not network'
 cd -
@@ -98,6 +99,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.0-alt1
+- Updated to 2.16.0.
+
 * Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.13.1-alt1
 - Updated to 2.13.1.
 

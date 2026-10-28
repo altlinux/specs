@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
-Release: alt2
+Version: 1.1.4
+Release: alt1
 
 Summary: Glue between async and thread worlds
 License: Apache-2.0
@@ -23,6 +23,7 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -85,7 +86,7 @@ sed -i \
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --session-timeout=600
 
 %files
 %doc LICENSE README.md
@@ -93,6 +94,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.4-alt1
+- Updated to 1.1.4.
+
 * Wed Apr 15 2026 Maxim Tulskiy <tulskijms@altlinux.org> 1.1.1-alt2
 - Fixed type checking tests for newer mypy output (strip builtins. prefix).
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.15.0
+Version: 2.16.1
 Release: alt1
 
 Summary: Settings management using pydantic
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %add_pyproject_deps_check_filter pytest-examples
 %add_pyproject_deps_check_filter typed-ast
 %pyproject_builddeps_check
@@ -56,7 +57,7 @@ for discussion.
 # azure functional.
 # tests/test_source_gcp_secret_manager.py: there's no sense testing
 # google-cloud-secret-manager since that package is no in Sisyphus
-%pyproject_run_pytest \
+%pyproject_run_pytest --session-timeout=600 \
     --ignore='tests/test_docs.py' \
     --ignore='tests/test_source_azure_key_vault.py' \
     --ignore='tests/test_source_gcp_secret_manager.py'
@@ -67,6 +68,9 @@ for discussion.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.1-alt1
+- Updated to 2.16.1.
+
 * Thu Aug 07 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.15.0-alt1
 - NMU: updated to 2.15.0.
 

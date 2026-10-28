@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: A thread-safe disk based persistent queue in Python
@@ -21,9 +21,11 @@ Source1: %pyproject_deps_config_name
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 # deprecated, not need for build
 %add_pyproject_deps_check_filter cov-core
 %pyproject_builddeps_metadata_extra extra
+%pyproject_builddeps_metadata_extra async
 %pyproject_builddeps_check
 BuildRequires: python3-modules-sqlite3
 %endif
@@ -47,14 +49,17 @@ Persist-queue implements a file-based queue and a serial of sqlite3-based queues
 
 %check
 # require running mysql on 127.0.0.1
-rm -v persistqueue/tests/test_mysqlqueue.py
-%pyproject_run -- python3 -m nose2 -v
+%pyproject_run_pytest --session-timeout=600 -ra --asyncio-mode=auto \
+    --ignore=persistqueue/tests/test_mysqlqueue.py
 
 %files
 %python3_sitelibdir/persistqueue
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.1.0-alt1
+- Updated to 1.1.0.
+
 * Wed Jul 03 2024 Ajrat Makhmutov <rauty@altlinux.org> 1.0.0-alt1
 - New version.
 

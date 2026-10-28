@@ -4,7 +4,7 @@
 %define module_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 0.12.9
+Version: 0.12.10
 Release: alt1
 
 Summary: Linux AIO c python bindings
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata_extra develop
 %endif
 
@@ -43,7 +44,7 @@ sed -i '/^version /s/= .*$/= "%version"/' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --session-timeout=600
 
 %files
 %doc README.md
@@ -51,6 +52,9 @@ sed -i '/^version /s/= .*$/= "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.10-alt1
+- Updated to 0.12.10.
+
 * Wed Sep 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.12.9-alt1
 - Updated to 0.12.9.
 

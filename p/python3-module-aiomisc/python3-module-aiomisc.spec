@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 18.0.33
+Version: 18.0.37
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -25,6 +25,7 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %add_pyproject_deps_check_filter autodoc
 %add_pyproject_deps_check_filter collective-checkdocs
 %add_pyproject_deps_check_filter coveralls
@@ -82,7 +83,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest --session-timeout=600 -vra
 
 %files
 %doc COPYING README.rst CHANGELOG.md
@@ -90,6 +91,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 18.0.37-alt1
+- Updated to 18.0.37.
+
 * Wed Sep 30 2026 Alexandr Shashkin <dutyrok@altlinux.org> 18.0.33-alt1
 - Updated to 18.0.33.
 

@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.168.5
+Version: 6.170.12
 Release: alt1
 
 Summary: A library for property based testing
@@ -31,6 +31,7 @@ BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: python3-dev
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %if_without crosshair_check
 %add_pyproject_deps_check_filter hypothesis-crosshair
 %add_pyproject_deps_check_filter crosshair-tool
@@ -83,7 +84,7 @@ export CARGO_HOME=${PWD}/cargo
 # Ignoring of UserWarning for dateutile.zoneinfo is needed, because there's a
 # flaw of python3-module-dateutil packaging and we don't create and package
 # dateutil-zoneinfo.tar.gz. But it doesn't influence on the test execution.
-%pyproject_run_pytest -ra -nauto -p pytester --runpytest=subprocess \
+%pyproject_run_pytest --session-timeout=600 -ra -nauto -p pytester --runpytest=subprocess \
 	-Wignore::UserWarning:dateutil.zoneinfo tests \
 %if_without crosshair_check
 	--ignore="tests/crosshair" \
@@ -106,6 +107,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.170.12-alt1
+- Updated to 6.170.12.
+
 * Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.168.5-alt1
 - Updated to 6.168.5.
 

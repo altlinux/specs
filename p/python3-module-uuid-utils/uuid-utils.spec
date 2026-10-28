@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Fast, drop-in replacement for Python's uuid module, powered by Rust
@@ -27,6 +27,7 @@ BuildRequires: python3-dev
 BuildRequires: rust-cargo
 BuildRequires: /proc
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest
 %endif
 
@@ -60,7 +61,7 @@ Available UUID versions:
 # integer. However, there're no network interfaces in a Hasher environment,
 # so it uses a random MAC address. Therefore, getnode from the standard uuid
 # module and getnode from uuid_utils return different values.
-%pyproject_run_pytest \
+%pyproject_run_pytest --session-timeout=600 \
 	--deselect="tests/test_uuid.py::test_getnode"
 
 %files
@@ -69,6 +70,9 @@ Available UUID versions:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Wed Sep 23 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.0.0-alt1
 - Updated to 1.0.0.
 
