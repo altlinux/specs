@@ -2,7 +2,7 @@
 %define oname net.trowell.typesetter
 
 Name: typesetter
-Version: 0.16.6
+Version: 0.16.7
 Release: alt1
 
 Summary: A minimalist, local-first Typst editor
@@ -89,6 +89,9 @@ cp -a tools/nautilus/mount_typz.py %buildroot%_datadir/nautilus-python/extension
 %_datadir/nautilus-python/extensions/mount_typz.py
 
 %changelog
+* Wed Oct 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.7-alt1
+- 0.16.6 -> 0.16.7
+
 * Fri Oct 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.16.6-alt1
 - 0.16.5 -> 0.16.6
 - added nautilus-typesetter subpackage
