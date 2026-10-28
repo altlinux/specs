@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-webpack
-Version: 5.112.0
+Version: 5.112.2
 Release: alt1
 
 Summary: A bundler for javascript and friends
@@ -71,6 +71,9 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/examples/
 %nodejs_sitelib/%node_module/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 5.112.2-alt1
+- new version 5.112.2
+
 * Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 5.112.0-alt1
 - new version 5.112.0
 - fixed License tag to SPDX MIT
