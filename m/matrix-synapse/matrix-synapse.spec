@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: matrix-synapse
-Version: 1.162.0
+Version: 1.164.0
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -196,6 +196,9 @@ rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.164.0-alt1
+- new version 1.164.0
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.162.0-alt1
 - new version 1.162.0
 - security fixes:
