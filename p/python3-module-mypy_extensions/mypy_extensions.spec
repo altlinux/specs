@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Type system extensions for programs checked with the mypy type checker
 License: MIT
 Group: Development/Python3
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/mypy-extensions/
 VCS: https://github.com/python/mypy_extensions
 BuildArch: noarch
 Source: %name-%version.tar
+Patch: python314-annotations.patch
 # well-known PyPI names
 Provides: python3-module-%pypi_name = %EVR
 %py3_provides %pypi_name
@@ -28,6 +29,7 @@ that are supported by the mypy type checker and the mypyc compiler.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -45,6 +47,9 @@ that are supported by the mypy type checker and the mypyc compiler.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1.1
+- Fix TypedDict annotations on Python 3.14.
+
 * Fri Jun 06 2025 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 1.0.0 -> 1.1.0.
 
