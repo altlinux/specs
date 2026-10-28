@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: git-sprig
-Version: 0.1.1
+Version: 0.2.1
 Release: alt1
 
 Summary: Materialize git submodules as plain files, recursively, without their history
@@ -17,7 +17,7 @@ Vcs: https://github.com/ancieg/git-sprig
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
-Source2: config.toml
+Source2: cargo-config.toml
 Patch0: %name-%version-alt.patch
 
 BuildRequires: rust-cargo
@@ -36,7 +36,8 @@ CI builds, or copying a dependency into another tree.
 %prep
 %setup -a1
 %autopatch -p1
-install -vpD %SOURCE2 .cargo/config.toml
+[ -d .cargo ] || mkdir .cargo
+cat %_sourcedir/cargo-config.toml >> .cargo/config.toml
 
 %build
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
@@ -74,5 +75,8 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_git-sprig
 
 %changelog
+* Wed Oct 28 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Wed Sep 16 2026 Anton Zhukharev <ancieg@altlinux.org> 0.1.1-alt1
 - Packaged for ALT Sisyphus.
