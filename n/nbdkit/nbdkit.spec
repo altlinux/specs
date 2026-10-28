@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=relaxed
 
 Name: nbdkit
-Version: 1.43.9
+Version: 1.49.4
 Release: alt1
 Summary: NBD server with stable plugin ABI and permissive license
 License: BSD-3-Clause
@@ -23,15 +23,16 @@ BuildRequires: pkgconfig(bzip2)
 BuildRequires: pkgconfig(com_err)
 BuildRequires: pkgconfig(ext2fs)
 BuildRequires: pkgconfig(ext2fs)
-BuildRequires: pkgconfig(gnutls)
-BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(gnutls) >= 3.5.18
+BuildRequires: pkgconfig(libcurl) >= 7.61.0
 BuildRequires: pkgconfig(liblzma)
-BuildRequires: pkgconfig(libnbd)
-BuildRequires: pkgconfig(libssh)
+BuildRequires: pkgconfig(libnbd) >= 0.9.8
+BuildRequires: pkgconfig(libssh) >= 0.8.0
 BuildRequires: pkgconfig(libtorrent-rasterbar)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(zlib-ng)
+BuildRequires: pkgconfig(OpenCL) >= 2.0
 BuildRequires: xorriso
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /dev/pts
@@ -88,6 +89,7 @@ grep -rlZ 'mke2fs -' | xargs -rt0 sed -i 's!mke2fs -!/sbin/&!'
 # Workaround for precision problems.
 %add_optflags -ffloat-store
 %endif
+%add_optflags -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64
 %autoreconf
 # nbdkit tool is usable for non-root user so force install into bin. Also
 # installed into bin in Debian, most other distros install to sbin.
@@ -131,7 +133,7 @@ nbdkit -U - memory 1G --run 'nbdinfo "$uri"'
 %_man3dir/nbdkit-sh-plugin*.3*
 
 %files devel
-%doc docs BENCHMARKING OTHER_PLUGINS SECURITY plugins/example*/example*.c
+%doc docs BENCHMARKING OTHER_PLUGINS SECURITY.md plugins/example*/example*.c
 %_libdir/nbdkit/plugins/nbdkit-example*
 %_libdir/nbdkit/plugins/nbdkit-cc-*
 %_pkgconfigdir/nbdkit.pc
@@ -144,6 +146,9 @@ nbdkit -U - memory 1G --run 'nbdinfo "$uri"'
 %files checkinstall
 
 %changelog
+* Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.49.4-alt1
+- Update to 1.49.4.
+
 * Sun Jun 01 2025 Vitaly Chikunov <vt@altlinux.org> 1.43.9-alt1
 - Update to v1.43.9 (2025-05-17).
 
