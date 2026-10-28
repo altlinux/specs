@@ -4,7 +4,7 @@
 %def_with prebuild
 
 Name:    naps2
-Version: 8.4.1
+Version: 8.6.0
 Release: alt1
 
 Summary: Scan documents to PDF and more, as simply as possible
@@ -57,7 +57,7 @@ dotnet publish NAPS2.App.Gtk \
 install -pDm755 bin/naps2 %buildroot%_appdir/%name
 install -pDm644 NAPS2.Setup/config/linux/com.naps2.Naps2.desktop \
 		%buildroot%_datadir/applications/%name.desktop
-install -pDm644 NAPS2.Lib/Icons/scanner-128.png \
+install -pDm644 NAPS2.Lib/Icons/scanner_128.png \
 		%buildroot%_datadir/icons/hicolor/128x128/apps/com.naps2.Naps2.png
 install -pDm644 NAPS2.Setup/config/linux/com.naps2.Naps2.metainfo.xml \
 		%buildroot%_datadir/metainfo/com.naps2.Naps2.metainfo.xml
@@ -75,6 +75,9 @@ ln -sf %_appdir/%name %buildroot%_bindir/%name
 %_appdir
 
 %changelog
+* Tue Oct 27 2026 Nikolay Burykin <bne@altlinux.org> 8.6.0-alt1
+- 8.6.0
+
 * Mon Oct 05 2026 Nikolay Burykin <bne@altlinux.org> 8.4.1-alt1
 - 8.4.1
 
