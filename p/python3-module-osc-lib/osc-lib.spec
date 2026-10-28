@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
+Version: 4.7.0
 Release: alt1
 
 Summary: OpenStackClient Library
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/osc-lib
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+Patch0: identity-sdk-utils.patch
 
 BuildArch: noarch
 
@@ -67,6 +68,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch0 -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -114,6 +116,10 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 %endif
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.7.0-alt1
+- New version 4.7.0
+- Fix build with current openstacksdk.
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
 - Automatically updated to 4.2.0.
 
