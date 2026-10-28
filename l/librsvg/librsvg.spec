@@ -25,7 +25,7 @@
 
 Name: %bname
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: SVG rendering library
@@ -153,6 +153,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %meson \
+    -Dbuildtype=release \
     %{subst_enable_meson_feature introspection introspection} \
     %{subst_enable_meson_feature docs docs} \
     %{subst_enable_meson_feature pixbuf_loader pixbuf-loader} \
@@ -212,6 +213,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Wed Oct 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.4-alt1.1
+- optimized build
+
 * Thu Oct 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.62.4-alt1
 - 2.62.4 (fixed CVE-2026-96889)
 
