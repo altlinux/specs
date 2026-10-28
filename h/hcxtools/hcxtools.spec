@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: hcxtools
-Version: 7.1.2
+Version: 8.0.0
 Release: alt1
 
 Summary: Tools to convert packets from capture files to hash files
@@ -36,6 +36,9 @@ for use with Hashcat or John the Ripper.
 %doc README.md license.txt changelog
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 8.0.0-alt1
+- New version 8.0.0.
+
 * Wed Feb 18 2026 Artem Krasovskiy <aibure@altlinux.org> 7.1.2-alt1
 - New version 7.1.2.
 
