@@ -2,7 +2,7 @@
 %define app_name QPasswordChecker
 
 Name: qpasswordchecker
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Group: System/Configuration/Other
@@ -15,7 +15,7 @@ Url: https://github.com/alxvmr/passwordchecker
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc gcc-c++
+BuildRequires: cmake gcc gcc-c++ rpm-build-xdg desktop-file-utils
 BuildRequires: pkgconfig(wbclient)
 BuildRequires: qt6-svg-devel qt6-tools-devel libldap-devel libsasl2-devel libwbclient-devel
 
@@ -32,15 +32,24 @@ Qt application and background service for password expiry notifications.
 %install
 %cmake_install
 
+install -Dm 0644 %buildroot/%_desktopdir/%app_name.desktop %buildroot/%_xdgconfigdir/autostart/%daemon_name.desktop
+desktop-file-install --mode=0644 --dir %buildroot/%_xdgconfigdir/autostart \
+        --set-key="Exec" --set-value="%_bindir/%daemon_name" \
+        %buildroot/%_xdgconfigdir/autostart/%daemon_name.desktop
+
 %files
 %_bindir/%name
 %_bindir/%daemon_name
 %_desktopdir/%app_name.desktop
-%_user_unitdir/qpasswordchecker-daemon-user.service
+%_xdgconfigdir/autostart/%daemon_name.desktop
 %_datadir/qpasswordchecker/translations/qpasswordchecker_ru.qm
 %_iconsdir/hicolor/*/apps/qpasswordchecker.*
 
 %changelog
+* Wed Oct 28 2026 Sergey V Turchin <zerg at altlinux dot org> 0.3.0-alt1
+- set tool tip for system tray (closes: 61208)
+- start user service via autostart (closes: 61233)
+
 * Mon Oct 26 2026 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
 - fix to start service
 
