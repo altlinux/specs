@@ -1,7 +1,7 @@
 %define pypi_name dogtail
 
 Name: dogtail
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: GUI test tool and automation framework
@@ -20,7 +20,8 @@ BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gdk) = 3.0
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-build-gir
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel python3-module-setuptools_scm
 
 # optional distro-specific package backends in dogtail.distro
@@ -54,6 +55,11 @@ find examples -type f -exec chmod 0644 {} \;
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- new version 2.1.2
+- fix BuildRequires placement
+- escape %%_docdir in changelog
+
 * Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1
 
