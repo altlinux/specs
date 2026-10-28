@@ -14,7 +14,7 @@
 %def_enable check
 
 Name: %_name-%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Glycin image library
@@ -145,9 +145,13 @@ cargo vendor -s glycin-dev-tools/Cargo.toml | sed 's/^directory = ".*"/directory
 tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
+# 'release' and 'lto=true' by default
+# automatically disabled LTO for architectures other than x86_64 and aarch64
 %meson \
+    -Dprofile=release \
+    -Dtest_disable_sandbox=true \
+    -Dlto=true \
     %{subst_enable_meson_bool thumbnailer %_name-thumbnailer} \
-    -Dtest_disable_sandbox=true
 %nil
 %meson_build
 
@@ -207,6 +211,9 @@ tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 %_girdir/%{namespace}Gtk4-%api_ver_major.gir
 
 %changelog
+* Wed Oct 28 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.5-alt1
+- 2.2.5
+
 * Fri Oct 23 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.4-alt1
 - 2.2.4
 

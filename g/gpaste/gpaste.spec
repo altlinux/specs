@@ -7,10 +7,12 @@
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
 
-%def_enable check
+%def_enable encryption
+%def_enable pwquality
+%def_disable check
 
 Name: gpaste
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -28,9 +30,9 @@ Source: %_name-%version%beta.tar
 
 Requires: lib%name = %EVR
 
-%define glib_ver 2.80
-%define gtk4_ver 4.23.4
-%define adwaita_ver 1.9
+%define glib_ver 2.90
+%define gtk4_ver 4.24
+%define adwaita_ver 1.10
 %define gi_ver 1.58.0
 %define vala_ver 0.42
 %define mutter_ver 45.0
@@ -47,14 +49,16 @@ BuildRequires: gobject-introspection-devel >= %gi_ver
 BuildRequires: libgtk4-gir-devel libadwaita-gir-devel
 BuildRequires: vala-tools >= %vala_ver
 BuildRequires: gcr4-libs-devel >= %gcr_ver
-BuildRequires: pkgconfig(libsodium)
-BuildRequires: pkgconfig(pwquality)
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(libsecret-1)
+BuildRequires: pkgconfig(xfixes)
+%{?_enable_encryption:BuildRequires: pkgconfig(libsodium)}
+%{?_enable_pwquality:BuildRequires: pkgconfig(pwquality)}
+%{?_enable_check:BuildRequires: xvfb-run /dev/pts}
 
 %description
-This package provides gpaste-daemon is a clipboard management daemon with DBus
-interface.
+This package provides gpaste-daemon is a clipboard management daemon
+with DBus interface.
 
 %package -n lib%name
 Summary: GPaste library
@@ -121,7 +125,9 @@ sed -i 's/\.alpha//' meson.build
 %add_optflags -Wno-incompatible-pointer-types
 %endif
 %meson \
-  -Dvapi=true
+  -Dvapi=true \
+  %{subst_enable_meson_feature encryption encryption} \
+  %{subst_enable_meson_feature pwquality pwquality}
 %nil
 %meson_build
 
@@ -188,6 +194,9 @@ sed -i 's/\.alpha//' meson.build
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Wed Oct 28 2026 Yuri N. Sedunov <aris@altlinux.org> 51.2-alt1
+- 51.2
+
 * Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 
