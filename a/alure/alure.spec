@@ -1,17 +1,18 @@
 Summary: ALURE is a utility library to help manage common tasks with OpenAL applications
 Name: alure
 Version: 1.2
-Release: alt2.qa2
+Release: alt3
 Source0: %name-%version.tar
+Patch0: alure-cmake-cflags.patch
 License: MIT
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: System/Libraries
 Url: http://kcat.strangesoft.net/alure.html
 
-BuildRequires: cmake gcc-c++ libopenal-devel libsndfile-devel libvorbis-devel libflac-devel libmpg123-devel dumb-devel libmodplug-devel libfluidsynth-devel
+BuildRequires: rpm-build-cmake gcc-c++ libopenal-devel libsndfile-devel libvorbis-devel libflac-devel libmpg123-devel dumb-devel libmodplug-devel libfluidsynth-devel
 
 %description
-The purpose of this library is to provide pre-made functionality that would otherwise be 
+The purpose of this library is to provide pre-made functionality that would otherwise be
 repetitive or difficult to (re)code for various projects and platforms, such as loading
 a sound file into an OpenAL buffer and streaming an audio file through a buffer queue.
 Support for different formats is consistant across platforms, so no special checks are
@@ -27,7 +28,7 @@ Summary: ALURE is a utility library to help manage common tasks with OpenAL appl
 Group: System/Libraries
 
 %description -n lib%name
-The purpose of this library is to provide pre-made functionality that would otherwise be 
+The purpose of this library is to provide pre-made functionality that would otherwise be
 repetitive or difficult to (re)code for various projects and platforms, such as loading
 a sound file into an OpenAL buffer and streaming an audio file through a buffer queue.
 Support for different formats is consistant across platforms, so no special checks are
@@ -64,6 +65,7 @@ The %name-examples package contains example program for %name
 
 %prep
 %setup -q
+%patch -P 0 -p1
 
 %build
 %cmake	-DBUILD_STATIC=OFF \
@@ -84,11 +86,20 @@ The %name-examples package contains example program for %name
 
 %files -n lib%name-devel-doc
 %doc docs/*
+%_docdir/%name/html
 
 %files examples
 %_bindir/*
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt3
+- Fix FTBFS caused by CMake pkg-config flags.
+- Replace cmake with rpm-build-cmake in BuildRequires.
+
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt2.qa2.1
+- Fix CMake handling of pkg-config compiler flags.
+- Replace cmake with rpm-build-cmake in BuildRequires.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 1.2-alt2.qa2
 - NMU: spec: adapted to new cmake macros.
 
