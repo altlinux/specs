@@ -2,7 +2,7 @@
 %define icinga_user icinga
 
 Name: 	  nagwad
-Version:  0.11.14
+Version:  0.11.15
 Release:  alt1
 
 Summary:  System journal event scanner and handler
@@ -30,6 +30,7 @@ Obsoletes: %name <= 0.9.12-alt2
 
 Requires: systemd
 Requires: %name-audit = %version-%release
+Requires: procps >= 4.0.7-alt2
 
 Conflicts: integ <= 0.4.2-alt2
 
@@ -270,6 +271,15 @@ usermod -a -G %name %icinga_user
 %_bindir/nsca-shell
 
 %changelog
+* Tue Oct 27 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.15-alt1
+- Require procps >= 4.0.7-alt2.
+- Version 0.11.15.
+- Ignore /proc/1/root for EPERM and EACCES errors caused by open()
+  and openat(), but not execve().
+- Stop to ignore /proc/1/environ access errors (fixed in
+  procps 4.0.7-alt2).
+- Fix: Make 10-eperm filter work when skiplist is empty.
+
 * Tue Oct 20 2026 Paul Wolneykien <manowar@altlinux.org> 0.11.14-alt1
 - Version 0.11.14.
 - Added a eperm skip (PATH) filter for the 'exec-eacces' event.
