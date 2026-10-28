@@ -12,7 +12,7 @@ currently maintained by OpenLink Software under a LGPL or BSD license.
 
 Name: libiodbc
 Version: 3.52.16
-Release: alt1
+Release: alt2
 
 Summary: The iODBC Driver Manager
 Group: System/Libraries
@@ -21,6 +21,7 @@ Url: http://www.iodbc.org/
 Vcs: https://github.com/openlink/iODBC
 
 Source: %name-%version.tar
+Patch0: c23-function-pointer.patch
 
 BuildRequires: chrpath
 %if_enabled gtk
@@ -98,6 +99,7 @@ This package contains some demo programs that may be useful.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -170,6 +172,9 @@ while read b; do chrpath -d $b || : ; done
 %_man1dir/%{oname}testw.1.xz
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.52.16-alt2
+- fix driver manager build with C23 compilers.
+
 * Mon Apr 21 2025 Ulysses Apokin <ulysses@altlinux.org> 3.52.16-alt1
 - new version
 
