@@ -3,7 +3,7 @@
 %global import_path crg.eti.br/go/neko
 
 Name: goneko
-Version: 0.1.20.0.4.0355a467d
+Version: 0.1.46
 Release: alt1
 
 Summary: A cross-platform open-source animated cursor-chasing cat
@@ -54,6 +54,9 @@ mv %buildroot%_bindir/{neko,%name}
 %_bindir/%name
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 0.1.46-alt1
+- Updated to 0.1.46.
+
 * Fri Sep 08 2023 Anton Zhukharev <ancieg@altlinux.org> 0.1.20.0.4.0355a467d-alt1
 - Built for ALT Sisyphus.
 
