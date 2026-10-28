@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 8.9.0
+Version: 8.11.0
 Release: alt1
 
 Summary: Client library for OpenStack DBaaS API
@@ -14,6 +14,7 @@ Url: https://pypi.org/project/python-troveclient
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+Patch1: python314-argparse.patch
 
 BuildArch: noarch
 
@@ -74,6 +75,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch1 -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -121,6 +123,10 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 8.11.0-alt1
+- New version 8.11.0.
+- Fixed help output with Python 3.14.
+
 * Fri Oct 24 2025 Grigory Ustinov <grenka@altlinux.org> 8.9.0-alt1
 - Automatically updated to 8.9.0.
 
