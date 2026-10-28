@@ -1,10 +1,10 @@
-# git commit ce387e806b59ed5174b3c21ced4563314962eb05
+# git commit 964e969389fadb9fe94b490afc6e0cbf436dc252
 
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 35.0.1
+Version: 35.0.2
 
 Release: alt1
 
@@ -89,7 +89,7 @@ Patch201: palemoon-33.7.2-UXP-Enable-LTO-to-work.patch
 %set_autoconf_version 2.13
 
 BuildPreReq: gstreamer1.0-devel gst-plugins1.0-devel libpixman-devel
-BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel
+BuildPreReq: python3-base unzip xorg-cf-files libsndfile-devel libsqlite3-devel
 
 # Automatically added by buildreq on Sun Jun 21 2026
 # optimized out: alternatives fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libctf-nobfd0 libfreetype-devel libgcc15-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel openssl-config perl pkg-config python-modules python2-base python3 python3-base python3-module-setuptools sh5 xorg-proto-devel zlib-devel
@@ -384,11 +384,6 @@ gcc %optflags \
 	%SOURCE7 -o %bname
 
 %install
-## ? install -D -m644 %%SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json
-# нужен только с патчами KDE
-#install -D -m644 %%SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
-
-#cd palemoon
 cd obj-%_arch
 %makeinstall MOZ_APP_VERSION=%version SHELL=/bin/sh
 
@@ -511,6 +506,9 @@ install -D -m 644 %SOURCE12 %_builddir/%sname-%version
 %exclude %_includedir/*
 
 %changelog
+* Sat Oct 24 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:35.0.2-alt1
+- Version 35.0.2 (CVE-2026-100822, CVE-2026-100783, CVE-2026-100773 , CVE-2026-96869,  CVE-2026-100791)
+
 * Mon Sep 28 2026 Hihin Ruslan <ruslandh@altlinux.ru> 2:35.0.1-alt1
 - Version 35.0.1 (CVE-2026-92016 , CVE-2026-92044, CVE-2026-92049, CVE-2026-92030 , CVE-2026-92012, CVE-2026-74982, CVE-2026-74969, CVE-2026-74977, CVE-2026-74945, CVE-2026-74964, CVE-2026-74971, CVE-2026-74943)
 
