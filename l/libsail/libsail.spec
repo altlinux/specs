@@ -5,7 +5,7 @@
 
 %define pre %nil
 Name: libsail
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Squirrel Abstract Image Library
@@ -17,11 +17,10 @@ Url: https://github.com/HappySeaFox/sail
 # Source-url: https://github.com/HappySeaFox/sail/archive/refs/tags/v%version%pre.tar.gz
 Source: %name-%version.tar
 # https://github.com/HappySeaFox/sail/commit/c2b218ebb804e7ecb2e9a10cd92027ffeba5f4a7
-Patch0: libsail-munit-drop-ATOMIC_VAR_INIT.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: gcc-c++ cmake ctest
+BuildRequires: gcc-c++ rpm-build-cmake ctest
 #BuildRequires: libgif-devel
 BuildRequires: libpng-devel libtiff-devel libjpeg-devel libwebp-devel libjasper-devel libavif-devel
 
@@ -38,7 +37,6 @@ Header files for the %name library.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %cmake_insource \
@@ -71,10 +69,15 @@ mv %buildroot/usr/lib/cmake %buildroot%_libdir/
 %files devel
 %_libdir/cmake/*
 %_libdir/libsail*.so
-%_pkgconfigdir/*.pc
 %_includedir/sail/
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1
+- replace cmake build dependency with rpm-build-cmake.
+- remove patch already included upstream.
+- drop obsolete pkg-config file entry.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - new version 1.2.0
 - add upstream patch: drop deprecated ATOMIC_VAR_INIT in munit (fix build with gcc 15)
