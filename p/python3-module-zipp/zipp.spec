@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 4.1.2
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -17,8 +17,6 @@ VCS: https://github.com/jaraco/zipp.git
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch0: %name-%version-alt.patch
-
 BuildRequires: git
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools-scm
@@ -64,6 +62,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.2-alt1
+- New version 4.1.2.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - New version 4.1.0.
 
