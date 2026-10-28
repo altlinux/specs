@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-dukpy
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1.1
 
 Summary: Simple JavaScript interpreter for Python
@@ -16,13 +16,10 @@ VCS: https://github.com/amol-/dukpy
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: Use-system-duktape.patch
-Patch1: Fix-tests-with-webassets-3.patch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
-BuildRequires: libduktape-devel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,22 +29,11 @@ BuildRequires: python3-module-mutf8
 %endif
 
 %description
-DukPy is a simple javascript interpreter for Python
-built on top of duktape engine without any external dependency.
-It comes with a bunch of common transpilers built-in for convenience:
-CoffeeScript, BabelJS, TypeScript, JSX, LESS
-Dukpy has been tested on Python 2.7 and Python 3.4,
-dukpy is currently not production ready and might
-actually crash your program as it is mostly implemented in C.
+DukPy is a simple JavaScript interpreter for Python built on QuickJS.
+It also provides common transpilers and WebAssets filters.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
-# This removed the bundled duktape. The files that form the "Duktape
-# 1.x compatible module loading framework" remain. They are some
-# compat glue that is not shipped in duktape-devel.
-rm -v src/duktape/duk_config.h src/duktape/duktape.c src/duktape/duktape.h
 
 %build
 %pyproject_build
@@ -68,6 +54,18 @@ rm -rv dukpy
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1.1
+- New version 0.6.0.
+- Drop BuildRequires: libduktape-devel; upstream now uses QuickJS.
+- Move rpm-build-python3 to BuildRequires for build tools.
+
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- New version 0.6.0.
+- Switch to QuickJS engine.
+- Drop BuildRequires: libduktape-devel; upstream now uses QuickJS.
+- Drop obsolete webassets test patch.
+- Fix package build rules.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.0-alt1.1
 - NMU: fix tests with webassets 3.0.
 - Package dukpy-install.
