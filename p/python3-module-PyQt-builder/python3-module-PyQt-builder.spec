@@ -1,7 +1,7 @@
 %define oname pyqt_builder
 
 Name: python3-module-PyQt-builder
-Version: 1.20.1
+Version: 1.20.3
 Release: alt1
 
 Summary: The PEP 517 compliant PyQt build system
@@ -47,6 +47,9 @@ rm -rfv %buildroot%python3_sitelibdir/pyqtbuild/bundle/dlls
 %python3_sitelibdir/pyqt_builder-%version.dist-info/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.20.3-alt1
+- new version 1.20.3
+
 * Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 1.20.1-alt1
 - new version 1.20.1
 
