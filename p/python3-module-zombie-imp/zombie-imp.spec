@@ -4,7 +4,7 @@
 %define modulename zombie_imp
 
 Name:    python3-module-%srcname
-Version: 0.0.3
+Version: 0.0.4
 Release: alt1
 
 Summary: A copy of the `imp` module that was removed in Python 3.12
@@ -15,6 +15,7 @@ URL:     https://pypi.org/project/zombie-imp
 VCS:     https://github.com/encukou/zombie-imp
 
 Source: %name-%version.tar
+Patch: .gear/local-encoding-fixtures.patch
 
 BuildArch: noarch
 
@@ -35,6 +36,7 @@ should use `importlib.metadata` instead.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -53,6 +55,9 @@ should use `importlib.metadata` instead.
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Oct 23 2026 Vitaly Lipatov <lav@altlinux.ru> 0.0.4-alt1
+- New version 0.0.4
+
 * Sun Aug 03 2025 Grigory Ustinov <grenka@altlinux.org> 0.0.3-alt1
 - Build new version.
 
