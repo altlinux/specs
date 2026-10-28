@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.11.6
-Release: alt2
+Release: alt2.1
 
 Summary: Auto-generate API documentation for Python 3+ projects
 License: AGPL-3.0-or-later
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
+Patch0: pdoc3-markdown-headings.patch
 %pyproject_runtimedeps_metadata
 
 BuildRequires(pre): rpm-build-pyproject
@@ -38,6 +39,7 @@ Guaranteed 99%% correct magic out of the box!
 
 %prep
 %setup
+%patch0 -p1
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
@@ -65,6 +67,9 @@ EOF
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11.6-alt2.1
+- NMU: Fix Google docstring section headings with current Markdown.
+
 * Wed May 14 2025 Ivan Khanas <xeno@altlinux.org> 0.11.6-alt2
 - Maintainer`s work.
 
