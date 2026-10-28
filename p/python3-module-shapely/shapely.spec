@@ -6,7 +6,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 2.1.2
+Version: 2.2.0
 Release: alt1
 
 Summary: Planar geometries, predicates, and operations
@@ -21,8 +21,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: libgeos-devel
 # build backend and its deps
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-Cython
+BuildRequires: meson
+BuildRequires: python3-module-mesonpy
+BuildRequires: ninja-build
 BuildRequires: libnumpy-py3-devel
 %if_with check
 BuildRequires: python3-module-pytest
@@ -71,13 +73,8 @@ This package contains documentation for %oname.
 %prep
 %setup
 
-# workaround for versioneer
-rm versioneer.py
-grep -qsF ' export-subst' .gitattributes || exit 1
-vers_f="$(sed -n 's/ export-subst//p' .gitattributes)"
-echo 'def get_versions():return {"version": "%version"}' > "$vers_f"
-echo 'def get_cmdclass(): return {}' > versioneer.py
-echo 'def get_version(): return "%version"' >> versioneer.py
+# Source archives do not contain git metadata for versioneer.
+printf 'def get_versions(): return {"version": "%version", "full-revisionid": "release"}\ndef get_version(): return "%version"\n' > versioneer.py
 
 %if_with doc
 %prepare_sphinx3 .
@@ -119,6 +116,12 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
+- New version 2.2.0.
+- Add BuildRequires: meson, python3-module-mesonpy and ninja-build.
+- Remove BuildRequires: python3-module-setuptools (obsolete with Meson).
+- Update prep for Meson and versioneer.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 2.1.2-alt1
 - Automatically updated to 2.1.2.
 
