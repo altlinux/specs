@@ -1,6 +1,6 @@
 Name:    solaar
 Version: 1.1.20
-Release: alt1
+Release: alt2
 
 Summary: Device manager for Logitech Unifying Receiver
 License: GPL-2.0-or-later
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Vcs: https://github.com/pwr-Solaar/Solaar.git
 Source: %name-%version.tar
+Patch1: 0001-device-add-descriptor-for-K380.patch
 Patch2: 0002-Install-alternative-udev-rules-for-wayland-compatibi.patch
 Patch3: 0003-Install-autostart-desktop-file.patch
 Patch4: remove-udev-check.patch
@@ -60,10 +61,7 @@ Solaar.
 
 %prep
 %setup
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
+%autopatch -p1
 sed -i 's|lib/udev/rules.d|%_udev_rulesdir|g' setup.py
 
 %build
@@ -91,6 +89,9 @@ tools/po-compile.sh
 %_udevrulesdir/*.rules
 
 %changelog
+* Wed Oct 28 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.20-alt2
+- Added support for K380 (ALT #61180).
+
 * Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 1.1.20-alt1
 - New version.
 
