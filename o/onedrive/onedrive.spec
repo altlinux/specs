@@ -1,5 +1,5 @@
 Name: onedrive
-Version: 2.5.11
+Version: 2.5.12
 Release: alt1
 
 Summary: OneDrive Free Client written in D
@@ -70,6 +70,9 @@ chmod a-x %buildroot/%_man1dir/%{name}*
 %config %_logrotatedir/onedrive
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.12-alt1
+- new version 2.5.12
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 2.5.11-alt1
 - new version 2.5.11
 - package new onedrive-notifications.svg icon (added upstream)
