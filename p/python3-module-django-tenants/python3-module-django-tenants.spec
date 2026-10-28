@@ -1,7 +1,7 @@
 %define pypi_name django_tenants
 
 Name: python3-module-django-tenants
-Version: 3.14.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Tenant support for Django using PostgreSQL schemas
@@ -65,5 +65,8 @@ import django_tenants.postgresql_backend.base, django_tenants.postgresql_backend
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- new version 4.0.1
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 3.14.0-alt1
 - initial build for Sisyphus
