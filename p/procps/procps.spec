@@ -1,6 +1,6 @@
 Name: procps
 Version: 4.0.7
-Release: alt1
+Release: alt2
 
 %def_disable bootstrap
 %if_enabled bootstrap
@@ -20,6 +20,7 @@ URL: https://gitlab.com/procps-ng/procps
 # git://git.altlinux.org/gears/p/procps.git
 Vcs: https://gitlab.com/procps-ng/procps.git
 Source: %name-%version-%release.tar
+Patch0: readproc_check_before_open.patch
 
 # it is actually procps-ng
 Provides: procps-ng = %version-%release
@@ -62,6 +63,7 @@ applications.
 
 %prep
 %setup -n %name-%version-%release
+%autopatch -p1
 
 # build scripts expect to find package version in this file
 echo -n %version-%release > .tarball-version
@@ -128,6 +130,10 @@ make check
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 27 2026 Paul Wolneykien <manowar@altlinux.org> 4.0.7-alt2
+- Added patch fixing a lot of audit EACCES messages when running
+  pgrep (and possibly other procps utils).
+
 * Thu Aug 13 2026 Mikhail Efremov <sem@altlinux.org> 4.0.7-alt1
 - Updated to v4.0.7.
 
