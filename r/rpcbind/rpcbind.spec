@@ -1,6 +1,6 @@
 Name: rpcbind
-Version: 1.2.6
-Release: alt1.qa1
+Version: 1.3.1
+Release: alt1
 
 Summary: RPC port mapper
 License: BSD
@@ -34,7 +34,7 @@ to make RPC calls.
 make
 
 %install
-%make_install DESTDIR=%buildroot sbindir=/sbin install
+%make_install DESTDIR=%buildroot install
 mkdir -p %buildroot%_localstatedir/rpcbind
 install -pm0755 -D rpcbind.init %buildroot%_initdir/rpcbind
 install -pm0755 -D rpcbind.control %buildroot%_controldir/rpcbind
@@ -78,7 +78,7 @@ fo=/var/run/control/portmap
 %systemd_unitdir/rpcbind.service
 %systemd_unitdir/rpcbind.socket
 
-/sbin/rpcbind
+%_sbindir/rpcbind
 %_bindir/rpcinfo
 
 %_man8dir/rpcbind.8*
@@ -87,6 +87,9 @@ fo=/var/run/control/portmap
 %dir %attr(770,root,rpc) %_localstatedir/rpcbind
 
 %changelog
+* Wed Oct 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.1-alt1
+- 1.3.1 released
+
 * Fri Jan 28 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.6-alt1.qa1
 - NMU.
 - Fixed rpcbind abort at startup due to a double free bug (closes: #41830).
