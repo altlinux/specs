@@ -1,5 +1,5 @@
 Name: python3-module-turbojpeg
-Version: 1.8.3
+Version: 2.6.1
 Release: alt1
 
 Summary: A Python wrapper of libjpeg-turbo
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/pyturbojpeg-%version.dist-info
 
 %changelog
+* Wed Oct 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.1-alt1
+- 2.6.1 released
+
 * Thu Jul 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.8.3-alt1
 - 1.8.3 released
 
