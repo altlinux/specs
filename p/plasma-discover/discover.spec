@@ -8,6 +8,7 @@
 #
 %def_enable snap
 %def_disable ostree
+%def_enable stplr
 #
 %ifarch %qt6_qtwebengine_arches
 %def_enable qtwebengine
@@ -18,10 +19,11 @@
 %define sover 6
 %define libdiscovercommon libdiscovercommon%sover
 %define libdiscovernotifiers libdiscovernotifiers%sover
+%define stplr_backend_ver 0.1.4
 
 Name: plasma-%rname
 Version: 6.7.5
-Release: alt2
+Release: alt3
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -40,6 +42,7 @@ Source1: env-flatpak.sh
 Source2: env-snap.sh
 Source10: ru-override-plasma-discover.po
 Source11: ru-add-libdiscover.po
+Source12: plasma-discover-stplr-%stplr_backend_ver.tar
 # ALT
 Patch1: alt-offline-updates.patch
 Patch2: alt-pk-refresh-timer.patch
@@ -61,6 +64,8 @@ Patch19: alt-3dparty-warning.patch
 Patch20: alt-fix-displayed-local-details.patch
 Patch21: alt-add-maintainer-detail.patch
 Patch22: alt-xdg-current-desktop.patch
+Patch23: alt-add-stplr-dbus.patch
+Patch24: alt-add-launch-app-on-btn-click.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -104,6 +109,9 @@ Requires: %name-fwupd
 %endif
 %if_enabled snap
 Requires: %name-snap
+%endif
+%if_enabled stplr
+Requires: %name-stplr
 %endif
 %description maxi
 Plasma Discover maximum package.
@@ -179,6 +187,16 @@ Obsoletes: plasma5-discover-fwupd < %EVR
 %description fwupd
 Integrates Fwupd firmware updater into Discover.
 
+%if_enabled stplr
+%package stplr
+Summary: Plasma Discover stplr support
+Group: System/Configuration/Packaging
+Requires: %name-core
+Requires: stplr-dbus
+%description stplr
+Integrates Stapler applications into Discover.
+%endif
+
 %package packagekit
 Summary: Plasma Discover PackageKit support
 Group: System/Configuration/Packaging
@@ -206,6 +224,10 @@ KF6 library
 
 %prep
 %setup -n %rname-%version
+tar xvf %SOURCE12 \
+    --transform="s,^StplrBackend/src,StplrBackend/," \
+    -C libdiscover/backends StplrBackend/src
+
 %patch1 -p1
 %patch2 -p1
 #%patch3 -p2 -b .upd-appstream
@@ -226,6 +248,8 @@ KF6 library
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -251,6 +275,13 @@ rm -f po/ru/plasma-discover.po.tmp
 msgcat %SOURCE11 po/ru/libdiscover.po > po/ru/libdiscover.po.tmp
 cat po/ru/libdiscover.po.tmp >po/ru/libdiscover.po
 rm -f po/ru/libdiscover.po.tmp
+
+cat >> libdiscover/backends/CMakeLists.txt <<EOF
+option(BUILD_StplrBackend "Build Stapler support." "ON")
+if (BUILD_StplrBackend AND AppStreamQt_FOUND)
+    add_subdirectory(StplrBackend)
+endif()
+EOF
 
 %build
 %K6build \
@@ -344,6 +375,12 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6plug/discover/fwupd-backend.so
 %endif
 
+%if_enabled stplr
+%files stplr
+%_K6plug/discover/stplr-backend.so
+%_datadir/metainfo/org.kde.discover.stplr.appdata.xml
+%endif
+
 %files -n %libdiscovercommon
 %_K6lib/libDiscoverCommon.so.%sover
 %_K6lib/libDiscoverCommon.so.*
@@ -352,6 +389,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Tue Oct 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.5-alt3
+- import Stapler backend
+
 * Wed Sep 16 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.5-alt2
 - fix incorrect stripping of DistTag from the package version (closes: 60550)
 
