@@ -21,8 +21,8 @@ Name: mailutils
 %define baseversion 3.17.90
 
 %if ! %snapshot
-Version: 3.17.90
-Release: alt2
+Version: 3.21
+Release: alt1
 %define srcdir %name-%version
 %else
 %define snapshotdate 20200913
@@ -38,6 +38,7 @@ License: GPL-3.0-or-later
 %if %snapshot
 Source0:        %name-%version-%snapshotdate.tar.gz
 %else
+# Source0-url: https://ftp.gnu.org/gnu/mailutils/mailutils-%version.tar.gz
 Source0:        %name-%version.tar.gz
 %endif
 
@@ -373,6 +374,7 @@ done
 %_libdir/mailutils/spamd.so
 %_libdir/mailutils/timestamp.so
 %_libdir/mailutils/editheader.so
+%_libdir/mailutils/uidnew.so
 
 %_libdir/libmailutils.so.*
 %_libdir/libmuaux.so.*
@@ -408,6 +410,7 @@ done
 %_libdir/mailutils/spamd.*a
 %_libdir/mailutils/timestamp.*a
 %_libdir/mailutils/editheader.*a
+%_libdir/mailutils/uidnew.*a
 
 %files doc
 %_infodir/*
@@ -469,6 +472,10 @@ done
 %endif
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.21-alt1
+- Updated to 3.21.
+- Package the new uidnew Sieve extension.
+
 * Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 3.17.90-alt2
 - Fix build with GCC 15.
 
