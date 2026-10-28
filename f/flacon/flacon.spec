@@ -1,6 +1,6 @@
 Name: flacon
 Version: 13.0.2
-Release: alt1
+Release: alt2
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 BuildRequires: libuchardet-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: taglib-devel
+BuildRequires: zlib-devel
 
 Requires: alacenc
 Requires: faac
@@ -70,6 +71,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Wed Oct 28 2026 Sergey V Turchin <zerg@altlinux.org> 13.0.2-alt2
+- NMU: fix build requires
+
 * Sun Jul 26 2026 Nazarov Denis <nenderus@altlinux.org> 13.0.2-alt1
 - New version 13.0.2.
 
