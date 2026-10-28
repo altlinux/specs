@@ -1,5 +1,5 @@
 Name: icon-themes-mint-l
-Version: 1.8.5
+Version: 1.8.6
 Release: alt1
 
 Summary: Mint-L Icon Theme
@@ -15,10 +15,10 @@ BuildArch: noarch
 
 AutoReqProv: no
 
+Requires: icon-themes-mint-y
+
 %description
-Mint-L icon theme contains the application and category, folder,
-device, mimetype, action and panel icons originate from the
-Moka, Arc, Paper, Elementary, ePapirus themes.
+Mint-L icon theme contains the folder icons originate from the Arc icon theme.
 
 %package -n folder-color-switcher-mint-l
 Summary: Mint-L style for Folder Color Switcher
@@ -46,6 +46,11 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-L.json
 
 %changelog
+* Wed Oct 28 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.6-alt1
+- New version 1.8.6.
+- Mint-L only provide place icons.
+- Inherit and depend on Mint-Y icons for all other icons.
+
 * Sun Oct 04 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.5-alt1
 - New version 1.8.5.
 

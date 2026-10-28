@@ -1,5 +1,5 @@
 Name: gtk-themes-mint-l
-Version: 2.0.8
+Version: 2.0.10
 Release: alt1
 
 Summary: Mint-L Theme
@@ -8,8 +8,6 @@ License: GPLv3+
 Group: Graphical desktop/MATE
 URL: https://github.com/linuxmint/mint-l-theme
 VCS: https://github.com/linuxmint/mint-l-theme.git
-
-Packager: Alexander Kovalev <alexvk@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -51,6 +49,9 @@ cp -a usr %buildroot/
 %_datadir/cinnamon/styles.d/00_mint-l.styles
 
 %changelog
+* Wed Oct 28 2026 Alexander Kovalev <alexvk@altlinux.org> 2.0.10-alt1
+- New version 2.0.10.
+
 * Sat Sep 26 2026 Alexander Kovalev <alexvk@altlinux.org> 2.0.8-alt1
 - New version 2.0.8.
 
