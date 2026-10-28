@@ -15,7 +15,7 @@ export CARGO_FEATURE_UNPREFIXED_MALLOC_ON_SUPPORTED_PLATFORMS=1 \
 %nil
 
 Name: %pypi_name
-Version: 1.30.1
+Version: 1.31.1
 Release: alt1
 
 Summary: Static analysis for GitHub Actions
@@ -89,6 +89,9 @@ cargo test %_smp_mflags --release --no-fail-fast -p zizmor
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.31.1-alt1
+- Updated to 1.31.1.
+
 * Fri Sep 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.30.1-alt1
 - Updated to 1.30.1.
 
