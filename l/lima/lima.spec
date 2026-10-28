@@ -2,7 +2,7 @@
 %define import_path github.com/lima-vm/lima/v2
 
 Name: lima
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Linux virtual machines, with a focus on running containers
@@ -136,5 +136,8 @@ install -Dpm 0644 .build/share/man/man1/*.1 -t %buildroot%_mandir/man1/
 %_man1dir/limactl*.1*
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 2.2.1-alt1
+- updated from 2.2.0 to 2.2.1
+
 * Sat Aug 08 2026 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - Packaged for ALT Sisyphus.
