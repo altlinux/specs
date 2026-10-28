@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-appearance
-Version: 1.1.86
+Version: 1.1.87
 Release: alt1
 
 Summary: Set the theme and appearance of DDE
@@ -36,7 +36,7 @@ BuildRequires(pre): gcc-c++
 %patch -p1
 
 sed 's|include <KF6/|include <DKF6/|g' \
-  -i fakewm/dbus/deepinwmfaker.cpp
+  -i fakewm/dbus/deepinwmfaker.{cpp,h}
 
 %build
 %if_enabled clang
@@ -76,6 +76,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_datadir/dsg/configs/org.deepin.dde.appearance/org.deepin.dde.appearance.json
 
 %changelog
+* Wed Oct 28 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.87-alt1
+- New version 1.1.87.
+
 * Thu Oct 08 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.86-alt1
 - New version 1.1.86.
 - Built on separate kf6 libs.
