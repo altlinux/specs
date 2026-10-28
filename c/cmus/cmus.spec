@@ -1,11 +1,8 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
-
-%define rcname rc0
-%define release alt1
-%define debug 0
+%define _unpackaged_files_terminate_build 1
 
 Name: cmus
-Version: 2.12.0
+Version: 2.13.0
 Release: alt1
 Summary: CMus - C* Music Player
 License: GPL-2.0-only
@@ -18,9 +15,6 @@ AutoReq: yes, nopython
 
 Source0: %name-%version.tar
 Source2: cmus.desktop
-
-Patch: ffmpeg8.patch
-Patch1: fixed_check_mp4v2.patch
 
 # User interface
 BuildRequires(build): libtinfo-devel
@@ -418,7 +412,6 @@ This package contains plugin for Jack Audio Connection Kit support.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 CFLAGS="${CFLAGS:--pipe -Wall -O2 -g}" ; export CFLAGS
@@ -528,6 +521,9 @@ mv cmus-status-display examples
 %_libexecdir/%name/op/jack.so
 
 %changelog
+* Thu Oct 29 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.13.0-alt1
+- 2.12.0 -> 2.13.0
+
 * Fri Jul 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.12.0-alt1
 - 2.8.0 -> 2.12.0 (ALT #58241)
 - changed license
