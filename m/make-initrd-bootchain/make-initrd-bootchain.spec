@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+%define _unpackaged_files_terminate_build 1
+
 %define parent make-initrd
 %define child  bootchain
 
@@ -7,11 +10,11 @@
 %endif
 
 Name: %parent-%child
-Version: 0.1.5
-Release: alt32
+Version: 0.1.6
+Release: alt1
 
 Summary: %child modules set for %parent
-License: GPL-3.0
+License: GPL-3.0+
 Group: System/Configuration/Boot and Init
 BuildArch: noarch
 
@@ -180,6 +183,7 @@ Documentation, testing and development files for %parent-%child.
 
 %install
 ./mix-altboot.sh
+mv -f -- LICENSE %child-doc/
 mkdir -p -- "%buildroot%_datadir/%parent"/features "%buildroot%_docdir"
 cp -aRf -- %child-* "%buildroot%_datadir/%parent"/features/
 mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%name"
@@ -226,6 +230,12 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Oct 27 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.6-alt1
+- improve the step 'liveboot' (ALT #60732)
+- fix bugs and improve other bootchain modules
+- add check of a liverw partition before using
+- update the documentation
+
 * Thu Oct 08 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt32
 - redesign interaction with rootdelay (ALT #60861)
 - add a new feature 'mediacheck' (ALT #60692)
