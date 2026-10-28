@@ -7,7 +7,7 @@
 %def_without ebpf
 
 Name: netdata
-Version: 2.12.1
+Version: 2.12.2
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -397,6 +397,9 @@ touch %buildroot%_sysconfdir/%name/.opt-out-from-anonymous-statistics
 %endif
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.2-alt1
+- new version
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.1-alt1
 - new version 2.12.1 (restore the package in Sisyphus)
 - switch to cmake, use system libraries:
