@@ -3,7 +3,7 @@
 %define priority_max 300
 
 Name: webclient-dummy
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: Dummy webclient
@@ -38,21 +38,13 @@ Requires: %_bindir/firefox
 install -d %buildroot/%_bindir/
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
 # weakest webclient
-cat >%buildroot/%_bindir/00-webclient-dummy <<__EOF__
-#!/bin/sh
-exec %_bindir/xdg-open "\${@}"
-__EOF__
-chmod 0755 %buildroot/%_bindir/00-webclient-dummy
+ln -sr %buildroot/%_bindir/xdg-open  %buildroot/%_bindir/00-webclient-dummy
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/00-webclient-dummy <<__EOF__
 %_bindir/xbrowser       %_bindir/00-webclient-dummy      %priority_min
 %_bindir/x-www-browser  %_bindir/00-webclient-dummy      %priority_min
 __EOF__
 # strongest webclient
-cat >%buildroot/%_bindir/zz-webclient-dummy <<__EOF__
-#!/bin/sh
-exec %_bindir/firefox "\${@}"
-__EOF__
-chmod 0755 %buildroot/%_bindir/zz-webclient-dummy
+ln -sr %buildroot/%_bindir/firefox %buildroot/%_bindir/zz-webclient-dummy
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/zz-webclient-dummy <<__EOF__
 %_bindir/xbrowser       %_bindir/zz-webclient-dummy      %priority_max
 %_bindir/x-www-browser  %_bindir/zz-webclient-dummy      %priority_max
@@ -67,6 +59,9 @@ __EOF__
 %_bindir/zz-webclient-dummy
 
 %changelog
+* Wed Oct 28 2026 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
+- simplify code
+
 * Tue Oct 27 2026 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - fix provides
 
