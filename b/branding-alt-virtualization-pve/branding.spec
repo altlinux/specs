@@ -20,7 +20,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-sans
@@ -291,6 +291,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Oct 28 2026 Sergey Konev <darisishe@altlinux.org> 11.2-alt2
+- Set docs URL to 11.2
+
 * Sun Aug 30 2026 Sergey Konev <darisishe@altlinux.org> 11.2-alt1
 - 11.2
 
