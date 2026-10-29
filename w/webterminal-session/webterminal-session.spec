@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.7.3
+Version: 0.8.0
 Release: alt1
 %K6init no_altplace
 
@@ -65,6 +65,9 @@ install -m 0644 webterminal-gui.service %buildroot/%_userunitdir
 %_bindir/webterminal-application
 
 %changelog
+* Thu Oct 29 2026 Sergey V Turchin <zerg at altlinux dot org> 0.8.0-alt1
+- restrict su usage
+
 * Wed Oct 21 2026 Sergey V Turchin <zerg at altlinux dot org> 0.7.3-alt1
 - add workaround against bug#61125
 
