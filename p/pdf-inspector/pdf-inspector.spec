@@ -5,7 +5,7 @@
 %python3_set_limited_api
 
 Name: pdf-inspector
-Version: 1.20.0
+Version: 1.25.2
 Release: alt1
 
 Summary: Fast Rust library for PDF inspection, classification, and text extraction
@@ -73,6 +73,9 @@ install -pD -m0755 -t %buildroot%_bindir/ target/release/{pdf2md,detect-pdf,dump
 %python3_sitelibdir/%{pyproject_distinfo pdf-inspector}/
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 1.25.2-alt1
+- updated from 1.20.0 to 1.25.2
+
 * Tue Sep 15 2026 Artem Krasovskiy <aibure@altlinux.org> 1.20.0-alt1
 - updated from 0.1.7 to 1.20.0
 
