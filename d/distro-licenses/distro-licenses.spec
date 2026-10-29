@@ -2,7 +2,7 @@
 
 Name: distro-licenses
 Version: 1.4.7
-Release: alt1
+Release: alt2
 License: CC0-1.0
 Summary: Texts of various distribution licenses
 Group: System/Base
@@ -27,6 +27,9 @@ Texts of various distribution licenses
 %_bindir/*
 
 %changelog
+* Thu Oct 29 2026 Dmitry Terekhin <jqt4@altlinux.org> 1.4.7-alt2
+- fix: correct the error in the license texts
+
 * Mon Sep 28 2026 Dmitry Terekhin <jqt4@altlinux.org> 1.4.7-alt1
 - Add static license ALT_Server_License/11.1.1
 - Add static license ALT_Domain_License/11.1.1
