@@ -2,8 +2,8 @@
 
 %define  modulename treq
 Name:    python3-module-%modulename
-Version: 22.2.0
-Release: alt2.1
+Version: 26.7.0
+Release: alt1
 
 Summary: Python requests like API built on top of Twisted's HTTP client
 License: MIT
@@ -25,6 +25,7 @@ BuildRequires: python3(service_identity)
 BuildRequires: python3(httpbin)
 BuildRequires: python3-module-twisted-core-tests
 BuildRequires: python3-module-legacy-cgi
+BuildRequires: python3(multipart)
 %endif
 
 BuildArch: noarch
@@ -60,6 +61,10 @@ trial treq || exit 1
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 26.7.0-alt1
+- New version 26.7.0.
+- Added BuildRequires: python3(multipart) for tests.
+
 * Sun Oct 12 2025 Grigory Ustinov <grenka@altlinux.org> 22.2.0-alt2.1
 - Fixed FTBFS.
 
