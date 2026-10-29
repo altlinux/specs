@@ -1,9 +1,9 @@
 %def_with check
-%define commit a5604c4
+%define commit 418b4c4
 
 Name: pcb2gcode
-Version: 3.0.4
-Release: alt2
+Version: 3.1.0
+Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 Group: Engineering
 License: GPL-3.0-or-later
@@ -13,20 +13,21 @@ VCS: https://github.com/pcb2gcode/pcb2gcode
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-# Tests fails
-ExcludeArch: %ix86 %arm
-
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
+BuildRequires: ccache
+BuildRequires: boost-program_options-devel
+BuildRequires: boost-geometry-devel
+BuildRequires: libgeos-devel
+BuildRequires: nlohmann-json-devel
+BuildRequires: pkgconfig(libgerbv) >= 2.1.0
 %if_with check
 BuildRequires: ctest
-%endif
-BuildRequires: boost-program_options-devel boost-geometry-devel
 BuildRequires: pkgconfig(glibmm-2.4) >= 2.8
-BuildRequires: pkgconfig(gdkmm-2.4) >= 2.8
-BuildRequires: pkgconfig(libgerbv) >= 2.1.0
+BuildRequires: pkgconfig(gdkmm-3.0)
 BuildRequires: pkgconfig(librsvg-2.0)
+%endif
 
 %description
 pcb2gcode is a command-line software for the isolation, routing and drilling of
@@ -43,16 +44,15 @@ sed -i 's/PCB2GCODE_GIT_VERSION "unknown"/PCB2GCODE_GIT_VERSION "%commit"/' \
 	CMakeLists.txt
 
 %build
-%cmake
+%cmake \
+	-DBUILD_TESTING=%{?_with_check:ON}%{!?_with_check:OFF}
 %cmake_build
 
 %install
 %cmake_install
 
 %check
-%if_with check
-%ctest -E gerberimporter_tests
-%endif
+%ctest
 
 %files
 %_bindir/*
@@ -60,6 +60,11 @@ sed -i 's/PCB2GCODE_GIT_VERSION "unknown"/PCB2GCODE_GIT_VERSION "%commit"/' \
 %doc AUTHORS README.md COPYING
 
 %changelog
+* Thu Oct 29 2026 Valery Zabrovsky <brow@altlinux.org> 3.1.0-alt1
+- New version 3.1.0.
+- Build with geos and ccache.
+- Drop ExcludeArch.
+
 * Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 3.0.4-alt2
 - Fix FTBFS with boost 1.91.0.
 
