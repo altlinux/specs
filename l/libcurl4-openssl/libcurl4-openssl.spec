@@ -12,7 +12,7 @@
 %define soname 4
 
 Name: libcurl4-openssl
-Version: 8.22.0
+Version: 8.23.0
 Release: alt1
 
 Summary: libcurl library built with openssl
@@ -92,6 +92,30 @@ ln -s ../%libname.so.%soname %buildroot%_libdir/%name/libcurl.so.%soname
 %doc CHANGES.md README* docs/{FAQ.md,FEATURES.md}
  
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 8.23.0-alt1
+- new version 8.23.0
+- fixes:
+  + CVE-2026-107928: info leak uploading over WebSockets with GnuTLS
+  + CVE-2026-107929: local interface connection reuse mixup
+  + CVE-2026-86412: server-set cookie erases cookie jar
+  + CVE-2026-86413: negotiate credentials sent to redirected origin
+  + CVE-2026-86414: leaking host credentials to HTTP proxy
+  + CVE-2026-86415: auto client cert connection reuse mixup
+  + CVE-2026-87861: cross-origin reuse of a negotiate connection
+  + CVE-2026-87862: HSTS cache import drops longer-lived child
+  + CVE-2026-87863: HSTS response erases persisted entries
+  + CVE-2026-87865: knownhost callback mismatches key as missing
+  + CVE-2026-87866: wolfSSL public-key pinning bypass
+  + CVE-2026-92386: server-set cookie aborts cookie jar load
+  + CVE-2026-92387: never-ending loop via server response omission
+  + CVE-2026-92388: FTP wildcard write callback mixup
+  + CVE-2026-92389: TFTP direction confusion
+  + CVE-2026-92390: -J no-clobber guarantee bypassed with 103 early hints
+  + CVE-2026-92391: curl_mime_free stack overflow by recursion
+  + CVE-2026-92392: HTTP/2 upload use-after-free
+  + CVE-2026-94265: authorization: negotiate sent to foreign origin
+  + CVE-2026-94266: password leak in CURLINFO_EFFECTIVE_URL
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 8.22.0-alt1
 - new version 8.22.0
 
