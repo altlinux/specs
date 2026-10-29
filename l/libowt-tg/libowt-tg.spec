@@ -9,7 +9,7 @@
 
 Name: libowt-tg
 Version: 4.3.0.15
-Release: alt1
+Release: alt2
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -29,6 +29,7 @@ Source2: %name-abseil-cpp-%version.tar
 Patch1: 0011-cmake-external.cmake-add-link_libyuv-function.patch
 Patch2: 0012-cmake-libwebrtcbuild.cmake-add-tg_owt-libyuv-only-if.patch
 Patch3: 0013-CMakeLists.txt-use-external-libyuv.patch
+Patch4: 0004-use-system-openssl-ca-store.patch
 
 Patch2000: %name-e2k.patch
 
@@ -65,7 +66,7 @@ BuildRequires: libpcre-devel
 # Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
 BuildRequires: libffi-devel
 
-BuildRequires: gcc-c++ cmake ninja-build
+BuildRequires: gcc-c++ rpm-build-cmake ninja-build
 
 # TODO: enable logging and debugging
 #add_optflags -DRTC_DISABLE_LOGGING=1
@@ -119,6 +120,7 @@ develop programs which make use of %name.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1
 %ifarch %e2k
 %patch2000 -p2
 sed -i 's/~Result() = default;//' src/modules/congestion_controller/goog_cc/loss_based_bwe_v2.h
@@ -149,6 +151,7 @@ sed -i '/absl\/strings\/cord.cc/d' cmake/libabsl.cmake
           -DTG_OWT_PACKAGED_BUILD:BOOL=ON \
           -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
           -DTG_OWT_USE_PROTOBUF:BOOL=ON \
+          -DTG_OWT_USE_SYSTEM_SSL_ROOT_CERTS:BOOL=ON \
 %if_enabled pipewire
           -DTG_OWT_USE_PIPEWIRE:BOOL=ON \
 %else
@@ -182,6 +185,10 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Sun Oct 25 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.15-alt2
+- backport system OpenSSL CA trust support from tg_owt PR #181.
+- replaced BuildRequires: cmake with rpm-build-cmake.
+
 * Thu May 21 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.15-alt1
 - build from git 89df288dd6ba (fix build with gcc 15: missing cstring include)
 
