@@ -1,6 +1,6 @@
 Name: kde-autofs-shares
-Version: 0.2.5
-Release: alt2
+Version: 0.2.6
+Release: alt1
 %K6init
 
 Summary: Samba shares plugin for Dolphin
@@ -46,6 +46,9 @@ done
 %_bindir/kde-autofs-shares-*
 
 %changelog
+* Thu Oct 29 2026 Sergey V Turchin <zerg@altlinux.org> 0.2.6-alt1
+- don't trace script
+
 * Fri Nov 14 2025 Sergey V Turchin <zerg@altlinux.org> 0.2.5-alt2
 - fix requires (closes: 56855)
 
