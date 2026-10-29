@@ -1,6 +1,6 @@
 Name: xfce4-screensaver
 Version: 4.20.2
-Release: alt2
+Release: alt3
 
 Summary: Screen saver and locker for Xfce
 License: GPLv2+ and LGPLv2+
@@ -79,6 +79,11 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Thu Oct 29 2026 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt3
+- Fixed crash for .desktop screensavers without options.
+- Used provider text domain for XML config translations.
+- Improved searching xscreensaver .xml config files patch.
+
 * Tue Jun 16 2026 Mikhail Efremov <sem@altlinux.org> 4.20.2-alt2
 - Fixed searching xscreensaver .xml config files.
 
