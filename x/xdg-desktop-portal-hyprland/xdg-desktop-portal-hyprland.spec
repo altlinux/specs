@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.4
+%define ver_major 1.5
 
 %def_enable check
 
 Name: xdg-desktop-portal-hyprland
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: xdg-desktop-portal backend for Hyprland
@@ -29,15 +29,17 @@ Requires: qt6-wayland
 BuildRequires(pre): rpm-macros-cmake rpm-build-systemd
 BuildRequires: cmake gcc-c++ ctest
 BuildRequires: pkgconfig(wayland-client)
-BuildRequires: pkgconfig(wayland-protocols)
-BuildRequires: pkgconfig(hyprland-protocols) >= 0.6.4
+BuildRequires: pkgconfig(wayland-protocols) >= 1.39
+BuildRequires: pkgconfig(hyprland-protocols) >= 0.8.0
 BuildRequires: hyprwayland-scanner >= 0.4.2
 BuildRequires: pkgconfig(hyprlang)
 BuildRequires: pkgconfig(hyprutils) >= 0.2.6
+BuildRequires: pkgconfig(hyprtoolkit) >= 0.6.0
 BuildRequires: pkgconfig(libpipewire-0.3) >= 1.2
 BuildRequires: pkgconfig(gbm)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(sdbus-c++) >= 2.0.0
 BuildRequires: pkgconfig(libsystemd)
 BuildRequires: qt6-tools pkgconfig(Qt6Widgets)
@@ -70,6 +72,9 @@ XDG Desktop Portal implementation for Hyprland.
 
 
 %changelog
+* Wed Oct 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Thu Jul 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
