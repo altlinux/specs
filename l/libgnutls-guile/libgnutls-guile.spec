@@ -1,5 +1,5 @@
 Name: libgnutls-guile
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 
 Summary: Guile bindings for the GnuTLS library
@@ -43,6 +43,9 @@ printf "%%s" "%version" >.tarball-version
 %exclude %_libdir/guile/*/extensions/*.la
 
 %changelog
+* Thu Oct 29 2026 Mikhail Efremov <sem@altlinux.org> 5.0.3-alt1
+- Updated to 5.0.3.
+
 * Wed Jul 01 2026 Mikhail Efremov <sem@altlinux.org> 5.0.2-alt1
 - Updated to 5.0.2.
 
