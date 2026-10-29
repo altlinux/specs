@@ -7,12 +7,12 @@
 
 Name: xmake
 Version: 3.1.2
-Release: alt1
+Release: alt2
 
 Summary: A cross-platform build utility based on Lua
 License: Apache-2.0
 Group: Development/Tools
-Url: https://xmake.io
+URL: https://xmake.io
 VCS: https://github.com/xmake-io/xmake
 
 Source: %name-%version.tar
@@ -104,19 +104,22 @@ rm -r \
 xmake l tests/run.lua
 
 %files
-%doc CHANGELOG.md CODE_OF_CONDUCT.md CONTRIBUTING.md NOTICE.md README.md
+%doc CHANGELOG.md NOTICE.md README.md
 %_bindir/%name
 %_bindir/xrepo
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
-%_man1dir/%name.1.xz
-%_man1dir/xrepo.1.xz
+%_man1dir/%name.1.*
+%_man1dir/xrepo.1.*
 
 %files data
 %_datadir/%name
 
 %changelog
+* Tue Oct 27 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.1.2-alt2
+- Cleaned up the spec file.
+
 * Fri Oct 16 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.1.2-alt1
 - Updated to version 3.1.2.
 
