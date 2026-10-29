@@ -10,7 +10,7 @@
 
 
 Name:    alloy
-Version: 1.19.2
+Version: 1.21.2
 Release: alt1
 
 Summary: OpenTelemetry Collector distribution with programmable pipelines
@@ -97,6 +97,8 @@ install -dm770 %buildroot%_sharedstatedir/%name/data
 install -Dm644 packaging/rpm/%name.service %buildroot%_unitdir/%name.service
 install -Dm644 packaging/environment-file %buildroot%_sysconfdir/sysconfig/%name
 install -Dm644 packaging/config.%name %buildroot%_sysconfdir/%name/config.%name
+install -Dm644 packaging/config.yaml %buildroot%_sysconfdir/%name/config.yaml
+install -Dm755 packaging/systemd/%name-wrapper %buildroot%_libexecdir/%name/%name-wrapper
 
 %pre
 groupadd -r -f %name 2>/dev/null ||:
@@ -111,11 +113,18 @@ useradd -r -g %name -c 'alloy user' \
 %_bindir/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/%name/config.%name
+%config(noreplace) %_sysconfdir/%name/config.yaml
+%_libexecdir/%name/%name-wrapper
 %_unitdir/%name.service
+%dir %_libexecdir/%name
 %dir %attr(0770, %name, %name) %_sharedstatedir/%name
 %dir %attr(0770, %name, %name) %_sharedstatedir/%name/data
 
 %changelog
+* Thu Oct 29 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.21.2-alt1
+- Update version to v1.21.2
+- Add support for selecting the OpenTelemetry engine at runtime.
+
 * Tue Sep 01 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.19.2-alt1
 - Update version to v1.19.2
 - Bundle Beyla binaries for offline builds and skip the upstream
