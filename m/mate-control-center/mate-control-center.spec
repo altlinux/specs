@@ -1,6 +1,6 @@
 Name: mate-control-center
 Version: 1.28.2
-Release: alt4
+Release: alt5
 Epoch: 2
 Summary: MATE Desktop control-center
 License: LGPLv2+ and GPLv2+
@@ -71,6 +71,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 28 2026 Valery Zabrovsky <brow@altlinux.org> 2:1.28.2-alt5
+- mate-about-me.c: Fall back to user name if real name is not set.
+- Fix Russian translation.
+
 * Wed Oct 14 2026 Valery Inozemtsev <shrek@altlinux.ru> 2:1.28.2-alt4
 - updated ru translation
 
