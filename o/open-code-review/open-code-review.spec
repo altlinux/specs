@@ -6,7 +6,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: open-code-review
-Version: 1.12.9
+Version: 1.13.3
 Release: alt1
 
 Summary: An AI-powered code review CLI tool
@@ -72,6 +72,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_ocr
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 1.13.3-alt1
+- updated from 1.12.9 to 1.13.3
+
 * Thu Sep 24 2026 Artem Krasovskiy <aibure@altlinux.org> 1.12.9-alt1
 - updated from 1.12.3 to 1.12.9
 
