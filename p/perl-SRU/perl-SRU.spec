@@ -15,7 +15,7 @@
 
 Name: perl-SRU
 Version: 1.01
-Release: alt2
+Release: alt2.1
 
 Summary: Search and Retrieve URL Service
 
@@ -87,6 +87,10 @@ http://www.ockham.org.
 %perl_vendor_privlib/SRU.pm
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.01-alt2.1
+- NMU: fixed unknown diagnostic code handling (closes: #61242)
+- added BuildRequires: perl-XML-LibXML (required to build the package).
+
 * Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.01-alt2
 - fixed FTBFS (add BR: perl-XML-LibXML)
 
