@@ -1,8 +1,6 @@
-%define git_version v1.260327.0
-
 Name: xray-core
-Version: 26.3.27
-Release: alt2
+Version: 26.10.29
+Release: alt1
 
 Summary: Project X
 License: MPL-2.0
@@ -35,7 +33,7 @@ Project X originates from XTLS protocol, providing a set of network tools such a
 %setup -n Xray-core-%version -a 1
 
 %build
-go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%git_version -s -w -buildid=" -v ./main
+go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=v%version -s -w -buildid=" -v ./main
 
 %install
 %__mkdir_p %buildroot{%_bindir,{%_datadir,%_sysconfdir}/xray,%_unitdir}
@@ -44,6 +42,10 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%gi
 %__install -Dp -m0644 %SOURCE3 %buildroot%_unitdir/
 %__install -Dp -m0644 %SOURCE4 %buildroot%_datadir/xray/
 %__install -Dp -m0644 %SOURCE5 %buildroot%_datadir/xray/
+
+%pre
+%_sbindir/groupadd -r -f xray 2>/dev/null ||:
+%_sbindir/useradd -r -N -M -g xray -d /dev/null -s /dev/null xray 2>/dev/null ||:
 
 %post
 %post_systemd_postponed xray
@@ -61,6 +63,10 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=%gi
 %_unitdir/xray@.service
 
 %changelog
+* Thu Oct 29 2026 Nazarov Denis <nenderus@altlinux.org> 26.10.29-alt1
+- New version 26.10.29.
+- Created xray system user required by the service.
+
 * Sat Apr 18 2026 Nazarov Denis <nenderus@altlinux.org> 26.3.27-alt2
 - Added GeoIP and Domain lists
 
