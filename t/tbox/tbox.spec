@@ -6,20 +6,20 @@
 
 Name: tbox
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: A glib-like multi-platform c library
 License: Apache-2.0
 Group: System/Libraries
-Url: https://tboox.top
+URL: https://tboox.top
 VCS: https://github.com/tboox/tbox
 
 Source: %name-%version.tar
 Patch: %name-1.8.0-alt-fix-DESTDIR-configure.patch
 Patch1: %name-1.8.0-alt-add-relwithdebinfo-mode.patch
+Patch2: %name-1.8.2-alt-remove-rpath-configure.patch
 
 BuildRequires: gcc-c++
-BuildRequires: chrpath
 
 %description
 TBOX is a glib-like cross-platform C library that is simple to use yet
@@ -101,7 +101,6 @@ EOF
 
 %install
 %makeinstall_std
-chrpath -d %buildroot%_bindir/demo
 mv %buildroot%_bindir/demo %buildroot%_bindir/%name-demo
 install -Dm 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 
@@ -119,6 +118,10 @@ install -Dm 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Oct 27 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.2-alt2
+- Replaced chrpath RPATH removal with a build patch.
+- Cleaned up the spec file.
+
 * Wed Oct 07 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.2-alt1
 - Updated to version 1.8.2.
 
@@ -130,4 +133,3 @@ install -Dm 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 
 * Tue Apr 14 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 1.8.0-alt1
 - Initial build for ALT.
-
