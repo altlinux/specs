@@ -1,5 +1,5 @@
 Name: hyprland-protocols
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Wayland protocol extensions for Hyprland
@@ -13,9 +13,9 @@ ExcludeArch: %ix86
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-cmake
 
-BuildRequires: meson
+BuildRequires: cmake
 
 %description
 %summary.
@@ -24,16 +24,22 @@ BuildRequires: meson
 %setup
 
 %build
-%meson
-%meson_build
+%cmake
+%cmake_build
 
 %install
-%meson_install
+%cmake_install
 
 %files
 %_datadir/%name/
 %_datadir/pkgconfig/%name.pc
 
 %changelog
+* Thu Oct 29 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.7.1-alt1
+- new version 0.7.1
+
 * Sun Jan 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.7.0-alt1
 - Initial build

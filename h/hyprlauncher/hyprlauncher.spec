@@ -1,5 +1,5 @@
 Name: hyprlauncher
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 License: BSD-3-Clause
 
@@ -48,6 +48,9 @@ BuildRequires: pkgconfig(xkbcommon)
 %_bindir/%name
 
 %changelog
+* Wed Jul 29 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.6-alt1
+- new version 0.1.6
+
 * Sun Jan 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.5-alt1
 - new version 0.1.5 (with rpmrb script)
 

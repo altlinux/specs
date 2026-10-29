@@ -1,14 +1,12 @@
 %define _libexecdir %prefix/libexec
 
 Name: polkit-hyprland
-Version: 0.1.3
+Version: 0.2.0
 Release: alt1
 License: BSD-3-Clause
 
-Summary: A polkit authentication agent written in QT/QML
-Summary(ru_RU.UTF-8): Агент аутентификации polkit, написанный на QT/QML
-
-%K6init
+Summary: A polkit authentication agent written in hyprtoolkit
+Summary(ru_RU.UTF-8): Агент аутентификации polkit, написанный на hyprtoolkit
 
 Group: Graphical desktop/Other
 
@@ -18,34 +16,35 @@ Vcs: https://github.com/hyprwm/hyprpolkitagent.git
 ExcludeArch: %ix86
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-kf6
+BuildRequires: cmake
+BuildRequires: clang libstdc++-devel
 
-BuildRequires: gcc-c++ cmake
-
+BuildRequires: pkgconfig(hyprtoolkit)
 BuildRequires: pkgconfig(hyprutils)
-BuildRequires: pkgconfig(polkit-agent-1)
-BuildRequires: pkgconfig(polkit-qt6-1)
+BuildRequires: pkgconfig(hyprgraphics)
+BuildRequires: pkgconfig(hyprlang)
 
-BuildRequires: extra-cmake-modules qt6-base-devel
-BuildRequires: qt6-declarative-devel qt6-tools-devel
-BuildRequires: hyprland-qt-support
+BuildRequires: pkgconfig(sdbus-c++)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(libdrm)
 
-Requires: kf6-kirigami hyprland-qt-support libkf6sonnetui
+BuildRequires: pkgconfig(xkbcommon)
 
 %description
-A simple polkit authentication agent for Hyprland, written in QT/QML.
+A simple polkit authentication agent for Hyprland, written in hyprtoolkit.
 
 %description -l ru_RU.UTF-8
-Простой агент аутентификации polkit для Hyprland, написанный на QT/QML.
+Простой агент аутентификации polkit для Hyprland, написанный на hyprtoolkit.
 
 %prep
 %setup
 
 %build
-%K6build
+%cmake -DCMAKE_CXX_COMPILER=clang++
+%cmake_build
 
 %install
-%K6install
+%cmake_install
 
 %files
 %_userunitdir/hyprpolkitagent.service
@@ -53,6 +52,9 @@ A simple polkit authentication agent for Hyprland, written in QT/QML.
 %_datadir/dbus-1/services/*.service
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
+- new version 0.2.0
+
 * Fri Aug 01 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3-alt1
 - new version 0.1.3 (with rpmrb script)
 

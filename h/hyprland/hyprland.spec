@@ -3,7 +3,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: hyprland
-Version: 0.54.3
+Version: 0.56.2
 Release: alt1
 
 Summary: Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice on its looks
@@ -17,7 +17,8 @@ ExcludeArch: i586 armh
 # Source-url: https://github.com/hyprwm/Hyprland/releases/download/v%version/source-v%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: hyprland-0.53.3-clang.patch
+Patch1: hyprland-0.56.1-lua-5.4.patch
+Patch2: hyprland-0.56.1-libstdcxx-ranges.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -60,6 +61,11 @@ BuildRequires: libpixman
 BuildRequires: pkgconfig(vulkan) >= 1.2.182
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(SPIRV-Tools)
+BuildRequires: pkgconfig(libeis-1.0)
+BuildRequires: pkgconfig(lcms2)
+BuildRequires: pkgconfig(readline)
+BuildRequires: pkgconfig(lua5.4)
 
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.26
@@ -166,6 +172,12 @@ Requires: pkgconfig(hyprland-protocols)
 %_includedir/%name
 
 %changelog
+* Wed Aug 12 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.56.2-alt1
+- new version 0.56.2
+
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.56.1-alt1
+- new version 0.56.1
+
 * Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.54.3-alt1
 - new version 0.54.3
 

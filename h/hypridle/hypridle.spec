@@ -1,5 +1,5 @@
 Name: hypridle
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 License: BSD-3-Clause
 
@@ -52,6 +52,9 @@ Hypridle поддерживает команды блокировки, разб�
 %_datadir/hypr/%name.conf
 
 %changelog
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.8-alt1
+- new version 0.1.8
+
 * Sun Aug 31 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.1.7-alt1
 - new version 0.1.7 (with rpmrb script)
 

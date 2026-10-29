@@ -1,7 +1,7 @@
-%define soversion 11
+%define soversion 13
 
 Name: libhyprutils
-Version: 0.12.0
+Version: 0.14.2
 Release: alt1
 License: BSD-3-Clause
 
@@ -62,6 +62,9 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprutils.pc
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.14.2-alt1
+- new version 0.14.2
+
 * Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.12.0-alt1
 - new version 0.12.0
 

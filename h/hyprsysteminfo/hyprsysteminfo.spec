@@ -1,5 +1,5 @@
 Name: hyprsysteminfo
-Version: 0.1.3.6abb64f
+Version: 0.2.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -52,6 +52,9 @@ the running system, or copy diagnostics data, without the terminal.
 %_desktopdir/hyprsysteminfo.desktop
 
 %changelog
+* Wed Jul 29 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
+- new version 0.2.0
+
 * Fri Mar 20 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.3.6abb64f-alt1
 - new version 0.1.3.6abb64f
 - rewrite entire app in hyprtoolkit

@@ -1,7 +1,7 @@
-%define soversion 5
+%define soversion 6
 
 Name: libhyprtoolkit
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 License: BSD-3-Clause
 
@@ -15,7 +15,7 @@ Vcs: https://github.com/hyprwm/hyprtoolkit.git
 ExcludeArch: %ix86
 Source: %name-%version.tar
 
-Patch1: fix-cover-tile-pixels.patch
+Patch1: fix-zero-size-swapchain.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -40,6 +40,7 @@ BuildRequires: pkgconfig(pangocairo)
 BuildRequires: pkgconfig(iniparser)
 
 BuildRequires: pkgconfig(opengl)
+BuildRequires: pkgconfig(absl_flat_hash_map)
 
 %description
 %summary.
@@ -80,6 +81,12 @@ This package provides development files for %name library.
 %_pkgconfigdir/hyprtoolkit.pc
 
 %changelog
+* Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.6.0-alt1
+- new version 0.6.0
+
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.4-alt1
+- new version 0.5.4
+
 * Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.3-alt1
 - new version 0.5.3
 

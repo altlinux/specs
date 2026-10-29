@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    hyprlock
-Version: 0.9.5
+Version: 0.9.6
 Release: alt1
 
 Summary: Hyprland's GPU-accelerated screen locking utility
@@ -61,6 +61,9 @@ echo 'auth            include         system-auth' > %buildroot%_sysconfdir/pam.
 %config(noreplace) %_sysconfdir/xdg/hypr/hyprlock.conf
 
 %changelog
+* Sat Aug 01 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.9.6-alt1
+- new version 0.9.6
+
 * Sat Apr 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.9.5-alt1
 - new version 0.9.5
 

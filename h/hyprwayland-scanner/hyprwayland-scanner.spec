@@ -1,5 +1,5 @@
 Name: hyprwayland-scanner
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Hyprland implementation of wayland-scanner
@@ -7,6 +7,7 @@ License: BSD-3-Clause
 Group: Development/C++
 
 Url: https://github.com/hyprwm/hyprwayland-scanner
+Vcs: https://github.com/hyprwm/hyprwayland-scanner.git
 
 ExcludeArch: i586
 Source: %name-%version.tar
@@ -36,6 +37,9 @@ A Hyprland implementation of wayland-scanner, in and for C++.
 %_libdir/cmake/%name/
 
 %changelog
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.4.6-alt1
+- new version 0.4.6
+
 * Thu Jul 17 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.4.5-alt1
 - new version 0.4.5 (with rpmrb script)
 

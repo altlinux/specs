@@ -1,5 +1,5 @@
 Name: hyprshutdown
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -48,5 +48,8 @@ BuildRequires: glaze-devel
 %_bindir/%name
 
 %changelog
+* Wed Jul 29 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.1-alt1
+- new version 0.1.1
+
 * Wed Feb 11 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.0-alt1
 - Initial build

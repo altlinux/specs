@@ -1,7 +1,7 @@
 %define soversion 3
 
 Name: hyprwire
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 License: BSD-3-Clause
 
@@ -73,6 +73,9 @@ subst "s|Version:|Version: %version|" \
 %_pkgconfigdir/%name-scanner.pc
 
 %changelog
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.1-alt1
+- new version 0.3.1
+
 * Sat Feb 07 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.0-alt1
 - new version 0.3.0 (with rpmrb script)
 

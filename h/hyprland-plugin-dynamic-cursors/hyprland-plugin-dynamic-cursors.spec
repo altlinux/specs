@@ -1,7 +1,7 @@
 %define plugin dynamic-cursors
 
 Name: hyprland-plugin-%plugin
-Version: 0.54.2
+Version: 0.56.1
 Release: alt1
 License: MIT
 
@@ -32,6 +32,8 @@ BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libglvnd)
 BuildRequires: pkgconfig(gbm)
 
+BuildRequires: glslang-devel
+
 %description
 This plugin makes your cursor more realistic by simulating how
 it would behave if it was an actual object being dragged across
@@ -55,6 +57,12 @@ install out/%plugin.so %buildroot%_libdir/hyprland/
 %_libdir/hyprland/%plugin.so
 
 %changelog
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.56.1-alt1
+- new version 0.56.1
+
+* Wed Apr 15 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.54.3-alt1
+- new version 0.54.3
+
 * Fri Mar 20 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.54.2-alt1
 - new version 0.54.2
 

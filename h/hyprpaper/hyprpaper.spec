@@ -1,5 +1,5 @@
 Name: hyprpaper
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 License: BSD-3-Clause
 
@@ -14,7 +14,7 @@ Vcs: https://github.com/hyprwm/hyprpaper.git
 ExcludeArch: i586
 Source: %name-%version.tar
 
-Patch1: clang.patch
+#Patch1: clang.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
@@ -60,6 +60,9 @@ Hyprpaper is a blazing fast wayland wallpaper utility with IPC controls.
 %_userunitdir/%name.service
 
 %changelog
+* Tue Jul 28 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.8.4-alt1
+- new version 0.8.4
+
 * Wed Feb 11 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.8.3-alt1
 - new version 0.8.3
 
