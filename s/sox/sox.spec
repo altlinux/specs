@@ -1,239 +1,165 @@
+%define soname 5
+
 Name: sox
 Summary: A general purpose sound file conversion tool
-Version: 14.4.2
-Release: alt8
+Version: 14.8.1
+Release: alt1
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libopusfile-devel libpng-devel libsndfile-devel libvorbis-devel libwavpack-devel
 %def_with pulse
-Url: https://sourceforge.net/projects/sox/
+Url: https://codeberg.org/sox_ng/sox_ng
+VCS: https://codeberg.org/sox_ng/sox_ng
 Source: %name-%version.tar
 Source1: soxeffect
-Patch1: sox-14.4.2-fix-build.patch
-Patch2: sox-14.4.2-debian-CVE-2017-15371.patch
-Patch3: sox-14.4.2-debian-CVE-2019-8355.patch
-Patch4: sox-14.4.2-debian-CVE-2021-33844.patch
-Patch5: sox-14.4.2-debian-CVE-2017-15370.patch
-Patch6: sox-14.4.2-debian-CVE-2019-8356.patch
-Patch7: sox-14.4.2-debian-CVE-2021-3643.patch
-Patch8: sox-14.4.2-debian-CVE-2017-11332.patch
-Patch9: sox-14.4.2-debian-CVE-2019-8357.patch
-Patch10: sox-14.4.2-debian-CVE-2021-40426.patch
-Patch11: sox-14.4.2-debian-CVE-2017-11359.patch
-Patch12: sox-14.4.2-debian-CVE-2023-32627-filter-null-sampling-rate-in-VOC-code.patch
-Patch13: sox-14.4.2-debian-CVE-2022-31650.patch
-Patch14: sox-14.4.2-debian-CVE-2017-15372.patch
-Patch15: sox-14.4.2-debian-CVE-2017-11358.patch
-Patch16: sox-14.4.2-debian-CVE-2022-31651.patch
-Patch17: sox-14.4.2-debian-CVE-2017-15642.patch
-Patch18: sox-14.4.2-debian-CVE-2019-13590.patch
-Patch19: sox-14.4.2-debian-CVE-2019-8354.patch
-Patch20: sox-14.4.2-debian-CVE-2021-23159.patch
-Patch21: sox-14.4.2-debian-wavpack-check-errors.patch
-Patch22: sox-14.4.2-debian-xa-validate-channel-count.patch
-Patch23: sox-14.4.2-debian-handle-vorbis-analysis-headerout-errors.patch
-Patch24: sox-14.4.2-debian-fix-hcom-big-endian.patch
-Patch25: sox-14.4.2-debian-fix-resource-leak-comments.patch
-Patch26: sox-14.4.2-debian-fix-resource-leak-hcom.patch
-Patch27: sox-14.4.2-sox_sample_test-clean-up-nonsense.patch
-Requires: sox-play = %version-%release
-Requires: sox-base = %version-%release
-Requires: libsox-fmt-alsa = %version-%release
-Requires: libsox-fmt-ao = %version-%release
-Requires: libsox-fmt-caf = %version-%release
-Requires: libsox-fmt-fap = %version-%release
-Requires: libsox-fmt-flac = %version-%release
-Requires: libsox-fmt-gsm = %version-%release
-Requires: libsox-fmt-lpc10 = %version-%release
-Requires: libsox-fmt-mat4 = %version-%release
-Requires: libsox-fmt-mat5 = %version-%release
-Requires: libsox-fmt-mp3 = %version-%release
-Requires: libsox-fmt-oss = %version-%release
-Requires: libsox-fmt-opus = %version-%release
-Requires: libsox-fmt-paf = %version-%release
+Patch1: sox-14.4.2-sox_sample_test-clean-up-nonsense.patch
+Requires: sox-play = %EVR
+Requires: sox-base = %EVR
+Requires: libsox-fmt-alsa = %EVR
+Requires: libsox-fmt-ao = %EVR
+Requires: libsox-fmt-flac = %EVR
+Requires: libsox-fmt-gsm = %EVR
+Requires: libsox-fmt-lpc10 = %EVR
+Requires: libsox-fmt-mp3 = %EVR
+Requires: libsox-fmt-oss = %EVR
+Requires: libsox-fmt-opus = %EVR
 %if_with pulse
-Requires: libsox-fmt-pulseaudio = %version-%release
+Requires: libsox-fmt-pulseaudio = %EVR
 %endif
-Requires: libsox-fmt-pvf = %version-%release
-Requires: libsox-fmt-sd2 = %version-%release
-Requires: libsox-fmt-sndfile = %version-%release
-Requires: libsox-fmt-vorbis = %version-%release
-Requires: libsox-fmt-w64 = %version-%release
-Requires: libsox-fmt-wavpack = %version-%release
-Requires: libsox-fmt-xi = %version-%release
-Requires: libsox-fmt-caf = %version-%release
-Requires: libsox-fmt-fap = %version-%release
+Requires: libsox-fmt-sndfile = %EVR
+Requires: libsox-fmt-vorbis = %EVR
+Requires: libsox-fmt-wavpack = %EVR
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
 
 %package -n libsox-devel
-Summary: The SoX sound file format converter headers files and libraries
-Group: Sound
-Requires: %name = %version-%release
-Obsoletes: sox-devel < %version-%release
-Provides: sox-devel = %version-%release
+Summary: Development files for the SoX audio processing library
+Group: Development/C
+Requires: libsox_ng%soname = %EVR
 
 %description -n libsox-devel
-This package contains the headers and library needed for compiling
-applications which will use the SoX sound file format converter.
+This package contains the headers, linker symlinks, pkg-config metadata
+and API documentation for the SoX library. These files are needed to build
+applications that use the SoX API.
 
 %package -n libsox-fmt-alsa
-Summary: %summary
+Summary: ALSA audio device support for SoX
 Group: Sound
 
 %description -n libsox-fmt-alsa
-%summary
+This package contains the SoX plugin for ALSA audio devices.
+It supports audio playback and recording through ALSA.
 
 %package -n libsox-fmt-ao
-Summary: %summary
+Summary: Audio output through libao for SoX
 Group: Sound
 
 %description -n libsox-fmt-ao
-%summary
-
-%package -n libsox-fmt-caf
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-caf
-%summary
-
-%package -n libsox-fmt-fap
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-fap
-%summary
+This package contains the SoX plugin for audio playback through libao.
+It provides access to the output drivers supported by libao.
 
 %package -n libsox-fmt-flac
-Summary: %summary
+Summary: FLAC format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-flac
-%summary
+This package contains the SoX plugin for the FLAC audio format.
+It supports reading and writing losslessly compressed FLAC files.
 
 %package -n libsox-fmt-gsm
-Summary: %summary
+Summary: GSM format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-gsm
-%summary
+This package contains the SoX plugin for GSM speech audio.
+It supports reading and writing files with GSM 06.10 encoding.
 
 %package -n libsox-fmt-lpc10
-Summary: %summary
+Summary: LPC-10 format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-lpc10
-%summary
-
-%package -n libsox-fmt-mat4
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-mat4
-%summary
-
-%package -n libsox-fmt-mat5
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-mat5
-%summary
+This package contains the SoX plugin for the LPC-10 speech format.
+It supports reading and writing LPC-10 audio files.
 
 %package -n libsox-fmt-mp3
-Summary: %summary
+Summary: MPEG audio format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-mp3
-%summary
+This package contains the SoX plugin for MPEG audio files.
+It supports decoding MPEG audio and encoding MP3 audio.
 
 %package -n libsox-fmt-opus
-Summary: %summary
+Summary: Opus format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-opus
-%summary
+This package contains the SoX plugin for the Opus audio format.
+It supports reading Ogg Opus files through libopusfile.
 
 %package -n libsox-fmt-oss
-Summary: %summary
+Summary: OSS audio device support for SoX
 Group: Sound
 
 %description -n libsox-fmt-oss
-%summary
-
-%package -n libsox-fmt-paf
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-paf
-%summary
+This package contains the SoX plugin for Open Sound System (OSS) devices.
+It supports audio playback and recording through OSS.
 
 %package -n libsox-fmt-pulseaudio
-Summary: %summary
+Summary: PulseAudio support for SoX
 Group: Sound
 
 %description -n libsox-fmt-pulseaudio
-%summary
-
-%package -n libsox-fmt-pvf
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-pvf
-%summary
-
-%package -n libsox-fmt-sd2
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-sd2
-%summary
+This package contains the SoX plugin for the PulseAudio sound server.
+It supports audio playback and recording through PulseAudio.
 
 %package -n libsox-fmt-sndfile
-Summary: %summary
+Summary: Audio format support through libsndfile for SoX
 Group: Sound
+# Required by festival-freebsoft-utils; these formats are now handled by sndfile.
+Provides: libsox-fmt-caf = %EVR
+Provides: libsox-fmt-fap = %EVR
+Provides: libsox-fmt-mat4 = %EVR
+Provides: libsox-fmt-mat5 = %EVR
+Provides: libsox-fmt-paf = %EVR
+Provides: libsox-fmt-pvf = %EVR
+Provides: libsox-fmt-sd2 = %EVR
+Provides: libsox-fmt-w64 = %EVR
+Provides: libsox-fmt-xi = %EVR
 
 %description -n libsox-fmt-sndfile
-%summary
+This package contains the SoX plugin for audio formats supported by
+libsndfile, including CAF, FAP, MAT4, MAT5, PAF, PVF, SD2, W64 and XI.
 
 %package -n libsox-fmt-vorbis
-Summary: %summary
+Summary: Ogg Vorbis format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-vorbis
-%summary
-
-%package -n libsox-fmt-w64
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-w64
-%summary
+This package contains the SoX plugin for the Ogg Vorbis audio format.
+It supports reading and writing Ogg Vorbis files.
 
 %package -n libsox-fmt-wavpack
-Summary: %summary
+Summary: WavPack format support for SoX
 Group: Sound
 
 %description -n libsox-fmt-wavpack
-%summary
+This package contains the SoX plugin for the WavPack audio format.
+It supports reading and writing WavPack files.
 
-%package -n libsox-fmt-xi
-Summary: %summary
-Group: Sound
-
-%description -n libsox-fmt-xi
-%summary
-
-%package -n libsox3
+%package -n libsox_ng%soname
 Summary: The SoX sound file format converter libraries
-Group: Development/C
+Group: System/Libraries
 
-%description -n libsox3
-This package contains libraries for SoX
+%description -n libsox_ng%soname
+This package contains the shared SoX library for audio conversion and
+processing. It provides the runtime functions used by SoX and applications
+that use the SoX API.
 
 %package base
 Summary: A general purpose sound file conversion tool
 Group: Sound
-Conflicts: sox < %version-%release
+Conflicts: sox < %EVR
 
 %description base
 SoX (Sound eXchange) is a sound file format converter for Linux,
@@ -248,10 +174,10 @@ or manipulate some sounds.
 Summary: A general purpose sound file conversion tool
 Group: Sound
 BuildArch: noarch
-Requires: sox-base = %version-%release
-Requires: libsox-fmt-oss = %version-%release
-Requires: libsox-fmt-alsa = %version-%release
-Requires: libsox-fmt-vorbis = %version-%release
+Requires: sox-base = %EVR
+Requires: libsox-fmt-oss = %EVR
+Requires: libsox-fmt-alsa = %EVR
+Requires: libsox-fmt-vorbis = %EVR
 
 %description play
 SoX (Sound eXchange) is a sound file format converter for Linux,
@@ -287,14 +213,22 @@ s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" src/effects.c
 %build
 %autoreconf
 %configure \
+           --enable-replace \
            --with-dyn-default \
            --enable-dl-amrnb \
            --enable-dl-amrwb \
            --enable-dl-sndfile
 %make_build
 
+%check
+%make_build -C src sox_sample_test
+./src/sox_sample_test
+
 %install
 %makeinstall install
+# Avoid chains of man-page symlinks during RPM compression.
+ln -sf sox_ng.1 %buildroot%_man1dir/play.1
+ln -sf sox_ng.1 %buildroot%_man1dir/rec.1
 install %SOURCE1 %buildroot%_bindir/soxeffect
 sed -i 's,\(/usr/\)local/,\1,' %buildroot%_bindir/soxeffect
 rm -f %buildroot%_bindir/rec
@@ -305,96 +239,77 @@ cat << EOF >%buildroot%_bindir/%{name}play
 EOF
 chmod 755 %buildroot%_bindir/%{name}play
 
-rm -rf %buildroot%_libdir/*.a
-rm -rf %buildroot%_libdir/sox/*.a
+rm -f %buildroot%_libdir/*.a %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/sox_ng/*.a %buildroot%_libdir/sox_ng/*.la
 
 %files
-%doc ChangeLog README
+%doc ChangeLog
 
 %files -n libsox-devel
 %_includedir/*
 %_libdir/libsox.so
+%_libdir/libsox_ng.so
 %_pkgconfigdir/*.pc
 %_man3dir/*
 
 %files -n libsox-fmt-alsa
-%_libdir/sox/libsox_fmt_alsa.so
+%_libdir/sox_ng/libsox_ng_fmt_alsa.so
 
 %files -n libsox-fmt-ao
-%_libdir/sox/libsox_fmt_ao.so
-
-%files -n libsox-fmt-caf
-%_libdir/sox/libsox_fmt_caf.so
-
-%files -n libsox-fmt-fap
-%_libdir/sox/libsox_fmt_fap.so
+%_libdir/sox_ng/libsox_ng_fmt_ao.so
 
 %files -n libsox-fmt-flac
-%_libdir/sox/libsox_fmt_flac.so
+%_libdir/sox_ng/libsox_ng_fmt_flac.so
 
 %files -n libsox-fmt-gsm
-%_libdir/sox/libsox_fmt_gsm.so
+%_libdir/sox_ng/libsox_ng_fmt_gsm.so
 
 %files -n libsox-fmt-lpc10
-%_libdir/sox/libsox_fmt_lpc10.so
-
-%files -n libsox-fmt-mat4
-%_libdir/sox/libsox_fmt_mat4.so
-
-%files -n libsox-fmt-mat5
-%_libdir/sox/libsox_fmt_mat5.so
+%_libdir/sox_ng/libsox_ng_fmt_lpc10.so
 
 %files -n libsox-fmt-mp3
-%_libdir/sox/libsox_fmt_mp3.so
+%_libdir/sox_ng/libsox_ng_fmt_mp3.so
 
 %files -n libsox-fmt-opus
-%_libdir/sox/libsox_fmt_opus.so
+%_libdir/sox_ng/libsox_ng_fmt_opus.so
 
 %files -n libsox-fmt-oss
-%_libdir/sox/libsox_fmt_oss.so
-
-%files -n libsox-fmt-paf
-%_libdir/sox/libsox_fmt_paf.so
+%_libdir/sox_ng/libsox_ng_fmt_oss.so
 
 %files -n libsox-fmt-pulseaudio
-%{?_with_pulse:%_libdir/sox/libsox_fmt_pulseaudio.so}
-
-%files -n libsox-fmt-pvf
-%_libdir/sox/libsox_fmt_pvf.so
-
-%files -n libsox-fmt-sd2
-%_libdir/sox/libsox_fmt_sd2.so
+%{?_with_pulse:%_libdir/sox_ng/libsox_ng_fmt_pulseaudio.so}
 
 %files -n libsox-fmt-sndfile
-%_libdir/sox/libsox_fmt_sndfile.so
+%_libdir/sox_ng/libsox_ng_fmt_sndfile.so
 
 %files -n libsox-fmt-vorbis
-%_libdir/sox/libsox_fmt_vorbis.so
-
-%files -n libsox-fmt-w64
-%_libdir/sox/libsox_fmt_w64.so
+%_libdir/sox_ng/libsox_ng_fmt_vorbis.so
 
 %files -n libsox-fmt-wavpack
-%_libdir/sox/libsox_fmt_wavpack.so
+%_libdir/sox_ng/libsox_ng_fmt_wavpack.so
 
-%files -n libsox-fmt-xi
-%_libdir/sox/libsox_fmt_xi.so
-
-%files -n libsox3
-%_libdir/libsox.so.3*
-%_libdir/libsox.so.3.*
-%dir %_libdir/sox
+%files -n libsox_ng%soname
+%_libdir/libsox_ng.so.%{soname}*
+%dir %_libdir/sox_ng
 
 %files base
+%_libdir/sox_ng/libsox_ng_fmt_amr_*.so
 %_bindir/*
 %_man1dir/sox.*
 %_man1dir/play.*
 %_man1dir/rec.*
 %_man1dir/soxi.*
+%_man1dir/*_ng.*
 %_man7dir/*
 
 %files play
 %changelog
+* Thu Oct 29 2026 Anton Farygin <rider@altlinux.org> 14.8.1-alt1
+- 14.4.2 -> 14.8.1
+- Dropped patches included upstream and refreshed sample test cleanup.
+- Packaged the new library ABI separately as libsox_ng5.
+- Decoupled libsox-devel from the command-line tools.
+
 * Mon Jan 27 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 14.4.2-alt8
 - fixed FTBFS by b/porting upstream changes
 

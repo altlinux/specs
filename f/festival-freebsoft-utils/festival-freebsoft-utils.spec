@@ -8,7 +8,8 @@ Group: Sound
 
 Name:           festival-freebsoft-utils
 Version:        0.10
-Release:        alt3_%autorelease
+Release:        alt4_%autorelease
+
 Summary:        Utilities that enhance Festival with some useful features
 
 BuildArch:      noarch
@@ -25,7 +26,7 @@ Requires:       festival
 # From docs/festival-freebsoft-utils.texi:
 #   Having SoX (@url{http://sox.sourceforge.net}) installed is strongly
 #   recommended, many festival-freebsoft-utils functions don't work without it.
-Requires:     libsox-fmt-alsa libsox-fmt-ao libsox-fmt-caf libsox-fmt-fap libsox-fmt-flac libsox-fmt-mat4 libsox-fmt-mat5 libsox-fmt-mp3 libsox-fmt-opus libsox-fmt-oss libsox-fmt-paf libsox-fmt-pulseaudio libsox-fmt-pvf libsox-fmt-sd2 libsox-fmt-sndfile libsox-fmt-vorbis libsox-fmt-w64 libsox-fmt-wavpack libsox-fmt-xi libsox3 sox-base
+Requires:     libsox-fmt-alsa libsox-fmt-ao libsox-fmt-caf libsox-fmt-fap libsox-fmt-flac libsox-fmt-mat4 libsox-fmt-mat5 libsox-fmt-mp3 libsox-fmt-opus libsox-fmt-oss libsox-fmt-paf libsox-fmt-pulseaudio libsox-fmt-pvf libsox-fmt-sd2 libsox-fmt-sndfile libsox-fmt-vorbis libsox-fmt-w64 libsox-fmt-wavpack libsox-fmt-xi libsox_ng5 sox-base
 # From docs/festival-freebsoft-utils.texi:
 #   As Festival does not support UTF-8 encoding, festival-freebsoft-utils uses
 #   the iconv utility for character coding conversions.
@@ -107,6 +108,9 @@ install -t '%{buildroot}/%{_docdir}/%{name}' -D -p -m 0644 \
 
 
 %changelog
+* Thu Oct 29 2026 Anton Farygin <rider@altlinux.org> 0.10-alt4_25
+- fixed build with libsox_ng5
+
 * Fri Oct 15 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt3_25
 - update to new release by fcimport
 
