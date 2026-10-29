@@ -5,7 +5,7 @@
 %def_with check
 
 Name: rpm-build-pyproject
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 Summary: Extra RPM macros for packaging Python projects
 License: GPL-2.0-or-later
@@ -67,6 +67,9 @@ PYPROJECT_USE_SYSTEM_DEPS=1 tools/run_tests.sh
 %_rpmlibdir/pyproject.req.files
 
 %changelog
+* Thu Oct 29 2026 Stanislav Levin <slev@altlinux.org> 0.3.1-alt1
+- 0.3.0 -> 0.3.1
+
 * Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - 0.2.3 -> 0.3.0
 
