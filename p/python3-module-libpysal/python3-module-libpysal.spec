@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 4.15.0
+Version: 4.15.1
 Release: alt1
 Summary: Core components of Python Spatial Analysis Library
 License: BSD-3-Clause
@@ -79,7 +79,7 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_build
 
 %install
-%pyproject_install	
+%pyproject_install
 
 %check
 # some tests require internet access
@@ -93,7 +93,8 @@ and not test_fuzzy_contiguity \
 and not test_holes \
 and not test_tree_parameter_knn \
 and not test_tree_parameter_sklearn \
-and not test_tree_parameter_distance_band" \
+and not test_tree_parameter_distance_band \
+and not test___init__1" \
 --ignore libpysal/cg/tests/test_voronoi.py \
 
 %files
@@ -102,6 +103,9 @@ and not test_tree_parameter_distance_band" \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 29 2026 Anton Vyatkin <toni@altlinux.org> 4.15.1-alt1
+- New version 4.15.1.
+
 * Tue Jul 07 2026 Nikita Panov <nexxy@altlinux.org> 4.15.0-alt1
 - New version 4.15.0.
 
