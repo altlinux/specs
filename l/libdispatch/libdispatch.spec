@@ -1,7 +1,7 @@
 %def_without check
 
 Name: libdispatch
-Version: 6.4.0
+Version: 6.4.1
 Release: alt1
 
 Summary: Apple's Grand Central Dispatch library
@@ -24,7 +24,7 @@ BuildRequires: llvm
 BuildRequires: clang libstdc++-devel
 BuildRequires: libbsd-devel
 BuildRequires: ninja-build
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: chrpath
 
 %if_with check
@@ -102,6 +102,10 @@ chrpath --delete %buildroot%_libdir/libdispatch.so
 %_includedir/os/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4.1-alt1
+- new version 6.4.1
+- use rpm-build-cmake macros for cmake setup
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4.0-alt1
 - new version 6.4.0
 
