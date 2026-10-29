@@ -6,21 +6,21 @@
 
 Name: yq-go
 Version: 4.54.1
-Release: alt1
+Release: alt2
 
 Summary: A portable command-line YAML, JSON, XML, CSV, TOML and properties processor
 License: MIT
 Group: Development/Tools
-Url: https://mikefarah.gitbook.io/yq
+URL: https://mikefarah.gitbook.io/yq
 VCS: https://github.com/mikefarah/yq
 
 Source: %name-%version.tar
 Source1: vendor.tar
 
-Provides: yq = %EVR
-Conflicts: yq < %EVR
+Conflicts: yq
 
 ExclusiveArch: %go_arches
+
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 
@@ -63,6 +63,10 @@ install -Dpm644 yq.zsh  -T %buildroot%_datadir/zsh/site-functions/_yq
 %_datadir/zsh/site-functions/_yq
 
 %changelog
+* Tue Oct 27 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.54.1-alt2
+- Removed the yq virtual provide and declare conflict.
+- Cleaned up the spec file.
+
 * Wed Sep 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.54.1-alt1
 - Updated to version 4.54.1.
 
