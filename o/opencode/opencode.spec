@@ -29,7 +29,7 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 2.2.0
+Version: 2.2.1
 Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
@@ -97,7 +97,15 @@ BuildRequires: /proc
 BuildRequires: git-core
 # Upstream supports x86_64 and aarch64 only.
 ExclusiveArch: x86_64 aarch64
-Requires: %name-common = %EVR
+# The tree-sitter grammars (Patch3) are read by the TUI of this very binary,
+# and the server shells out to these tools.
+Requires: ripgrep
+Requires: git-core
+# Former noarch data subpackage: the grammars serve the terminal client
+# alone, and the desktop client requires this package anyway, so the split
+# had no second consumer. Take over the installed instances on upgrade.
+Provides: %name-common = %EVR
+Obsoletes: %name-common < %EVR
 
 %description
 %name is an AI coding agent that runs in the terminal. It works with a
@@ -108,18 +116,6 @@ This package is the command line client; the desktop client is packaged
 separately as %name-desktop. It does not update itself, install npm packages
 into your home directory, or download syntax highlighting grammars from
 GitHub.
-
-%package common
-Summary: Shared data for the %name CLI and desktop client
-Group: Development/Other
-BuildArch: noarch
-Requires: ripgrep
-Requires: git-core
-
-%description common
-The tree-sitter grammars used for syntax highlighting, shared by the %name
-terminal client and by %name-desktop, which embeds the same server code, plus
-the command line tools both shell out to.
 
 %package desktop
 Summary: Desktop client for %name, the AI coding agent
@@ -137,8 +133,8 @@ Requires: electron >= 42
 %description desktop
 %name-desktop is the Electron desktop client of %name. The opencode server
 is the packaged %name binary, which the client resolves and stages on first
-run; %name-common supplies the syntax highlighting grammars and the command
-line tools the server shells out to.
+run; it ships the syntax highlighting grammars and shells out to ripgrep
+and git itself.
 
 The client does not update itself: updates arrive with the package.
 
@@ -245,9 +241,16 @@ EOF
 # Launcher. ELECTRON_FORCE_IS_PACKAGED: a system electron started with an app
 # directory argument treats it as an unpackaged "default app", and the app
 # would then pick its dev appId and user-data paths.
+#
+# --ozone-platform-hint=auto: this electron build ignores the
+# ELECTRON_OZONE_PLATFORM_HINT environment variable and always initializes
+# X11, which on a Wayland session without a reachable X server means the app
+# exits before creating a window. The hint selects the platform from the
+# session type instead - native Wayland under Wayland, X11 under X11 - and
+# an explicit --ozone-platform on the command line still wins over it.
 %__install -Dpm 0755 /dev/stdin %buildroot%_bindir/%name-desktop <<EOF
 #!/bin/sh
-ELECTRON_FORCE_IS_PACKAGED=1 exec %_bindir/electron %_libexecdir/%name-desktop "\$@"
+ELECTRON_FORCE_IS_PACKAGED=1 exec %_bindir/electron --ozone-platform-hint=auto %_libexecdir/%name-desktop "\$@"
 EOF
 
 # Desktop entry. StartupWMClass=OpenCode matches the X11 WM_CLASS that
@@ -313,8 +316,6 @@ fi
 %files
 %doc LICENSE README*.md CONTRIBUTING.md SECURITY.md
 %_bindir/%name
-
-%files common
 %dir %_datadir/%name
 %_datadir/%name/tree-sitter
 
@@ -326,6 +327,15 @@ fi
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Thu Oct 29 2026 Nazarov Denis <nenderus@altlinux.org> 2.2.1-alt1
+- Update to 2.2.1
+- Fold opencode-common into the main package: the tree-sitter grammars are
+  read only by the terminal client, and the desktop client depends on the
+  CLI binary anyway
+- Launch the desktop client with --ozone-platform-hint=auto: this electron
+  ignores ELECTRON_OZONE_PLATFORM_HINT and otherwise exits on a Wayland
+  session where no X server is reachable
+
 * Tue Oct 27 2026 Nazarov Denis <nenderus@altlinux.org> 2.2.0-alt1
 - Update to 2.2.0
 
