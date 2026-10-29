@@ -5,8 +5,10 @@
 %define fish_completionsdir %_datadir/fish/vendor_completions.d
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
+%def_with check
+
 Name: git-sprig
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Materialize git submodules as plain files, recursively, without their history
@@ -21,6 +23,9 @@ Source2: cargo-config.toml
 Patch0: %name-%version-alt.patch
 
 BuildRequires: rust-cargo
+%if_with check
+BuildRequires: git-core
+%endif
 
 %description
 git-sprig fills in a project's git submodules with plain files. Its git-sprig
@@ -67,6 +72,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %buildroot%_bindir/git-sprig --generate-completions zsh \
     > %buildroot%zsh_completionsdir/_git-sprig
 
+%check
+cargo test --locked --bins --test e2e
+
 %files
 %_bindir/git-sprig
 %_man1dir/git-sprig.1*
@@ -75,6 +83,9 @@ mkdir -p %buildroot%zsh_completionsdir
 %zsh_completionsdir/_git-sprig
 
 %changelog
+* Thu Oct 29 2026 Anton Zhukharev <ancieg@altlinux.org> 0.3.0-alt1
+- Updated to 0.3.0.
+
 * Wed Oct 28 2026 Anton Zhukharev <ancieg@altlinux.org> 0.2.1-alt1
 - Updated to 0.2.1.
 
