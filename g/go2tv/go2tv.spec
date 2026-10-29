@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define import_path github.com/alexballas/go2tv
+%define import_path go2tv.app/go2tv/v2
 
 Name: go2tv
-Version: 2.3.0
+Version: 2.8.0
 Release: alt1
 
 Summary: Cast media files to UPnP/DLNA Media Renderers and Smart TVs
@@ -18,6 +18,7 @@ Source1: %name-%version-vendor.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-golang
+BuildRequires: gcc-c++
 BuildRequires: asciidoctor
 BuildRequires: libX11-devel
 BuildRequires: libXcursor-devel
@@ -26,15 +27,22 @@ BuildRequires: libXi-devel
 BuildRequires: libXinerama-devel
 BuildRequires: libglvnd-devel
 BuildRequires: libXxf86vm-devel
-BuildRequires: ffmpeg
 BuildRequires: pipewire-libs-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libwayland-client-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: libwayland-cursor-devel
+
+Requires: ffmpeg
 
 %description
 Cast media files to UPnP/DLNA Media Renderers and Smart TVs
 
 %package -n %name-lite
-Summary: Networking/File transfer
-Group: Video
+Summary: Lite (CLI-only) version of go2tv
+Group: Networking/File transfer
+
+Requires: ffmpeg
 
 %description -n %name-lite
 Lite version go2tv
@@ -51,7 +59,8 @@ export GOPATH="$BUILDDIR:%go_path"
 
 pushd $BUILDDIR/src/$IMPORT_PATH
 export CGO_CFLAGS_ALLOW='-fno-strict-overflow'
-%golang_build cmd/go2tv cmd/go2tv-lite
+TAGS=migrated_fynedo %golang_build cmd/go2tv
+%golang_build cmd/go2tv-lite
 popd
 
 %install
@@ -67,6 +76,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name-lite
 
 %changelog
+* Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 2.8.0-alt1
+- Updated to 2.8.0.
+
 * Tue Jun 23 2026 Artem Krasovskiy <aibure@altlinux.org> 2.3.0-alt1
 - Updated to 2.3.0.
 
