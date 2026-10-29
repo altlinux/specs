@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2.5
+Version: 7.2.6
 Release: alt1
 Summary: Extensible memoizing collections and decorators
 License: MIT
@@ -14,16 +14,8 @@ Url: https://pypi.org/project/cachetools
 VCS: https://github.com/tkem/cachetools
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 This module provides various memoizing collections and decorators,
@@ -32,11 +24,7 @@ decorator.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -52,6 +40,9 @@ decorator.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 28 2026 Stanislav Levin <slev@altlinux.org> 7.2.6-alt1
+- 7.2.5 -> 7.2.6
+
 * Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 7.2.5-alt1
 - 7.2.4 -> 7.2.5
 
