@@ -3,7 +3,7 @@
 %def_enable clang
 
 Name: dtkdeclarative
-Version: 6.7.51
+Version: 6.7.52
 Release: alt1
 
 Summary: Widget development toolkit for Deepin
@@ -166,6 +166,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_datadir/qtcreator/templates/wizards/projects/qml5-app-template/
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.52-alt1
+- New version 6.7.52.
+
 * Thu Oct 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.51-alt1
 - New version 6.7.51.
 

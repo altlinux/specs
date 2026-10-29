@@ -4,7 +4,7 @@
 %def_without docs
 
 Name: dtkcore
-Version: 6.7.51
+Version: 6.7.52
 Release: alt1
 
 Summary: Deepin tool kit core modules
@@ -17,7 +17,6 @@ VCS: https://github.com/linuxdeepin/dtkcore
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: dtk6core-6.0.9-alt-uos-version.patch
 
 Provides: libdtk5-core = %EVR
 Obsoletes: libdtk5-core < %EVR
@@ -123,7 +122,12 @@ This package provides  dtk6coredocumantation.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
+
+sed \
+  -e 's|/etc/os-version|/etc/uos-version|g' \
+  -i src/dsysinfo.cpp \
+  -i tests/dsysinfo_stub.cpp \
+  -i tests/ut_dsysinfo.cpp
 
 %build
 %if_enabled clang
@@ -227,6 +231,9 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %endif
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.52-alt1
+- New version 6.7.52.
+
 * Thu Oct 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.51-alt1
 - New version 6.7.51.
 
