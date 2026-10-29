@@ -24,7 +24,7 @@
 %endif
 
 Name: zed
-Version: 1.25.2
+Version: 1.26.2
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor from the creators of Atom and Tree-sitter
@@ -88,12 +88,6 @@ install -vpD %SOURCE2 .cargo/config.toml
 install -vp  %SOURCE3 ./update-metadata-releases.py
 
 unzip -oq %webrtc_source -d %webrtc_basedir
-
-# Cargo metadata may reject vendored packages with a feature-gated
-# `default-run` target. `default-run` is irrelevant for license generation.
-find vendor -mindepth 2 -maxdepth 2 -name Cargo.toml \
-    -exec grep -l '^[[:space:]]*default-run[[:space:]]*=' {} + |
-    xargs -r sed -i '/^[[:space:]]*default-run[[:space:]]*=/d'
 
 %build
 export RELEASE_VERSION="%version"
@@ -167,6 +161,9 @@ envsubst < crates/zed/resources/flatpak/zed.metainfo.xml.in > %buildroot%_datadi
 %_iconsdir/hicolor/*/apps/%app_id.png
 
 %changelog
+* Thu Oct 29 2026 Anton Zhukharev <ancieg@altlinux.org> 1.26.2-alt1
+- Updated to 1.26.2.
+
 * Thu Oct 22 2026 Anton Zhukharev <ancieg@altlinux.org> 1.25.2-alt1
 - Updated to 1.25.2.
 
