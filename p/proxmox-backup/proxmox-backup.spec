@@ -12,8 +12,8 @@
 %endif
 
 Name: proxmox-backup
-Version: 4.2.0.1
-Release: alt2
+Version: 4.2.8.1
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -49,7 +49,7 @@ Group: Archiving/Backup
 Requires(pre): shadow-utils
 Requires: %name-client = %EVR pve-xtermjs >= 4.12.0  pbs-i18n %name-docs
 Requires: javascript-common javascript-extjs javascript-qrcodejs
-Requires: proxmox-widget-toolkit >= 5.1.1 proxmox-mini-journalreader proxmox-termproxy >= 2.0.3
+Requires: proxmox-widget-toolkit >= 5.2.1 proxmox-mini-journalreader >= 1.7 proxmox-termproxy >= 2.0.3
 Requires: lvm2 zfs-utils sg3_utils smartmontools gdisk
 Requires: openssh-server
 Requires: update-kernel
@@ -246,6 +246,12 @@ fi
 %_datadir/doc/%name
 
 %changelog
+* Thu Oct 29 2026 Sergey Konev <darisishe@altlinux.org> 1:4.2.8.1-alt1
+- 4.2.8-1
+- Re-vendor with newer 'proxmox-apt' (Closes: 60223)
+- Fix PBS single-file restore on aarch64 (native QEMU, PCI slots, memory hotplug)
+- Fix build in a clean chroot by skipping backup user lookup during CLI documentation generation
+
 * Thu May 21 2026 Ivan A. Melnikov <iv@altlinux.org> 1:4.2.0.1-alt2
 - Fix FTBFS on loongarch64
 

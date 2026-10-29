@@ -12,17 +12,17 @@
 %endif
 
 %define flavour 6.18
-# select kernel flavour based on branch
+# Select the kernel flavour available with a matching ZFS module in each branch.
 %if "%altbranch" == "p10"
-# Force un-def kernel flavour
 %define flavour un-def
-%else if "%altbranch" == "p11" || "%altbranch" == "c10f2"
+%endif
+%if "%altbranch" == "c10f2"
 %define flavour 6.12
 %endif
 
 Name: kernel-build-proxmox-backup-restore-image
-Version: 4.2.0.1
-Release: alt2
+Version: 4.2.8.1
+Release: alt1
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
 License: GPL-2.0-or-later
@@ -56,6 +56,9 @@ install -p -D -m 0644 %imagedir/initramfs.img %buildroot%cachedir/file-restore-i
 %cachedir/file-restore-initramfs.img
 
 %changelog
+* Thu Oct 29 2026 Sergey Konev <darisishe@altlinux.org> 4.2.8.1-alt1
+- Rebuild restore image for proxmox-backup 4.2.8.1.
+
 * Tue Jun 23 2026 Anton Farygin <rider@altlinux.org> 4.2.0.1-alt2
 - Renamed source package to kernel-build-proxmox-backup-restore-image;
   binary package proxmox-backup-restore-image is now a subpackage.

@@ -2,8 +2,8 @@
 
 Name: proxmox-backup-qemu
 Summary: Proxmox Backup Server client library for QEMU
-Version: 2.0.2
-Release: alt2
+Version: 2.0.3
+Release: alt1
 License: AGPL-3.0+
 Group: Archiving/Backup
 Url: https://git.proxmox.com/?p=proxmox-backup-qemu.git
@@ -85,6 +85,9 @@ ln -s libproxmox_backup_qemu.so.0 %buildroot%_libdir/libproxmox_backup_qemu.so
 %_libdir/*.so
 
 %changelog
+* Thu Oct 29 2026 Sergey Konev <darisishe@altlinux.org> 2.0.3-alt1
+- 2.0.3
+
 * Fri May 22 2026 Ivan A. Melnikov <iv@altlinux.org> 2.0.2-alt2
 - NMU: fix FTBFS on loongarch64
 
