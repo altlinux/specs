@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.11
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2377,6 +2377,17 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Thu Oct 29 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt4
+- Backport fixes from upstream (Samba#16240, Samba#16225, Samba#15988,
+                                Samba#16223, Samba#16194, Samba#16144):
+  + Fix smbd mkdir temporary directory name length exceeding NAME_MAX limit.
+  + Address DNS client issues related to EDNS mechanisms and buffer processing.
+  + Ensure internal DNS server correctly handles UDP to TCP fallback for packets > 4KB.
+  + Fix DNS scavenging triggering inappropriately when fAging is set to FALSE.
+  + Resolve memory leaks and crash conditions in winbindd_child_msg_filter when
+    winbind max domain connections > 1.
+  + Fix incorrect stream creation handling when the previous stream handle is closed.
+
 * Sat Aug 29 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt3
 - Fix resolve srv records as in windows option default value.
 - Backport fixes from upstream (Samba#14638, Samba#15973, Samba#16067,
