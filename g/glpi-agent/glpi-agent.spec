@@ -1,6 +1,6 @@
 Name:    glpi-agent
 Version: 1.21
-Release: alt1
+Release: alt2
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -115,6 +115,7 @@ install -Dm0755 contrib/unix/glpi-agent.cron %buildroot%_sysconfdir/cron.hourly/
 install -Dm0644 contrib/unix/glpi-agent.service %buildroot%_unitdir/%name.service
 mkdir -p %buildroot%_localstatedir/%name
 mkdir -p %buildroot%_sysconfdir/%name/conf.d
+mkdir -p %buildroot%_logdir/glpi-agent
 find %buildroot -name .packlist -delete
 
 %preun
@@ -142,8 +143,12 @@ find %buildroot -name .packlist -delete
 %_unitdir/%name.service
 %_man1dir/*.1*
 %dir %_localstatedir/%name
+%dir %_logdir/glpi-agent
 
 %changelog
+* Thu Oct 29 2026 Andrey Cherepanov <cas@altlinux.org> 1.21-alt2
+- Create directory for logs (ALT #61255).
+
 * Fri Oct 09 2026 Andrey Cherepanov <cas@altlinux.org> 1.21-alt1
 - New version.
 
