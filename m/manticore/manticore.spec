@@ -4,7 +4,7 @@
 
 Name: manticore
 Version: 29.9.0
-Release: alt1
+Release: alt2
 
 Summary: Manticore full-text search server
 
@@ -24,6 +24,7 @@ Patch2: manticore-uni-algo-no-freebsd-ifdef.patch
 Patch3: manticore-system-columnar.patch
 Patch4: manticore-gcc15-sortergroup-access.patch
 Patch5: manticore-boost191-process-environment.patch
+Patch6: manticore-openssl-library-selection.patch
 
 Conflicts: mnogosearch
 Conflicts: sphinx
@@ -88,6 +89,7 @@ Manticore Search 3.x format.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 subst 's|#define VERNUMBERS "0.0.0"|#define VERNUMBERS "%version"|' src/sphinxversion.h.in
 subst "s|.*Boost_USE_STATIC_LIBS ON.*||" src/CMakeLists.txt
 subst "s|.*Boost_USE_STATIC_RUNTIME ON.*||" src/CMakeLists.txt
@@ -103,6 +105,8 @@ cp -r googletest ../cache/googletest-src
     -DWITH_GALERA=OFF \
     -DWITH_MYSQL=ON \
     -DWITH_EXPAT=ON \
+    -DWITH_SSL=ON \
+    -DOPENSSL_USE_STATIC_LIBS=OFF \
     -DWITH_POSTGRESQL=ON \
     -DWITH_ICU=ON \
     -DWITH_ICU_FORCE_STATIC=OFF \
@@ -177,6 +181,11 @@ done
 %_bindir/index_converter
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt2
+- respect shared OpenSSL selection in CMake.
+- enable OpenSSL support in searchd.
+- use rpm-build-cmake and rpm-macros-cmake.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt1
 - new version 29.9.0
 - use rpm-build-cmake
