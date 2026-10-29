@@ -6,7 +6,7 @@
 
 Name: kf6-%rname
 Version: 6.31.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -23,6 +23,9 @@ Patch2: alt-kio-help-fallback.patch
 Patch3: alt-copy-first.patch
 Patch4: alt-soname.patch
 Patch5: alt-crash.patch
+Patch6: kdebug-492660.patch
+Patch7: alt-ftp-list-fallback.patch
+#
 Patch10: alt-streebog-support.patch
 
 BuildRequires(pre): rpm-build-kf6
@@ -114,6 +117,9 @@ KF6 library
 %patch3 -p1
 %patch4 -p1
 #%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+#
 %if_enabled streebog
 %patch10 -p2 -b .streebog
 %endif
@@ -175,6 +181,10 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Thu Oct 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt2
+- add fix against KDE BUG #492660 (closes: 61243)
+- fix ftp listing (closes: 61241)
+
 * Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt1
 - new version
 
