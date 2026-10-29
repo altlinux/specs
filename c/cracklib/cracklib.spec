@@ -5,13 +5,15 @@
 %def_enable check
 
 Name: cracklib
-Version: 2.10.3
+Version: 2.10.4
 Release: alt1
 
 Summary: A password-checking library.
 License: LGPL-2.1-or-later
 Group: System/Libraries
-Url: https://github.com/%name/%name
+Url: https://github.com/cracklib/cracklib
+
+Vcs: https://github.com/cracklib/cracklib.git
 
 Source: https://github.com/%name/%name/releases/download/v%version/%name-%version.tar.xz
 
@@ -186,6 +188,9 @@ _EOF_
 
 
 %changelog
+* Thu Oct 29 2026 Yuri N. Sedunov <aris@altlinux.org> 2.10.4-alt1
+- 2.10.4
+
 * Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 2.10.3-alt1
 - 2.10.3
 

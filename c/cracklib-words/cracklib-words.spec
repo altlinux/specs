@@ -1,14 +1,16 @@
 %define _name cracklib
 
 Name: %_name-words
-Version: 2.10.3
+Version: 2.10.4
 Release: alt1
 Epoch: 1
 
 Summary: Well-known words for cracklib
 License: Freely distributable
 Group: System/Libraries
-Url: https://github.com/%_name/%_name
+Url: https://github.com/cracklib/cracklib
+
+Vcs: https://github.com/cracklib/cracklib.git
 
 Source: https://github.com/%_name/%_name/releases/download/v%version/%name-%version.xz
 
@@ -35,6 +37,9 @@ sort | uniq >%buildroot%_datadir/%_name/%name
 %_datadir/%_name/%name
 
 %changelog
+* Thu Oct 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1:2.10.4-alt1
+- 2.10.4
+
 * Tue Dec 24 2024 Yuri N. Sedunov <aris@altlinux.org> 1:2.10.3-alt1
 - 2.10.3
 
