@@ -13,7 +13,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xscreensaver
-Version: 6.16
+Version: 6.17
 Release: alt1
 
 Summary: A screen saver and locker for the X window system
@@ -154,6 +154,7 @@ This package contains OpenGL standalone modules.
 Summary: A screen saver and locker for the X window system - configuration frontend
 Group: Graphical desktop/Other
 Requires: %name = %EVR
+Requires: %name-l10n = %EVR
 Provides: %name-gnome = %EVR
 Provides: screen-saver-frontend
 Obsoletes: %name-gnome
@@ -164,6 +165,15 @@ Highly customizable: allows the use of any program that
 can draw on the root window as a display mode.
 
 This package contains xscreensaver configuration frontend.
+
+%package l10n
+Summary: Localization files for %name
+Group: Graphical desktop/Other
+BuildArch: noarch
+
+%description l10n
+This package contains internationalization (i18n)
+and localization (l10n) files for %name.
 
 %prep
 %setup
@@ -245,7 +255,7 @@ EOF
 cat <<EOF >%buildroot%_rpmlibdir/%name.filetrigger
 #!/bin/sh -e
 
-grep -qs '^%xss_ad_dir/' && update-%name ||:
+grep -qs '^%xss_ad_dir' && update-%name ||:
 EOF
 chmod 755 %buildroot%_rpmlibdir/%name.filetrigger
 
@@ -349,7 +359,7 @@ cat xscreensaver-hacks-gl >>xscreensaver-modules-gl
 
 %_datadir/fonts/xscreensaver/
 
-%files frontend -f %name.lang
+%files frontend
 %_bindir/%name-settings
 %_man1dir/%name-settings.1*
 %_bindir/%name-demo
@@ -385,7 +395,14 @@ cat xscreensaver-hacks-gl >>xscreensaver-modules-gl
 
 %files -n desktop-screensaver-modules-xscreensaver-gl -f xscreensaver-desktop-gl
 
+%files l10n -f %name.lang
+
 %changelog
+* Thu Oct 29 2026 Mikhail Efremov <sem@altlinux.org> 6.17-alt1
+- Updated to 6.17.
+- Moved l10n files to a separate subpackage.
+- Fixed filetrigger regexp.
+
 * Fri Sep 11 2026 Mikhail Efremov <sem@altlinux.org> 6.16-alt1
 - Updated to 6.16.
 
