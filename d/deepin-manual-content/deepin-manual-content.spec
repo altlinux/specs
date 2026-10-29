@@ -1,7 +1,7 @@
 %define repo dde-manual-content
 
 Name: deepin-manual-content
-Version: 3.0.13
+Version: 3.0.15
 Release: alt1
 
 Summary: Additional system assets for deepin-manual
@@ -42,6 +42,9 @@ BuildRequires: cmake gcc-c++
 %_datadir/deepin-manual/manual-assets/system/dde/
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 3.0.15-alt1
+- New version 3.0.15.
+
 * Thu Oct 15 2026 Leontiy Volodin <lvol@altlinux.org> 3.0.13-alt1
 - New version 3.0.13.
 
