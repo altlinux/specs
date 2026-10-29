@@ -8,7 +8,7 @@
 
 Name: xfce4-session
 Version: 4.21.2
-Release: alt1
+Release: alt2
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -229,6 +229,9 @@ sed 's|@LIBDIR@|%_libdir|' <%SOURCE6 > %buildroot%_sysconfdir/xdg/autostart/xfce
 %endif
 
 %changelog
+* Wed Oct 28 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt2
+- startxfce4: Don't try to create directory in /run/user.
+
 * Mon Oct 12 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
 - Don't try to use gdk_wayland_window_get_xdg_toplevel().
 - Added libxfce4session-client subpackages.
