@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 10.0.1
+Version: 10.2.1
 Release: alt1
 
 Summary: AMQP 0.9 client designed for asyncio and humans
@@ -18,25 +18,10 @@ Vcs: https://github.com/mosquito/aio-pika
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%add_pyproject_deps_check_filter autodoc
-%add_pyproject_deps_check_filter collective-checkdocs
-%add_pyproject_deps_check_filter coveralls
-%add_pyproject_deps_check_filter nox
-%add_pyproject_deps_check_filter pytest-rst
-%add_pyproject_deps_check_filter sphinx-autobuild
-%add_pyproject_deps_check_filter sphinxcontrib-googleanalytics
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 A wrapper around aiormq for asyncio and humans.
@@ -54,11 +39,7 @@ Features:
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
 
 # Set version instead of forgetful upstream
 sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
@@ -77,6 +58,9 @@ sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 10.2.1-alt1
+- Updated to 10.2.1.
+
 * Tue Jul 14 2026 Anton Zhukharev <ancieg@altlinux.org> 10.0.1-alt1
 - Updated to 10.0.1.
 

@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 7.0.0
+Version: 7.2.4
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
@@ -18,21 +18,10 @@ Vcs: https://github.com/mosquito/aiormq
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%add_pyproject_deps_check_filter collective-checkdocs
-%add_pyproject_deps_check_filter coveralls
-%add_pyproject_deps_check_filter pytest-rst
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -40,11 +29,10 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
+
+# Set version instead of forgetful upstream
+sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -60,6 +48,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 7.2.4-alt1
+- Updated to 7.2.4.
+
 * Tue Jul 14 2026 Anton Zhukharev <ancieg@altlinux.org> 7.0.0-alt1
 - Updated to 7.0.0.
 
