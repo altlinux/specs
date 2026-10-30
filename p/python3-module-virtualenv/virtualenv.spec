@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 21.14.13
+Version: 21.15.1
 Release: alt1
 Summary: Virtual Python Environment builder
 License: MIT
@@ -15,18 +15,12 @@ Url: https://pypi.org/project/virtualenv/
 VCS: https://github.com/pypa/virtualenv
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # system seed wheels
 Requires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 BuildRequires: python3-module-system-seed-wheels-wheels >= 0.0.2-alt1
 %endif
 
@@ -60,11 +54,7 @@ in newly created environment by invoking /your/dir/bin/python
 # remove all bundled seed wheels
 rm src/%mod_name/seed/wheels/embed/*.whl
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -83,6 +73,9 @@ export PIP_FIND_LINKS=%system_wheels_path
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 21.15.1-alt1
+- 21.14.13 -> 21.15.1
+
 * Fri Oct 23 2026 Stanislav Levin <slev@altlinux.org> 21.14.13-alt1
 - 21.14.12 -> 21.14.13
 
