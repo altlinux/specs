@@ -1,7 +1,7 @@
 %def_with postgresql
 Name: gnunet
 Version: 0.29.0
-Release: alt1
+Release: alt2
 
 Summary: Peer-to-peer framework
 
@@ -13,6 +13,8 @@ Packager: ALT QA Team <qa@packages.altlinux.org>
 Source: http://ftpmirror.gnu.org/gnunet/%name-%version.tar
 
 Source3: gnunetd.sysusers
+
+Patch0: gnunet-61154-aead-size.patch
 
 BuildRequires(pre): rpm-macros-meson
 
@@ -61,6 +63,7 @@ applications which will use %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %meson
@@ -281,6 +284,9 @@ rm -rv %buildroot%_infodir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 0.29.0-alt2
+- fix file download (closes: #61154)
+
 * Sat Oct 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.29.0-alt1
 - new version 0.29.0
 - package gnunet-regex and gnunet-transport binaries
