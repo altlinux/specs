@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    satellite-dish
-Version: 2.1.7
+Version: 2.1.9
 Release: alt1
 
 Summary: Satellite wireless-gamepad server for Dish clients
@@ -79,6 +79,9 @@ fi
 %_modulesloaddir/satellite.conf
 
 %changelog
+* Fri Oct 30 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.9-alt1
+- new version 2.1.9
+
 * Mon Oct 26 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.7-alt1
 - new version 2.1.7
 
