@@ -5,7 +5,7 @@ Summary: geomview -- interactive geometry viewing program
 
 Name: geomview
 Version: 1.9.5
-Release: alt2
+Release: alt2.1
 
 License: LGPLv2+
 Group: Sciences/Mathematics
@@ -16,8 +16,8 @@ Source1: %{name}_16.xpm
 Source2: %{name}_32.xpm
 Source3: %{name}_48.xpm
 #Patch0: http://ftp.debian.org/debian/pool/main/g/geomview/%{name}_%version-8.diff.bz2
-Patch: geomview-1.8.2-rc9-alt-xforms-path.patch
 Patch1: geomview-1.9.4-alt-DSO.patch
+Patch2: geomview-gcc-function-pointer-types.patch
 
 # Automatically added by buildreq on Sun Jan 13 2008 (-bi)
 BuildRequires: flex gcc-c++ imake tcsh xorg-cf-files zlib-devel libXt-devel libXext-devel lesstif-devel
@@ -60,8 +60,10 @@ BuildRequires: texinfo
 %setup -n %name-%version
 #%patch0 -p0
 %patch1 -p2
+%patch2 -p2
 
 %build
+%add_optflags -std=gnu17
 autoreconf -fisv
 CONFFLAGS='--enable-shared' # --disable-static'
 
@@ -150,6 +152,9 @@ EOF
 %exclude %_libdir/lib%name.so
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.5-alt2.1
+- Fix callback types for current GCC.
+
 * Tue Oct 19 2021 Grigory Ustinov <grenka@altlinux.org> 1.9.5-alt2
 - Fixed FTBFS.
 
