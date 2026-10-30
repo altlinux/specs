@@ -14,7 +14,7 @@
 
 # https://dl.winehq.org/wine/source/
 %define basemajor 11.x
-%define major 11.19
+%define major 11.20
 %define rel %nil
 
 # the packages will conflict with that
@@ -944,6 +944,10 @@ tools/winebuild/winebuild --builtin %buildroot%libwinedir/%winepedir/*
 %endif
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.20-alt1
+- new version 11.20
+- fix desktop entry metadata.
+
 * Sun Oct 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1:11.19-alt1
 - new version 11.19
 
