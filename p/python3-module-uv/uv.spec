@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 %define pypi_name uv
 %define mod_name %pypi_name
-%define uv_version 0.13.5
+%define uv_version 0.13.6
 
 %define pypi_name_uv_build uv-build
 %define mod_name_uv_build uv_build
@@ -22,20 +22,14 @@ Url: https://pypi.org/project/uv
 Vcs: https://github.com/astral-sh/uv
 Source: %name-%version.tar
 Source1: vendor_rust.tar
-Source2: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 Patch1: linux-raw-sys-upstream-loongarch64-fiemap.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 Requires: %pypi_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 BuildRequires: /usr/bin/cmake
 BuildRequires: libssl-devel
-%if_with check
-%pyproject_builddeps_metadata
-%endif
 
 %description
 An extremely fast Python package installer and resolver, written in Rust.
@@ -74,8 +68,7 @@ Requires: %pypi_name_uv_build
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
      ./vendor/linux-raw-sys/.cargo-checksum.json
 cat < vendor_cargoconf.toml >> .cargo/config.toml
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 export CARGO_TERM_VERBOSE=true
@@ -145,6 +138,9 @@ popd
 %_bindir/uv-build
 
 %changelog
+* Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 0.13.6-alt1
+- 0.13.5 -> 0.13.6
+
 * Fri Oct 23 2026 Stanislav Levin <slev@altlinux.org> 0.13.5-alt1
 - 0.13.3 -> 0.13.5
 
