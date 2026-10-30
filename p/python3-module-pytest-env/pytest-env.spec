@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.1
+Version: 1.8.3
 Release: alt1
 Summary: py.test plugin that allows you to add environment variables
 License: MIT
@@ -14,17 +14,9 @@ Url: https://pypi.org/project/pytest-env
 Vcs: https://github.com/pytest-dev/pytest-env
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 This is a pytest plugin that enables you to set environment variables in a
@@ -34,11 +26,7 @@ pytest.ini or pyproject.toml file.
 %setup
 %autopatch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -54,6 +42,9 @@ pytest.ini or pyproject.toml file.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1
+- 1.8.1 -> 1.8.3
+
 * Mon Oct 19 2026 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1
 - 1.8.0 -> 1.8.1
 
