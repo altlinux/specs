@@ -1,6 +1,6 @@
 Name: python3-module-gazetteer-matcher
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Intent recognizer for Home Assistant voice commands
 License: Apache-2.0
@@ -50,6 +50,9 @@ the upstream intent schema.
 %python3_sitelibdir/gazetteer_matcher-%version.dist-info
 
 %changelog
+* Fri Oct 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt2
+- fixed tests for home-assistant-intents 2026.10.27 data
+
 * Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.2.0-alt1
 - 1.2.0 released
 
