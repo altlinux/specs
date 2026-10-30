@@ -1,4 +1,4 @@
-%define git_version c92aebb279828e9c3c1f5d24613efca272649e62
+%define git_version 9ec952b9f9668e9fa97e29a4c2b51e951674df2a
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -19,7 +19,7 @@
 %def_without ceph_test_package
 %def_with python3
 %def_with system_boost
-%def_with system_rocksdb
+%def_without system_rocksdb
 %def_without system_fmt
 %def_without mgr_dashboard
 %def_with blustore
@@ -31,6 +31,12 @@
 %endif
 %def_with rbd_rwl_cache
 %def_with rbd_ssd_cache
+# Keep x86_64 separate for future QAT enablement.
+%ifarch x86_64
+%def_without qat
+%else
+%def_without qat
+%endif
 %def_without seastar
 %def_without jaeger
 %def_without zbd
@@ -57,8 +63,8 @@
 %endif
 
 Name: ceph
-Version: 19.2.3
-Release: alt5
+Version: 19.2.7
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -105,9 +111,7 @@ Source42: qatzip.tar
 Patch: %name-%version.patch
 # https://github.com/ceph/s3select/pull/169
 Patch1: ceph-19.2.3-alt-s3select-arrow20-api.patch
-# Backport of upstream zpp_bits.h fixes for GCC 15 (commits 830925f0,
-# 9b8d72f1, 3fcd3536); not yet on squid branch as of 19.2.3.
-Patch2: ceph-19.2.3-alt-zpp-bits-gcc15.patch
+Patch2: ceph-19.2.7-alt-rocksdb-gcc15-cstdint.patch
 
 # cmake/ninja need /proc to correctly estimate system
 # resources and run several build jobs in parallel
@@ -872,7 +876,9 @@ tar -xf %SOURCE42 -C src/qatzip
 
 %patch -p1
 %patch1 -p1
+%if_without system_rocksdb
 %patch2 -p1
+%endif
 %ifarch %e2k
 sed -i 's/template serialize_one(/serialize_one(/' \
 	src/rgw/driver/posix/zpp_bits.h
@@ -1000,9 +1006,9 @@ export CPPFLAGS="$java_inc"
 %endif
 %if_with pmem
     -DWITH_BLUESTORE_PMEM:BOOL=ON -DWITH_SYSTEM_PMDK:BOOL=ON \
-%if_with rbd_rwl_cache
-    -DWITH_RBD_RWL:BOOL=ON \
 %endif
+%if %{with pmem} && %{with rbd_rwl_cache}
+    -DWITH_RBD_RWL:BOOL=ON \
 %endif
 %if_with rbd_ssd_cache
     -DWITH_RBD_SSD_CACHE:BOOL=ON \
@@ -1021,6 +1027,11 @@ export CPPFLAGS="$java_inc"
     -DWITH_SPDK:BOOL=ON \
 %else
     -DWITH_SPDK:BOOL=OFF \
+%endif
+%if_with qat
+    -DWITH_QATDRV:BOOL=OFF -DWITH_QATLIB:BOOL=ON -DWITH_QATZIP:BOOL=ON \
+%else
+    -DWITH_QATDRV:BOOL=OFF -DWITH_QATLIB:BOOL=OFF -DWITH_QATZIP:BOOL=OFF \
 %endif
 %ifarch %arm
     -DWITH_RDMA:BOOL=OFF \
@@ -1897,6 +1908,15 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Tue Oct 27 2026 Alexey Shabalin <shaba@altlinux.org> 19.2.7-alt1
+- Update to 19.2.7.
+- Use bundled RocksDB because system RocksDB 11.8.1 has incompatible APIs.
+- Fixes:
+  + CVE-2025-30156 (CephX authentication bypass)
+  + CVE-2026-39944 (RGW STS privilege escalation)
+  + CVE-2026-50152 (MON config-key unauthorized read)
+  + CVE-2026-54330 (RGW SigV4 header injection)
+
 * Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 19.2.3-alt5
 - Work around GCC PR target/119610 on aarch64 (Closes: 59871)
 - Fix build with Boost 1.85 and newer.
