@@ -1,10 +1,11 @@
 Name: bcunit
-Version: 5.4.123
+Version: 5.4.126
 Release: alt1
 Summary: CUnit is a Unit testing framework for C.
 Group: System/Libraries
 License: GPLv2
-Url: https://gitlab.linphone.org/BC/public/bcunit
+Url: https://github.com/BelledonneCommunications/bcunit
+Vcs: https://github.com/BelledonneCommunications/bcunit
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -48,6 +49,10 @@ rm -f %buildroot%_libdir/*.a
 %_datadir/BCUnit
 
 %changelog
+* Fri Oct 30 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.126-alt1
+- New version 5.4.126.
+- Changed url and vcs tag.
+
 * Thu Jul 09 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.123-alt1
 - New version 5.4.123.
 
