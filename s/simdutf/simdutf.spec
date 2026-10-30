@@ -1,5 +1,5 @@
 Name: simdutf
-Version: 9.3.2
+Version: 9.3.3
 Release: alt1
 
 Summary: SIMD assisted Unicode validation and transcoding
@@ -40,6 +40,7 @@ This package contains simdutf development part.
 
 %build
 %cmake	-DBUILD_SHARED_LIBS=ON \
+	-DSIMDUTF_CXX_STANDARD=20 \
 	-DSIMDUTF_BENCHMARKS=OFF \
 	-DSIMDUTF_TOOLS=OFF
 %cmake_build
@@ -64,6 +65,9 @@ This package contains simdutf development part.
 %_libdir/libsimdutf.so
 
 %changelog
+* Fri Oct 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.3.3-alt1
+- 9.3.3 released
+
 * Fri Oct 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.3.2-alt1
 - 9.3.2 released
 
