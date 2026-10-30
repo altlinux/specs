@@ -8,14 +8,11 @@
 # TODO: remove later this fix for documentation
 %define _cmake__builddir BUILD
 
-%def_with openmp
 %def_without unicap
-%def_with swig
 %def_with python3
 %def_without octave
 %def_with gstreamer
 %def_with ffmpeg
-%def_with 1394libs
 %def_with v4l
 %def_with gtk
 %def_without quicktime
@@ -29,7 +26,6 @@
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
 
 %{?_with_ffmpeg:%set_without quicktime}
-%{?_with_1394libs:%set_without quicktime}
 %{?_with_v4l:%set_without quicktime}
 
 %define bname opencv
@@ -39,7 +35,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.14.0
-Release: alt2
+Release: alt3
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -56,18 +52,13 @@ Patch2: %name-4.5.5-alt-build.patch
 
 Patch2000: %name-e2k-simd.patch
 
-BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
+BuildRequires: gcc-c++ libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
 BuildRequires: cmake eigen3 zlib-devel
 BuildRequires: python3 python3(bs4) doxygen
-BuildRequires: libucil-devel libtbb-devel bzlib-devel
-BuildRequires: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
-BuildRequires: pkgconfig(xdamage) pkgconfig(xxf86vm)
-BuildRequires: libGLU-devel libXau-devel libXdmcp-devel
-BuildRequires: python3-module-sphinx-devel python3-module-Pygments python3-module-sphinx-sphinx-build-symlink
-BuildRequires: texlive-latex-base
+BuildRequires: libtbb-devel bzlib-devel
+BuildRequires: libGLU-devel libXdmcp-devel
 BuildRequires: libprotobuf-devel protobuf-compiler libwebp-devel
-BuildRequires: libgflags-devel
 BuildRequires: libflexiblas-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libbrotli-devel
@@ -79,13 +70,11 @@ BuildRequires: libblkid-devel
 BuildRequires: libhdf5-devel
 
 %ifarch %{ix86} x86_64 armh
-BuildRequires: libglog-devel
+BuildRequires: libgflags-devel libglog-devel
 %endif
 %ifarch %{ix86} x86_64
 BuildRequires: ceres-solver-devel
 %endif
-%{?_with_v4l:BuildRequires: libv4l-devel}
-%{?_with_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel libswresample-devel}
 %{?_with_gstreamer:BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel liborc-devel}
@@ -96,8 +85,6 @@ BuildRequires: python3-devel
 BuildRequires: libnumpy-py3-devel
 }
 %{?_with_octave:BuildRequires: octave-devel}
-%{?_with_swig:BuildRequires: swig}
-%{?_with_1394libs:BuildRequires: libdc1394-devel}
 %{?_with_gdcm:BuildRequires: gdcm-devel}
 %{?_with_openni:
 BuildRequires: openni-devel
@@ -270,8 +257,9 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 	-DBUILD_EXAMPLES:BOOL=ON \
 	-DINSTALL_C_EXAMPLES:BOOL=ON \
 	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
-	-DENABLE_OPENMP:BOOL=%{?_with_openmp:ON}%{!?_with_openmp:OFF} \
 	-DWITH_TBB:BOOL=ON \
+        -DCBLAS_INCLUDE_DIR:PATH=%_includedir/flexiblas \
+        -DLAPACKE_INCLUDE_DIR:PATH=%_includedir/flexiblas \
 	-DBUILD_PYTHON_SUPPORT:BOOL=ON \
 	-DCMAKE_VERBOSE:BOOL=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
@@ -286,7 +274,7 @@ rm -fR 3rdparty/{ffmpeg,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib,protob
 	-DBUILD_PROTOBUF:BOOL=OFF \
 	-DPROTOBUF_UPDATE_FILES:BOOL=ON \
 	-DOPENCV_ENABLE_NONFREE:BOOL=ON \
-	-DWITH_LIBV4L:BOOL=%{?_with_v4l:ON}%{!?_with_v4l:OFF} \
+        -DWITH_V4L:BOOL=%{?_with_v4l:ON}%{!?_with_v4l:OFF} \
 	-DOPENCV_EXTRA_MODULES_PATH=%_builddir/%bname-contrib-%version/modules \
 	%{?_with_openni: -DWITH_OPENNI=ON } \
 	%{?_with_gdcm: -DWITH_GDCM=ON} \
@@ -387,6 +375,10 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Sat Oct 31 2026 Anton Farygin <rider@altlinux.org> 1:4.14.0-alt3
+- fixed LAPACK detection with FlexiBLAS
+- removed obsolete build dependencies and CMake options
+
 * Thu Oct 08 2026 Anton Farygin <rider@altlinux.org> 1:4.14.0-alt2
 - fixed build with ffmpeg 9.0
 
