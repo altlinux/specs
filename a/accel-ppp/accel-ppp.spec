@@ -1,5 +1,5 @@
 Name: accel-ppp
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
@@ -7,6 +7,8 @@ License: GPLv2
 Url: https://accel-ppp.org/
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
+
+ExcludeArch: %ix86
 
 BuildRequires: cmake libpcre2-devel libnl-devel libssl-devel liblua5.3-devel glibc-kernheaders
 BuildPreReq: rpm-build-kernel
@@ -56,7 +58,7 @@ tar -cjf ../%name-%version.tar.bz2 ../%name-%version
       -DLOG_PGSQL=FALSE \
       -DLUA=5.3 \
       -DBUILD_INSTALL_PREFIX=%buildroot \
-      -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_BUILD_TYPE=RelWithDebInfo \
       -DMEMDEBUG=TRUE \
       -DCMAKE_C_COMPILER=clang
 
@@ -82,7 +84,7 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %preun_service %name
 
 %files
-%doc COPYING README CHANGELOG.md accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt alt-linux/IPoE_ru.txt alt-linux/IPoE_dhcp_lua_ru.txt docs/ipoe_radius.md docs/pppoe_radius.md
+%doc COPYING README.md CHANGELOG.md CONTRIBUTING.md accel-pppd/extra/net-snmp/ACCEL-PPP-MIB.txt alt-linux/IPoE_ru.txt alt-linux/IPoE_dhcp_lua_ru.txt docs/ipoe_radius.md docs/pppoe_radius.md docs/ng40-safeguards-review.md
 %config(noreplace) %_initdir/*
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config %_sysconfdir/accel-ppp.conf.dist
@@ -101,6 +103,10 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Oct 30 2026 Alexei Takaseev <taf@altlinux.org> 1.15.0-alt1
+- 1.15.0
+- Build 64-bit only
+
 * Fri May 08 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt1
 - 1.14.1
 - /var/run/accel-ppp -> /run/accel-ppp

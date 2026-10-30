@@ -1,16 +1,16 @@
 %define module_name             accel-ppp
-%define module_version          1.14.1
+%define module_version          1.15.0
 %define module_release          alt1
 
 %define flavour		6.18
-%define karch	%ix86 x86_64 aarch64 riscv64 loongarch64
+%define karch	x86_64 aarch64 riscv64 loongarch64
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-6.18
 
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/ipoe
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
@@ -22,6 +22,8 @@ Group: System/Kernel and hardware
 Url: https://accel-ppp.org/
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+
+Patch0: Fix-build-with-6.12.114.patch
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel cmake libpcre2-devel libssl-devel
@@ -43,21 +45,26 @@ rm -rf %module_name-%module_version
 tar -jxvf %kernel_src/%module_name-%module_version.tar.bz2
 %setup -D -T -n %module_name-%module_version
 
+%patch0 -p1
+
 %build
 %cmake \
       -G 'Unix Makefiles' \
       -DKDIR=%_usrsrc/linux-%kversion-%flavour \
       -DBUILD_IPOE_DRIVER=TRUE \
       -DBUILD_VLAN_MON_DRIVER=TRUE \
+      -DBUILD_PPPOSEQ_DRIVER=TRUE \
       -B BUILD
 
 make -C BUILD/drivers/ipoe
 make -C BUILD/drivers/vlan_mon
+make -C BUILD/drivers/ppposeq
 
 %install
 install -d %buildroot/%module_dir
-install -m644 -D BUILD/drivers/ipoe/driver/ipoe.ko %buildroot/%module_dir/ipoe.ko
+install -m644 -D BUILD/drivers/ipoe/driver/ipoe.ko         %buildroot/%module_dir/ipoe.ko
 install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_dir/vlan_mon.ko
+install -m644 -D BUILD/drivers/ppposeq/driver/ppposeq.ko   %buildroot/%module_dir/ppposeq.ko
 
 %files
 %module_dir
@@ -65,6 +72,15 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Oct 30 2026 Alexei Takaseev <taf@altlinux.org> 1.15.0-alt1
+- 1.15.0
+- Build 64-bit only
+- Add ppposeq.ko
+- Rename module dir from "ipoe" to "accel-ppp"
+
+* Thu Oct 22 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt2
+- Fix FTBS with 6.12.114
 
 * Fri May 08 2026 Alexei Takaseev <taf@altlinux.org> 1.14.1-alt1
 - 1.14.1
