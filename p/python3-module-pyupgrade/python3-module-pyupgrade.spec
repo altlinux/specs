@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.21.2
+Version: 3.22.0
 Release: alt1
 
 Summary: A tool to automatically upgrade syntax for newer versions of the language
@@ -17,16 +17,12 @@ Vcs: https://github.com/asottile/pyupgrade
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_with_check_deps pip_reqfile requirements-dev.txt
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -34,11 +30,7 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -50,12 +42,14 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.md
 %_bindir/pyupgrade
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 3.22.0-alt1
+- Updated to 3.22.0.
+
 * Mon Dec 22 2025 Anton Zhukharev <ancieg@altlinux.org> 3.21.2-alt1
 - Updated to 3.21.2.
 
@@ -121,4 +115,3 @@ BuildRequires(pre): rpm-build-pyproject
 
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 2.38.2-alt1
 - initial build for Sisyphus
-
