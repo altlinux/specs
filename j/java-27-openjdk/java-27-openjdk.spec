@@ -363,7 +363,7 @@
 
 Name: java-27-openjdk
 Version: %featurever.%interimver.%updatever.%patchver.%buildver
-Release: alt2
+Release: alt3
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -647,6 +647,7 @@ Requires: javapackages-filesystem
 # Require zone-info data provided by tzdata-java sub-package
 # 2020a required as of JDK-8243541 in 11.0.8+4
 Requires: tzdata-java >= 2020b
+Requires: fonts-type1-xorg
 
 # Standard JPackage base provides
 Provides: jre-%javaver-%origin-headless = %EVR
@@ -1976,6 +1977,9 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Fri Oct 30 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.2.1-alt3
+- Added req to fonts-type1-xorg (Closes: 61195)
+
 * Fri Oct 23 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.2.1-alt2
 - New release (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-83395,
   CVE-2026-91394, CVE-2026-87291, CVE-2026-91332,
