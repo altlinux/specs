@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mobile-config-firefox
-Version: 5.5.1
+Version: 5.5.2
 Release: alt1
 
 Summary: Mobile and privacy friendly firefox configuration
@@ -41,6 +41,9 @@ sed -i "s|/usr/lib/mobile-config-firefox|%firefox_datadir|" \
 %_datadir/metainfo/eco.nura.mobile_config_firefox.metainfo.xml
 
 %changelog
+* Wed Oct 28 2026 Egor Shestakov <ved@altlinux.org> 5.5.2-alt1
+- Update to 5.5.2
+
 * Mon Oct 12 2026 Egor Shestakov <ved@altlinux.org> 5.5.1-alt1
 - Update to 5.5.1
 
