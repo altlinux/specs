@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 2.1.10
-Release: alt1
+Release: alt2
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -26,6 +26,7 @@ BuildRequires: zlib-devel libprotobuf-devel
 BuildRequires: protobuf-compiler
 
 Requires: %name-data = %version-%release
+Requires: fonts-ttf-google-noto-emoji
 
 %define _unpackaged_files_terminate_build 1
 
@@ -54,6 +55,7 @@ License: AGPL-3.0+
 Requires: %name-qml-data = %version-%release
 Requires: libqt6-quickcontrols2universal
 Requires: libqt6-quickvectorimage
+Requires: fonts-ttf-google-noto-emoji
 
 %description qml
 PokerTH is a poker game written in C++/Qt6. You can play the popular
@@ -127,6 +129,8 @@ sed -ri -e "s|QT_PLUGIN_PATH=[^[:blank:]]+|QT_PLUGIN_PATH=$QT_PLUGIN_PATH|" \
 
 # remove bundled font (see ALT 25328)
 rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
+# colour emoji font is provided by fonts-ttf-google-noto-emoji
+rm %buildroot%_datadir/pokerth/data/fonts/NotoColorEmoji.ttf
 
 %files
 %_bindir/pokerth_client
@@ -150,6 +154,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/DejaVuSans-Bold.ttf
 %_bindir/pokerth_official_server
 
 %changelog
+* Fri Oct 30 2026 Mikhail Efremov <sem@altlinux.org> 2.1.10-alt2
+- Use system Noto Color Emoji font instead of bundled one.
+
 * Thu Oct 29 2026 Mikhail Efremov <sem@altlinux.org> 2.1.10-alt1
 - Updated to 2.1.10.
 
