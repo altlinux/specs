@@ -11,6 +11,12 @@
 %def_without staticlibs
 # Build a fresh libjvm.so for use in a copy of the bootstrap JDK
 %def_without fresh_libjvm
+# Explicit, independently supplied x86-32 boot JDK for the initial native build.
+%ifarch %ix86
+%def_with external_bootjdk
+%else
+%def_without external_bootjdk
+%endif
 # Build with system libraries
 %def_with system_libs
 
@@ -95,7 +101,7 @@
 # Set of architectures for which we build fastdebug builds
 %global fastdebug_arches x86_64 ppc64le aarch64
 # Set of architectures with a Just-In-Time (JIT) compiler
-%global jit_arches      %{aarch64} x86_64 loongarch64 riscv64
+%global jit_arches      %{ix86} %{aarch64} x86_64 loongarch64 riscv64
 # Set of architectures which use the Zero assembler port (!jit_arches)
 %global zero_arches ppc s390
 # Set of architectures which run a full bootstrap cycle
@@ -105,7 +111,7 @@
 # Set of architectures with a Ahead-Of-Time (AOT) compiler
 %global aot_arches      x86_64 %{aarch64}
 # Set of architectures which support the serviceability agent
-%global sa_arches       x86_64 aarch64 loongarch64 riscv64
+%global sa_arches       %{ix86} x86_64 aarch64 loongarch64 riscv64
 # Set of architectures which support class data sharing
 # See https://bugzilla.redhat.com/show_bug.cgi?id=513605
 # MetaspaceShared::generate_vtable_methods is not implemented for the PPC JIT
@@ -300,10 +306,20 @@
 %global lts_designator_zip ""
 
 # JDK to use for bootstrapping
-%if_with fresh_libjvm
+%if 0%{?_with_external_bootjdk:1}
+%ifnarch %{ix86}
+%{error:external_bootjdk is only available for ix86}
+%endif
+%if 0%{?_with_fresh_libjvm:1}
+%{error:external_bootjdk and fresh_libjvm are mutually exclusive}
+%endif
+%global bootjdk %{_builddir}/liberica-boot-jdk
+%else
+%if 0%{?_with_fresh_libjvm:1}
 %global bootjdk %{_builddir}/bootstrap
 %else
 %global bootjdk /usr/lib/jvm/java-%{buildjdkver}-openjdk
+%endif
 %endif
 # Define whether to use the bootstrap JDK directly or with a fresh libjvm.so
 # This will only work where the bootstrap JDK is the same major version
@@ -351,7 +367,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1
+Release: alt2
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -382,6 +398,7 @@ Group: Development/Java
 # The elliptic curve cryptography (ECC) source code is licensed under the LGPLv2.1 or any later version
 License:  Apache-1.1 and Apache-2.0 and BSD and BSD with advertising and GPL-2.0 and GPL-2.0 with exceptions and IJG and LGPL-2.0+ and MIT and MPL-2.0 and ALT-Public-Domain and W3C and Zlib and ISC and FTL and RSA-MD
 URL:      http://openjdk.java.net/
+VCS:      https://github.com/openjdk/jdk21u.git
 
 # Define vendor information used by OpenJDK
 %global oj_vendor Red Hat, Inc.
@@ -457,7 +474,6 @@ URL:      http://openjdk.java.net/
 %endif
 
 %define java_arches x86_64 aarch64 loongarch64 riscv64
-ExclusiveArch: %{java_arches}
 
 # Prevent brp-java-repack-jars from being run
 %global __jar_repack 0
@@ -505,6 +521,11 @@ Source18: TestTranslations.java
 
 Source19: openjdk21.watch
 
+# Initial bootstrap compiler; the archive retains upstream licenses.
+%if 0%{?_with_external_bootjdk:1}
+Source20: https://github.com/bell-sw/Liberica/releases/download/21.0.10+10/bellsoft-jdk21.0.10+10-linux-i586.tar.gz
+%endif
+
 #############################################
 #
 # OpenJDK patches in need of upstreaming
@@ -519,11 +540,15 @@ Patch3500: jdk21u-loongarch64.patch
 # OpenJDK patches which missed last update
 #
 #############################################
-#empty now
+# JDK-8331541: correct the x86-32 SafeFetch symbol and reject undefined symbols.
+Patch3501: jdk21u-JDK-8331541.patch
 
 BuildRequires(pre): rpm-build-java
 BuildRequires(pre): rpm-macros-alternatives
+%ifarch %ix86
 BuildRequires: /proc
+%endif
+
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libalsa-devel
@@ -533,8 +558,10 @@ BuildRequires: desktop-file-utils
 BuildRequires: libasm-devel libdw-devel libelf-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libfreetype-devel
-%if_without fresh_libjvm
+%if !0%{?_with_external_bootjdk:1}
+%if 0%{?_without_fresh_libjvm:1}
 BuildRequires: java-%{buildjdkver}-openjdk-devel
+%endif
 %endif
 # gcc-c++ is already needed
 BuildRequires: gcc-c++
@@ -565,12 +592,12 @@ BuildRequires: javapackages-filesystem
 BuildRequires: libffi-devel
 %endif
 # 2023c required as of JDK-8305113
-BuildRequires: tzdata-java >= 2023c
+BuildRequires: tzdata-java
 
 # cacerts build requirement in portable mode
 BuildRequires: ca-certificates
 # Earlier versions have a bug in tree vectorization on PPC
-BuildRequires: gcc >= 4.8.3-8
+BuildRequires: gcc
 
 %if_with systemtap                                                                                                    
 BuildRequires: systemtap-sdt-devel
@@ -854,6 +881,21 @@ if [ $prioritylength -ne 8 ] ; then
  exit 14
 fi
 
+# Java launchers resolve $ORIGIN through procfs; hasher must mount it.
+%ifarch %{ix86}
+test -r /proc/self/exe
+%endif
+
+# The supplied boot JDK is a build tool, never part of installed target images.
+%if 0%{?_with_external_bootjdk:1}
+echo '73505e53a4ebd382ee77b501956e4730614fa1d29c55ebb9c7e5068c3ac97c52  %{SOURCE20}' | sha256sum -c -
+mkdir -p %{bootjdk}
+tar --strip-components=1 -xf %{SOURCE20} -C %{bootjdk}
+readelf -h %{bootjdk}/bin/java | grep 'Class:.*ELF32'
+%{bootjdk}/bin/java -version
+%{bootjdk}/bin/javac -version
+%endif
+
 # Extract bootstrap binaries
 %if_with fresh_libjvm
 tar xf %{SOURCE1}
@@ -871,6 +913,7 @@ pushd %{top_level_dir_name}
 # Patches in need of upstreaming
 
 %patch3500 -p1
+%patch3501 -p1
 popd # openjdk
 
 # The OpenJDK version file includes the current
@@ -965,9 +1008,14 @@ BOOT_JDK=%{bootjdk}
 export LD_LIBRARY_PATH=%bootjdk/lib:$LD_LIBRARY_PATH
 %endif
 
+%ifarch %{ix86}
+NUM_PROC=${NPROCS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || :)}
+export NUM_PROC=${NUM_PROC:-1}
+%else
 # How many CPU's do we have?
 export NUM_PROC=%(/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :)
 export NUM_PROC=${NUM_PROC:-1}
+%endif
 %if 0%{?_smp_ncpus_max}
 # Honor %%_smp_ncpus_max
 [ ${NUM_PROC} -gt %{?_smp_ncpus_max} ] && export NUM_PROC=%{?_smp_ncpus_max}
@@ -1081,10 +1129,14 @@ function buildjdk() {
     --disable-warnings-as-errors
 
     cat spec.gmk
+    # Keep x86-32 GC code position independent to avoid libjvm TEXTREL.
 %if (0%{?rhel} > 0 && 0%{?rhel} < 8)
     scl enable devtoolset-8  -- make \
 %else
     make \
+%endif
+%ifarch %{ix86}
+      NONPIC_SRC= \
 %endif
       LOG=trace \
       WARNINGS_ARE_ERRORS="-Wno-error" \
@@ -1985,6 +2037,11 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Wed Oct 28 2026 Ivan Khanas <xeno@altlinux.org> 0:21.0.13.0.9-alt2
+- Enable native i586 HotSpot builds with position-independent GC code.
+- Package the x86-32 Serviceability Agent and honor build parallelism.
+- Fix the i386 SafeFetch symbol and reject unresolved shared-library symbols.
+
 * Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.13.0.9-alt1
 - New version (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-91382,
   CVE-2026-91411, CVE-2026-83395, CVE-2026-87294, CVE-2026-91394,

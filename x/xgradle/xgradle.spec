@@ -2,25 +2,24 @@
 %def_with check
 
 Name: xgradle
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Gradle plugin for system dependency resolution and offline builds
 License: Apache-2.0
 Group: Development/Java
 Url: https://github.com/ikxeno/xgradle
-Vcs: https://github.com/ikxeno/xgradle.git
+VCS: https://github.com/ikxeno/xgradle.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: %name-tags.tar
 Source2: commit.sh
+Patch0: %name-system-variants.patch
 
 BuildRequires(pre): rpm-macros-gradle
-BuildRequires: /proc
-BuildRequires: gradle
 BuildRequires: rpm-build-java-osgi
-BuildRequires: java-17-openjdk-devel
+BuildRequires: java-21-openjdk-devel
 BuildRequires: xgradle
 BuildRequires: maven-lib
 BuildRequires: plexus-utils
@@ -36,9 +35,9 @@ BuildRequires: junit5
 BuildRequires: apiguardian
 BuildRequires: google-gson
 BuildRequires: mockito mockito-junit-jupiter
-Requires: xgradle-resolution-plugin
-Requires: xgradle-cli
-Requires: rpm-macros-gradle
+Requires: xgradle-resolution-plugin = %EVR
+Requires: xgradle-cli = %EVR
+Requires: rpm-macros-gradle = %EVR
 
 %if_with check
 BuildRequires: apache-commons-io
@@ -99,15 +98,15 @@ CLI tool APIs. Essential for developers extending XGradle functionality.
 
 %prep
 %setup -a1
+%patch0 -p1
 
 cp %SOURCE2 .
 chmod +x commit.sh
 
 %build
-%gradle_publish -DgitCommitId=$(./commit.sh) \
-  -Prelease \
-  -Djava11 \
-  #
+%gradle_publish -DgitCommitId="$(./commit.sh)" \
+    -Prelease \
+    -Djava11
 
 %install
 install -Dm 644 xgradle-resolution-plugin/build/dist/xgradle-resolution-plugin.jar \
@@ -147,8 +146,10 @@ install -Dm 644 xgradle-cli/build/dist/xgradle-cli-javadoc.jar \
 install -Dm 644 rpm-macros/xgradle-fjava \
   -t %buildroot/%_rpmmacrosdir
 
+%if_with check
 %check
 %gradle_check
+%endif
 
 %files
 
@@ -173,6 +174,15 @@ install -Dm 644 rpm-macros/xgradle-fjava \
 %_rpmmacrosdir/xgradle-fjava
 
 %changelog
+* Thu Oct 29 2026 Ivan Khanas <xeno@altlinux.org> 1.0.2-alt1
+- New version.
+- Select compatible installed Kotlin Gradle plugin variants.
+- Preserve local project dependencies during system resolution.
+- Recover dependency lists from installed POMs.
+- Resolve installed Kotlin DSL plugin markers.
+- Reduce missing parent POM diagnostics to debug level.
+- Adapt relocation settings to the current Shadow plugin.
+
 * Fri Sep 25 2026 Ivan Khanas <xeno@altlinux.org> 1.0.1-alt1
 - New version: dependencies are resolved from XMvn metadata
   through a generated ivy repository.
