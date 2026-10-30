@@ -1,5 +1,5 @@
 Name: samplv1
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Polyphonic sampler
@@ -61,6 +61,9 @@ This package contains LV2 plugin.
 %_datadir/samplv1
 
 %changelog
+* Fri Oct 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Wed Sep 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
 - 1.5.0 released
 
