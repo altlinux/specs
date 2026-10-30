@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name aiocarbon
+%define mod_name aiocarbon
 
-# tests are broken
-%def_without check
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.15.3
+Version: 0.17.0
 Release: alt1
 
 Summary: Asynchronous client for carbon
@@ -17,36 +17,21 @@ Vcs: https://github.com/mosquito/aiocarbon
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
 
 %prep
 %setup
+%autopatch -p1
+%pyproject_setup_deps
 
-# fix version
-VERSION=`python3 -c 'print(tuple(map(int, "%version".split("."))))'`
-sed -i "/version_info =/s/= .*/ = ${VERSION}/" %pypi_name/version.py
-
-# fix python_requires version specifier
-sed -i '/python_requires=/s/3.5.\*/3.5/' setup.py
-
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements.dev.txt
-%endif
+# Set version instead of forgetful upstream
+sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
 
 %build
 %pyproject_build
@@ -55,14 +40,16 @@ sed -i '/python_requires=/s/3.5.\*/3.5/' setup.py
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra -o=addopts=
 
 %files
-%doc LICENCE.md README.rst
-%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 0.17.0-alt1
+- Updated to 0.17.0.
+
 * Tue Sep 26 2023 Anton Zhukharev <ancieg@altlinux.org> 0.15.3-alt1
 - Updated to 0.15.3.
 
@@ -71,4 +58,3 @@ sed -i '/python_requires=/s/3.5.\*/3.5/' setup.py
 
 * Thu May 11 2023 Anton Zhukharev <ancieg@altlinux.org> 0.15.1-alt1.git0dbbe0c
 - Initial commit for ALT Sisyphus.
-
