@@ -5,8 +5,8 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 7.6.3
-Release: alt2
+Version: 7.6.4
+Release: alt1
 Summary: Jupyter Interactive Notebook
 License: BSD-3-Clause
 Group: Development/Python3
@@ -112,6 +112,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/notebook.json \
 %endif
 
 %changelog
+* Fri Oct 30 2026 Anton Vyatkin <toni@altlinux.org> 7.6.4-alt1
+- new version 7.6.4
+
 * Sat Oct 03 2026 Anton Vyatkin <toni@altlinux.org> 7.6.3-alt2
 - delete unnecessary require (nest-asyncio)
 
