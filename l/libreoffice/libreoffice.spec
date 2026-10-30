@@ -51,9 +51,9 @@
 
 Name: libreoffice
 %define hversion 26.8
-%define urelease 1.1
+%define urelease 2.2
 Version: %hversion.%urelease
-Release: alt3
+Release: alt1
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
@@ -82,7 +82,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-Source4: libreoffice-%version-ru.tar
+#Source4: libreoffice-%version-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -129,8 +129,6 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
-# https://gerrit.libreoffice.org/c/core/+/212087
-Patch501: alt-tdf173885_Fix_for_Impress_crash_when_scrolling_through_slides.patch
 Patch502: 0005-tdf-172966-Don-t-add-attach-attachment-to-mailto-URI.patch
 Patch503: alt-tdf174010-fix-underlined-after-being-added-to-the-spelling-dictionary.patch
 
@@ -480,7 +478,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
+#tar xf %%SOURCE4 --strip-components=1 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -518,7 +516,6 @@ git apply %PATCH116
 #patch412 -p1
 
 %patch500 -p0
-%patch501 -p1
 %patch502 -p1
 %patch503 -p1
 
@@ -941,6 +938,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Thu Oct 29 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.2.2-alt1
+- New version.
+
 * Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.1.1-alt3
 - Fixed underlined after being added to the spelling dictionary (ALT #57049).
 
