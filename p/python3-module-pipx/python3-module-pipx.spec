@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.17.8
+Version: 1.18.10
 Release: alt1
 
 Summary: Install and Run Python Applications in Isolated Environments
@@ -18,20 +18,10 @@ Vcs: https://github.com/pypa/pipx
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-# pyproject-installer can't work with `nox'.
-BuildRequires: python3-module-pytest
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -40,8 +30,7 @@ BuildRequires: python3-module-pytest
 %setup
 %autopatch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -59,6 +48,9 @@ BuildRequires: python3-module-pytest
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.18.10-alt1
+- Updated to 1.18.10.
+
 * Wed Sep 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.17.8-alt1
 - Updated to 1.17.8.
 
