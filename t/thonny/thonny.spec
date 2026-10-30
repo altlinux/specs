@@ -1,6 +1,6 @@
 Name: thonny
-Version: 5.0.0
-Release: alt2
+Version: 5.0.1
+Release: alt1
 License: MIT
 Summary: Python IDE for beginners
 Group: Development/Python3
@@ -68,6 +68,9 @@ done
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Oct 29 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.1-alt1
+- New version.
+
 * Sat Oct 17 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt2
 - Removed political appeals.
 
