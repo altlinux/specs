@@ -7,7 +7,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.9.6
+Version: 1.9.8
 Release: alt1
 Summary: TOML Toolkit
 License: MIT
@@ -15,21 +15,13 @@ Group: Development/Python3
 Url: https://pypi.org/project/tombi
 Vcs: https://github.com/tombi-toml/tombi
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 Requires: %pypi_name
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
 # not packaged
-%add_pyproject_deps_check_filter 'pytest-stub$'
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_filter 'pytest-stub$'
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -47,13 +39,11 @@ cat < vendor_cargoconf.toml >> .cargo/config.toml
 %autopatch -p1
 # upstream uses GHA to set version based on git tag
 sed -i 's/@VERSION@/%version/' python/tombi/pyproject.toml Cargo.toml
+# tests deps live in the repo root
+cat pyproject.toml >> python/tombi/pyproject.toml
 pushd python/tombi
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 popd
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
 
 %build
 pushd python/tombi
@@ -78,6 +68,9 @@ pushd python/tombi
 %_bindir/tombi
 
 %changelog
+* Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 1.9.8-alt1
+- 1.9.6 -> 1.9.8
+
 * Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 1.9.6-alt1
 - 1.9.0 -> 1.9.6
 
