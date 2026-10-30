@@ -1,6 +1,6 @@
 Name: python3-module-probatio
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Data validation library
 License: MIT
@@ -42,13 +42,19 @@ sed -ri '/^version\s*=/ s,"[^"]+","%version",' pyproject.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest -o addopts=
+# tests/test_fuzz_engine.py::test_matches_voluptuous: upstream test-suite bug —
+# the fuzz strategy never avoids ADR-017's deliberate float/int deviation
+# from voluptuous; fails with hypothesis != 6.168.3. Deselect until fixed upstream.
+%pyproject_run_pytest -o addopts= --deselect tests/test_fuzz_engine.py::test_matches_voluptuous
 
 %files
 %python3_sitelibdir/probatio
 %python3_sitelibdir/probatio-%version.dist-info
 
 %changelog
+* Fri Oct 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.13.0-alt2
+- ftbfs fixed by deselecting questionable test
+
 * Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.13.0-alt1
 - 0.13.0 released
 
