@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: foomuuri
-Version: 0.33
+Version: 0.34
 Release: alt1
 Summary: Multizone bidirectional nftables firewall
 Group: Security/Networking
@@ -135,6 +135,9 @@ vm-run \
 %_man1dir/prometheus-foomuuri-exporter.1*
 
 %changelog
+* Fri Oct 30 2026 Alexey Shabalin <shaba@altlinux.org> 0.34-alt1
+- updated from 0.33 to 0.34
+
 * Tue Sep 22 2026 Alexey Shabalin <shaba@altlinux.org> 0.33-alt1
 - Updated from 0.31 to 0.33
 - Add prometheus-foomuuri-exporter subpackage
