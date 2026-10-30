@@ -1,19 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: opencommit
-Version: 3.3.9
+Version: 3.3.11
 Release: alt1
 
 Summary: Auto-generate meaningful commits in a second
 License: MIT
 Group: Development/Tools
-Url: https://www.npmjs.com/package/opencommit
+URL: https://www.npmjs.com/package/opencommit
 VCS: https://github.com/di-sukharev/opencommit
 
 BuildArch: noarch
 
 Source: %name-%version.tar
 Source1: node_modules.tar
+Patch: %name-3.3.9-alt-fix-hook-symlink-eperm.patch
+Patch1: %name-3.3.11-alt-fix-jest-json-attrs.patch
 
 Requires: node
 
@@ -31,6 +33,8 @@ provider, supports local Ollama models too.
 
 %prep
 %setup -a1
+%patch -p1
+%patch1 -p1
 npm_esbuild=$(node -p "require('./node_modules/esbuild/package.json').version")
 distro_esbuild=%{get_version esbuild}
 find node_modules/esbuild -name "*.js" -exec \
@@ -60,9 +64,13 @@ npm test
 %_libexecdir/%name
 
 %changelog
+* Thu Oct 29 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.3.11-alt1
+- Updated to version 3.3.11.
+- Fixed EPERM when installing hook (closes: #60010).
+- Cleaned up the spec file.
+
 * Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.3.9-alt1
 - Updated to version 3.3.9.
 
 * Tue May 05 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.2.19-alt1
 - Initial build for ALT.
-
