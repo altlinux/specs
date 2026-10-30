@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.11.1.3756
-Release: alt2
+Version: 4.1.0.3933
+Release: alt1
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-macros-dotnet
 BuildRequires(pre): rpm-build-mono
 BuildRequires: mono-devel
 BuildRequires: mono-locale-extras
-BuildRequires: dotnet-sdk-9.0
+BuildRequires: dotnet-sdk-10.0
 BuildRequires: pascalabcnet
 
 Requires: mono-devel
@@ -131,6 +131,9 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Fri Oct 30 2026 Andrey Cherepanov <cas@altlinux.org> 4.1.0.3933-alt1
+- New version.
+
 * Wed Feb 18 2026 Andrey Cherepanov <cas@altlinux.org> 3.11.1.3756-alt2
 - Used _RebuildRelease.sh for build.
 
