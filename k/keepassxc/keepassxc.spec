@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.7.12
+Version:  2.8.0
 Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
@@ -16,7 +16,6 @@ Source1: keepassxc_ru.ts
 
 Patch1: alt-add-chromium-gost-support-for-browser-integrations.patch
 
-%def_with yubikey
 # requires asciidoctor
 %def_enable docs
 %def_without asan
@@ -27,23 +26,16 @@ BuildRequires: cmake ctest gcc-c++
 %if_with asan
 BuildRequires: liblsan-devel-static
 %endif
-BuildRequires: qt5-base-devel >= 5.12.0 qt5-tools-devel >= 5.12.0 qt5-svg-devel
-BuildRequires: libbotan-devel >= 2.19
-BuildRequires: libargon2-devel
-BuildRequires: libsodium-devel
+BuildRequires: qt6-base-devel >= 6.2.4 qt6-svg-devel qt6-tools-devel
+BuildRequires: libbotan-devel >= 3.11.1
 BuildRequires: zlib-devel >= 1.2.0
-BuildRequires: libqrencode4-devel
 BuildRequires: libreadline-devel
 BuildRequires: libminizip-devel
-# Optional for Auto-Type on X11/Linux:
-BuildRequires: libXi-devel, libXtst-devel, qt5-x11extras-devel
-# Optional for YubiKey support
-%if_with yubikey
-BuildRequires: libyubikey-devel
-BuildRequires: libykpers-1-devel
-BuildRequires: libpcsclite-devel
 BuildRequires: libusb-devel
-%endif
+BuildRequires: libpcsclite-devel
+BuildRequires: libkeyutils-devel
+BuildRequires: libXi-devel, libXtst-devel
+BuildRequires: libqrencode4-devel
 %if_enabled docs
 BuildRequires: asciidoctor
 %endif
@@ -66,53 +58,52 @@ cp -v %SOURCE1 share/translations/keepassxc_ru.ts
 
 %build
 # LTO is not supported yet, see https://github.com/keepassxreboot/keepassxc/issues/5801
-%define optflags_lto %{nil}
+#%define optflags_lto %{nil}
 
 %cmake \
   -DWITH_TESTS=ON \
-  -DWITH_XC_BROWSER=ON \
-  -DWITH_XC_BROWSER_PASSKEYS=ON \
-  -DWITH_XC_PASSKEYS=ON \
-  -DWITH_XC_NETWORKING=ON \
-  -DWITH_XC_AUTOTYPE=ON \
-  -DWITH_XC_SSHAGENT=ON \
-  -DWITH_XC_KEESHARE=ON \
-  -DWITH_XC_UPDATECHECK=OFF \
-  -DWITH_XC_FDOSECRETS=ON \
 %if_with asan
   -DWITH_ASAN=ON \
 %endif
+  -DWITH_APP_BUNDLE=OFF \
+  -DWITH_BUILD_X11=ON \
+  -DWITH_BUILD_QT=OFF \
+  -DKPXC_FEATURE_BROWSER=ON \
+  -DKPXC_FEATURE_SSHAGENT=ON \
+  -DKPXC_FEATURE_FDOSECRETS=ON \
+  -DKPXC_FEATURE_NETWORK=ON \
+  -DKPXC_FEATURE_UPDATES=OFF \
 %if_enabled docs
-  -DWITH_XC_DOCS=ON \
+  -DKPXC_FEATURE_DOCS=ON \
 %else
-  -DWITH_XC_DOCS=OFF \
-%endif
-%if_with yubikey
-  -DWITH_XC_YUBIKEY=ON
+  -DKPXC_FEATURE_DOCS=OFF \
 %endif
 
 %cmake_build
 
 %check
 export LANG=en_US.UTF-8; \
-  %ctest --exclude-regex "testcli|testpasskeys"
+  %ctest --exclude-regex "testcli"
 
 %install
 %cmake_install
 
 %files
 %_bindir/*
-%_libdir/%name
-%_desktopdir/org.%name.KeePassXC.desktop
-%_datadir/metainfo/org.%name.KeePassXC.appdata.xml
+%_datadir/%name
 %_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/*/*
-%_datadir/%name
+%_desktopdir/org.%name.KeePassXC.desktop
+%_datadir/polkit-1/actions/org.%name.KeePassXC.policy
+%_datadir/metainfo/org.%name.KeePassXC.appdata.xml
 %if_enabled docs
 %_mandir/man?/*
 %endif
 
 %changelog
+* Sat Oct 31 2026 Pavel Nakonechnyi <zorg@altlinux.org> 2.8.0-alt1
+- updated to v2.8.0
+
 * Sat Mar 28 2026 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.12-alt1
 - updated to v2.7.12
 
