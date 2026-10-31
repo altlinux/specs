@@ -1,8 +1,8 @@
 %define oname pyod
 
 Name: python3-module-pyod
-Version: 3.6.6
-Release: alt1
+Version: 3.6.7
+Release: alt1.1
 Epoch: 1
 
 Summary: A Python Toolbox for Scalable Outlier Detection (Anomaly Detection)
@@ -15,6 +15,7 @@ Url: https://github.com/yzhao062/pyod
 Source: %name-%version.tar
 
 BuildArch: noarch
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-build-pyproject rpm-build-intro
 
@@ -60,7 +61,25 @@ PyOD includes more than 30 detection algorithms, from classical LOF (SIGMOD 2000
 %python3_prune
 
 %check
-PYTHONPATH=$(pwd) py.test3 || echo "Test result are ignored. Wait for https://bugzilla.altlinux.org/show_bug.cgi?id=39744"
+# sklearn's PSD eigenvalue check is numerically unstable for KPCA on aarch64.
+pytest_arch_ignores=
+if [ "$(uname -m)" = aarch64 ]; then
+    pytest_arch_ignores="--ignore=pyod/test/test_kpca.py \
+        --deselect=pyod/test/test_lscp.py::TestLSCP::test_predict_rank \
+        --deselect=pyod/test/test_lscp.py::TestLSCP::test_predict_rank_normalized \
+        --deselect=pyod/test/test_save_load_clone.py::TestSaveLoadClone::test_save_load_roundtrip"
+fi
+PYTHONPATH=$(pwd) py.test3 $pytest_arch_ignores \
+    --ignore=pyod/test/test_abod.py \
+    --ignore=pyod/test/test_combination.py \
+    --ignore=pyod/test/test_feature_bagging.py \
+    --ignore=pyod/test/test_stat_models.py \
+    --ignore=pyod/test/test_suod.py \
+    --ignore=pyod/test/test_thresholds.py \
+    --ignore=pyod/test/test_xgbod.py \
+    --deselect=pyod/test/test_ad_engine.py::TestRandomStateDeterminism::test_engine_seed_flows_to_lunar_plan \
+    --deselect=pyod/test/test_auto_model_selector.py::TestModelRegistry::test_registry_module_paths_exist \
+    --deselect=pyod/test/test_auto_model_selector.py::TestAutoModelSelectorSmoke::test_full_pipeline_mocked
 
 %files
 %_bindir/pyod
@@ -69,6 +88,12 @@ PYTHONPATH=$(pwd) py.test3 || echo "Test result are ignored. Wait for https://bu
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.7-alt1.1
+- new version 3.6.7
+- skip numerically unstable sklearn tests on aarch64.
+- exclude i586.
+- run supported upstream tests without suppressing failures
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1:3.6.6-alt1
 - new version 3.6.6
 - security fixes:
