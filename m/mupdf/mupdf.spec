@@ -4,7 +4,7 @@
 
 Name: mupdf
 Version: 1.28.2
-Release: alt1
+Release: alt2
 
 Summary: Lightweight framework for viewing and converting PDF, XPS, E-book documents
 License: AGPL-3.0-or-later
@@ -23,6 +23,7 @@ Patch0: mupdf-1.25.2-alt1-disable_strip.patch
 Patch1: mupdf-1.25.6-alt1-do-not-require-libclang-and-swig.patch
 Patch2: mupdf-1.25.6-alt1-no-venv.patch
 Patch3: mupdf-1.26.10-alt1-disable-auto-rpath.patch
+Patch4: mupdf-python314.patch
 
 BuildRequires: make gcc-c++
 BuildRequires: zlib-devel libopenjpeg2.0-devel libjbig2dec-devel libgumbo-devel
@@ -169,6 +170,9 @@ install -Dm644 docs/examples/* -t %buildroot%_defaultdocdir/mupdf/examples
 %_man1dir/mutool.1*
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.28.2-alt2
+- Fix Python bindings build with Python 3.14.
+
 * Sat Sep 26 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.28.2-alt1
 - New version (1.28.2).
 
