@@ -1,6 +1,6 @@
 Name: autogen
 Version: 5.18.16
-Release: alt1
+Release: alt2
 
 Summary: AutoGen - The Automated Program Generator
 License: GPL-3.0-or-later AND GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later AND BSD-2-Clause
@@ -15,6 +15,7 @@ Patch4: suse_04-guile-version.patch
 Patch5: suse_05-sprintf-overflow.patch
 Patch6: suse_06-autogen-avoid-GCC-code-analysis-bug.patch
 Patch7: suse_07-installable-programs.patch
+Patch8: autogen-gcc-const.patch
 
 # Automatically added by buildreq on Sun Dec 10 2017
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 guile22 libgc-devel libgmp-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl pkg-config python-base
@@ -78,11 +79,12 @@ This package is needed to write programs that use AutoOpts API.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 rm doc/autogen.info*
 
 %build
 %autoreconf
-%configure \
+%configure POSIX_SHELL=/bin/bash \
 	--disable-static
 %make_build
 
@@ -121,6 +123,9 @@ make -k check
 %_man3dir/*.3.*
 
 %changelog
+* Fri Oct 30 2026 Vitaly Lipatov <lav@altlinux.ru> 5.18.16-alt2
+- Fix build with current GCC (const correctness)
+
 * Wed Oct 25 2023 Mikhail Efremov <sem@altlinux.org> 5.18.16-alt1
 - Enabled tests.
 - Added SUSE patches.
