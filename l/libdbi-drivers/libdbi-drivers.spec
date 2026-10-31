@@ -3,12 +3,12 @@
 
 %def_with firebird
 %def_without sqlite2
-%def_disable doc
+%def_disable docs
 
 Name: libdbi-drivers
 Epoch: 1
 Version: 0.9.0
-Release: alt7.1
+Release: alt7.2
 Summary: Database drivers for libdbi
 License: LGPL
 Group: System/Libraries
@@ -21,6 +21,7 @@ Patch2: libdbi-drivers-fedora-sys-wait.patch
 Patch3: libdbi-drivers-fedora-c99.patch
 Patch4: libdbi-drivers-alt-firebird-driver-gcc14-fix.patch
 Patch5: libdbi-drivers-alt-firebird-driver-proper-pvector-type.patch
+Patch6: libdbi-drivers-alt-firebird-fbclient.patch
 
 # Automatically added by buildreq on Mon Feb 09 2009
 BuildRequires: gcc-c++ libdbi-devel zlib-devel
@@ -28,8 +29,8 @@ BuildRequires: libMySQL-devel postgresql-devel
 BuildRequires: libfreetds-devel
 BuildRequires: libsqlite3-devel
 %{?_with_sqlite2:BuildRequires: libsqlite-devel}
-%{?_with_firebird:BuildRequires: firebird-devel docbook-style-dsssl jadetex}
-%{?_enable_doc:BuildRequires: docbook-style-dsssl jadetex openjade}
+%{?_with_firebird:BuildRequires: firebird-devel}
+%{?_enable_docs:BuildRequires: docbook-style-dsssl jadetex openjade}
 
 %description
 libdbi implements a database-independent abstraction layer in C, similar to the
@@ -204,11 +205,11 @@ install -pm0644 drivers/firebird/dbd_firebird.h %buildroot%_includedir/dbi/
 # fix some docs
 cp -a drivers/mysql/TODO TODO.mysql
 cp -a drivers/pgsql/TODO TODO.pgsql
-%if_with sqlite2
+%if 0%{?_with_sqlite2}
 cp -a drivers/sqlite/TODO TODO.sqlite
 %endif
 cp -a drivers/sqlite3/TODO TODO.sqlite3
-%if_with firebird
+%if 0%{?_with_firebird}
 cp -a drivers/firebird/TODO TODO.firebird
 %endif
 %else
@@ -258,6 +259,10 @@ rm -f %buildroot%_libdir/dbd/*.la
 %endif
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.9.0-alt7.2
+- NMU: avoid unused documentation build dependencies.
+- NMU: link the Firebird driver with fbclient.
+
 * Mon Mar 31 2025 Ivan A. Melnikov <iv@altlinux.org> 1:0.9.0-alt7.1
 - NMU: fix FTBFS
 
