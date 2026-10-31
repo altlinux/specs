@@ -13,7 +13,7 @@
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
 Version: 3.0.3
-Release: alt1
+Release: alt1.1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -34,7 +34,7 @@ BuildRequires: python3-devel gcc-c++ bzlib-devel libpam-devel
 BuildRequires: libqb-devel > 0.11.0 libgnutls-devel libltdl-devel libgio-devel
 BuildRequires: libncurses-devel libssl-devel libselinux-devel docbook-style-xsl
 BuildRequires: help2man xsltproc
-BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel libopenipmi-devel libservicelog-devel
+BuildRequires: libesmtp-devel libsensors3-devel libnet-snmp-devel libopenipmi-devel
 BuildRequires: libcorosync-devel
 %{?_enable_doc:BuildRequires: publican inkscape asciidoc}
 
@@ -345,6 +345,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/base
 
 %changelog
+* Mon Oct 26 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.3-alt1.1
+- NMU: Remove BuildRequires: libservicelog-devel.
+
 * Wed Jul 29 2026 Andrey Cherepanov <cas@altlinux.org> 3.0.3-alt1
 - New version (fixes: CVE-2026-10649).
 
