@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: retry
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Retry a command until the command succeeds
@@ -47,5 +47,8 @@ passed to stdout once and once only.
 %_man1dir/%{name}.1.*
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.7-alt1
+- new version 1.0.7 (with rpmrb script)
+
 * Sat Jun 21 2025 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt1
 - Initial build for Sisyphus
