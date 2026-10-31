@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gtklock-playerctl-module
-Version: 4.0.0
+Version: 5.0.2
 Release: alt1
 
 Summary: gtklock module adding media player controls to the lockscreen
@@ -36,5 +36,8 @@ Adds a mpris media player controller to the lockscreen.
 %_libdir/gtklock/playerctl-module.so
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.2-alt1
+- New version 5.0.2.
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus

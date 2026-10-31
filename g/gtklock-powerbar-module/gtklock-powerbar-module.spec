@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gtklock-powerbar-module
-Version: 4.0.0
+Version: 5.0.1
 Release: alt1
 
 Summary: gtklock module adding power controls to the lockscreen
@@ -34,5 +34,8 @@ Adds a reboot and poweroff button the the lockscreen.
 %_libdir/gtklock/powerbar-module.so
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 5.0.1-alt1
+- New version 5.0.1.
+
 * Sun May 11 2025 Nikolay Strelkov <snk@altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus
