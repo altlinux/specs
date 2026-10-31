@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mitos
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 Summary: Mitos is a fast and minimal modal text editor
 License: MPL-2.0
@@ -23,6 +23,7 @@ BuildRequires: gcc-c++
 
 %if_with check
 BuildRequires: git-core
+BuildRequires: /dev/pts
 %endif
 
 %description
@@ -91,6 +92,9 @@ export CARGO_PROFILE_RELEASE_STRIP=false
 %_libdir/%name/grammars/*.so
 
 %changelog
+* Sat Oct 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.3-alt1
+- Updated to version 0.1.3.
+
 * Sun Oct 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.1.2-alt1
 - Updated to version 0.1.2.
 
