@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.32
+Version: 0.0.33
 Release: alt1
 
 Summary: A streaming multipart parser for Python
@@ -17,29 +17,25 @@ Vcs: https://github.com/Kludex/python-multipart
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
 # see https://bugzilla.altlinux.org/43483 for more information
 AutoProv: nopython3
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_filter mkdocstrings-python
+%pyproject_configure_with_check_filter pymdown-extensions
+%pyproject_configure_with_check_filter pytest-codspeed
+%pyproject_configure_with_check_filter zensical
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
-python-multipart is an Apache2 licensed streaming multipart parser for Python.
+Python-Multipart reads the data that a web browser sends when someone submits
+a form or uploads a file.
 
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -58,6 +54,9 @@ rm -r %buildroot%python3_sitelibdir/multipart/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 31 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.33-alt1
+- Updated to 0.0.33.
+
 * Thu Jul 23 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.32-alt1
 - Updated to 0.0.32.
 
