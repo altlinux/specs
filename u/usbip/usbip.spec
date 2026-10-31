@@ -1,4 +1,4 @@
-%define kernel_version   7.2
+%define kernel_version   7.3
 %define kernel_source /usr/src/kernel/sources/kernel-source-%kernel_version.tar
 %define source_dir tools/usb/usbip
 %define lname lib%name
@@ -6,7 +6,7 @@
 %def_disable static
 
 Name: usbip
-Version: %kernel_version
+Version: 7.3.0
 Release: alt1
 
 Summary: Utility for manage usbip devices
@@ -175,6 +175,10 @@ ln -s ../sbin/usbip %buildroot%_bindir/usbip
 %endif
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.0-alt1
+- new version 7.3.0 (closes: #46885).
+- updated BuildRequires: kernel-source-7.3 (to use matching USB/IP sources).
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2-alt1
 - build with sources from linux kernel 7.2
 
