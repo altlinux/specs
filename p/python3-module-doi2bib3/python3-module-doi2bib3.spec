@@ -3,8 +3,8 @@
 %define pypi_name doi2bib3
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
-Release: alt2
+Version: 1.7.1
+Release: alt1
 
 Summary: DOI/arXiv to BibTeX command line utility
 License: GPL-3.0-or-later
@@ -57,6 +57,9 @@ A GUI frontend is available: Check out QuickBib.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+
 * Mon Sep 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.7.0-alt2
 - Explicitly require python3-module-pylatexenc (thanks to apandada1).
 
