@@ -7,7 +7,7 @@
 
 Name: %_name
 Version: %ver_major.6
-Release: alt0.2
+Release: alt0.2.1
 
 Summary: A Low Complexity Speech Enhancement Framework for Full-Band Audio using on Deep Filtering
 License: MIT OR Apache-2.0
@@ -25,6 +25,7 @@ Source1: %__name-%version-cargo.tar
 
 Patch: deepfilternet-0.5.6-alt-loongarch64-nix-0.22.3.patch
 Patch1: deepfilternet-0.5.6-alt-loongarch64-nix-0.24.3.patch
+Patch2: deepfilternet-0.5.6-alt-hdf5-2.2.patch
 
 ExcludeArch: %ix86
 
@@ -67,9 +68,11 @@ tar -cf %_sourcedir/%__name-%version-cargo.tar Cargo.lock .cargo/ vendor/}
 
 %patch -p2
 %patch1 -p2
+%patch2 -p2
 sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 	 ./vendor/nix-0.22.3/.cargo-checksum.json \
-     ./vendor/nix-0.24.3/.cargo-checksum.json
+     ./vendor/nix-0.24.3/.cargo-checksum.json \
+     ./vendor/hdf5-sys/.cargo-checksum.json
 
 %build
 # for --features
@@ -104,6 +107,9 @@ install -Dm 755 target/release/df-demo-c -t %buildroot%_bindir
 %doc README*
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.6-alt0.2.1
+- fix HDF5 2.2 detection and vendor checksum.
+
 * Thu Jul 03 2025 Ilya Sorochan <k0tran@altlinux.org> 0.5.6-alt0.2
 - add two patches for two old nix crate versions (0.22.3 and 0.24.3) to enable
   build on loongarch64
