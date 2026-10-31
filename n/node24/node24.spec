@@ -5,6 +5,7 @@
 # the private prefix /usr/lib/node24 with unversioned node/npm/npx in bin/
 # (PATH=/usr/lib/node24/bin:$PATH selects Node.js 24 as node), no alternatives.
 %define major 24
+%define node_version 24.22.1
 
 %define node_prefix %_prefix/lib/node%major
 
@@ -18,15 +19,16 @@
 
 # check deps/zlib/zlib.h (chromium fork 1.3.2.1-motley)
 %define zlib_version 1.3.1
+%define brotli_version 1.2.1
 
 # check deps/cares/include/ares_version.h
-%define c_ares_version 1.34.8
+%define c_ares_version 1.34.9
 
 # check deps/llhttp/include/llhttp.h
 %define llhttp_version 9.4.3
 
 # check deps/openssl/openssl/include/openssl/opensslv.h
-%define openssl_version 3.5
+%define openssl_version 3.5.9
 
 # check deps/uv/include/uv/version.h
 %define libuv_version 1.52.1
@@ -44,7 +46,7 @@
 %define zstd_version 1.5.7
 
 # check deps/sqlite/sqlite3.h (bundled 3.53.4)
-%define sqlite_version 3.53
+%define sqlite_version 3.53.3
 
 # bundled: simdjson 4.6.11 (Sisyphus libsimdjson is older),
 # simdutf 6.4.0 (Sisyphus simdutf 9.x has another API), uvwasi 0.0.23,
@@ -65,7 +67,7 @@
 %def_disable check
 
 Name: node%major
-Version: %major.22.0
+Version: %node_version
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript (Node.js %major LTS)
@@ -94,12 +96,12 @@ BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires: python3-devel gcc-c++
 BuildRequires: gyp >= 0.22
 BuildRequires: zlib-devel >= %zlib_version
-BuildRequires: libbrotli-devel
+BuildRequires: libbrotli-devel >= %brotli_version
+BuildRequires: libcares-devel >= %c_ares_version
 BuildRequires: openssl-devel >= %openssl_version
 BuildRequires: libuv-devel >= %libuv_version
 BuildRequires: libicu-devel >= %libicu_version
 BuildRequires: libnghttp2-devel >= %libnghttp2_version
-BuildRequires: libcares-devel >= %c_ares_version
 BuildRequires: libada-devel >= %ada_version
 BuildRequires: libzstd-devel >= %zstd_version
 BuildRequires: libsqlite3-devel >= %sqlite_version
@@ -114,6 +116,13 @@ Provides: bundled(uvwasi) = 0.0.23
 Provides: bundled(simdjson) = 4.6.11
 Provides: bundled(simdutf) = 6.4.0
 Provides: bundled(v8) = %v8_version
+
+Requires: libbrotlidec >= %brotli_version
+Requires: libbrotlienc >= %brotli_version
+Requires: libcares >= %c_ares_version
+Requires: libsqlite3 >= %sqlite_version
+Requires: libssl3 >= %openssl_version
+Requires: libcrypto3 >= %openssl_version
 
 # use no more than system_memory/3000 build procs (V8 13.6 turboshaft units
 # are killed with 1400 and 1800, see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
@@ -135,7 +144,7 @@ use PATH=%node_prefix/bin:$PATH to get it as node.
 Summary: Devel package for Node.js %major
 Group: Development/Other
 Requires: %name = %EVR
-Requires: gcc-c++ zlib-devel libbrotli-devel libcares-devel
+Requires: gcc-c++ zlib-devel libbrotli-devel >= %brotli_version libcares-devel >= %c_ares_version
 Requires: openssl-devel >= %openssl_version
 Requires: libuv-devel >= %libuv_version
 
@@ -299,6 +308,22 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs%{major}_native.req
 %node_prefix/node_modules/
 
 %changelog
+* Thu Oct 22 2026 Vitaly Lipatov <lav@altlinux.ru> 24.22.1-alt1
+- new version 24.22.1
+- require libcares-devel 1.34.9 (was 1.34.8) and libbrotli-devel 1.2.1.
+- require openssl-devel 3.5.9 (was 3.5).
+- require libsqlite3-devel 3.53.4 (was 3.53).
+- require libsqlite3-devel 3.53.3 (was 3.53.4).
+- fixes:
+  + CVE-2026-105481: Node.js releases include security fixes.
+  + CVE-2026-105482: Node.js releases include security fixes.
+  + CVE-2026-105483: Node.js releases include security fixes.
+  + CVE-2026-106069: Node.js releases include security fixes.
+  + CVE-2026-106072: Node.js releases include security fixes.
+  + CVE-2026-106073: Node.js releases include security fixes.
+  + CVE-2026-106074: Node.js releases include security fixes.
+  + CVE-2026-111497: Node.js releases include security fixes.
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 24.22.0-alt1
 - initial build for Sisyphus
 - ExcludeArch: i586 (bundled hdr_histogram does not build on 32-bit x86),
