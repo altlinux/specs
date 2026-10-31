@@ -3,15 +3,14 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 Summary: Python Module for Accessing and Modifying Configuration Data in INI files
 Group: Development/Python3
 License: MIT and Python
 Url: https://github.com/candlepin/python-iniparse
 
 Source: %name-%version.tar
-Patch: iniparse-0.5.1-py314-fix.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
@@ -30,7 +29,6 @@ are preserved when data is updated), and is more convenient to use.
 
 %prep
 %setup
-%patch -p1
 
 # Fix version
 sed -i 's/VERSION = "0.5"/VERSION = "%version"/' setup.py
@@ -53,6 +51,9 @@ rm -rf %buildroot%_datadir/doc/iniparse-%version
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Sat Oct 31 2026 Anton Vyatkin <toni@altlinux.org> 0.5.2-alt1
+- New version 0.5.2.
+
 * Wed Jul 22 2026 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt2
 - Fix FTBFS.
 
