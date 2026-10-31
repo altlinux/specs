@@ -3,7 +3,7 @@
 %def_with check
 
 Name: superlight
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: System Monitor for Linux Desktops
@@ -49,5 +49,8 @@ Requires: xapp-symbolic-icons
 %_iconsdir/hicolor/scalable/apps/superlight.svg
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
+- New version 1.0.2.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus
