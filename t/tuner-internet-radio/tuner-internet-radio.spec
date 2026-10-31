@@ -3,7 +3,7 @@
 %define appname io.github.tuner_labs.tuner
 
 Name: tuner-internet-radio
-Version: 2.1.0
+Version: 2.2.1
 Release: alt1
 
 Summary: Minimalist internet radio station player
@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-player-1.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: vapi(granite)
+BuildRequires: pkgconfig(librsvg-2.0)
 
 %description
 Discover and Listen to your favourite internet radio stations.
@@ -50,7 +51,7 @@ sed -i "s|flathub/||g" README.md
 %meson_test
 
 %files -f %{appname}.lang
-%doc LICENSE README.md flathub/logo_01.png flathub/Tuner.210.one.png
+%doc LICENSE README.md flathub/logo_01.png flathub/Tuner.220.discover.png
 %_bindir/%{appname}
 %_desktopdir/%{appname}.desktop
 %_datadir/glib-2.0/schemas/%{appname}.gschema.xml
@@ -61,6 +62,9 @@ sed -i "s|flathub/||g" README.md
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.1-alt1
+- New version 2.2.1.
+
 * Fri Mar 20 2026 Nikolay Strelkov <snk@altlinux.org> 2.1.0-alt1
 - New version 2.1.0.
 
