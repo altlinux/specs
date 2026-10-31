@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.60.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -73,6 +73,7 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch: 0001-luks-Fix-regression-parsing-etc-luks.keys-with-empty.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -437,6 +438,10 @@ fi
 %prefix/lib/kernel/install.d/50-make-initrd.install
 
 %changelog
+* Sat Oct 31 2026 Anton Midyukov <antohami@altlinux.org> 2.60.0-alt2
+- luks: Fix regression parsing /etc/luks.keys with empty key-device
+  (Closes: 61272).
+
 * Mon Oct 12 2026 Anton Midyukov <antohami@altlinux.org> 2.60.0-alt1
 - Kernel-install integration:
   + Add a plugin for building initramfs and UKI images.
