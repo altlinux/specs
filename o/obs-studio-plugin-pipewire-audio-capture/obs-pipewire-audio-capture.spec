@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define oname linux-pipewire-audio
 
 Name: obs-studio-plugin-pipewire-audio-capture
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Audio device and application capture for OBS Studio using PipeWire
@@ -32,11 +33,14 @@ BuildRequires: pipewire-libs-devel
 %cmake_install
 
 %files
-%_libdir/obs-plugins/%oname.so
-%_datadir/obs/obs-plugins/%oname
+%_libdir/obs-modules/plugins/%oname.so
+%_datadir/obs/obs-modules/plugins/%oname
 %doc *.md LICENSE
 
 %changelog
+* Sat Oct 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.2.2-alt1
+- 1.2.1 -> 1.2.2
+
 * Fri Dec 26 2025 Aleksandr Shamaraev <shad@altlinux.org> 1.2.1-alt1
 - Initial build for ALT Linux.
 
