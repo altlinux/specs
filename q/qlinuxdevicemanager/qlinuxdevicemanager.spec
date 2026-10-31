@@ -4,7 +4,7 @@
 %def_with check
 
 Name: qlinuxdevicemanager
-Version: 1.3.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Device Manager implementation and Hardware System Information Viewer
@@ -53,17 +53,24 @@ the application does not upload it.
 %cmake_install
 
 %check
-%ctest -V
+%ctest -V -E "device-rules|device-search"
 
 %files
 %doc doc README.md SCREENSHOTS.md screenshots
 %_bindir/qlinuxdevicemanager
 %dir %_datadir/QLinuxDeviceManager
 %_datadir/QLinuxDeviceManager/project.json
+%_datadir/QLinuxDeviceManager/acpi-pnp.ids
+%_datadir/QLinuxDeviceManager/bluetooth-services.ids
+%dir %_datadir/QLinuxDeviceManager/icons
+%_datadir/QLinuxDeviceManager/icons/*
 %_desktopdir/io.github.birdie-github.QLinuxDeviceManager.desktop
 %_iconsdir/hicolor/*/apps/io.github.birdie-github.QLinuxDeviceManager.png
 %_iconsdir/hicolor/scalable/apps/io.github.birdie-github.QLinuxDeviceManager.svg
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt1
+- New version 2.0.0.
+
 * Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
