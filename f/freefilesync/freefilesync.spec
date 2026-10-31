@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: freefilesync
-Version: 14.12
+Version: 14.13
 Release: alt1
 
 Summary: Cross-platform file sync utility with GUI (GPL release)
@@ -68,10 +68,12 @@ sed -i '/DisableAutomaticBoundingBoxUpdates/s|^|//|' wx+/dc.h
 sed -i '/soundLog/s|^|//|' FreeFileSync/Source/ui/{batch_status_handler,gui_status_handler,main_dlg}.cpp
 sed -i '/zipLog/s|^|//|' FreeFileSync/Source/localization.cpp wx+/image_resources.cpp
 
-echo '#undef wxUSE_EXCEPTIONS' >> FreeFileSync/Source/localization.h
+sed -i -e '/conversion/s|$| \\|' -e 's|arch)|uname)|' FreeFileSync/Source/{Makefile,RealTimeSync/Makefile}
+sed -i '/#error/s|^|//|' FreeFileSync/Source/{application.cpp,RealTimeSync/application.cpp}
 sed -i 's|::g_free|g_free|' FreeFileSync/Source/{base/icon_loader.cpp,afs/ftp.cpp} zen/zstring.cpp
 sed -i -e's|const override|const|' -e'/animalImg/s|^|//|' FreeFileSync/Source/ui/small_dlgs.cpp
 sed -i '/Bind\(.*onStartupUpdateCheck\)/s|^|//|' FreeFileSync/Source/ui/main_dlg.cpp
+sed -i 's|  def|def|' zen/argon2.cpp xBRZ/src/xbrz.cpp
 
 %build
 export CXXFLAGS="%{optflags} -DMAX_SFTP_READ_SIZE=30000 -DMAX_SFTP_OUTGOING_SIZE=30000 \
@@ -133,6 +135,9 @@ install -m 0644 %SOURCE5 %buildroot%_datadir/mime/packages/
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 14.13-alt1
+- New version 14.13.
+
 * Thu Sep 24 2026 Nikolay Strelkov <snk@altlinux.org> 14.12-alt1
 - New version 14.12.
 - Exclude %%ix86 arch as not buildable.
