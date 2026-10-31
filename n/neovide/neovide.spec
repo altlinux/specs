@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: neovide
-Version: 0.16.2
+Version: 0.17.1
 Release: alt1
 
 Summary: No Nonsense Neovim Gui
@@ -13,13 +13,16 @@ Vcs: https://github.com/neovide/neovide
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
-Source2: skia-m145-0.92.0.tar
-Source3: wuffs-e3f919ccfe3ef542cfc983a82146070258fb57f8.tar
+# Required Skia revision: see vendor/skia-bindings/Cargo.toml ([package.metadata] skia).
+# Refresh with: .gear/vendor-skia.sh <revision>
+Source2: skia-m156.5.tar
+Source3: wuffs-7411f488fe2e2c205c3d3b3d28638b7356522930.tar
 Source4: cargo-config.toml
+Source5: freetype-891f904e2e7b4289f615598cd4b69832f87d2f3a.tar
 Patch0: %name-%version-alt.patch
 
 # from website/docs/installation.md
-Requires: neovim >= 0.10
+Requires: neovim >= 0.12
 
 BuildRequires: rust-cargo
 BuildRequires: python3
@@ -31,7 +34,6 @@ BuildRequires: pkg-config
 BuildRequires: libexpat-devel
 BuildRequires: libicu-devel
 BuildRequires: fontconfig-devel
-BuildRequires: libfreetype-devel
 BuildRequires: libharfbuzz-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
@@ -46,7 +48,7 @@ To checkout all the cool features, installation instructions, configuration
 settings and much more, head on over to https://neovide.dev.
 
 %prep
-%setup -a1 -a2 -a3
+%setup -a1 -a2 -a3 -a5
 %autopatch -p1
 [ -d .cargo ] || mkdir -p .cargo
 cat %_sourcedir/cargo-config.toml >> .cargo/config.toml
@@ -87,5 +89,8 @@ done
 %_iconsdir/hicolor/*/apps/neovide.*
 
 %changelog
+* Sat Oct 31 2026 Anton Zhukharev <ancieg@altlinux.org> 0.17.1-alt1
+- Updated to 0.17.1.
+
 * Tue Oct 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.16.2-alt1
 - Packaged for ALT Sisyphus.
