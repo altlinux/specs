@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name:    GPU-Viewer
-Version: 4.02
+Version: 4.04
 Release: alt1
 
 Summary: A front-end to glxinfo, vulkaninfo, clinfo and es2_info - Linux
@@ -21,7 +23,7 @@ BuildArch: noarch
 
 %add_python3_req_skip Common Filenames OpenCL OpenGLViewer VdpauViewer
 %add_python3_req_skip VulkanVideoViewer aboutPage const vulkan_viewer
-%add_python3_req_skip FrameBuffer SummaryViewer
+%add_python3_req_skip FrameBuffer SummaryViewer GpuZViewer
 
 %description
 This project aims to capture all the important details of glxinfo, vulkaninfo
@@ -42,6 +44,7 @@ clinfo works the GPU-viewer will also work.
 %meson_install
 
 %files
+%doc LICENSE README.md
 %_bindir/gpu-viewer
 %_datadir/gpu-viewer/
 %_datadir/metainfo/io.github.arunsivaramanneo.GPUViewer.metainfo.xml
@@ -49,6 +52,9 @@ clinfo works the GPU-viewer will also work.
 %_iconsdir/hicolor/*/apps/io.github.arunsivaramanneo.GPUViewer.png
 
 %changelog
+* Sat Oct 31 2026 Sergey Palcheh <minergenon@altlinux.org> 4.04-alt1
+- new version 4.04
+
 * Mon Sep 14 2026 Sergey Palcheh <minergenon@altlinux.org> 4.02-alt1
 - new version 4.02
 
