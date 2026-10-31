@@ -1,75 +1,84 @@
+%define soname 3
+
 Name: daq
-Version: 2.0.7
+Version: 3.0.28
 Release: alt1
 Summary: Data Acquisition Library
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Libraries
-Provides: daq
-Source: daq-%version.tar.gz
-URL: http://www.snort.org/
+URL: https://github.com/snort3/libdaq
+# Source-url: https://github.com/snort3/libdaq/archive/v%version/libdaq-%version.tar.gz
+Source: daq-%version.tar
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-BuildRequires: autoconf, automake, flex, libpcap-devel
+
+BuildRequires: gcc-c++ libpcap-devel
 
 %description
 Data Acquisition library for Snort.
 
-%package -n lib%name
-Summary: The shared library for Snort Data Acquisition.
+This package contains daqtest, a tool to test DAQ modules.
+
+%package -n libdaq%soname
+Summary: The shared library for Snort Data Acquisition
 Group: System/Libraries
-Provides: %name-lib = %version
-Obsoletes: %name-lib < %version
+# the DAQ modules in %_libdir/daq/ moved from libdaq 2.x
+Obsoletes: libdaq < 3
 
-%package -n lib%name-devel
-Summary: Header files for lib%name
-Summary(ru_RU.UTF-8): Заголовочные файлы для lib%name
+%package -n libdaq-devel
+Summary: Header files for libdaq
+Summary(ru_RU.UTF-8): Заголовочные файлы для libdaq
 Group: Development/C
-Requires: lib%name = %version-%release bc
-Provides: %name-devel = %version
-Obsoletes: %name-devel < %version
+Requires: libdaq%soname = %EVR
 
-%description -n lib%name
-This package contains lib%name shared library of functions for 
-Snort Data Acquisition.
+%description -n libdaq%soname
+This package contains libdaq shared library and DAQ modules
+for Snort Data Acquisition.
 
-
-%description -n lib%name-devel
-This package contains lib%name develomment library of functions for 
+%description -n libdaq-devel
+This package contains libdaq development files for
 Snort Data Acquisition.
 
 This package is required for development of applications that
-utilize lib%name.
-
+utilize libdaq.
 
 %prep
-%setup -q
+%setup
 
 %build
-%configure
+%autoreconf
+%configure --disable-static
 # get rid of rpath
-%{__sed} -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-%{__sed} -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
-%make
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+%make_build
 
 %install
 %makeinstall_std
+find %buildroot -type f -name "*.la" -delete -print
+# static DAQ modules for static linking into Snort: we link dynamically
+rm -v %buildroot%_libdir/libdaq_static_*.a %buildroot%_pkgconfigdir/libdaq_static_*.pc
+rm -v %buildroot%_bindir/daqtest-static
 
-# get rid of la files
-find $RPM_BUILD_ROOT -type f -name "*.la" -delete -print
-# get rid of static libraries
-find $RPM_BUILD_ROOT -type f -name "*.a" -delete -print
+%files
+%doc README.md ChangeLog.md
+%_bindir/daqtest
 
-
-%files -n lib%name
-%_bindir/daq-modules-config
+%files -n libdaq%soname
+%_libdir/libdaq.so.%{soname}*
+%dir %_libdir/daq
 %_libdir/daq/*.so
-%_libdir/lib*.so.*
 
-%files -n lib%name-devel
-%_includedir/*.h
-%_libdir/*.so
+%files -n libdaq-devel
+%_includedir/daq*.h
+%_libdir/libdaq.so
+%_pkgconfigdir/libdaq.pc
 
 %changelog
+* Fri Oct 30 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.28-alt1
+- NMU: update to libdaq 3.0.28.
+- removed BuildRequires: autoconf, automake, flex.
+- added BuildRequires: gcc-c++ for the C++ build.
+
 * Sat May 15 2021 Ilya Mashkin <oddity@altlinux.ru> 2.0.7-alt1
 - 2.0.7
 

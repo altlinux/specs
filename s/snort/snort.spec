@@ -1,269 +1,110 @@
-Summary:   An intrusion detection system
-Name:      snort
-Version:   2.9.17.1
-Release:   alt1
-License: %gpl2only
-Group:     Security/Networking
-Url:       http://www.snort.org
+Name: snort
+Version: 3.12.4.0
+Release: alt1
+Summary: Network intrusion detection and prevention system
 
-# You can omit this feature via 'rpmbuild --disable flexresp'
-%def_enable flexresp
-
-Source0:   %name-%version.tar
-
-Source10:  snort.sysconfig.m4
-Source20:  README-ALT.ru.m4
-Source30:  snort.logrotate.m4
-Source99:  snortd
-
-Patch0:    %name-%version-%release.patch
-
-Requires:  libpcap >= 0.4
-Requires:  service >= 0.5.6
-Requires:  snort-base, snort-rules
-Requires:  alternatives >= 0.2.0-alt0.7
-BuildPreReq: libltdl-devel, m4, bzip2
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-macros-alternatives
-
-BuildRequires: libpcap-devel >= 0.4, libpcre-devel
-BuildRequires: zlib-devel libdnet-devel libdaq-devel flex
-BuildRequires: libluajit-devel libssl-devel libnghttp2-devel libtirpc-devel
-
-Conflicts: snort-rules < 2.8
-
-Provides: snort-inline = %EVR
-Obsoletes: snort-inline <= 2.9.7.0-alt2
-
-%define _unpackaged_files_terminate_build 1
-
-Summary(ru_RU.UTF-8): Автоматический анализатор/блокировщик сетевых пакетов
-
-%description
-Snort is a libpcap-based packet sniffer/logger which can be used as a
-lightweight network intrusion detection system.  It features rules
-based logging and can perform protocol analysis, content
-searching/matching and can be used to detect a variety of attacks and
-probes, such as buffer overflows, stealth port scans, CGI attacks, SMB
-probes, OS fingerprinting attempts, and much more.  Snort has a
-real-time alerting capabilty, with alerts being sent to syslog, a
-seperate "alert" file, or as a WinPopup message via Samba's smbclient.
-
-Please see the documentation in %_docdir/%name-%version
-
-%description -l ru_RU.UTF-8
-Snort -- это мощный прослушиватель и перехватчик сетевых пакетов,
-основанный на библиотеке libpcap. При работе Snort использует набор
-предварительно подготовленных правил, которые содержат условия срабатывания
-по значениям служебных и прикладных данных.
-
-Snort может использоваться в качестве системы обнаружения вторжения в сеть,
-а также разнообразных атак и попыток предпринятия таковых (переполнение буфера,
-сканирование портов и SMB, стелс-сканирование, атаки CGI, определение
-операционных систем и многое другое).
-
-Snort имеет возможность оповещения в реальном масштабе времени через сообщения,
-отправленные в системный лог-файл, альтернативный файл "тревоги"
-или как WinPopup-сообщение, отправленное с помощью smbclient.
-
-Базовая версия не блокирует опасные соединения. Если вам требуется эта функция,
-инсталлируйте один из пакетов snort с суффиксом flexresp в названии.
-
-Пожалуйста, обязательно ознакомьтесь с документацией,
-которая размещена в %_docdir/%name-%version
-
-%description -l uk_UA.UTF-8
-Snort -- це потужний зас╕б прослуховування та перехвату мережевих
-пакет╕в, оснований на б╕бл╕отец╕ libpcap. В╕н базу╓ться на попередньо
-сформованих правилах та вм╕╓ виконувати анал╕з зм╕сту протоколу.
-
-Даний пакет може використовуватися в якост╕ системи виявлення
-вторгнень в мереж╕, а також допомага╓ виявляти р╕зноман╕тн╕ атаки та
-╖х спроби (переповнення буфера, сканування порт╕в, невидим╕
-сканування, атаки CGI, SMB, спроби визначення типу операц╕йно╖ системи
-та багато ╕нших).
-
-Snort ма╓ можлив╕сть опов╕щення в реальному масштаб╕ часу через
-пов╕домлення, в╕дправлен╕ в системний лог-файл, альтернативний файл
-"тривоги" або як WinPopup-пов╕домлення, в╕дправлене за допомогою
-програми smbclient.
-
-Будь-ласка, обов'язково ознайомтеся з документац╕╓ю, що розм╕щена в
-%_docdir/%name-%version
-
-%package plain+flexresp
-Summary: Snort (plain) with Flexible Response
-Summary(ru_RU.UTF-8): Snort с поддержкой автоматического блокирования соединений
+License: GPL-2.0-only
 Group: Security/Networking
-Requires: %name = %version
+URL: https://www.snort.org
+# Source0-url: https://github.com/snort3/snort3/archive/refs/tags/%version.tar.gz
+Source0: snort-%{version}.tar
+Source1: snort.service
+Source2: snort.sysusers
+Source3: snort.logrotate
 
-Provides: snort-inline+flexresp = %EVR
-Obsoletes: snort-inline+flexresp <= 2.9.7.0-alt2
-
-%description plain+flexresp
-Snort compiled with flexresp support.
-Flexible Response allows snort to actively close offending connections.
-%description -l ru_RU.UTF-8 plain+flexresp
-Snort, скомпилированный с поддержкой flexresp. Flexible Responses означает
-возможность автоматически блокировать соединения, признанные злонамеренными
-на основании соответствующих правил.
-%description -l uk_UA.UTF-8 plain+flexresp
-Snort, скомп╕льований з п╕дтримкою flexresp.
-
-%package doc
-Summary: Various documentation from Snort IDS distribution.
-Summary(ru_RU.UTF-8): Документация по анализатору сетевого трафика Snort
-Group: Security/Networking
-BuildArch: noarch
-%description doc
-Snort manual, FAQ and tons of detailed textual listings
-describing all network intrusions known by Snort.
-%description doc -l ru_RU.UTF-8
-Руководство пользователя, FAQ, а также детальная документация
-по сигнатурам всех сетевых атак, которые распознаёт Snort.
-
-%prep
-%setup -q
-
-%patch0 -p1
-
-mkdir -p building
-%autoreconf -I m4
-
-%build
-
-#export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
-
-function prepconf() {
-    local t=$1
-    case $t in
-	--without* ) return ;;
-    esac
-    shift
-
-#   echo DEBUG: Configure args: "$@"
-#   return
-
-    local d=$1
-    shift
-    mkdir -p $d
-    pushd $d
-    ln -s -f ../configure ./configure
-    OPENSSL_LIB_DIR=%_libdir \
-     %configure \
-	--prefix=%_prefix \
-	--sysconfdir=%_sysconfdir/%name \
-	--enable-linux-smp-stats \
-	--disable-static-daq \
-    --with-libtirpc \
-	"$@"
-    %make    
-    mv src/%name ../building/%name-$d
-    case "$d" in
-        plain)
-        mv src/dynamic-plugins/sf_engine/.libs/libsf_engine.so* ../building/
-        mv src/dynamic-preprocessors/build/usr/lib*/snort_dynamicpreprocessor ../building/
-        ;;
-        *);;
-    esac
-    popd
-}
-
-prepconf   xxx                    plain
-%if_enabled flexresp
-prepconf   xxx                    plain+flexresp      --enable-flexresp3
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: flex
+BuildRequires: bison
+BuildRequires: libdaq-devel >= 3.0.28
+BuildRequires: libdnet-devel
+BuildRequires: libpcap-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libhwloc-devel
+BuildRequires: libluajit-devel
+BuildRequires: libssl-devel
+BuildRequires: zlib-devel
+BuildRequires: liblzma-devel
+%ifarch x86_64
+BuildRequires: libhyperscan-devel
 %endif
 
+Obsoletes: snort-inline <= 2.9.7.0-alt2
+Obsoletes: snort-inline+flexresp <= 2.9.7.0-alt2
+Obsoletes: snort-plain+flexresp < 3.12.4.0
+
+%description
+Snort is a lightweight network intrusion detection and prevention system.
+It performs real-time traffic analysis, packet logging, protocol analysis,
+content searching and matching.
+
+%prep
+%setup -q -n snort-%{version}
+
+%build
+%cmake \
+    -DCMAKE_INSTALL_SYSCONFDIR=%{_sysconfdir} \
+    -DENABLE_STATIC_DAQ=OFF \
+    -DMAKE_DOC=OFF
+%cmake_build
+
 %install
-mkdir -p %buildroot{%_sbindir,%_initdir,%_man8dir,%_logdir/%name,%_altdir}
-mkdir -p %buildroot%_sysconfdir/{%name,logrotate.d,sysconfig}
+%cmake_install
 
-weight=0
+rm -rv %{buildroot}%{_includedir}/snort
+rm -v %{buildroot}%{_libdir}/pkgconfig/snort.pc
 
-function myinstall() {
-    weight=$[10+$weight]
-    test -r "$1" || return 0
-    install -m 755 "$1" "%buildroot%_sbindir/$1"
+install -Dpm 0644 %{SOURCE1} %{buildroot}%{_unitdir}/snort.service
+install -Dpm 0644 %{SOURCE2} %{buildroot}%{_sysusersdir}/snort.conf
+install -Dpm 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/logrotate.d/snort
 
-    # Create record file for alterantives
-    printf "%_sbindir/%name\t%_sbindir/$1\t$weight\n" > %buildroot%_altdir/$1
-}
-
-mkdir -p %buildroot%_libdir/%name/dynamicengine
-mkdir -p %buildroot%_libdir/%name/dynamicpreprocessor/
-mkdir -p %buildroot%_libdir/%name/dynamicrules
-pushd building
-myinstall "%name-plain"
-myinstall "%name-plain+flexresp"
-cp -P libsf_engine.so* %buildroot%_libdir/%name/dynamicengine/
-chmod 0644 %buildroot%_libdir/%name/dynamicengine/libsf_engine.so*
-cp -P snort_dynamicpreprocessor/libsf_*_preproc.so* %buildroot%_libdir/%name/dynamicpreprocessor/
-chmod 0644 %buildroot%_libdir/%name/dynamicpreprocessor/libsf_*_preproc.so*
-popd
-
-# Create symlink for %%ghost, actually not packaged
-pushd %buildroot%_sbindir
-ln -s %name-plain %name
-popd
-
-install -m 644 %name.8    %buildroot%_man8dir/
-install -m 644 etc/*.{conf,config,map} %buildroot%_sysconfdir/%name
-install -m 744 %SOURCE99  %buildroot%_initdir/
-mkdir -p %buildroot%_sysconfdir/%name/preproc_rules/
-install -m 644 preproc_rules/*.rules %buildroot%_sysconfdir/%name/preproc_rules/
-sed -i 's;^var RULE_PATH \.\./rules;var RULE_PATH \%_sysconfdir/%name/rules;i' %buildroot%_sysconfdir/%name/%name.conf
-sed -i 's;^var PREPROC_RULE_PATH \.\./preproc_rules;var PREPROC_RULE_PATH \%_sysconfdir/%name/preproc_rules;i' \
-        %buildroot%_sysconfdir/%name/%name.conf
-sed -i 's;/usr/local/lib/snort_;%_libdir/%name/;' %buildroot%_sysconfdir/%name/%name.conf
-sed -i 's;^# config daq_dir: <dir>;config daq_dir: %_libdir/daq/;' %buildroot%_sysconfdir/%name/%name.conf
-sed -i 's;^var WHITE_LIST_PATH \.\./rules;var WHITE_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot%_sysconfdir/%name/%name.conf
-sed -i 's;^var BLACK_LIST_PATH \.\./rules;var BLACK_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot%_sysconfdir/%name/%name.conf
-
-m4 -DSNORT_CONFDIRPATH=%_sysconfdir/%name %SOURCE10 > %buildroot%_sysconfdir/sysconfig/%name
-m4 -DSNORT_LOGPATH=%_logdir/%name %SOURCE30 > %buildroot%_sysconfdir/logrotate.d/%name
-m4 -DSNORT_CONFPATH=%_sysconfdir/%name/%name.conf -DSNORT_BINPATH=%_sbindir/%name %SOURCE20 > README-ALT.ru
-
-mkdir -p %buildroot%_sysconfdir/%name/rules/
-touch %buildroot%_sysconfdir/%name/rules/white_list.rules
-touch %buildroot%_sysconfdir/%name/rules/black_list.rules
-
-%pre
-%_sbindir/groupadd -rf %name
-%_bindir/id %name > /dev/null 2>&1 \
-|| %_sbindir/useradd -c "Snort IDS" -g %name -r -M -d /dev/null -s /dev/null %name
+install -d -m 0755 %{buildroot}%{_sysconfdir}/snort/rules
+install -d -m 0755 %{buildroot}%{_sysconfdir}/snort/lists
+install -pm 0644 lua/snort.lua lua/snort_defaults.lua lua/balanced.lua \
+    lua/connectivity.lua lua/inline.lua lua/max_detect.lua lua/security.lua \
+    lua/talos.lua lua/file_magic.rules lua/sensitive_data.rules \
+    %{buildroot}%{_sysconfdir}/snort/
+touch %{buildroot}%{_sysconfdir}/snort/rules/local.rules
+touch %{buildroot}%{_sysconfdir}/snort/lists/default.allowlist
+touch %{buildroot}%{_sysconfdir}/snort/lists/default.blocklist
 
 %post
-%post_service snortd
+%post_service snort
 
 %preun
-%preun_service snortd
+%preun_service snort
+
+%pre
+%sysusers_create_package snort %{SOURCE2}
 
 %files
-%doc doc/AUTHORS doc/BUGS doc/CREDITS doc/NEWS doc/PROBLEMS doc/README* doc/TODO doc/USAGE doc/WISHLIST
-%doc README-ALT.ru
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %_initdir/snortd
-%config(noreplace) %_sysconfdir/logrotate.d/%name
-%config(noreplace) %_sysconfdir/%name
-%attr(0770,root,snort) %dir %_logdir/%name
-%_sbindir/%name-plain
-%ghost %_sbindir/%name
-%_man8dir/%name.*
-%_altdir/%name-plain
-%_libdir/%name
-
-%if_enabled flexresp
-
-%files plain+flexresp
-%_sbindir/%name-plain+flexresp
-%_altdir/%name-plain+flexresp
-
-%endif  # flexresp
-
-%files doc
-%doc doc/snort_manual.*
+%doc README.md ChangeLog.md
+%{_bindir}/snort
+%{_bindir}/snort2lua
+%{_bindir}/u2boat
+%{_bindir}/appid_detector_builder.sh
+%{_bindir}/show_flows
+%{_bindir}/u2spewfoo
+%{_libdir}/snort/daq/daq_file.so
+%{_libdir}/snort/daq/daq_hext.so
+%{_docdir}/snort/README.show_flows
+%{_docdir}/snort/README.u2boat
+%{_sysconfdir}/snort/
+%config(noreplace) %{_sysconfdir}/logrotate.d/snort
+%{_unitdir}/snort.service
+%{_sysusersdir}/snort.conf
 
 %changelog
+* Fri Oct 30 2026 Vitaly Lipatov <lav@altlinux.ru> 3.12.4.0-alt1
+- new version 3.12.4.0 (Snort 3): CMake build with libdaq 3
+- replace the Snort 2 service and configuration with Snort 3 Lua and systemd
+- build with Hyperscan on x86_64 only (not available elsewhere)
+- added BuildRequires: rpm-macros-cmake, rpm-build-cmake, gcc-c++, bison,
+  liblzma-devel, libhwloc-devel, libhyperscan-devel, libpcre2-devel (Snort 3)
+- removed BuildRequires: libnghttp2-devel, libpcre-devel, libtirpc-devel,
+  rpm-build-licenses, rpm-macros-alternatives (not used by Snort 3)
+
 * Mon Apr 19 2021 Slava Aseev <ptrnine@altlinux.org> 2.9.17.1-alt1
 - update to 2.9.17.1
 - apply libtirpc patch from gentoo
