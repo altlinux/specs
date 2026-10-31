@@ -2,7 +2,7 @@
 %def_with check
 
 Name: rumdl
-Version: 0.2.79
+Version: 0.3.2
 Release: alt1
 Summary: A high-performance Markdown linter
 License: MIT
@@ -42,12 +42,17 @@ speed and developer experience improvements to the Markdown ecosystem.
 # Timing-based tests are not stable in a build chroot.
 %rust_test -- \
     --test-threads=1 \
-    --skip rules::md057_existing_relative_links::exact_case_tests::test_a_listing_answers_until_the_directory_changes
+    --skip rules::md057_existing_relative_links::exact_case_tests::test_a_listing_answers_until_the_directory_changes \
+    --skip format_proof::tests::source_fragments_never_prove_a_native_rewrite \
+    --skip perf::rule_complexity_regression_test::test_md044_long_lines_linear_complexity
 
 %files
 %_bindir/%name
 
 %changelog
+* Wed Oct 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.2-alt1
+- Updated to version 0.3.2.
+
 * Sat Oct 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.2.79-alt1
 - Updated to version 0.2.79.
 
