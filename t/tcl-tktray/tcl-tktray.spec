@@ -1,6 +1,6 @@
 Name: tcl-tktray
 Version: 1.3.9
-Release: alt1
+Release: alt1.1
 
 Summary: FreeDesktop dock plugin for Tk apps
 License: GPL
@@ -10,6 +10,7 @@ Provides: tcl-tksystray = %version-%release
 Obsoletes: tcl-tksystray
 
 Source: %name-%version-%release.tar
+Patch0: tcl-tktray-gcc15.patch
 
 BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1 tcl-devel >= 8.4.0 tk-devel >= 8.4.0
 
@@ -18,6 +19,7 @@ BuildRequires: rpm-build >= 4.0.4-alt41 rpm-build-tcl >= 0.2-alt1 tcl-devel >= 8
 
 %prep
 %setup
+%patch0 -p1
 sed -i 's,@lib@,%_lib,' pkgIndex.tcl.in
 
 %build
@@ -36,5 +38,8 @@ autoconf
 %_mandir/mann/tktray.n*
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.9-alt1.1
+- NMU: fix build with current Tk and GCC.
+
 * Mon Jun 25 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.9-alt1
 - 1.3.9
