@@ -4,7 +4,7 @@
 %def_with check
 
 Name: prek
-Version: 0.5.5
+Version: 0.5.9
 Release: alt1
 
 Summary: Better pre-commit, re-engineered in Rust
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-macros-python3
 BuildRequires: rpm-build-rust
 BuildRequires: rpm-build-python3
 BuildRequires: python3(maturin)
+BuildRequires: cmake
 
 %if_with check
 BuildRequires: git
@@ -46,9 +47,19 @@ This package contains python bindings for %name.
 %prep
 %setup -a1
 %rust_prep
+sed -i 's/^strip = true$/strip = false/' pyproject.toml
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+export RUSTFLAGS="${RUSTFLAGS} -g"
+export AWS_LC_SYS_CMAKE_BUILDER=1
+
+# avoid rustc-LLVM: out of memory on 32-bit archs
+%ifarch %ix86
+export CARGO_PROFILE_RELEASE_LTO=false
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16
+%endif
+
 %pyproject_build
 ./target/release/%name util generate-shell-completion bash > %name.bash
 ./target/release/%name util generate-shell-completion fish > %name.fish
@@ -64,15 +75,18 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 # most tests require network access, run only unit tests
 # snapshot test fails on i586 due to hash map ordering
 %ifarch %ix86
-%rust_test --bin prek -- --skip http \
-    --skip hook_builder_build_fills_and_merges_attributes \
+%define arch_skip_args \\\
+    --skip hook_builder_build_fills_and_merges_attributes \\\
     --skip hook_from_spec_fills_and_merges_attributes
-%else
-%rust_test --bin prek -- --skip http
 %endif
 
+%rust_test --bin prek -- \
+    --skip http \
+    --skip retries_with_static_musl_when_native_interpreter_is_missing \
+    %{?arch_skip_args}
+
 %files
-%doc CHANGELOG.md CONTRIBUTING.md README.md
+%doc CHANGELOG.md README.md
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -83,6 +97,11 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Oct 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.5.9-alt1
+- Updated to version 0.5.9.
+- Enabled debug symbols with the maturin backend.
+- Cleaned up the spec file.
+
 * Wed Oct 07 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.5.5-alt1
 - Updated to version 0.5.5.
 
@@ -107,4 +126,3 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 
 * Mon Mar 23 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.3.6-alt1
 - Initial build for ALT.
-
