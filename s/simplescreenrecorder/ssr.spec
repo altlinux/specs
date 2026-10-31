@@ -9,7 +9,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4.0.23.9559
-Release: alt4
+Release: alt5
 
 Summary: Simple Screen Recording with OpenGL capture
 
@@ -21,10 +21,11 @@ Vcs: git://github.com/MaartenBaert/ssr.git
 Source: https://github.com/MaartenBaert/ssr/archive/%version/ssr-%version.tar.gz
 Patch0: simplescreenrecorder-0.4.4-alt-hide-window-on-the-screen-recording.patch
 Patch1: simplescreenrecorder-0.4.4-alt-fix-russian-translations.patch
+Patch2: simplescreenrecorder-0.4.4-alt-ffmpeg9.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: libavformat-devel
 BuildRequires: libswscale-devel
 BuildRequires: libswresample-devel
@@ -53,6 +54,7 @@ Obsoletes: simplescreenrecording
 %setup -n ssr-%version
 %patch0 -p2
 %patch1 -p1
+%patch2 -p1
 f="data/simplescreenrecorder.desktop"
 for s in "GenericName=Simple screen recorder" \
 	"GenericName[ru]=Запись видео с экрана" \
@@ -93,6 +95,10 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.4.0.23.9559-alt5
+- Fix build with FFmpeg 9.
+- Use rpm-build-cmake for the %%cmake macros.
+
 * Mon Jan 26 2026 Sergey V Turchin <zerg@altlinux.org> 0.4.4.0.23.9559-alt4
 - Hide from Plasma Wayland session by KDE-specific way.
 
