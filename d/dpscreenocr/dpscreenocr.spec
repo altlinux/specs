@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dpscreenocr
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: Program to recognize text on screen
@@ -52,6 +52,9 @@ sed -i 's|^Categories=.*|Categories=Graphics;OCR;Scanning;|' data/dpscreenocr.de
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.2-alt1
+- New version 1.5.2.
+
 * Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt1
 - New version 1.5.1.
 
