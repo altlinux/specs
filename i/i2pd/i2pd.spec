@@ -2,8 +2,8 @@
 %define _i2pd_root %_sharedstatedir/%name
 
 Name: i2pd
-Version: 2.61.0
-Release: alt2
+Version: 3.0.0.1
+Release: alt1
 
 Summary: Full C++ implementation of I2P router
 
@@ -24,7 +24,7 @@ Source5: %name.sysconfig
 
 BuildRequires: rpm-build-intro rpm-build-cmake
 
-BuildRequires: gcc-c++ libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel libminiupnpc-devel zlib-devel
+BuildRequires: gcc-c++ libssl-devel boost-devel boost-filesystem-devel boost-program_options-devel boost-asio-devel boost-beast-devel libminiupnpc-devel zlib-devel
 
 BuildRequires: /proc
 
@@ -120,6 +120,10 @@ mkdir -p %buildroot%_logdir/%name/
 %dir %_logdir/%name/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1-alt1
+- new version 3.0.0.1
+- added BuildRequires: boost-beast-devel (new dependency of 3.0.0.1)
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.61.0-alt2
 - systemd unit: add ExecReload (SIGHUP), graceful stop timeout, LimitNOFILE and network-online ordering.
 - the config in the current format is shipped since 2.61.0-alt1, service starts again (closes: #42746)
