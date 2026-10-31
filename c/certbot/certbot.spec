@@ -5,7 +5,7 @@
 %define acme_version %version
 
 Name: certbot
-Version: 5.8.0
+Version: 5.9.0
 Release: alt1
 
 Summary: A free, automated certificate authority client
@@ -248,6 +248,9 @@ rm -rv %buildroot%python3_sitelibdir/certbot/*/*_test*
 %endif
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 5.9.0-alt1
+- new version 5.9.0
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.8.0-alt1
 - new version 5.8.0
 - apache: add ALT Linux httpd2 layout support (closes: #43399)
