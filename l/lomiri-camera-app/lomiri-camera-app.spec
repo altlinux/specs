@@ -4,7 +4,7 @@
 %def_with check
 
 Name: lomiri-camera-app
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: Camera application for Lomiri
@@ -110,6 +110,9 @@ rm -vf lomiri-camera-app-migrate.py
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-camera-app.mo
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt1
+- New version 4.2.1.
+
 * Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.0-alt1
 - New version 4.2.0.
 

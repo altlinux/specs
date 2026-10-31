@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: lomiri-gallery-app
-Version: 3.2.0
+Version: 3.2.2
 Release: alt1
 
 Summary: Gallery App for Lomiri Operating Environment
@@ -95,6 +95,9 @@ This package provides the arch-indep files of Lomiri's Gallery App.
 %exclude %_datadir/locale/zh_LATN@pinyin/LC_MESSAGES/lomiri-gallery-app.mo
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.2-alt1
+- New version 3.2.2.
+
 * Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
