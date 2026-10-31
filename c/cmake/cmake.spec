@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.4.4
+Version: 4.4.5
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -27,13 +27,12 @@ Source: %name-%version.tar
 
 Source2: CMakeCache.txt
 Patch1: alt-fallback-modules-dir.patch
-Patch2: 696d16ae6c5214e314cfc7cb809c2e574bcff651.patch
 Patch3: alt-find-mpi.patch
 Patch4: alt-findpkgconfig-quiet-static.patch
 
 %if_disabled bootstrap
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 %endif
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++
@@ -331,6 +330,10 @@ popd
 
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.5-alt1
+- new version 4.4.5
+- use rpm-build-cmake for build-time dependency generation
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.4-alt1
 - new version 4.4.4
 - require rpm-build-cmake instead of rpm-macros-cmake, so that cmake(Name)
