@@ -2,8 +2,8 @@
 %def_with check
 
 Name: reuse
-Version: 6.2.0
-Release: alt2
+Version: 6.3.0
+Release: alt1
 
 Summary: tool for REUSE copyright and license recommendations
 License: Apache-2.0 AND CC0-1.0 AND CC-BY-SA-4.0 AND GPL-3.0-or-later
@@ -74,6 +74,9 @@ install -D -m 0644 docs/manpages/*.1 -t "%{buildroot}%{_man1dir}/"
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 6.3.0-alt1
+- New version 6.3.0.
+
 * Fri Nov 14 2025 Nikolay Strelkov <snk@altlinux.org> 6.2.0-alt2
 - Fixed FTBFS by using sphinx-build instead of sphinx-build-3.12.
 
