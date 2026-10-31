@@ -3,7 +3,7 @@
 
 %def_with doc
 Name: beremiz
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Integrated development environment for machine automation
@@ -187,6 +187,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 #exclude %_datadir/%name/etherlab
 
 %changelog
+* Sat Oct 31 2026 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
+- New version 1.6.1.
+
 * Sun Sep 13 2026 Anton Midyukov <antohami@altlinux.org> 1.6.0-alt1
 - New version 1.6.0.
 
