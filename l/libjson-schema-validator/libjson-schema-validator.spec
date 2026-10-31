@@ -4,7 +4,7 @@
 %def_with check
 
 Name: libjson-schema-validator
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 
 Summary: JSON schema validator for JSON for Modern C++
@@ -79,5 +79,8 @@ libjson-schema-validator.
 %_libdir/cmake/nlohmann_json_schema_validator/*
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 2.4.1-alt1
+- New version 2.4.1.
+
 * Sat Jul 04 2026 Nikolay Strelkov <snk@altlinux.org> 2.4.0-alt1
 - Initial build for Sisyphus
