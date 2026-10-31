@@ -1,7 +1,7 @@
 %define oname pycparser
 
 Name: python3-module-pycparser
-Version: 3.0
+Version: 3.12
 Release: alt1
 
 Summary: C parser in Python
@@ -46,6 +46,9 @@ It parses C code into an AST and can serve as a front-end for C compilers or ana
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 3.12-alt1
+- new version 3.12
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0-alt1
 - new version 3.0
 - build with pyproject
