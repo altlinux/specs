@@ -4,7 +4,7 @@
 %define irrlichtmt_version 1.9.0mt13
 
 Name: minetest
-Version: 5.16.1
+Version: 5.18.0
 Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
@@ -39,7 +39,7 @@ BuildRequires: gcc-c++
 #BuildRequires: libirrlicht-devel
 BuildRequires: bzip2-devel jthread-devel libsqlite3-devel libSDL2-devel
 BuildRequires: libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel libX11-devel libXcm-devel libXi-devel libXv-devel libXext-devel libGLU-devel
-BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel libpq-devel
+BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel libpq-devel libzip-devel
 #libdotconf-devel graphviz
 BuildRequires: libfreetype-devel
 BuildRequires: systemd
@@ -224,6 +224,9 @@ fi
 %_man6dir/luantiserver.6*
 
 %changelog
+* Sun Nov 01 2026 Ilya Mashkin <oddity@altlinux.ru> 5.18.0-alt1
+- 5.18.0
+
 * Wed May 20 2026 Ilya Mashkin <oddity@altlinux.ru> 5.16.1-alt1
 - 5.16.1
 
