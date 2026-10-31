@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: serial-studio
-Version: 4.2.0
+Version: 4.2.1
 Release: alt1
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
@@ -84,6 +84,9 @@ sed -i "s|set(SS_MIMALLOC_PLATFORM TRUE)|set(SS_MIMALLOC_PLATFORM FALSE) # HACK|
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt1
+- New version 4.2.1.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.0-alt1
 - New version 4.2.0.
 
