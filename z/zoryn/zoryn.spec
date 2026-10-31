@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.53.0
+Version: 0.54.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -110,6 +110,48 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sat Oct 31 2026 Anton Farygin <rider@altlinux.org> 0.54.0-alt1
+- up:
+  + added checks for unexpected patch changes during package updates
+  + changed --reset-to-gear to use sisyphus by default; --branch selects
+    another branch
+  + fixed --continue ignoring the selected sandbox settings
+  + removed tag descriptions and PGP signatures from merge messages
+- flow:
+  + fixed continuing interrupted updates without repeating completed steps
+  + fixed --abort leaving the flow's interrupted update unfinished
+- task test-rebuild:
+  + added lists of task packages and packages used in each test build
+  + added repository refresh when the branch changes during a run, with
+    one retry for builds that may have failed because of the change
+  + changed --verify-failures to check against the current branch without
+    the task packages
+  + fixed test repositories choosing different packages than the build
+    system
+- task download:
+  + added --builder to download packages to selected builders
+  + added --clean to remove old RPMs before downloading
+- task management:
+  + fixed task rebuild continuing after a manually resumed package update
+  + fixed rebuild commands using outdated task status or reporting no
+    dependent packages when the package lookup failed
+  + fixed forgetting the current task after deleting a subtask
+  + added timeouts for remote repository operations
+- build:
+  + fixed local rebuilds unnecessarily recreating the build environment
+  + fixed fallback builds overwriting the failed rebuild's log
+  + fixed remote builders missing /dev/kvm in their default settings
+- devenv:
+  + added run/run_user as aliases for build/build_user in settings, and
+    build/build_user as aliases for run/run_user in feature files
+  + changed pi to use the official installer and share the full ~/.pi
+    directory with the host
+- submit:
+  + added --tag-name for packages whose version is determined at build time
+  + fixed shell completion after --skip-check
+- clone:
+  + fixed cloning repositories whose default branch no longer exists
+
 * Sun Sep 13 2026 Anton Farygin <rider@altlinux.org> 0.53.0-alt1
 - added unlocking the tag signing key before the first 'flow' step so
   pinentry shows up while the terminal is still watched
