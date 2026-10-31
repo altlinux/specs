@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: raceview
-Version: 0.99.5
+Version: 0.99.6
 Release: alt1
 
 Summary: Multi-track synchronized video player built with Qt6 + libmpv
@@ -49,6 +49,9 @@ sed -i "s/^GenericName=/GenericName=Multi-Track Synchronized Video Player/" race
 %_iconsdir/hicolor/scalable/apps/raceview.svg
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.99.6-alt1
+- New version 0.99.6.
+
 * Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.99.5-alt1
 - New version 0.99.5.
 
