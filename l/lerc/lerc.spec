@@ -1,7 +1,7 @@
 %define sover 4
 
 Name: lerc
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
 
 Summary: Limited Error Raster Compression library
@@ -64,5 +64,8 @@ LD_LIBRARY_PATH="$libdir" ./lercTest
 %_pkgconfigdir/Lerc.pc
 
 %changelog
+* Sat Oct 31 2026 Anton Farygin <rider@altlinux.org> 4.3.0-alt1
+- 4.2.0 -> 4.3.0
+
 * Sat Aug 08 2026 Anton Farygin <rider@altlinux.org> 4.2.0-alt1
 - Initial build for ALT Sisyphus.
