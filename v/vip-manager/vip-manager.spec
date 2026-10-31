@@ -1,7 +1,7 @@
 %global import_path github.com/cybertec-postgresql/vip-manager
 Name:     vip-manager
-Version:  4.2.0
-Release:  alt1
+Version: 5.0.0
+Release: alt1
 
 Summary:  Manages a virtual IP based on state kept in etcd or Consul
 License:  BSD-2-Clause
@@ -57,6 +57,9 @@ install -pDm 0644 %SOURCE2 %buildroot%_sysconfdir/patroni/vip.in
 %doc *.md
 
 %changelog
+* Sat Oct 31 2026 Nikolay Burykin <bne@altlinux.org> 5.0.0-alt1
+- 5.0.0
+
 * Mon Jun 01 2026 Nikolay Burykin <bne@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
