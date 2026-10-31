@@ -4,7 +4,7 @@
 
 Name: displaycal
 Version: 3.9.19
-Release: alt1
+Release: alt2
 
 Summary: A graphical user interface for the Argyll CMS display calibration utilities
 
@@ -78,6 +78,22 @@ rm -v %buildroot%python3_sitelibdir/%up_name/freeze.py
 # it's not used for Linux anyway
 rm -vf %buildroot%python3_sitelibdir/%up_name/cacert.pem
 
+# Help menu handlers look for these files in the application data directory.
+docdir=%buildroot%_docdir/%up_name-%version
+datadir=%buildroot%_datadir/%up_name
+mkdir -p "$datadir/theme" "$datadir/screenshots"
+cp -a "$docdir/README.html" "$docdir/README-fr.html" \
+    "$docdir/CHANGES.html" "$docdir/LICENSE.txt" "$datadir/"
+find "$docdir/theme" -type f -print | while IFS= read -r source; do
+    relative=${source#"$docdir/theme/"}
+    target="$datadir/theme/$relative"
+    if [ ! -e "$target" ]; then
+        mkdir -p "$(dirname "$target")"
+        cp -a "$source" "$target"
+    fi
+done
+cp -a "$docdir/screenshots/." "$datadir/screenshots/"
+
 %files
 %_sysconfdir/xdg/autostart/z-displaycal-apply-profiles.desktop
 %_bindir/%name
@@ -95,6 +111,9 @@ rm -vf %buildroot%python3_sitelibdir/%up_name/cacert.pem
 %exclude %_datadir/doc-base/
 
 %changelog
+* Fri Oct 30 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.19-alt2
+- fix Help menu: restore bug report and ship README/LICENSE (closes: #61164)
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.19-alt1
 - new version 3.9.19
 - switch Source-url to PyPI sdist (no tarball in GitHub release)
