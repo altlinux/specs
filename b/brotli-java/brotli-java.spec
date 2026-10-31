@@ -1,5 +1,5 @@
 Name: brotli-java
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Pure Java decoder for the Brotli compression format
@@ -10,8 +10,8 @@ Url: https://github.com/google/brotli
 BuildArch: noarch
 ExcludeArch: %ix86
 
-# GitHub tag archives exclude java/ (export-ignore), the sources are imported
-# from git: https://github.com/google/brotli.git tag v%version
+# Source-git: https://github.com/google/brotli.git
+# GitHub tag archives exclude java/ (export-ignore), so sources come from git.
 Source: %name-%version.tar
 
 BuildRequires: maven-local
@@ -71,5 +71,8 @@ mv .mfiles* ../../../
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- update to 1.2.1.
+
 * Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
 - initial build for Sisyphus
