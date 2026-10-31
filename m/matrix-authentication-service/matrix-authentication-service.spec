@@ -3,7 +3,7 @@
 %define cargo_install %rust_install
 
 Name: matrix-authentication-service
-Version: 1.26.0
+Version: 1.28.0
 Release: alt1
 
 Summary: OAuth 2.0 and OpenID Connect authentication server for Matrix
@@ -91,6 +91,9 @@ mkdir -p %buildroot%_sysconfdir/mas
 %_datadir/mas-cli/
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 1.28.0-alt1
+- new version 1.28.0
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26.0-alt1
 - new version 1.26.0
 - security fixes:
