@@ -2,7 +2,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.59
+%define kernel_sublevel	.60
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -582,6 +582,31 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 %modules_dir/build
 
 %changelog
+* Sat Oct 31 2026 Alexei Takaseev <taf@altlinux.org> 6.18.60-alt1
+- v6.18.60 (2026-10-30).
+
+* Wed Oct 28 2026 Alexei Takaseev <taf@altlinux.org> 6.18.59-alt2
+- config-rockchip64:
+    +CONFIG_CAN_ROCKCHIP_CANFD=m
+    +CONFIG_INPUT_PWM_VIBRA=m
+    +CONFIG_NET_DSA_REALTEK_MDIO=y
+    +CONFIG_NET_DSA_REALTEK_RTL8365MB=m
+    +CONFIG_NET_DSA_REALTEK_RTL8366RB=m
+    +CONFIG_REALTEK_PHY_HWMON=y
+    +# CONFIG_WLAN_VENDOR_ADMTEK is not set
+    +CONFIG_FB_UVESA=m
+    +CONFIG_SND_SOC_ES8311=m
+    +CONFIG_SND_SOC_ES8389=m
+    +# CONFIG_REALTEK_AUTOPM is not set
+    +CONFIG_IIO_MUX=m
+    -CONFIG_WLAN_UWE5622=m
+    -CONFIG_RTL8189ES=m
+    -CONFIG_RTL8192EU=m
+    -CONFIG_RTL8723DS=m
+    -CONFIG_SPARD_WLAN_SUPPORT=y
+    -CONFIG_TTY_OVERY_SDIO=m
+    -CONFIG_UNISOC_WIFI_PS=y
+
 * Tue Oct 27 2026 Alexei Takaseev <taf@altlinux.org> 6.18.59-alt1
 - v6.18.59 (2026-10-26).
 - config-rockchip64:
