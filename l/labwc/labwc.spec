@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labwc
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: A Wayland window-stacking compositor
@@ -70,14 +70,18 @@ rm -rv %buildroot%_datadir/locale/sr_Latn
 %_bindir/labnag
 %_datadir/xdg-desktop-portal/labwc-portals.conf
 %_docdir/%name/
-%_mandir/man1/*.1*
-%_mandir/man5/*.5*
+%_man1dir/*.1.*
+%_man5dir/*.5.*
+%_man7dir/*.7.*
 %_iconsdir/hicolor/scalable/apps/%{name}*.svg
 
 %files
 %_datadir/wayland-sessions/%name.desktop
 
 %changelog
+* Sat Oct 31 2026 Anton Midyukov <antohami@altlinux.org> 0.20.3-alt1
+- New version 0.20.3.
+
 * Sat Aug 22 2026 Anton Midyukov <antohami@altlinux.org> 0.20.2-alt1
 - New version 0.20.2.
 
