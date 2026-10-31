@@ -15,7 +15,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -37,6 +37,7 @@ Source10: %name-%version-subprojects-highs.tar
 Source11: datasets.tar
 
 Patch: 0001-ALT-Make-use-of-local-storage-of-datasets-as-a-defau.patch
+Patch1: 0002-ALT-Fix-bellman_ford-predecessors-under-Cython-3.3.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx3
@@ -113,6 +114,7 @@ This package contains development files of SciPy.
 %prep
 %setup -a2 -a3 -a4 -a5 -a6 -a8 -a9 -a10 -a11
 %patch -p1
+%patch1 -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
@@ -223,6 +225,9 @@ sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^
 %_includedir/%modname-py3
 
 %changelog
+* Sat Oct 31 2026 Anton Farygin <rider@altlinux.org> 1.18.1-alt2
+- Fixed bellman_ford predecessors left at -9999 (Cython 3.3 / GCC LTO).
+
 * Sat Aug 29 2026 Anton Farygin <rider@altlinux.org> 1.18.1-alt1
 - 1.18.0 -> 1.18.1
 
