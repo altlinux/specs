@@ -5,7 +5,7 @@
 %def_with check
 
 Name: tuned-switcher
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Simple utility to manipulate the Tuned service
@@ -82,6 +82,9 @@ sed -i "s/ validate / validate --nonet /" CMakeLists.txt
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.3-alt1
+- New version 1.1.3.
+
 * Fri Jun 26 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.2-alt1
 - New version 1.1.2.
 
