@@ -1,7 +1,7 @@
 %define oname httplib2
 
 Name: python3-module-httplib2
-Version: 0.32.0
+Version: 0.32.1
 Release: alt1
 
 Summary: A comprehensive HTTP client library in Python
@@ -10,6 +10,7 @@ License: MIT
 Group: Development/Python
 URL: https://github.com/httplib2/httplib2
 # https://github.com/httplib2/httplib2/archive/refs/tags/v%%version.tar.gz
+# Source-url: https://github.com/httplib2/httplib2/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -39,6 +40,9 @@ of other HTTP libraries.
 %python3_sitelibdir/%oname-*.dist-info/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.32.1-alt1
+- new version 0.32.1
+
 * Fri Jun 26 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.32.0-alt1
 - NMU: new version 0.32.0
 
