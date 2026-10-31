@@ -1,5 +1,5 @@
 Name: xray-core
-Version: 26.10.29
+Version: 26.10.31
 Release: alt1
 
 Summary: Project X
@@ -63,6 +63,9 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=v%v
 %_unitdir/xray@.service
 
 %changelog
+* Sat Oct 31 2026 Nazarov Denis <nenderus@altlinux.org> 26.10.31-alt1
+- New version 26.10.31.
+
 * Thu Oct 29 2026 Nazarov Denis <nenderus@altlinux.org> 26.10.29-alt1
 - New version 26.10.29.
 - Created xray system user required by the service.
