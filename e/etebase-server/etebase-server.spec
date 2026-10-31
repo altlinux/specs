@@ -4,7 +4,7 @@
 
 Name: etebase-server
 Version: 0.14.2
-Release: alt1
+Release: alt1.1
 
 Summary: Etebase (EteSync 2.0) server
 
@@ -23,6 +23,8 @@ Source4: etebase-server.sysusers.conf
 Patch1: 0001-Fix-server-error-when-passing-null-collection-types.patch
 # FastAPI 0.141 compatibility, the same change is in upstream PR #205
 Patch2: 0002-Declare-collection_uid-as-a-path-parameter-explicitl.patch
+# FastAPI current external documentation argument
+Patch3: 0003-Use-current-FastAPI-external-documentation-argument.patch
 
 BuildArch: noarch
 
@@ -113,5 +115,8 @@ PYTHONPATH=%buildroot%python3_sitelibdir %__python3 %SOURCE3
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14.2-alt1.1
+- fix application startup with current FastAPI.
+
 * Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14.2-alt1
 - initial build for Sisyphus
