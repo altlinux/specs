@@ -2,7 +2,7 @@
 %define mod_name claude_agent_sdk
 
 Name: python3-module-%pypi_name
-Version: 0.2.165
+Version: 0.2.176
 Release: alt1
 
 Summary: Python SDK for Claude Code
@@ -38,6 +38,9 @@ through async functions and bidirectional conversations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2.176-alt1
+- new version 0.2.176
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.2.165-alt1
 - new version 0.2.165
 
