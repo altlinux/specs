@@ -7,7 +7,7 @@
 %define subst_with_to() %{expand:%%{?_with_%1:--with-%2}} %{expand:%%{?_without_%1:--without-%2}}
 
 Name: yaz
-Version: 5.38.0
+Version: 5.38.1
 Release: alt1
 
 Summary: Z39.50/SRW/SRU toolkit
@@ -20,7 +20,6 @@ Url: http://www.indexdata.dk/%name/
 Source: %name-%version.tar.gz
 Source1: m4.tar
 Source2: id-docbook-common.tar
-Patch1: yaz-external-libstemmer.patch
 
 %define lname lib%name
 Requires: %lname = %version-%release
@@ -87,7 +86,6 @@ server and client.
 
 %prep
 %setup -a1 -a2
-%patch1 -p1
 # Fix tests linking.
 sed -i 's| ../src/libyaz_icu\.la | ../src/libyaz.la&|' test/Makefile*
 
@@ -98,7 +96,8 @@ sed -i 's| ../src/libyaz_icu\.la | ../src/libyaz.la&|' test/Makefile*
     %{subst_enable threads} \
     %{subst_enable tcpd} \
     %{subst_with_to xml xml2} \
-    %{subst_with_to ssl openssl}
+    %{subst_with_to ssl openssl} \
+    --with-stemmer=yes
 %make_build
 
 %install
@@ -145,6 +144,10 @@ bzip2 --best --force --keep NEWS
 %_docdir/%name/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 5.38.1-alt1
+- new version 5.38.1
+- build with system libstemmer
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 5.38.0-alt1
 - new version 5.38.0
 
