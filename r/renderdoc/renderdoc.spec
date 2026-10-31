@@ -4,8 +4,8 @@
 %define optflags_lto %nil
 
 Name: renderdoc
-Version: 1.46
-Release: alt2
+Version: 1.47
+Release: alt1
 
 Summary: A frame-capture based graphics debugger
 License: MIT
@@ -74,6 +74,9 @@ available for Vulkan, D3D11, D3D12, OpenGL, and OpenGL ES development.
 %_includedir/renderdoc_app.h
 
 %changelog
+* Sat Oct 31 2026 Nazarov Denis <nenderus@altlinux.org> 1.47-alt1
+- New version 1.47.
+
 * Sun Oct 25 2026 Nazarov Denis <nenderus@altlinux.org> 1.46-alt2
 - Disable LTO: it reorders static initialisers, breaking the guarantee that
   posix_libentry's library_loaded() runs last, which segfaulted the library
