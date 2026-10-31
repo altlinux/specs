@@ -2,8 +2,8 @@
 %define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Simple local mirror switcher for ALT
 
@@ -96,6 +96,11 @@ fi
 %_bindir/ams
 
 %changelog
+* Sat Oct 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0-alt1
+- added Hihin Ruslan (ruslandh@) to co-author information
+- added getting timestamp mirror
+- updated: ftps -> sftp
+
 * Wed Oct 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.0-alt2
 - added xsel depensety
 
