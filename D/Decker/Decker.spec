@@ -1,5 +1,5 @@
 Name:    Decker
-Version: 1.71
+Version: 1.72
 Release: alt1
 
 Summary: A multimedia sketchpad
@@ -47,6 +47,9 @@ install -Dm644 -t %buildroot/usr/share/doc/decker/images docs/images/*
 %_iconsdir/hicolor/*/apps/decker.png
 
 %changelog
+* Sat Oct 31 2026 Sergey Palcheh <minergenon@altlinux.org> 1.72-alt1
+- new version 1.72
+
 * Fri Oct 09 2026 Sergey Palcheh <minergenon@altlinux.org> 1.71-alt1
 - new version 1.71
 
