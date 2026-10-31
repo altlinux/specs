@@ -4,7 +4,7 @@
 %def_with check
 
 Name: antpm
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Summary: ANT+ information retrieval client for Garmin GPS products
@@ -89,6 +89,9 @@ mv -v %buildroot%_bindir/gant %buildroot%_bindir/antpm-garmin-ant-downloader
 %_udevrulesdir/*.rules
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.26-alt1
+- new version 1.26 (with rpmrb script)
+
 * Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.25-alt1
 - New version 1.25.
 - Enabled tests.
