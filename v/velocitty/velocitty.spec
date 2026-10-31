@@ -3,7 +3,7 @@
 %def_with check
 
 Name: velocitty
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Terminal for Linux desktops
@@ -15,12 +15,12 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-build-gir
+BuildRequires(pre): rpm-build-python3
 
-BuildRequires: rpm-build-python3
+BuildRequires: meson
 
-Requires: libadwaita-gir
-Requires: libvte3-gir
 Requires: xapp-symbolic-icons
 
 %description
@@ -53,5 +53,8 @@ An easy-to-use terminal emulator.
 %_datadir/velocitty/palettes/*
 
 %changelog
+* Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.4-alt1
+- New version 1.0.4.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.3-alt1
 - Initial build for Sisyphus
