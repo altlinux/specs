@@ -29,7 +29,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 404
+Version: 412
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -41,16 +41,16 @@ Group: Terminals
 Source0: ftp://invisible-island.net/%name/%name-%version.tgz
 Source1: uxterm
 
-Patch0001: 0001-xterm-alt-render.patch
-Patch0002: 0002-xterm-alt-utempter.patch
-Patch0003: 0003-xterm-alt-perms.patch
-Patch0004: 0004-xterm-alt-deffont.patch
-Patch0005: 0005-xterm-alt-makefile-install.patch
-Patch0006: 0006-xterm-alt-disable-report_win_label.patch
-Patch0007: 0007-xterm-alt-i18n.patch
-Patch0008: 0008-xterm-alt-colors.patch
-Patch0009: 0009-xterm-alt-appdef.patch
-Patch0010: 0010-xterm-alt-translate-update-desktop.patch
+Patch0001: 0001-PATCH-01-10-xterm-alt-render.patch
+Patch0002: 0002-PATCH-02-10-xterm-alt-utempter.patch
+Patch0003: 0003-PATCH-03-10-xterm-alt-perms.patch
+Patch0004: 0004-PATCH-04-10-xterm-alt-deffont.patch
+Patch0005: 0005-PATCH-05-10-xterm-alt-makefile-install.patch
+Patch0006: 0006-PATCH-06-10-xterm-alt-disable-report_win_label.patch
+Patch0007: 0007-PATCH-07-10-xterm-alt-i18n.patch
+Patch0008: 0008-PATCH-08-10-xterm-alt-colors.patch
+Patch0009: 0009-PATCH-09-10-xterm-alt-appdef.patch
+Patch0010: 0010-PATCH-10-10-xterm-alt-translate-update-desktop.patch
 
 Provides: xvt, %_bindir/xvt, x-terminal-emulator %_bindir/x-terminal-emulator
 Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -93,16 +93,7 @@ command is run.
 
 install -pm755 %_sourcedir/uxterm .
 
-%patch0001 -p2
-%patch0002 -p2
-%patch0003 -p2
-%patch0004 -p2
-%patch0005 -p2
-%patch0006 -p2
-%patch0007 -p2
-%patch0008 -p2
-%patch0009 -p2
-%patch0010 -p2
+%autopatch -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -167,6 +158,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Sat Oct 31 2026 Fr. Br. George <george@altlinux.org> 412-alt1
+- Autobuild version bump to 412
+
 * Thu Dec 04 2025 Fr. Br. George <george@altlinux.org> 404-alt1
 - Autobuild version bump to 404
 
