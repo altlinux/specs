@@ -3,7 +3,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.8.1
-Release: alt1
+Release: alt2
 
 Summary: Python interface for libheif library and Pillow plugin
 
@@ -13,6 +13,7 @@ Url: https://github.com/bigcat88/pillow_heif
 
 # Source-url: %__pypi_url %mod_name
 Source: %name-%version.tar
+Patch: metadata-none.patch
 
 # tests/overflow_test segfaults in the encoder on i586 (32-bit stride overflow)
 ExcludeArch: %ix86
@@ -37,6 +38,7 @@ of pi-heif (python3-module-pi-heif), which includes only the decoder.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %pyproject_build
@@ -66,5 +68,8 @@ python3 -m pytest -v tests -k "not leak" \
 %python3_sitelibdir/%mod_name-%version.dist-info/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt2
+- skip null metadata blocks returned by libheif.
+
 * Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.1-alt1
 - initial build for Sisyphus
