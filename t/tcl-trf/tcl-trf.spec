@@ -2,7 +2,7 @@
 
 Name: tcl-trf
 Version: 2.1.4
-Release: alt4
+Release: alt4.1
 
 Summary: A tcl extension called Tcl Data transformations
 License: TCL
@@ -12,9 +12,11 @@ Url: http://tcltrf.sourceforge.net/
 # CVS import tcltrf.cvs.sourceforge.net:/cvsroot/tcltrf module trf
 # git://git.altlinux.org/gears/t/tcl-trf.git
 Source: %name-%version-%release.tar
+Patch0: tcl-trf-openssl-crypt.patch
+Patch1: tcl-trf-gcc15.patch
 
 Requires: tcl >= 8.6.7-alt2
-BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-memchan rpm-build-tcl >= 0.5.2-alt1
+BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 rpm-build-tcl >= 0.5.2-alt1
 
 %description
 %name is a collection of data transformation:
@@ -27,8 +29,18 @@ BuildRequires: bzlib-devel zlib-devel libssl-devel tcl-devel >= 8.6.7-alt2 tcl-m
 - a reed-solomon error correcting coder
 - (de)compression based on zlib and bzlib
 
+%package -n lib%name-devel
+Summary: Development files for Tcl-Trf
+Group: Development/Tcl
+Requires: %name = %EVR
+
+%description -n lib%name-devel
+Development headers and the stub library for Tcl-Trf extensions.
+
 %prep
 %setup -n %name-%version-%release
+%patch0 -p1
+%patch1 -p1
 %tea_patch
 
 %build
@@ -67,7 +79,16 @@ TCLLIBPATH=%buildroot%_tcllibdir ./test.tcl
 %_tcllibdir/Trf%version/libTrf%version.so
 %_tcllibdir/Trf%version/pkgIndex.tcl
 
+%files -n lib%name-devel
+%_includedir/transform.h
+%_includedir/trfDecls.h
+%_libdir/tcl/Trf%version/libTrfstub%version.a
+
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.4-alt4.1
+- NMU: Fixed build errors; removed unavailable tcl-memchan dependency.
+- Packaged development headers and stub library.
+
 * Mon Aug 30 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.4-alt4
 - Fixed built with LTO.
 - Do no pack stub.
