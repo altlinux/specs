@@ -11,11 +11,11 @@
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 %add_optflags -ffat-lto-objects
 
-%define zuo zuo -X /usr/share/zuo
+%define zuo ../zuo/zuo -X ../zuo/lib
 
 Name: racket-core
 Version: 8.8
-Release: alt2
+Release: alt3
 
 Summary: Racket, the programming language (base package)
 License: Apache-2.0 or MIT
@@ -29,11 +29,10 @@ Vcs: https://github.com/racket/racket
 Source0: %name-%version.tar
 Source1: update-launchers.rkt
 Source2: update-mans.rkt
+Patch1: zuo-signal-handler.patch
 
 BuildRequires(pre): rpm-macros-racket
 BuildRequires: /proc
-BuildRequires: zuo
-
 BuildRequires: liblz4-devel
 BuildRequires: zlib-devel
 BuildRequires: libncurses-devel
@@ -51,11 +50,13 @@ This package contains minimal Racket which can install packages for itself.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i 's|@RACKETLIBDIR@|%racket_libdir|' %SOURCE1
 sed -i 's|@RACKETLIBDIR@|%racket_libdir|' %SOURCE2
 
 %build
+cc %optflags -o racket/src/zuo/zuo racket/src/zuo/zuo.c
 mkdir -p racket/src/build && cd racket/src/build
 
 # We can't use %%configure macro because it uses ./configure, but
@@ -143,6 +144,10 @@ chmod 0755 %buildroot%_rpmlibdir/racket-update-mans.filetrigger
 %endif
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 8.8-alt3
+- Build with the bundled Zuo, which is unavailable in Sisyphus.
+- Drop BuildRequires: zuo because it is not available in Sisyphus.
+
 * Sat Mar 25 2023 Anton Zhukharev <ancieg@altlinux.org> 8.8-alt2
 - Fixed paths for filetriggers.
 
