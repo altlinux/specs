@@ -2,7 +2,7 @@
 %def_without test
 
 Name:    python3-module-%modulename
-Version: 1.7.2
+Version: 1.9.1
 Release: alt1
 
 Summary: The ultimate Python library in building OAuth and OpenID Connect servers
@@ -90,6 +90,19 @@ authlib integration with django.
 %python3_sitelibdir/%modulename/integrations/flask_*/
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.1-alt1
+- new version 1.9.1
+- fixes:
+  + CVE-2026-114614, GHSA-jj7h-c3hg-m23x: fix HTTP loopback bypass.
+  + CVE-2026-114615, GHSA-7vr2-2fgp-9w7p: prevent prefixed-key HMAC forgery.
+  + CVE-2026-114616, GHSA-8m4g-j4wp-wgcg: reject empty HMAC keys.
+  + CVE-2026-114617, GHSA-c5mf-xmp2-59rc: validate ID token nonce.
+  + CVE-2026-114618, GHSA-fch4-3c6x-j4gc: validate JWT bearer audience.
+  + CVE-2026-114619, GHSA-q686-2qmg-hqc7: check allowed implicit-grant scopes.
+  + CVE-2026-114620, GHSA-x4rv-c3wx-4cr8: validate JAR request_uri.
+  + CVE-2026-116672, GHSA-c73q-w75p-j82v: require RFC 7592 client binding.
+  + CVE-2026-96760, GHSA-6v38-4h7w-rj9h: reject empty JWS JSON signatures.
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.2-alt1
 - new version 1.7.2
 
