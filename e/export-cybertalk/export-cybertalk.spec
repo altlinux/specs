@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.7.3
+Version: 0.8.0
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -12,6 +12,8 @@ Summary: Simple CLI utility for export Sisyphus|p1* news
 
 BuildArch: noarch
 AutoProv: nopython3
+
+Requires: python3-module-socks
 
 BuildRequires(pre): rpm-build-python3
 
@@ -34,6 +36,11 @@ install -Dm755 %name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Sun Nov 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
+- added translite module for mantainer names
+- added auto-check and auto-update of maintainer names from the project repository
+- fixed: output maintainer name
+
 * Fri Oct 30 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.7.3-alt1
 - 0.7.2 -> 0.7.3
 
