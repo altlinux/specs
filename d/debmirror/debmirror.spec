@@ -1,5 +1,5 @@
 Name: debmirror
-Version: 2.48
+Version: 2.49
 Release: alt1
 
 Summary: Debian partial mirror script, with ftp and package pool support
@@ -10,7 +10,7 @@ Url: http://packages.debian.org/sid/debmirror
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://ftp.de.debian.org/debian/pool/main/d/debmirror/debmirror_%version.tar
+Source: https://deb.debian.org/debian/pool/main/d/debmirror/debmirror_%version.tar.xz
 
 Epoch: 1
 
@@ -19,6 +19,7 @@ BuildArch: noarch
 # Automatically added by buildreq on Mon Feb 17 2014 (-bi)
 # optimized out: perl-Compress-Raw-Zlib perl-Encode perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-IP perl-Log-Agent perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage perl-Socket6 perl-URI perl-libnet python-base python3 python3-base
 BuildRequires: perl-Digest-SHA perl-IO-Socket-INET6 perl-LockFile-Simple perl-Net-INET6Glue perl-libwww perl-podlators
+Requires: rsync
 
 %description
 This program downloads and maintains a partial local Debian mirror. It can
@@ -57,6 +58,9 @@ install -D -m 0644 examples/debmirror.conf %buildroot%_sysconfdir/debmirror.conf
 %_man1dir/*
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.49-alt1
+- new version 2.49
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2.48-alt1
 - new version (2.48)
 
