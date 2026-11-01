@@ -3,7 +3,7 @@
 %def_with check
 
 Name: rio
-Version: 0.5.28
+Version: 0.5.29
 Release: alt1
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
@@ -98,6 +98,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Sun Nov 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.29-alt1
+- Updated to version 0.5.29.
+
 * Sat Sep 19 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.28-alt1
 - Updated to version 0.5.28.
 
