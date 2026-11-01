@@ -4,7 +4,7 @@
 
 Name: clockenstein
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Calendar application for Linux Desktops
 License: GPL-3.0-only
@@ -15,10 +15,12 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gir
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: /usr/bin/gtk4-update-icon-cache
@@ -42,7 +44,6 @@ Requires: python3(caldav)
 Requires: python3(babel)
 Requires: python3(rich)
 Requires: python3(pycurl)
-Requires: libgsound-gir
 Requires: xapp-symbolic-icons
 
 %if_with check
@@ -74,11 +75,11 @@ Remote calendars are read-only when disconnected or offline.
 
 %prep
 %setup
-sed -i "s/dist-packages/site-packages/g" test-clocks \
-                                         dummy-events.sh \
-                                         meson.build \
-                                         test-calendar \
-                                         debian/clockenstein-daemon.install
+%__subst "s/dist-packages/site-packages/g" test-clocks \
+                                           dummy-events.sh \
+                                           meson.build \
+                                           test-calendar \
+                                           debian/clockenstein-daemon.install
 
 %build
 %meson
@@ -143,6 +144,9 @@ export LC_ALL=C
 %_iconsdir/hicolor/scalable/apps/clockenstein-clocks.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.2-alt2
+- Spec refined.
+
 * Wed Oct 14 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.2-alt1
 - New version 2.0.2.
 

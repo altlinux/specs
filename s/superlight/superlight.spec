@@ -4,7 +4,7 @@
 
 Name: superlight
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: System Monitor for Linux Desktops
 License: GPL-3.0-or-later
@@ -15,13 +15,14 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-gir
 
-BuildRequires: rpm-build-python3
+BuildRequires: meson
 
 Requires: python3-module-pygobject3
 Requires: python3(cairo)
-Requires: libupower-gir
 Requires: xapp-symbolic-icons
 
 %description
@@ -49,6 +50,9 @@ Requires: xapp-symbolic-icons
 %_iconsdir/hicolor/scalable/apps/superlight.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt2
+- Spec refined.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - New version 1.0.2.
 

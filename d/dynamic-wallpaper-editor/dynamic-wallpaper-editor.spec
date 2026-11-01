@@ -6,7 +6,7 @@
 
 Name: dynamic-wallpaper-editor
 Version: 2.99
-Release: alt1.git.6bf092c
+Release: alt2.git.6bf092c
 
 Summary: Create or edit dynamic wallpapers for GNOME Shell, Cinnamon and MATE
 License: GPL-3.0-or-later
@@ -15,9 +15,10 @@ Url: https://github.com/maoschanz/dynamic-wallpaper-editor
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: /usr/bin/glib-compile-schemas
 BuildRequires: /usr/bin/itstool
@@ -30,6 +31,7 @@ BuildRequires: /usr/bin/appstream-util
 
 BuildArch: noarch
 
+Requires: python3-module-pygobject3
 Requires: libgtk+3-gir
 
 %description
@@ -42,9 +44,9 @@ exactly 24 hours.
 
 %prep
 %setup
-sed -i "s/'validate'/'validate', '--nonet'/" data/meson.build
-sed -i "s/org.mate.desktop.background/org.mate.background/" src/main.py
-sed -i "s/Categories=.*/Categories=GTK;Graphics;2DGraphics;/" data/com.github.maoschanz.DynamicWallpaperEditor.desktop.in
+%__subst "s/'validate'/'validate', '--nonet'/" data/meson.build
+%__subst "s/org.mate.desktop.background/org.mate.background/" src/main.py
+%__subst "s/Categories=.*/Categories=GTK;Graphics;2DGraphics;/" data/com.github.maoschanz.DynamicWallpaperEditor.desktop.in
 
 %build
 %meson
@@ -70,5 +72,8 @@ sed -i "s/Categories=.*/Categories=GTK;Graphics;2DGraphics;/" data/com.github.ma
 %_datadir/metainfo/%{appname}.appdata.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.99-alt2.git.6bf092c
+- Spec refined.
+
 * Wed Apr 22 2026 Nikolay Strelkov <snk@altlinux.org> 2.99-alt1.git.6bf092c
 - Initial build for Sisyphus

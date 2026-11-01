@@ -4,7 +4,7 @@
 
 Name: xepub
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: EPUB reader for the Linux desktop
 License: GPL-3.0-or-later
@@ -15,9 +15,10 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: /usr/bin/gtk4-update-icon-cache
@@ -60,6 +61,9 @@ Xepub is a secure, comfortable, paginated EPUB reader.
 %_datadir/xepub/window.ui
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt2
+- Spec refined.
+
 * Wed Sep 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - New version 1.0.2.
 

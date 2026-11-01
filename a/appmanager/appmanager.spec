@@ -2,7 +2,7 @@
 
 Name: appmanager
 Version: 3.8.0
-Release: alt1
+Release: alt2
 
 Summary: MacOS style AppImage installer and management application
 License: GPL-3.0-or-later
@@ -11,9 +11,10 @@ Url: https://github.com/kem-a/AppManager
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-vala
 
+BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: cmake
 BuildRequires: pkgconfig(libadwaita-1)
@@ -38,8 +39,8 @@ integration, icon extraction, executable bits, and app updates.
 
 %prep
 %setup
-sed 's/"fusermount"/"fusermount2"/' src/windows/main_window.vala
-sed -i "s|Categories=.*|Categories=GNOME;GTK;Settings;PackageManager;|" data/app-manager.desktop.in
+%__subst 's/"fusermount"/"fusermount2"/' src/windows/main_window.vala
+%__subst "s|Categories=.*|Categories=GNOME;GTK;Settings;PackageManager;|" data/app-manager.desktop.in
 
 %build
 %meson \
@@ -63,6 +64,9 @@ sed -i "s|Categories=.*|Categories=GNOME;GTK;Settings;PackageManager;|" data/app
 %_datadir/metainfo/com.github.AppManager.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 3.8.0-alt2
+- Spec refined.
+
 * Fri Sep 04 2026 Nikolay Strelkov <snk@altlinux.org> 3.8.0-alt1
 - New version 3.8.0.
 

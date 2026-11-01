@@ -2,7 +2,7 @@
 
 Name: gnome-break-timer
 Version: 3.1.0
-Release: alt2
+Release: alt3
 
 Summary: Break timer application for GNOME
 License: GPL-3.0-or-later
@@ -13,9 +13,10 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-vala
 
+BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: cmake
 BuildRequires: pkgconfig(cairo)
@@ -69,6 +70,9 @@ build-aux/update-release-info.sh
 %_datadir/metainfo/org.gnome.BreakTimer.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.0-alt3
+- Spec refined.
+
 * Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.0-alt2
 - Fixed FTBFS by generating metainfo/org.gnome.BreakTimer.metainfo.xml.
 - Exclude %%ix86 because of failing test.

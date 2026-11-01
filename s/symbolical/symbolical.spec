@@ -5,7 +5,7 @@
 
 Name: symbolical
 Version: 0.9.0.1
-Release: alt1
+Release: alt2
 
 Summary: Math document application
 License: GPL-3.0-or-later
@@ -14,8 +14,10 @@ Url: https://gitlab.com/symbolical/symbolical
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: meson
 
 %if_with check
 BuildRequires: python3(PyQt6)
@@ -54,9 +56,9 @@ feature that grants the user the ability to make their own units.
 
 %prep
 %setup
-sed -i "s|join_paths(prefix, 'symbolical')|join_paths(datadir, 'symbolical')|" meson.build
-sed -i "s|join_paths(get_option('prefix'), 'symbolical/src')|join_paths(datadir, 'symbolical/src')|" meson.build
-sed -i "s|Categories=.*|Categories=Science;Math;|" flatpak/dk.pracedru.Symbolical.desktop
+%__subst "s|join_paths(prefix, 'symbolical')|join_paths(datadir, 'symbolical')|" meson.build
+%__subst "s|join_paths(get_option('prefix'), 'symbolical/src')|join_paths(datadir, 'symbolical/src')|" meson.build
+%__subst "s|Categories=.*|Categories=Science;Math;|" flatpak/dk.pracedru.Symbolical.desktop
 
 %build
 %meson
@@ -64,7 +66,7 @@ sed -i "s|Categories=.*|Categories=Science;Math;|" flatpak/dk.pracedru.Symbolica
 
 %install
 %meson_install
-sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %buildroot%_bindir/symbolical
+%__subst "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %buildroot%_bindir/symbolical
 
 %check
 %__python3 src/testing.py
@@ -83,6 +85,9 @@ sed -i "s| share/symbolical/src/main.py| /usr/share/symbolical/src/main.py|" %bu
 %exclude %_datadir/licenses/symbolical
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.0.1-alt2
+- Spec refined.
+
 * Thu Oct 22 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.0.1-alt1
 - New version 0.9.0.1.
 

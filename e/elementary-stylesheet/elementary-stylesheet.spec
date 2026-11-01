@@ -2,7 +2,7 @@
 
 Name: elementary-stylesheet
 Version: 8.2.2
-Release: alt1
+Release: alt2
 
 Summary: GTK Stylesheet for elementary OS
 License: GPL-3.0-or-later
@@ -11,8 +11,9 @@ Url: https://github.com/elementary/stylesheet
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: sassc
 
 BuildArch: noarch
@@ -58,5 +59,8 @@ Supports GTK versions 2 and 3.
 %_datadir/themes/io.elementary.stylesheet.strawberry/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 8.2.2-alt2
+- Spec refined.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 8.2.2-alt1
 - Initial build for Sisyphus

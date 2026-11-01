@@ -3,7 +3,7 @@
 
 Name: mangobar
 Version: 0.2.2
-Release: alt1
+Release: alt2
 
 Summary: Simple bar for Mango
 License: GPL-3.0-or-later
@@ -12,8 +12,9 @@ Url: https://github.com/mangowm/mangobar
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(fcft)
@@ -48,6 +49,9 @@ by swaybar and waybar.
 %_bindir/mangobar
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.2-alt2
+- Spec refined.
+
 * Thu Sep 17 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.2-alt1
 - New version 0.2.2.
 

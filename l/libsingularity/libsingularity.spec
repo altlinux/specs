@@ -11,7 +11,7 @@
 
 Name: libsingularity
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: GTK4 application and widget framework for the Singularity Desktop Environment
 License: LGPL-2.1-only
@@ -20,9 +20,10 @@ Url: https://github.com/singularityos-lab/libsingularity
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-vala
 
+BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: cmake
 BuildRequires: pkgconfig(gtk4)
@@ -83,8 +84,8 @@ Development files for %name.
 %_includedir/singularity-system.h
 %_libdir/libsingularity.so
 %_libdir/libsingularity-system.so
-%_libdir/pkgconfig/singularity-1.0.pc
-%_libdir/pkgconfig/singularity-system-1.0.pc
+%_pkgconfigdir/singularity-1.0.pc
+%_pkgconfigdir/singularity-system-1.0.pc
 %_datadir/gir-1.0/Singularity-1.0.gir
 %_vapidir/singularity-1.0.deps
 %_vapidir/singularity-1.0.vapi
@@ -92,5 +93,8 @@ Development files for %name.
 %_vapidir/singularity-system-1.0.vapi
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.0-alt2
+- Spec refined.
+
 * Sat Sep 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus

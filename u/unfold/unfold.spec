@@ -4,7 +4,7 @@
 
 Name: unfold
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Archive Manager for Linux Desktops
 License: GPL-3.0-or-later
@@ -15,8 +15,9 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: rpm-build-python3
 
 Requires: python3-module-pygobject3
@@ -57,5 +58,8 @@ variants, rar and more, including password protected ones.
 %_datadir/unfold/unfold.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt2
+- Spec refined.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus

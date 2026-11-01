@@ -2,7 +2,7 @@
 
 Name: elementary-default-settings
 Version: 8.1.1
-Release: alt1
+Release: alt2
 
 Summary: Default settings for elementary OS
 License: GPL-2.0-or-later
@@ -11,8 +11,9 @@ Url: https://github.com/elementary/default-settings
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(dbus-1)
@@ -56,5 +57,8 @@ Installing this package won't affect existing users on your system.
 %_datadir/xdg-desktop-portal/pantheon-portals.conf
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.1-alt2
+- Spec refined.
+
 * Sat Apr 11 2026 Nikolay Strelkov <snk@altlinux.org> 8.1.1-alt1
 - Initial build for Sisyphus

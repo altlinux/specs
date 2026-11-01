@@ -2,7 +2,7 @@
 
 Name: waynergy
 Version: 0.0.17
-Release: alt1
+Release: alt2
 
 Summary: Synergy client for Wayland compositors
 License: MIT
@@ -11,8 +11,9 @@ Url: https://github.com/r-c-f/waynergy
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(xkbcommon)
@@ -50,5 +51,8 @@ desktop-file-install \
 %_desktopdir/waynergy.desktop
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.17-alt2
+- Spec refined.
+
 * Mon Feb 03 2026 Nikolay Strelkov <snk@altlinux.org> 0.0.17-alt1
 - Initial build for Sisyphus

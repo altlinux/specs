@@ -4,7 +4,7 @@
 
 Name: atoms
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Open persistent Linux environments in a terminal
 License: GPL-3.0-only
@@ -16,9 +16,10 @@ Source1: submodules-%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-vala
 
+BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: cmake
 BuildRequires: pkgconfig(gee-0.8)
@@ -28,14 +29,14 @@ BuildRequires: pkgconfig(gtk4)
 BuildRequires: pkgconfig(vte-2.91-gtk4)
 BuildRequires: pkgconfig(singularity-1.0)
 
+%if_with check
+BuildRequires: /usr/bin/xvfb-run
+%endif
+
 Requires: cpak
 
 # need cpak, which needs go >= 1.26.7
 ExcludeArch: riscv64
-
-%if_with check
-BuildRequires: /usr/bin/xvfb-run
-%endif
 
 %description
 Atoms opens persistent Linux environments supplied by installed
@@ -89,9 +90,12 @@ xvfb-run %meson_test
 %dir %_includedir/atoms-core-2
 %_includedir/atoms-core-2/atoms-core-2.h
 %_libdir/libatoms-core-2.so
-%_libdir/pkgconfig/atoms-core-2.pc
+%_pkgconfigdir/atoms-core-2.pc
 %_vapidir/atoms-core-2.vapi
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.2-alt2
+- Spec refined.
+
 * Sat Sep 05 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.2-alt1
 - Initial build for Sisyphus

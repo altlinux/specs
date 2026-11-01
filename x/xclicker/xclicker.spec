@@ -3,7 +3,7 @@
 
 Name: xclicker
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Fast gui autoclicker for x11 linux desktops
 License: GPL-3.0-only
@@ -12,8 +12,9 @@ Url: https://github.com/robiot/xclicker
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(xi)
@@ -25,8 +26,8 @@ Autoclicker for linux desktops using x11.
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=Utility;Accessibility;/" assets/xclicker.desktop
-sed -i "s|https://raw.githubusercontent.com/robiot/xclicker/master/img/||" README.md
+%__subst "s/Categories=.*/Categories=Utility;Accessibility;/" assets/xclicker.desktop
+%__subst "s|https://raw.githubusercontent.com/robiot/xclicker/master/img/||" README.md
 
 %build
 %meson
@@ -44,5 +45,8 @@ install -Dm 644 assets/icon.png %buildroot%_iconsdir/hicolor/256x256/apps/%{name
 %_iconsdir/hicolor/256x256/apps/%{name}.png
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt2
+- Spec refined.
+
 * Sun Apr 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt1
 - Initial build for Sisyphus

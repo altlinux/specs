@@ -10,7 +10,7 @@
 
 Name: singularity-desktop
 Version: 0.1.0
-Release: alt1.git20260904.d642160
+Release: alt2.git20260904.d642160
 
 Summary: The Singularity Desktop Environment
 License: GPL-3.0-or-later
@@ -22,10 +22,11 @@ Source1: submodules-%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 BuildRequires(pre): rpm-build-vala
 BuildRequires(pre): rpm-build-systemd
 
+BuildRequires: meson
 BuildRequires: vala-tools
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -120,13 +121,13 @@ Development files for %name.
 %prep
 %setup -a1
 %patch -p1
-sed -i "s|, 'strip=true'||" meson.build subprojects/singularity-shell/meson.build
+%__subst "s|, 'strip=true'||" meson.build subprojects/singularity-shell/meson.build
 
 # already packaged externally
-sed -i "s|^subproject('libsingularity')|#subproject('libsingularity')|" meson.build
+%__subst "s|^subproject('libsingularity')|#subproject('libsingularity')|" meson.build
 
 # TODO - see https://github.com/singularityos-lab/singularity-desktop/issues/246
-sed -i "s|^subproject('singularity-gestures')|#subproject('singularity-gestures')|" meson.build
+%__subst "s|^subproject('singularity-gestures')|#subproject('singularity-gestures')|" meson.build
 
 %build
 %meson
@@ -260,8 +261,8 @@ EOF
 %exclude %_includedir/singularity-system.h
 %exclude %_libdir/libsingularity.so
 %exclude %_libdir/libsingularity-system.so
-%exclude %_libdir/pkgconfig/singularity-1.0.pc
-%exclude %_libdir/pkgconfig/singularity-system-1.0.pc
+%exclude %_pkgconfigdir/singularity-1.0.pc
+%exclude %_pkgconfigdir/singularity-system-1.0.pc
 %exclude %_datadir/gir-1.0/Singularity-1.0.gir
 %exclude %_vapidir/singularity-1.0.deps
 %exclude %_vapidir/singularity-1.0.vapi
@@ -271,8 +272,11 @@ EOF
 %_includedir/loginui.h
 %_includedir/widget.h
 %_libdir/libloginui.a
-%_libdir/pkgconfig/singularity-loginui.pc
+%_pkgconfigdir/singularity-loginui.pc
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.0-alt2.git20260904.d642160
+- Spec refined.
+
 * Sat Sep 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.0-alt1.git20260904.d642160
 - Initial build for Sisyphus

@@ -4,7 +4,7 @@
 
 Name: runemaster
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Unleash the magic of Unicode characters
 License: GPL-3.0-or-later
@@ -13,8 +13,9 @@ Url: https://github.com/johnfactotum/runemaster
 
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 
+BuildRequires: meson
 BuildRequires: cmake
 BuildRequires: pkgconfig(gjs-1.0)
 BuildRequires: pkgconfig(gtk4)
@@ -39,8 +40,8 @@ Features:
 
 %prep
 %setup
-sed -i "s|io.github.johnfactotum.Runemaster.svg|%_iconsdir/hicolor/scalable/apps/%{appname}.svg|" README.md
-sed -i "s|^Categories=.*|Categories=Office;Publishing;|" io.github.johnfactotum.Runemaster.desktop
+%__subst "s|io.github.johnfactotum.Runemaster.svg|%_iconsdir/hicolor/scalable/apps/%{appname}.svg|" README.md
+%__subst "s|^Categories=.*|Categories=Office;Publishing;|" io.github.johnfactotum.Runemaster.desktop
 
 %build
 %meson
@@ -63,5 +64,8 @@ sed -i "s|^Categories=.*|Categories=Office;Publishing;|" io.github.johnfactotum.
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt2
+- Spec refined.
+
 * Thu Apr 09 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.0-alt1
 - Initial build for Sisyphus
