@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.11.1
+Version: 0.14.1
 Release: alt1
 
 Summary: Music player built around customisation
@@ -46,6 +46,8 @@ BuildRequires: libkdsingleapplication-qt6-devel
 #
 BuildRequires: libgtest-devel
 BuildRequires: ctest
+BuildRequires: libarchive-devel
+BuildRequires: zlib-devel
 
 %description
 Fooyin is a music player built around customisation. It offers a growing list of
@@ -103,6 +105,10 @@ echo '%%lang(zh) %_datadir/%name/translations/fooyin_zh_Hant.qm' >> %name.lang
 %_libdir/cmake/%name/
 
 %changelog
+* Sun Nov 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.14.1-alt1
+- New version 0.14.1.
+- NMU: fix FTBFS.
+
 * Tue Jul 07 2026 Anton Kurachenko <srebrov@altlinux.org> 0.11.1-alt1
 - New version 0.11.1.
 - Added tests and devel package.
