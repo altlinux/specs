@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: gst-pipeline-studio
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Draw your own GStreamer pipeline
@@ -39,6 +39,7 @@ BuildRequires: pkgconfig(libadwaita-1) >= %adw_ver
 BuildRequires: pkgconfig(gstreamer-1.0) >= %gst_ver
 BuildRequires: pkgconfig(gstreamer-base-1.0)
 BuildRequires: pkgconfig(gstreamer-video-1.0)
+BuildRequires: pkgconfig(vte-2.91-gtk4)
 BuildRequires: pkgconfig(dbus-1)
 %{?_enable_check:BuildRequires: /usr/bin/appstream-util desktop-file-utils}
 
@@ -56,7 +57,9 @@ cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.
 tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson
+%meson -Dprofile=default \
+    -Dbuildtype=release
+%nil
 %meson_build
 
 %install
@@ -74,6 +77,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README* ChangeLog*
 
 %changelog
+* Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.2-alt1
+- 0.7.2
+
 * Sat Oct 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
 - 0.7.1
 

@@ -1,8 +1,8 @@
 %def_disable snapshot
 
-%define ver_major 0.27
+%define ver_major 0.28
 %define beta %nil
-%define efl_ver_major 1.28
+%define efl_ver_major 1.29
 %define efl_ver %efl_ver_major.0
 
 %def_enable bluetooth
@@ -21,8 +21,8 @@
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -212,7 +212,6 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 #%{?_enable_wayland:%_libdir/%name/gadgets/}
 %dir %_libdir/%name/utils
 %_libdir/%name/utils/%{name}_alert
-%_libdir/%name/utils/%{name}_elm_cfgtool
 %_libdir/%name/utils/%{name}_fm
 %_libdir/%name/utils/%{name}_fm_op
 %_libdir/%name/utils/%{name}_wallpaper_gen
@@ -251,6 +250,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat Oct 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1:0.28.0-alt1
+- 0.28.0
+
 * Mon Sep 08 2025 Yuri N. Sedunov <aris@altlinux.org> 1:0.27.1-alt2
 - moved huge amount of data files to a separate noarch subpackage
 

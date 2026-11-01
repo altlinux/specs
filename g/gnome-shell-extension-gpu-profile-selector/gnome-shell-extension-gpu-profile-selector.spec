@@ -2,7 +2,7 @@
 
 %define _name gpu-profile-selector
 %define __name GPU_profile_selector
-%define ego_ver 26
+%define ego_ver 27
 %define ver_major %ego_ver
 %define beta %nil
 %define uuid %{__name}@lorenzo9904.gmail.com
@@ -58,6 +58,9 @@ cp -a schemas/%xdg_name.gschema.xml %buildroot%_datadir/glib-2.0/schemas/
 %doc README.md
 
 %changelog
+* Sat Oct 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1:27-alt1
+- 27 (GNOME 51 supported)
+
 * Mon May 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1:26-alt1
 - 26 (GNOME 50 supported)
 - switched to ego versioning

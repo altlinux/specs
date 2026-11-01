@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -225,6 +225,9 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %endif
 
 %changelog
+* Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Tue Sep 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 

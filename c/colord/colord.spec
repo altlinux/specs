@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define xdg_name org.freedesktop.colord
 
@@ -27,8 +27,8 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 1.4.8
-Release: alt1
+Version: 1.4.9
+Release: alt0.5
 
 Summary: Color daemon
 License: GPL-2.0-or-later
@@ -42,8 +42,6 @@ Source: http://www.freedesktop.org/software/%name/releases/%name-%version.tar.xz
 %else
 Source: %name-%version.tar
 %endif
-# https://github.com/hughsie/colord/issues/188
-Patch10: colord-1.4.8-up-c1153fbcf.patch
 
 %define colord_group %name
 %define colord_user %name
@@ -154,7 +152,6 @@ This package provides Colord reference manual
 
 %prep
 %setup
-%patch10 -p1
 
 %build
 %meson \
@@ -328,6 +325,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %endif
 
 %changelog
+* Fri Oct 30 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.9-alt0.5
+- updated to 1.4.8-23-g8837810
+
 * Wed Jun 25 2025 Yuri N. Sedunov <aris@altlinux.org> 1.4.8-alt1
 - 1.4.8
 

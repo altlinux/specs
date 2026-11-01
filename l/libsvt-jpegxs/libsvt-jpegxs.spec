@@ -1,14 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name svt-jpegxs
 %define __name SvtJpegxs
 %define libname lib%__name
 %define git_name SVT-JPEG-XS
-%define ver_major 0.9
+%define ver_major 0.10
 
 %def_enable tools
+
+%ifarch %ix86
+%def_disable check
+%else
 %def_enable check
+%endif
 
 Name: lib%_name
 Version: %ver_major.0
@@ -27,11 +32,12 @@ Source: https://github.com/OpenVisualCloud/SVT-JPEG-XS/archive/v%version/%git_na
 Source: %git_name-%version.tar
 %endif
 
-ExcludeArch: aarch64
+# aarch64 supported since 0.10.0
+#ExcludeArch: aarch64
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ yasm
-%{?_enable_check:BuildRequires: libgtest-devel}
+%{?_enable_check:BuildRequires: ctest libgtest-devel}
 
 %description
 This library is implementation of ISO/IEC 21122 protocol.
@@ -57,7 +63,7 @@ This package provides JPEG-XS tools.
 
 %build
 # see CMakeLists.txt:210
-%add_optflags -D_FORTIFY_SOURCE=2
+%add_optflags -D_FORTIFY_SOURCE=2 %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE=Release \
     %{?_enable_check:-DBUILD_TESTING=ON}
 %nil
@@ -67,7 +73,7 @@ This package provides JPEG-XS tools.
 %cmake_install
 
 %check
-#%%cmake_build -t test
+%ctest
 
 %files
 %_libdir/%libname.so.*
@@ -87,6 +93,9 @@ This package provides JPEG-XS tools.
 %endif
 
 %changelog
+* Sat Oct 31 2026 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Thu Mar 13 2025 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - first build for Sisyphus (v0.9.0-5-ge0940ac)
 

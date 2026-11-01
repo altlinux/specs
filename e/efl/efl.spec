@@ -2,7 +2,7 @@
 %def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 1.28
+%define ver_major 1.29
 %define beta %nil
 %define gst_api_ver 1.0
 %define wayland_ver 1.11.0
@@ -34,7 +34,8 @@
 %def_enable jxl
 %endif
 %def_disable physics
-%def_disable rlottie
+%def_enable rlottie
+%def_enable pipewire
 
 # elua disabled by default
 %ifarch %luajit_arches
@@ -47,8 +48,8 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -93,7 +94,8 @@ BuildRequires: libxkbcommon-x11-devel}
 %{?_enable_drm:BuildRequires: libdrm-devel libgbm-devel libinput-devel}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-server-devel libwayland-cursor-devel
 BuildRequires: wayland-protocols libxkbcommon-devel >= 0.6.0 libuuid-devel libwayland-egl-devel}
-BuildRequires: pkgconfig(rlottie)
+%{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-0.3)}
+%{?_enable_rlotti:BuildRequires: pkgconfig(rlottie)}
 
 %{?_enable_elua:BuildRequires: libluajit-devel}
 %ifnarch %e2k
@@ -263,22 +265,22 @@ subst 's/libreoffice/LibreOffice/' src/generic/evas/pdf/evas_generic_pdf_loader.
 %build
 %add_optflags -std=gnu17
 %meson \
-	%{subst_enable_meson_bool x11 x11} \
-	%{subst_enable_meson_bool wayland wl} \
-	%{subst_enable_meson_bool drm drm} \
-	%{subst_enable_meson_bool fb fb} \
-	%{subst_enable_meson_bool elua elua} \
-	-Dlua-interpreter=luajit \
-	%{subst_enable_meson_bool tslib tslib} \
-	%{subst_enable_meson_bool gstreamer gstreamer} \
-	%{subst_enable_meson_bool avahi avahi} \
-	%{subst_enable_meson_bool physics physics} \
-	-Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif',}%{?_disable_heif: 'heif',}%{?_disable_jxl: 'jxl'}]" \
-	%{?_disable_scim:-Decore-imf-loaders-disabler="['scim']"} \
-	%{subst_enable_meson_bool glib glib} \
-	-Dmount-path=/bin/mount \
-	-Dunmount-path=/bin/umount \
-	-Deject-path=%_bindir/eject
+    %{subst_enable_meson_bool x11 x11} \
+    %{subst_enable_meson_bool wayland wl} \
+    %{subst_enable_meson_bool drm drm} \
+    %{subst_enable_meson_bool fb fb} \
+    %{subst_enable_meson_bool elua elua} \
+    -Dlua-interpreter=luajit \
+    %{subst_enable_meson_bool tslib tslib} \
+    %{subst_enable_meson_bool gstreamer gstreamer} \
+    %{subst_enable_meson_bool avahi avahi} \
+    %{subst_enable_meson_bool physics physics} \
+    -Devas-loaders-disabler="[%{?_disable_json:'json',}%{?_disable_avif: 'avif',}%{?_disable_heif: 'heif',}%{?_disable_jxl: 'jxl'}]" \
+    %{?_disable_scim:-Decore-imf-loaders-disabler="['scim']"} \
+    %{subst_enable_meson_bool glib glib} \
+    -Dmount-path=/bin/mount \
+    -Dunmount-path=/bin/umount \
+    -Deject-path=%_bindir/eject
 %ifarch %e2k
 export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_file:@efreet:@edje:@ecore_evas" | sed "s|@|$(pwd)/%__builddir/src/lib/|g")"
 %endif
@@ -463,6 +465,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Sat Oct 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.29.0-alt1
+- 1.29.0
+
 * Sat May 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.1-alt1.1
 - rebuilt with gcc-15 & -std=gnu17
 

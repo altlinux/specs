@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.3.0
+Version: 8.3.2
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -47,6 +47,11 @@ Requires: xdg-desktop-portal-kde
 Requires: libqtgraphs-qt6
 # https://bugzilla.altlinux.org/58803
 Requires: kf6-qqc2-desktop-style libkf6sonnetui
+
+# since 8.3.2
+#- HushMic package should be installed in order to use DPDFNet model inside the Deep Noise Remover effect.
+#- The `rakarrack-plus` package should be installed in order to use the Harmonizer effect.
+Requires: rakarrack-plus-lv2-plugins
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ extra-cmake-modules
@@ -117,6 +122,9 @@ KDE/Kirigami frameworks.
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 8.3.2-alt1
+- 8.3.2
+
 * Tue Sep 29 2026 Yuri N. Sedunov <aris@altlinux.org> 8.3.0-alt1
 - 8.3.0
 
