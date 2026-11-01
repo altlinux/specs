@@ -1,11 +1,14 @@
 Name: ixion
 Version: 0.20.0
-Release: alt1
+Release: alt2
 Url: https://gitlab.com/ixion/ixion
 License: MPL-2.0
-Source: %name-%version.tar.gz
 Group: Sciences/Mathematics
 Summary: Threaded multi-target formula parser & interpreter
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+Source: %name-%version.tar.gz
+Patch1: ixion-0.20.0-upstream-update-boost-m4.patch
 
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-program_options-devel
@@ -52,6 +55,7 @@ Summary: Python biondings for %name, a general purpose formula parser and interp
 
 %prep
 %setup
+%autopatch -p1
 sed -i 's/sphinx-build/sphinx-build-3/g' Makefile.am
 
 %build
@@ -83,6 +87,9 @@ sed -i 's/sphinx-build/sphinx-build-3/g' Makefile.am
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 01 2026 Ivan A. Melnikov <iv@altlinux.org> 0.20.0-alt2
+- NMU: fix building with rescent boost
+
 * Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 0.20.0-alt1
 - Updated to 0.20.0
 
