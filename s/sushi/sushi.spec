@@ -16,7 +16,7 @@
 
 Name: sushi
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A quick previewer for Nautilus
 License: GPL-2.0-or-later and LGPL-2.1-or-later
@@ -44,7 +44,7 @@ Requires: %lo_bin
 Requires: typelib(Adw) = 1
 Requires: typelib(GtkSource) = 5
 Requires: typelib(WebKit) = 6.0
-Requires: typelib(GlyGtk4)
+Requires: typelib(GlyGtk4) = 2
 Requires: typelib(PapersDocument) = 4.0
 Requires: typelib(PapersView)
 Requires: typelib(GtkSource) = 5
@@ -147,6 +147,9 @@ GObject introspection devel data for the Sushi library.
 %doc README* AUTHORS NEWS TODO
 
 %changelog
+* Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 51.2-alt1.1
+- required 'typelib(GlyGtk4) = 2' (ALT #61285)
+
 * Tue Oct 13 2026 Yuri N. Sedunov <aris@altlinux.org> 51.2-alt1
 - 51.2
 
