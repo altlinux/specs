@@ -3,14 +3,14 @@
 
 # ALT release suffix (e.g. .release.4, .hotfix.2, .rc1).
 # Set to %nil when the upstream version has no suffix.
-%define version_suffix .mono
+%define version_suffix .pulse
 # Upstream tag/source-tarball suffix, dash-separated (e.g. -release.4, -hotfix.2, -rc1).
 # Set to %nil when the upstream version has no suffix.
-%define upstream_suffix -mono
+%define upstream_suffix -pulse
 
 Name: sharpemu
-Version: 0.0.6
-Release: alt2%{version_suffix}
+Version: 0.0.7
+Release: alt1%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
@@ -31,9 +31,6 @@ Source2: ffmpeg-%ffmpeg_version.tar
 Source3: %name.desktop
 # https://github.com/sharpemu/ffmpeg-core/raw/%ffmpeg_tag/bink2.patch
 Patch0: bink2.patch
-# Store user-writable data (GUI settings, caches, saves, logs) in the XDG
-# data directory on Linux instead of the read-only install directory.
-Patch1: sharpemu-datadir.patch
 
 BuildRequires: /proc
 BuildRequires: dotnet-sdk-10.0
@@ -59,7 +56,6 @@ It uses AOT compilation and high-level emulation to run PS5 games.
 %prep
 %setup -n %name-%version%{upstream_suffix} -a 1 -b 2
 %patch0 -p1 -d ../ffmpeg-%ffmpeg_version
-%patch1 -p1
 
 %build
 # Build FFmpeg with only the codecs used by SharpEmu
@@ -164,6 +160,10 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_libexecdir/%name/SharpEmu
 
 %changelog
+* Sun Nov 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.7-alt1.pulse
+- Update to v0.0.7-pulse
+- Drop the user data directory patch: accepted upstream (PR #1108)
+
 * Mon Oct 19 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.6-alt2.mono
 - Update the user data directory patch: also route the trophy cache, game
   art cache, .zar cache and downloaded game patches there
