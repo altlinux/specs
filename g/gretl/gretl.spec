@@ -2,7 +2,7 @@
 %def_with openmpi
 
 Name: gretl
-Version: 2026c
+Version: 2026d
 Release: alt1
 
 Summary: A tool for econometric analysis
@@ -172,6 +172,9 @@ desktop-file-install						\
 %endif
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 2026d-alt1
+- new version 2026d
+
 * Sat Oct 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2026c-alt1
 - new version 2026c with MPI build fix and libgretl-devel rename.
 
