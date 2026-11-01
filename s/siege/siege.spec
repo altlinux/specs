@@ -1,5 +1,5 @@
 Name: siege
-Version: 4.2.0
+Version: 4.2.2
 Release: alt1
 
 Summary: An HTTP regression testing/benchmarking utility
@@ -10,7 +10,7 @@ Url: http://www.joedog.org/JoeDog/Siege
 
 Packager: Sergey Alembekov <rt@altlinux.ru>
 
-# Source-url: https://github.com/JoeDog/siege/archive/refs/tags/v%version.tar.gz
+# Source-url: https://github.com/JoeDog/siege/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
@@ -59,6 +59,9 @@ mkdir -p %buildroot/%_sysconfdir/siege
 %_man1dir/*
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt1
+- new version 4.2.2
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
 - new version 4.2.0
 
