@@ -5,7 +5,7 @@
 
 Name: musacad
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: High-performance, multi-threaded 2D CAD in modern C++23
 License: LGPL-3.0-or-later
@@ -16,8 +16,9 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(cups)
@@ -51,8 +52,8 @@ Features:
 
 %prep
 %setup
-sed -i "s|assets/branding/||" README.md
-sed -i "s|assets/screenshots/||g" README.md
+%__subst "s|assets/branding/||" README.md
+%__subst "s|assets/screenshots/||g" README.md
 %patch -p1
 
 %build
@@ -83,6 +84,9 @@ sed -i "s|assets/screenshots/||g" README.md
 %_datadir/metainfo/org.musacad.MusaCAD.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt2
+- Spec refined.
+
 * Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
