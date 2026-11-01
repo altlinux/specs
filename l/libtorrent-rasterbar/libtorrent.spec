@@ -4,12 +4,12 @@
 
 %define soname 2.0
 
-%def_without python3
+%def_with python3
 
 Name: libtorrent-rasterbar
 Epoch: 4
 Version: 2.0.13
-Release: alt2
+Release: alt3
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
 Group: System/Libraries
@@ -169,6 +169,9 @@ popd
 %endif
 
 %changelog
+* Sun Nov 01 2026 Ivan A. Melnikov <iv@altlinux.org> 4:2.0.13-alt3
+- NMU: build with python3 module enabled
+
 * Mon Jun 29 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4:2.0.13-alt2
 - e2k build fix
 
