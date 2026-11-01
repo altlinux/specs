@@ -1,5 +1,5 @@
 Name: miniaudio-devel
-Version: 0.11.25
+Version: 0.11.26
 Release: alt1
 
 Summary: Header-only audio playback and capture library
@@ -53,5 +53,10 @@ EOF
 %_datadir/pkgconfig/miniaudio.pc
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11.26-alt1
+- new version 0.11.26
+- fixes:
+  + CVE-2026-32837: fix out-of-bounds read in WAV BEXT metadata.
+
 * Mon Apr 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11.25-alt1
 - initial build for ALT Sisyphus
