@@ -2,12 +2,12 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.13
-%define _dotnet_sdkversion 10.0.402
+%define _dotnet_coreversion 10.0.14
+%define _dotnet_sdkversion 10.0.403
 
-%define _dotnet_corerelease 10.0.13
+%define _dotnet_corerelease 10.0.14
 # used for build
-%define _dotnet_sdkrelease 10.0.402
+%define _dotnet_sdkrelease 10.0.403
 %define upstream_tag v%_dotnet_corerelease
 %define commithash %version-%release
 
@@ -35,8 +35,10 @@ License: MIT
 Url: https://github.com/dotnet/runtime
 Group: Development/Other
 
-# Source-url: https://github.com/dotnet/runtime/archive/v%{_dotnet_corerelease}.tar.gz
+# Runtime sources come from dotnet/dotnet v%{_dotnet_corerelease} (src/runtime).
 Source: %name-%version.tar
+Patch0: system-brotli-cmake.patch
+Patch1: import-line-endings.patch
 
 # Full upstream information about release
 #Source1: https://github.com/dotnet/dotnet/releases/download/%{upstream_tag}/release.json
@@ -62,7 +64,7 @@ BuildRequires: libstdc++-devel
 %if_with libunwind
 BuildRequires: libunwind-devel >= 1.5
 %endif
-BuildRequires: liblttng-ust-devel
+BuildRequires: liblttng-ust-devel libbrotli-devel
 
 #BuildRequires: lldb-devel
 BuildRequires: libicu-devel libuuid-devel zlib-devel libcurl-devel libkrb5-devel libssl-devel
@@ -177,6 +179,8 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 # set global runtime location
 %__subst "s|/usr/share/dotnet|%_dotnetdir|" src/native/corehost/hostmisc/pal.unix.cpp
@@ -207,6 +211,8 @@ cd src/coreclr/
 bash -x ./build-runtime.sh \
     %debrelopt -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
     -cmakeargs -DENABLE_LLDBPLUGIN=0 \
+    -cmakeargs -DCLR_CMAKE_USE_SYSTEM_BROTLI=1 \
+    -cmakeargs -DCLR_CMAKE_USE_SYSTEM_ZLIB=1 \
 %if_without single_file_diagnostics
     -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
 %endif
@@ -218,7 +224,9 @@ cd -
 
 # build Native libraries
 cd src/native/libs/
-bash -x ./build-native.sh %debrelopt
+bash -x ./build-native.sh %debrelopt \
+    -cmakeargs -DCLR_CMAKE_USE_SYSTEM_BROTLI=1 \
+    -cmakeargs -DCLR_CMAKE_USE_SYSTEM_ZLIB=1
 cd -
 
 # FIXME: allow get the release info from release.json file
@@ -387,6 +395,18 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.14-alt1
+- runtime sources from dotnet/dotnet VMR v10.0.14 (src/runtime).
+- includes fixes missing from 10.0.13-alt1: CborReader depth, XML/CMS, Tar
+  symlinks, and Shared Mutex privileges.
+- build with system Brotli and zlib.
+- added BuildRequires: libbrotli-devel (system Brotli).
+- fixes:
+  + CVE-2026-111497: fix Brotli decoder out-of-bounds write.
+  + CVE-2026-70197: fix Windows SocketAsyncEventArgs memory corruption.
+  + CVE-2026-102870: fix Blazor WebAssembly debugger remote code execution.
+  + CVE-2026-114148: fix Linux .NET tarball ownership.
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.13-alt1
 - .NET Runtime 10.0.13
 - BR: use rpm-build-cmake instead of plain cmake

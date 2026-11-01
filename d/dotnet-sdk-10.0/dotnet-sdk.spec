@@ -4,15 +4,15 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 10.0
-%define _dotnet_coreversion 10.0.13
-%define _dotnet_sdkversion 10.0.402
+%define _dotnet_coreversion 10.0.14
+%define _dotnet_sdkversion 10.0.403
 
-%define _dotnet_corerelease 10.0.13
-%define _dotnet_corerelease1 10.0.13
+%define _dotnet_corerelease 10.0.14
+%define _dotnet_corerelease1 10.0.14
 
 #define _dotnet_sdkmanifestsrelease1 9.0.100
 %define _dotnet_sdkmanifestsrelease 10.0.100
-%define _dotnet_sdkrelease 10.0.402
+%define _dotnet_sdkrelease 10.0.403
 
 %define _dotnet_templatesrelease %_dotnet_corerelease1
 %define _dotnet_coreapprefrelease %_dotnet_corerelease
@@ -186,6 +186,14 @@ done
 %endif
 
 %changelog
+* Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.403-alt1
+- update to 10.0.403
+- fixes:
+  + CVE-2026-111497: fix Brotli decoder out-of-bounds write.
+  + CVE-2026-70197: fix Windows SocketAsyncEventArgs memory corruption.
+  + CVE-2026-102870: fix Blazor WebAssembly debugger remote code execution.
+  + CVE-2026-114148: fix Linux .NET tarball ownership.
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 10.0.402-alt1
 - .NET SDK 10.0.402
 - security fixes:
