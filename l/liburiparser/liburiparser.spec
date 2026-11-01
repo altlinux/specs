@@ -3,7 +3,7 @@
 
 %define oname uriparser
 Name: liburiparser
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -17,7 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/uriparser/uriparser/archive/uriparser-%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: cmake gcc-c++ libcpptest-devel
+BuildRequires: rpm-build-cmake gcc-c++ libcpptest-devel
 
 %if_with doc
 BuildRequires: doxygen graphviz
@@ -77,6 +77,12 @@ touch doc/html/FIXME.map
 %_libdir/cmake/*
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
+- new version 1.0.3
+- fixes:
+  + CVE-2026-48841: fix integer overflow in ComposeQueryEngine.
+- use rpm-build-cmake for CMake macros.
+
 * Thu May 28 2026 Alexander Danilov <admsasha@altlinux.org> 1.0.2-alt1
 - new version 1.0.2 (with rpmgs script)
 
