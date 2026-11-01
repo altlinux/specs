@@ -7,7 +7,7 @@
 
 Name: vips
 Version: 8.18.6
-Release: alt1
+Release: alt2
 
 Summary: Large image processing library
 
@@ -76,6 +76,7 @@ BuildRequires: libarchive-devel
 BuildRequires: libexif-devel
 BuildRequires: libultrahdr-devel
 BuildRequires: libraw-devel
+BuildRequires: libgomp-devel
 
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:BuildRequires(pre): gobject-introspection-devel}
@@ -225,6 +226,9 @@ rm -v %buildroot%_docdir/vips-cpp/html/*.map
 # - package python bindings
 
 %changelog
+* Sun Nov 01 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.18.6-alt2
+- e2k build fix
+
 * Tue Sep 08 2026 L.A. Kostis <lakostis@altlinux.ru> 8.18.6-alt1
 - 8.18.6.
 
