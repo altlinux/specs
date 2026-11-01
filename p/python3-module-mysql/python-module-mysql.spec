@@ -2,7 +2,7 @@
 #def_with bootstrap
 
 Name: python3-module-mysql
-Version: 26.7.0
+Version: 26.10.0
 Release: alt1
 
 Summary: MySQL Connector for Python 3
@@ -82,6 +82,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir %__python3 -c \
 %python3_sitelibdir/mysql/connector/django/
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 26.10.0-alt1
+- new version 26.10.0
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 26.7.0-alt1
 - new version 26.7.0
 
