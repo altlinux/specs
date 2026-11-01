@@ -1,7 +1,7 @@
 %global import_path github.com/vmware-tanzu/velero-plugin-for-aws
 
 Name:     velero-plugin-for-aws
-Version:  1.14.2
+Version:  1.14.4
 Release:  alt1
 
 Summary:  Velero plugins for AWS (S3 object storage and EBS volume snapshots)
@@ -47,5 +47,8 @@ export IGNORE_SOURCES=1
 %doc LICENSE
 
 %changelog
+* Sat Oct 31 2026 Nikolay Burykin <bne@altlinux.org> 1.14.4-alt1
+- 1.14.4
+
 * Wed Jul 22 2026 Nikolay Burykin <bne@altlinux.org> 1.14.2-alt1
 - Initial build for Sisyphus
