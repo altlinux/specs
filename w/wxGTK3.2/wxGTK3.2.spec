@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.12
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -27,6 +27,9 @@ Patch1: wxGTK3.0-disable-ABI-checking.patch
 # https://github.com/wxWidgets/wxWidgets/pull/25101
 Patch10: 0001-Use-UTF-8-for-environment-variables-names-and-values.patch
 Patch11: 0002-Use-UTF-8-in-wxGetenv-overload-for-wide-strings-too.patch 
+
+# https://bugzilla.altlinux.org/55648
+Patch20: wxGrid-lines-contrast-with-the-cell-ba.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -334,6 +337,9 @@ ln -s %_bindir/wx-config %buildroot%_bindir/wx-config-%wxbranch
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Nov 01 2026 Anton Midyukov <antohami@altlinux.org> 3.2.12-alt2
+- Backport of MR #27282 to the 3.2 branch (Closes: 55648).
+
 * Sun Oct 11 2026 Anton Midyukov <antohami@altlinux.org> 3.2.12-alt1
 - New version 3.2.12.
 
