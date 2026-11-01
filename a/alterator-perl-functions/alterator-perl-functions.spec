@@ -1,6 +1,6 @@
 Name: alterator-perl-functions
-Version: 0.4
-Release: alt4
+Version: 0.5
+Release: alt1
 
 Requires:  gettext
 Provides: perl-Alterator-Backend3
@@ -27,6 +27,9 @@ helper functions for alterator perl based backends
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Oct 30 2026 Artyom Sinyugin <writers@altlinux.org> 0.5-alt1
+- Terminate backend3 responses with a newline
+
 * Fri Nov 07 2008 Vladislav Zavjalov <slazav@altlinux.org> 0.4-alt4
 - export $LANGUAGE
 
@@ -71,4 +74,3 @@ helper functions for alterator perl based backends
 
 * Tue May 27 2008 Vladislav Zavjalov <slazav@altlinux.org> 0.1-alt1
 - Initial verion. Package perl-Alterator-Backend3 was used...
-

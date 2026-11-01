@@ -1,7 +1,7 @@
 Name: alterator-python-functions
 
-Version: 1.0.0
-Release: alt4
+Version: 1.0.1
+Release: alt1
 
 BuildRequires(pre): rpm-build-python3
 
@@ -39,6 +39,9 @@ Note that the module is `alterator_bindings.backend3`
 %doc README.md
 
 %changelog
+* Fri Oct 30 2026 Artyom Sinyugin <writers@altlinux.org> 1.0.1-alt1
+- Terminate backend3 responses with a newline
+
 * Fri Apr 11 2025 Sergey Konev <darisishe@altlinux.org> 1.0.0-alt4
 - Easier restrictions for write_enum_item argument
   (similar to alterator-sh-functions)
