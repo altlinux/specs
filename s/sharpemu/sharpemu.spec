@@ -10,7 +10,7 @@
 
 Name: sharpemu
 Version: 0.0.7
-Release: alt1%{version_suffix}
+Release: alt2%{version_suffix}
 
 Summary: PlayStation 5 emulator
 License: GPL-2.0-or-later
@@ -35,15 +35,21 @@ Patch0: bink2.patch
 BuildRequires: /proc
 BuildRequires: dotnet-sdk-10.0
 BuildRequires: zip
-# libSkiaSharp (bundled into the single-file binary since v0.0.5-nexus) links
-# against system fontconfig and harfbuzz; the test suite loads it and renders
-# system fonts, so a fontconfig setup with a real font is needed as well.
+# libSkiaSharp (published from the NuGet cache into runtimes/linux-x64/native)
+# links against system fontconfig and harfbuzz; the test suite loads it and
+# renders system fonts, so a fontconfig setup with a real font is needed as well.
 BuildRequires: libfontconfig1
 BuildRequires: fontconfig
 BuildRequires: fonts-ttf-dejavu
 BuildRequires: libharfbuzz
-# Auto-requires cannot see the NEEDED of the libraries embedded into the
-# single-file bundle, so the runtime deps must be listed explicitly.
+# Framework-dependent build: run on the system .NET runtime instead of
+# embedding Microsoft's prebuilt one from the NuGet cache (ALT #61284).
+# The apphost resolves the runtime from DOTNET_ROOT, /etc/dotnet/install_location*
+# or /usr/share/dotnet, but ALT installs dotnet into %_libdir/dotnet, hence
+# the DOTNET_ROOT wrapper in the file section.
+Requires: dotnet-runtime-10.0
+# find-requires now sees the NEEDED entries of the published native libraries,
+# but keep them explicit as a safety net against resolver/skiplist changes.
 Requires: libfontconfig1
 Requires: libharfbuzz
 
@@ -98,7 +104,13 @@ zip -j $FFMPEG_RUNTIME/ffmpeg-linux-x64.zip \
     ../ffmpeg-%ffmpeg_version/libavfilter/libavfilter.so*
 
 # Build SharpEmu
-dotnet restore SharpEmu.slnx --packages .packages -p:NuGetAudit=false
+# Framework-dependent restore: foreign-RID runtime/host packs are pruned from
+# the NuGet cache. The linux-x64 runtime packs stay because upstream's
+# Directory.Build.props pins RuntimeIdentifier for the CLI project, so restore
+# resolves them into the lock file — but nothing from them is published: the
+# app runs on the system dotnet-runtime-10.0. The linux-x64 apphost pack ships
+# inside the SDK itself.
+dotnet restore SharpEmu.slnx --packages .packages -r linux-x64 -p:SelfContained=false -p:NuGetAudit=false
 dotnet build SharpEmu.slnx -c Release --no-restore
 
 %check
@@ -111,7 +123,10 @@ pushd ../ffmpeg-%ffmpeg_version
 popd
 
 # Build and publish SharpEmu
-dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained true -r linux-x64 --no-restore
+# Framework-dependent: no runtime is embedded (Requires: dotnet-runtime-10.0);
+# PublishSingleFile is disabled as well, so the native libraries stay plain
+# files and their dependencies are visible to find-requires.
+dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained false -r linux-x64 -p:PublishSingleFile=false --no-restore
 
 # Copy FFmpeg shared libraries into plugins directory
 %__mkdir_p artifacts/publish/SharpEmu.CLI/Release/net10.0/linux-x64/plugins
@@ -145,7 +160,15 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %__rm -rf %buildroot%_libexecdir/%name/licenses
 
 %__mkdir_p %buildroot%_bindir
-%__ln_s ../lib/%name/SharpEmu %buildroot%_bindir/%name
+%__cat > %buildroot%_bindir/%name <<'EOF'
+#!/bin/sh
+# The apphost resolves the runtime from DOTNET_ROOT, /etc/dotnet/install_location*
+# or /usr/share/dotnet; ALT installs .NET into %_libdir/dotnet.
+DOTNET_ROOT=%_libdir/dotnet
+export DOTNET_ROOT
+exec %_libexecdir/%name/SharpEmu "$@"
+EOF
+chmod +x %buildroot%_bindir/%name
 
 %__install -Dm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %__install -Dm644 assets/images/logo.png %buildroot%_pixmapsdir/%name.png
@@ -155,11 +178,13 @@ dotnet publish src/SharpEmu.CLI/SharpEmu.CLI.csproj -c Release --self-contained 
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
-%dir %_libexecdir/%name
-%_libexecdir/%name/plugins
-%_libexecdir/%name/SharpEmu
+%_libexecdir/%name/
 
 %changelog
+* Sun Nov 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.7-alt2.pulse
+- Build framework-dependent against the system dotnet-runtime-10.0 instead of
+  embedding Microsoft's prebuilt runtime from the NuGet cache (closes: #61284)
+
 * Sun Nov 01 2026 Nazarov Denis <nenderus@altlinux.org> 0.0.7-alt1.pulse
 - Update to v0.0.7-pulse
 - Drop the user data directory patch: accepted upstream (PR #1108)
