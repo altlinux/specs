@@ -1,7 +1,7 @@
 %define pypi_name narwhals
 
 Name: python3-module-narwhals
-Version: 2.27.1
+Version: 2.28.0
 Release: alt1
 
 Summary: Extremely lightweight compatibility layer between dataframe libraries
@@ -22,7 +22,7 @@ BuildRequires: python3-module-uv-build
 # Pull them in only via the corresponding extras, do not force them at runtime.
 %add_python3_req_skip cudf dask dask.dataframe modin modin.pandas
 %add_python3_req_skip duckdb ibis ibis.expr.datatypes ibis.expr.types
-%add_python3_req_skip pandas polars pyarrow pyarrow.compute
+%add_python3_req_skip pandas polars polars.selectors pyarrow pyarrow.compute
 %add_python3_req_skip pyspark pyspark.sql pyspark.sql.connect.dataframe
 %add_python3_req_skip sqlframe sqlparse fireducks numpy
 
@@ -51,6 +51,10 @@ are pulled in only when actually used.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 2.28.0-alt1
+- new version 2.28.0
+- exclude optional polars selectors from runtime requirements.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.27.1-alt1
 - new version 2.27.1
 
