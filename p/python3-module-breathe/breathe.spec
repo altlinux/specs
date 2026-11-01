@@ -1,13 +1,13 @@
 %define oname breathe
 Name: python3-module-breathe
-Version: 4.36.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Make reStructuredText and Sphinx read and render Doxygen xml output
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/michaeljones/breathe
+Url: https://github.com/breathe-doc/breathe
 
 BuildArch: noarch
 
@@ -20,6 +20,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-flit-core
+BuildRequires: python3-module-jinja2
 Conflicts: python-module-breathe
 
 %description
@@ -29,6 +30,7 @@ Breathe is an extension to reStructuredText and Sphinx to be able to read and re
 %setup -n %oname-%version
 
 %build
+python3 xml_parser_generator/setuptools_builder.py
 %pyproject_build
 
 %install
@@ -42,6 +44,12 @@ ln -s breathe-apidoc %buildroot/%_bindir/python3-breathe-apidoc
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0
+- generate the XML parser before building the wheel (Arch Linux).
+- add BuildRequires: python3-module-jinja2 for parser generation.
+- update the project URL and license tag.
+
 * Mon Oct 27 2025 Andrey Cherepanov <cas@altlinux.org> 4.36.0-alt1
 - new version 4.36.0
 - use pyproject macros
