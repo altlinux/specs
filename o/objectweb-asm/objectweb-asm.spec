@@ -2,35 +2,31 @@
 %def_with check
 
 Name: objectweb-asm
-Version: 9.9
-Release: alt2
+Version: 9.11.1
+Release: alt1
 
 Summary: Java bytecode manipulation and analysis framework
-License: BSD
+License: BSD-3-Clause
 Group: Development/Java
 Url: https://asm.ow2.org
-Vcs: https://gitlab.ow2.org/asm/asm.git
+VCS: https://gitlab.ow2.org/asm/asm.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch0: 0001-Remove-all-external-gradle-plugins-alt-patch.patch
-Patch1: 0002-Janino-3.1.7-compatibility-for-tests-alt-patch.patch
-Patch3: 0004-Gradle-9-archive-permissions-alt-patch.patch
-%if_with check
-# Fix warnings "unknown enum constant Status.STABLE".
-Patch2: 0003-Add-an-explicit-dependency-on-apiguardian-alt-patch.patch
-%endif
+Patch0: %name-%version-alt-build.patch
 
 BuildRequires(pre): rpm-macros-gradle
+BuildRequires: java-21-openjdk-devel
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: rpm-build-java
-BuildRequires: jpackage-default
 BuildRequires: xgradle
+# asm-test is built for publication, but is not installed in the RPM.
+BuildRequires: mvn(org.apiguardian:apiguardian-api)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-params)
 %if_with check
-BuildRequires: junit5
-BuildRequires: janino
-BuildRequires: apiguardian
+BuildRequires: mvn(org.codehaus.janino:janino)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires: mvn(org.junit.platform:junit-platform-launcher)
 %endif
 
 %description
@@ -56,16 +52,18 @@ This package provides %summary.
 %gradle_publish -Prelease
 
 %install
-%gradle_register_bom --remove-parent=all
-%gradle_register --exclude-artifacts=asm-test --remove-parent=all
-%gradle_register_javadoc --exclude-artifacts=asm-test
+%gradle_register_bom --artifacts=asm-bom- --remove-parent=all
+%gradle_register --artifacts=asm- --exclude-artifacts=asm-test-,asm-bom- --remove-parent=all
+%gradle_register_javadoc --artifacts=asm- --exclude-artifacts=asm-test-,asm-bom-
 
 %gradle_install
 
+%if_with check
 %check
 # We must explicitly specify the encoding when building in hasher
 # if it is not explicitly specified by upstream in the build file.
 %gradle_check -Dfile.encoding=UTF-8
+%endif
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt
@@ -74,6 +72,9 @@ This package provides %summary.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Oct 31 2026 Ivan Khanas <xeno@altlinux.org> 9.11.1-alt1
+- New version.
+
 * Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 9.9-alt2
 - Fix FTBFS: dirMode and fileMode were removed in Gradle 9.
 
@@ -170,4 +171,3 @@ This package provides %summary.
 
 * Mon Jan 28 2008 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_2jpp1.7
 - converted from JPackage by jppimport script
-

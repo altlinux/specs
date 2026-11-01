@@ -2,7 +2,7 @@
 
 Name: maven-javadoc-plugin
 Version: 3.12.0
-Release: alt1
+Release: alt2
 
 Summary: Maven plugin for generating Java API documentation
 License: Apache-2.0
@@ -10,56 +10,55 @@ Group: Development/Java
 Url: https://maven.apache.org/plugins/maven-javadoc-plugin/
 VCS: https://github.com/apache/maven-javadoc-plugin.git
 
-ExcludeArch: %ix86
+BuildArch: noarch
 
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
-BuildRequires: maven-local
-BuildRequires: rpm-build-java
 BuildRequires: java-21-openjdk-devel
+BuildRequires: maven-local
 
 # Parent POM and plugins executed during the upstream Maven build.
+BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugins:pom:)
 BuildRequires: mvn(org.codehaus.modello:modello-maven-plugin)
 BuildRequires: mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 
 # Direct compile/provided dependencies from the upstream 3.12.0 POM.
-BuildRequires: mvn(org.apache.maven:maven-core)
-BuildRequires: mvn(org.apache.maven:maven-model)
-BuildRequires: mvn(org.apache.maven:maven-settings)
-BuildRequires: mvn(org.apache.maven:maven-plugin-api)
-BuildRequires: mvn(org.apache.maven:maven-artifact)
-BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
-BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-api)
-BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-impl)
-BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires: mvn(com.thoughtworks.qdox:qdox)
+BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(javax.inject:javax.inject)
-BuildRequires: mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires: mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires: mvn(org.apache.maven:maven-archiver)
-BuildRequires: mvn(org.apache.maven.shared:maven-invoker)
-BuildRequires: mvn(org.apache.maven.shared:maven-shared-utils)
-BuildRequires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
-BuildRequires: mvn(org.apache.maven.doxia:doxia-sink-api)
-BuildRequires: mvn(org.apache.maven.doxia:doxia-site-renderer)
-BuildRequires: mvn(org.apache.maven.doxia:doxia-integration-tools)
-BuildRequires: mvn(org.apache.maven.wagon:wagon-provider-api)
 BuildRequires: mvn(org.apache.commons:commons-lang3)
 BuildRequires: mvn(org.apache.commons:commons-text)
 BuildRequires: mvn(org.apache.httpcomponents:httpclient)
 BuildRequires: mvn(org.apache.httpcomponents:httpcore)
-BuildRequires: mvn(com.thoughtworks.qdox:qdox)
-BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.apache.maven.doxia:doxia-integration-tools)
+BuildRequires: mvn(org.apache.maven.doxia:doxia-sink-api)
+BuildRequires: mvn(org.apache.maven.doxia:doxia-site-renderer)
+BuildRequires: mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires: mvn(org.apache.maven.reporting:maven-reporting-api)
+BuildRequires: mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-impl)
+BuildRequires: mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires: mvn(org.apache.maven.shared:maven-common-artifact-filters)
+BuildRequires: mvn(org.apache.maven.shared:maven-invoker)
+BuildRequires: mvn(org.apache.maven.shared:maven-shared-utils)
+BuildRequires: mvn(org.apache.maven.wagon:wagon-provider-api)
+BuildRequires: mvn(org.apache.maven:maven-archiver)
+BuildRequires: mvn(org.apache.maven:maven-artifact)
+BuildRequires: mvn(org.apache.maven:maven-core)
+BuildRequires: mvn(org.apache.maven:maven-model)
+BuildRequires: mvn(org.apache.maven:maven-plugin-api)
+BuildRequires: mvn(org.apache.maven:maven-settings)
+BuildRequires: mvn(org.codehaus.plexus:plexus-archiver)
+BuildRequires: mvn(org.codehaus.plexus:plexus-interactivity-api)
+BuildRequires: mvn(org.codehaus.plexus:plexus-io)
 BuildRequires: mvn(org.codehaus.plexus:plexus-java)
 BuildRequires: mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires: mvn(org.codehaus.plexus:plexus-xml)
-BuildRequires: mvn(org.codehaus.plexus:plexus-io)
-BuildRequires: mvn(org.codehaus.plexus:plexus-archiver)
-BuildRequires: mvn(org.codehaus.plexus:plexus-interactivity-api)
-BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(org.slf4j:slf4j-api)
 
 %description
 The Apache Maven Javadoc Plugin uses the javadoc tool to generate
@@ -89,6 +88,9 @@ API documentation for %name.
 %doc LICENSE README.md
 
 %changelog
+* Sat Oct 31 2026 Ivan Khanas <xeno@altlinux.org> 3.12.0-alt2
+- Enable building on i586.
+
 * Mon Oct 26 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.12.0-alt1
 - new version
 

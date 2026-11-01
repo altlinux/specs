@@ -1,68 +1,65 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: javapoet
+Version: 1.13.0
+Release: alt1
+
+Summary: A Java API for generating .java source files
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:          javapoet
-Version:       1.7.0
-Release:       alt1_12jpp11
-Summary:       A Java API for generating .java source files
-License:       ASL 2.0
-URL:           https://github.com/square/javapoet
-Source0:       https://github.com/square/%{name}/archive/%{name}-%{version}.tar.gz
+Url: https://github.com/square/javapoet
+VCS: https://github.com/square/javapoet.git
+BuildArch: noarch
 
+Source0: %name-%version.tar
+Patch0: %name-%version-alt-tests.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-21-openjdk-devel
 BuildRequires: maven-local
-
-%if 0
-# test dependencies
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
+BuildRequires: mvn(com.google.jimfs:jimfs)
+BuildRequires: mvn(com.google.testing.compile:compile-testing)
+BuildRequires: mvn(com.google.truth:truth)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.eclipse.jdt.core.compiler:ecj:4.4.2)
-BuildRequires: mvn(org.mockito:mockito-core:1.10.16)
-# missing test dependencies
-BuildRequires: mvn(com.google.jimfs:jimfs:1.0)
-BuildRequires: mvn(com.google.testing.compile:compile-testing:0.6)
-BuildRequires: mvn(com.google.truth:truth:0.25)
-%endif
-
-BuildArch:     noarch
-Source44: import.info
-
+BuildRequires: mvn(org.eclipse.jdt:ecj)
+BuildRequires: mvn(org.mockito:mockito-core)
 %description
 A utility class which aids in generating Java source files.
 
 %package javadoc
 Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
+Summary: Javadoc for JavaPoet
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for JavaPoet.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
-
-# remove unnecessary dependency on parent POM
+%setup
+%autopatch -p1
 %pom_remove_parent
-
 %pom_remove_plugin :maven-checkstyle-plugin
-
-%mvn_file : %{name}
+%pom_xpath_remove 'pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:dependencies'
+%pom_xpath_remove 'pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration/pom:compilerId'
+%pom_add_dep com.google.code.findbugs:jsr305:3.0.2:test
+%mvn_file : javapoet
 
 %build
-# skip tests due to missing test dependencies
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.release=8 -Dmaven.javadoc.source=8
 
 %install
 %mvn_install
 
-%files -f .mfiles
-%doc CHANGELOG.md README.md
-%doc --no-dereference LICENSE.txt
+%files -f .mfiles-javapoet
+%doc CHANGELOG.md README.md LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc LICENSE.txt
 
 %changelog
+* Thu Oct 29 2026 Ivan Khanas <xeno@altlinux.org> 1.13.0-alt1
+- New version.
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.7.0-alt1_12jpp11
 - fc34 update
 

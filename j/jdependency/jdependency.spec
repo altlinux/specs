@@ -1,19 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jdependency
-Version: 2.13
+Version: 2.17
 Release: alt1
 
 Summary: This project provides an API to analyse class dependencies
 Group: Development/Java
 License: Apache-2.0
 Url: https://github.com/tcurdt/jdependency
-Vcs: https://github.com/tcurdt/jdependency.git
+VCS: https://github.com/tcurdt/jdependency.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
 
-BuildRequires: /proc rpm-build-java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: /proc
 BuildRequires: jpackage-default
 BuildRequires: maven-local
 BuildRequires: mvn(commons-io:commons-io)
@@ -21,6 +22,7 @@ BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires: mvn(org.jacoco:jacoco-maven-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.ow2.asm:asm-analysis)
@@ -42,13 +44,18 @@ Comprehensive API documentation for analyzing Java bytecode dependencies.
 
 %prep
 %setup
+%pom_remove_plugin org.sonatype.central:central-publishing-maven-plugin
+%pom_xpath_set \
+    "pom:build/pom:pluginManagement/pom:plugins/"\
+"pom:plugin[pom:artifactId='build-helper-maven-plugin']/pom:version" \
+    3.6.1
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 \
   -Dmaven.compiler.target=1.8 \
   -Dmaven.javadoc.source=1.8 \
   -Dmaven.compiler.release=8 \
-  #
+  -Dasm.version=9.9
 
 %install
 %mvn_install
@@ -61,6 +68,9 @@ Comprehensive API documentation for analyzing Java bytecode dependencies.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Thu Oct 29 2026 Ivan Khanas <xeno@altlinux.org> 2.17-alt1
+- New version.
+
 * Mon Aug 04 2025 Ivan Khanas <xeno@altlinux.org> 2.13-alt1
 - New version.
 

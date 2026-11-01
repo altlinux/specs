@@ -1,29 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: commonmark
-Version: 0.28.0
+Version: 0.31.0
 Release: alt1
 
 Summary: Java CommonMark library for parsing and rendering Markdown text
 Group: Development/Java
 License: BSD-2-Clause
-Url: https://commonmark.org/
-Vcs: https://github.com/commonmark/commonmark-java
+Url: https://commonmark.org
+VCS: https://github.com/commonmark/commonmark-java
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Patch0: commonmark-assertj-module.patch
 
-BuildRequires(pre): rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
-BuildRequires: jpackage-default
+BuildRequires: java-17-openjdk-devel
 BuildRequires: maven-local
-BuildRequires: maven-compiler-plugin
-BuildRequires: maven-jar-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-plugin-bundle
-BuildRequires: maven-source-plugin
-BuildRequires: autolink-java
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-install-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-jar-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
+BuildRequires: mvn(org.assertj:assertj-core)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires: mvn(org.nibor.autolink:autolink)
+BuildRequires: mvn(org.openjdk.jmh:jmh-core)
+BuildRequires: mvn(org.openjdk.jmh:jmh-generator-annprocess)
 
 %package javadoc
 Summary: API documentation for commonmark
@@ -112,26 +117,28 @@ CommonMark extension for YAML front matter.
 
 %prep
 %setup
+%patch0 -p1
 
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-gpg-plugin
 
-# Now there is a problem with JPMS of assertj-core and its transitive dependency byte-buddy.
+# The integration module includes comparative benchmarks against other parsers.
 %pom_disable_module commonmark-integration-test
-%pom_disable_module commonmark-test-util
 
-# No need to package
+# Test helpers are built for the unit tests, not installed as a public library.
 %mvn_package :commonmark-parent __noinstall
+%mvn_package :commonmark-test-util __noinstall
 
 %build
-%mvn_build -sf
+%mvn_build -s
 
 %install
 %mvn_install
 
 %files -f .mfiles-commonmark
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 
@@ -156,6 +163,9 @@ CommonMark extension for YAML front matter.
 %files ext-yaml-front-matter -f .mfiles-commonmark-ext-yaml-front-matter
 
 %changelog
+* Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 0.31.0-alt1
+- New version.
+
 * Thu Apr 30 2026 Arseniy Kostevich <faux@altlinux.org> 0.28.0-alt1
 - New version.
 - Add package ext-gfm-alerts.
