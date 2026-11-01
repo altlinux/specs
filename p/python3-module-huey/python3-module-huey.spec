@@ -1,6 +1,6 @@
 %define oname huey
 Name: python3-module-%oname
-Version: 3.4.0
+Version: 3.5.3
 Release: alt1
 
 Summary: a little task queue for python
@@ -54,6 +54,9 @@ rm -rfv %buildroot%python3_sitelibdir/huey/contrib/
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.3-alt1
+- new version 3.5.3.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
 - new version 3.4.0
 
