@@ -4,7 +4,7 @@
 
 Name: metadata-cleaner
 Version: 4.0.1
-Release: alt2
+Release: alt3
 
 Summary:  Metadata Cleaner
 License: GPL-3.0-or-later and CC-BY-SA-4.0
@@ -16,8 +16,6 @@ Vcs: https://gitlab.com/metadatacleaner/metadatacleaner
 BuildArch: noarch
 
 Source: %name-%version.tar
-#https://bugzilla.altlinux.org/61140
-Source1: ru.po
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3
 BuildRequires: meson itstool
@@ -36,7 +34,6 @@ This tool allows you to view metadata in your files and to get rid of it, as muc
 
 %prep
 %setup
-cp -a %SOURCE1 po/
 
 %build
 %meson
@@ -61,6 +58,9 @@ cp -a %SOURCE1 po/
 %doc *.md
 
 %changelog
+* Mon Nov 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt3
+- updated to git.bf8bf151
+
 * Tue Oct 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 4.0.1-alt2
 - updated russian translation (ALT #61140)
 
