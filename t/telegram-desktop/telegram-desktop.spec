@@ -23,7 +23,7 @@
 
 Name:    telegram-desktop
 Version: 7.3.3
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -35,6 +35,7 @@ Vcs: https://github.com/telegramdesktop/tdesktop
 # Source-url: https://github.com/telegramdesktop/tdesktop/releases/download/v%version/tdesktop-%version-full.tar.gz
 Source: %name-%version.tar
 Patch1: telegram-desktop-gsl-5.patch
+Patch2: telegram-desktop-system-window-frame.patch
 
 # Source1-url: https://github.com/desktop-app/GSL/archive/refs/heads/main.zip
 #Source1: %name-gsl-%version.tar
@@ -259,6 +260,7 @@ or business messaging needs.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %if_without gsl
 test -d /usr/share/cmake/Microsoft.GSL/ && echo "External Microsoft GSL is incompatible with buggy libstd++ (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=106547), remove libmicrosoft-gsl-devel to correct build" && exit 1
@@ -379,6 +381,9 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.3-alt2
+- use system window frame by default (closes: #57075)
+
 * Fri Oct 23 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.3-alt1
 - new version 7.3.3
 
