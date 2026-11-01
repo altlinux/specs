@@ -1,6 +1,6 @@
 Name: bdsync
-Version: 0.11.2
-Release: alt3.1
+Version: 0.11.4
+Release: alt1
 
 Summary: Remote sync for block devices
 
@@ -10,8 +10,6 @@ Url: http://bdsync.rolf-fokkens.nl/
 
 # Source-url: https://github.com/rolffokkens/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
-
-Patch1: bdsync-0.10-buildflags.patch
 
 BuildRequires: libssl-devel
 %ifnarch %e2k
@@ -32,7 +30,6 @@ block devices.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %ifarch %e2k
@@ -61,6 +58,10 @@ cp %name.1 %buildroot/%_man1dir/%name.1
 %endif
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11.4-alt1
+- new version 0.11.4
+- fix FTBFS with upstream test updates.
+
 * Wed Apr 27 2022 Michael Shigorin <mike@altlinux.org> 0.11.2-alt3.1
 - E2K: avoid pandoc (not available yet)
 
