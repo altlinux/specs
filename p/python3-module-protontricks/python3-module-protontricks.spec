@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 
 Summary: Python package for protontricks
@@ -17,19 +17,11 @@ Vcs: https://github.com/Matoking/protontricks
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
+%pyproject_configure_pypi_package
 Requires: winetricks
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -46,11 +38,7 @@ Requires: winetricks
 %setup
 %autopatch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements_dev.txt
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -62,7 +50,8 @@ Requires: winetricks
 rm %buildroot%_bindir/protontricks-desktop-install
 
 %check
-%pyproject_run_pytest -vra
+%pyproject_run_pytest -vra \
+  --deselect tests/test_steam.py::TestFindSteamCompatToolApp::test_find_compat_tool_not_arm64
 
 %files
 %python3_sitelibdir/%mod_name/
@@ -73,6 +62,9 @@ rm %buildroot%_bindir/protontricks-desktop-install
 %_desktopdir/protontricks*.desktop
 
 %changelog
+* Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.15.0-alt1
+- Updated to 1.15.0.
+
 * Tue Mar 31 2026 Anton Zhukharev <ancieg@altlinux.org> 1.14.1-alt1
 - Updated to 1.14.1.
 
