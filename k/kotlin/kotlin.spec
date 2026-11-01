@@ -27,14 +27,14 @@
 
 Name: kotlin
 Version: 2.4.21
-Release: alt1
+Release: alt2
 
 Summary: Kotlin compiler distribution
 License: Apache-2.0
 Group: Development/Java
 Url: https://kotlinlang.org/
 VCS: https://github.com/JetBrains/kotlin.git
-ExclusiveArch: %java_arches
+BuildArch: noarch
 
 Source0: %name-%version.tar
 Source1: gradle-cache-base.tar.zst
@@ -54,6 +54,7 @@ Source13: gradle-cache-npm.tar.zst
 Source14: kotlin-runtime-cache.tar.zst
 Source15: install-runtime.py
 Source16: gradle-cache-linux-arm64.tar.zst
+Source17: gradle-cache-rollup-wasm.tar.zst
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-java
@@ -62,11 +63,13 @@ BuildRequires: maven
 BuildRequires: maven-local
 BuildRequires: gradle
 BuildRequires: zstd
+BuildRequires: node
+BuildRequires: npm
+BuildRequires: /proc
 BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: java-11-openjdk-devel
 BuildRequires: java-17-openjdk-devel
 BuildRequires: java-21-openjdk-devel
-BuildRequires: java-25-openjdk-devel
 
 Requires: java-17-openjdk-headless
 Requires: %name-stdlib = %EVR
@@ -192,44 +195,71 @@ tar --zstd -xf %SOURCE8 -C %_builddir
 tar --zstd -xf %SOURCE9 -C %_builddir
 tar --zstd -xf %SOURCE13 -C %_builddir
 tar --zstd -xf %SOURCE16 -C %_builddir
+tar --zstd -xf %SOURCE17 -C %_builddir
 rm -rf %runtime_repo
 tar --zstd -xf %SOURCE14 -C %_builddir
 cp -al %m2_seed_repo/. %m2_repo/
 
 
 %build
+build_workers=%build_workers
+build_jvmargs="%build_jvmargs"
+direct_memory_arg="%direct_memory_arg"
+compiler_strategy=in-process
+set --
+if [ "$(getconf LONG_BIT)" = 32 ]; then
+  build_workers=2
+  build_jvmargs="-Xmx2g -XX:MaxMetaspaceSize=1g"
+  build_jvmargs="$build_jvmargs -XX:ReservedCodeCacheSize=96m"
+  build_jvmargs="$build_jvmargs -XX:ActiveProcessorCount=2"
+  direct_memory_arg="-XX:MaxDirectMemorySize=128m"
+  compiler_strategy=daemon
+  # This included build is compiled before its settings convention is available.
+  sed -i "s|^kotlin.daemon.jvmargs=.*|kotlin.daemon.jvmargs=$build_jvmargs|" \
+    repo/gradle-settings-conventions/gradle.properties
+  # System project properties also reach composite builds and their Kotlin DSL tasks.
+  set -- "-Dorg.gradle.project.kotlin.daemon.jvmargs=$build_jvmargs" \
+    "-Dorg.gradle.project.kotlin.compiler.execution.strategy=$compiler_strategy" \
+    "-Dorg.gradle.project.kotlin.daemon.useFallbackStrategy=false" \
+    "-Dorg.gradle.project.kotlin.build.disableMappedJarFs=true"
+  maven_daemon_jvmargs=$(printf '%s' "$build_jvmargs $direct_memory_arg" |
+    sed 's/^-//; s/ -/,/g')
+  export MAVEN_ARGS="-Dkotlin.compiler.daemon.jvmArgs=$maven_daemon_jvmargs"
+fi
+
 export HOME=%build_home
 export TMPDIR=%build_tmp
 export GRADLE_USER_HOME=%gradle_cache_dir
 export GRADLE_OPTS="-Duser.home=%build_home -Djava.io.tmpdir=%build_tmp"
-export MAVEN_OPTS="%build_jvmargs \
+export MAVEN_OPTS="$build_jvmargs \
   -Duser.home=%build_home -Djava.io.tmpdir=%build_tmp"
 export npm_config_cache=%gradle_cache_dir/npm-cache
 export JDK_1_8=%_jvmdir/java-1.8.0-openjdk
 export JDK_11=%_jvmdir/java-11-openjdk
 export JDK_17_0=%_jvmdir/java-17-openjdk
 export JDK_21=%_jvmdir/java-21-openjdk
-export JDK_25_0=%_jvmdir/java-25-openjdk
 
 toolchain_paths=$JDK_1_8,$JDK_11,$JDK_17_0
-toolchain_paths=$toolchain_paths,$JDK_21,$JDK_25_0
+toolchain_paths=$toolchain_paths,$JDK_21
 
 # Gradle keeps its daemon home; publish to the repository used by Maven.
 gradle dist installJps installIdeArtifacts --offline --no-daemon \
   --no-watch-fs --no-configuration-cache --no-build-cache --no-scan \
-  --max-workers=%build_workers --dependency-verification=off \
+  --max-workers=$build_workers --dependency-verification=off \
   -x test \
   -Dorg.gradle.java.home=$JDK_21 \
   -Dmaven.repo.local=%m2_repo \
-  -Dorg.gradle.jvmargs="%build_jvmargs %direct_memory_arg \
+  -Dorg.gradle.jvmargs="$build_jvmargs $direct_memory_arg \
     -Djava.io.tmpdir=%build_tmp" \
   -Dorg.gradle.java.installations.auto-download=false \
   -Dorg.gradle.parallel=true \
-  -Pkotlin.compiler.execution.strategy=in-process \
-  -Pkotlin.daemon.jvmargs="%build_jvmargs" \
+  -Pkotlin.compiler.execution.strategy=$compiler_strategy \
+  -Pkotlin.daemon.jvmargs="$build_jvmargs" \
+  "$@" \
   -Dorg.gradle.java.installations.auto-detect=false \
   -Dorg.gradle.java.installations.paths="$toolchain_paths" \
   -Pkotlin.native.enabled=false \
+  -Pkotlin.build.useSystemNode=true \
   -Pkotlin.build.internal.gradle.setup=false \
   -Porg.gradle.kotlin.dsl.allWarningsAsErrors=false \
   -PdeployVersion=%version -Pbuild.number=%version \
@@ -534,6 +564,14 @@ done
 %doc license
 
 %changelog
+* Sat Oct 31 2026 Ivan Khanas <xeno@altlinux.org> 2.4.21-alt2
+- Build portable Kotlin packages as noarch.
+- Support i586 builds without the optional JDK 25 toolchain.
+- Use system Node and portable Rollup for offline browser assets.
+- Bound Gradle and Maven compiler JVM memory on i586.
+- Keep compiler daemons isolated across composite builds on i586.
+- Handle legacy compiler compatibility without mapped JARs on i586.
+
 * Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 2.4.21-alt1
 - New version.
 - Ship one Gradle API variant for the system Gradle.
