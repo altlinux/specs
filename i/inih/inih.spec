@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: inih
-Version: 62
+Version: 63
 Release: alt1
 Epoch: 1
 
@@ -11,6 +11,7 @@ License: BSD
 Group: System/Libraries
 
 Url: https://github.com/benhoyt/%name
+Vcs: https://github.com/benhoyt/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # %url/archive/%version/%name-r%version.tar.gz
@@ -88,6 +89,9 @@ Static libraries for INI Not Invented Here
 %endif
 
 %changelog
+* Mon Nov 02 2026 Nazarov Denis <nenderus@altlinux.org> 1:63-alt1
+- New version 63.
+
 * Fri Sep 12 2025 Nazarov Denis <nenderus@altlinux.org> 1:62-alt1
 - New version 62.
 
