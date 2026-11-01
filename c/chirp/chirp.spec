@@ -4,7 +4,7 @@
 #%%def_disable check
 
 Name: chirp
-Version: 20260616
+Version: 20261027
 Release: alt1
 Summary: A tool for programming two-way radio equipment
 
@@ -100,6 +100,9 @@ find chirp/locale -type d -mindepth 1 -maxdepth 1 -exec cp -r {} %buildroot/%_da
 %_iconsdir/hicolor/scalable/apps/chirp.svg
 
 %changelog
+* Sun Nov 01 2026 Anton Midyukov <antohami@altlinux.org> 20261027-alt1
+- New snapshot.
+
 * Sat Jun 20 2026 Anton Midyukov <antohami@altlinux.org> 20260616-alt1
 - New snapshot.
 
