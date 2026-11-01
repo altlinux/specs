@@ -4,7 +4,7 @@
 
 Name: manticore
 Version: 29.9.0
-Release: alt2
+Release: alt2.1
 
 Summary: Manticore full-text search server
 
@@ -25,6 +25,7 @@ Patch3: manticore-system-columnar.patch
 Patch4: manticore-gcc15-sortergroup-access.patch
 Patch5: manticore-boost191-process-environment.patch
 Patch6: manticore-openssl-library-selection.patch
+Patch7: manticore-index-converter-crash.patch
 
 Conflicts: mnogosearch
 Conflicts: sphinx
@@ -90,6 +91,7 @@ Manticore Search 3.x format.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 subst 's|#define VERNUMBERS "0.0.0"|#define VERNUMBERS "%version"|' src/sphinxversion.h.in
 subst "s|.*Boost_USE_STATIC_LIBS ON.*||" src/CMakeLists.txt
 subst "s|.*Boost_USE_STATIC_RUNTIME ON.*||" src/CMakeLists.txt
@@ -181,6 +183,9 @@ done
 %_bindir/index_converter
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt2.1
+- index_converter: fix crashes with --config and --path (closes: #61261)
+
 * Thu Oct 29 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt2
 - respect shared OpenSSL selection in CMake.
 - enable OpenSSL support in searchd.
