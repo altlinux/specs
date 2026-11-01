@@ -1,7 +1,7 @@
 %define _iconsscaldir  %_iconsdir/hicolor/scalable/apps
 
 Name: byobu
-Version: 7.22
+Version: 7.23
 Release: alt1
 
 Summary: Light-weight, configurable window manager built upon GNU screen
@@ -136,6 +136,10 @@ cp -p usr/share/byobu/pixmaps/byobu.svg %buildroot%_iconsscaldir
 %_datadir/bash-completion/completions/trustmux
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 7.23-alt1
+- New version 7.23
+- Add a dependency test to prevent optional requirements.
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 7.22-alt1
 - New version 7.22
 - Move Trustmux mobile companion into the separate byobu-trustmux subpackage.
