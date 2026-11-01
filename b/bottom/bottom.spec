@@ -3,7 +3,7 @@
 %def_with check
 
 Name: bottom
-Version: 0.14.9
+Version: 0.15.0
 Release: alt1
 Summary: Yet another cross-platform graphical process/system monitor
 License: MIT
@@ -59,6 +59,9 @@ export RUST_BACKTRACE=full
 %doc LICENSE CHANGELOG.md README.md sample_configs
 
 %changelog
+* Sun Nov 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.15.0-alt1
+- Updated to version 0.15.0.
+
 * Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.14.9-alt1
 - Updated to version 0.14.9.
 
