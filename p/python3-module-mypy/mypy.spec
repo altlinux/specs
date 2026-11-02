@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 Summary: Optional static typing for Python
 License: MIT
@@ -20,19 +20,15 @@ Group: Development/Python3
 Url: https://pypi.org/project/mypy/
 VCS: https://github.com/python/mypy
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%add_pyproject_deps_build_filter types-
-%pyproject_builddeps_build
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_with_build_filter types-
+%pyproject_configure_with_check_deps pip_reqfile test-requirements.in
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 %if_with check
 BuildRequires: /proc
 BuildRequires: gcc-c++
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 # required for mypy/test/testpep561.py
 BuildRequires: python3-module-hatchling
 BuildRequires: python3-module-editables
@@ -68,11 +64,7 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile test-requirements.in
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -140,6 +132,9 @@ export CFLAGS="${CFLAGS:-%optflags} -DNDEBUG"
 %endif
 
 %changelog
+* Mon Nov 02 2026 Stanislav Levin <slev@altlinux.org> 2.4.1-alt1
+- 2.4.0 -> 2.4.1
+
 * Fri Oct 02 2026 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
 - 2.3.1 -> 2.4.0
 
