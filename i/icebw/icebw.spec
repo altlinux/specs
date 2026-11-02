@@ -8,7 +8,7 @@
 %define oversion 14_14
 
 Name:    icebw
-Version: 15.12
+Version: 15.19
 Release: alt1
 Summary: Free financial accounting system with GTK interface
 
@@ -25,7 +25,8 @@ Patch2:  %name-alt-fix-missing-global-variables.patch
 Patch3:  %name-bindir.patch
 Patch4:  %name-fix-mariadb-link-library.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: libmariadb-devel
@@ -57,16 +58,23 @@ pushd locale
 popd
 mkdir -p %buildroot%_desktopdir
 cp -v desktop/applications/*.desktop %buildroot%_desktopdir
-mkdir -p %buildroot%_pixmapsdir
-cp -v desktop/pixmaps/*.png %buildroot%_pixmapsdir
+sed -i 's/^Categories=Office;$/Categories=Office;Finance;/; s/^Icon=\(.*\)\.png$/Icon=\1/' %buildroot%_desktopdir/*.desktop
+mkdir -p %buildroot%_iconsdir/hicolor/32x32/apps
+cp -v desktop/pixmaps/*.png %buildroot%_iconsdir/hicolor/32x32/apps
+%find_lang %{oname}
 
-%files
+%files -f %{oname}.lang
 %_bindir/*
 %_desktopdir/*.desktop
-%_pixmapsdir/*.png
-%_datadir/locale/uk/LC_MESSAGES/%oname.mo
+%_iconsdir/hicolor/32x32/apps/*.png
 
 %changelog
+* Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 15.19-alt1
+- New version 15.19
+- Build with rpm-build-cmake and rpm-macros-cmake.
+- Add Finance desktop categories and install icons in hicolor.
+- Register Ukrainian translations with %%find_lang.
+
 * Sun Apr 30 2023 Cronbuild Service <cronbuild@altlinux.org> 15.12-alt1
 - New version 15.12.
 
