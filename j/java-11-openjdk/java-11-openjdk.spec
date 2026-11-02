@@ -41,7 +41,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.32.1.1
+%define version 11.0.33.0.9
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -284,8 +284,9 @@ BuildRequires: /proc rpm-build-java
 %global top_level_dir_name jdk11u
 %global majorver    11
 %global minorver    0
-%global securityver 32
-%global buildver    1
+%global securityver 33
+%global patchver    0
+%global buildver    9
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
@@ -312,7 +313,7 @@ BuildRequires: /proc rpm-build-java
 # for techpreview, using 1, so slowdebugs can have 0
 %define priority %( printf '%08d' 3 )
 %endif
-%global newjavaver      %{majorver}.%{minorver}.%{securityver}.%{buildver}
+%global newjavaver      %{majorver}.%{minorver}.%{securityver}.%{patchver}
 %global javaver         %{majorver}
 
 # Define milestone (EA for pre-releases, GA for releases)
@@ -1758,6 +1759,19 @@ fi
 %endif
 
 %changelog
+* Mon Nov 02 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.33.0.9-alt1
+- New version (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-91382,
+  CVE-2026-91411, CVE-2026-83395, CVE-2026-87294, CVE-2026-91395,
+  CVE-2026-91396, CVE-2026-91394, CVE-2026-87290, CVE-2026-83387,
+  CVE-2026-91462, CVE-2026-83374, CVE-2026-91410, CVE-2026-91332,
+  CVE-2026-91451, CVE-2026-91373, CVE-2026-83380, CVE-2026-83400,
+  CVE-2026-91463, CVE-2026-91464, CVE-2026-91453, CVE-2026-91452,
+  CVE-2026-91418, CVE-2026-91487, CVE-2026-83381, CVE-2026-91374,
+  CVE-2026-91375, CVE-2026-91379, CVE-2026-91380, CVE-2026-91334,
+  CVE-2026-87367, CVE-2026-87292, CVE-2026-83376, CVE-2026-91461,
+  CVE-2026-91397, CVE-2026-91400, CVE-2026-91335, CVE-2026-91403,
+  CVE-2026-114820).
+
 * Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.32.1.1-alt1
 - New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
 
