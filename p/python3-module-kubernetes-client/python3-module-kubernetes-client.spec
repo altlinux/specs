@@ -1,7 +1,8 @@
 %define  modulename kubernetes-client
+%filter_from_requires /python3(kubernetes.aio/d
 
 Name:     python3-module-%modulename
-Version:  36.0.3
+Version:  37.0.1
 Release:  alt1
 
 Summary:  Kubernetes Python Client
@@ -36,6 +37,9 @@ cp -pr kubernetes/e2e_test %buildroot%python3_sitelibdir/kubernetes/
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 37.0.1-alt1
+- 37.0.1
+
 * Tue Jul 14 2026 Andrew A. Vasilyev <andy@altlinux.org> 36.0.3-alt1
 - 36.0.3
 
