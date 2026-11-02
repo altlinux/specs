@@ -2,7 +2,7 @@
 %define abiver 35
 
 Name:    albert
-Version: %abiver.1.0
+Version: %abiver.2.0
 Release: alt1
 
 Summary: A fast and flexible keyboard launcher
@@ -12,40 +12,39 @@ Url:     https://albertlauncher.github.io
 Vcs:     https://github.com/albertlauncher/albert
 
 Source0: %name-%version.tar
-Source1: %name-%version-i18n.tar
-Source2: %name-%version-lib-QHotkey.tar
-Source3: %name-%version-lib-QNotification.tar
-Source4: %name-%version-plugins-applications.tar
-Source5: %name-%version-plugins-application.tar
-Source6: %name-%version-plugins-bluetooth.tar
-Source7: %name-%version-plugins-caffeine.tar
-Source8: %name-%version-plugins-calculator-qalculate.tar
-Source9: %name-%version-plugins-chromium.tar
-Source10: %name-%version-plugins-clipboard.tar
-Source11: %name-%version-plugins-commandline.tar
-Source12: %name-%version-plugins-contacts.tar
-Source13: %name-%version-plugins-datetime.tar
-Source14: %name-%version-plugins-debug.tar
-Source15: %name-%version-plugins-dictionary.tar
-Source16: %name-%version-plugins-docs.tar
-Source17: %name-%version-plugins-files.tar
-Source18: %name-%version-plugins-github.tar
-Source19: %name-%version-plugins-hash.tar
-Source20: %name-%version-plugins-homebrew.tar
-Source21: %name-%version-plugins-mediaremote.tar
-Source22: %name-%version-plugins-menubar.tar
-Source23: %name-%version-plugins-obsidian.tar
-Source24: %name-%version-plugins-python.tar
-Source25: %name-%version-plugins-snippets.tar
-Source26: %name-%version-plugins-spotify.tar
-Source27: %name-%version-plugins-ssh.tar
-Source28: %name-%version-plugins-system.tar
-Source29: %name-%version-plugins-timer.tar
-Source30: %name-%version-plugins-timezones.tar
-Source31: %name-%version-plugins-urlhandler.tar
-Source32: %name-%version-plugins-vpn.tar
-Source33: %name-%version-plugins-websearch.tar
-Source34: %name-%version-plugins-widgetsboxmodel.tar
+Source1: %name-%version-lib-QHotkey.tar
+Source2: %name-%version-lib-QNotification.tar
+Source3: %name-%version-plugins-applications.tar
+Source4: %name-%version-plugins-application.tar
+Source5: %name-%version-plugins-bluetooth.tar
+Source6: %name-%version-plugins-caffeine.tar
+Source7: %name-%version-plugins-calculator-qalculate.tar
+Source8: %name-%version-plugins-chromium.tar
+Source9: %name-%version-plugins-clipboard.tar
+Source10: %name-%version-plugins-commandline.tar
+Source11: %name-%version-plugins-contacts.tar
+Source12: %name-%version-plugins-datetime.tar
+Source13: %name-%version-plugins-debug.tar
+Source14: %name-%version-plugins-dictionary.tar
+Source15: %name-%version-plugins-docs.tar
+Source16: %name-%version-plugins-files.tar
+Source17: %name-%version-plugins-github.tar
+Source18: %name-%version-plugins-hash.tar
+Source19: %name-%version-plugins-homebrew.tar
+Source20: %name-%version-plugins-mediaremote.tar
+Source21: %name-%version-plugins-menubar.tar
+Source22: %name-%version-plugins-obsidian.tar
+Source23: %name-%version-plugins-python.tar
+Source24: %name-%version-plugins-snippets.tar
+Source25: %name-%version-plugins-spotify.tar
+Source26: %name-%version-plugins-ssh.tar
+Source27: %name-%version-plugins-system.tar
+Source28: %name-%version-plugins-timer.tar
+Source29: %name-%version-plugins-timezones.tar
+Source30: %name-%version-plugins-urlhandler.tar
+Source31: %name-%version-plugins-vpn.tar
+Source32: %name-%version-plugins-websearch.tar
+Source33: %name-%version-plugins-widgetsboxmodel.tar
 # Link application against existent pybind from repo
 # Upstream requires submodule
 Patch0: albert-0.26.10-alt-build-without-pybind-src.patch
@@ -102,7 +101,7 @@ Obsoletes: lib%name < %EVR
 Shared libraries for running Albert launcher application
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33 -a34
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22 -a23 -a24 -a25 -a26 -a27 -a28 -a29 -a30 -a31 -a32 -a33
 %patch0 -p2
 
 # Avoid error: inconsistent deduction for 'auto': 'long long int' and then 'int'
@@ -146,6 +145,9 @@ sed -i 's/0ll/0/g' src/util/querypreprocessing.cpp
 %_libdir/lib%name.so.%abiver.*
 
 %changelog
+* Mon Nov 02 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 35.2.0-alt1
+- New version.
+
 * Tue Jul 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 35.1.0-alt1
 - New version.
 
