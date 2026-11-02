@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-hypopg
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 Summary: HypoPG is a PostgreSQL extension adding support for hypothetical indexes.
 License: PostgreSQL
@@ -38,6 +38,9 @@ spend resources to create them.
 %doc CHANGELOG.md CONTRIBUTORS.md LICENSE README.md TODO.md docs
 
 %changelog
+* Mon Nov 02 2026 Alexei Takaseev <taf@altlinux.org> 1.4.5-alt1
+- 1.4.5
+
 * Mon Oct 26 2026 Alexei Takaseev <taf@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
