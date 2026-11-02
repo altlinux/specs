@@ -1,6 +1,6 @@
-%define dbeaver_common_commit 995fc034cc88f1328d2e4be27feda5ba5578d5ab
+%define dbeaver_common_commit 79d77de623dd4848b61c21d2dd30ce0d652af076
 %define equinox_commit 12022c26e62ce76e376f6f9b22001b9aa0f969a7
-%define datadam_api_commit d1158c848c99a51c58fbd5153c5195ae69b11984
+%define datadam_api_commit ae0f5d40b8c54d461be3990d24ca278601cf1a3f
 
 %ifarch x86_64
 %define jna_arch linux-x86-64
@@ -10,7 +10,7 @@
 %endif
 
 Name: dbeaver
-Version: 26.2.3
+Version: 26.2.4
 Release: alt1
 
 Summary: Universal Database Manager
@@ -36,6 +36,7 @@ Source4: equinox-%equinox_commit.tar
 Source5: datadam-api-%datadam_api_commit.tar
 
 Patch0: %name-alt-autoupdate.patch
+Patch1: %name-alt-ssl-test-filestore.patch
 
 BuildRequires: /proc rpm-build-java maven
 BuildRequires: java-25-openjdk-devel
@@ -59,6 +60,7 @@ DBeaver is free and open source universal database tool for developers and datab
 %prep
 %setup -b 2 -b 3 -b 4 -b 5
 %patch0 -p1
+%patch1 -p1
 
 %__mv -Tf ../dbeaver-common-%dbeaver_common_commit ../dbeaver-common
 %__mv -Tf ../datadam-api-%datadam_api_commit ../datadam-api
@@ -140,6 +142,10 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Mon Nov 02 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.4-alt1
+- Version 26.2.4
+- Fix SSL private key staging in sandboxed environments without mount info
+
 * Mon Oct 19 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.3-alt1
 - Version 26.2.3
 
