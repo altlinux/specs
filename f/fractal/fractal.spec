@@ -1,6 +1,6 @@
 Name: fractal
-Version: 13
-Release: alt2
+Version: 14.3
+Release: alt1
 Summary: Matrix messaging app for GNOME written in Rust
 License: GPLv3
 Group: Networking/Instant messaging
@@ -17,7 +17,7 @@ BuildRequires: blueprint-compiler clang gst-plugins-bad1.0-devel grass-sass liba
 
 BuildRequires: /proc
 BuildRequires: cmake xdg-desktop-portal-devel clang-devel
-BuildRequires: pkgconfig(gtk4) >= 4.16 pkgconfig(libadwaita-1) >= 1.7 pkgconfig(gstreamer-1.0) >= 1.20
+BuildRequires: pkgconfig(gtk4) >= 4.16 pkgconfig(libadwaita-1) >= 1.7 pkgconfig(glycin-gtk4-2) pkgconfig(gstreamer-1.0) >= 1.20
 BuildRequires: pkgconfig(gtksourceview-5) >= 5.0.0 pkgconfig(lcms2) >= 2.12.0
 
 Requires: fonts-ttf-google-noto-emoji-color glycin-2-loaders gst-plugin-gtk4
@@ -41,17 +41,8 @@ Highlights:
 
 mkdir -p .cargo
 cat >> .cargo/config.toml <<EOF
+
 [source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/matrix-org/matrix-rust-sdk.git?rev=c1bc814ac2c306da704c5e10b7feda2e207beb19"]
-git = "https://github.com/matrix-org/matrix-rust-sdk.git"
-rev = "c1bc814ac2c306da704c5e10b7feda2e207beb19"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/ruma/ruma.git?rev=c441eccb92a36467217ff929cd71462fbeeeaf1a"]
-git = "https://github.com/ruma/ruma.git"
-rev = "c441eccb92a36467217ff929cd71462fbeeeaf1a"
 replace-with = "vendored-sources"
 
 [source.vendored-sources]
@@ -82,6 +73,9 @@ EOF
 %_datadir/metainfo/*.xml
 
 %changelog
+* Fri Oct 30 2026 Ildar Mulyukov <ildar@altlinux.ru> 14.3-alt1
+- new version
+
 * Sat Apr 11 2026 Ildar Mulyukov <ildar@altlinux.ru> 13-alt2
 - fix dependency to glycin-2-loaders (ALT #58247)
 
