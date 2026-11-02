@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.1.150
-Release: alt1.g126edd142.1
+Version: 1.4.4.0
+Release: alt1.gab26ea65c
 Summary: A music player and library organiser
 
 Group: Sound
@@ -12,6 +12,8 @@ Url: https://www.clementine-player.org/
 
 Source0: %name-%version.tar.gz
 Patch1: 01-fix-version.patch
+Patch2: 02-fix-revision-regexp.patch
+Patch3: 03-fix-applicationName-type.patch
 # Patch2: 02-fix-old-system-projectm.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -117,17 +119,6 @@ Features include:
 sed -i "s|== Separator|== QChar(Separator)|" \
     ext/libclementine-tagreader/fmpsparser.cpp
 %endif
-sed -i 's|local_server_name_ = qApp->applicationName().toLower();|local_server_name_ = QString(qApp->applicationName()).toLower();|' \
-    ext/libclementine-common/core/workerpool.h
-
-if [ ! -d .git ]; then
-    git init
-    git config user.email author@example.com
-    git config user.name author
-    git add .
-    git commit -m 'release'
-    git tag -a '%version' -m '%version'
-fi
 
 %build
 %cmake -DUSE_SYSTEM_PROJECTM:BOOL=OFF \
@@ -137,7 +128,7 @@ fi
        -DCMAKE_CXX_STANDARD:INT=17 \
        -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
        -DUSE_SYSTEM_TAGLIB:BOOL=ON \
-       -Wno-dev
+       -Wno-author
 %cmake_build
 
 %install
@@ -160,6 +151,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Mon Nov 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.4.0-alt1.gab26ea65c
+- Update upstream source to 1.4.4
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.1.150-alt1.g126edd142.1
 - NMU: drop unused libcryptopp-devel from BuildRequires (crypto++ is not used upstream).
 
