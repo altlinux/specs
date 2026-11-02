@@ -3,7 +3,7 @@
 
 Name: satdump
 Version: 1.2.2
-Release: alt1.git20250923.b79af48
+Release: alt2.git20250923.b79af48
 
 Summary: Generic satellite data processing software
 License: GPL-3.0-only
@@ -14,8 +14,9 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(OpenCL)
@@ -74,7 +75,7 @@ This package provides data files of satdump.
 %prep
 %setup
 %patch -p1
-sed -i 's|^Categories=.*|Categories=Audio;HamRadio;AudioVideo;|' satdump.desktop
+%__subst 's|^Categories=.*|Categories=Audio;HamRadio;AudioVideo;|' satdump.desktop
 
 %build
 %cmake \
@@ -117,5 +118,8 @@ done
 %_datadir/satdump/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.2-alt2.git20250923.b79af48
+- Spec refined.
+
 * Fri Jun 19 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.2-alt1.git20250923.b79af48
 - Initial build for Sisyphus
