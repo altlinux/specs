@@ -12,7 +12,7 @@
 %define sover 7.0
 
 Name: scotch
-Version: 7.0.17
+Version: 7.0.18
 Release: alt1
 
 Summary: Package and libraries for sequential and parallel graph partitioning
@@ -26,9 +26,16 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-fortran libgfortran-devel bison flex cmake
-BuildRequires: zlib-devel bzlib-devel liblzma-devel
-BuildRequires: glibc-devel %mpiimpl-devel
+BuildRequires: gcc-fortran
+BuildRequires: libgfortran-devel
+BuildRequires: bison
+BuildRequires: flex
+BuildRequires: cmake
+BuildRequires: zlib-devel
+BuildRequires: bzlib-devel
+BuildRequires: liblzma-devel
+BuildRequires: glibc-devel
+BuildRequires: %mpiimpl-devel
 %if_with check
 BuildRequires: ctest
 %endif
@@ -248,6 +255,9 @@ export OMPI_MCA_plm_rsh_agent=false OMPI_MCA_btl=^tcp
 %_datadir/%name/tgt
 
 %changelog
+* Mon Nov 02 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.18-alt1
+- New version 7.0.18.
+
 * Mon Oct 12 2026 Valery Zabrovsky <brow@altlinux.org> 7.0.17-alt1
 - New version 7.0.17.
 - Switch to build from Gear tags.
