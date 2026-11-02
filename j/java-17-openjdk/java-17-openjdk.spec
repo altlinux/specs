@@ -278,8 +278,8 @@
 %global featurever 17
 %global interimver 0
 %global updatever 21
-%global patchver 0
-%global buildver 9
+%global patchver 1
+%global buildver 3
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -326,7 +326,7 @@
 %if %{is_ga}
 %global build_type GA
 %global ea_designator ""
-%global ea_designator_zip ""
+%global ea_designator_zip ".0.3"
 %global extraver %{nil}
 %global eaprefix %{nil}
 %else
@@ -2014,6 +2014,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 02 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.21.1.3-alt1
+- New version (fixes: CVE-2026-91403).
+
 * Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.21.0.9-alt1
 - New version (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-91382,
   CVE-2026-91411, CVE-2026-83395, CVE-2026-87294, CVE-2026-91394,
