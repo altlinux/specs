@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 50.0.22
-Release: alt6
+Release: alt7
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -170,6 +170,7 @@ cd lisp && mkdir -p /tmp/emacspeak-sounds && \
 emacs -batch -q -no-site-file \
     --eval '(setq file-name-handler-alist nil gc-cons-threshold 64000000 load-source-file-function nil)' \
     --eval '(defvar emacspeak-sounds-directory "/tmp/emacspeak-sounds/")' \
+    --eval '(defvar emacspeak-etc-directory (expand-file-name "etc/" (expand-file-name "../" default-directory)))' \
     -l ./emacspeak-load-path.el \
     -f batch-byte-compile voice-setup.el
 cd ..
@@ -451,6 +452,9 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Mon Nov 02 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt7
+- Define emacspeak-etc-directory before byte-compiling voice-setup.el standalone to fix void variable error.
+
 * Tue Aug 04 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt6
 - Fixed file conflicts
 
