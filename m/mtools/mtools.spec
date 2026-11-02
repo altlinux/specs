@@ -1,7 +1,7 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.49
+Version: 4.0.50
 Release: alt1
 Epoch: 1
 
@@ -129,6 +129,9 @@ touch EFI/BOOT/bootia32.efi EFI/enroll/cert
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Mon Nov 02 2026 Anton Midyukov <antohami@altlinux.org> 1:4.0.50-alt1
+- New version 4.0.50 (Fixes: CVE-2026-118384).
+
 * Sun Dec 28 2025 Anton Midyukov <antohami@altlinux.org> 1:4.0.49-alt1
 - New version 4.0.49.
 
