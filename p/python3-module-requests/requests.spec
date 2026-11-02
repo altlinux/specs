@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.34.2
-Release: alt1
+Release: alt2
 
 Summary: HTTP library, written in Python, for human beings
 License: Apache-2.0
@@ -16,17 +16,12 @@ Url: https://pypi.org/project/requests/
 VCS: https://github.com/psf/requests
 BuildArch: noarch
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata_extra socks
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_deps metadata_extra socks
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
+
+%pyproject_configure_pypi_subpackage socks
 
 %description
 Requests allows you to send HTTP/1.1 requests extremely easily. There's no need
@@ -39,11 +34,7 @@ Keep-alive and HTTP connection pooling are 100%% automatic, thanks to urllib3.
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -59,6 +50,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 02 2026 Stanislav Levin <slev@altlinux.org> 2.34.2-alt2
+- Packaged 'socks' extra (closes: #61277).
+
 * Fri May 15 2026 Stanislav Levin <slev@altlinux.org> 2.34.2-alt1
 - 2.34.0 -> 2.34.2.
 
