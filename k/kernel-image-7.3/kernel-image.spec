@@ -2,7 +2,7 @@ Name: kernel-image-7.3
 Release: alt1
 %define kernel_src_version	7.3
 %define kernel_base_version	7.3
-%define kernel_sublevel		.0
+%define kernel_sublevel	.1
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -227,6 +227,10 @@ If possible, try to use glibc-kernheaders instead of this package.
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
 Requires: gcc%kgcc_version
+%ifarch x86_64 loongarch64
+# for tools/objtool
+Requires: /proc
+%endif
 AutoReqProv: nocpp nopython nopython3
 %if "%sub_flavour" == "def"
 Provides: kernel-headers-modules-%kernel_latest = %version-%release
@@ -622,8 +626,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 02 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.1-alt1
+- v7.3.1 (2026-10-30).
+- spec: Require /proc from kernel-headers-modules-<flavor>.
+
 * Mon Oct 19 2026 Ivan A. Melnikov <iv@altlinux.org> 7.3.0-alt1
 - v7.3 (2026-09-18).
+- Drop altha and kiosk patches for now.
 
 * Thu Oct 15 2026 Ivan A. Melnikov <iv@altlinux.org> 7.3.0-alt0.rc7
 - v7.3-rc7 (2026-10-11).
