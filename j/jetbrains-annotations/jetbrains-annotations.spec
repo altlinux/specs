@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: jetbrains-annotations
-Version: 24.1.0
-Release: alt3
+Version: 26.1.0
+Release: alt1
 
 Summary: IntelliJ IDEA Annotations
 License: Apache-2.0
@@ -10,11 +12,10 @@ VCS: https://github.com/JetBrains/java-annotations.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Patch0: 0001-Adapt-for-Gradle-8-alt-patch.patch
-Patch1: 0002-Adapt-for-Gradle-9-alt-patch.patch
+Patch0: %name-%version-alt-jvm-publication.patch
 
 BuildRequires(pre): rpm-macros-gradle
-BuildRequires: jpackage-17-compat
+BuildRequires: java-17-openjdk-devel
 BuildRequires: xgradle
 
 %description
@@ -41,13 +42,21 @@ This package contains javadoc for %name.
 
 %gradle_install
 
+%check
+%gradle_check
+
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt
+%doc LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Nov 02 2026 Ivan Khanas <xeno@altlinux.org> 26.1.0-alt1
+- New version.
+
+* Mon Oct 26 2026 Ivan Khanas <xeno@altlinux.org> 26.0.2-alt1
+- New version.
+
 * Thu Sep 24 2026 Ivan Khanas <xeno@altlinux.org> 24.1.0-alt3
 - Fix FTBFS: archivesBaseName and project sourceCompatibility were removed in Gradle 9.
 
@@ -83,4 +92,3 @@ This package contains javadoc for %name.
 
 * Mon Sep 15 2008 Igor Vlasenko <viy@altlinux.ru> 0:6.0.2-alt1_1jpp5
 - jpp5 build
-
