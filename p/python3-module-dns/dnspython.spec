@@ -5,19 +5,8 @@
 # Testing requires network access
 %def_with check
 
-%define add_pyproject_extra() \
-%{expand:%%package -n python3-module-%%{pep503_name %%pypi_name}+%1 \
-Summary: %%summary \
-Group: Development/Python3 \
-Requires: python3-module-%%{pep503_name %%pypi_name} = %%EVR \
-%%pyproject_runtimedeps_metadata_extra %1 \
-%%description -n python3-module-%%{pep503_name %%pypi_name}+%1 \
-Extra "%1" for %%pypi_name. \
-%%files -n python3-module-%%{pep503_name %%pypi_name}+%1 \
-}
-
 Name: python3-module-%mod_name
-Version: 2.9.0
+Version: 2.9.1
 Release: alt1
 Epoch: 1
 Summary: DNS toolkit
@@ -27,32 +16,20 @@ Url: https://pypi.org/project/dnspython/
 Vcs: https://github.com/rthalley/dnspython
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 %py3_provides %pypi_name
-# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra dev
-%pyproject_builddeps_metadata_extra doh
-%pyproject_builddeps_metadata_extra dnssec
-%pyproject_builddeps_metadata_extra idna
-%pyproject_builddeps_metadata_extra trio
-%pyproject_builddeps_metadata_extra doq
-%endif
-
-# extra functionality
-%add_pyproject_extra doh
-%add_pyproject_extra dnssec
-%add_pyproject_extra idna
-%add_pyproject_extra trio
-%add_pyproject_extra doq
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
+%pyproject_configure_with_check_deps metadata_extra doh
+%pyproject_configure_with_check_deps metadata_extra dnssec
+%pyproject_configure_with_check_deps metadata_extra idna
+%pyproject_configure_with_check_deps metadata_extra trio
+%pyproject_configure_with_check_deps metadata_extra doq
+%pyproject_configure_pypi_package
+%pyproject_configure_pypi_subpackage doh
+%pyproject_configure_pypi_subpackage dnssec
+%pyproject_configure_pypi_subpackage idna
+%pyproject_configure_pypi_subpackage trio
+%pyproject_configure_pypi_subpackage doq
 
 %description
 dnspython is a DNS toolkit for Python. It supports almost all
@@ -67,8 +44,7 @@ direct manipulation of DNS zones, messages, names, and records.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -84,6 +60,9 @@ direct manipulation of DNS zones, messages, names, and records.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 1:2.9.1-alt1
+- 2.9.0 -> 2.9.1
+
 * Fri Oct 16 2026 Stanislav Levin <slev@altlinux.org> 1:2.9.0-alt1
 - 2.8.0 -> 2.9.0
 
