@@ -8,7 +8,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: coolercontrol
-Version: 5.0.1
+Version: 5.1.1
 Release: alt1
 Summary: Monitor and control your cooling devices
 Group: %group
@@ -44,6 +44,8 @@ Source: %name-%version.tar
 Source1: %{name}d-vendor.tar
 Source2: %name-ui-node-modules.tar
 
+Patch: coolercontrold-alt-it87.patch
+
 # due missing qtwebengine on ix86
 # set it to x86_64 as npm requires native binaries on
 # every platform (sorry, aarch64)
@@ -75,6 +77,7 @@ access over a local browser without the need for any additional package.
 
 %prep
 %setup
+#%%patch -p1
 pushd %{name}d
 tar -xf %SOURCE1
 mkdir -p .cargo
@@ -139,6 +142,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Mon Nov 02 2026 L.A. Kostis <lakostis@altlinux.ru> 5.1.1-alt1
+- 5.1.1.
+
 * Fri Sep 18 2026 L.A. Kostis <lakostis@altlinux.ru> 5.0.1-alt1
 - 5.0.1.
 
