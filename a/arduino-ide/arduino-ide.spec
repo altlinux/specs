@@ -4,7 +4,7 @@
 
 Name: arduino-ide
 Version: 2.3.10
-Release: alt2
+Release: alt3
 
 Summary: IDE for Arduino boards and compatible microcontroller platforms.
 Group: Education
@@ -52,6 +52,7 @@ both beginners and experienced developers.
 %autopatch -p1
 
 %build
+yarn --cwd arduino-ide-extension copy-i18n
 yarn --cwd arduino-ide-extension build
 yarn rebuild:browser
 
@@ -98,6 +99,9 @@ install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/51
 %_iconsdir/arduino-ide.png
 
 %changelog
+* Mon Nov 02 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt3
+- Fix Russian interface translations. (Closes: 61050)
+
 * Mon Sep 14 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt2
 - Use Russian as the default interface language.
 - Fix About dialog metadata with system Electron.
