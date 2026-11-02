@@ -10,21 +10,9 @@
 %def_with check
 %endif
 
-%define add_python_extra() \
-%{expand:%%package -n %%name+%1 \
-Summary: %%summary \
-Group: Development/Python3 \
-Requires: %%name \
-Provides: python3-module-%%{pep503_name %%pypi_name}+%1 = %%EVR \
-%%pyproject_runtimedeps_metadata_extra %1 \
-%%description -n %%name+%1' \
-Extra "%1" for %%pypi_name. \
-%%files -n %%name+%1 \
-}
-
 Name: python3-module-%mod_name
 Version: 10.3.4
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -32,25 +20,18 @@ Url: https://pypi.org/project/setuptools-scm/
 VCS: https://github.com/pypa/setuptools_scm/
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch1: %name-%version-alt.patch
-# manually manage extra dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
+# not yet packaged
+%pyproject_configure_with_check_filter '^griffe.*'
+%pyproject_configure_with_check_deps metadata_extra rich
+%pyproject_configure_pypi_package
 Requires: git-core
 %if_disabled bootstrap
 Requires: mercurial
 %endif
 %py3_provides %pypi_name
-# mapping from PyPI name
-Provides: python3-module-%pypi_name = %EVR
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 %if_with check
-# not yet packaged
-%add_pyproject_deps_check_filter '^griffe.*'
-%pyproject_builddeps_metadata_extra rich
-%pyproject_builddeps_check
 BuildRequires: git-core mercurial
 %endif
 
@@ -64,18 +45,15 @@ managed by the SCM (i.e. it automatically adds all the SCM-managed files to the
 sdist). Unwanted files must be excluded via MANIFEST.in or configuring Git
 archive.
 
-%add_python_extra rich
+%pyproject_configure_pypi_subpackage rich
+%pyproject_configure_pypi_subpackage toml
 
 %prep
 %setup
 %patch1 -p1
 %pyproject_scm_init setuptools-scm-v%version
 cd setuptools-scm
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+%pyproject_setup_deps
 
 %build
 cd setuptools-scm
@@ -100,6 +78,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 02 2026 Stanislav Levin <slev@altlinux.org> 10.3.4-alt2
+- Packaged 'toml' extra.
+
 * Thu Oct 01 2026 Stanislav Levin <slev@altlinux.org> 10.3.4-alt1
 - 10.2.3 -> 10.3.4
 
