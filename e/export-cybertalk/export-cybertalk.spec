@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -36,6 +36,9 @@ install -Dm755 %name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Mon Nov 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.1-alt1
+- 0.8.0 -> 0.8.1
+
 * Sun Nov 01 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.0-alt1
 - added translite module for mantainer names
 - added auto-check and auto-update of maintainer names from the project repository
