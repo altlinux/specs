@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 Summary: py.test plugin that allows you to add environment variables
 License: MIT
@@ -42,6 +42,9 @@ pytest.ini or pyproject.toml file.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Nov 02 2026 Stanislav Levin <slev@altlinux.org> 1.8.4-alt1
+- 1.8.3 -> 1.8.4
+
 * Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 1.8.3-alt1
 - 1.8.1 -> 1.8.3
 
