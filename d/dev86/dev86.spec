@@ -1,6 +1,6 @@
 Name: dev86
 Version: 0.16.21
-Release: alt2
+Release: alt2.1
 
 Summary: A real mode 80x86 assembler and linker
 License: GPL+ and GPLv2+ and LGPLv2+
@@ -17,13 +17,9 @@ Patch4: dev86-0.16.19-alt-noelksemu.patch
 Patch5: dev86-0.16.19-owl-tmp.patch
 Patch6: dev86-0.16.19-alt-bcc.patch
 Patch7: dev86-0.16.19-rh-nostrip.patch
-Patch8: dev86-0.16.19-rh-bound.patch
-Patch10: dev86-noelks.patch
-Patch11: dev86-64bit.patch
-Patch12: dev86-nostrip.patch
-Patch14: dev86-long.patch
+Patch15: dev86-c23-compat.patch
 
-BuildRequires: gcc13
+BuildRequires: gcc
 Provides: bin86
 Obsoletes: bin86
 
@@ -58,11 +54,7 @@ Note that you don't need this package in order to build a kernel.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
-#patch8 -p1
-#patch10 -p1
-#patch11 -p1
-#patch12 -p1
-#patch14 -p1
+%patch15 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl /usr/lib/liberror.txt -- |
@@ -72,7 +64,6 @@ mkdir -p lib/bcc
 ln -s ../../include lib/bcc/include
 
 %build
-%set_gcc_version 13
 #global build_type_safety_c 0
 make GCCFLAG='%optflags'
 
@@ -113,6 +104,10 @@ BCC_PREFIX=%buildroot%_prefix make -C tests BCC=%buildroot%_bindir/bcc
 %_prefix/lib/bcc/include
 
 %changelog
+* Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 0.16.21-alt2.1
+- NMU: Fix the build with the current GCC.
+- replace the gcc13 build requirement with gcc.
+
 * Sat Jul 05 2025 Ilya Mashkin <oddity@altlinux.ru> 0.16.21-alt2
 - check
 
