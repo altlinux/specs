@@ -4,7 +4,7 @@
 
 Name: wiredpanda
 Version: 5.2.2
-Release: alt1
+Release: alt2
 
 Summary: Logic circuits simulator
 License: GPL-3.0-or-later
@@ -13,8 +13,9 @@ Url: https://github.com/GIBIS-UNIFESP/wiRedPanda
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
@@ -43,8 +44,8 @@ The main features of the software are:
 %prep
 %setup
 
-sed -i "s|Exec=wiredpanda %%F|Exec=/usr/bin/wiredpanda %%f|" App/Resources/Freedesktop/wiredpanda.desktop
-sed -i "s|Categories=.*|Categories=Education;Electronics;|" App/Resources/Freedesktop/wiredpanda.desktop
+%__subst "s|Exec=wiredpanda %%F|Exec=/usr/bin/wiredpanda %%f|" App/Resources/Freedesktop/wiredpanda.desktop
+%__subst "s|Categories=.*|Categories=Education;Electronics;|" App/Resources/Freedesktop/wiredpanda.desktop
 
 %build
 %ifarch riscv64
@@ -85,6 +86,9 @@ xvfb-run -a --server-args="-screen 0 1920x1080x24+32" %ctest -E "TestLanguageMan
 %_datadir/wiredpanda/Examples/display-4bits.txt
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.2-alt2
+- Spec refined.
+
 * Sun Aug 30 2026 Nikolay Strelkov <snk@altlinux.org> 5.2.2-alt1
 - New version 5.2.2.
 

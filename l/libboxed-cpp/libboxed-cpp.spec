@@ -4,7 +4,7 @@
 
 Name: libboxed-cpp
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: Boxing primitive types in C++
 License: Apache-2.0
@@ -13,8 +13,9 @@ Url: https://github.com/contour-terminal/boxed-cpp
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 
 %if_with check
@@ -58,5 +59,8 @@ The %{name}-devel package contains development files for %{name}.
 %_libdir/cmake/boxed-cpp/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.3-alt2
+- Spec refined.
+
 * Mon Aug 24 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.3-alt1
 - Initial build for Sisyphus

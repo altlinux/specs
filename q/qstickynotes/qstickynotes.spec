@@ -3,7 +3,7 @@
 
 Name: qstickynotes
 Version: 0.1
-Release: alt1
+Release: alt2
 
 Summary: Lightweight sticky notes application inspired by indicator-stickynotes
 License: GPL-3.0
@@ -12,8 +12,9 @@ Url: https://github.com/ivnish/QStickyNotes
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt6)
 
@@ -23,8 +24,8 @@ indicator-stickynotes, but it is not a full clone.
 
 %prep
 %setup
-sed -i 's|^Categories=.*|Categories=Utility;TextTools;|' QStickyNotes.desktop
-sed -i 's|^Exec=.*|Exec=env QT_QPA_PLATFORM=xcb QStickyNotes|' QStickyNotes.desktop
+%__subst 's|^Categories=.*|Categories=Utility;TextTools;|' QStickyNotes.desktop
+%__subst 's|^Exec=.*|Exec=env QT_QPA_PLATFORM=xcb QStickyNotes|' QStickyNotes.desktop
 
 %build
 %cmake
@@ -41,5 +42,8 @@ sed -i 's|^Exec=.*|Exec=env QT_QPA_PLATFORM=xcb QStickyNotes|' QStickyNotes.desk
 %_datadir/QStickyNotes/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.1-alt2
+- Spec refined.
+
 * Sat May 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.1-alt1
 - Initial build for Sisyphus

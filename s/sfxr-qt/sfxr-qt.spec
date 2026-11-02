@@ -4,7 +4,7 @@
 
 Name: sfxr-qt
 Version: 1.5.1
-Release: alt1
+Release: alt2
 
 Summary: Qt port of SFXR, a sound effect generator, to generate retro-gaming like sound effects
 License: MIT
@@ -14,8 +14,9 @@ Url: https://github.com/agateau/sfxr-qt
 Source: %name-%version.tar
 Source1: submodules-%name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: pkgconfig(Qt5)
@@ -65,5 +66,8 @@ modern user interface.
 %_iconsdir/hicolor/48x48/apps/sfxr-qt.png
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt2
+- Spec refined.
+
 * Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.1-alt1
 - Initial build for Sisyphus

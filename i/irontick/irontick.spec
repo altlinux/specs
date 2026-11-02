@@ -3,7 +3,7 @@
 
 Name: irontick
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: Lightweight, precise, and cross-platform metronome
 License: GPL-3.0-or-later
@@ -12,8 +12,9 @@ Url: https://github.com/olegkapitonov/IronTick
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Multimedia)
@@ -49,5 +50,8 @@ Features:
 %_pixmapsdir/IronTick.png
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.0-alt2
+- Spec refined.
+
 * Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.0-alt1
 - Initial build for Sisyphus

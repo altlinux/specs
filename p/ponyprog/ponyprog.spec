@@ -5,7 +5,7 @@
 
 Name: ponyprog
 Version: 3.1.4
-Release: alt2
+Release: alt3
 
 Summary: Serial device programmer
 License: GPL-2.0
@@ -17,8 +17,9 @@ Source1: submodules-%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(Qt5)
@@ -49,7 +50,7 @@ wires using I/O port setup.
 %prep
 %setup -a1
 %patch -p1
-sed -i "s|Categories=.*|Categories=Qt;Development;Electronics;|" desktop/ponyprog.desktop
+%__subst "s|Categories=.*|Categories=Qt;Development;Electronics;|" desktop/ponyprog.desktop
 
 %build
 %cmake \
@@ -70,12 +71,15 @@ cp -v icons/ponyprog.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_desktopdir/ponyprog.desktop
 %_iconsdir/ponyprog.png
 %_iconsdir/hicolor/scalable/apps/ponyprog.svg
-%dir %_datadir/doc/ponyprog
-%_datadir/doc/ponyprog/*
+%dir %_docdir/ponyprog
+%_docdir/ponyprog/*
 %dir %_datadir/ponyprog
 %_datadir/ponyprog/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.4-alt3
+- Spec refined.
+
 * Thu May 28 2026 Nikolay Strelkov <snk@altlinux.org> 3.1.4-alt2
 - Applied repocop fix for sisyphus_check.
 - Place package in Engineering group.

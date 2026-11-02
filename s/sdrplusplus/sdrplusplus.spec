@@ -3,7 +3,7 @@
 
 Name: sdrplusplus
 Version: 1.2.1
-Release: alt1.git20260520.36ea9a1
+Release: alt2.git20260520.36ea9a1
 
 Summary: Cross-Platform SDR Software
 License: GPL-3.0-only
@@ -14,8 +14,9 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(glfw3)
 BuildRequires: pkgconfig(fftw3f)
@@ -61,8 +62,8 @@ Features:
 %setup
 %patch -p1
 %if "%{?_lib}"=="lib64"
-sed -i "s|lib/sdrpp/plugins|lib64/sdrpp/plugins| " sdrpp_module.cmake
-sed -i "s|/lib/sdrpp|/lib64/sdrpp|" core/src/core.cpp
+%__subst "s|lib/sdrpp/plugins|lib64/sdrpp/plugins| " sdrpp_module.cmake
+%__subst "s|/lib/sdrpp|/lib64/sdrpp|" core/src/core.cpp
 %endif
 
 %build
@@ -93,8 +94,8 @@ install -D -p -m644 root/res/icons/sdrpp.png \
         %buildroot%_iconsdir/hicolor/512x512/apps/sdrpp.png
 
 for size in 16 24 32 48 64 128 256; do
-  mkdir -p %buildroot%_datadir/icons/hicolor/${size}x${size}/apps ;
-  magick root/res/icons/sdrpp.png -filter Lanczos -resize ${size}x${size} %buildroot%_datadir/icons/hicolor/${size}x${size}/apps/sdrpp.png ;
+  mkdir -p %buildroot%_iconsdir/hicolor/${size}x${size}/apps ;
+  magick root/res/icons/sdrpp.png -filter Lanczos -resize ${size}x${size} %buildroot%_iconsdir/hicolor/${size}x${size}/apps/sdrpp.png ;
 done
 
 rm -fv %buildroot%_libdir/libsdrpp_core.so
@@ -112,5 +113,8 @@ rm -fv %buildroot%_libdir/libsdrpp_core.so
 %_datadir/sdrpp/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt2.git20260520.36ea9a1
+- Spec refined.
+
 * Thu Jun 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt1.git20260520.36ea9a1
 - Initial build for Sisyphus

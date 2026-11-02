@@ -6,7 +6,7 @@
 
 Name: tuned-switcher
 Version: 1.1.3
-Release: alt1
+Release: alt2
 
 Summary: Simple utility to manipulate the Tuned service
 License: GPL-3.0-or-later
@@ -15,8 +15,9 @@ Url: https://github.com/xvitaly/tuned-switcher
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Svg)
@@ -50,9 +51,9 @@ Currently supported features:
 
 %prep
 %setup
-sed -i "s/^Categories=.*/Categories=System;Monitor;/" assets/desktop/tuned-switcher.desktop.in \
+%__subst "s/^Categories=.*/Categories=System;Monitor;/" assets/desktop/tuned-switcher.desktop.in \
                                                       assets/desktop/autorun.desktop.in
-sed -i "s/ validate / validate --nonet /" CMakeLists.txt
+%__subst "s/ validate / validate --nonet /" CMakeLists.txt
 
 %build
 %cmake \
@@ -82,6 +83,9 @@ sed -i "s/ validate / validate --nonet /" CMakeLists.txt
 %_datadir/metainfo/%{appname}.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.3-alt2
+- Spec refined.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.3-alt1
 - New version 1.1.3.
 

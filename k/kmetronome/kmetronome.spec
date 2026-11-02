@@ -4,17 +4,17 @@
 
 Name: kmetronome
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: MIDI based metronome using the ALSA sequencer
 License: GPL-2.0-or-later
 Group: Sound
-URL: https://kmetronome.sourceforge.io/kmetronome.shtml
+Url: https://kmetronome.sourceforge.io/kmetronome.shtml
 Vcs: https://git.code.sf.net/p/kmetronome/git
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -36,7 +36,7 @@ usage and very accurate timing thanks to the ALSA sequencer
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=AudioVideo;Audio;Midi;Music;/" net.sourceforge.kmetronome.desktop
+%__subst "s/Categories=.*/Categories=AudioVideo;Audio;Midi;Music;/" net.sourceforge.kmetronome.desktop
 
 %build
 %cmake
@@ -64,5 +64,8 @@ sed -i "s/Categories=.*/Categories=AudioVideo;Audio;Midi;Music;/" net.sourceforg
 %_datadir/metainfo/net.sourceforge.kmetronome.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt2
+- Spec refined.
+
 * Thu Dec 25 2025 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt1
 - Initial build for Sisyphus

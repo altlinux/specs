@@ -2,7 +2,7 @@
 
 Name: raceview
 Version: 0.99.6
-Release: alt1
+Release: alt2
 
 Summary: Multi-track synchronized video player built with Qt6 + libmpv
 License: GPL-3.0-or-later
@@ -11,7 +11,7 @@ Url: https://github.com/r0ck3r/RaceView
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -31,7 +31,7 @@ and volume.
 
 %prep
 %setup
-sed -i "s/^GenericName=/GenericName=Multi-Track Synchronized Video Player/" raceview.desktop
+%__subst "s/^GenericName=/GenericName=Multi-Track Synchronized Video Player/" raceview.desktop
 
 %build
 %cmake
@@ -49,6 +49,9 @@ sed -i "s/^GenericName=/GenericName=Multi-Track Synchronized Video Player/" race
 %_iconsdir/hicolor/scalable/apps/raceview.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.99.6-alt2
+- Spec refined.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.99.6-alt1
 - New version 0.99.6.
 

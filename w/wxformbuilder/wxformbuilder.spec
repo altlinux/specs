@@ -4,19 +4,20 @@
 
 Name: wxformbuilder
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Summary: wxWidgets GUI Builder
 License: GPL-2.0-or-later
-Group: 	Development/Other
+Group: Development/Other
 Url: https://github.com/wxFormBuilder/wxFormBuilder
 
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libwxBase3.2-devel
 BuildRequires: boost-devel
@@ -62,5 +63,8 @@ xvfb-run --server-args="-screen 0, 1280x720x24" -a %buildroot%_bindir/wxformbuil
 %_datadir/metainfo/org.wxformbuilder.wxFormBuilder.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt2
+- Spec refined.
+
 * Sun Apr 05 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt1
 - Initial build for Sisyphus

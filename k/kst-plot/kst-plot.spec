@@ -4,7 +4,7 @@
 
 Name: kst-plot
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Summary: Fast real-time large-dataset viewing and plotting tool for KDE
 License: GPL-2.0-or-later
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -28,8 +28,6 @@ BuildRequires: pkgconfig(gsl)
 BuildRequires: pkgconfig(matio)
 BuildRequires: pkgconfig(netcdf-cxx4)
 BuildRequires: pkgconfig(cfitsio)
-
-Requires: lib%{name}libs = %{version}-%{release}
 
 %if_with check
 BuildRequires: ctest
@@ -63,17 +61,9 @@ Features of Kst include:
 %package devel
 Summary: Development files for Kst
 Group: Development/C++
-Requires: lib%{name}libs = %{version}-%{release}
 
 %description devel
 Development files for %name.
-
-%package -n lib%{name}libs
-Group: System/Libraries
-Summary: libraries for %name
-
-%description -n lib%{name}libs
-This package contains libraries for %name.
 
 %prep
 %setup
@@ -107,7 +97,6 @@ rm -v %buildroot%_libdir/libkst2app.a
 %_man1dir/kst2.1.xz
 %_datadir/mime/packages/x-kst.xml
 
-%files -n lib%{name}libs
 %dir %_libdir/kst2
 %dir %_libdir/kst2/plugins
 %_libdir/kst2/plugins/*.*
@@ -124,6 +113,10 @@ rm -v %buildroot%_libdir/libkst2app.a
 %_libdir/libkst2widgets.so
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt3
+- Spec refined.
+- Returned to two packages build - runtime and -devel.
+
 * Thu Jun 11 2026 Nikolay Strelkov <snk@altlinux.org> 2.1-alt2
 - Moved libraries to libkst-plotlibs package.
 

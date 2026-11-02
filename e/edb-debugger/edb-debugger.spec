@@ -2,7 +2,7 @@
 
 Name: edb-debugger
 Version: 1.5.0
-Release: alt1
+Release: alt2
 
 Summary: Cross platform x86/x86-64 debugger
 License: GPL-2.0
@@ -14,8 +14,9 @@ Source1: submodules-%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(capstone)
 BuildRequires: qt5-tools-devel
@@ -58,5 +59,8 @@ install -Dm 644 edb.appdata.xml %buildroot%_datadir/metainfo/edb.appdata.xml
 %_datadir/metainfo/edb.appdata.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt2
+- Spec refined.
+
 * Sun Jul 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt1
 - Initial build for Sisyphus

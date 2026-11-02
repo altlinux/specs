@@ -6,7 +6,7 @@
 
 Name: fancontrol-gui
 Version: 0.8
-Release: alt1.git.c752e3b
+Release: alt2.git.c752e3b
 
 Summary: GUI for the fancontrol script and systemd service
 License: GPL-2.0-or-later
@@ -15,9 +15,10 @@ Url: https://github.com/Maldela/fancontrol-gui
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt5
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: extra-cmake-modules
 BuildRequires: pkgconfig(Qt5Core)
@@ -54,8 +55,8 @@ systemd via dbus to control the fancontrol service.
 %prep
 %setup
 mv -v readMe.MD README.md
-sed -i "s|Categories=.*|Categories=Qt;KDE;Monitor;System;|" fancontrol-gui/org.kde.fancontrol.gui.desktop
-sed -i "s/0.7/%version/" fancontrol-gui/src/main.cpp
+%__subst "s|Categories=.*|Categories=Qt;KDE;Monitor;System;|" fancontrol-gui/org.kde.fancontrol.gui.desktop
+%__subst "s/0.7/%version/" fancontrol-gui/src/main.cpp
 
 %build
 %cmake \
@@ -91,5 +92,8 @@ sed -i "s/0.7/%version/" fancontrol-gui/src/main.cpp
 %_datadir/polkit-1/actions/org.kde.fancontrol.gui.helper.policy
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.8-alt2.git.c752e3b
+- Spec refined.
+
 * Sun Mar 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.8-alt1.git.c752e3b
 - Initial build for Sisyphus

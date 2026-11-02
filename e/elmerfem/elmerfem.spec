@@ -7,7 +7,7 @@
 
 Name: elmerfem
 Version: 26.2.1
-Release: alt6
+Release: alt7
 
 Summary: Elmer FEM software
 License: LGPL-2.0-only
@@ -18,8 +18,9 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
 BuildRequires: openmpi-devel
@@ -82,7 +83,7 @@ This package provides data files of %name.
 %patch -p1
 
 %ifarch %ix86
-sed -i 's|SET(ElmerIce_SRC ${ElmerIce_SRC} CalvingRemeshMMG.F90 )|MESSAGE(STATUS "Disabling CalvingRemeshMMG.F90 on %ix86 as not buildable.")|' elmerice/Solvers/CMakeLists.txt
+%__subst 's|SET(ElmerIce_SRC ${ElmerIce_SRC} CalvingRemeshMMG.F90 )|MESSAGE(STATUS "Disabling CalvingRemeshMMG.F90 on %ix86 as not buildable.")|' elmerice/Solvers/CMakeLists.txt
 %endif
 
 %build
@@ -197,6 +198,9 @@ echo "      Run -> Start ElmerVTK menu option to view results."
 %_datadir/elmersolver/lua-scripts/defaults.lua
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt7
+- Spec refined.
+
 * Wed Sep 16 2026 Nikolay Strelkov <snk@altlinux.org> 26.2.1-alt6
 - Support Unicode paths for at least Mesh and Project (closes: #60358).
 

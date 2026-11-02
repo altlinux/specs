@@ -3,7 +3,7 @@
 
 Name: arqiver
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Simple Qt archive manager; front-end for libarchive, gzip and 7z
 License: GPL-3.0-or-later
@@ -12,8 +12,9 @@ Url: https://github.com/tsujan/Arqiver
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: qt6-tools
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(Qt6Svg)
@@ -31,7 +32,7 @@ protection.
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=Utility;Archiving;Compression;FileTools;/" data/arqiver.desktop
+%__subst "s/Categories=.*/Categories=Utility;Archiving;Compression;FileTools;/" data/arqiver.desktop
 
 %build
 lrelease-qt6 arqiver.pro
@@ -51,6 +52,9 @@ qmake-qt6 \
 %_iconsdir/hicolor/scalable/apps/arqiver.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt2
+- Spec refined.
+
 * Fri Jun 12 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
 - New version 1.0.2.
 

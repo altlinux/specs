@@ -3,7 +3,7 @@
 
 Name: sdrangel
 Version: 8.0.0
-Release: alt1
+Release: alt2
 
 Summary: Qt-based SDR front-end for various devices
 License: GPL-3.0-or-later
@@ -17,9 +17,10 @@ Patch: %name-%version-%release.patch
 
 ExcludeArch: %not_qt6_qtwebengine_arches
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt6-webengine
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: git
 BuildRequires: patchelf
@@ -147,10 +148,10 @@ Supported modes:
 %prep
 %setup
 %patch -p1
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|g' swagger/sdrangel/examples/*.py
+%__subst 's|#!/usr/bin/env python|#!/usr/bin/python3|g' swagger/sdrangel/examples/*.py
 
 %ifarch loongarch64
-sed -i 's|FATAL_ERROR "Not supported|WARNING "Not supported|' cmake/Modules/DetectArchitecture.cmake
+%__subst 's|FATAL_ERROR "Not supported|WARNING "Not supported|' cmake/Modules/DetectArchitecture.cmake
 %endif
 
 %build
@@ -214,6 +215,9 @@ patchelf %buildroot%_libdir/sdrangel/pluginssrv/*.so --add-rpath %_libdir/sdrang
 %_datadir/metainfo/org.sdrangel.SDRangel.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt2
+- Spec refined.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt1
 - New version 8.0.0.
 

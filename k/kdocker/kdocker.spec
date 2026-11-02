@@ -3,7 +3,7 @@
 
 Name: kdocker
 Version: 6.2
-Release: alt1
+Release: alt2
 
 Summary: Dock most applications to the system tray
 License: GPL-2.0-only
@@ -12,7 +12,7 @@ Url: https://github.com/user-none/KDocker
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -26,7 +26,7 @@ includes KDE, GNOME, Xfce, Fluxbox and many more.
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=Utility;Accessibility;/" resources/desktop/com.kdocker.KDocker.desktop
+%__subst "s/Categories=.*/Categories=Utility;Accessibility;/" resources/desktop/com.kdocker.KDocker.desktop
 
 %build
 %cmake
@@ -51,5 +51,8 @@ sed -i "s/Categories=.*/Categories=Utility;Accessibility;/" resources/desktop/co
 %_datadir/metainfo/com.kdocker.KDocker.metainfo.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 6.2-alt2
+- Spec refined.
+
 * Sat Nov 29 2025 Nikolay Strelkov <snk@altlinux.org> 6.2-alt1
 - Initial build for Sisyphus

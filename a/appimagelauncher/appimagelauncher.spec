@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
-# TODO - make binfmt-bypass library at 
+# TODO - make binfmt-bypass library at
 #        %%_libdir/appimagelauncher/libbinfmt-bypass-preload.so
 #        debuggable
 %global __find_debuginfo_files %nil
 
 Name: appimagelauncher
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: Integration of AppImages into the Linux desktop
 License: MIT
@@ -18,9 +18,10 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt5-tools
 BuildRequires: /usr/bin/wget
@@ -40,10 +41,10 @@ BuildRequires: pkgconfig(libcurl)
 %description
 Integrate AppImages to your application launcher with one click, and
 manage, update and remove them from there. Double-click AppImages to
-open them, without having to make them executable first. 
+open them, without having to make them executable first.
 
-AppImageLauncher plays well with other applications managing AppImages, 
-for example app stores. However, it doesn't depend on any of those, and 
+AppImageLauncher plays well with other applications managing AppImages,
+for example app stores. However, it doesn't depend on any of those, and
 can run completely standalone.
 
 %prep
@@ -51,10 +52,10 @@ can run completely standalone.
 %patch -p1
 echo "tag v{%version}" > cmake/GIT_COMMIT
 
-sed -i "s|https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/doc/||" README.md
-sed -i "s|https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/icons|%_iconsdir|" README.md
+%__subst "s|https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/doc/||" README.md
+%__subst "s|https://github.com/TheAssassin/AppImageLauncher/raw/master/resources/icons|%_iconsdir|" README.md
 
-sed -i "s|Categories=.*|Categories=Qt;Settings;PackageManager;|" resources/appimagelaunchersettings.desktop
+%__subst "s|Categories=.*|Categories=Qt;Settings;PackageManager;|" resources/appimagelaunchersettings.desktop
 
 %build
 %cmake \
@@ -106,5 +107,8 @@ chmod +x %buildroot%_datadir/appimagelauncher/maintainer-scripts/post-uninstall
 %_datadir/mime/packages/appimage.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt2
+- Spec refined.
+
 * Mon Feb 23 2026 Nikolay Strelkov <snk@altlinux.org> 2.2.0-alt1
 - Initial build for Sisyphus

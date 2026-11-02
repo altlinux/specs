@@ -7,7 +7,7 @@
 
 Name: lomiri-polkit-agent
 Version: 0.3.3
-Release: alt1
+Release: alt2
 
 Summary: Service to prompt for policy kit permissions in Lomiri
 License: GPL-3.0-only
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
 
 BuildRequires: cmake
@@ -69,6 +69,9 @@ it back to PolicyKit.
 %_libexecdir/lomiri-polkit-agent/policykit-agent
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt2
+- Spec refined.
+
 * Tue Mar 31 2026 Nikolay Strelkov <snk@altlinux.org> 0.3.3-alt1
 - New version 0.3.3.
 

@@ -3,7 +3,7 @@
 
 Name: serial-studio
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
 License: GPL-3.0-only
@@ -14,8 +14,9 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(Qt6)
@@ -56,11 +57,11 @@ sensors and debug hardware without writing code.
 %prep
 %setup
 %patch -p1
-sed -i "s|doc/screenshot.png|screenshot.png|" README.md
-sed -i "s|./doc/brand/||" README.md
-sed -i "s|share/pixmaps|%_iconsdir/hicolor/scalable/apps|" app/CMakeLists.txt
+%__subst "s|doc/screenshot.png|screenshot.png|" README.md
+%__subst "s|./doc/brand/||" README.md
+%__subst "s|share/pixmaps|%_iconsdir/hicolor/scalable/apps|" app/CMakeLists.txt
 
-sed -i "s|set(SS_MIMALLOC_PLATFORM TRUE)|set(SS_MIMALLOC_PLATFORM FALSE) # HACK|" cmake/MiMalloc.cmake
+%__subst "s|set(SS_MIMALLOC_PLATFORM TRUE)|set(SS_MIMALLOC_PLATFORM FALSE) # HACK|" cmake/MiMalloc.cmake
 
 %build
 %cmake \
@@ -84,6 +85,9 @@ sed -i "s|set(SS_MIMALLOC_PLATFORM TRUE)|set(SS_MIMALLOC_PLATFORM FALSE) # HACK|
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt2
+- Spec refined.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt1
 - New version 4.2.1.
 

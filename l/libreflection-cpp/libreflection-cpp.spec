@@ -4,7 +4,7 @@
 
 Name: libreflection-cpp
 Version: 0.5.0
-Release: alt1
+Release: alt2
 
 Summary: C++ static reflection support library
 License: Apache-2.0
@@ -13,8 +13,9 @@ Url: https://github.com/contour-terminal/reflection-cpp
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 
 %if_with check
@@ -58,6 +59,9 @@ The %{name}-devel package contains development files for %{name}.
 %_libdir/cmake/reflection-cpp/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt2
+- Spec refined.
+
 * Fri Oct 02 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 

@@ -3,7 +3,7 @@
 
 Name: vnote
 Version: 3.20.1
-Release: alt1
+Release: alt2
 
 Summary: Pleasant note-taking platform in native C++
 License: LGPL-3.0-only
@@ -16,7 +16,7 @@ Source1: submodules-%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -53,8 +53,8 @@ Data files for VNote.
 %prep
 %setup -a1
 %patch -p1
-sed -i "s|pics/||g" README.md README_zh_CN.md
-sed -i "s|Categories=.*|Categories=Office;WordProcessor;|" src/data/core/vnote.desktop
+%__subst "s|pics/||g" README.md README_zh_CN.md
+%__subst "s|Categories=.*|Categories=Office;WordProcessor;|" src/data/core/vnote.desktop
 
 %build
 %cmake
@@ -81,5 +81,8 @@ sed -i "s|Categories=.*|Categories=Office;WordProcessor;|" src/data/core/vnote.d
 %_datadir/vnote_extra.rcc
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 3.20.1-alt2
+- Spec refined.
+
 * Sun Feb 22 2026 Nikolay Strelkov <snk@altlinux.org> 3.20.1-alt1
 - Initial build for Sisyphus

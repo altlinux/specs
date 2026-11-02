@@ -3,7 +3,7 @@
 
 Name: fstl
 Version: 0.11.1
-Release: alt1
+Release: alt2
 
 Summary: Fast STL file viewer
 License: MIT
@@ -12,8 +12,9 @@ Url: https://github.com/fstl-app/fstl
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt5)
 
@@ -25,7 +26,7 @@ It is optimized to quickly load and render very high-polygon models.
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=Science;Engineering;/" xdg/fstlapp-fstl.desktop
+%__subst "s/Categories=.*/Categories=Science;Engineering;/" xdg/fstlapp-fstl.desktop
 
 %build
 %cmake
@@ -48,5 +49,8 @@ done
 %_iconsdir/hicolor/*/apps/fstlapp-fstl.png
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.11.1-alt2
+- Spec refined.
+
 * Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 0.11.1-alt1
 - Initial build for Sisyphus

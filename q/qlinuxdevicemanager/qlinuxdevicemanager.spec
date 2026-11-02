@@ -5,7 +5,7 @@
 
 Name: qlinuxdevicemanager
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Device Manager implementation and Hardware System Information Viewer
 License: GPL-3.0-or-later
@@ -14,14 +14,18 @@ Url: https://github.com/birdie-github/QLinuxDeviceManager
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(Qt6)
 BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libv4l2)
 BuildRequires: pkgconfig(libdisplay-info)
 BuildRequires: pkgconfig(libkmod)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(vulkan)
+BuildRequires: /usr/bin/glslangValidator
 
 %if_with check
 BuildRequires: ctest
@@ -69,6 +73,9 @@ the application does not upload it.
 %_iconsdir/hicolor/scalable/apps/io.github.birdie-github.QLinuxDeviceManager.svg
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt2
+- Spec refined.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.0-alt1
 - New version 2.0.0.
 

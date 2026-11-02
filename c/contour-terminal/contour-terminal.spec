@@ -4,7 +4,7 @@
 
 Name: contour-terminal
 Version: 0.8.0.9335
-Release: alt1
+Release: alt2
 
 Summary: Modern C++ Terminal Emulator
 License: Apache-2.0
@@ -13,9 +13,10 @@ Url: https://github.com/contour-terminal/contour
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-systemd
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libmicrosoft-gsl-devel
 BuildRequires: pkgconfig(yaml-cpp)
@@ -58,7 +59,7 @@ for everyday use. It is aiming for power users with a modern feature mindset.
 
 %prep
 %setup
-sed -i "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-ncneofetch.png|" README.md
+%__subst "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-ncneofetch.png|" README.md
 
 %build
 %cmake \
@@ -104,6 +105,9 @@ sed -i "s|docs/screenshots/contour-notcurses-ncneofetch.png|contour-notcurses-nc
 %_userunitdir/app-org.contourterminal.Contour@.service.d/50-oom-policy.conf
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.0.9335-alt2
+- Spec refined.
+
 * Sun Oct 25 2026 Nikolay Strelkov <snk@altlinux.org> 0.8.0.9335-alt1
 - New version 0.8.0.9335.
 - Exclude %%ix86 arch as not buildable.

@@ -3,7 +3,7 @@
 
 Name: mystran
 Version: 19.0.0
-Release: alt1
+Release: alt2
 
 Summary: General purpose finite element analysis solver
 License: MIT
@@ -14,8 +14,9 @@ Source: %name-%version.tar
 
 Source1: submodules-%name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
 BuildRequires: liblapack-devel
@@ -30,7 +31,7 @@ solving a wide variety of finite element analysis problems.
 
 %prep
 %setup -a1
-sed -i "s/ -march=native//g" submodules/metis/conf/gkbuild.cmake
+%__subst "s/ -march=native//g" submodules/metis/conf/gkbuild.cmake
 
 %build
 %cmake
@@ -50,5 +51,8 @@ install -Dpm755 Binaries/mystran %buildroot%_bindir/mystran
 %exclude %_libdir
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 19.0.0-alt2
+- Spec refined.
+
 * Sun Jul 19 2026 Nikolay Strelkov <snk@altlinux.org> 19.0.0-alt1
 - Initial build for Sisyphus

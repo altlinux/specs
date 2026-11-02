@@ -3,7 +3,7 @@
 
 Name: feathernotes
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Hierarchical notes-manager
 License: GPL-3.0-or-later
@@ -12,7 +12,7 @@ Url: https://github.com/tsujan/feathernotes
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -47,6 +47,9 @@ It is independent of any desktop environment.
 %_datadir/mime/packages/feathernotes.xml
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt2
+- Spec refined.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

@@ -4,7 +4,7 @@
 
 Name: libayatana-appindicator-glib
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: Ayatana Application Indicators (Glib-2.0-only reimplementation)
 License: GPL-3.0
@@ -13,8 +13,9 @@ Url: https://github.com/AyatanaIndicators/libayatana-appindicator-glib
 
 Source: %name-%version.tar
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(vapigen)
@@ -83,14 +84,17 @@ This package contains developer documentation.
 %_includedir/libayatana-appindicator-glib/ayatana-appindicator-enum-types.h
 %_includedir/libayatana-appindicator-glib/ayatana-appindicator.h
 %_libdir/libayatana-appindicator-glib.so
-%_libdir/pkgconfig/ayatana-appindicator-glib.pc
+%_pkgconfigdir/ayatana-appindicator-glib.pc
 %_datadir/gir-1.0/AyatanaAppIndicatorGlib-2.0.gir
 %_datadir/vala/vapi/ayatana-appindicator-glib.deps
 %_datadir/vala/vapi/ayatana-appindicator-glib.vapi
 
 %files doc
-%_datadir/doc/libayatana-appindicator-glib-dev/
+%_docdir/libayatana-appindicator-glib-dev/
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.3-alt2
+- Spec refined.
+
 * Sun Jun 14 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.3-alt1
 - Initial build for Sisyphus

@@ -5,7 +5,7 @@
 
 Name: scidavis
 Version: 2.9.2
-Release: alt1
+Release: alt2
 
 Summary: Application for Scientific Data Analysis and Visualization
 License: GPL-2.0-only
@@ -18,8 +18,9 @@ Source1: submodules-%name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: qt5-tools-devel
 BuildRequires: python3-devel
@@ -59,16 +60,16 @@ https://highperformancecoder.github.io/scidavis-handbook/ .
 %setup -a1
 %patch -p1
 
-sed -i 's|VERSION 2.3.0|VERSION %{version}|' CMakeLists.txt
+%__subst 's|VERSION 2.3.0|VERSION %version|' CMakeLists.txt
 
-sed -i 's|pythonconfig.path = "$$INSTALLBASE/../etc"|pythonconfig.path = "$$INSTALLBASE/..%{python3_sitelibdir}/scidavis"|g' config.pri
-sed -i 's|pythonutils.path = "$$INSTALLBASE/share/scidavis"|pythonutils.path = "$$INSTALLBASE/..%{python3_sitelibdir}/scidavis"|g' config.pri
-sed -i 's|set(PYTHON_SCRIPTDIR etc|set(PYTHON_SCRIPTDIR %{python3_sitelibdir}/scidavis|g' scidavis/CMakeLists.txt
-sed -i 's|FILES scidavisrc.py ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/scidavisrc.pyc DESTINATION|FILES scidavisrc.py DESTINATION|g' scidavis/CMakeLists.txt
-sed -i 's|FILES scidavisrc.py ${CMAKE_CURRENT_BINARY_DIR}/scidavisrc.pyc DESTINATION|FILES scidavisrc.py DESTINATION|g' scidavis/CMakeLists.txt
-sed -i 's|FILES scidavisUtil.py DESTINATION share/scidavis|FILES scidavisUtil.py DESTINATION ${PYTHON_SCRIPTDIR}|g' scidavis/CMakeLists.txt
-sed -i 's|PYTHON_CONFIG_PATH="${CMAKE_INSTALL_PREFIX}/etc"|PYTHON_CONFIG_PATH="%{python3_sitelibdir}/scidavis"|g' libscidavis/CMakeLists.txt
-sed -i 's|PYTHON_UTIL_PATH="${CMAKE_INSTALL_PREFIX}/share/scidavis"|PYTHON_UTIL_PATH="%{python3_sitelibdir}/scidavis"|g' libscidavis/CMakeLists.txt
+%__subst 's|pythonconfig.path = "$$INSTALLBASE/../etc"|pythonconfig.path = "$$INSTALLBASE/..%python3_sitelibdir/scidavis"|g' config.pri
+%__subst 's|pythonutils.path = "$$INSTALLBASE/share/scidavis"|pythonutils.path = "$$INSTALLBASE/..%python3_sitelibdir/scidavis"|g' config.pri
+%__subst 's|set(PYTHON_SCRIPTDIR etc|set(PYTHON_SCRIPTDIR %python3_sitelibdir/scidavis|g' scidavis/CMakeLists.txt
+%__subst 's|FILES scidavisrc.py ${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>/scidavisrc.pyc DESTINATION|FILES scidavisrc.py DESTINATION|g' scidavis/CMakeLists.txt
+%__subst 's|FILES scidavisrc.py ${CMAKE_CURRENT_BINARY_DIR}/scidavisrc.pyc DESTINATION|FILES scidavisrc.py DESTINATION|g' scidavis/CMakeLists.txt
+%__subst 's|FILES scidavisUtil.py DESTINATION share/scidavis|FILES scidavisUtil.py DESTINATION ${PYTHON_SCRIPTDIR}|g' scidavis/CMakeLists.txt
+%__subst 's|PYTHON_CONFIG_PATH="${CMAKE_INSTALL_PREFIX}/etc"|PYTHON_CONFIG_PATH="%python3_sitelibdir/scidavis"|g' libscidavis/CMakeLists.txt
+%__subst 's|PYTHON_UTIL_PATH="${CMAKE_INSTALL_PREFIX}/share/scidavis"|PYTHON_UTIL_PATH="%python3_sitelibdir/scidavis"|g' libscidavis/CMakeLists.txt
 
 %build
 lrelease-qt5 scidavis.pro
@@ -107,10 +108,10 @@ xvfb-run -a %ctest -j1 -VV -E '^(python_Establishing_contact|python_integration_
 %_libdir/scidavis/plugins/libfitRational1.so
 %_libdir/scidavis/plugins/libplanck_wavelength.so
 %_desktopdir/scidavis.desktop
-%exclude %_datadir/doc/scidavis/ChangeLog.md
-%exclude %_datadir/doc/scidavis/README.md
-%exclude %_datadir/doc/scidavis/gpl.txt
-%exclude %_datadir/doc/scidavis/license.rtf
+%exclude %_docdir/scidavis/ChangeLog.md
+%exclude %_docdir/scidavis/README.md
+%exclude %_docdir/scidavis/gpl.txt
+%exclude %_docdir/scidavis/license.rtf
 %_iconsdir/hicolor/*/apps/scidavis.png
 %_iconsdir/locolor/*/apps/scidavis.png
 %_iconsdir/hicolor/scalable/apps/scidavis.svg
@@ -122,5 +123,8 @@ xvfb-run -a %ctest -j1 -VV -E '^(python_Establishing_contact|python_integration_
 %python3_sitelibdir/scidavis/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.9.2-alt2
+- Spec refined.
+
 * Wed Mar 04 2026 Nikolay Strelkov <snk@altlinux.org> 2.9.2-alt1
 - Initial build for Sisyphus

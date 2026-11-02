@@ -3,7 +3,7 @@
 
 Name: nelson
 Version: 1.17.0
-Release: alt4
+Release: alt5
 
 Summary: The Nelson Programming Language
 License: LGPL-3.0 OR GPL-3.0
@@ -15,9 +15,10 @@ Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): cmake
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(eigen3)
 BuildRequires: pkgconfig(Qt6)
@@ -104,7 +105,7 @@ This package contains arch-independent files of Nelson.
 %prep
 %setup
 %patch -p1
-sed -i "s/Categories=.*/Categories=Science;Math;DataVisualization;NumericalAnalysis;/" desktop/io.github.nelson_lang.Nelson.desktop
+%__subst "s/Categories=.*/Categories=Science;Math;DataVisualization;NumericalAnalysis;/" desktop/io.github.nelson_lang.Nelson.desktop
 
 %build
 %cmake \
@@ -147,6 +148,9 @@ patchelf %buildroot%_bindir/nelson_f2c --add-rpath %_libdir/Nelson
 %_libdir/cmake/Nelson/*
 
 %changelog
+* Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt5
+- Spec refined.
+
 * Sat Aug 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.17.0-alt4
 - Include loongarch64 since liblapacke is now available.
 
