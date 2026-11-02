@@ -35,8 +35,8 @@
 %define gname  dqt6
 Name: dqt6-base
 %define major  6
-Version: 6.10.3
-Release: alt1.dde.3
+Version: 6.11.2
+Release: alt1.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -58,17 +58,11 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
-
+# UPSTREAM
+Patch50: qtbase-qiconloader-dont-consider-fallbackthemename-in-themename.patch
 # Debian
 Patch100: remove_rpath_from_examples.patch
 Patch101: enable_skip_plugins.patch
-# upstream
-Patch200: qtbase-wayland-convey-preference-for-server-side-decorations.patch
-Patch201: qtbase-wayland-compress-high-frequency-mouse-events.patch
-Patch202: qtbase-wayland-optimize-scroll-operations.patch
-Patch203: qtbase-wayland-enable-event-compression-and-fix-scroll-end-event.patch
-Patch204: qtbase-wayland-fix-crash-in-qwaylandshmbackingstore-scroll.patch
-Patch205: QTBUG-145310.patch
 # ALT
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
@@ -80,14 +74,14 @@ Patch1006: alt-singleclick.patch
 Patch1007: alt-xdg-current-desktop.patch
 Patch1008: python-shebang.patch
 #
-Patch2000: 9003-qt6-base-6.8.0-qmenu_fix_shortcuts.patch
+Patch2000: 9003-qt6-base-6.10.3-qmenu_fix_shortcuts.patch
 
 # macros
 %define _dqt6 %gname
 %include %SOURCE1
 
 # dynamically probing plugins
-#add_findreq_skiplist %%_dqt6_plugindir/platformthemes/*.so
+#add_findreq_skiplist %_dqt6_plugindir/platformthemes/*.so
 
 # Automatically added by buildreq on Fri Nov 26 2021 (-bi)
 # optimized out: at-spi2-atk bash4 bashrc cmake cmake-modules debugedit elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libalsa-devel libassuan-devel libat-spi2-core libatk-devel libatomic_ops-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcanberra-devel libcom_err-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdouble-conversion3 libffi-devel libfreetype-devel libgdbm-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmp-devel libgpg-error libgpg-error-devel libharfbuzz-devel libicu-devel libjpeg-devel libkrb5-devel libmpfr-devel libncurses-devel libp11-kit libpango-devel libpng-devel libpopt-devel libsasl2-3 libsndfile-devel libssl-devel libstdc++-devel libtinfo-devel libudev-devel libunixODBC-devel-compat libverto-devel libvulkan-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxkbcommon-devel libxkbcommon-x11 perl pkg-config postgresql-devel python-modules python2-base python3 python3-base python3-module-paste rpm-build-file rpm-build-python3 rpm-macros-python sh4 tcl-devel tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel xxd zlib-devel zlib-devel-static
@@ -104,7 +98,7 @@ BuildRequires: libinput-devel liblz4-devel liblzma-devel libmng-devel libmtdev-d
 BuildRequires: libpcre2-devel libproxy-devel libts-devel
 BuildRequires: libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel-static
+BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
 BuildRequires: libat-spi2-core-devel
 %{?_enable_vulkan:BuildRequires: pkgconfig(vulkan)}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
@@ -296,6 +290,7 @@ Core library for the Qt%major toolkit
 Summary: GUI support library for the Qt%major toolkit
 Group: System/Libraries
 Requires: %name-common
+Requires: libdqt6-wlshellintegration
 %description -n lib%gname-gui
 GUI support library for the Qt%major toolkit
 
@@ -413,15 +408,10 @@ Requires: %name-common
 %patch2 -p1
 %patch3 -p1
 #
+%patch50 -p1
+#
 %patch100 -p1
 %patch101 -p1
-#
-%patch200 -p1
-%patch201 -p1
-%patch202 -p1
-%patch203 -p1
-%patch204 -p1
-%patch205 -p1
 #
 %patch1000 -p1
 %patch1001 -p1
@@ -435,7 +425,7 @@ Requires: %name-common
 %patch1007 -p1
 %patch1008 -p1
 #
-#%patch2000 -p1
+%patch2000 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -763,6 +753,8 @@ done
 %_dqt6_bindir/qdbusxml2cpp*
 %_bindir/qmake*
 %_dqt6_bindir/qmake*
+%exclude %_bindir/wasmdeployqt*
+%_dqt6_bindir/wasmdeployqt*
 #
 %_dqt6_libexecdir/moc
 %_dqt6_libexecdir/rcc
@@ -773,12 +765,9 @@ done
 %_dqt6_libexecdir/qvkgen
 %_dqt6_libexecdir/tracegen
 %_dqt6_libexecdir/cmake_automoc_parser
-%_dqt6_libexecdir/ensure_pro_file.cmake
 %_dqt6_libexecdir/qt-internal-configure-*
 %_dqt6_libexecdir/qt-cmake-private*
 %_dqt6_libexecdir/qt-cmake-standalone-test
-%_dqt6_libexecdir/qt-testrunner.py
-%_dqt6_libexecdir/sanitizer-testrunner.py
 %_dqt6_libexecdir/tracepointgen
 %_dqt6_libexecdir/qtwaylandscanner
 %_dqt6_libexecdir/qt_cyclonedx_generator.py
@@ -799,6 +788,7 @@ done
 %_dqt6_libdir/cmake/Qt%{major}*/
 %_dqt6_archdatadir/metatypes/
 %_dqt6_archdatadir/modules/
+%_dqt6_datadir/json_schema/modules.json
 %_dqt6_libdir/pkgconfig/Qt%{major}*.pc
 
 %files devel-static
@@ -891,11 +881,29 @@ done
 %_dqt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt1.dde.1
+- merge with new version
+
+* Fri Oct 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- update requires
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
+* Mon Aug 03 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt5
+- add upstream fix to avoid resetting clipboard (closes: 60071)
+
+* Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt4
+- fix build requires for new libzstd
+
 * Wed Jul 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.3
 - fix build on zstd 1.5.7-alt1
 
 * Mon Jun 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.2
 - fix build on dqt6-declarative 6.10.3
+
+* Wed Jun 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
+- don't generate SBOM by default
 
 * Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.1
 - merge with new version
@@ -976,21 +984,11 @@ done
 * Tue Dec 17 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt6
 - switch to legacy implementation of QCryptographicHash while openssl3 not ready (closes: 48923)
 
-* Thu Dec 12 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.2
-- update cmake macros
-
-* Tue Oct 31 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt4.dde.1
-- don't disable lto
-- fix compile with gcc-14
-
 * Thu Oct 31 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt5
 - fix compile with gcc-14
 
 * Thu Oct 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt3
 - don't disable lto
-
-* Wed Oct 02 2024 Leontiy Volodin <lvol@altlinux.org> 6.7.2-alt1.dde.1
-- fork qt6 for separate deepin packaging (ALT #48138)
 
 * Tue Sep 03 2024 Sergey V Turchin <zerg@altlinux.org> 6.7.2-alt2
 - restore qmenu_fix_shortcuts.patch (thanks Corwin)

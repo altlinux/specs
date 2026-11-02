@@ -2,8 +2,13 @@
 %global qt_module dqtsvg
 
 Name: dqt6-svg
-Version: 6.10.3
+Version: 6.11.2
 Release: alt0.dde.1
+%if "%version" == "%{get_version dqt6-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - Support for rendering and displaying SVG
@@ -15,9 +20,13 @@ Source: %qt_module-everywhere-src-%version.tar
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
 
-BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
+BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
+%if_disabled bootstrap
+BuildRequires: dqt6-tools
+BuildRequires: libdqt6-xml libdqt6-qml libdqt6-help
+%endif
+BuildRequires: libdqt6-gui libdqt6-widgets
 BuildRequires: dqt6-base-devel
-BuildRequires: libdqt6-xml libdqt6-gui libdqt6-widgets libdqt6-qml libdqt6-help
 BuildRequires: clang-devel
 BuildRequires: gcc-c++ glibc-devel
 BuildRequires: cmake libxkbcommon-devel zlib-devel
@@ -80,6 +89,11 @@ Requires: libdqt6-core = %_dqt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
+%if_disabled bootstrap
+%define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+%else
+%define qdoc_found 0
+%endif
 %DQ6build \
     -DQT_GENERATE_SBOM:BOOL=OFF \
     #
@@ -90,7 +104,6 @@ Requires: libdqt6-core = %_dqt6_version
 %install
 %DQ6install_qt
 %if %qdoc_found
-#DQ6install_qt --target install_docs
 mkdir -p %buildroot/%_docdir/dqt6/
 cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
@@ -133,6 +146,15 @@ done
 %_dqt6_examplesdir/*
 
 %changelog
+* Fri Oct 30 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
+- merge with new version
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
+* Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- build docs after qttools
+
 * Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
 - merge with new version
 

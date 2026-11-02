@@ -3,7 +3,7 @@
 %define optflags_lto %nil
 
 Name: dqt6-declarative
-Version: 6.10.3
+Version: 6.11.2
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -40,6 +40,8 @@ Requires: libdqt6-quickcontrols2basic
 Requires: libdqt6-quickcontrols2fusion
 Requires: libdqt6-quickcontrols2imagine
 Requires: libdqt6-quickcontrols2material
+Requires: libdqt6-quickvectorimagegenerator
+Requires: libdqt6-quickvectorimagehelpers
 
 Source: %qt_module-everywhere-src-%version.tar
 Source10: rpm-build-dqml.tar
@@ -47,8 +49,6 @@ Source1: dqml6
 Source2: dqml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
-# FC
-Patch1: qtdeclarative-quickshapes-make-module-public.patch
 
 # find librares
 %add_findprov_lib_path %_dqt6_libdir
@@ -64,7 +64,7 @@ Patch1: qtdeclarative-quickshapes-make-module-public.patch
 #BuildRequires: ccmake glslang libGLU-devel libxkbcommon-devel python-modules-compiler python3-dev qt6-shadertools-devel rpm-build-qml tbb-devel
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 BuildRequires: rpm-build-python3
-BuildRequires: gcc-c++ glibc-devel dqt6-base-devel dqt6-shadertools-devel
+BuildRequires: glibc-devel dqt6-base-devel dqt6-shadertools-devel dqt6-svg-devel
 BuildRequires: libdqt6-widgets libdqt6-openglwidgets libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-concurrent libdqt6-test vulkan-headers
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
 %if_disabled bootstrap
@@ -459,10 +459,49 @@ Requires: libdqt6-core = %_dqt6_version
 %description -n libdqt6-labssynchronizer
 %summary
 
+%package -n libdqt6-quickvectorimagegenerator
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-quickvectorimagegenerator
+%summary
+
+%package -n libdqt6-quickvectorimagehelpers
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-quickvectorimagehelpers
+%summary
+
+%package -n libdqt6-quickvectorimage
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-quickvectorimage
+%summary
+
+%package -n libdqt6-labsstylekit
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-labsstylekit
+%summary
+
+%package -n libdqt6-labsstylekitimpl
+Group: System/Libraries
+Summary: Qt6 - library
+Requires: %name-common
+Requires: libdqt6-core = %_dqt6_version
+%description -n libdqt6-labsstylekitimpl
+%summary
+
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
-%patch1 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -473,8 +512,6 @@ done
 mv rpm-build-dqml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
-# don't make  module static
-sed -i '/STATIC/d' src/labs/assetdownloader/CMakeLists.txt
 
 %ifarch %e2k
 # as of lcc 1.29.06 (mcst#9355)
@@ -482,7 +519,7 @@ sed -i 's/baseIndent, std::move(loc2str)/baseIndent, loc2str/' src/qmldom/qqmldo
 %endif
 
 %build
-%if_enabled bootstrap
+%if_disabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %else
 %define qdoc_found 0
@@ -505,7 +542,8 @@ popd
 %install
 %DQ6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 # relax depends on plugins files
@@ -548,10 +586,10 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_dqt6_examplesdir/*
 
 %files -n libdqt6-labssynchronizer
-%_dqt6_libdir//libQt6LabsSynchronizer.so.*
+%_dqt6_libdir/libQt6LabsSynchronizer.so.*
 %_dqt6_qmldir/Qt/labs/synchronizer/
 %files -n libdqt6-quickshapesdesignhelpers
-%_dqt6_libdir//libQt6QuickShapesDesignHelpers.so.*
+%_dqt6_libdir/libQt6QuickShapesDesignHelpers.so.*
 %files -n libdqt6-qml
 %_dqt6_libdir/libQt?Qml.so.*
 %_dqt6_qmldir/QML/
@@ -562,15 +600,12 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_dqt6_qmldir/QtQml/libqmlplugin.so
 %_dqt6_qmldir/builtins.qmltypes
 %_dqt6_qmldir/jsroot.qmltypes
-%files -n libdqt6-assetsdownloader
-%_dqt6_libdir/libQt6QmlAssetDownloader.so.*
-%_dqt6_qmldir/Qt/labs/assetdownloader/
 %files -n libdqt6-labsplatform
-%_dqt6_libdir//libQt6LabsPlatform.so.*
+%_dqt6_libdir/libQt6LabsPlatform.so.*
 %files -n libdqt6-qmlmeta
-%_dqt6_libdir//libQt6QmlMeta.so.*
+%_dqt6_libdir/libQt6QmlMeta.so.*
 %files -n libdqt6-quickcontrols2fluentwinui3styleimpl
-%_dqt6_libdir//libQt6QuickControls2FluentWinUI3StyleImpl.so.*
+%_dqt6_libdir/libQt6QuickControls2FluentWinUI3StyleImpl.so.*
 %_dqt6_qmldir/QtQuick/Controls/FluentWinUI3/
 %files -n libdqt6-quick
 %_dqt6_libdir/libQt?Quick.so.*
@@ -679,10 +714,28 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_dqt6_qmldir/QtQuick/Controls/Universal/
 %files -n libdqt6-quickcontrols2universalstyleimpl
 %_dqt6_libdir/libQt6QuickControls2UniversalStyleImpl.so.*
+%files -n libdqt6-quickvectorimage
+%_dqt6_libdir/libQt6QuickVectorImage.so.*
+%dir %_dqt6_qmldir/QtQuick/VectorImage/
+%_dqt6_qmldir/QtQuick/VectorImage/libqquickvectorimageplugin.so
+%_dqt6_qmldir/QtQuick/VectorImage/plugins.qmltypes
+%_dqt6_qmldir/QtQuick/VectorImage/qmldir
+%files -n libdqt6-quickvectorimagegenerator
+%_dqt6_libdir/libQt6QuickVectorImageGenerator.so.*
+%files -n libdqt6-quickvectorimagehelpers
+%_dqt6_libdir/libQt6QuickVectorImageHelpers.so.*
+%_dqt6_qmldir/QtQuick/VectorImage/Helpers/
+%files -n libdqt6-labsstylekit
+%_dqt6_libdir/libQt6LabsStyleKit.so.*
+%files -n libdqt6-labsstylekitimpl
+%_dqt6_libdir/libQt6LabsStyleKitImpl.so.*
+%_dqt6_qmldir/Qt/labs/StyleKit/
 
 %files devel
 %_bindir/qml*
+%_bindir/svgtoqml*
 %_dqt6_bindir/qml*
+%_dqt6_bindir/svgtoqml*
 %_dqt6_libexecdir/qml*
 %_dqt6_plugindir/qmltooling/*
 %_dqt6_plugindir/qmllint/*
@@ -716,6 +769,16 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
+- merge with new version
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
+* Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- build vectorimage QML plugin (closes: 59476)
+- fix compile docs
+
 * Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
 - merge with new version
 

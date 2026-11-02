@@ -2,7 +2,7 @@
 %def_enable glslang_bundle
 
 Name: dqt6-shadertools
-Version: 6.10.3
+Version: 6.11.2
 Release: alt0.dde.1
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
@@ -85,7 +85,7 @@ Requires: libdqt6-core = %_dqt6_version
 %endif
 
 %build
-%if_enabled bootstrap
+%if_disabled bootstrap
 %define qdoc_found %{expand:%%(if [ -e %_dqt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %else
 %define qdoc_found 0
@@ -100,7 +100,8 @@ Requires: libdqt6-core = %_dqt6_version
 %install
 %DQ6install_qt
 %if %qdoc_found
-%make -C BUILD DESTDIR=%buildroot VERBOSE=1 install_docs ||:
+mkdir -p %buildroot/%_docdir/dqt6/
+cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 %endif
 
 %files common
@@ -130,6 +131,15 @@ Requires: libdqt6-core = %_dqt6_version
 #%_dqt6_examplesdir/*
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
+- merge with new version
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
+* Mon Jun 08 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt2
+- fix to build docs
+
 * Mon Jun 08 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
 - merge with new version
 

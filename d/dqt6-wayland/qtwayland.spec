@@ -2,7 +2,7 @@
 %global qt_module dqtwayland
 
 Name: dqt6-wayland
-Version: 6.10.3
+Version: 6.11.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -10,7 +10,6 @@ Summary: Qt6 - Wayland platform support and QtCompositor module
 Url: http://qt.io/
 License:  GPL-3.0-or-later AND (LGPL-3.0-only OR GPL-2.0-only OR GPL-3.0-or-later)
 
-Requires: libdqt6-waylandcompositor
 Requires: libdqt6-waylandclient
 Requires: libdqt6-waylandeglcompositorhwintegration
 Requires: libdqt6-wlshellintegration
@@ -237,6 +236,12 @@ done
 %endif
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
+- merge with new version
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Jun 09 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
 - merge with new version
 

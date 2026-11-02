@@ -2,7 +2,7 @@
 %global qt_module dqttranslations
 
 Name: dqt6-translations
-Version: 6.10.3
+Version: 6.11.2
 Release: alt0.dde.1
 
 Group: System/Libraries
@@ -44,6 +44,12 @@ done
 %_dqt6_translationdir/catalogs.json
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
+- merge with new version
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Tue Jun 09 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
 - merge with new version
 

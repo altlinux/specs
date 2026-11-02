@@ -24,9 +24,16 @@
 %def_enable system_ffmpeg
 %endif
 
+%define re2_ver %{get_version libre2-devel}
+%IF_ver_gteq %re2_ver 20251105
+%def_enable system_re2
+%else
+%def_disable system_re2
+%endif
+
 Name: dqt6-webengine
-Version: 6.10.3
-Release: alt0.dde.1
+Version: 6.11.2
+Release: alt2.dde.1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -44,18 +51,20 @@ Patch11: qtwebengine-aarch64-new-stat.patch
 Patch12: qtwebengine-fix-arm-build.patch
 Patch13: qtwebengine-use-openh264.patch
 Patch14: qtwebengine-SIOCGSTAMP.patch
-Patch15: qtwebengine-add-missing-pipewire-headers.patch
-Patch16: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
+Patch15: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
+# SuSE
+Patch300: Fix-renderer-crash-when-registering-ICU-encoding-names.patch
 # LoongArch
 Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 
 BuildRequires(pre): rpm-macros-dqt6-webengine
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools
 BuildRequires(pre): libavformat-devel
+BuildRequires(pre): libre2-devel
 BuildRequires: /proc
 BuildRequires: clang-devel
 BuildRequires: cmake libstdc++-devel-static
@@ -74,13 +83,13 @@ BuildRequires: libXdamage-devel
 BuildRequires: libcups-devel
 BuildRequires: gyp libudev-devel libxml2-devel jsoncpp-devel liblcms2-devel
 BuildRequires: libopus-devel libpulseaudio-devel pipewire-libs-devel
-BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libre2-devel libsnappy-devel libsrtp2-devel
+BuildRequires: libpci-devel libprotobuf-devel protobuf-compiler libsnappy-devel libsrtp2-devel
 BuildRequires: libpng-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libxslt-devel libva-devel libvdpau-devel
 BuildRequires: libhunspell-devel
 BuildRequires: ninja-build gn
 BuildRequires: libopenjpeg2.0-devel
-BuildRequires: node-yargs node-terser
+BuildRequires: node
 BuildRequires: python3(json) python3(html5lib)
 BuildRequires: dqt6-multimedia-devel dqt6-svg-devel dqt6-tools-devel
 BuildRequires: dqt6-declarative-devel
@@ -211,11 +220,12 @@ Obsoletes: %name < %EVR
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
-%patch16 -p1
 #
 #%patch200 -p1
 #%patch201 -p1
 %patch202 -p1
+#
+%patch300 -p1
 %ifarch loongarch64
 %patch3500 -p2
 %endif
@@ -226,9 +236,11 @@ Obsoletes: %name < %EVR
 # never cross-compile in native Fedora RPMs, fixes ARM and aarch64 FTBFS
 sed -i -e '/toolprefix = /d' -e 's/\${toolprefix}//g' \
   src/3rdparty/chromium/build/toolchain/linux/BUILD.gn
+%if_enabled system_re2
 # http://bugzilla.redhat.com/1337585
 # can't just delete, but we'll overwrite with system headers to be on the safe side
 cp -bv /usr/include/re2/*.h src/3rdparty/chromium/third_party/re2/src/re2/
+%endif
 # add compile flags
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/build/config/compiler/BUILD.gn
 sed -i 's|"-fPIC"|"-DPIC","-fPIC"|' src/3rdparty/chromium/third_party/*/BUILD.gn
@@ -286,7 +298,7 @@ MEM_PER_PROC=10000000
 MAX_MEM=`grep ^MemTotal: /proc/meminfo | sed -e 's|^\(.*\)[[:space:]].*|\1|' -e 's|.*[[:space:]]||'`
 #NUM_PROCS="$(($MAX_MEM / $MEM_PER_PROC))"
 [ "$NUM_PROCS" -ge 2  ] || NUM_PROCS=2
-[ "$NUM_PROCS" -le 16  ] || NUM_PROCS=16
+[ "$NUM_PROCS" -le 32  ] || NUM_PROCS=32
 
 export NPROCS=$NUM_PROCS
 export STRIP=strip
@@ -317,6 +329,7 @@ export LDFLAGS+="-Wl,--no-keep-memory -Wl,--hash-size=31 -Wl,--reduce-memory-ove
 %if_enabled system_icu
     -DFEATURE_webengine_system_icu:BOOL=ON \
 %endif
+    -DFEATURE_webengine_system_re2:BOOL=%{?_enable_system_re2:ON}%{!?_enable_system_re2:OFF} \
     -DFEATURE_webengine_system_libevent:BOOL=ON \
     -DFEATURE_webengine_system_libopenjpeg2:BOOL=ON \
     -DFEATURE_qtpdf_build:BOOL=ON \
@@ -430,6 +443,18 @@ done
 %_dqt6_libdir/pkgconfig/Qt?*.pc
 
 %changelog
+* Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt2.dde.1
+- merge with new version
+
+* Mon Sep 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt3
+- add fix against QTBUG-149435, QTBUG-149946
+
+* Fri Sep 04 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- using bundled libre2 with old system libre2
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
 * Wed Jun 10 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt0.dde.1
 - merge with new version
 

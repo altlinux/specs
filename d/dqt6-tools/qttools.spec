@@ -4,8 +4,8 @@
 %define dkf6_bindir %prefix/lib/dkf6/bin
 
 Name: dqt6-tools
-Version: 6.10.3
-Release: alt1.dde.3
+Version: 6.11.2
+Release: alt0.dde.1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -25,6 +25,8 @@ AutoReq: no
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch1: alt-hide-search-and-translate.patch
+Patch2: qdoc-support-newer-clang.patch
+Patch3: qttools-llvm22-qdoc-fixes.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -40,14 +42,16 @@ BuildRequires: clang-devel-static llvm-devel-static
 BuildRequires: clang-devel llvm-devel
 BuildRequires: /usr/bin/clang-format /usr/bin/clangd
 #endif
-BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libzstd-devel-static libicu-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ glibc-devel zlib-devel libicu-devel
+BuildRequires: libzstd-devel
 BuildRequires: dqt6-base-devel dqt6-declarative-devel
 BuildRequires: libXext-devel libX11-devel libxkbcommon-x11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: rpm-macros-alternatives
-BuildRequires: libdqt6-quickwidgets libdqt6-xml libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-sql libdqt6-printsupport libdqt6-openglwidgets libdqt6-quicklayouts libdqt6-qmlcompiler vulkan-headers libdqt6-help
+BuildRequires: libdqt6-openglwidgets libdqt6-xml libdqt6-printsupport libdqt6-sql libdqt6-concurrent dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql vulkan-headers libdqt6-quickwidgets libdqt6-quicklayouts libdqt6-qmlcompiler
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
+BuildRequires: libdqt6-help
 %endif
 
 %description
@@ -156,6 +160,8 @@ Requires: libdqt6-core = %_dqt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %if_disabled bootstrap
@@ -242,7 +248,9 @@ done
 
 %files common
 %doc LICENSES/*
+%if_disabled bootstrap
 %_dqt6_datadir/phrasebooks/
+%endif
 
 %files -f main.filelist
 %_bindir/lconvert*
@@ -251,18 +259,23 @@ done
 %_bindir/pixeltool*
 %_bindir/qtdiag*
 %_bindir/qtplugininfo*
+%if_disabled bootstrap
 %_bindir/qdistancefieldgenerator*
+%endif
+%_bindir/lcheck*
+%_bindir/ltext2id*
 %_dqt6_bindir/lconvert*
 %_dqt6_bindir/lrelease*
 %_dqt6_bindir/lupdate*
 %_dqt6_bindir/pixeltool*
 %_dqt6_bindir/qtdiag*
 %_dqt6_bindir/qtplugininfo*
+%if_disabled bootstrap
 %_dqt6_bindir/qdistancefieldgenerator*
+%endif
+%_dqt6_bindir/lcheck*
+%_dqt6_bindir/ltext2id*
 %_dqt6_libexecdir/qtattributionsscanner
-%_dqt6_libexecdir/lprodump
-%_dqt6_libexecdir/lrelease-pro
-%_dqt6_libexecdir/lupdate-pro
 %_dqt6_libexecdir/qhelpgenerator
 
 %files -n dqt6-assistant
@@ -288,8 +301,10 @@ done
 
 %files -n dqt6-designer
 %_bindir/designer*
+%if_disabled bootstrap
 %_bindir/linguist*
 %_dqt6_bindir/linguist*
+%endif
 %_dqt6_bindir/designer*
 %exclude %_desktopdir/*designer.desktop
 %exclude %_desktopdir/*linguist.desktop
@@ -332,6 +347,15 @@ done
 %_dqt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Fri Oct 30 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
+- merge with new version
+
+* Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
+- new version
+
+* Wed Jul 22 2026 Sergey V Turchin <zerg@altlinux.org> 6.10.3-alt3
+- fix build requires for new libzstd
+
 * Wed Jul 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.10.3-alt1.dde.3
 - fix build on zstd 1.5.7-alt1
 
