@@ -1,7 +1,7 @@
 %define abiversion 4
 Name: svt-av1
-Version: 4.2.0
-Release: alt2
+Version: 4.3.0
+Release: alt1
 
 Summary: Scalable Video Technology for AV1 Encoder
 
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: yasm
 BuildRequires: help2man
 
@@ -128,6 +128,10 @@ help2man -N --help-option=-help --no-discard-stderr --version-string=%version %b
 %doc Docs
 
 %changelog
+* Mon Nov 02 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
+- New version 4.3.0
+- Replace BuildRequires: cmake with rpm-build-cmake.
+
 * Wed Sep 02 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt2
 - Remove obsolete conflict with the legacy libsvt-av1 package (ALT bug 60184).
 - Fix the Public Domain license identifier.
