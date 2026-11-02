@@ -5,7 +5,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 13.1.0
+Version: 13.4.0
 Release: alt1
 
 Summary: Thumbnails for Django
@@ -51,6 +51,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 29 2026 Alexander Burmatov <thatman@altlinux.org> 13.4.0-alt1
+- New 13.4.0 version.
+
 * Thu Aug 27 2026 Alexander Burmatov <thatman@altlinux.org> 13.1.0-alt1
 - New 13.1.0 version.
 

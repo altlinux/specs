@@ -1,5 +1,5 @@
 Name:    netbox-proxbox
-Version: 0.0.23.post1
+Version: 0.0.29.post6
 Release: alt1
 
 Summary: Netbox Plugin for integration between Proxmox and Netbox
@@ -16,7 +16,7 @@ Requires: netbox >= 4.5.8
 Requires: python3-module-pydantic
 Requires: python3-module-requests
 Requires: python3-module-websockets
-Conflicts: netbox > 4.6.99
+Conflicts: netbox > 4.7.99
 
 BuildArch: noarch
 
@@ -38,12 +38,20 @@ cp -r netbox_proxbox/* %buildroot%_datadir/netbox/netbox_proxbox
 mkdir -p %buildroot%_defaultdocdir/netbox-proxbox
 install -p -D -m 644 %SOURCE1 %buildroot%_defaultdocdir/netbox-proxbox/README
 
-
 %files
 %_datadir/netbox/netbox_proxbox
 %_defaultdocdir/netbox-proxbox/README
 
 %changelog
+* Fri Oct 30 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.29.post6-alt1
+- New 0.0.29.post6 version.
+
+* Fri Oct 02 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.27-alt1
+- New 0.0.27 version.
+
+* Mon Sep 21 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.26.post10-alt1
+- New 0.0.26.post10 version.
+
 * Thu Aug 13 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.23.post1-alt1
 - New 0.0.23.post1 version.
 

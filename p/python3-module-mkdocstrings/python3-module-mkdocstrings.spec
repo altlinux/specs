@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 
 Summary: Automatic documentation from sources, for MkDocs
@@ -72,6 +72,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 29 2026 Alexander Burmatov <thatman@altlinux.org> 1.0.8-alt1
+- Update version to 1.0.8.
+
 * Tue Oct 13 2026 Alexander Burmatov <thatman@altlinux.org> 1.0.7-alt1
 - Update version to 1.0.7.
 

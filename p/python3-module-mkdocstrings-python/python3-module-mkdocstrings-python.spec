@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.0.9
+Version: 2.0.10
 Release: alt1
 
 Summary: A Python handler for mkdocstrings
@@ -65,9 +65,7 @@ fi
 %pyproject_install
 
 %check
-# "None" meaning particular formatter not installed according Gentoo
-%pyproject_run_pytest --deselect "tests/test_rendering.py::test_format_code[None-print('Hello')]"\
-    --deselect "tests/test_rendering.py::test_format_code[None-aaaaa(bbbbb, ccccc=1) + ddddd.eeeee[ffff] or {ggggg: hhhhh, iiiii: jjjjj}]"
+%pyproject_run_pytest
 
 %files
 %doc *.md
@@ -75,6 +73,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 29 2026 Alexander Burmatov <thatman@altlinux.org> 2.0.10-alt1
+- Updated to 2.0.10.
+
 * Thu Oct 01 2026 Alexander Burmatov <thatman@altlinux.org> 2.0.9-alt1
 - Updated to 2.0.9.
 
