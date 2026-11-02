@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: goose
-Version: 1.44.0
+Version: 1.57.0
 Release: alt1
 Summary: An open source, extensible AI agent
 License: Apache-2.0
@@ -60,14 +60,28 @@ cat %SOURCE2 >> .cargo/config.toml
 # path back within 1.44.0 itself.
 %rust_build -p goose-cli --no-default-features --features portable-default,system-keyring
 
+target/release/goose completion bash > goose.bash
+target/release/goose completion zsh > _goose
+target/release/goose completion fish > goose.fish
+
 %install
 %rust_install
+install -Dm644 goose.bash %buildroot%_datadir/bash-completion/completions/goose
+install -Dm644 _goose %buildroot%_datadir/zsh/site-functions/_goose
+install -Dm644 goose.fish %buildroot%_datadir/fish/vendor_completions.d/goose.fish
 
 %files
 %_bindir/goose
+%_datadir/bash-completion/completions/goose
+%_datadir/zsh/site-functions/_goose
+%_datadir/fish/vendor_completions.d/goose.fish
 %doc LICENSE
 
 %changelog
+* Mon Nov 02 2026 Alexey Shabalin <shaba@altlinux.org> 1.57.0-alt1
+- Updated to 1.57.0.
+- Added shell completions for Bash, Zsh and Fish.
+
 * Tue Jul 28 2026 Alexey Shabalin <shaba@altlinux.org> 1.44.0-alt1
 - updated from 1.16.1 to 1.44.0
 
