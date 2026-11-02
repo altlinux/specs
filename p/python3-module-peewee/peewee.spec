@@ -1,7 +1,7 @@
 %define oname peewee
 
 Name: python3-module-%oname
-Version: 4.5.2
+Version: 4.5.3
 Release: alt1
 
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
@@ -92,6 +92,9 @@ python3 runtests.py
 %doc docs/_build/html/*
 
 %changelog
+* Mon Nov 02 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.3-alt1
+- new version 4.5.3
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.2-alt1
 - new version 4.5.2
 - pack pwmigrate (new in 4.4.0)
