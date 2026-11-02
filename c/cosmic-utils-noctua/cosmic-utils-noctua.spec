@@ -3,7 +3,7 @@
 %define oname2 org.codeberg.wfx.Noctua
 
 Name: cosmic-utils-noctua
-Version: 20260927
+Version: 20261101
 Release: alt1
 
 Summary: An image viewer application for the COSMIC desktop
@@ -57,9 +57,9 @@ replace-with = "vendored-sources"
 git = "https://github.com/pop-os/freedesktop-icons"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/libcosmic.git?rev=87ab8179e1bd9880239c340855ae8862034bd0e8"]
+[source."git+https://github.com/pop-os/libcosmic.git?rev=03d7dcb832bc6d15bc1bb07327a1aa426b2d5bc0"]
 git = "https://github.com/pop-os/libcosmic.git"
-rev = "87ab8179e1bd9880239c340855ae8862034bd0e8"
+rev = "03d7dcb832bc6d15bc1bb07327a1aa426b2d5bc0"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/pop-os/smithay-clipboard?tag=sctk-0.20"]
@@ -77,14 +77,14 @@ git = "https://github.com/pop-os/window_clipboard.git"
 tag = "sctk-0.20"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/winit.git?tag=cosmic-0.14"]
+[source."git+https://github.com/pop-os/winit.git?rev=9567503"]
 git = "https://github.com/pop-os/winit.git"
-tag = "cosmic-0.14"
+rev = "9567503"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/wash2/accesskit?tag=cosmic-0.14"]
+[source."git+https://github.com/wash2/accesskit?rev=6c20249"]
 git = "https://github.com/wash2/accesskit"
-tag = "cosmic-0.14"
+rev = "6c20249"
 replace-with = "vendored-sources"
 
 EOF
@@ -107,6 +107,9 @@ install -Dm 0644 ui/cosmic/resources/%oname2.desktop %buildroot%_desktopdir/%ona
 %_iconsdir/hicolor/scalable/apps/%oname2.svg
 
 %changelog
+* Mon Nov 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 20261101-alt1
+- updated to git.71c9885346
+
 * Mon Sep 28 2026 Aleksandr Shamaraev <shad@altlinux.org> 20260927-alt1
 - updated to git.17c0a2c827
 
