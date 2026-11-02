@@ -1,5 +1,5 @@
 Name: python3-module-aiodns
-Version: 4.0.0
+Version: 4.0.4
 Release: alt1
 
 Summary: Simple DNS resolver for asyncio
@@ -38,6 +38,9 @@ BuildRequires: python3(pycares)
 %python3_sitelibdir/aiodns-%version.dist-info
 
 %changelog
+* Wed Aug 19 2026 Alexander Burmatov <thatman@altlinux.org> 4.0.4-alt1
+- Updated to 4.0.4.
+
 * Wed Jan 21 2026 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 
