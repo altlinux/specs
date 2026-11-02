@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2026.3.0
+Version: 2026.9.1
 Release: alt1
 Summary: Source of XYZ tiles providers
 License: BSD-3-Clause
@@ -60,6 +60,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests
 %_datadir/%pypi_name/providers.json
 
 %changelog
+* Mon Nov 02 2026 Anton Vyatkin <toni@altlinux.org> 2026.9.1-alt1
+- New version 2026.9.1.
+
 * Sun Apr 05 2026 Nikita Panov <nexxy@altlinux.org> 2026.3.0-alt1
 - New version 2026.3.0.
 
