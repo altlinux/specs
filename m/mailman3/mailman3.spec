@@ -4,7 +4,7 @@
 
 Name: mailman3
 Version: 3.3.10
-Release: alt1
+Release: alt1.1
 
 Summary: Managing electronic mail discussion and e-newsletter lists
 License: GPLv3
@@ -19,6 +19,8 @@ Source3: %name.service
 Source4: %name.logrotate
 Source5: %name-digests.service
 Source6: %name-digests.timer
+
+Patch0: mailman3-sqlalchemy-2.1.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pdm-backend
@@ -84,6 +86,7 @@ This package contain python modules for %name.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -164,6 +167,9 @@ getent passwd mailman >/dev/null || \
 
 
 %changelog
+* Mon Nov 02 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.10-alt1.1
+- NMU: fix query counting with SQLAlchemy 2.1.
+
 * Thu Oct 03 2024 Anton Vyatkin <toni@altlinux.org> 3.3.10-alt1
 - new version 3.3.10
 
