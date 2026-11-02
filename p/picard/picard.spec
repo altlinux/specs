@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: picard
-Version: 3.0.2
+Version: 3.0.4
 Release: alt1
 Summary: MusicBrainz-based audio tagger
 License: GPL-2.0-or-later
@@ -77,6 +77,9 @@ cat %name-attributes.lang %name-constants.lang %name-countries.lang >> %name.lan
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Mon Nov 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.0.4-alt1
+- release-3.0.4
+
 * Tue Oct 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.0.2-alt1
 - release-3.0.2
 
