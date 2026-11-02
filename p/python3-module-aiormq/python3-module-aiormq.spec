@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 7.2.4
+Version: 7.2.5
 Release: alt1
 
 Summary: Pure python AMQP 0.9.1 asynchronous client library
@@ -48,6 +48,9 @@ sed -i '/^version/s/= .*/= "%version"/' pyproject.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 02 2026 Anton Zhukharev <ancieg@altlinux.org> 7.2.5-alt1
+- Updated to 7.2.5.
+
 * Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 7.2.4-alt1
 - Updated to 7.2.4.
 
