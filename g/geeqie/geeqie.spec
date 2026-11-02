@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: geeqie
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 
 %{?_enable_lua:Requires: lua%lua_ver}
 Requires: %_bindir/exiftool %_bindir/exiftran
-Requires: %_bindir/convert %_bindir/gphoto2
+Requires: %_bindir/convert %_bindir/magick %_bindir/gphoto2
 Requires: %_bindir/zenity lcms2-utils >= 2.12-alt2
 Requires: libwebp-pixbuf-loader
 # for print preview
@@ -98,7 +98,7 @@ xvfb-run %__meson_test
 %_libdir/%name/%name-camera-import-hook-script
 %_libdir/%name/%name-exif-datetime-to-file
 %_libdir/%name/%name-export-jpeg
-%_libdir/%name/%name-image-crop
+%_libdir/%name/%name-convert-image.sh
 %_libdir/%name/%name-random-image
 %_libdir/%name/%name-resize-image
 %_libdir/%name/%name-rotate
@@ -117,6 +117,9 @@ xvfb-run %__meson_test
 %doc NEWS README.*
 
 %changelog
+* Mon Nov 02 2026 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- 3.4
+
 * Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1
 - 3.3
 

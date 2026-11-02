@@ -6,7 +6,7 @@
 
 Name: easytag
 Version: %ver_major.3
-Release: alt6.1
+Release: alt6.2
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -22,7 +22,9 @@ Source: %name-%version.tar
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %endif
 
-BuildRequires: rpm-build-gnome intltool gcc-c++
+Requires: dconf yelp
+
+BuildRequires: rpm-build-gnome intltool gcc-c++ yelp-tools
 BuildRequires: xsltproc docbook-dtds docbook-style-xsl
 BuildRequires: desktop-file-utils
 BuildRequires: yelp-tools libappstream-glib-devel /usr/bin/appstreamcli
@@ -32,7 +34,7 @@ BuildRequires: pkgconfig(opus) >= 1.0 pkgconfig(opusfile)
 BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(flac) >= 1.1.4
 BuildRequires: pkgconfig(id3tag) id3lib-devel
-BuildRequires: pkgconfig(taglib-0) >= 1.9.1
+BuildRequires: pkgconfig(taglib-2) >= 2.0
 BuildRequires: pkgconfig(wavpack) >= 4.40
 BuildRequires: pkgconfig(gio-2.0) >= 2.32.0
 BuildRequires: pkgconfig(libsoup-2.4)
@@ -52,7 +54,7 @@ Monkey's звуковых файлов.
 
 %prep
 %setup
-sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
+#sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
 
 %build
 # id3lib C interface uses int bool, not compatible with C23
@@ -90,6 +92,9 @@ sed -i 's/^TAGLIB_DEPS="taglib/&-0/' configure.ac
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Mon Nov 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt6.2
+- rebuilt with taglib-2 (ALT #61289)
+
 * Sun Apr 26 2026 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt6.1
 - rebuilt with gcc-15 and -std=gnu11
 
