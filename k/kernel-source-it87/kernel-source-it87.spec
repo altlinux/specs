@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name	it87
-%define module_version  1.0
-%define git 60d9def
+%define module_version  2.0
+%define git %nil
 
 #### MODULE SOURCES ####
 Name: kernel-source-%module_name
 Version: %module_version
-Release: alt3.g%{git}
+Release: alt2
 Provides: kernel-source-%module_name-%module_version
 Summary: IT86XXX/87XXX/Sis950 sensor kernel module driver
 License: GPL-2.0-or-later
@@ -17,7 +17,6 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 Source0: %name-%version.tar
 
 Patch0: it87-alt-add-b550-aorus-elite-v2.patch
-Patch1: alt-modname.patch
 
 BuildPreReq: kernel-build-tools
 BuildArch: noarch
@@ -34,13 +33,6 @@ include an 'environment controller' with 3 temperature sensors, 3 fan
 rotation speed sensors, 8 voltage sensors, associated alarms, and chassis
 intrusion detection.
 
-%package -n %module_name-blacklist
-Summary: blacklist upstream kernel %module_name module
-Group: System/Kernel and hardware
-
-%description -n %module_name-blacklist
-blacklist upstream kernel %module_name module
-
 %package -n %module_name-sensors-conf
 Summary: %module_name configurations to use with lm_sensors
 Group: System/Kernel and hardware
@@ -54,7 +46,7 @@ Requires: lm_sensors3
 pushd kernel-source-%module_name-%module_version
 %autopatch -p1
 popd
-pushd kernel-source-%module_name-%module_version/"Sensors configs"
+pushd kernel-source-%module_name-%module_version/"Sensors configs"/"old configs"
 ln -s GA-B550M-DS3H.conf GA-B550-AORUS-ELITE-V2.conf
 popd
 
@@ -63,20 +55,22 @@ mkdir -p %buildroot{%_sysconfdir/modprobe.d,%_datadir/lm_sensors3/configs/Gigaby
 pushd kernel-source-%module_name-%module_version
 cp -ar "Sensors configs"/* %buildroot%_datadir/lm_sensors3/configs/Gigabyte_%module_name/
 popd
-echo 'blacklist %module_name' > %buildroot%_sysconfdir/modprobe.d/%module_name.conf
 mkdir -p %kernel_srcdir
 tar jcf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
-%files -n %module_name-blacklist
-%_sysconfdir/modprobe.d/%module_name.conf
-
 %files -n %module_name-sensors-conf
 %_datadir/lm_sensors3/configs/Gigabyte_%module_name
 
 %changelog
+* Mon Nov 02 2026 L.A. Kostis <lakostis@altlinux.ru> 2.0-alt2
+- Do not provide -blacklist package (use alternate method).
+
+* Fri Oct 23 2026 L.A. Kostis <lakostis@altlinux.ru> 2.0-alt1
+- 2.0.
+
 * Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt3.g60d9def
 - GIT 60d9def.
 

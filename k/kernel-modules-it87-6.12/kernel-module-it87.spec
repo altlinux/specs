@@ -1,15 +1,15 @@
 %define module_name	it87
-%define git 4bff981
-%define module_version	1.0
-%define module_release	alt1.g%{git}
+%define git %nil
+%define module_version	2.0
+%define module_release	alt2
 
 %define flavour		6.12
-%define karch %ix86 x86_64 aarch64 ppc64le armh
+%define karch %ix86 x86_64
 
 BuildRequires(pre): kernel-headers-modules-6.12
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
+%define module_dir /lib/modules/%kversion-%flavour-%krelease/updates
 
 Summary: %module_name kernel module
 Name: kernel-modules-%module_name-%flavour
@@ -23,17 +23,17 @@ ExclusiveOS: Linux
 Url: https://github.com/frankcrawford/it87
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
-BuildRequires: kernel-source-%module_name = %module_version
+BuildRequires: kernel-source-%module_name = %module_version-alt2
 
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %EVR
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %EVR
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %EVR
 
-Requires: %module_name-blacklist
+Obsoletes: %module_name-blacklist <= %EVR
 
 %requires_kimage
 
-ExclusiveArch: %karch
+ExclusiveArch: x86_64
 
 %description
 This driver implements support for the IT8603E, IT8620E, IT8622E, IT8623E,
@@ -52,20 +52,35 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
 
 %build
-mv %module_name.c gb-%module_name.c
+if [ -n "%flavour" -a "%flavour" == 'lks-wks' ]; then
+echo 'got wks flavour, applying llvm macros'
+%setup_llvm_env
+fi
 %make_build EXTRA_CFLAGS=-DIT87_DRIVER_VERSION='\"%version-%release\"' -C %_usrsrc/linux-%kversion-%flavour M=`pwd` V=1 modules
 
 %install
-install -d %buildroot%module_dir
-install *.ko %buildroot%module_dir
+install -pDm644 %module_name.ko %buildroot%module_dir/%module_name.ko
 
 %files
 %defattr(644,root,root,755)
-%module_dir
+%module_dir/%module_name.ko*
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Nov 02 2026 L.A. Kostis <lakostis@altlinux.org> 2.0-alt2
+- Get rid of -blacklist dependency (use /updates dir).
+- karch: make x86_only.
+
+* Fri Oct 23 2026 L.A. Kostis <lakostis@altlinux.org> 2.0-alt1
+- 2.0.
+
+* Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.org> 1.0-alt3.g60d9def
+- karch: set to x86 and x86_64 only.
+
+* Fri Oct 24 2025 L.A. Kostis <lakostis@altlinux.org> 1.0-alt2.g60d9def
+- GIT 60d9def.
 
 * Fri Aug 08 2025 L.A. Kostis <lakostis@altlinux.org> 1.0-alt1.g4bff981
 - Initial build for Sisyphus.
