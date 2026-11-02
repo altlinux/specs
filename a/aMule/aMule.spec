@@ -1,6 +1,6 @@
 %define _name amule
 Name: aMule
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 
 Summary: aMule - eMule client
@@ -77,6 +77,9 @@ for multiplatform support.
 %_datadir/%_name
 
 %changelog
+* Mon Nov 02 2026 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
+- New version 3.2.0.
+
 * Sun Oct 04 2026 Anton Midyukov <antohami@altlinux.org> 3.1.0-alt1
 - New version 3.1.0.
 - Swintch to build with cmake.
