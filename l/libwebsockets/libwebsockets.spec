@@ -10,7 +10,7 @@
 
 Name: libwebsockets
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary: A lightweight C library for Websockets
 
@@ -21,10 +21,7 @@ Url: http://libwebsockets.org
 # Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Patch: libwebsockets-4.3.2-alt-upstream-gcc13.patch
-
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
@@ -85,6 +82,7 @@ This package contains the tests for %name applications.
     -DLWS_WITHOUT_BUILTIN_GETIFADDRS=ON \
     -DLWS_USE_BUNDLED_ZLIB=OFF \
     -DLWS_WITHOUT_BUILTIN_SHA1=ON \
+    -DLWS_WITH_EXTERNAL_POLL=ON \
     -DDISABLE_WERROR=ON \
     -DLWS_WITH_STATIC=OFF \
     -DLWS_WITH_MINIMAL_EXAMPLES=OFF
@@ -94,7 +92,6 @@ This package contains the tests for %name applications.
 %cmakeinstall_std
 find %buildroot -name '*.la' -exec rm -f {} ';'
 find %buildroot -name '*.a' -exec rm -f {} ';'
-find %buildroot -name '*.cmake' -exec rm -f {} ';'
 find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 
 %files -n %name%abiversion
@@ -115,6 +112,7 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_includedir/%name
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
+%_libdir/cmake/%name/
 
 %files tests
 %doc READMEs/README.coding.md READMEs/README.test-apps.md
@@ -123,6 +121,11 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Mon Nov 02 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt2
+- pack CMake config files in -devel and expose cmake(libwebsockets).
+- added BuildRequires: rpm-build-cmake, replacing cmake and rpm-macros-cmake.
+- enable external poll support.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version 5.0.0 (soname libwebsockets.so.22, binary subpackage libwebsockets22)
 - build with IPv6 support (closes: #60770)
