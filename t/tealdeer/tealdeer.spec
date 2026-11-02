@@ -3,7 +3,7 @@
 %def_with check
 
 Name: tealdeer
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 Summary: A very fast implementation of tldr in Rust
 License: MIT and Apache-2.0
@@ -55,6 +55,9 @@ find target/release/deps -maxdepth 1 -type f -name 'lib-*' -executable -exec {} 
 %_datadir/fish/vendor_completions.d/%bin_name.fish
 
 %changelog
+* Mon Nov 02 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.9.1-alt1
+- Updated to version 1.9.1.
+
 * Sat Aug 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.9.0-alt1
 - Updated to version 1.9.0.
 
