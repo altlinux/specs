@@ -16,8 +16,8 @@
 %global optflags_lto %nil
 
 Name: squid
-Version: 7.7
-Release: alt2
+Version: 7.8
+Release: alt1
 
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -333,17 +333,20 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/squid.*
 
 %changelog
+* Mon Nov 02 2026 Egor Ignatov <egori@altlinux.org> 7.8-alt1
+- 7.8
+
 * Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 7.7-alt2
 - helpers: don't pull in Samba via /usr/bin/wbinfo (closes: #35554)
 
 * Mon Aug 24 2026 Egor Ignatov <egori@altlinux.org> 7.7-alt1
-- 7.7
+- 7.7 (fixes: CVE-2026-104786, CVE-2026-62846)
 
 * Tue Jun 23 2026 Egor Ignatov <egori@altlinux.org> 7.6-alt2
 - Fix build with openldap < 2.5
 
 * Mon Jun 22 2026 Egor Ignatov <egori@altlinux.org> 7.6-alt1
-- 7.6 (fixes: CVE-2026-47729)
+- 7.6 (fixes: CVE-2026-47729, CVE-2026-50012, CVE-2026-61642)
 
 * Fri Apr 03 2026 Egor Ignatov <egori@altlinux.org> 7.5-alt1
 - 7.5 (fixes: CVE-2026-33515,  CVE-2026-32748, CVE-2026-33526)
