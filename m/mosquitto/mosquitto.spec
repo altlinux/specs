@@ -3,7 +3,7 @@
 %define lname     libmosquitto
 
 Name: mosquitto
-Version: 2.0.22
+Version: 2.1.2
 Release: alt1
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
@@ -19,10 +19,11 @@ Source: %name-%version.tar
 Source1: %name
 Source2: %name.sysconf
 Source3: %name.conf
+Patch0: mosquitto-client-websockets.patch
 
 # Automatically added by buildreq on Mon Feb 01 2016
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
-BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel docbook-style-xsl xsltproc libwebsockets-devel libcjson-devel
+BuildRequires: rpm-build-cmake gcc-c++ libssl-devel libedit-devel libsqlite3-devel libmicrohttpd-devel docbook-style-xsl xsltproc libcjson-devel libwebsockets-devel
 Requires: %lname = %version-%release
 
 %set_verify_elf_method unresolved=relaxed
@@ -49,18 +50,23 @@ Obsoletes: %name-devel
 Libraries needed to develop for mosquitto
 
 %prep
-%setup 
+%setup
+%patch0 -p1
 
 subst 's|Invalid memory_limit value (%%ld)|Invalid memory_limit value (%%zd)|g' src/conf.c
 
 %build
-subst 's|prefix?=/usr/local|prefix=/usr|g' config.mk
-subst 's|stylesheet/docbook-xsl/manpages/docbook.xsl|xsl-stylesheets/manpages/docbook.xsl|g' man/manpage.xsl man/html.xsl
-%make_build WITH_WEBSOCKETS=yes
+%cmake -DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
+	-DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+	-DWITH_TESTS=OFF \
+	-DWITH_WEBSOCKETS=ON \
+	-DWITH_WEBSOCKETS_BUILTIN=OFF
+%cmake_build
 
 %install
 export LIB_SUFFIX='%_libsuff'
-%makeinstall_std
+%cmake_install
 
 chmod a-x %buildroot%_includedir/*.h
 
@@ -85,11 +91,16 @@ install -pDm644 service/systemd/%name.service.simple \
 
 %preun
 %preun_service %name
-        
+
 %files
 %dir %_sysconfdir/%name
 %config %dir %_sysconfdir/%name/*
 %config %_sysconfdir/sysconfig/%name
+%_libdir/mosquitto_acl_file.so
+%_libdir/mosquitto_dynamic_security.so
+%_libdir/mosquitto_password_file.so
+%_libdir/mosquitto_persist_sqlite.so
+%_libdir/mosquitto_sparkplug_aware.so
 %_bindir/*
 %_sbindir/*
 %_man1dir/*
@@ -105,10 +116,23 @@ install -pDm644 service/systemd/%name.service.simple \
 
 %files -n %lname-devel
 %_includedir/*.h
-%_libdir/*.so
+%_includedir/mosquitto/
+%_libdir/libmosquitto.so
+%_libdir/libmosquittopp.so
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Mon Nov 02 2026 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- new version 2.1.2 (with rpmrb script)
+- build with external libwebsockets (closes: #61305)
+- keep websocket transport enabled in client utilities
+- added BuildRequires: rpm-build-cmake (the upstream CMake build)
+- added BuildRequires: libedit-devel (for mosquitto_ctrl shell)
+- added BuildRequires: libsqlite3-devel (for persistence plugin)
+- added BuildRequires: libmicrohttpd-devel (for the HTTP API)
+- removed unused BuildRequires: libcares-devel and libuuid-devel
+- pack the plugins
+
 * Sun Nov 16 2025 Pavel Vainerman <pv@altlinux.ru> 2.0.22-alt1
 - new version (2.0.22) with rpmgs script
 
