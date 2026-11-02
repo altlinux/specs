@@ -1,65 +1,70 @@
-%define oname pycollada
+%global pypi_name pycollada
+%global oname collada
 
-Name: python3-module-%oname
-Version: 0.4.1
-Release: alt3
+%global descr pycollada is a python module for creating, editing and loading COLLADA,\
+which is a COLLAborative Design Activity for establishing an interchange\
+file format for interactive 3D applications.\
+\
+The library allows you to load a COLLADA file and interact with it as a\
+python object. In addition, it supports creating a collada python object\
+from scratch, as well as in-place editing.
+
+Name: python3-module-%pypi_name
+Version: 0.9.3
+Release: alt1
 
 Summary: A python COLLADA library. Can be used to create, edit and load COLLADA documents
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/pycollada/pycollada
+URL: https://github.com/pycollada/pycollada
+VCS: https://pycollada.readthedocs.io
+
+Source: %pypi_name-%version.tar
+
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-lxml
+
 BuildArch: noarch
 
-# https://github.com/pycollada/pycollada.git
-Source: %oname-%version.tar
-
-BuildRequires(pre): rpm-build-python3
-
-
 %description
-pycollada is a python module for creating, editing and loading COLLADA,
-which is a COLLAborative Design Activity for establishing an interchange
-file format for interactive 3D applications.
-
-The library allows you to load a COLLADA file and interact with it as a
-python object. In addition, it supports creating a collada python object
-from scratch, as well as in-place editing.
+%descr
 
 %package tests
 Summary: Tests for pycollada
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name
 
 %description tests
-pycollada is a python module for creating, editing and loading COLLADA,
-which is a COLLAborative Design Activity for establishing an interchange
-file format for interactive 3D applications.
-
-The library allows you to load a COLLADA file and interact with it as a
-python object. In addition, it supports creating a collada python object
-from scratch, as well as in-place editing.
-
 This package contains tests for pycollada
+
+%descr
 
 %prep
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc AUTHORS.md CHANGELOG.rst COPYING README.markdown 
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/collada/tests
+%doc AUTHORS.md CHANGELOG.rst COPYING README.markdown
+%python3_sitelibdir_noarch/%oname
+%exclude %python3_sitelibdir_noarch/%oname/tests
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %files tests
-%python3_sitelibdir/collada/tests
-
+%python3_sitelibdir_noarch/%oname/tests
 
 %changelog
+* Mon Nov 02 2026 Ulysses Apokin <ulysses@altlinux.org> 0.9.3-alt1
+- New version.
+
 * Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt3
 - Build for python2 disabled.
 

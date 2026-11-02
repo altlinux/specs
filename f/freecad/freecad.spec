@@ -9,7 +9,7 @@
 
 Name: freecad
 Version: 1.1.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Free and opensource multiplatform 3D parametric modeler
@@ -112,13 +112,16 @@ Requires: python3-module-pivy
 # GUI runtime dependencies
 Requires: python3-module-pyside6-devel
 
-# Runtime dependence for export to Dwg format
+# Runtime dependency for export to Collada format
+Requires: python3-module-pycollada >= 0.9.3
+
+# Runtime dependency for export to Dwg format
 Requires: libredwg >= 0.13.4.8295
 
-# Runtime dependence for export to Ifc format
+# Runtime dependency for export to Ifc format
 Requires: python3-module-ifcopenshell
 
-# CAM workbench runtime dependence
+# CAM workbench runtime dependency
 Requires: python3-module-yaml
 
 # FEM workbench runtime dependencies
@@ -128,7 +131,7 @@ Requires: gmsh >= 4.15.2-alt2
 Requires: calculix-ccx
 Requires: elmerfem
 
-# OpenSCAD workbench runtime dependence
+# OpenSCAD workbench runtime dependency
 %ifnarch armh
 Requires: openscad
 %endif
@@ -284,6 +287,9 @@ install -Dpm 0644 %name.1 %buildroot/%_man1dir/%name.1
 %_datadir/pkgconfig/OndselSolver.pc
 
 %changelog
+* Mon Nov 02 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.4-alt2
+- Fix collada support (ALT #55461).
+
 * Thu Oct 01 2026 Ulysses Apokin <ulysses@altlinux.org> 1:1.1.4-alt1
 - New version.
 
