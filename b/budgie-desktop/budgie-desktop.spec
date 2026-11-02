@@ -7,8 +7,8 @@
 %global vala_version 0.52.5
 
 Name: budgie-desktop
-Version: 10.10.3
-Release: alt2
+Version: 10.10.4
+Release: alt1
 
 Summary: A feature-rich, modern desktop designed to keep out the way of the user
 
@@ -165,6 +165,7 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/glib-2.0/schemas/com.solus-project.*.gschema.xml
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.%name.raven.widget.*.gschema.xml
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.%name.screenshot.gschema.xml
+%_datadir/glib-2.0/schemas/org.buddiesofbudgie.budgie-locker.gschema.xml
 %_datadir/glib-2.0/schemas/org.buddiesofbudgie.settings-daemon.*.gschema.xml
 # removed in 10.10.0:
 #_datadir/polkit-1/actions/org.buddiesofbudgie.settings-daemon.*.policy
@@ -225,6 +226,9 @@ desktop-file-validate %buildroot%_desktopdir/*.desktop
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Nov 02 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.4-alt1
+- New version 10.10.4
+
 * Thu Oct 08 2026 Vitaly Lipatov <lav@altlinux.ru> 10.10.3-alt2
 - Fix parallel build race when generating the panel enum header.
 
