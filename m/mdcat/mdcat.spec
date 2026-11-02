@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mdcat
-Version: 2.16.1
+Version: 2.19.0
 Release: alt1
 Summary: cat for markdown
 License: MPL-2.0
@@ -12,6 +12,7 @@ VCS: https://github.com/BIRSAx2/mdcat
 
 Source: %name-%version.tar
 Source1: vendor.tar
+Patch: alt-default-pager-lessi.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -19,18 +20,19 @@ BuildRequires: pkgconfig(openssl)
 BuildRequires: asciidoctor
 
 %if_with check
-BuildRequires: less
+BuildRequires: lessi
 %endif
 
 # for mdpick and mdless
 Requires: fzf
-Requires: less
+Requires: lessi
 
 %description
 Fancy cat for Markdown.
 
 %prep
 %setup -a1
+%patch -p1
 %rust_prep
 
 %build
@@ -82,6 +84,10 @@ install -Dm 0644 mdpick.fish %buildroot%_datadir/fish/vendor_completions.d/mdpic
 %_datadir/fish/vendor_completions.d/mdpick.fish
 
 %changelog
+* Mon Nov 02 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.19.0-alt1
+- Updated to version 2.19.0.
+- Set lessi as default pager instead of less for mdless.
+
 * Sun Sep 13 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.16.1-alt1
 - Updated to version 2.16.1.
 
