@@ -2,7 +2,7 @@
 %def_with check
 
 Name: biome
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 Summary: A fast formatter, linter and analyzer for web projects
 License: MIT or Apache-2.0
@@ -65,6 +65,9 @@ grep -F 'no such command or positional: `upgrade`' upgrade.log
 %doc LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Mon Nov 02 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.6.4-alt1
+- Updated to version 2.6.4.
+
 * Sat Oct 24 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.6.3-alt1
 - Updated to version 2.6.3.
 
