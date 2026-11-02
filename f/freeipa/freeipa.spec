@@ -61,7 +61,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.4
-Release: alt3
+Release: alt4
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -254,7 +254,6 @@ Conflicts: freeipa-server <= 4.13.1-alt6
 %filter_from_provides /python3(migration\(\..*\)\?)/d
 # manually manage dependency on python-pki
 %filter_from_requires /python3(pki\(\..*\)\?)/d
-%filter_from_requires /libgse-private-samba/d
 
 %description server-core
 %desc_common
@@ -1200,6 +1199,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat Oct 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.13.4-alt4
+- Revert libgse-private-samba auto-requirement (closes: #61268).
+
 * Mon Oct 12 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt3
 - Fixed FTBFS (esbuild 0.28.2).
 

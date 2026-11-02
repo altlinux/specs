@@ -129,7 +129,7 @@
 
 Name:    samba
 Version: 4.22.11
-Release: alt4
+Release: alt5
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1008,6 +1008,9 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %endif
 
 %define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}
+
+%add_findprov_lib_path %_samba_mod_libdir
+%filter_from_provides '/private-samba/{/libgse-private-samba/!d}'
 
 %undefine _configure_gettext
 
@@ -2377,6 +2380,11 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Sat Oct 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt5
+- Made the libgse-private-samba.so private ABI visible to RPM via
+  find-provides on %%_samba_mod_libdir, without publishing other
+  private-samba provides.
+
 * Thu Oct 29 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt4
 - Backport fixes from upstream (Samba#16240, Samba#16225, Samba#15988,
                                 Samba#16223, Samba#16194, Samba#16144):
