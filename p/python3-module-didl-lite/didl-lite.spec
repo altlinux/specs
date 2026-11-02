@@ -1,5 +1,5 @@
 Name: python3-module-didl-lite
-Version: 1.5.0
+Version: 1.5.2
 Release: alt1
 
 Summary: DIDL-Lite (Digital Item Declaration Language) tools for Python
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
-%pyproject_deps_resync_check_tox tox.ini testenv
+%pyproject_deps_resync_check_pipreqfile requirements/tox-testenv/requirements.txt
 
 %build
 %pyproject_build
@@ -45,6 +45,9 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %python3_sitelibdir/python_didl_lite-%version.dist-info
 
 %changelog
+* Mon Nov 02 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.2-alt1
+- 1.5.2 released
+
 * Tue Feb 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.0-alt1
 - 1.5.0 released
 
