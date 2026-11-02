@@ -1,5 +1,5 @@
 Name: vkQuake
-Version: 1.36.0
+Version: 1.37.0
 Release: alt1
 
 Summary: Quake I engine
@@ -53,6 +53,9 @@ install -pDm644 Misc/%{name}_256.png %buildroot%_iconsdir/hicolor/256x256/apps/v
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Mon Nov 02 2026 L.A. Kostis <lakostis@altlinux.ru> 1.37.0-alt1
+- 1.37.0.
+
 * Thu Sep 24 2026 L.A. Kostis <lakostis@altlinux.ru> 1.36.0-alt1
 - 1.36.0.
 
