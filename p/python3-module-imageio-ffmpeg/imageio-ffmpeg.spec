@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: FFMPEG wrapper for Python
@@ -55,6 +55,9 @@ Requires: ffmpeg
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Nov 02 2026 Alexander Kovalev <alexvk@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Fri Oct 30 2026 Alexander Kovalev <alexvk@altlinux.org> 0.7.0-alt1
 - New version 0.7.0.
 
