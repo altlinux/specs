@@ -4,7 +4,7 @@
 %def_with check
 
 Name: tailor-adw
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Create bootable drives
@@ -62,6 +62,9 @@ install -pD -m0644 %SOURCE1 %buildroot%_datadir/glib-2.0/schemas/
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Nov 02 2026 Alexey Volkov <qualimock@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Fri Sep 25 2026 Alexey Volkov <qualimock@altlinux.org> 1.1.2-alt1
 - new version 1.1.2 (closes: #60626, #60643, #60645)
 
