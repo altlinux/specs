@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: proxsave
-Version: 0.45.0
+Version: 0.46.0
 Release: alt1
 
 Summary: Backup tool for Proxmox PBS & PVE System Files
@@ -66,6 +66,9 @@ install -Dm0755 build/%name %buildroot%_bindir/%name
 %doc docs
 
 %changelog
+* Tue Nov 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.46.0-alt1
+- 0.45.0 -> 0.46.0
+
 * Tue Oct 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.45.0-alt1
 - 0.44.1 -> 0.45.0
 
