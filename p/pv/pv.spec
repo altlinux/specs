@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.12.0
+Version: 1.12.7
 Release: alt1
 
 Summary: Pipe Viewer
@@ -55,6 +55,9 @@ popd
 %exclude %_datadir/doc
 
 %changelog
+* Mon Nov 02 2026 Alexei Takaseev <taf@altlinux.org> 1.12.7-alt1
+- 1.12.7
+
 * Sat Oct 03 2026 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt1
 - 1.12.0 (Fix FTBS)
 
