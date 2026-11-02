@@ -1,12 +1,12 @@
 %def_with check
 
 Name: broot
-Version: 1.61.0
+Version: 1.62.0
 Release: alt1
 Summary: A new way to see and navigate directory trees
 License: MIT
 Group: File tools
-Url: https://dystroy.org/broot
+URL: https://dystroy.org/broot
 VCS: https://github.com/Canop/broot
 
 Source: %name-%version.tar
@@ -44,6 +44,9 @@ install -Dm 0644 man/page %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Nov 02 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.62.0-alt1
+- Updated to version 1.62.0.
+
 * Sat Oct 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.61.0-alt1
 - Updated to version 1.61.0.
 
