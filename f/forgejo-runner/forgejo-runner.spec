@@ -2,7 +2,7 @@
 
 Name: forgejo-runner
 Version: 13.2.0
-Release: alt1
+Release: alt2
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
 
@@ -138,6 +138,9 @@ fi
 %_userunitdir/%name-cache.service
 
 %changelog
+* Thu Oct 15 2026 Egor Ignatov <egori@altlinux.org> 13.2.0-alt2
+- Fix docker action steps failing on podman with --add-host/--dns* in options.
+
 * Sat Sep 19 2026 Maxim Slipenko <maks1ms@altlinux.org> 13.2.0-alt1
 - New version 13.2.0.
 
