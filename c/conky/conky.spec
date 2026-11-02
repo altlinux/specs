@@ -42,10 +42,10 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.25.5
+Version: 1.26.0
 Release: alt1
 
-Summary: lightweight graphical system monitor
+Summary: Lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
 License: GPL-3.0-or-later AND LGPL-3.0-or-later AND MIT
 Group: Monitoring
@@ -87,7 +87,7 @@ BuildRequires: gperf
 %{?_enable_xinerama:BuildRequires: libXinerama-devel}
 
 %description
-Conky is a free, light-weight system monitor for X11, that displays any kind
+Conky is a free, lightweight system monitor for X11, that displays any kind
 of information on your desktop. It can also run on Wayland (with caveats).
 
 %description -l ru_RU.UTF-8
@@ -194,6 +194,9 @@ rm -v %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/%{name}rc.vim
 
 %changelog
+* Mon Nov 02 2026 Ulysses Apokin <ulysses@altlinux.org> 1.26.0-alt1
+- Updated to 1.26.0.
+
 * Fri Oct 30 2026 Ulysses Apokin <ulysses@altlinux.org> 1.25.5-alt1
 - Updated to 1.25.5.
 
