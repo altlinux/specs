@@ -6,7 +6,7 @@
 %def_with check
 
 Name: gopass
-Version: 1.16.0
+Version: 1.17.4
 Release: alt1
 
 Summary: The slightly more awesome standard unix password manager for teams
@@ -19,13 +19,15 @@ Source: %name-%version.tar
 Source1: vendor.tar
 
 # Fixes a unit test for the vendored build
-Patch0: gopass-1.15.5-alt-fix-tests-for-vendored-build.patch
-Patch1: gopass-1.16.0-alt-dont-print-update-message.patch
+Patch0: gopass-1.17.4-alt-fix-tests-for-vendored-build.patch
+Patch1: gopass-1.17.4-alt-dont-print-update-message.patch
 
 BuildRequires: rpm-build-golang golang >= 1.24.1
 
 %if_with check
 BuildRequires: git gnupg gnupg2
+# Required for some tests that run pty.Start()
+BuildRequires: /dev/pts
 %endif
 
 %description
@@ -62,13 +64,16 @@ git config --global user.email "foo.bar@example.org"
 
 %files
 %doc *.md
-%_man1dir/*
+%_man1dir/gopass.1*
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/zsh/site-functions/_%name
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Oct 16 2026 Alexander Stepchenko <geochip@altlinux.org> 1.17.4-alt1
+- 1.16.0 -> 1.17.4
+
 * Thu Nov 27 2025 Alexander Stepchenko <geochip@altlinux.org> 1.16.0-alt1
 - 1.15.17 -> 1.16.0
 
