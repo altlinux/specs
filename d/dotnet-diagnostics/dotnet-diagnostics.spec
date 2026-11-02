@@ -1,6 +1,6 @@
 %define _dotnet_major 8.0
-%define _dotnet_sdkrelease 8.0.131
-%define _dotnet_corerelease 8.0.31
+%define _dotnet_sdkrelease 8.0.132
+%define _dotnet_corerelease 8.0.32
 
 %def_with native
 %if_with native
@@ -9,7 +9,7 @@
 
 Name:    dotnet-diagnostics
 Version: %_dotnet_major.505301
-Release: alt3
+Release: alt3.1
 
 Summary: Various .NET Core runtime diagnostic tools
 License: MIT
@@ -233,6 +233,9 @@ fi
 %endif
 
 %changelog
+* Wed Oct 28 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt3.1
+- SDK version update.
+
 * Fri Oct 02 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 8.0.505301-alt3
 - Added the option to build the native part.
 
