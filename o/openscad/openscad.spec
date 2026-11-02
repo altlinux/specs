@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt8
+Release: alt9
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -35,6 +35,11 @@ Patch6: openscad-2021.01-cgal-build-fix.patch
 Patch7: openscad-2021.01-cgal6-cpp17.patch
 # Linkage against boost_system disabled in boost 1.91.0+
 Patch8: openscad-2021.01-boost-system.patch
+
+# Exit gracefully upon Ctrl+Q
+# https://github.com/openscad/openscad/pull/3846
+Patch10: openscad-2021.01-fix-segfault-on-exit.patch
+Patch11: openscad-2021.01-clean-close.patch
 
 # needed cgal-devel on armh
 ExcludeArch: armh
@@ -183,6 +188,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Mon Nov 02 2026 Valery Zabrovsky <brow@altlinux.org> 2021.01-alt9
+- Exit gracefully upon Ctrl+Q (ALT #61018).
+
 * Thu Jul 23 2026 Valery Zabrovsky <brow@altlinux.org> 2021.01-alt8
 - Fix FTBFS with boost 1.91.0.
 - Spec: add VCS tag.
