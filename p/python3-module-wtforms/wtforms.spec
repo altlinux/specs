@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 
 Summary: Form validation and rendering for Python web development
@@ -50,6 +50,9 @@ web development.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Nov 02 2026 Andrey Cherepanov <cas@altlinux.org> 3.3.2-alt1
+- New version.
+
 * Sat Oct 24 2026 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt1
 - New version.
 
