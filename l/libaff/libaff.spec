@@ -1,5 +1,5 @@
 Name: libaff
-Version: 3.7.22
+Version: 3.7.23
 Release: alt1
 
 Summary: A set of programs for creating and manipulating AFF files
@@ -107,6 +107,9 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7.23-alt1
+- new version 3.7.23
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7.22-alt1
 - new version 3.7.22
 - fix build with libfuse3
