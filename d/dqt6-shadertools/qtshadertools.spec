@@ -3,7 +3,7 @@
 
 Name: dqt6-shadertools
 Version: 6.11.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -27,7 +27,7 @@ BuildRequires: dqt6-tools
 %endif
 BuildRequires: /proc
 BuildRequires: cmake glibc-devel dqt6-base-devel
-BuildRequires: libdqt6-gui
+BuildRequires: libdqt6-gui libdqt6-qml clang-devel libdqt6-help
 %if_disabled glslang_bundle
 BuildRequires: glslang glslang-devel libspirv-tools-devel
 %else
@@ -131,6 +131,9 @@ cp -ar BUILD/share/doc/dqt6/* %buildroot/%_docdir/dqt6/
 #%_dqt6_examplesdir/*
 
 %changelog
+* Tue Nov 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.2
+- fix build on shrinked dqt 6.11.2
+
 * Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
 - merge with new version
 
