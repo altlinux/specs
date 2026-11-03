@@ -4,7 +4,7 @@
 
 Name: lib%lname
 Version: 0.15.1
-Release: alt8
+Release: alt9
 
 Summary: Modified version of the Athena Widgets with N*XTSTEP appearance
 Group: System/Libraries
@@ -14,9 +14,11 @@ URL: http://siag.nu/neXtaw/
 Source: %lname-%version.tar
 Patch1: 0001-Dropped-buggy-keyboard-traversal-support.patch
 Patch2: nextaw-alt-linkage.patch
+Patch3: 0002-fix-modern-gcc-prototypes.patch
 
 # Automatically added by buildreq on Thu Feb 09 2006
 BuildRequires: libXext-devel libXmu-devel
+BuildRequires: bison flex
 
 %description
 This is %lname, a modified version of the Athena Widgets with N*XTSTEP
@@ -46,10 +48,11 @@ that use the %lname library.
 %setup -n %lname-%version
 %patch1 -p2
 %patch2 -p1
+%patch3 -p1
 
 %build
 %autoreconf
-%configure \
+%configure CFLAGS="%optflags -std=gnu17" \
 	--disable-static
 %make_build
 
@@ -66,6 +69,10 @@ that use the %lname library.
 %_libdir/*.so
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 0.15.1-alt9
+- Fix build with modern GCC.
+- Add BuildRequires: bison and flex to regenerate parser sources.
+
 * Sun Apr 03 2011 Dmitry V. Levin <ldv@altlinux.org> 0.15.1-alt8
 - Link libneXtaw.so with all required libraries.
 
