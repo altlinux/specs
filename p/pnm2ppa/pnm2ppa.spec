@@ -2,7 +2,7 @@ Summary: Drivers for printing to HP PPA printers
 
 Name: pnm2ppa
 Version: 1.13
-Release: alt2
+Release: alt2.1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -11,6 +11,7 @@ URL: http://sourceforge.net/projects/pnm2ppa
 Source: http://download.sourceforge.net/pnm2ppa/pnm2ppa-%{version}.tar.gz
 Patch: pnm2ppa-1.11-rh-build.patch
 Patch1: alt-fix-ftbfs.patch
+Patch2: c23-keywords.patch
 
 License: GPL
 Group: Publishing
@@ -27,6 +28,7 @@ Install pnm2ppa if you need to print to a PPA printer.
 %setup -q
 %patch -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %configure
@@ -57,6 +59,9 @@ chmod 644 docs/en/LICENSE
 %config(noreplace) /etc/pnm2ppa.conf
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt2.1
+- fix build with C23 compilers.
+
 * Mon Feb 08 2021 Oleg Solovyov <mcpain@altlinux.org> 1.13-alt2
 - fix ftbfs
 
