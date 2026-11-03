@@ -1,6 +1,6 @@
 Name: notmuch
-Version: 0.38.3
-Release: alt1.1
+Version: 0.40
+Release: alt1
 
 Summary: new email reading system called notmuch
 
@@ -11,6 +11,7 @@ Url: http://notmuchmail.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-git: git://notmuchmail.org/git/notmuch
+# Source-url: http://mirror.yandex.ru/fedora/linux/development/rawhide/Everything/source/tree/Packages/n/notmuch-0.40-9.fc46.src.rpm
 Source: %name-%version.tar
 
 BuildRequires: rpm-macros-emacs
@@ -134,6 +135,9 @@ rm -v %buildroot%_man1dir/nmbug.1*
 %_libdir/lib%name.so
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 0.40-alt1
+- New version 0.40
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.38.3-alt1.1
 - NMU: rebuild with libxapian45 (xapian-core 2.1.0).
 - Fix FTBFS: do not package nmbug.1 (nmbug is not installed).
