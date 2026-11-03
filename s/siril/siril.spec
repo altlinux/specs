@@ -1,5 +1,5 @@
 Name:           siril
-Version:        1.4.4
+Version:        1.4.5
 Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
@@ -113,6 +113,9 @@ desktop-file-install \
 
 
 %changelog
+* Wed Nov 04 2026 Ilya Mashkin <oddity@altlinux.ru> 1.4.5-alt1
+- 1.4.5
+
 * Sat Oct 10 2026 Ilya Mashkin <oddity@altlinux.ru> 1.4.4-alt1
 - 1.4.4
 
