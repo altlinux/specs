@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: stplr-dbus
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: D-Bus service for Stapler
@@ -41,6 +41,9 @@ BuildRequires: libpolkitqt6-qt6-devel
 %_datadir/polkit-1/actions/org.alt.stplr.policy
 
 %changelog
+* Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.2.0-alt1
+- remove polkit authorization when refreshing cache
+
 * Mon Oct 26 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.1.1-alt1
 - change the package build scheme
 
