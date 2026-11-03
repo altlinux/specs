@@ -2,10 +2,10 @@
 
 Name: kwin-mcp
 Version: 0.12.0
-Release: alt1
+Release: alt2
 
-Group: Development/Tools
-Summary: MCP server for KDE Plasma 6 Wayland GUI automation
+Group: Graphical desktop/KDE
+Summary: MCP server for KDE Plasma Wayland GUI automation
 Url: https://github.com/isac322/kwin-mcp
 License: MIT
 
@@ -31,7 +31,7 @@ BuildRequires: python3-module-uv-build >= 0.12.19
 BuildRequires: python3-module-uv-build < 0.14
 
 %description
-kwin-mcp exposes KDE Plasma 6 Wayland desktop automation through the Model
+kwin-mcp exposes KDE Plasma Wayland desktop automation through the Model
 Context Protocol. It supports isolated virtual KWin sessions and live desktop
 sessions, including accessibility inspection, screenshots and input injection.
 
@@ -52,5 +52,8 @@ sessions, including accessibility inspection, screenshots and input injection.
 %python3_sitelibdir/%{pyproject_distinfo kwin-mcp}/
 
 %changelog
+* Tue Nov 03 2026 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt2
+- update package description
+
 * Mon Nov 02 2026 Sergey V Turchin <zerg@altlinux.org> 0.12.0-alt1
 - initial build
