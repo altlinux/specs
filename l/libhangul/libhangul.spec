@@ -1,12 +1,15 @@
-Name:    libhangul
-Version: 0.1.0
+%define _unpackaged_files_terminate_build 1
+%define soname 1
+
+Name: libhangul
+Version: 0.2.0
 Release: alt1
 
 License: LGPLv2+
-Url:     http://kldp.net/projects/hangul/
-# url changes every release
-Source0:  http://kldp.net/frs/download.php/5417/libhangul-%version.tar.gz
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+Url: https://github.com/libhangul/libhangul
+Vcs: https://github.com/libhangul/libhangul
+
+Source:  %name-%version.tar.gz
 
 BuildRequires: chrpath
 
@@ -18,17 +21,24 @@ libhangul provides common features for Hangul input method programs.
 %package devel
 Summary: Development files for libhangul
 Group:   Development/Other
-Requires: %name = %version-%release
 Requires: pkgconfig
-
 %description devel
 This package contains development files necessary to develop programs
 providing Hangul input.
 
+%package -n %name%soname
+Group: System/Libraries
+Summary: %name library
+%description -n %name%soname
+%name library.
+
 %prep
-%setup -q
+%setup
+#created missing file
+touch ChangeLog
 
 %build
+%autoreconf
 %configure --disable-static
 
 make %{?_smp_mflags}
@@ -44,8 +54,11 @@ chrpath -d %buildroot%_bindir/hangul
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog NEWS README
 %_bindir/hangul
-%_libdir/lib*.so.*
 %_datadir/%name
+
+%files -n %name%soname
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%{soname}.*
 
 %files devel
 %_includedir/hangul-*
@@ -53,6 +66,11 @@ chrpath -d %buildroot%_bindir/hangul
 %_libdir/*.so
 
 %changelog
+* Tue Nov 03 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.0-alt1
+- 0.1.0 -> 0.2.0
+- changed URL && VCS
+- builded in accordance with SharedLibsPolicy
+
 * Fri May 30 2014 Andrey Cherepanov <cas@altlinux.org> 0.1.0-alt1
 - New version
 - Disable hardcoded rpath with standard library path
