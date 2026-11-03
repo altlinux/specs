@@ -13,7 +13,7 @@
 
 Name: proxmox-backup
 Version: 4.2.8.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -246,6 +246,9 @@ fi
 %_datadir/doc/%name
 
 %changelog
+* Tue Nov 03 2026 Sergey Konev <darisishe@altlinux.org> 1:4.2.8.1-alt2
+- Fix file-restore with LVM disks
+
 * Thu Oct 29 2026 Sergey Konev <darisishe@altlinux.org> 1:4.2.8.1-alt1
 - 4.2.8-1
 - Re-vendor with newer 'proxmox-apt' (Closes: 60223)

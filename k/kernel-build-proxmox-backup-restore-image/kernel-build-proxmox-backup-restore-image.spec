@@ -22,7 +22,7 @@
 
 Name: kernel-build-proxmox-backup-restore-image
 Version: 4.2.8.1
-Release: alt1
+Release: alt2
 
 Summary: Kernel/initramfs images for Proxmox Backup single file restore
 License: GPL-2.0-or-later
@@ -56,6 +56,9 @@ install -p -D -m 0644 %imagedir/initramfs.img %buildroot%cachedir/file-restore-i
 %cachedir/file-restore-initramfs.img
 
 %changelog
+* Tue Nov 03 2026 Sergey Konev <darisishe@altlinux.org> 4.2.8.1-alt2
+- Rebuild (fix file-restore with LVM disks).
+
 * Thu Oct 29 2026 Sergey Konev <darisishe@altlinux.org> 4.2.8.1-alt1
 - Rebuild restore image for proxmox-backup 4.2.8.1.
 
