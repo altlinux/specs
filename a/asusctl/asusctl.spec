@@ -1,12 +1,12 @@
 Name:     asusctl
-Version:  6.1.12
-Release:  alt2
+Version:  6.5.0
+Release:  alt1
 
 Summary:  A control daemon, CLI tools, and a collection of crates for interacting with ASUS ROG laptops 
 License:  MPL-2.0
 Group:    System/Configuration/Hardware
 Url:      https://asus-linux.org
-Vcs:      https://gitlab.com/asus-linux/asusctl
+Vcs:      https://github.com/opengamingcollective/asusctl
 
 ExclusiveArch: x86_64
 
@@ -20,7 +20,7 @@ Source4: update-vendor.sh
 Source5: config.toml
 
 BuildRequires(pre): rpm-macros-rust rpm-macros-systemd >= 5
-BuildRequires(pre): rust-cargo 
+BuildRequires(pre): rust-cargo cargo-vendor-filterer
 
 # Automatically added by buildreq on Sat Oct 26 2024
 # optimized out: ca-trust glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libudev-devel libwayland-server llvm17.0-libs pkg-config python3 python3-base python3-dev rust rust-cargo sh5
@@ -98,16 +98,24 @@ export CARGO_HOME=%_builddir/%name-%version/cargo_src
 export RUSTFLAGS="%rustflags"
 
 install -m644 %SOURCE1 %_builddir/%name-%version
-%makeinstall_std
+
+make INSTALL="/usr/libexec/rpm-build/install -p" install install-program install-data  DESTDIR=/usr/src/tmp/asusctl-buildroot
+make INSTALL="/usr/libexec/rpm-build/install -p" install install-data  DESTDIR=/usr/src/tmp/asusctl-buildroot
+%find_lang rog-control-center
 
 mkdir -p %buildroot/%_unitdir
 mkdir -p %buildroot/%_udevrulesdir
-install data/asusd.service %buildroot/%_unitdir/asusd.service
+mkdir -p %buildroot/%_user_unitdir
+
+install ./data/asusd.service %buildroot/%_user_unitdir/asusd.service
+install ./data/asusd-user.service %buildroot/%_user_unitdir/asusd.service
 
 %files
 %_bindir/*
 %exclude %_bindir/rog-control-center
-%doc README.ru *.md
+%doc README.ru *.md 
+%exclude %_datadir/asusctl
+
 %_datadir/asusd
 %_datadir/dbus-1/system.d/*.conf
 %_udevrulesdir/*.rules
@@ -119,14 +127,21 @@ install data/asusd.service %buildroot/%_unitdir/asusd.service
 %exclude %_iconsdir/hicolor/512x512/apps/rog-control-center.png
 %_iconsdir/hicolor/scalable/*
 
-%files rog-gui
+%files rog-gui -f rog-control-center.lang
 %_bindir/rog-control-center
-%_desktopdir/rog-control-center.desktop
+%_desktopdir/*rog-control-center.desktop
 
 %_iconsdir/hicolor/512x512/apps/rog-control-center.png
 %_datadir/rog-gui/*
+%_datadir/metainfo/*.rog-control-center.metainfo.xml
 
 %changelog
+* Mon Nov 02 2026 Hihin Ruslan <ruslandh@altlinux.ru> 6.5.0-alt1
+- Version 6.5.0
+
+* Wed Jan 14 2026 Hihin Ruslan <ruslandh@altlinux.ru> 6.3.0-alt1
+- Version 6.3.0
+
 * Sun Sep 14 2025 Fr. Br. George <george@altlinux.org> 6.1.12-alt2
 - Add X11 support
 
@@ -179,4 +194,5 @@ install data/asusd.service %buildroot/%_unitdir/asusd.service
 
 * Tue Jun 21 2022 Hihin Ruslan <ruslandh@altlinux.ru> 4.1.1-alt1
 - Initial build for Sisyphus
+
 
