@@ -5,7 +5,7 @@
 
 Name: engcom
 Version: 1.40
-Release: alt1
+Release: alt2
 
 Summary: The Open English-Russian Dictionary of Computer Terms
 Summary(ru_RU.UTF-8): Свободный англо-русский словарь компьютерных терминов
@@ -30,30 +30,16 @@ Dictionary of Computer Terms. It is not academic dictionary.
 Пакет %name содержит англо-русский словарь компьютерных
 терминов, составленный по мотивам реальной жизни.
 
-%package -n mova-%name
-
-Summary: %dictdesc for mova
-Summary(ru_RU.UTF-8): Свободный англо-русский словарь компьютерных терминов для mova
-Group: Text tools
-Obsoletes: engcom engcom-mova
-Provides: engcom engcom-mova
-Requires: mova
-
-%description -n mova-%name
-The %name package contains free (with FDL license ) English-Russian
-Dictionary of Computer Terms in mova format. It is not academic dictionary.
-
-%description -n mova-%name -l ru_RU.UTF-8
-Пакет %name содержит свободный англо-русский словарь компьютерных
-терминов в формате mova, составленный по мотивам реальной жизни,
-содержанию компьютерной прессы и рассылок.
-
 %package -n dict-%name
 
 Summary: %dictdesc for dict dictionary
 Summary(ru_RU.UTF-8): Свободный англо-русский словарь компьютерных терминов в формате dict
 Group: Text tools
 Requires: dictd >= 1.7.1
+Obsoletes: engcom
+Obsoletes: engcom-mova
+Obsoletes: mova-engcom < %EVR
+Provides: engcom engcom-mova
 
 %description -n dict-%name
 The %name package contains free (with FDL license) English-Russian
@@ -105,9 +91,6 @@ makedict -i xdxf -o dictd %dict_name -d out
 #makedict -i xdxf -o stardict %dict_name -d out
 
 %install
-# install mova files
-install -p -m644 -D %dict_name.koi %buildroot%_datadir/dict/%dict_name.koi
-
 # install dict files
 cd out/%dict_name
 dictzip %dict_name.dict
@@ -141,10 +124,6 @@ cd -
 %postun -n dict-%name
 %_sbindir/dictdconfig -w
 
-%files -n mova-%name
-%doc docs
-%_datadir/dict/*.koi
-
 %files -n dict-%name
 %doc docs
 %_datadir/dictd/*
@@ -156,6 +135,9 @@ cd -
 %endif
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt2
+- drop mova subpackage (mova is removed from Sisyphus).
+
 * Wed Aug 18 2021 Vitaly Lipatov <lav@altlinux.ru> 1.40-alt1
 - switch to python3
 - disable stardict dictionary packing
