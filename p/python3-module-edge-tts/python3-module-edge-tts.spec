@@ -2,7 +2,7 @@
 %define modulename edge_tts
 
 Name: python3-module-%oname
-Version: 7.2.8
+Version: 7.3.1
 Release: alt1
 
 Summary: Microsoft Edge online text-to-speech (TTS) Python module and CLI
@@ -64,6 +64,9 @@ speech directly to the speakers.
 %python3_sitelibdir/edge_playback/
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 7.3.1-alt1
+- new version 7.3.1
+
 * Mon May 04 2026 Vitaly Lipatov <lav@altlinux.ru> 7.2.8-alt1
 - initial build for ALT Sisyphus
 
