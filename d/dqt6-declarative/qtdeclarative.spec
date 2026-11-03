@@ -4,7 +4,7 @@
 
 Name: dqt6-declarative
 Version: 6.11.2
-Release: alt0.dde.1
+Release: alt0.dde.2
 %if "%version" == "%{get_version dqt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -65,7 +65,7 @@ Source4: find-requires.sh
 BuildRequires(pre): rpm-macros-dqt6 dqt6-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: glibc-devel dqt6-base-devel dqt6-shadertools-devel dqt6-svg-devel
-BuildRequires: libdqt6-widgets libdqt6-openglwidgets libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-concurrent libdqt6-test vulkan-headers
+BuildRequires: libdqt6-widgets libdqt6-openglwidgets libdqt6-sql dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-concurrent libdqt6-test vulkan-headers libdqt6-qml clang-devel libdqt6-help
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
 %if_disabled bootstrap
 BuildRequires: dqt6-tools
@@ -769,6 +769,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/dqml6.env
 %_bindir/rpmbdqml6-qmlinfo
 
 %changelog
+* Tue Nov 03 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.2
+- fix build on shrinked dqt 6.11.2
+
 * Thu Oct 29 2026 Leontiy Volodin <lvol@altlinux.org> 6.11.2-alt0.dde.1
 - merge with new version
 
