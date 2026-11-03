@@ -2,7 +2,7 @@
 %def_with check
 
 Name: sshs
-Version: 4.7.2
+Version: 4.8.0
 Release: alt1
 
 Summary: Terminal user interface for SSH
@@ -43,5 +43,8 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 4.8.0-alt1
+- new version
+
 * Fri May 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 4.7.2-alt1
 - initial build for ALT Linux
