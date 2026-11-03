@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: matrix-synapse
-Version: 1.164.0
+Version: 1.164.2
 Release: alt1
 
 Summary: Synapse: Matrix reference homeserver
@@ -196,6 +196,11 @@ rm -rfv %buildroot%python3_sitelibdir_noarch/synmark/
 %attr(0750,_synapse,_synapse) /var/log/synapse/
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.164.2-alt1
+- new version 1.164.2
+- fixes:
+  + GHSA-j586-36cw-2gc2: prevent memory exhaustion via msgpack update
+
 * Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.164.0-alt1
 - new version 1.164.0
 
