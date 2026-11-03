@@ -1,7 +1,7 @@
 %define oname grok
 
 Name: libgrokj2k
-Version: 20.4.24
+Version: 20.4.25
 Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
@@ -122,6 +122,9 @@ ctest --output-on-failure -j%__nprocs -E "$exclude"
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.25-alt1
+- new version 20.4.25.
+
 * Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.24-alt1
 - new version 20.4.24.
 
