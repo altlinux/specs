@@ -10,8 +10,8 @@
 %def_with faketime
 
 Name: sssd
-Version: 2.12.0
-Release: alt1
+Version: 2.13.1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -983,6 +983,57 @@ chown -f -R %sssd_user:%sssd_user %gpocachepath/ || true
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Tue Nov 03 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.13.1-alt2
+- Backport security and stability fixes from upstream sssd-2-13 branch.
+- Security fixes:
+  + GPO: reject path traversal in gPCFileSysPath (fixes: CVE-2026-14476).
+  + LDAP: fix fail-open ppolicy access check, preserve access errors and
+    treat shadowExpire=0 as expired (fixes: CVE-2026-90462,
+    CVE-2026-92821, CVE-2026-104033).
+  + IPA: compare users with domain awareness against HBAC rules
+    (fixes: CVE-2026-104048).
+  + IDP/OIDC: fix exact user matching, clean stale requests and escape
+    Entra ID OData filters (fixes: CVE-2026-87853, CVE-2026-104046,
+    CVE-2026-104047).
+  + NSS: fix initgroups heap disclosure and request parser memory-safety
+    issues (fixes: CVE-2026-68744, CVE-2026-68742, CVE-2026-90996,
+    CVE-2026-90463, CVE-2026-104043).
+  + PAM: fix request parsing, NULL dereferences, use-after-free and GSSAPI
+    state handling (fixes: CVE-2026-68743, CVE-2026-90994,
+    CVE-2026-90995, CVE-2026-104039, CVE-2026-12610).
+  + Passkey: fix blob and token parsing and Kerberos passkey flow
+    (fixes: CVE-2026-104030, CVE-2026-104042, CVE-2026-104044).
+  + Autofs: restrict access with allowed_uids (root by default), fix
+    out-of-bounds reads and context leaks (fixes: CVE-2026-104032,
+    CVE-2026-104037, CVE-2026-104029, CVE-2026-104031, CVE-2026-104045).
+  + KCM: avoid event-loop hangs and memory exhaustion, fix ccache name
+    use-after-free during TGT renewal (fixes: CVE-2026-80048,
+    CVE-2026-104035).
+  + Certmap and NFS idmap: validate certificate SID and output buffer size
+    (fixes: CVE-2026-104038, CVE-2026-104036).
+  + Responder: back off accept() on file descriptor exhaustion
+    (fixes: CVE-2026-88252).
+- Important fixes:
+  + Fix various memory leaks, provider timeouts, OAuth2/Keycloak bugs, and
+    test linkage with libkeyutils.
+  + Improve configuration robustness, diagnostics (SUDO/AD), and input
+    validation (SID sanitization).
+
+* Thu Aug 20 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.13.1-alt1
+- Update to latest 2.13.1 release (cumulative update from 2.12.0).
+- New features and improvements:
+  + Fix out-of-bounds read in PAM passkey child (fixes: CVE-2026-6245).
+  + Add pam_gssapi_indicators_apply option for authentication indicators
+    from Kerberos PAC (AD AMA support).
+  + Properly ignore Foreign Security Principals in nested groups.
+  + IdP tokens are now cached and can be auto-refreshed (idp_auto_refresh).
+  + Add alternative OIDC client auth methods (mTLS, JWT) via oidc_child choices.
+  + Add KDE Plasma Login Manager support.
+  + Add avoid_by_id_lookups option to prefer name-based lookups.
+  + Fix startup failure when DNS is unresponsive.
+  + Fix crash with ldap_read_rootdse=never and enumerate=true.
+  + Fix pinpad card reader incorrectly requesting keyboard PIN input.
+
 * Tue Apr 07 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.12.0-alt1
 - Update to latest 2.12 release.
 - New features and improvements:
