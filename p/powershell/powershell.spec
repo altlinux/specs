@@ -5,7 +5,7 @@
 %define _dotnet_corerelease %{dotnetver}*
 
 Name: powershell
-Version: 7.6.6
+Version: 7.6.9
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -158,6 +158,9 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 7.6.9-alt1
+- new version 7.6.9
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 7.6.6-alt1
 - new version 7.6.6
 - build with .NET 10.0 (pwsh 7.6 targets net10.0)
