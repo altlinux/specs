@@ -9,7 +9,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: kache
-Version: 1.2.2
+Version: 2.0.1
 Release: alt1
 
 Summary: Compiler cache for Rust, C/C++ and CUDA, with S3, GCS, shared-filesystem and OCI remotes
@@ -56,6 +56,7 @@ cargo build --release %{?_smp_mflags} --offline --verbose
 
 %install
 install -vpDm0755 target/release/kache -t %buildroot%_bindir
+install -vpDm0755 target/release/kache-engine -t %buildroot%_bindir
 
 mkdir -p %buildroot%bash_completionsdir
 mkdir -p %buildroot%fish_completionsdir
@@ -70,10 +71,14 @@ cargo test --locked --bin kache
 
 %files
 %_bindir/kache
+%_bindir/kache-engine
 %bash_completionsdir/kache
 %fish_completionsdir/kache.fish
 %zsh_completionsdir/_kache
 
 %changelog
+* Tue Nov 03 2026 Anton Zhukharev <ancieg@altlinux.org> 2.0.1-alt1
+- Updated to 2.0.1.
+
 * Sat Oct 17 2026 Anton Zhukharev <ancieg@altlinux.org> 1.2.2-alt1
 - Packaged for ALT Sisyphus.
