@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: espflash
-Version: 4.6.0
+Version: 4.7.0
 Release: alt1
 
 Summary: Utils for flashing Espressif devices
@@ -54,6 +54,9 @@ export RUSTFLAGS="-Copt-level=3"
 %_bindir/cargo-espflash
 
 %changelog
+* Tue Nov 03 2026 Mikhail Nogin <joycap@altlinux.org> 4.7.0-alt1
+- Updated to 4.7.0.
+
 * Tue Sep 22 2026 Mikhail Nogin <joycap@altlinux.org> 4.6.0-alt1
 - Updated to 4.6.0.
 
