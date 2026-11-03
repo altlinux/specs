@@ -1,5 +1,5 @@
 Name: tinylog
-Version: 2.7.0
+Version: 2.8.1
 Release: alt1
 Summary: Lightweight Java logging framework
 
@@ -75,6 +75,9 @@ grep -q tinylog-slf4j-smoke smoke.log
 %doc license.txt
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 2.8.1-alt1
+- New version 2.8.1
+
 * Wed Sep 09 2026 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
 - Initial build of the desktop logging API, implementation and SLF4J adapter.
 
