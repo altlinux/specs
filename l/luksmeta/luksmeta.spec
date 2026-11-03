@@ -3,7 +3,7 @@
 %def_enable tests
 
 Name: luksmeta
-Version: 10
+Version: 11
 Release: alt1
 
 Summary: Tools for storing metadata in a LUKSv1 header
@@ -74,6 +74,9 @@ make check
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Nov 03 2026 Leontiy Volodin <lvol@altlinux.org> 11-alt1
+- New version 11 (Fixes: CVE-2026-107565, CVE-2026-111555).
+
 * Sat Nov 01 2025 Leontiy Volodin <lvol@altlinux.org> 10-alt1
 - New version 10 (Fixes: CVE-2025-11568).
 - Added VCS tag.
