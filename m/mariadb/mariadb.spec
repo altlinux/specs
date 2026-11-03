@@ -1,5 +1,4 @@
-%add_findreq_skiplist %_datadir/mysql/mysql-test/mysql-test-run.pl
-%add_findreq_skiplist %_datadir/mysql/mini-benchmark
+%add_findreq_skiplist %_datadir/mariadb/mini-benchmark
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup
 %add_findreq_skiplist %_bindir/wsrep_sst_xtrabackup-v2
 
@@ -56,7 +55,7 @@
 
 Name: mariadb
 Version: 12.3.3
-Release: alt3
+Release: alt4
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -1148,12 +1147,16 @@ fi
 %endif
 
 %changelog
+* Tue Nov 03 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt4
+- Remove garbage dependencies from mariadb-common (ALT #61325)
+
 * Fri Oct 16 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.3.3-alt3
 - e2k build fix
 
 * Tue Oct 13 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt2
-- Fix issue #257749
 - Cleanup garbage requires
+- Fixes:
+  + OVE-20261014-0001: Issue #257749 "SHOW AUTHORS"
 
 * Tue Aug 25 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt1
 - 12.3.3 (Fixes CVE-2026-61081, CVE-2026-60585, CVE-2026-60331,
