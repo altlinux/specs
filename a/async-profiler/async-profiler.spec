@@ -2,7 +2,7 @@
 
 %add_findreq_skiplist %_bindir/jfrconv
 Name: async-profiler
-Version: 4.5
+Version: 4.6
 Release: alt1
 
 Summary: Sampling CPU and HEAP profiler for Java featuring AsyncGetCallTrace + perf_events
@@ -64,6 +64,9 @@ install -pm 644 build/jar/*.jar %buildroot%_javadir/
 %_javadir/*.jar
 
 %changelog
+* Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 4.6-alt1
+- new version
+
 * Wed Jul 22 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 4.5-alt1
 - new version
 
