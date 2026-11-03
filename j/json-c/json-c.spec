@@ -1,19 +1,19 @@
 %define soversion 5
 
 Name: json-c
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: JSON implementation in C
 License: MIT
 Group: System/Libraries
-Url: https://github.com/json-c/json-c/wiki
+URL: https://github.com/json-c/json-c/wiki
+VCS: https://github.com/json-c/json-c
 
 Source: %name-%version.tar
-# git://github.com/json-c/json-c.git
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake ctest
+BuildRequires: cmake ctest xxd
 
 %description
 JSON-C implements a reference counting object model that allows you to
@@ -80,6 +80,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/cmake/%name
 
 %changelog
+* Tue Nov 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.19-alt1
+- Updated to 0.19.
+
 * Wed Sep 25 2024 Alexey Shabalin <shaba@altlinux.org> 0.18-alt1
 - Updated to 0.18
 - Not relocate shared libraries to /lib.
