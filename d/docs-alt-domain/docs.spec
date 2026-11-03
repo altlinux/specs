@@ -5,8 +5,8 @@
 %define _docsinstalldir %_defaultdocdir/%variant
 
 Name: docs-%variant
-Version: 11.1
-Release: alt3
+Version: 11.1.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 03 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt1
+- update to ALT Domain 11.1.1
+- fix typos (closes #58633)
+
 * Fri Jan 30 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt3
 - add alt-services
 - add LAPS
