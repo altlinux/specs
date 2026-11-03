@@ -3,11 +3,9 @@
 %def_enable pskc
 %def_enable pam
 
-%set_gcc_version 14
-
 Name: oath-toolkit
-Version: 2.6.14
-Release: alt2
+Version: 2.6.15
+Release: alt1
 Summary: Toolkit for one-time password authentication systems
 License: GPLv3+
 Group: Security/Networking
@@ -128,7 +126,6 @@ printf "gdoc_MANS =\ngdoc_TEXINFOS =\n" > libpskc/man/Makefile.gdoc
 touch ChangeLog
 
 %build
-export CC=%__cc
 %autoreconf
 %configure  \
   --with-pam-dir=/%_lib/security \
@@ -185,6 +182,9 @@ rm -r %buildroot%_datadir/gtk-doc
 %endif
 
 %changelog
+* Tue Nov 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.6.15-alt1
+- 2.6.15 (fixes: CVE-2026-109117)
+
 * Mon Jun 15 2026 Andrew A. Vasilyev <andy@altlinux.org> 2.6.14-alt2
 - build with gcc 14 to fix FTBFS
 
