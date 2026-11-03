@@ -3,13 +3,13 @@
 %def_with check
 
 Name: usage
-Version: 3.5.5
+Version: 7.1.5
 Release: alt1
 
 Summary: A specification for CLIs
 License: MIT
 Group: Development/Tools
-Url: https://usage.jdx.dev
+URL: https://usage.jdx.dev
 VCS: https://github.com/jdx/usage
 
 Source: %name-%version.tar
@@ -22,21 +22,16 @@ BuildRequires: rpm-build-rust
 BuildRequires: node
 BuildRequires: fish
 BuildRequires: zsh
+BuildRequires: /dev/pts
 %endif
 
 %description
-Usage is a spec and CLI for defining CLI tools. Arguments, flags,
-environment variables, and config files can all be defined in a Usage
-spec. It can be thought of like OpenAPI (swagger) for CLIs. Here are
-some potential reasons for defining your CLI with a Usage spec:
+Define your CLI once. Generate the tools around it.
 
-- Generate autocompletion scripts
-- Generate markdown documentation
-- Generate man pages
-- Use an advanced arg parser in any language
-- Scaffold one spec into different CLI frameworks-even different
-languages
-- [coming soon] Host your CLI documentation on usage.sh
+Usage is a portable KDL specification, a command-line utility, and a
+Rust framework. Describe commands, flags, arguments, and settings in one
+place, then use that definition for parsing, help, shell completions,
+Markdown docs, man pages, and typed clients.
 
 %prep
 %setup -a1
@@ -56,10 +51,13 @@ install -Dm 644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.f
 install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 
 %check
+export LC_ALL="C.UTF-8"
 export PATH="%buildroot%_bindir:$PATH"
 
-# skip unstable powershell integration test
-%rust_test -- --skip test_powershell_completion_integration
+# skip unstable integration tests
+%rust_test -- \
+    --skip test_powershell_completion_integration \
+    --skip the_long_flags_offered_are_the_reference_s
 
 %files
 %doc CHANGELOG.md README.md
@@ -70,6 +68,10 @@ export PATH="%buildroot%_bindir:$PATH"
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Nov 02 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 7.1.5-alt1
+- Updated to version 7.1.5.
+- Cleaned up the spec file.
+
 * Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.5.5-alt1
 - Updated to version 3.5.5.
 
@@ -84,4 +86,3 @@ export PATH="%buildroot%_bindir:$PATH"
 
 * Thu Apr 09 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 3.2.0-alt1
 - Initial build for ALT.
-

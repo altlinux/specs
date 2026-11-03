@@ -3,13 +3,13 @@
 %def_with check
 
 Name: mise
-Version: 2026.7.7
+Version: 2026.10.25
 Release: alt1
 
-Summary: The front-end to your dev env
+Summary: Dev tools, env vars, and tasks in one CLI
 License: MIT
 Group: Development/Tools
-Url: https://mise.jdx.dev
+URL: https://mise.jdx.dev
 VCS: https://github.com/jdx/mise
 
 # rustc: memory allocation failure during mise linking
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source1: vendor.tar
 
 Requires: usage
+# https://bugzilla.altlinux.org/58938
 Requires: libatomic1
 
 BuildRequires(pre): rpm-macros-rust
@@ -29,34 +30,13 @@ BuildRequires: clang-devel
 
 %if_with check
 BuildRequires: git
+BuildRequires: /dev/pts
 %endif
 
 %description
-mise (pronounced "meez") or "mise-en-place" is a development environment
-setup tool. The name refers to a French culinary phrase that roughly
-translates to "setup" or "put in place". The idea is that before one
-begins cooking, they should have all their utensils and ingredients
-ready to go in their place.
-
-mise does the same for your projects. Using its mise.toml config file,
-you'll have a consistent way to setup and interact with your projects no
-matter what language they're written in.
-
-Its functionality is grouped into 3 categories described below.
-
-mise installs and manages dev tools/runtimes like node, python, or
-terraform both simplifying installing these tools and allowing you to
-specify which version of these tools to use in different projects. mise
-supports hundreds of dev tools.
-
-mise manages environment variables letting you specify configuration
-like AWS_ACCESS_KEY_ID that may differ between projects. It can also be
-used to automatically activate a Python virtualenv when entering
-projects too.
-
-mise is a task runner that can be used to share common tasks within a
-project among developers and make things like running tasks on file
-changes easy.
+Mise installs a project's tools, sets its environment variables, and runs its
+tasks from one mise.toml that works in your shell, editor, and CI. With mise
+bootstrap, it can also set up a whole machine: packages, dotfiles, and services.
 
 %prep
 %setup -a1
@@ -79,10 +59,13 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 
 %check
-%rust_test
+# skip tests that require network access
+%rust_test -- \
+    --skip mise_binary_services_aube_node_gyp_bootstrap_trampoline \
+    --skip system_install::tests::archive_boundary
 
 %files
-%doc CHANGELOG.md CONTRIBUTING.md README.md SECURITY.md
+%doc CHANGELOG.md README.md SECURITY.md
 %_bindir/%name
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -91,6 +74,10 @@ install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 %_man1dir/%name.1.*
 
 %changelog
+* Mon Nov 02 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.10.25-alt1
+- Updated to version 2026.10.25.
+- Cleaned up the spec file.
+
 * Sat Jul 18 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.7.7-alt1
 - Updated to version 2026.7.7.
 
@@ -106,4 +93,3 @@ install -Dm 644 /dev/null %buildroot%_libexecdir/%name/.disable-self-update
 
 * Thu Apr 09 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 2026.4.5-alt1
 - Initial build for ALT.
-
