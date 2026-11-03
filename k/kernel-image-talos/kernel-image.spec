@@ -7,7 +7,7 @@ Name: kernel-image-talos
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.49
+%define kernel_sublevel	.60
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -432,6 +432,7 @@ check-pesign-helper
 %modules_dir/updates
 %modules_dir/kernel
 %exclude %modules_dir/build
+%exclude %modules_dir/kernel/drivers/accel/
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/gpu/
 %ifarch aarch64
@@ -452,6 +453,7 @@ check-pesign-helper
 
 %files -n kernel-modules-drm-%flavour
 %modules_dir/kernel/drivers/gpu/
+%modules_dir/kernel/drivers/accel/
 %modules_dir/kernel/drivers/media/
 %ifarch aarch64
 %modules_dir/kernel/drivers/crypto/
@@ -460,6 +462,27 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 02 2026 Alexander Stepchenko <geochip@altlinux.org> 6.18.60-alt1
+- v6.18.60 (2026-10-30).
+
+* Wed Oct 28 2026 Alexander Stepchenko <geochip@altlinux.org> 6.18.59-alt1
+- v6.18.59 (2026-10-26).
+- Package accelerator modules with DRM modules to keep their dependencies together.
+- config: enable ZRAM with zstd compression.
+- config: enable HID multitouch and iPhone USB Ethernet as modules.
+- config: enable IRQ time accounting.
+- config: enable CONFIG_CRYPTO_CTS, CONFIG_GPU_BUDDY and
+  CONFIG_HAVE_ARCH_GET_SECUREBOOT.
+- config: synchronize Kerberos crypto selections.
+- config: complete PPP, AMD XGBE/SFP and VFIO/IOMMUFD configuration.
+- config: remove stale options and match upstream option ordering.
+- config-x86_64: enable Intel VPU support as a module.
+- config-x86_64: enable dynamic preemption with PREEMPT_NONE as the default.
+- config-x86_64: enable ACPI platform profiles and build ACPI thermal as a module.
+- config-aarch64: enable Rockchip RK3588 NPU support as a module.
+- config-aarch64: enable CONFIG_ARM64_ERRATUM_4118414,
+  CONFIG_ARM64_ERRATUM_3821522 and CONFIG_ARM64_WORKAROUND_BROKEN_AMU_CONSTCNT.
+
 * Fri Sep 04 2026 Maxim Slipenko <maks1ms@altlinux.org> 6.18.49-alt1
 - v6.18.49 (2026-09-02).
 - config-aarch64: enable PCF8523 RTC support.

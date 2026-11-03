@@ -1,5 +1,5 @@
 %define module_name     drbd9
-%define module_version  9.3.3
+%define module_version  9.3.4
 %define module_release  alt1
 %define flavour         talos
 %define karch x86_64 aarch64
@@ -42,6 +42,11 @@ rm -rf %module_name-%module_version
 tar xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 
 %setup -D -T -n %module_name-%module_version
+
+# 6.18.57+ converted only bind() to sockaddr_unsized, not connect() 
+# Reference: https://github.com/LINBIT/drbd/issues/156
+sed -i 's/\(->connect(.*\)(struct sockaddr_unsized \*)/\1(void *)/' drbd/drbd_transport*.c
+! grep -n 'connect(.*sockaddr_unsized' drbd/drbd_transport*.c
 
 %build
 #sed -i s/SUBDIRS=/M=/g Makefile
