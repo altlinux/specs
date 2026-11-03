@@ -4,8 +4,8 @@
 %define mod_name etesync_dav
 
 Name: etesync-dav
-Version: 0.35.1
-Release: alt2
+Version: 0.36.0
+Release: alt1
 
 Summary: CalDAV and CardDAV adapter for EteSync
 
@@ -17,21 +17,16 @@ Url: https://github.com/etesync/etesync-dav
 Source: %name-%version.tar
 Source1: radicale38-check.py
 
-# Radicale 3.5+ compatibility
-# upstream master: https://github.com/etesync/etesync-dav/pull/357
-Patch1: 0001-Fix-usage-with-radicale-3.5.1-357.patch
-# upstream master: https://github.com/etesync/etesync-dav/pull/362
-Patch2: 0002-fix-compatibility-with-radicale-3.5.9-362.patch
 # upstream PR (open): https://github.com/etesync/etesync-dav/pull/365
-Patch3: 0003-Fix-upload-return-type-for-Radicale-3.5.5.patch
-Patch4: 0004-Fix-WSGIResponse-for-Radicale-3.5.10.patch
-Patch5: 0005-Fix-method-signatures-for-Radicale-3.6.0.patch
+Patch1: 0003-Fix-upload-return-type-for-Radicale-3.5.5.patch
+Patch2: 0004-Fix-WSGIResponse-for-Radicale-3.5.10.patch
+Patch3: 0005-Fix-method-signatures-for-Radicale-3.6.0.patch
 # drop the Radicale < 3.3 pin (not yet proposed upstream)
-Patch6: 0006-setup.py-allow-Radicale-3.3-and-newer.patch
+Patch4: 0006-setup.py-allow-Radicale-3.3-and-newer.patch
 # peewee 4.x removed SqliteExtDatabase (not yet proposed upstream)
-Patch7: 0007-Use-peewee.SqliteDatabase-for-peewee-4-compatibility.patch
+Patch5: 0007-Use-peewee.SqliteDatabase-for-peewee-4-compatibility.patch
 # https://bugzilla.altlinux.org/60849 (attachment 22355)
-Patch8: 0007-Fix-Radicale-3.8-metadata-and-last-modified.patch
+Patch6: 0007-Fix-Radicale-3.8-metadata-and-last-modified.patch
 
 BuildArch: noarch
 
@@ -105,6 +100,9 @@ done
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 0.36.0-alt1
+- new version 0.36.0
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 0.35.1-alt2
 - fix compatibility with peewee 4.x (SqliteExtDatabase was removed).
 - Fix PROPFIND and GET with Radicale 3.8 (closes: #60849).
