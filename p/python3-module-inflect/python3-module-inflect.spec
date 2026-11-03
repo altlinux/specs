@@ -1,7 +1,7 @@
 %define  modulename inflect
 
 Name:    python3-module-%modulename
-Version: 7.5.0
+Version: 7.6.0
 Release: alt1
 
 Summary: Correctly generate plurals, singular nouns, ordinals, indefinite articles; convert numbers to words
@@ -35,6 +35,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %modulename}/
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 7.6.0-alt1
+- new version 7.6.0
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 7.5.0-alt1
 - new version 7.5.0
 - switch to pyproject build
