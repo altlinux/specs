@@ -1,6 +1,6 @@
 Name: libpng16
-Version: 1.6.56
-Release: alt2
+Version: 1.6.59
+Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
 License: PNGv2
@@ -75,6 +75,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Tue Nov 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.6.59-alt1
+- 1.6.59 (fixes: CVE-2026-34757, CVE-2026-46675)
+
 * Fri Mar 27 2026 Ivan A. Melnikov <iv@altlinux.org> 1.6.56-alt2
 - NMU: drop explicit SIMD enablement on loongarch64
   (not needed anymore)
