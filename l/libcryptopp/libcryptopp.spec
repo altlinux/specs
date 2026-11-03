@@ -7,13 +7,8 @@
 %add_optflags -mfpu=neon
 %endif
 
-# LTO partitioning breaks the x86 inline asm labels (undefined LMulN) in integer.cpp
-%ifarch %ix86
-%global optflags_lto %nil
-%endif
-
 Name: libcryptopp
-Version: 2026.9.1
+Version: 2026.11.0
 Release: alt1
 
 Summary: Cryptopp Library - a free C++ class library of cryptographic schemes
@@ -133,6 +128,10 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.11.0-alt1
+- new version 2026.11.0
+- drop ix86 LTO workaround.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.9.1-alt1
 - switch to the maintained fork cryptopp-modern
 - new version 2026.9.1
