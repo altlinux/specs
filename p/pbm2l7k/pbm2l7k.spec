@@ -2,7 +2,7 @@ Summary: Converts PBM stream to Lexmark 7000, 7200 and 5700 printer language
 
 Name: pbm2l7k
 Version: 990321
-Release: alt1.qa2
+Release: alt1.qa3
 
 Provides: lexmark700linux = %version
 
@@ -12,6 +12,7 @@ Group: Publishing
 License: GPL
 Url: http://bimbo.fjfi.cvut.cz/~paluch/l7kdriver/olddrv.html
 Source: %name-%version.tar
+Patch0: pnmraw2cmyk-include-dither-header.patch
 
 %description
 This is a filter to convert pbmraw data such as produced by ghostscript to
@@ -21,6 +22,7 @@ foomatic package.
 
 %prep
 %setup -q -n %name-%version
+%patch0 -p1
 
 %build
 make CFLAGS="$RPM_OPT_FLAGS"
@@ -36,6 +38,9 @@ done
 %_bindir/*
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 990321-alt1.qa3
+- Include the dithering declarations to fix the build.
+
 * Thu Mar 15 2018 Igor Vlasenko <viy@altlinux.ru> 990321-alt1.qa2
 - NMU: added URL
 
