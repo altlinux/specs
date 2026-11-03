@@ -1,7 +1,7 @@
 %global xslver $(rpm -q --queryformat "%%{VERSION}" docbook-style-xsl)
 
 Name: netatalk
-Version: 4.4.2
+Version: 4.6.1
 Release: alt1
 
 Summary: Open Source Apple Filing Protocol (AFP) File Server
@@ -22,8 +22,8 @@ BuildRequires(pre): rpm-build-python3 rpm-macros-meson rpm-build-perl
 BuildRequires: cracklib-devel flex libacl-devel libattr-devel libavahi-devel docbook-style-xsl python3-module-yaml python3-module-pyaml
 BuildRequires: libdb4-devel libdbus-glib-devel libevent-devel libgcrypt-devel xsltproc libcups-devel libiniparser-devel
 BuildRequires: libkrb5-devel libldap-devel libpam-devel meson cmake unicode-ucd libxslt libxslt-devel glibc-devel
-BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus findutils libtdb-devel libmariadb-devel libsqlite3x-devel
-BuildRequires: pandoc gcc13
+BuildRequires: libssl-devel libtdb-devel perl-bignum perl-IO-Socket-INET6 rpm-build-perl perl-Net-DBus findutils libtdb-devel libmariadb-devel libsqlite3x-devel perl-Test-More-UTF8
+BuildRequires: pandoc gcc
 #libmysqlclient-devel 
 Requires: cracklib-words cracklib
 # systemd
@@ -78,7 +78,7 @@ sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initsc
 
 
 %build
-%set_gcc_version 13
+#set_gcc_version 13
 
 %meson  \
         -Ddefault_library=shared                                               \
@@ -88,8 +88,8 @@ sed -E -i 's|^(ExecStart=.*)|\1\nRuntimeDirectory=lock/netatalk|' distrib/initsc
         -Dwith-tests=true							\
         -Dwith-cups=true                                                      \
         -Dwith-pkgconfdir-path=%{_sysconfdir}/netatalk                         \
-        -Dwith-lockfile-path=%{_runtimedir}/lock/netatalk/netatalk                 \
-	-Dwith-dbus-sysconf-path=%{_sysconfdir}/dbus-1/system.d                
+        -Dwith-lockfile-path=%{_runtimedir}/lock/netatalk/netatalk                 
+#	-Dwith-dbus-sysconf-path=%{_sysconfdir}/dbus-1/system.d                
 #        -Dwith-init-style=systemd	                                       \
 #	-Dwith-docbook-path=%{_datadir}/sgml/docbook/xsl-stylesheets-%{xslver} \
 #        -Dwith-init-hooks=false
@@ -126,7 +126,7 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 %files
 %doc CONTRIBUTORS.md NEWS.md COPYING COPYRIGHT INSTALL.md README.md SECURITY.md
 %doc %{_defaultdocdir}/%name/manual
-%config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
+#config(noreplace) %_sysconfdir/dbus-1/system.d/netatalk-dbus.conf
 %dir %_sysconfdir/netatalk
 %config(noreplace) %_sysconfdir/netatalk/afp.conf
 #config(noreplace) %_sysconfdir/netatalk/dbus-session.conf
@@ -155,11 +155,15 @@ touch %buildroot%_sysconfdir/netatalk/afppasswd
 #_datadir/aclocal/netatalk.m4
 %_includedir/atalk/
 %_includedir/bstr*.h
+%_includedir/*util.h
 %_libdir/libatalk.so
 %_libdir/libbstring.so
 #_mandir/man*/netatalk-config.1*
 
 %changelog
+* Tue Nov 03 2026 Ilya Mashkin <oddity@altlinux.ru> 4.6.1-alt1
+- 4.6.1
+
 * Tue Apr 21 2026 Ilya Mashkin <oddity@altlinux.ru> 4.4.2-alt1
 - 4.4.2
 
