@@ -1,6 +1,6 @@
 Name: rpmrebuild
 Version: 2.21
-Release: alt2
+Release: alt3
 License: GPL-2.0+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
@@ -11,6 +11,7 @@ Patch2: rpmrebuild-2.21-optional-man.patch
 Patch3: rpmrebuild-alt-remove-SendBugReport.patch
 Patch4: rpmrebuild-2.21-optional-rpm2archive.patch
 Patch5: rpmrebuild-2.21-plugin-dir-before-options.patch
+Patch6: rpmrebuild-2.21-fix-rpmfilename.patch
 Url: http://rpmrebuild.sourceforge.net/
 
 BuildArch: noarch
@@ -33,6 +34,7 @@ dpkg-repack).
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 %build
 %make
@@ -52,6 +54,9 @@ dpkg-repack).
 %_man1dir/*
 
 %changelog
+* Tue Nov 03 2026 Egor Ignatov <egori@altlinux.org> 2.21-alt3
+- Fix rebuilt package filename detection with ALT rpm.
+
 * Wed Oct 21 2026 Anton Farygin <rider@altlinux.org> 2.21-alt2
 - Initialize plugin directory before parsing options to fix rpmrebuild-arepo.
 - Remove dependencies on optional tools to reduce arepo chroot size (ALT #61153).
