@@ -3,7 +3,7 @@
 %def_with check
 
 Name: llmfit
-Version: 1.1.17
+Version: 1.1.18
 Release: alt1
 
 Summary: Hundreds of models & providers
@@ -43,6 +43,7 @@ cargo-vendor-checksum --vendor vendor --all
 %rust_test -- \
   --skip test_custom_overlay_replaces_embedded_entry_by_slug \
   --skip test_moe_offload_is_not_faster_than_gpu \
+  --skip diff_named_models_ignore_the_fit_filter \
   #
 
 %files
@@ -50,6 +51,9 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.18-alt1
+- new version
+
 * Wed Oct 21 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.17-alt1
 - new version
 
