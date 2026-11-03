@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fsel
-Version: 3.7.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Fast TUI app launcher for GNU/Linux and *BSD 
@@ -44,6 +44,9 @@ install -pm 644 {config,keybinds,color_examples}.toml \
 %_datadir/%name
 
 %changelog
+* Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 4.0.0-alt1
+- new version
+
 * Thu Sep 10 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 3.7.0-alt1
 - new version
 
