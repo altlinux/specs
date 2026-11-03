@@ -1,5 +1,5 @@
 Name:    python3-module-pytest-codspeed
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: Pytest plugin to create CodSpeed benchmarks
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/pytest_codspeed-%version.dist-info
 
 %changelog
+* Tue Nov 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.0.4-alt1
+- 5.0.4 released
+
 * Mon Jul 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.0.3-alt1
 - 5.0.3 released
 
