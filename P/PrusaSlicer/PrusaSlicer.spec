@@ -4,8 +4,8 @@
 
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
-Version: 2.9.6
-Release: alt3
+Version: 2.9.7
+Release: alt1
 License: AGPL-3.0-only
 Group: Engineering
 URL: https://www.prusa3d.com/prusaslicer/
@@ -136,12 +136,6 @@ glad --reproducible \
 sed -i 's|SLIC3R_BUILD_TESTS|FALSE|' src/libseqarrange/CMakeLists.txt
 
 %build
-# sse2 flags for 32-bit: see gh#prusa3d/PrusaSlicer#3781
-%ifarch %ix86
-  export CFLAGS="%optflags -mfpmath=sse -msse2"
-  export CXXFLAGS="$CFLAGS"
-%endif
-
 # -DSLIC3R_FHS=1 - Enable FHS layout instead of installing things into the resources directory
 # -DSLIC3R_WX_STABLE=1 - Allow use of wxGTK version 3.0 instead of 3.1.
 %cmake \
@@ -176,6 +170,9 @@ popd
 %doc README.md doc/
 
 %changelog
+* Tue Nov 03 2026 Valery Zabrovsky <brow@altlinux.org> 2.9.7-alt1
+- New version 2.9.7.
+
 * Fri Oct 16 2026 Valery Zabrovsky <brow@altlinux.org> 2.9.6-alt3
 - Fix FTBFS with catch 3.16.
 - Switch to build from Gear tags.
