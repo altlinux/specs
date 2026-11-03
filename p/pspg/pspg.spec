@@ -2,7 +2,7 @@
 BuildRequires: libncurses-devel
 # END SourceDeps(oneline)
 Name: pspg
-Version: 5.8.16
+Version: 5.9.1
 Release: alt1
 
 Summary: A unix pager optimized for psql
@@ -36,6 +36,9 @@ columns, and lot of color themes are included.
 %_bindir/*
 
 %changelog
+* Tue Nov 03 2026 Alexei Takaseev <taf@altlinux.org> 5.9.1-alt1
+- 5.9.1
+
 * Wed May 06 2026 Alexei Takaseev <taf@altlinux.org> 5.8.16-alt1
 - 5.8.16
 - Change BR postgresql-devel -> libpq-devel
