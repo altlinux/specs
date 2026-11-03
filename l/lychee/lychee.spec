@@ -4,7 +4,7 @@
 
 Name: lychee
 Version: 0.24.2
-Release: alt1
+Release: alt2
 
 Summary: A fast, async, stream-based link checker written in Rust
 License: Apache-2.0 or MIT
@@ -18,6 +18,7 @@ Source1: vendor_rust.tar
 Patch1: lychee-v0.24.2-fix-build-enviroment.patch
 Patch2: lychee-v0.24.2-exclude-octocrab-from-workspace.patch
 Patch3: lychee-v0.24.2-turn-off-network-depended-tests.patch
+Patch4: lychee-v0.24.2-non-SIMD-html5ever.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -48,6 +49,9 @@ export GIT_DATE=%GIT_DATE
 %_bindir/%name
 
 %changelog
+* Tue Nov 03 2026 Ilya Sorochan <k0tran@altlinux.org> 0.24.2-alt2
+- NMU: add patch fixing non-SIMD html5ever link parsing (test_include_verbatim).
+
 * Fri Jul 10 2026 Yaroslav Bahtin <alpacost@altlinux.org> 0.24.2-alt1
 - Initial build
 
