@@ -1,5 +1,5 @@
 Name: udns
-Version: 0.6
+Version: 0.7
 Release: alt1
 Summary: A collection of useful DNS resolver utilities
 License: LGPLv2+
@@ -72,6 +72,9 @@ install -pm644 udns.h %buildroot%_includedir/
 %_man3dir/*
 
 %changelog
+* Mon Nov 02 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.7-alt1
+- 0.6 -> 0.7.
+
 * Wed Feb 26 2025 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.6-alt1
 - 0.4 -> 0.6.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 
 Summary: A collection of compression algorithms
@@ -42,8 +42,6 @@ all neatly bundled in one simple installation.
 %setup -a1
 %rust_prep
 
-sed -i 's/-rc1//' pyproject.toml
-
 %build
 # enable system libraries where supported
 export ZSTD_SYS_USE_PKG_CONFIG=1
@@ -54,11 +52,8 @@ export PKG_CONFIG_PATH=%_pkgconfigdir
 %pyproject_install
 
 %check
-# XXX: Switched off test_variants cause it fails on different cases
-# https://github.com/milesgranger/cramjam/issues/190
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%pyproject_run_pytest --ignore benchmarks -v \
--k 'not test_variants'
+%pyproject_run_pytest --ignore benchmarks -v
 
 %files
 %doc README.* LICENSE
@@ -66,6 +61,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%pypi_name-%version.dist-info
 
 %changelog
+* Tue Nov 03 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.14.0-alt1
+- 2.13.0 -> 2.14.0.
+
 * Mon Oct 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 2.13.0-alt1
 - 2.12.0 -> 2.13.0
 
