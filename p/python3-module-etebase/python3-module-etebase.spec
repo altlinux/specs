@@ -1,7 +1,7 @@
 %define pypi_name etebase
 
 Name: python3-module-%pypi_name
-Version: 0.31.8
+Version: 0.32.0
 Release: alt1
 
 Summary: Python client library for Etebase
@@ -15,16 +15,10 @@ Source: %name-%version.tar
 # Cargo crates for the Rust extension
 Source1: %name-development-%version.tar
 Source2: config.toml
-# https://github.com/dgrunwald/rust-cpython/pull/300 (vendored python3-sys)
-Patch1: rust-cpython-python3.14-tuple.patch
-
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust /proc
-# flapigen formats the generated bindings
-BuildRequires: /usr/bin/rustfmt
-BuildRequires: python3-module-setuptools python3-module-wheel
-BuildRequires: python3-module-setuptools_rust
+BuildRequires: python3-module-maturin
 BuildRequires: pkgconfig(libsodium) pkgconfig(openssl)
 # for %%check
 BuildRequires: python3-module-msgpack
@@ -39,9 +33,6 @@ etebase-rs), used for example by etesync-dav.
 %prep
 %setup -a1
 install -vD %SOURCE2 .cargo/config.toml
-patch -p1 -d vendor < %PATCH1
-# patched vendored crate: drop file checksums
-sed -i 's/"files":{[^}]*}/"files":{}/' vendor/python3-sys/.cargo-checksum.json
 
 %build
 # use system libraries instead of the bundled OpenSSL/libsodium
@@ -53,10 +44,6 @@ export CARGO_PROFILE_RELEASE_DEBUG=true
 
 %install
 %pyproject_install
-# the extension uses only the stable ABI: name it abi3 before debuginfo is
-# split off, otherwise the later abi3 rename leaves -debuginfo empty
-mv -v %buildroot%python3_sitelibdir/etebase/etebase_python.cpython-*.so \
-      %buildroot%python3_sitelibdir/etebase/etebase_python.abi3.so
 
 %check
 # tests/test_smoketest.py needs a running etebase server, do offline checks
@@ -78,6 +65,13 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 0.32.0-alt1
+- new version 0.32.0
+- replaced BuildRequires: python3-module-setuptools, python3-module-wheel,
+  python3-module-setuptools_rust and /usr/bin/rustfmt with
+  python3-module-maturin
+- dropped obsolete rust-cpython Python 3.14 patch
+
 * Mon Oct 05 2026 Vitaly Lipatov <lav@altlinux.ru> 0.31.8-alt1
 - initial build for Sisyphus
 
