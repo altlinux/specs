@@ -5,7 +5,7 @@
 
 Name: prek
 Version: 0.5.9
-Release: alt1
+Release: alt2
 
 Summary: Better pre-commit, re-engineered in Rust
 License: MIT
@@ -51,7 +51,7 @@ sed -i 's/^strip = true$/strip = false/' pyproject.toml
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-export RUSTFLAGS="${RUSTFLAGS} -g"
+export CARGO_PROFILE_RELEASE_DEBUG=true
 export AWS_LC_SYS_CMAKE_BUILDER=1
 
 # avoid rustc-LLVM: out of memory on 32-bit archs
@@ -72,14 +72,21 @@ install -Dm 644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.f
 install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 
 %check
-# most tests require network access, run only unit tests
-# snapshot test fails on i586 due to hash map ordering
+export CARGO_PROFILE_RELEASE_DEBUG=true
+export AWS_LC_SYS_CMAKE_BUILDER=1
+
 %ifarch %ix86
+# avoid rustc-LLVM: out of memory on 32-bit archs
+export CARGO_PROFILE_RELEASE_LTO=false
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16
+
+# snapshot test fails on i586 due to hash map ordering
 %define arch_skip_args \\\
     --skip hook_builder_build_fills_and_merges_attributes \\\
     --skip hook_from_spec_fills_and_merges_attributes
 %endif
 
+# most tests require network access, run only unit tests
 %rust_test --bin prek -- \
     --skip http \
     --skip retries_with_static_musl_when_native_interpreter_is_missing \
@@ -97,6 +104,9 @@ install -Dm 644 %name.zsh %buildroot%_datadir/zsh/site-functions/_%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 03 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.5.9-alt2
+- Fixed FTBFS with new rpm-build-rust.
+
 * Fri Oct 30 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 0.5.9-alt1
 - Updated to version 0.5.9.
 - Enabled debug symbols with the maturin backend.

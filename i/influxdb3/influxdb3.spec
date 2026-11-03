@@ -2,9 +2,12 @@
 %define git_hash 655664fed2eeedcd126b675dc318f28b10c45e8c
 %define git_hash_short e38298bbdb
 
+%define rust_debug_level 1
+%define rust_lto "thin"
+
 Name: influxdb3
 Version: 3.11.5
-Release: alt1
+Release: alt2
 Summary: Scalable datastore for metrics, events, and real-time analytics
 License: Apache-2.0 and MIT
 Group: Databases
@@ -25,6 +28,7 @@ BuildRequires: rpm-build-rust
 BuildRequires: libprotobuf-devel
 BuildRequires: protobuf-compiler
 BuildRequires: python3-dev
+BuildRequires: lld
 
 %description
 InfluxDB 3 Core is a database built to collect, process, transform, and store event
@@ -52,8 +56,7 @@ cat %SOURCE2 >> .cargo/config.toml
 %build
 export GIT_HASH=%git_hash
 export GIT_HASH_SHORT=%git_hash_short
-export CARGO_ENCODED_RUSTFLAGS=-Cdebuginfo=1
-%rust_build --config profile.release.lto=\"thin\"
+%rust_build
 
 %install
 %rust_install
@@ -64,7 +67,7 @@ export GIT_HASH_SHORT=%git_hash_short
 # skip flags for tests which need internet connection
 # test_disable_package_management_preserves_existing_venv assumes versioned venv layout (lib/pythonX.Y), ALT uses lib/python3
 # test_size_option_env_vars_mirror_cli_behavior mutates process env and races with parallel Config-parsing tests
-%rust_test --config profile.release.lto=\"thin\" -- \
+%rust_test -- \
 --skip test_load_wal_plugin_from_gh \
 --skip test_trigger_create_validates_file_present \
 --skip test_disable_package_management_preserves_existing_venv \
@@ -74,6 +77,9 @@ export GIT_HASH_SHORT=%git_hash_short
 %_bindir/%name
 
 %changelog
+* Tue Oct 27 2026 Sergey Zhidkih <rx1513@altlinux.org> 3.11.5-alt2
+- Fixed FTBFS with new rust macros.
+
 * Tue Sep 29 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.11.5-alt1
 - Updated to version 3.11.5.
 

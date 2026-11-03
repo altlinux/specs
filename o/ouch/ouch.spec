@@ -6,7 +6,7 @@
 
 Name: ouch
 Version: 0.8.3
-Release: alt1
+Release: alt2
 Summary: Painless compression and decompression for your terminal
 License: MIT
 Group: Archiving/Compression
@@ -18,9 +18,10 @@ Source1: vendor.tar
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
+BuildRequires: clang
 BuildRequires: clang-devel
+BuildRequires: libstdc++-devel
 BuildRequires: cmake
-BuildRequires: gcc-c++
 
 %if_with check
 BuildRequires: git-core
@@ -35,6 +36,9 @@ to help you compress and decompress files of several formats.
 %rust_prep
 
 %build
+# Latest gcc can't properly produce debuginfo for C part.
+export CXX=clang++
+export CXXFLAGS="-stdlib=libstdc++"
 %ifarch i586
 export BINDGEN_EXTRA_CLANG_ARGS="-D__CLANG_MAX_ALIGN_T_DEFINED -D_GCC_MAX_ALIGN_T"
 %endif
@@ -44,6 +48,8 @@ export BINDGEN_EXTRA_CLANG_ARGS="-D__CLANG_MAX_ALIGN_T_DEFINED -D_GCC_MAX_ALIGN_
 %rust_install
 
 %check
+export CXX=clang++
+export CXXFLAGS="-stdlib=libstdc++"
 %rust_test -- --test-threads=1
 
 %files
@@ -51,6 +57,9 @@ export BINDGEN_EXTRA_CLANG_ARGS="-D__CLANG_MAX_ALIGN_T_DEFINED -D_GCC_MAX_ALIGN_
 %doc README.md LICENSE
 
 %changelog
+* Tue Oct 27 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.8.3-alt2
+- Fixed debuginfo generation.
+
 * Mon Sep 14 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.3-alt1
 - Updated to version 0.8.3.
 
