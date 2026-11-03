@@ -23,7 +23,7 @@
 
 Name: plasma-%rname
 Version: 6.7.5
-Release: alt3
+Release: alt4
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -389,6 +389,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.5-alt4
+- fix infinite update loading loop when using the Stapler backend
+
 * Tue Oct 27 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.5-alt3
 - import Stapler backend
 
