@@ -5,8 +5,8 @@
 %define _docsinstalldir %_defaultdocdir/%variant
 
 Name: docs-%variant
-Version: 11.1
-Release: alt8
+Version: 11.1.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 03 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt1
+- update to ALT Server 11.1.1
+- small improvements (closes #55506)
+- add redis, kafka, valkey, opensearch, rabbitmq
+
 * Sun May 24 2026 Elena Mishina <lepata@altlinux.org> 11.1-alt8
 - update docker, PBS, autoinstall
 - fix some typos
