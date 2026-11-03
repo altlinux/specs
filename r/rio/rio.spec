@@ -4,7 +4,7 @@
 
 Name: rio
 Version: 0.5.29
-Release: alt1
+Release: alt2
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
 Group: Terminals
@@ -25,6 +25,7 @@ BuildRequires: gcc-c++
 BuildRequires: glslc
 BuildRequires: scdoc
 BuildRequires: termutils-devel
+BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(freetype2)
 
@@ -60,7 +61,7 @@ sed -i \
     extra/man/rio-bindings.5.scd
 
 %build
-%rust_build -p %bin_name
+%rust_build -p %bin_name --features audio
 scdoc < extra/man/rio.1.scd > %bin_name.1
 scdoc < extra/man/rio.5.scd > %bin_name.5
 scdoc < extra/man/rio-bindings.5.scd > %bin_name-bindings.5
@@ -85,7 +86,7 @@ install -Dm0644 %bin_name.5 %buildroot%_man5dir/%bin_name.5
 install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 
 %check
-%rust_test -p %bin_name
+%rust_test -p %bin_name --features audio
 
 %files
 %_bindir/%bin_name
@@ -98,6 +99,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Tue Nov 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.29-alt2
+- Enabled audio notifications (closes: #61312).
+
 * Sun Nov 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.29-alt1
 - Updated to version 0.5.29.
 
