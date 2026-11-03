@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.3.1
+Version: 4.4.1
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -121,6 +121,9 @@ export TERM=xterm-256color
 %endif
 
 %changelog
+* Tue Nov 03 2026 Anton Vyatkin <toni@altlinux.org> 4.4.1-alt1
+- New version 4.4.1.
+
 * Sun Oct 25 2026 Anton Vyatkin <toni@altlinux.org> 4.3.1-alt1
 - New version 4.3.1.
 
