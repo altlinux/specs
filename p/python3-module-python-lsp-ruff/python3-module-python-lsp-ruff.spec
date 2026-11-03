@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.3.4
 Release: alt1
 
 Summary: Linter plugin for pylsp based on ruff.
@@ -53,5 +53,8 @@ written in Rust.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 03 2026 Aleksandr Dovydenkov <asd@altlinux.org> 2.3.4-alt1
+- New version 2.3.4.
+
 * Tue Mar 03 2026 Aleksandr Dovydenkov <asd@altlinux.org> 2.3.0-alt1
 - Initial build for Sisyphus.
