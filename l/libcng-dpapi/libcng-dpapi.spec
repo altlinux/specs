@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcng-dpapi
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Client library for CNG-DPAPI
@@ -66,6 +66,11 @@ develop programs which make use of %name
 %_libdir/cng-dpapi/CNGDpApiConfig.cmake
 
 %changelog
+* Tue Oct 27 2026 Vladimir Rubanov <august@altlinux.org> 0.0.6-alt1
+- Implement ECDH_P256/P384 curves support.
+- Improve integration testing.
+- Fix memory management related issues.
+
 * Tue Sep 08 2026 Vladimir Rubanov <august@altlinux.org> 0.0.5-alt1
 - Adapt to ALT SP 10.2.2 (c10f2): build against OpenSSL 3.
 - Fix build with older gcc (avoid initializing variable-length arrays).
