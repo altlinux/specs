@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.11.4
-Release: alt1
+Release: alt2
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -20,6 +20,8 @@ Source4: %name-%version-3rdparty-x11vnc.tar
 Source100: veyon-config-dm-login.sh
 Patch1: alt-veyon-libdir.patch
 Patch2: alt-fix-dm-login.patch
+Patch3: alt-desktop-russian-translation.patch
+Patch4: alt-policy-russian-translation.patch
 
 Requires: polkit qca-qt6-ossl qt6-translations
 Obsoletes: italc3
@@ -141,6 +143,9 @@ fi
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Tue Nov 03 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.4-alt2
+- Return desktop and polkit russian translations (Closes: 61045).
+
 * Tue Oct 20 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.4-alt1
 - New version (Closes: 60478).
 
