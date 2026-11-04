@@ -6,7 +6,7 @@
 %endif
 
 Name: altera
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Altera is a spiritual successor to Alterator written in Rust
@@ -136,5 +136,11 @@ install -pD -m0644 %SOURCE3 \
 %config %_sysconfdir/pam.d/%name
 
 %changelog
+* Tue Nov 03 2026 Artyom Sinyugin <writers@altlinux.org> 1.1.0-alt1
+- Switch JWT to Opaque Token for auth
+- Add /auth/logout path
+- Extend debug logging with messages for backend modules
+- Fix sources scripts for vendor and e2k vendor
+
 * Sun Nov 01 2026 Artyom Sinyugin <writers@altlinux.org> 1.0.0-alt1
 - Initial build.
