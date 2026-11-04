@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libnet
 Name: perl-%dist
-Version: 3.15
+Version: 3.16
 Release: alt1
 Epoch: 1
 
@@ -58,6 +58,11 @@ mv %buildroot{%perl_vendor_privlib,/etc/perl5}/Net/libnet.cfg
 	%perl_vendor_privlib/Net/FTP/*.pm
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1:3.16-alt1
+- new version 3.16
+- fixes:
+  + CVE-2026-93469: bound response buffers in Net::Cmd
+
 * Thu Mar 23 2023 Igor Vlasenko <viy@altlinux.org> 1:3.15-alt1
 - automated CPAN update
 
