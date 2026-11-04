@@ -12,7 +12,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 100.0
+Version: 103.0
 Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel boost-locale-devel zlib-devel libmagic-devel
 BuildRequires: libgmp-devel
 BuildRequires: libvorbis-devel libogg-devel
-BuildRequires: libebml-devel >= 1.4.4 libmatroska-devel >= 1.7.1 libfmt-devel >= 6.1.0
+BuildRequires: libebml-devel >= 1.4.7 libmatroska-devel >= 1.7.2 libfmt-devel >= 6.1.0
 BuildRequires: docbook-style-xsl xsltproc
 BuildRequires: libpugixml-devel
 BuildRequires: po4a
@@ -159,11 +159,16 @@ rake V=1 tests:run_unit
 %_iconsdir/hicolor/*/apps/%name-gui.*
 %_desktopdir/org.bunkus.%name-gui.desktop
 %_xdgmimedir/packages/org.bunkus.%name-gui.xml
-%_datadir/metainfo/org.bunkus.%name-gui.appdata.xml
+%_datadir/metainfo/org.bunkus.%name-gui.metainfo.xml
 %_datadir/%name
 %endif
 
 %changelog
+* Wed Nov 04 2026 L.A. Kostis <lakostis@altlinux.ru> 103.0-alt1
+- 103.0.
+- Security fix: CVE-2026-90783 (fixed in 102.0).
+- BR: bump ebml/matroska versions.
+
 * Thu Jul 30 2026 L.A. Kostis <lakostis@altlinux.ru> 100.0-alt1
 - 100.0.
 - BR: s/libutfcpp/libutf8cpp/.
