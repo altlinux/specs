@@ -4,7 +4,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.31
+Version: 1.3.32
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -68,6 +68,9 @@ Shell functions and kbd data for %name.
 %_sysconfdir/alterator/sysconfig/gnome-kbd
 
 %changelog
+* Wed Nov 04 2026 Anton Midyukov <antohami@altlinux.org> 1.3.32-alt1
+- alterator-sysconfig-functions: refactoring the creation of vconsole.conf
+
 * Mon Jul 27 2026 Anton Midyukov <antohami@altlinux.org> 1.3.31-alt1
 - Added id_ID (Indonesian) locale support.
 
