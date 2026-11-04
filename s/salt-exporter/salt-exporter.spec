@@ -3,7 +3,7 @@
 
 Name: salt-exporter
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Prometheus exporter for Salt events
 License: MIT
@@ -59,5 +59,9 @@ install -Dpm0644 %SOURCE3 \
 %config(noreplace) %_sysconfdir/salt-exporter/config.yml
 
 %changelog
+%changelog
+* Mon Nov 02 2026 Olesya Shuster <lesyafox@altlinux.org> 0.13.0-alt2
+- Backport upstream fix for Salt 3006.26+ event bus message format.
+
 * Thu Oct 08 2026 Olesya Shuster <lesyafox@altlinux.org> 0.13.0-alt1
 - Initial build for ALT Linux Sisyphus.
