@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: jujutsu
-Version: 0.46.0
+Version: 0.47.0
 Release: alt1
 Summary: A Git-compatible VCS that is both simple and powerful
 License: Apache-2.0
@@ -93,6 +93,9 @@ cargo test --release --frozen -- \
 %_datadir/fish/vendor_completions.d/jj.fish
 
 %changelog
+* Wed Nov 04 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.47.0-alt1
+- Update to v0.47.0 (2026-11-03).
+
 * Thu Oct 08 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.46.0-alt1
 - Update to v0.46.0 (2026-10-07).
 
