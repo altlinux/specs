@@ -1,12 +1,12 @@
 %def_with check
 
 Name: xcp
-Version: 0.24.8
+Version: 0.24.9
 Release: alt1
 Summary: An extended cp
 License: GPL-3.0
 Group: File tools
-Url: https://crates.io/crates/xcp
+URL: https://crates.io/crates/xcp
 VCS: https://github.com/tarka/xcp
 
 Source: %name-%version.tar
@@ -53,6 +53,9 @@ diffstat -p1 -l < %PATCH3500 | sed -re 's@vendor/@@' | xargs cargo-vendor-checks
 %_bindir/%name
 
 %changelog
+* Wed Nov 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.9-alt1
+- Updated to version 0.24.9.
+
 * Sat May 09 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.24.8-alt1
 - Updated to version 0.24.8.
 
