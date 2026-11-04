@@ -3,7 +3,7 @@
 
 Name: picom
 Version: 13
-Release: alt1
+Release: alt2
 Summary: A lightweight compositor for X11
 License: MPL-2.0 OR MIT
 Group: System/X11
@@ -48,9 +48,8 @@ You can leave your feedbacks or thoughts in the discussion tab.
 %prep
 %setup
 %ifarch %e2k
-sed -i "s/const auto/auto/" src/{render,win,picom}.c src/backend/xrender/xrender.c
-sed -i "s/__attribute__((optimize(".*")))//" src/utils.h
-sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
+sed -i "s/__attribute__((optimize(".*")))//" src/utils/misc.h
+sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils/misc.h
 %endif
 
 %build
@@ -73,6 +72,9 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %exclude %_includedir/picom/
 
 %changelog
+* Wed Nov 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 13-alt2
+- e2k build fix
+
 * Sat Feb 07 2026 Anton Midyukov <antohami@altlinux.org> 13-alt1
 - New version 13.
 - Do not provide virtual package compton.
