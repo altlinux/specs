@@ -13,7 +13,7 @@
 
 Name: gnome-shell-extension-gsconnect
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: GSConnect is a implementation of KDE Connect for GNOME Shell
 Group: Graphical desktop/GNOME
@@ -31,7 +31,9 @@ Source: %name-%version%beta.tar
 %endif
 
 Requires: gnome-shell >= 46
-Requires: /usr/bin/ffmpeg /usr/bin/fusermount
+# https://bugzilla.altlinux.org/61329
+Requires: ffmpeg
+Requires: /usr/bin/fusermount
 Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
 
@@ -104,6 +106,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Tue Nov 03 2026 Yuri N. Sedunov <aris@altlinux.org> 74-alt1.1
+- require ffmpeg instead of /usr/bin/ffmpeg (ALT #61329)
+
 * Sun Oct 18 2026 Yuri N. Sedunov <aris@altlinux.org> 74-alt1
 - 74
 
