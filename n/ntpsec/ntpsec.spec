@@ -1,5 +1,5 @@
 Name: ntpsec
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 Summary: NTP daemon and utilities
 Group: System/Servers
@@ -187,6 +187,14 @@ sed -i.bak -E '/^restrict/s/no(e?peer|trap)//g' %_sysconfdir/ntp.conf
 %python3_sitelibdir/ntp
 
 %changelog
+* Wed Nov 04 2026 L.A. Kostis <lakostis@altlinux.ru> 1.2.6-alt1
+- 1.2.6.
+- Security fixes:
+  + CVE-2026-102483.
+  + CVE-2026-102484.
+  + CVE-2026-102485.
+  + CVE-2026-102486.
+
 * Mon Aug 10 2026 L.A. Kostis <lakostis@altlinux.ru> 1.2.5-alt1
 - 1.2.5.
 - Security fixes: CVE-2026-18321.
