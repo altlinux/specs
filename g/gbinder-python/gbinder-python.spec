@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: %pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: Python bindings for libgbinder
 Group: Development/Python
@@ -40,6 +40,9 @@ Cython extension module for gbinder.
 %python3_sitelibdir/gbinder_python-%{version}.dist-info/
 
 %changelog
+* Wed Nov 04 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
+- 1.3.1.
+
 * Wed Jan 28 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
 - 1.3.0.
 
