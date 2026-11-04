@@ -9,7 +9,7 @@
 
 Name: coolercontrol
 Version: 5.1.1
-Release: alt1
+Release: alt1.1
 Summary: Monitor and control your cooling devices
 Group: %group
 
@@ -127,6 +127,12 @@ cp -p packaging/metadata/%ap_id.metainfo.xml %buildroot%_datadir/metainfo/
 (cd %{name}d; /usr/bin/cargo test --locked --profile release --no-fail-fast)
 appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xml
 
+%post -n %{name}d
+%post_systemd %{name}d.service
+
+%preun -n %{name}d
+%preun_systemd %{name}d.service
+
 %files -n %{name}d
 %_bindir/%{name}d
 %_unitdir/%{name}d.service
@@ -142,6 +148,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.metainfo.xm
 %doc LICENSE README.md CHANGELOG.md
 
 %changelog
+* Wed Nov 04 2026 L.A. Kostis <lakostis@altlinux.ru> 5.1.1-alt1.1
+- added post/preun actions for daemon.
+
 * Mon Nov 02 2026 L.A. Kostis <lakostis@altlinux.ru> 5.1.1-alt1
 - 5.1.1.
 
