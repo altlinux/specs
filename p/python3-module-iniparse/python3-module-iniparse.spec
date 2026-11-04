@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 Summary: Python Module for Accessing and Modifying Configuration Data in INI files
 Group: Development/Python3
@@ -51,6 +51,9 @@ rm -rf %buildroot%_datadir/doc/iniparse-%version
 %python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Wed Nov 04 2026 Anton Vyatkin <toni@altlinux.org> 0.5.3-alt1
+- New version 0.5.3.
+
 * Sat Oct 31 2026 Anton Vyatkin <toni@altlinux.org> 0.5.2-alt1
 - New version 0.5.2.
 
