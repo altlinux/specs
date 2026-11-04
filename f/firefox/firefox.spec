@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 159.0
+Version: 159.0.1
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -388,6 +388,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Nov 03 2026 Ajrat Makhmutov <rauty@altlinux.org> 159.0.1-alt1
+- New version.
+- Fixes:
+  + CVE-2026-120572: Incorrect boundary conditions in the Layout: Block and Inline component
+
 * Tue Oct 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 159.0-alt1
 - New version.
 - Fixes:
