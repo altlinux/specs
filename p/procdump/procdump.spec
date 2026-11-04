@@ -4,7 +4,7 @@
 
 Name:     procdump
 Version:  3.5.3
-Release:  alt1
+Release:  alt2
 
 Summary:  A Linux version of the ProcDump Sysinternals tool
 
@@ -63,7 +63,7 @@ export PROCDUMP_VERSION=%version
 export CC=clang
 export CXX=clang++
 export CARGO_PROFILE_RELEASE_STRIP=false
-%rust_test --offline -p procdump-cli -p procdump
+%rust_test -p procdump-cli -p procdump
 
 %files
 %_bindir/procdump
@@ -71,6 +71,13 @@ export CARGO_PROFILE_RELEASE_STRIP=false
 %doc CONTRIBUTING.md README.md
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.3-alt2
+- fix package build by avoiding duplicate offline test flag.
+- added BuildRequires: pkgconfig(libbpf), pkgconfig(libelf), pkgconfig(zlib),
+  rpm-build-rust, rpm-macros-rust, /proc for the Rust build.
+- removed BuildRequires: bpftool, cmake, libbpf-devel, libelf-devel,
+  rpm-macros-cmake, zlib-devel.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.3-alt1
 - new version 3.5.3 (rewritten in Rust upstream)
 - build with cargo, vendor crates via .gear/predownloaded-development
