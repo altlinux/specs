@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    GPU-Viewer
-Version: 4.04
+Version: 4.05
 Release: alt1
 
 Summary: A front-end to glxinfo, vulkaninfo, clinfo and es2_info - Linux
@@ -52,6 +52,9 @@ clinfo works the GPU-viewer will also work.
 %_iconsdir/hicolor/*/apps/io.github.arunsivaramanneo.GPUViewer.png
 
 %changelog
+* Wed Nov 04 2026 Sergey Palcheh <minergenon@altlinux.org> 4.05-alt1
+- new version 4.05
+
 * Sat Oct 31 2026 Sergey Palcheh <minergenon@altlinux.org> 4.04-alt1
 - new version 4.04
 
