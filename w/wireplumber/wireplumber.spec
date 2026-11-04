@@ -13,7 +13,7 @@
 %define libname %name-%apiversion
 
 Name: wireplumber
-Version: 0.5.14
+Version: 0.5.19
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -166,9 +166,11 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %define docdir() %_defaultdocdir/%1-%version
 %{docdir %name}
 %_bindir/wireplumber
+%_man1dir/wireplumber.1*
 %_bindir/wpctl
 %_man1dir/wpctl.1*
 %_bindir/wpexec
+%_man1dir/wpexec.1*
 %_datadir/wireplumber
 %_datadir/bash-completion/completions/wpctl
 %_datadir/zsh/site-functions/_wpctl
@@ -202,6 +204,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Mon Nov 02 2026 Arseny Maslennikov <arseny@altlinux.org> 0.5.19-alt1
+- 0.5.14 -> 0.5.19.
+
 * Fri Mar 27 2026 Arseny Maslennikov <arseny@altlinux.org> 0.5.14-alt1
 - 0.5.13 -> 0.5.14.
 
