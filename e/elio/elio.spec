@@ -2,7 +2,7 @@
 %def_with check
 
 Name: elio
-Version: 1.14.0
+Version: 1.15.0
 Release: alt1
 Summary: Snappy, batteries-included terminal file manager
 License: MIT
@@ -54,6 +54,9 @@ export RUST_TEST_THREADS=1
 %_bindir/elio
 
 %changelog
+* Wed Nov 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.15.0-alt1
+- Updated to version 1.15.0.
+
 * Sun Oct 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.14.0-alt1
 - Updated to version 1.14.0.
 
