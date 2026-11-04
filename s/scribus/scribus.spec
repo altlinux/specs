@@ -1,9 +1,10 @@
 Name: scribus
-Version: 1.7.3
-Release: alt2
+Version: 1.7.4
+Release: alt1
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
+
 License: GPLv2+
 Group: Publishing
 
@@ -17,6 +18,9 @@ Patch1: scribus-1.5.7-no-execbit-plugins.patch
 Patch2: scribus-1.7.3-docpath.patch
 Patch3: scribus-1.7.3-image-editor-gimp3.patch
 Patch4: scribus-1.7.3-render-frame-i18n.patch
+Patch5: scribus-1.7.4-system-libraries.patch
+Patch6: scribus-1.7.4-system-wpg-api.patch
+Patch7: scribus-1.7.4-system-librevenge-stream.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -28,6 +32,7 @@ BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-declarative-devel
+BuildRequires: libqtadvanceddocking-qt6-devel
 # needs for smiles and emojicons
 Requires: qt6-imageformats
 
@@ -56,8 +61,6 @@ BuildRequires: python3-module-Pillow
 BuildRequires: libhunspell-devel >= 1.6
 # podofo - 0.7.0+ for enhanced Illustrator AI/EPS import, svn versions
 BuildRequires: libpodofo-devel >= 0.9.7
-# boost used only for 2geom
-BuildRequires: boost-devel-headers
 BuildRequires: GraphicsMagick
 BuildRequires: libGraphicsMagick-c++-devel
 
@@ -70,6 +73,7 @@ BuildRequires: libpagemaker-devel
 BuildRequires: libqxp-devel
 BuildRequires: libvisio-devel
 BuildRequires: libzmf-devel
+BuildRequires: libwpg-devel
 
 # Manually
 # (commented out in CMakeFiles.txt)
@@ -138,6 +142,9 @@ BuildArch: noarch
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
+%patch6 -p2
+%patch7 -p2
 # hack to ignore new broken checking
 subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
@@ -163,10 +170,6 @@ subst 's|hunspell_LIBRARY_DIRS||' cmake/modules/Findhunspell.cmake
 
 %install
 %cmake_install
-rm -rv %buildroot%_libdir/cmake/
-rm -v %buildroot%_libdir/libqt6advanceddocking_static.a
-rm -rv %buildroot%_includedir/qt6advanceddocking/
-rm -rv %buildroot/usr/license
 
 pushd %buildroot%_docdir/%name
 for i in $(ls ChangeLog*); do
@@ -212,6 +215,13 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.4-alt1
+- new version 1.7.4
+- build with system Qt Advanced Docking System and libwpg instead of bundled
+  copies: added BuildRequires: libqtadvanceddocking-qt6-devel, libwpg-devel
+- adapt WPG import to the system libwpg API, link with librevenge stream
+- disable 2Geom tools, removed BuildRequires: boost-devel-headers
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1:1.7.3-alt2
 - point DocPath in desktop file to the installed HTML help (closes: #42503)
 - use rpm-build-cmake instead of cmake in BuildRequires
