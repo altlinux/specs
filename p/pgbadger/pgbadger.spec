@@ -2,7 +2,7 @@
 %def_without test
 
 Name:    pgbadger
-Version: 13.2
+Version: 13.3
 Release: alt1
 
 Summary: A fast PostgreSQL Log Analyzer
@@ -40,5 +40,8 @@ PostgreSQL log analyzer with fully detailed reports and graphs.
 %_man1dir/%name.1*
 
 %changelog
+* Wed Nov 04 2026 Andrey Cherepanov <cas@altlinux.org> 13.3-alt1
+- New version.
+
 * Fri May 29 2026 Andrey Cherepanov <cas@altlinux.org> 13.2-alt1
 - Initial build for Sisyphus.
