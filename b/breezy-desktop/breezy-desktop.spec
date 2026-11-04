@@ -3,16 +3,16 @@
 %define __find_requires_filter grep -vF -e 'debug64(libGlassSDK.so)' -e '/usr/lib/debug/usr/lib64/xr-driver/viture/libglasses.so.debug' -e '/usr/lib/debug/usr/lib64/xr-driver/viture/libusb-1.0.so.0.debug'
 
 Name:    breezy-desktop
-Version: 2.12.2
+Version: 2.12.3
 Release: alt1
 
 Summary: XR virtual desktop for KWin 6 and GNOME (XR glasses mirror)
-License: GPL-3.0-only AND MIT AND BSD-3-Clause AND CC0-1.0
+License: GPL-3.0-only AND MIT AND BSD-3-Clause AND CC0-1.0 AND Zlib AND Apache-2.0 AND LGPL-2.1-or-later
 Group:   Graphical desktop/Other
 URL:     https://github.com/wheaney/breezy-desktop
 VCS:     https://github.com/wheaney/breezy-desktop
 
-Source: %name-%version.tar
+Source:  %name-%version.tar
 Source1: %name-postsubmodules-%version.tar
 Source2: %name-development-%version.tar
 Source3: %name-packaging-vulkan-%version.tar
@@ -32,9 +32,13 @@ BuildRequires: openssl-devel libcurl-devel libjson-c-devel
 BuildRequires: libgio-devel gettext-tools desktop-file-utils gtk4-update-icon-cache
 BuildRequires: libvulkan-devel glslang spirv-headers
 
+Requires: /bin/systemctl
 Requires: /usr/bin/env
+Requires: gsettings-desktop-schemas
+Requires: python3-module-pydbus
+Requires: pipewire
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
 Breezy Desktop turns XR glasses into a virtual desktop: a full-screen mirror
@@ -62,7 +66,9 @@ devices under %_libdir/xr-driver.
 %package kwin
 Summary: Breezy Desktop KWin 6 effect and settings module
 Group:   Graphical desktop/KDE
-Requires: kwin breezy-desktop-driver qt6-quick3d /usr/bin/kcmshell6
+Requires: kwin breezy-desktop = %EVR breezy-desktop-driver = %EVR
+Requires: qt6-quick3d /bin/systemctl /usr/bin/kcmshell6
+Requires: python3
 
 %description kwin
 KWin 6 full-screen effect that mirrors the desktop onto XR glasses through
@@ -72,8 +78,7 @@ options.
 %package gnome
 Summary: Breezy Desktop GNOME Shell extension
 Group:   Graphical desktop/GNOME
-BuildArch: noarch
-Requires: gnome-shell
+Requires: gnome-shell breezy-desktop = %EVR breezy-desktop-driver = %EVR
 
 %description gnome
 GNOME Shell extension (breezydesktop@xronlinux.com) that mirrors the desktop
@@ -83,7 +88,7 @@ the Breezy Desktop stack.
 %package vulkan
 Summary: Breezy Desktop Vulkan post-processing layer
 Group:   System/Configuration/Hardware
-Requires: breezy-desktop-driver
+Requires: breezy-desktop-driver = %EVR
 
 %description vulkan
 Breezy Desktop Vulkan post-processing layer: a 64-bit vkBasalt build with
@@ -110,10 +115,17 @@ cp modules/sombrero/calibrating.png kwin/src/qml/calibrating.png
 cp ui/data/icons/hicolor/scalable/apps/com.xronlinux.BreezyDesktop.svg \
    kwin/src/kcm/com.xronlinux.BreezyDesktop.svg
 
+# rpm copies doc files flat into one directory and refuses to overwrite a
+# file it has just created, so stage the bundled zlib and BSD-3-Clause texts
+# under names that do not collide with the top-level LICENSE:
+mkdir -p doc-licenses
+cp -p vulkan/modules/vkBasalt/LICENSE doc-licenses/LICENSE.vkBasalt
+cp -p vulkan/modules/vkBasalt/src/reshade/LICENSE.md doc-licenses/LICENSE.reshade.md
+
 # Driver systemd unit carries template placeholders; the LD_LIBRARY_PATH line
 # is dropped because the SDKs are found via the installed RUNPATH and
 # /etc/ld.so.conf.d/xr-driver.conf:
-sed -i -e "s|ExecStart={bin_dir}/xrDriver|ExecStart=%{_bindir}/xrDriver|" \
+sed -i -e "s|ExecStart={bin_dir}/xrDriver|ExecStart=%_bindir/xrDriver|" \
        -e "/Environment=/d" \
     modules/XRLinuxDriver/systemd/xr-driver.service
 
@@ -147,7 +159,7 @@ popd
 pushd kwin
 %cmake \
     -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_LIBDIR=%_lib
+    -DKDE_INSTALL_LIBDIR=%_lib
 %cmake_build
 popd
 
@@ -177,6 +189,11 @@ install -Dm755 modules/XRLinuxDriver/bin/xr_driver_logs %buildroot%_bindir/xr_dr
 
 install -dm755 %buildroot%_libdir/xr-driver
 cp -a modules/XRLinuxDriver/lib/%_arch/. %buildroot%_libdir/xr-driver/
+%ifarch aarch64
+# The aarch64 VITURE SDK links OpenCV statically into libcarina_vio.so;
+# its separate OpenCV libraries are unused and have unresolved dependencies.
+rm -f %buildroot%_libdir/xr-driver/viture/libopencv*.so*
+%endif
 # Prebuilt SDK blobs carry RPATHs "/usr/local/lib" and "./"; the ALT ELF check
 # accepts only $ORIGIN (or system paths), and the libs' siblings sit next to them.
 find %buildroot%_libdir/xr-driver -type f -name '*.so*' -exec patchelf --set-rpath '$ORIGIN' {} +
@@ -200,6 +217,7 @@ pushd ui
 popd
 rm -rf %buildroot%_datadir/breezydesktop/breezydesktop/lib
 sed -i -e 's|^Exec=.*|Exec=env APPDIR=%_datadir BINDIR=%_bindir breezydesktop|' \
+    -e '/^Categories=/a OnlyShowIn=GNOME;' \
     %buildroot%_desktopdir/com.xronlinux.BreezyDesktop.desktop
 
 # The UI looks for a verify helper next to the binary ($BINDIR/breezy_gnome_verify)
@@ -297,10 +315,7 @@ modprobe uinput 2>/dev/null || :
 %_bindir/xrDriver
 %_bindir/xr_driver_cli
 %_bindir/xr_driver_logs
-%dir %_libdir/xr-driver
-%_libdir/xr-driver/*.so*
-%dir %_libdir/xr-driver/viture
-%_libdir/xr-driver/viture/*.so*
+%_libdir/xr-driver/
 %_userunitdir/xr-driver.service
 %_udevrulesdir/70-xreal-xr.rules
 %_udevrulesdir/70-viture-xr.rules
@@ -312,10 +327,11 @@ modprobe uinput 2>/dev/null || :
 
 %files kwin
 %doc LICENSE
-%_libdir/qt6/plugins/kwin/effects/plugins/
+%dir %_libdir/qt6/plugins/kwin/effects/plugins
+%_libdir/qt6/plugins/kwin/effects/plugins/breezy_desktop.so
 %dir %_datadir/kwin/effects
 %_datadir/kwin/effects/breezy_desktop/
-%_libdir/qt6/plugins/plasma/kcms/
+%_libdir/qt6/plugins/plasma/kcms/breezy_desktop_config.so
 %_desktopdir/breezy_desktop.desktop
 %_bindir/breezy_kwin_logs
 
@@ -327,6 +343,8 @@ modprobe uinput 2>/dev/null || :
 
 %files vulkan
 %doc LICENSE
+%doc doc-licenses/LICENSE.vkBasalt
+%doc doc-licenses/LICENSE.reshade.md
 %dir %_libdir/breezy-desktop
 %dir %_libdir/breezy-desktop/vkbasalt
 %_libdir/breezy-desktop/vkbasalt/libvkbasalt.so
@@ -337,5 +355,9 @@ modprobe uinput 2>/dev/null || :
 %_bindir/breezy_vulkan_logs
 
 %changelog
+* Wed Nov 04 2026 Sergey Palcheh <minergenon@altlinux.org> 2.12.3-alt1
+- new version 2.12.3
+- Enabled aarch64 builds.
+
 * Sat Sep 19 2026 Sergey Palcheh <minergenon@altlinux.org> 2.12.2-alt1
 - Initial build for Sisyphus.
