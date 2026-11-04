@@ -2,8 +2,8 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 9.1.6
-Release: alt2
+Version: 9.1.9
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -68,6 +68,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Nov 04 2026 Sergey Konev <darisishe@altlinux.org> 9.1.9-alt1
+- 9.1.9 (Closes: 61334)
+
 * Thu Aug 13 2026 Sergey Konev <darisishe@altlinux.org> 9.1.6-alt2
 - zfspool: pass 'zfs send -U' only if zfs supports it (Closes: 60145)
 
