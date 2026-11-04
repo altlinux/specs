@@ -11,7 +11,7 @@
 %endif
 
 Name: %pypi_name
-Version: 2.33.0
+Version: 2.34.0
 Release: alt1
 Summary: Conan - The open-source C/C++ package manager (client)
 License: MIT
@@ -20,11 +20,15 @@ Url: https://conan.io
 Vcs: https://github.com/conan-io/conan
 BuildArch: noarch
 Source: %name-%version.tar
+Source1: %name-pyproject_deps.json
+%define pyproject_deps_config %SOURCE1
 Patch0: %name-%version-alt.patch
 Provides: python3-module-%{pep503_name %pypi_name} = %EVR
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-pyproject
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-setuptools
+%pyproject_runtimedeps_metadata
 %if_with check
 BuildRequires: python3-module-bottle
 BuildRequires: python3-module-docker
@@ -68,6 +72,7 @@ pushd ../%pypi_name_server
 popd
 
 %build
+%pyproject_deps_resync_metadata
 %pyproject_build
 cd ../%pypi_name_server
 %pyproject_build
@@ -81,7 +86,9 @@ cd ../%pypi_name_server
 rm -r %buildroot%python3_sitelibdir/test/
 
 %check
-%pyproject_run_pytest -ra -Wignore test/unittests/
+# Toolchain unit tests expect no compiler flags inherited from rpmbuild.
+%pyproject_run -- env -u CFLAGS -u CXXFLAGS -u CPPFLAGS -u LDFLAGS \
+    python3 -m pytest -ra -Wignore test/unittests/
 
 %files
 %doc README.md
@@ -101,6 +108,12 @@ rm -r %buildroot%python3_sitelibdir/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_server}/
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 2.34.0-alt1
+- new version 2.34.0
+- run unit tests without inherited compiler flags
+- generate runtime dependencies from upstream requirements
+- add BuildRequires: rpm-macros-pyproject for dependency generation
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.33.0-alt1
 - new version 2.33.0
 
