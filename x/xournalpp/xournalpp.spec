@@ -2,7 +2,7 @@
 
 Name: xournalpp
 Version: 1.3.8
-Release: alt2
+Release: alt3
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
 
@@ -50,6 +50,10 @@ The %name-ui package contains a graphical user interface for  %name.
 %prep
 %setup
 %patch100 -p2
+%ifarch %e2k
+# error: constexpr function's return type 'std::u8string' is not a literal type
+sed -ri 's/constexpr (auto .* -> std::u8string)/\1/' src/util/include/util/utf8_view.h
+%endif
 
 %build
 %if_with gtest
@@ -97,6 +101,9 @@ export LC_ALL=C.UTF-8
 %_datadir/%name/ui
 
 %changelog
+* Wed Nov 04 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.3.8-alt3
+- e2k build fix
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.8-alt2
 - Added BuildRequires: fonts-ttf-dejavu (text layout tests need a font).
 
