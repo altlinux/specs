@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2026.08.17
+Version: 2026.10.20
 Release: alt0.1
 
 Summary: Flexible test automation for Python
@@ -33,7 +33,6 @@ BuildRequires: python3-module-humanize
 BuildArch: noarch
 
 Source: %name-%version.tar
-Patch: nox-tox-to-nox-ignore-new-tox-env.patch
 
 %description
 nox is a command-line tool that automates testing in multiple Python
@@ -42,7 +41,6 @@ for configuration.
 
 %prep
 %setup
-%autopatch -p1
 
 %build
 %pyproject_build
@@ -56,9 +54,12 @@ for configuration.
 # - test_main_requires requires alternative Python interpreters
 # - test_noxfile_script_mode installs from PyPI
 # - test_download_python_* uses uv to install alternative Python interpreters
+# - test_concrete_install_target with free-threaded or malformed ranges expects
+#   python-discovery >= 1.6.6 (Sisyphus has 1.6.4)
 %pyproject_run_pytest -k "not test__create_venv_options[nox.virtualenv.CondaEnv.create-conda-CondaEnv] and \
             not test_main_requires[sessions2-expected_order2] and not test_main_requires[sessions1-expected_order1] and\
-            not test_noxfile_script_mode and not test_noxfile_no_script_mode and not test_download_python_"
+            not test_noxfile_script_mode and not test_noxfile_no_script_mode and not test_download_python_ and\
+            not (test_concrete_install_target and (3.13t or 3.12t or 3.12.-None))"
 
 %files
 %doc LICENSE *.md
@@ -68,6 +69,10 @@ for configuration.
 %python3_sitelibdir/%pypi_name-*.dist-info
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.10.20-alt0.1
+- NMU: new version 2026.10.20
+- Drop the tox_to_nox patch: merged upstream
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.08.17-alt0.1
 - NMU: new version 2026.08.17.
 - NMU: fixed FTBFS: tox_to_nox tests failed with new tox (ignore tox-specific
