@@ -1,7 +1,7 @@
 %define pypi_name fpdf2
 
 Name: python3-module-%pypi_name
-Version: 2.8.9
+Version: 2.9.0
 Release: alt1
 
 Summary: Simple and fast PDF generation for Python
@@ -39,6 +39,12 @@ fixes and Python 3 support.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version 2.9.0
+- fixes:
+  + CVE-2026-114609: restrict image resource access (fixed in 2.8.8)
+  + CVE-2026-114610: limit SVG resource expansion (fixed in 2.8.8)
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.8.9-alt1
 - new version 2.8.9
 
