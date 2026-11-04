@@ -6,7 +6,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 5.18.0
+Version: 5.18.1
 Release: alt1
 
 Summary: Python Socket.IO server and client
@@ -76,6 +76,9 @@ This package contains documentation for %pypi_name.
 %doc examples
 
 %changelog
+* Wed Nov 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.18.1-alt1
+- 5.18.0 -> 5.18.1
+
 * Mon Nov 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 5.18.0-alt1
 - 5.17.1 -> 5.18.0
 
