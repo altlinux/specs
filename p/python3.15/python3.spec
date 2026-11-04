@@ -104,7 +104,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %def_with docs
 
 Name: python3%{?_python3_standalone}
-Version: %{pybasever}.1
+Version: %{pybasever}.2
 Release: alt1
 
 %if 0%{?_python3_standalone:1}
@@ -1237,6 +1237,9 @@ python3%_python3_standalone -c "import pyxcrypt; pyxcrypt.crypt('LedZeppelinRock
 %endif
 
 %changelog
+* Wed Nov 04 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15.2-alt1
+- Update to upstream 3.15.2
+
 * Thu Oct 22 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 3.15.1-alt1
 - Update to upstream 3.15.1 release
 
