@@ -11,12 +11,7 @@
 %def_without staticlibs
 # Build a fresh libjvm.so for use in a copy of the bootstrap JDK
 %def_without fresh_libjvm
-# Explicit, independently supplied x86-32 boot JDK for the initial native build.
-%ifarch %ix86
-%def_with external_bootjdk
-%else
 %def_without external_bootjdk
-%endif
 # Build with system libraries
 %def_with system_libs
 
@@ -296,8 +291,8 @@
 %global featurever 21
 %global interimver 0
 %global updatever 13
-%global patchver 0
-%global buildver 9
+%global patchver 3
+%global buildver 1
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -367,7 +362,7 @@
 
 Name:    java-21-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -2037,6 +2032,9 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Tue Nov 03 2026 Andrey Cherepanov <cas@altlinux.org> 0:21.0.13.3.1-alt1
+- New version (fixes: CVE-2026-91403).
+
 * Wed Oct 28 2026 Ivan Khanas <xeno@altlinux.org> 0:21.0.13.0.9-alt2
 - Enable native i586 HotSpot builds with position-independent GC code.
 - Package the x86-32 Serviceability Agent and honor build parallelism.
