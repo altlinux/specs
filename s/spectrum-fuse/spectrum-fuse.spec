@@ -1,7 +1,7 @@
 %define        oname fuse
 
 Name:          spectrum-fuse
-Version:       1.6.0
+Version:       1.10.1
 Release:       alt1
 Summary:       The Free Unix Spectrum Emulator
 License:       GPLv2
@@ -17,8 +17,8 @@ BuildRequires: libalsa-devel
 BuildRequires: libgtk+3-devel
 # libgcrypt: the ability to digitally sign RZX files (note that Fuse requires version 1.1.42 or later).
 BuildRequires: libgcrypt-devel
-# libjsw: allow joystick input to be used (not required for joystick emulation).
-BuildRequires: libjsw-devel
+# SDL2: hardware joystick support in the GTK interface (not required for joystick emulation).
+BuildRequires: pkgconfig(sdl2)
 # libxml2: the ability to load and save Fuse's current configuration.
 BuildRequires: libxml2-devel
 # libpng: the ability to save screenshots.
@@ -30,7 +30,7 @@ BuildRequires: bzip2-devel
 # libaudiofile: support for loading from .wav files.
 BuildRequires: libaudiofile-devel
 BuildRequires: glib2-devel
-BuildRequires: pkgconfig(libspectrum) >= 1.5.0
+BuildRequires: pkgconfig(libspectrum) >= 1.8.0
 BuildRequires: xorg-cf-files
 BuildRequires: flex
 BuildRequires: gcc-c++
@@ -48,16 +48,14 @@ and sound.
 # LCC crashes with -O3 by default
 sed -i "/scaler_AdvMame3x/i __attribute__((optimize(2)))" ui/scaler/scalers.c
 %endif
-sed -e "s/=fuse/=spectrum-fuse/" -e "s/=Fuse/=Spectrum Fuse/" -e "/Version/a Encoding=UTF-8" -i data/fuse.desktop.in
-find -name "Makefile.am" -exec sed -e "s/fuse_/spectrum_fuse_/" -e "s/= fuse/= spectrum-fuse/" -i {} \;
+sed -e "s/=fuse/=spectrum-fuse/" -e "s/=Fuse/=Spectrum Fuse/" -i data/net.sourceforge.fuse_emulator.Fuse.desktop.in
+find -name "Makefile.am" -exec sed -E -e "s/(^|[^a-z_.])fuse_([A-Z])/\1spectrum_fuse_\2/" -e "s/EXTRA_fuse_/EXTRA_spectrum_fuse_/" -e "s/= fuse$/= spectrum-fuse/" -i {} \;
 sed -e "s/\[fuse]/[spectrum-fuse]/g" -i configure.ac
 sed -e "s/\(^\|\" \|B \"\?\|IR \|TH \)fuse/\1spectrum\\\\-fuse/" -i man/fuse.1
 
 %build
 %autoreconf
 %configure \
-      --disable-ui-joystick \
-      --enable-joystick \
       --with-gtk \
       --enable-desktop-integration
 %make_build
@@ -67,10 +65,8 @@ export DESTDIR=%buildroot
 %makeinstall
 install -D -m 0644 %buildroot/%buildroot/%_man1dir/fuse.1 %buildroot/%_man1dir/spectrum-fuse.1
 rm %buildroot/%buildroot/%_man1dir/fuse.1
-mv %buildroot/%_desktopdir/%oname.desktop  %buildroot%_desktopdir/%name.desktop
 mv %buildroot/usr/share/mime/packages/fuse.xml %buildroot/usr/share/mime/packages/spectrum-fuse.xml
 find %buildroot%buildroot -type f | while read f; do nf=$(sed "s|%buildroot||" <<< "$f"); echo "== $nf"; install -D -m 644 "$f" "$nf"; rm -f "$f"; done
-find %buildroot -name 'fuse.png' -type f | while read f; do nf=$(sed "s|fuse.png|spectrum-fuse.png|" <<< "$f"); echo "== $nf"; install -D -m 644 "$f" "$nf"; rm -f "$f"; done
 
 install -pm0644 %{SOURCE3} .
 
@@ -84,10 +80,17 @@ chmod +x %buildroot%_bindir/%name
 %_desktopdir/*
 %_datadir/%name
 %_datadir/mime/*
-%_iconsdir/hicolor/*/apps/spectrum-fuse.png
+%_iconsdir/hicolor/*/apps/net.sourceforge.fuse_emulator.Fuse.png
+%_datadir/metainfo/net.sourceforge.fuse_emulator.Fuse.metainfo.xml
 %_iconsdir/hicolor/*/mimetypes/application-x-spectrum.png
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1.10.1-alt1
+- New version 1.10.1 (requires libspectrum 1.8.0).
+- Use SDL2 for hardware joystick support: BuildRequires libjsw-devel replaced
+  with pkgconfig(sdl2) (upstream dropped libjsw).
+- Package the upstream desktop file, icons and AppStream metainfo.
+
 * Sat Dec 13 2025 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - New version (ALT #56122).
 
