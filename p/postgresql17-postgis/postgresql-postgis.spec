@@ -2,14 +2,14 @@
 %define pg_ver 17
 
 Name: postgresql%pg_ver-postgis
-Version: 3.6.4
+Version: 3.7.0
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
 Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL %pg_ver
 License: GPL-2.0
 Group: Databases
-Url: http://postgis.refractions.net
+URL: https://www.postgis.net/
 
 Source: postgis-%version.tar.gz
 Source1: create_template_postgis
@@ -22,14 +22,15 @@ BuildRequires: docbook5-style-xsl
 BuildRequires: flex
 BuildRequires: libgdal-devel
 BuildRequires: libgeos-devel
+BuildRequires: libgmp-devel
 BuildRequires: libgtk+2-devel
+BuildRequires: libjson-c-devel
+BuildRequires: libpcre-devel
 BuildRequires: libproj-devel
+BuildRequires: libprotobuf-c-devel
 BuildRequires: libxml2-devel
 BuildRequires: postgresql%pg_ver-server-devel
-BuildRequires: libjson-c-devel
-BuildRequires: libprotobuf-c-devel
 BuildRequires: protobuf-c-compiler
-BuildRequires: libpcre-devel
 BuildRequires: xsltproc
 
 Requires: postgresql%pg_ver-server
@@ -74,7 +75,6 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %files
 %doc %_docdir/postgis
 %doc %_docdir/postgis-%version
-%doc %_datadir/doc/postgresql/extension/README.address_standardizer
 %_bindir/*
 %_man1dir/*
 %_datadir/applications/shp2pgsql-gui.desktop
@@ -84,11 +84,13 @@ rm -rf %buildroot%_libdir/liblwgeom.a
 %ifnarch %e2k
 %_libdir/pgsql/bitcode
 %endif
-%_libdir/pgsql/address_standardizer*.so
 %_datadir/pgsql/contrib/postgis-*/*.sql
 %_datadir/pgsql/extension
 
 %changelog
+* Wed Nov 04 2026 Andrey Cherepanov <cas@altlinux.org> 3.7.0-alt1
+- New version.
+
 * Sat Jun 13 2026 Andrey Cherepanov <cas@altlinux.org> 3.6.4-alt1
 - New version.
 
