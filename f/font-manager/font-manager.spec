@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define rdn_name com.github.FontManager.FontManager
@@ -8,8 +8,8 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 Name: font-manager
-Version: 0.9.4
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Summary: A font management application for the GNOME desktop
 License: GPL-3.0-or-later
@@ -23,8 +23,6 @@ Source: https://github.com/FontManager/%name/archive/%version/%name-%version.tar
 %else
 Source: %name-%version.tar
 %endif
-# https://github.com/FontManager/font-manager/pull/468
-Patch10: %name-0.9.4-up-vala-0.56.19.patch
 
 Requires: yelp
 
@@ -59,10 +57,10 @@ Enlightenment, and even KDE.
 
 %prep
 %setup
-%patch10 -p1
 
 %build
 %meson \
+    -Dbuildtype=release \
     -Dreproducible=true \
     %{subst_enable_meson_bool nautilus nautilus}
 %nil
@@ -93,6 +91,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Wed Nov 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
+- 0.9.5
+
 * Wed Apr 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt2
 - updated to 0.9.4-20-gff593362
 - fixed build with vala-0.56.19

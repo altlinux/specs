@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 1.7
 %define git_commit 3d400164bcfb2616873be65e298df2df184a8971
 %define _name waycheck
@@ -6,7 +8,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Display information for Wayland compositors
 License: Apache-2.0
@@ -15,7 +17,11 @@ Url: https://gitlab.freedesktop.org/serebit/waycheck
 
 Vcs: https://gitlab.freedesktop.org/serebit/waycheck.git
 
+%if_disabled snapshot
 Source: https://gitlab.freedesktop.org/serebit/waycheck/-/archive/v%version/%_name-%version.tar.gz
+%else
+Source: %_name-%version.tar
+%endif
 
 %define wayland_ver 1.17
 
@@ -35,7 +41,7 @@ you're working on your own compositor, to keep track of which protocols
 you still need to implement.
 
 %prep
-%setup -n %_name-v%version-%git_commit
+%setup -n %_name-%{?_disable_snapshot:v%version-%git_commit}%{?_enable_snapshot:%version}
 
 %build
 %meson
@@ -56,6 +62,9 @@ you still need to implement.
 %doc README.md
 
 %changelog
+* Wed Nov 04 2026 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt2
+- updated to v1.7.0-8-gd3147c0
+
 * Sat Jun 28 2025 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
