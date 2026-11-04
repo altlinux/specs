@@ -6,21 +6,18 @@ BuildRequires: jpackage-17-compat
 %define _localstatedir %{_var}
 Name:          msv
 Epoch:         1
-Version:       2013.6.1
-Release:       alt3_19jpp11.1
+Version:       2022.7
+Release:       alt1
 Summary:       Multi-Schema Validator
 License:       BSD and ASL 1.1
-URL:           http://msv.java.net/
+URL:           https://github.com/xmlark/msv
 
-# To generate tarball from upstream source control:
-# $ ./create-tarball
-Source0:       %{name}-%{version}-clean.tar.gz
+Source0:       %{name}-%{version}.tar
 
 Source2:       http://www.apache.org/licenses/LICENSE-2.0.txt
 Source3:       create-tarball.sh
 
 # Use CatalogResolver from xml-commons-resolver package
-Patch1:        %{name}-Use-CatalogResolver-class-from-xml-commons-resolver.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(isorelax:isorelax)
@@ -30,6 +27,9 @@ BuildRequires:  mvn(net.java:jvnet-parent:pom:)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
+BuildRequires:  mvn(org.jdom:jdom2)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(relaxngDatatype:relaxngDatatype:20020414)
@@ -121,11 +121,18 @@ Requires:      msv-xsdlib
 %prep
 %setup -q
 
-# We don't have this plugin
-%pom_remove_plugin :buildnumber-maven-plugin
-
 # javadoc generation fails due to strict doclint in JDK 8
-%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+
+# Remove a publishing extension that is unavailable in the offline build
+%pom_xpath_remove 'pom:build/pom:extensions'
+%pom_remove_plugin org.codehaus.mojo:flatten-maven-plugin
+
+# These upstream modules have no ALT subpackages
+%pom_disable_module relames
+%pom_disable_module schmit
+%pom_disable_module tahiti
+%pom_disable_module trexconverter
 
 # Needed becuase of patch3
 %pom_add_dep xml-resolver:xml-resolver
@@ -145,13 +152,6 @@ rm -f testharness/src/*.java
 for m in $(find . -name MANIFEST.MF) ; do
   sed --in-place -e '/^[Cc]lass-[Pp]ath:/d' $m
 done
-
-# Apply patches
-%patch1 -p1
-
-# Fix isorelax groupId
-%pom_xpath_replace "pom:dependency[pom:groupId[text()='com.sun.xml.bind.jaxb']]/pom:groupId" "<groupId>isorelax</groupId>"
-%pom_xpath_replace "pom:dependency[pom:groupId[text()='com.sun.xml.bind.jaxb']]/pom:groupId" "<groupId>isorelax</groupId>" msv
 
 # remove maven-compiler-plugin configuration that is broken with Java 11
 %pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration/pom:source'
@@ -181,29 +181,27 @@ done
 
 %install
 %mvn_install
+cd %{_builddir}/%{name}-%{version}
 
 # Manuals
 install -d -m 755 %{buildroot}%{_docdir}/%{name}/msv
-install -m 644 msv/doc/*.html     %{buildroot}%{_docdir}/%{name}/msv
-install -m 644 msv/doc/*.gif      %{buildroot}%{_docdir}/%{name}/msv
-install -m 644 msv/doc/README.txt %{buildroot}%{_docdir}/%{name}/msv
+install -m 644 docs/core/*.html %{buildroot}%{_docdir}/%{name}/msv
+install -m 644 docs/core/*.gif  %{buildroot}%{_docdir}/%{name}/msv
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}/rngconverter
-install -m 644 rngconverter/README.txt %{buildroot}%{_docdir}/%{name}/rngconverter
+install -m 644 docs/rngconverter/README.md %{buildroot}%{_docdir}/%{name}/rngconverter
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}/generator
-install -m 644 generator/*.html     %{buildroot}%{_docdir}/%{name}/generator
-install -m 644 generator/README.txt %{buildroot}%{_docdir}/%{name}/generator
+install -m 644 docs/generator/*.html     %{buildroot}%{_docdir}/%{name}/generator
+install -m 644 docs/generator/README.md %{buildroot}%{_docdir}/%{name}/generator
 
 install -d -m 755 %{buildroot}%{_docdir}/%{name}/xsdlib
-install -m 644 xsdlib/*.html     %{buildroot}%{_docdir}/%{name}/xsdlib
-install -m 644 xsdlib/README.txt %{buildroot}%{_docdir}/%{name}/xsdlib
+install -m 644 docs/xsdlib/*.html     %{buildroot}%{_docdir}/%{name}/xsdlib
+install -m 644 docs/xsdlib/README.md %{buildroot}%{_docdir}/%{name}/xsdlib
 
 # Examples
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/msv
 cp -pr msv/examples/* %{buildroot}%{_datadir}/%{name}/msv
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/xsdlib
-cp -pr xsdlib/examples/* %{buildroot}%{_datadir}/%{name}/xsdlib
 
 # Scripts
 %jpackage_script com.sun.msv.driver.textui.Driver "" "" msv-msv:msv-xsdlib:relaxngDatatype2011.1:isorelax msv true
@@ -215,38 +213,47 @@ touch $RPM_BUILD_ROOT/etc/java/msv.conf
 
 %files msv -f .mfiles-msv-msv
 %{_bindir}/msv
-%doc License.txt
-%doc msv/doc/Apache-LICENSE-1.1.txt
+%doc docs/core/license.txt
+%doc docs/core/Apache-LICENSE-1.1.txt
 %doc Apache-LICENSE-2.0.txt
 %config(noreplace,missingok) /etc/java/msv.conf
 
 %files rngconv -f .mfiles-msv-rngconverter
 %{_bindir}/rngconv
-%doc msv/doc/Apache-LICENSE-1.1.txt
-%doc License.txt
+%doc docs/rngconverter/license.txt
+%doc docs/core/Apache-LICENSE-1.1.txt
 
 %files xmlgen -f .mfiles-msv-generator
 %{_bindir}/xmlgen
-%doc msv/doc/Apache-LICENSE-1.1.txt
-%doc License.txt
+%doc docs/generator/license.txt
+%doc docs/core/Apache-LICENSE-1.1.txt
 
 %files xsdlib -f .mfiles-xsdlib
-%doc msv/doc/Apache-LICENSE-1.1.txt
-%doc License.txt
+%doc docs/xsdlib/license.txt
+%doc docs/core/Apache-LICENSE-1.1.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc License.txt
-%doc msv/doc/Apache-LICENSE-1.1.txt
+%doc docs/core/license.txt
+%doc docs/core/Apache-LICENSE-1.1.txt
 %doc Apache-LICENSE-2.0.txt
 
 %files manual
 %doc %{_docdir}/%{name}
-%doc License.txt
+%doc docs/core/license.txt
 
 %files demo
 %{_datadir}/%{name}
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2022.7-alt1
+- update to upstream 2022.7.
+- remove Maven publication extensions and plugins unavailable offline.
+- added BuildRequires: mvn(org.apache.maven.plugins:maven-assembly-plugin).
+- added BuildRequires: mvn(org.jdom:jdom2).
+- added BuildRequires: mvn(org.apache.maven.plugins:maven-failsafe-plugin).
+- skip upstream Maven modules without ALT subpackages.
+- update documentation paths for the upstream layout.
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1:2013.6.1-alt3_19jpp11.1
 - NMU: fix FTBFS: replaced BuildRequires: jpackage-11-compat with jpackage-17-compat
   (maven-bundle-plugin requires Java 17)
