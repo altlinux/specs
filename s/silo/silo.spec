@@ -1,7 +1,8 @@
 %define import_path github.com/minio/minio
+%define upstream_commit 0cd388c666f8211f552604ae73448a066e9c25ce
 
 Name: silo
-Version: 2026.08.06
+Version: 2026.10.18
 Release: alt1
 Summary: S3-compatible object storage server
 License: AGPL-3.0-or-later
@@ -18,7 +19,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-macros-systemd
 Requires(pre): systemd
 BuildRequires: systemd
-BuildRequires: golang >= 1.26.5
+BuildRequires: golang >= 1.27.2
 
 %description
 Silo is an S3-compatible object storage server based on MinIO.
@@ -36,6 +37,12 @@ export GOPROXY=off
 
 %golang_prepare
 cd "$BUILDDIR/src/$IMPORT_PATH"
+
+export LDFLAGS="-X github.com/minio/minio/cmd.Version=2026-10-18T00:00:00Z \
+-X github.com/minio/minio/cmd.ReleaseTag=%version-%release \
+-X github.com/minio/minio/cmd.CommitID=%upstream_commit \
+-X github.com/minio/minio/cmd.ShortCommitID=0cd388c666f8"
+
 %golang_build .
 mv "$BUILDDIR/bin/minio" "$BUILDDIR/bin/silo"
 
@@ -69,5 +76,9 @@ install -dpm0750 %buildroot%_localstatedir/silo/data
 %attr(0750,silo,silo) %dir %_localstatedir/silo/data
 
 %changelog
+* Mon Nov 02 2026 Olesya Shuster <lesyafox@altlinux.org> 2026.10.18-alt1
+- Update to RELEASE.2026-10-18T00-00-00Z.
+- Fix displayed version and commit ID (closes: #60857).
+
 * Thu Oct 01 2026 Olesya Shuster <lesyafox@altlinux.org> 2026.08.06-alt1
 - Initial build for ALT Linux Sisyphus
