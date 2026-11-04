@@ -9,7 +9,7 @@
 
 Name: hugin
 Version: 2025.0.1
-Release: alt1
+Release: alt2
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
 Group: Graphics
@@ -20,6 +20,7 @@ Url: https://hugin.sourceforge.net/
 Source: %name-%version.tar
 Patch1: Add-translations-in-desktop-files.patch
 Patch2: hugin-2025.0.1-backport-vigra-version-parsing-fix.patch
+Patch3: hugin-2025.0.1-fix-PyInt_AsLong.patch
 
 %define boost_ver 1.54
 %define pano_ver 2.9.21
@@ -57,8 +58,7 @@ panorama, stitch any series of overlapping pictures and much more.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
+%autopatch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -105,6 +105,9 @@ done
 
 
 %changelog
+* Wed Nov 04 2026 Andrew A. Vasilyev <andy@altlinux.org> 2025.0.1-alt2
+- NMU: fix FTBFS with new Python
+
 * Tue Jul 07 2026 Leonid Znamenok <respublica@altlinux.org> 2025.0.1-alt1
 - 2025.0.1
 
