@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: plasma-addon-krohnkite
-Version: 0.9.10.0
+Version: 0.9.11.0
 Release: alt1
 
 Summary: A dynamic tiling extension for KWin 6 only
@@ -49,6 +49,9 @@ done
 %_datadir/kwin/scripts/krohnkite
 
 %changelog
+* Wed Nov 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.11.0-alt1
+- 0.9.10.0 -> 0.9.11.0
+
 * Mon Oct 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.10.0-alt1
 - 0.9.9.2 -> 0.9.10.0
 
