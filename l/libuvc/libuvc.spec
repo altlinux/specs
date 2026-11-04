@@ -1,5 +1,5 @@
 Name:           libuvc
-Version:        0.0.8
+Version:        0.0.9
 Release:        alt1
 Summary:        libuvc is a cross-platform library for USB video devices.
 #Summary(ru_RU.UTF8): 
@@ -57,6 +57,9 @@ doxygen doxygen.conf
 %doc doc/*
 
 %changelog
+* Wed Nov 04 2026 Alexei Mezin <alexvm@altlinux.org> 0.0.9-alt1
+- New version
+
 * Sun Sep 13 2026 Alexei Mezin <alexvm@altlinux.org> 0.0.8-alt1
 - New version
 
