@@ -4,7 +4,7 @@
 
 Name: ceph-deploy
 Version: 2.1.0
-Release: alt3
+Release: alt4
 
 Summary: Deploy Ceph with minimal infrastructure
 License: MIT
@@ -104,6 +104,12 @@ install -pDm644 docs/build/man/%name.1 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Thu Nov 05 2026 Alexey Shabalin <shaba@altlinux.org> 2.1.0-alt4
+- monitor keys are now generated with the AES256KRB5 (aes256k) cipher:
+  freshly created ceph >= 19.2.6/19.2.7 clusters accept aes256k only,
+  and "mon create-initial" failed at gatherkeys
+  with legacy type 1 keys (Closes: #61331)
+
 * Mon Dec 18 2023 Michael Shigorin <mike@altlinux.org> 2.1.0-alt3
 - make uninstall.py target python3 modules with removal
   (thx Andrey Firsov for the proposed fix)
