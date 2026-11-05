@@ -2,12 +2,10 @@
 %define pypi_name sqlalchemy
 %define mod_name %pypi_name
 
-# %%python3_set_limited_api not supported yet
-
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.6
+Version: 2.1.8
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -16,26 +14,20 @@ Group: Development/Python
 Url: https://pypi.org/project/sqlalchemy
 Vcs: https://github.com/sqlalchemy/sqlalchemy
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 %py3_provides SQLAlchemy
 Provides: python3-module-SQLAlchemy = %EVR
 Obsoletes: python3-module-SQLAlchemy
 # merged into main
 Provides: python3-module-sqlalchemy-tests = %EVR
 Obsoletes: python3-module-sqlalchemy-tests <= %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
 # in various tests, like in the tests for sphinx).
 Requires: python3-modules-sqlite3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata_extra asyncio
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_deps metadata_extra asyncio
+%pyproject_configure_without_limited_api
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives
@@ -47,11 +39,7 @@ simple and Pythonic domain language.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+%pyproject_setup_deps
 
 %build
 # https://setuptools.pypa.io/en/latest/deprecated/commands.html#release-tagging-options
@@ -68,6 +56,9 @@ simple and Pythonic domain language.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 05 2026 Stanislav Levin <slev@altlinux.org> 2.1.8-alt1
+- 2.1.6 -> 2.1.8
+
 * Thu Oct 22 2026 Stanislav Levin <slev@altlinux.org> 2.1.6-alt1
 - 2.1.5 -> 2.1.6
 
