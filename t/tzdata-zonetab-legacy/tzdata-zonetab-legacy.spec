@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tzdata-zonetab-legacy
-Version: 2024a
-Release: alt1
+Version: 2026e
+Release: alt2
 
 Summary: Deprecated timezone data for compatibility
 License: GPLv2+
@@ -14,7 +14,9 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires: tzdata-source = %EVR
+Requires: tzdata >= %EVR
+
+BuildRequires: tzdata-source
 
 %description
 %summary.
@@ -29,5 +31,8 @@ install -D -m 644 /usr/src/tzdata/zone.tab %buildroot%_datadir/zoneinfo/zone.tab
 %_datadir/zoneinfo/zone.tab
 
 %changelog
+* Tue Oct 13 2026 Vladimir Romanov <rirusha@altlinux.org> 2026e-alt2
+- Bumped version to 2026e-alt2.
+
 * Wed Sep 16 2026 Vladimir Romanov <rirusha@altlinux.org> 2024a-alt1
 - Initial build.
