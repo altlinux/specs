@@ -1,5 +1,5 @@
 Name: rpm-build-xfce4
-Version: 0.6.0
+Version: 0.7.0
 Release: alt1
 
 Summary: comfort build environment for xfce4 and plugins
@@ -46,6 +46,9 @@ install -m644 %SOURCE0 %buildroot%_rpmmacrosdir/xfce4
 
 
 %changelog
+* Thu Nov 05 2026 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Don't rely on _priority_distbranch in macros
+
 * Tue Jan 20 2026 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
 - Added %%if_xfce4_need_exo macro.
 
