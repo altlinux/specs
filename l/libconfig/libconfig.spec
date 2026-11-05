@@ -8,7 +8,7 @@
 %def_enable static
 
 Name: libconfig
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 Summary: C/C++ Configuration File Library
 License: LGPLv2.1+
@@ -141,6 +141,9 @@ sed -i '/examples.*Makefile/d' configure.ac
 %endif
 
 %changelog
+* Thu Nov 05 2026 Andrey Kovalev <ded@altlinux.org> 1.8.3-alt1
+- Updated to upstream version 1.8.3.
+
 * Wed Jan 14 2026 Andrey Kovalev <ded@altlinux.org> 1.8.2-alt1
 - Updated to upstream version 1.8.2.
 
