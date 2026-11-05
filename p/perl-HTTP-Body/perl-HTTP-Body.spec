@@ -1,7 +1,7 @@
 %define module HTTP-Body
 
 Name: perl-%module
-Version: 1.23
+Version: 1.24
 Release: alt1
 
 Summary: %module - HTTP Body Parser
@@ -34,6 +34,17 @@ export TEST_POD=1
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.24-alt1
+- new version 1.24
+- fixes:
+  + CVE-2026-116131: limit URL-encoded fields and multipart parts.
+  + CVE-2026-116132: remove incomplete multipart upload files.
+  + CVE-2026-116133: reject malformed multipart lines in linear time.
+  + CVE-2026-116134: limit multipart part header size and line count.
+  + CVE-2026-116135: decode mixed-case URL-encoded percent escapes.
+  + CVE-2026-116285: parse chunk size lines in linear time.
+  + CVE-2026-116531: handle chunk boundaries split across reads.
+
 * Thu Apr 03 2025 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
 - automated CPAN update
 
