@@ -1,5 +1,5 @@
 Name: libgpiod
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Linux GPIO interacting library
@@ -205,6 +205,9 @@ rm -vf %buildroot%_libdir/*.a
 %_man1dir/gpiocli.1*
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.2-alt1
+- 2.3.2
+
 * Mon Jul 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.1-alt1
 - 2.3.1 released
 
