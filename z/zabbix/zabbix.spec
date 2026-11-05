@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		0d6fa36d0a0
+%define svnrev		c81e276e505
 
 %def_with pgsql
 %def_enable java
@@ -17,7 +17,7 @@
 %endif
 
 Name: zabbix
-Version: 7.0.32
+Version: 8.0.0
 Release: alt1
 Epoch: 1
 
@@ -36,7 +36,7 @@ BuildRequires(pre): libelf-devel rpm-build-webserver-common rpm-macros-apache2
 %{?_enable_webservice:BuildRequires(pre): rpm-build-golang}
 
 BuildRequires: libcurl-devel libevent-devel libldap-devel libmysqlclient-devel libnet-snmp-devel
-BuildRequires: libopenipmi-devel libpcre-devel libsqlite3-devel libxml2-devel perl-parent rpm-build-python3
+BuildRequires: libopenipmi-devel libpcre2-devel libsqlite3-devel libxml2-devel perl-parent rpm-build-python3
 BuildRequires: perl-Switch zlib-devel /proc libzstd-devel
 %if_with ssh2
 BuildRequires: libssh2-devel
@@ -900,6 +900,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Nov 05 2026 Alexei Takaseev <taf@altlinux.org> 1:8.0.0-alt1
+- 8.0.0
+
 * Tue Oct 20 2026 Alexei Takaseev <taf@altlinux.org> 1:7.0.32-alt1
 - 7.0.32 (Fixes: CVE-2026-59782, CVE-2026-59783, CVE-2026-59785, CVE-2026-59786, CVE-2026-59787)
 
