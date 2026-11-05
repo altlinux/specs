@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: neovide
-Version: 0.17.1
+Version: 0.17.2
 Release: alt1
 
 Summary: No Nonsense Neovim Gui
@@ -89,6 +89,9 @@ done
 %_iconsdir/hicolor/*/apps/neovide.*
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.17.2-alt1
+- Updated to 0.17.2.
+
 * Sat Oct 31 2026 Anton Zhukharev <ancieg@altlinux.org> 0.17.1-alt1
 - Updated to 0.17.1.
 
