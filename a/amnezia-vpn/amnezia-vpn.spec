@@ -1,12 +1,14 @@
-%define git_commit_hash de93650a
-%define git_commit_date 1789711154
+%define git_commit_hash ac175c8a
+%define git_commit_date 1793636632
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
-%define amnezia_xray_bindings_version 1.4.0
+%define qtgamepad_commit f72b3e0c6229d1622b6bc7f6a5ec5ccff83460eb
+%define amnezia_xray_bindings_version 1.5.0
+%define libagw_version 1.0.8
 
 Name: amnezia-vpn
-Version: 5.0.3.0
+Version: 5.1.0.6
 Release: alt1
 
 Summary: The best client for self-hosted VPN
@@ -26,6 +28,11 @@ Source2: qtkeychain-%qtkeychain_commit.tar
 # https://github.com/%name/amnezia-xray-bindings/archive/v%amnezia_xray_bindings_version/amnezia-xray-bindings-%amnezia_xray_bindings_version.tar.gz
 Source3: amnezia-xray-bindings-%amnezia_xray_bindings_version.tar
 
+# https://github.com/%name/qtgamepad/archive/%qtgamepad_commit/qtgamepad-%qtgamepad_commit.tar.gz
+Source5: qtgamepad-%qtgamepad_commit.tar
+# https://github.com/%name/libagw/archive/v%libagw_version/libagw-%libagw_version.tar.gz
+Source6: libagw-%libagw_version.tar
+
 Source4: vendor.tar
 
 Patch0: %name-tun2-sudo.patch
@@ -35,6 +42,7 @@ BuildRequires: libsecret-devel
 BuildRequires: libssh-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: qt6-5compat-devel
+BuildRequires: qt6-httpserver-devel
 BuildRequires: qt6-remoteobjects-devel
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-tools-devel
@@ -70,11 +78,12 @@ Amnezia is an open-source VPN client, with a key feature that enables you to dep
 This package contains systemd service files.
 
 %prep
-%setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4
+%setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 %patch0 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
+%__mv -Tf ../qtgamepad-%qtgamepad_commit client/3rd/qtgamepad
 
 %__mv -Tf ../vendor ../amnezia-xray-bindings-%amnezia_xray_bindings_version/vendor
 
@@ -105,6 +114,26 @@ if(NOT TARGET amnezia::xray-bindings)
     set_target_properties(amnezia::xray-bindings PROPERTIES
         IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/../build/amnezia_xray.a"
         INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/../build"
+    )
+endif()
+EOF
+
+# Build libagw (static c-archive, like upstream conan recipe on Linux)
+pushd ../libagw-%libagw_version
+%__mkdir_p build
+CGO_ENABLED=1 go build -buildmode=c-archive -ldflags='-s -w' -o build/libagw.a ./archive
+%__cp cabi/agw.h cabi/agw_types.h build/
+popd
+
+# Create cmake config for libagw
+%__mkdir_p ../libagw-%libagw_version/cmake
+cat > ../libagw-%libagw_version/cmake/libagw-config.cmake << 'EOF'
+if(NOT TARGET amnezia::libagw)
+    add_library(amnezia::libagw STATIC IMPORTED)
+    set_target_properties(amnezia::libagw PROPERTIES
+        IMPORTED_LOCATION "${CMAKE_CURRENT_LIST_DIR}/../build/libagw.a"
+        INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_LIST_DIR}/../build"
+        INTERFACE_LINK_LIBRARIES "pthread"
     )
 endif()
 EOF
@@ -140,7 +169,7 @@ export LC_ALL=C.UTF-8
 %add_optflags -Wno-error=return-type
 %cmake \
     -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
-    -DCMAKE_PREFIX_PATH:PATH=%_builddir/amnezia-xray-bindings-%amnezia_xray_bindings_version/cmake
+    -DCMAKE_PREFIX_PATH:PATH="%_builddir/amnezia-xray-bindings-%amnezia_xray_bindings_version/cmake;%_builddir/libagw-%libagw_version/cmake"
 %cmake_build
 
 %install
@@ -182,6 +211,11 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Thu Nov 05 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.0.6-alt1
+- Version 5.1.0.6
+- Update amnezia-xray-bindings to 1.5.0
+- Add libagw 1.0.8
+
 * Sat Oct 03 2026 Nazarov Denis <nenderus@altlinux.org> 5.0.3.0-alt1
 - Version 5.0.3.0
 
