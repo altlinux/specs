@@ -1,145 +1,125 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: icu4j
+Version: 79.1
+Release: alt1
+Epoch: 1
+
+Summary: International Components for Unicode for Java
+License: Unicode-3.0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 71.1
-%global gittag %(v=%{version}; echo "release-$v" | sed 's/\\./-/')
-%global srctgz %(v=%{version}; echo "icu4j-$v" | sed 's/\\./_/')
-
-Name:           icu4j
-Version:        71.1
-Release:        alt1_3jpp11
-Epoch:          1
-Summary:        International Components for Unicode for Java
-# ICU itself is now covered by Unicode license, but still has contributed
-# components covered by MIT and BSD licenses
-# Data from the Timezone Database is Public Domain
-License:        Unicode and MIT and BSD and Public Domain
-URL:            https://icu.unicode.org/
-
-Source0:        https://github.com/unicode-org/icu/releases/download/%{gittag}/%{srctgz}.tgz
-
-# Add better OSGi metadata to core jar
-Patch0:         0001-Improve-OSGi-manifest.patch
-
-# Use default Doclet due to Doclet API changes in Java 9+
-# that prevent ICU's custom one from being built
-Patch1:         0002-Use-default-doclet.patch
-
-# Update the code for Java 8.  Patch courtesy of OpenSuSE.
-Patch2:         0003-java8.patch
-
-# Ivy is no longer available from Fedora
-Patch3:         0004-remove-ivy.patch
-
-# Fix some invalid javadoc characters
-Patch4:         0005-javadoc.patch
-
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  javapackages-local
-
-BuildArch:      noarch
-Source44: import.info
-%define java_bin %_jvmdir/java/bin
-
-%description
-The International Components for Unicode (ICU) library provides robust and
-full-featured Unicode services on a wide variety of platforms. ICU supports
-the most current version of the Unicode standard, and provides support for
-supplementary characters (needed for GB 18030 repertoire support).
-
-Java provides a very strong foundation for global programs, and IBM and the
-ICU team played a key role in providing globalization technology into Sun's
-Java. But because of its long release schedule, Java cannot always keep
-up-to-date with evolving standards. The ICU team continues to extend Java's
-Unicode and internationalization support, focusing on improving
-performance, keeping current with the Unicode standard, and providing
-richer APIs, while remaining as compatible as possible with the original
-Java text and internationalization API design.
-
-%package charset
-Group: Development/Java
-Summary: Charset converter library of %{name}
-
-%description charset
-Charset converter library of %{name}.
-
-%package localespi
-Group: Development/Java
-Summary: Locale SPI library of %{name}
-
-%description localespi
-Locale SPI library of %{name}.
-
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-Requires: java-javadoc
+URL: https://icu.unicode.org/
+VCS: https://github.com/unicode-org/icu.git
 BuildArch: noarch
 
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
+BuildRequires: mvn(com.google.code.gson:gson)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(pl.pragmatists:JUnitParams)
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-shade-plugin
+BuildRequires: maven-plugin-build-helper
+
+%description
+ICU4J provides Unicode and internationalization services for Java,
+including character properties, normalization, collation, transliteration,
+locale data, calendars and number and date formatting.
+
+%package charset
+Summary: Charset converters for ICU4J
+Group: Development/Java
+
+%description charset
+Additional charset converters for ICU4J.
+
+%package parent
+Summary: Maven parent metadata for ICU4J
+Group: Development/Java
+
+%description parent
+Parent POMs for the ICU4J Java modules.
+
+%package taglets
+Summary: Javadoc taglets for ICU4J
+Group: Development/Java
+
+%description taglets
+Javadoc extensions used to generate ICU4J API documentation.
+
+%package javadoc
+Summary: API documentation for ICU4J
+License: Unicode-3.0 AND MIT
+Group: Development/Java
+
 %description javadoc
-API documentation for %{name}.
+Generated Java API documentation for ICU4J.
 
 %prep
-%setup -q -c
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%setup
 
+# Publication and cleanup plugins are unnecessary for an offline RPM build.
+%pom_remove_plugin -r :flatten-maven-plugin
+%pom_remove_plugin -r :maven-clean-plugin
+%pom_remove_plugin -r :maven-deploy-plugin
 
-# Ivy local does not name these libs as icu4j expects
-sed -i -e 's/junit-4.12/junit-SYSTEM/' \
-       -e 's/hamcrest-core-1.3/hamcrest-core-SYSTEM/' build.xml
+# Keep every runtime module and its ordinary tests.
+# These modules are examples, benchmarks and development/reporting tools.
+%pom_disable_module demos icu4j
+%pom_disable_module samples icu4j
+%pom_disable_module perf-tests icu4j
+%pom_disable_module build icu4j/tools
+%pom_disable_module errorprone_report icu4j/tools
+%pom_disable_module misc icu4j/tools
+%pom_disable_module pmd icu4j/tools
 
-# Missing dep on pl.pragmatists:JUnitParams for tests, so delete tests that
-# requires it for now
-sed -i -e '/pl.pragmatists/d' ivy.xml
-rm main/tests/core/src/com/ibm/icu/dev/test/format/DataDrivenFormatTest.java
-rm main/tests/core/src/com/ibm/icu/dev/test/calendar/DataDrivenCalendarTest.java
-rm main/tests/core/src/com/ibm/icu/dev/test/serializable/CompatibilityTest.java
-rm main/tests/core/src/com/ibm/icu/dev/test/serializable/CoverageTest.java
-rm main/tests/core/src/com/ibm/icu/dev/test/util/LocaleMatcherTest.java
-rm main/tests/charset/src/com/ibm/icu/dev/test/charset/TestConversion.java
-rm main/tests/translit/src/com/ibm/icu/dev/test/translit/TransliteratorDisorderedMarksTest.java
+# Doclet extensions are build inputs, not an ICU runtime dependency.
+%pom_xpath_inject \
+  "pom:dependencies/pom:dependency[pom:artifactId='tools_taglets']" \
+  "<scope>provided</scope>" icu4j/main/core
+
+%mvn_package :icu-root parent
+%mvn_package :icu4j-root parent
+%mvn_package :icu4j-main parent
+%mvn_package :icu4j-tools parent
+%mvn_package :icu4j-charset charset
+%mvn_package :tools_taglets taglets
+%mvn_package :framework __noinstall
+%mvn_package :common_tests __noinstall
+%mvn_package :icu4j %name
+%mvn_package :core %name
+%mvn_package :collate %name
+%mvn_package :currdata %name
+%mvn_package :langdata %name
+%mvn_package :regiondata %name
+%mvn_package :translit %name
 
 %build
-#export JAVA_HOME=%{_jvmdir}/java/
-mkdir -p ~/.ant/lib
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavac.source=8 -Djavac.target=8 -Divy.mode=local -Doffline=true -Ddoclint.option='-Xdoclint:none' -Dicu4j.api.doc.jdk.link= all
-
-for jar in icu4j icu4j-charset icu4j-localespi ; do
-  sed -i -e 's/@POMVERSION@/%{version}/' maven/$jar/pom.xml
-  %mvn_artifact maven/$jar/pom.xml $jar.jar
-  %mvn_package :$jar $jar
-done
+%mvn_build -s
 
 %install
-%mvn_install -J doc
-
-# No poms for these, so install manually
-install -m 644 icu4j-charset.jar   %{buildroot}%{_javadir}/icu4j/
-install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
+%mvn_install
 
 %files -f .mfiles-icu4j
-%doc --no-dereference main/shared/licenses/*
-%doc readme.html APIChangeReport.html
+%doc LICENSE
 
-%files charset -f .mfiles-icu4j-charset
+%files charset -f .mfiles-charset
 
-%files localespi -f .mfiles-icu4j-localespi
+%files parent -f .mfiles-parent
+
+%files taglets -f .mfiles-taglets
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference main/shared/licenses/*
 
 %changelog
+* Mon Nov 02 2026 Ivan Khanas <xeno@altlinux.org> 1:79.1-alt1
+- New version.
+
+
 * Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:71.1-alt1_3jpp11
 - new version
 

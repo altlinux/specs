@@ -1,24 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define common_version 1.2.2
 %define service_version 1.1.1
+%define factory_version 1.1.0
 
 Name: auto
 Version: 1.11.1
-Release: alt1
+Release: alt2
+
 Summary: Java annotation processors and source generators
 License: Apache-2.0
 Group: Development/Java
-Url: https://github.com/google/auto
+URL: https://github.com/google/auto
 VCS: https://github.com/google/auto.git
-BuildArch: noarch
 
 Source0: auto-value-%version.tar
 Source1: common-%common_version.tar
 Source2: service-%service_version.tar
 Source3: legacy-auto-parent.pom
+Source4: factory-%factory_version.tar
+
+BuildArch: noarch
+
 BuildRequires(pre): rpm-macros-java
 BuildRequires: java-21-openjdk-devel
+BuildRequires: atinject-javax
 BuildRequires: maven-local
+BuildRequires: rpm-build-java
 BuildRequires: mvn(com.google.code.findbugs:jsr305)
 BuildRequires: mvn(com.google.errorprone:error_prone_annotations)
 BuildRequires: mvn(com.google.escapevelocity:escapevelocity)
@@ -34,10 +41,18 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.checkerframework:checker-qual)
 BuildRequires: mvn(org.eclipse.jdt:ecj)
 BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(com.google.auto.service:auto-service)
+BuildRequires: mvn(com.google.auto.value:auto-value)
+BuildRequires: mvn(com.google.auto.value:auto-value-annotations)
+BuildRequires: mvn(com.google.testparameterinjector:test-parameter-injector)
+BuildRequires: mvn(javax.inject:javax.inject)
+BuildRequires: mvn(jakarta.inject:jakarta.inject-api)
+BuildRequires: mvn(org.checkerframework:checker-compat-qual)
 
 %description
-Auto annotation processors generate immutable values, builders and service
-provider configuration. This package preserves the legacy Auto parent POM.
+Auto annotation processors generate immutable values, dependency injection
+factories and ServiceLoader configuration. The main package preserves the
+legacy Auto parent POM.
 
 %package common
 Summary: Common annotation processor utilities
@@ -74,23 +89,55 @@ Group: Development/Java
 %description value-parent
 Parent POM for AutoValue.
 
+%package factory
+Summary: Annotation processor for dependency injection factories
+Group: Development/Java
+
+%description factory
+AutoFactory generates JSR-330-compatible factories from annotated Java
+constructors. It supports both javax.inject and jakarta.inject clients.
+
 %prep
-%setup -n auto-value-%version -a1 -a2
-rm -rf common service
+%setup -n auto-value-%version -a1 -a2 -a4
+rm -rf common service factory
 mv common-%common_version common
 mv service-%service_version service
+mv factory-%factory_version factory
 %pom_remove_parent common service
 # Guava no longer brings Checker qualifiers transitively.
-%pom_add_dep org.checkerframework:checker-qual:3.52.0:provided common
-%pom_disable_module factory build-pom.xml
+%pom_add_dep org.checkerframework:checker-qual:3.52.0:provided common factory
 %pom_disable_module src/it/functional value
-%pom_xpath_remove "pom:project/pom:profiles/pom:profile[pom:id='java-11-and-after' or pom:id='sonatype-oss-release']" value
-%pom_xpath_remove -r -f "pom:project//pom:plugin[pom:artifactId='central-publishing-maven-plugin']" build-pom.xml
-%pom_xpath_remove -r -f "pom:project//pom:plugin[pom:artifactId='maven-gpg-plugin']" build-pom.xml
-%pom_xpath_remove -r -f "pom:project//pom:plugin[pom:artifactId='maven-shade-plugin']" build-pom.xml
-%pom_xpath_remove -r -f "pom:project//pom:plugin[pom:artifactId='maven-javadoc-plugin']" build-pom.xml
-%pom_xpath_remove -r -f "pom:project//pom:plugin[pom:artifactId='maven-invoker-plugin']" build-pom.xml
-%pom_change_dep com.google.auto:auto-common com.google.auto:auto-common:%common_version service/processor
+profiles='pom:project/pom:profiles/pom:profile'
+# Compile-testing uses the same javac opens as newer upstream Factory.
+factory_flags='--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED
+--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED
+--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED
+--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED
+--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED
+--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED'
+factory_profile="$profiles[pom:id='open-modules']"
+%pom_xpath_set -- "$factory_profile/pom:properties/pom:test.jvm.flags" \
+    "$factory_flags" factory
+%pom_xpath_remove "$profiles[pom:id='java-11-and-after']" value
+%pom_xpath_remove "$profiles[pom:id='sonatype-oss-release']" value
+plugins='pom:project//pom:plugin'
+%pom_xpath_remove -r -f \
+    "$plugins[pom:artifactId='central-publishing-maven-plugin']" \
+    common factory service value
+%pom_xpath_remove -r -f \
+    "$plugins[pom:artifactId='maven-gpg-plugin']" \
+    common factory service value
+%pom_xpath_remove -r -f \
+    "$plugins[pom:artifactId='maven-shade-plugin']" \
+    common factory service value
+%pom_xpath_remove -r -f \
+    "$plugins[pom:artifactId='maven-javadoc-plugin']" \
+    common factory service value
+%pom_xpath_remove -r -f \
+    "$plugins[pom:artifactId='maven-invoker-plugin']" \
+    common factory service value
+%pom_change_dep com.google.auto:auto-common \
+    com.google.auto:auto-common:%common_version service/processor
 cp %SOURCE3 legacy-auto-parent.pom
 %pom_remove_parent legacy-auto-parent.pom
 %mvn_artifact legacy-auto-parent.pom
@@ -101,6 +148,7 @@ cp %SOURCE3 legacy-auto-parent.pom
 %mvn_package com.google.auto.value:auto-value auto-value
 %mvn_package com.google.auto.value:auto-value-annotations auto-value-annotations
 %mvn_package com.google.auto.value:auto-value-parent auto-value-parent
+%mvn_package com.google.auto.factory:auto-factory auto-factory
 
 %build
 %mvn_build -j -- -f build-pom.xml
@@ -109,22 +157,24 @@ cp %SOURCE3 legacy-auto-parent.pom
 %mvn_install
 
 %files -f .mfiles-auto-parent
-%doc LICENSE README.md
+%doc LICENSE
 
 %files common -f .mfiles-auto-common
-%doc common/README.md
 
 %files service -f .mfiles-auto-service
-%doc service/README.md
 
 %files value -f .mfiles-auto-value
-%doc value/README.md
 
 %files value-annotations -f .mfiles-auto-value-annotations
 
 %files value-parent -f .mfiles-auto-value-parent
 
+%files factory -f .mfiles-auto-factory
+
 %changelog
+* Wed Nov 4 2026 Ivan Khanas <xeno@altlinux.org> 1.11.1-alt2
+- Package AutoFactory with its annotation processor tests.
+
 * Tue Oct 27 2026 Ivan Khanas <xeno@altlinux.org> 1.11.1-alt1
 - New version.
 

@@ -2,12 +2,12 @@
 
 Name: javawriter
 Version: 2.5.1
-Release: alt2
+Release: alt3
 
 Summary: Utility for generating Java source files
 License: Apache-2.0
 Group: Development/Java
-Url: https://github.com/square/javawriter
+URL: https://github.com/square/javawriter
 VCS: https://github.com/square/javawriter.git
 
 Source: %name-%version.tar
@@ -33,7 +33,6 @@ indentation, imports, declarations and escaped string literals.
 %package javadoc
 Summary: API documentation for %name
 Group: Development/Documentation
-Requires: %name = %EVR
 
 %description javadoc
 API documentation for %name.
@@ -46,14 +45,18 @@ API documentation for %name.
 # preserving the original Java6 classfile target without environment selectors.
 mkdir -p .mvn
 cp -p %SOURCE1 .mvn/toolchains.xml
-%pom_xpath_inject "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration" "<jdkToolchain><version>[1.8,1.9)</version></jdkToolchain>"
+%pom_xpath_inject \
+    "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-compiler-plugin']
+    /pom:configuration" \
+    "<jdkToolchain><version>[1.8,1.9)</version></jdkToolchain>"
 %pom_remove_plugin :maven-checkstyle-plugin
 %pom_remove_dep org.easytesting:fest-assert-core
 %pom_add_dep org.assertj:assertj-core:3.27.3:test
 %mvn_package :javawriter %name
 
 %build
-%mvn_build -s -- --toolchains .mvn/toolchains.xml -Dmaven.javadoc.source=8 -Ddoclint=none
+%mvn_build -s -- --toolchains .mvn/toolchains.xml -Dmaven.javadoc.source=8 \
+    -Ddoclint=none
 
 %install
 %mvn_install
@@ -61,7 +64,8 @@ mkdir -p licenses
 cp -p LICENSE.txt licenses/
 if [ -d %buildroot%_javadocdir/%name/legal ]; then
     mv %buildroot%_javadocdir/%name/legal licenses/javadoc
-    ln -s %_docdir/%name-%version/licenses/javadoc %buildroot%_javadocdir/%name/legal
+    ln -s %_docdir/%name-%version/licenses/javadoc \
+        %buildroot%_javadocdir/%name/legal
 fi
 
 %files -f .mfiles-%name
@@ -70,5 +74,8 @@ fi
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Nov 03 2026 Ivan Khanas <xeno@altlinux.org> 2.5.1-alt3
+- Remove manual Java dependency and normalize spec metadata.
+
 * Mon Nov 02 2026 Ivan Khanas <xeno@altlinux.org> 2.5.1-alt2
 - Initial build for ALT.

@@ -1,54 +1,35 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: junit
+Epoch: 1
+Version: 4.13.2
+Release: alt1
+
+Summary: Java regression testing framework
+License: EPL-1.0
 Group: Development/Java
+URL: https://junit.org/junit4/
+VCS: https://github.com/junit-team/junit4.git
+
+BuildArch: noarch
 AutoReq: yes,noosgi
+
+Source0: %name-%version.tar
+Source1: module-info.java
+Patch0: 0001-Port-to-hamcrest-2.2.patch
+
+BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+BuildRequires: maven-local
+BuildRequires: java-17-openjdk-devel
+BuildRequires: hamcrest
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.maven.surefire:surefire-junit4)
+BuildRequires: mvn(org.apache.maven.surefire:surefire-junit47)
 
-Name:           junit
-Epoch:          1
-Version:        4.13.1
-Release:        alt2
-Summary:        Java regression test package
-License:        EPL-1.0
-URL:            http://www.junit.org/
-BuildArch:      noarch
-
-# ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
-Source1:        generate-tarball.sh
-Source2:        module-info.java
-
-Patch1:         0001-Port-to-hamcrest-2.2.patch
-Patch2:         0002-Add-JPMS-support-alt-patch.patch
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest-core)
-%endif
-
-# For other packages, surefire-junit4 is normally pulled as transitive
-# runtime dependency of junit, but junit doesn't build-depend on
-# itself, so explicit BR on surefire-junit4 is needed.
-%if %{without bootstrap}
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit4)
-%endif
-Source44: import.info
-
-Provides: junit = 0:%{version}
-Provides: junit4 = %{epoch}:%{version}-%{release}
+Provides: junit = 0:%version
+Provides: junit4 = %epoch:%version-%release
 Conflicts: junit4 < 1:4.11-alt3_1jpp7
 Obsoletes: junit4 < 1:4.11-alt3_1jpp7
 Obsoletes: junit-junit4 < 1:4.11-alt3_1jpp7
@@ -57,84 +38,102 @@ Conflicts: junit-junit4 < 1:4.11-alt3_1jpp7
 Conflicts: junit-junit3 < 1:3.8.2-alt9_10jpp6
 
 %description
-JUnit is a regression testing framework written by Erich Gamma and Kent Beck. 
-It is used by the developer who implements unit tests in Java. JUnit is Open
-Source Software, released under the Common Public License Version 1.0 and 
-hosted on GitHub.
+JUnit is a regression testing framework written by Erich Gamma and Kent Beck.
+It provides assertions, test runners, rules and support for automated Java
+tests.
 
 %package manual
+Summary: Manual for JUnit
+
 Group: Development/Java
-Summary:        Manual for %{name}
-BuildArch: noarch
 
 %description manual
-Documentation for %{name}.
+Documentation and release notes for JUnit.
 
 %package javadoc
+Summary: API documentation for JUnit
+
 Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+API documentation for JUnit.
 
 %prep
-%setup -q -n junit4-r%{version}
-
+%setup
 %autopatch -p1
 
-cp %SOURCE2 src/main/java
-
-# InaccessibleBaseClassTest fails with Java 8
-sed -i /InaccessibleBaseClassTest/d src/test/java/org/junit/tests/AllTests.java
-
 %pom_remove_plugin :replacer
-sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >src/main/java/junit/runner/Version.java
-
+sed 's/@version@/%version/' src/main/java/junit/runner/Version.java.template \
+    > src/main/java/junit/runner/Version.java
 %pom_remove_plugin :animal-sniffer-maven-plugin
-
-# Removing hamcrest source jar references (not available and/or necessary)
+# The system Javadoc build does not need Hamcrest source archives.
 %pom_remove_plugin :maven-javadoc-plugin
 
-# Add proper Apache Felix Bundle Plugin instructions
-# so that we get a reasonable OSGi manifest.
-%pom_xpath_inject pom:project "<packaging>bundle</packaging>"
-%pom_xpath_inject pom:build/pom:plugins "
-    <plugin>
+# Hamcrest 3 includes both former core and library artifacts.
+%pom_remove_dep org.hamcrest:hamcrest-library
+%pom_change_dep org.hamcrest:hamcrest-core org.hamcrest:hamcrest:3.0
+
+# Legacy security-manager tests require the supported Java 17 test JVM.
+%pom_xpath_inject \
+    '//pom:plugin[pom:artifactId="maven-surefire-plugin"]/pom:configuration' \
+    '<jvm>%_jvmdir/java-17-openjdk/bin/java</jvm>'
+
+%pom_xpath_inject pom:project '<packaging>bundle</packaging>'
+%pom_xpath_inject pom:build/pom:plugins \
+    "<plugin>
       <groupId>org.apache.felix</groupId>
       <artifactId>maven-bundle-plugin</artifactId>
       <extensions>true</extensions>
       <configuration>
         <instructions>
           <Bundle-SymbolicName>org.junit</Bundle-SymbolicName>
-          <Export-Package>{local-packages},!org.hamcrest*,*;x-internal:=true</Export-Package>
+          <Export-Package>
+            {local-packages},!org.hamcrest*,*;x-internal:=true
+          </Export-Package>
           <_nouses>true</_nouses>
         </instructions>
       </configuration>
     </plugin>"
 
-%mvn_file : %{name}
-
+%mvn_file : %name
 %mvn_alias junit:junit junit:junit-dep
+# Keep normal coordinates and provide the actual release requested by Takari.
+%mvn_compat_version junit:junit '' %version
 
 %build
-%mvn_build -- -P\!restrict-doclint -Dmaven.test.skip=true
+%mvn_build -- -P\!restrict-doclint \
+    -DjdkVersion=8 -Dmaven.compiler.release=8 -Dmaven.compiler.fork=false
+
+# Preserve ALT JPMS support without raising ordinary library bytecode to Java 9.
+mkdir -p module-classes
+hamcrest_jar=$(xmvn-resolve org.hamcrest:hamcrest)
+javac --release 9 --module-path "$hamcrest_jar" \
+    --patch-module junit=target/classes \
+    -d module-classes %SOURCE1
+jar --update --file target/%name-%version.jar \
+    --release 9 -C module-classes module-info.class
 
 %install
 %mvn_install
+if [ -d %buildroot%_javadocdir/%name/legal ]; then
+    mv %buildroot%_javadocdir/%name/legal javadoc-legal
+    legal_target=$(realpath -m --relative-to="%_javadocdir/%name" \
+        "%_defaultdocdir/%name-%version/javadoc-legal")
+    ln -s "$legal_target" %buildroot%_javadocdir/%name/legal
+fi
 
 %files -f .mfiles
-%doc --no-dereference LICENSE-junit.txt
-%doc README.md
+%doc LICENSE-junit.txt javadoc-legal
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE-junit.txt
 
 %files manual
-%doc --no-dereference LICENSE-junit.txt
 %doc doc/*
 
 %changelog
+* Mon Nov 02 2026 Ivan Khanas <xeno@altlinux.org> 1:4.13.2-alt1
+- New version.
+
 * Mon Nov 17 2025 Ivan Khanas <xeno@altlinux.org> 1:4.13.1-alt2
 - Add JPMS support.
 

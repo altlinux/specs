@@ -1,23 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: mockito
-Version: 5.20.0
-Release: alt4
+Version: 5.24.0
+Release: alt1
 
 Summary: Tasty mocking framework for unit tests in Java
 License: MIT
 Group: Development/Java
-Url: https://site.mockito.org
-Vcs: https://github.com/mockito/mockito.git
+URL: https://site.mockito.org
+VCS: https://github.com/mockito/mockito.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
-BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: jpackage-17-compat
+BuildRequires: java-21-openjdk-devel
 BuildRequires: xgradle
 BuildRequires: biz-aQute-bnd-gradle-plugins
 BuildRequires: junit
@@ -34,7 +33,17 @@ BuildRequires: objectweb-asm
 BuildRequires: guava
 BuildRequires: auto-common
 BuildRequires: auto-service
-Requires: mockito-core
+BuildRequires: mvn(org.jspecify:jspecify)
+BuildRequires: jacoco
+BuildRequires: groovy
+BuildRequires: kotlin-gradle-plugin
+BuildRequires: kotlinx-coroutines
+BuildRequires: mvn(com.google.errorprone:error_prone_check_api)
+BuildRequires: mvn(com.google.errorprone:error_prone_core)
+BuildRequires: mvn(com.google.errorprone:error_prone_test_helpers)
+
+Provides: mockito-core = %version-%release
+Obsoletes: mockito-core <= %version-%release
 
 %description
 Mockito is a mocking framework that tastes really good. It lets you write
@@ -42,20 +51,18 @@ beautiful tests with clean & simple API. Mockito doesn't give you hangover
 because the tests are very readable and they produce clean verification
 errors.
 
-%package core
-Summary: Core classes of Mockito
+%package errorprone
+Epoch: 1
+Summary: Error Prone checks for Mockito
 Group: Development/Java
-BuildArch: noarch
 
-%description core
-This package contains the core Mockito library with essential APIs and runtime
-required for creating and using mocks.
+%description errorprone
+Static analysis checks for correct Mockito usage with Error Prone.
 
 %package junit-jupiter
 Summary: JUnit Jupiter integration for Mockito
 Group: Development/Java
 BuildArch: noarch
-Requires: mockito-core
 
 %description junit-jupiter
 This package provides integration helpers and extensions to use Mockito with
@@ -67,7 +74,6 @@ tests.
 Summary: Subclass mocking support for Mockito
 Group: Development/Java
 BuildArch: noarch
-Requires: mockito-core
 
 %description subclass
 This package provides the "subclass" mock maker for Mockito. It enables
@@ -80,7 +86,6 @@ where proxy-based mocking is not suitable.
 Summary: Proxy-based mocking utilities for Mockito
 Group: Development/Java
 BuildArch: noarch
-Requires: mockito-core
 
 %description proxy
 This package provides the "proxy" mock maker for Mockito. It offers proxy based
@@ -95,10 +100,6 @@ prefer proxying over subclassing.
 # Remove unwanted directory for RPM build(requires kotlin-dsl).
 rm -rf buildSrc
 
-# Compatibility alias
-%mvn_alias org.mockito:mokito-core org.mockito:mockito-all
-
-sed -i '/"mockito-extensions:mockito-errorprone",/d' settings.gradle.kts
 %build
 %gradle_publish
 
@@ -106,32 +107,32 @@ sed -i '/"mockito-extensions:mockito-errorprone",/d' settings.gradle.kts
 %gradle_register
 %gradle_register_bom
 
+%mvn_package org.mockito:mockito-junit-jupiter junit-jupiter
+%mvn_package org.mockito:mockito-subclass subclass
+%mvn_package org.mockito:mockito-proxy proxy
+%mvn_package org.mockito:mockito-errorprone errorprone
 %gradle_install
 
-%files
-%nil
+%check
+# System JUnit RPMs do not contain OSGi bundle metadata.
+%gradle_check -x :mockito-extensions:mockito-junit-jupiter:verifyOSGi
 
-%files core
-%_mavenmetadatadir/mockito.xml
-%_javadir/mockito/mockito-core.jar
-%_mavenpomdir/mockito/mockito-core.pom
-%_mavenpomdir/mockito/mockito-bom.pom
+%files -f .mfiles
 %doc --no-dereference LICENSE
-%doc README.md doc/design-docs/custom-argument-matching.md
+%doc doc/design-docs/custom-argument-matching.md
 
-%files junit-jupiter
-%_javadir/mockito/mockito-junit-jupiter.jar
-%_mavenpomdir/mockito/mockito-junit-jupiter.pom
+%files errorprone -f .mfiles-errorprone
 
-%files subclass
-%_javadir/mockito/mockito-subclass.jar
-%_mavenpomdir/mockito/mockito-subclass.pom
+%files junit-jupiter -f .mfiles-junit-jupiter
 
-%files proxy
-%_javadir/mockito/mockito-proxy.jar
-%_mavenpomdir/mockito/mockito-proxy.pom
+%files subclass -f .mfiles-subclass
+
+%files proxy -f .mfiles-proxy
 
 %changelog
+* Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 5.24.0-alt1
+- New version.
+
 * Mon Dec 1 2025 Ivan Khanas <xeno@altlinux.org> 5.20.0-alt4
 - Splitting the mockito-errorprone package.
 
@@ -226,4 +227,3 @@ sed -i '/"mockito-extensions:mockito-errorprone",/d' settings.gradle.kts
 
 * Mon Oct 18 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.8.5-alt1_0.1jpp6
 - new version
-

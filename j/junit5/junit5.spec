@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 %define version 5.14.4
 
 # Component versions, taken from gradle.properties
@@ -5,52 +7,54 @@
 %global jupiter_version %{version}
 %global vintage_version %{version}
 
-Name:           junit5
-Version:        5.14.4
-Release:        alt1
+Name: junit5
+Version: 5.14.4
+Release: alt2
 
-Summary:        The programmer-friendly testing framework for Java and the JVM
-License:        EPL-2.0
-Group:          Development/Java
-URL:            https://docs.junit.org/5.0.0/user-guide/
-VCS:            https://github.com/junit-team/junit-framework
+Summary: The programmer-friendly testing framework for Java and the JVM
+License: EPL-2.0
+Group: Development/Java
+URL: https://docs.junit.org/5.0.0/user-guide/
+VCS: https://github.com/junit-team/junit-framework
 
-Source0:        %name-%version.tar
+Source0: %name-%version.tar
 
 # Aggregator POM (used for packaging only)
-Source100:      aggregator.pom
+Source100: aggregator.pom
 # Platform POMs
-Source200:      junit-platform-commons-%platform_version.pom
-Source201:      junit-platform-console-%platform_version.pom
-Source202:      junit-platform-console-standalone-%platform_version.pom
-Source203:      junit-platform-engine-%platform_version.pom
-Source205:      junit-platform-launcher-%platform_version.pom
-Source206:      junit-platform-runner-%platform_version.pom
-Source207:      junit-platform-suite-api-%platform_version.pom
-Source209:      junit-platform-testkit-%platform_version.pom
-Source210:      junit-platform-suite-commons-%platform_version.pom
+Source200: junit-platform-commons-%platform_version.pom
+Source201: junit-platform-console-%platform_version.pom
+Source202: junit-platform-console-standalone-%platform_version.pom
+Source203: junit-platform-engine-%platform_version.pom
+Source205: junit-platform-launcher-%platform_version.pom
+Source206: junit-platform-runner-%platform_version.pom
+Source207: junit-platform-suite-api-%platform_version.pom
+Source209: junit-platform-testkit-%platform_version.pom
+Source210: junit-platform-suite-commons-%platform_version.pom
 # Jupiter POMs
-Source300:      junit-jupiter-%jupiter_version.pom
-Source301:      junit-jupiter-api-%jupiter_version.pom
-Source302:      junit-jupiter-engine-%jupiter_version.pom
-Source303:      junit-jupiter-migrationsupport-%jupiter_version.pom
-Source304:      junit-jupiter-params-%jupiter_version.pom
+Source300: junit-jupiter-%jupiter_version.pom
+Source301: junit-jupiter-api-%jupiter_version.pom
+Source302: junit-jupiter-engine-%jupiter_version.pom
+Source303: junit-jupiter-migrationsupport-%jupiter_version.pom
+Source304: junit-jupiter-params-%jupiter_version.pom
 # Vintage POM
-Source400:      junit-vintage-engine-%vintage_version.pom
+Source400: junit-vintage-engine-%vintage_version.pom
 # BOM POM
-Source500:      junit-bom-%version.pom
+Source500: junit-bom-%version.pom
 
-Patch0:         0001-Add-JRE-class-generated-from-template.patch
-Patch1:         0002-Drop-transitive-requirement-on-apiguardian.patch
-Patch2:         0003-Add-missing-module-static-requires.patch
-Patch3:         0004-Remove-legacy-XML-console-support.patch
+Patch0: 0001-Add-JRE-class-generated-from-template.patch
+Patch1: 0002-Drop-transitive-requirement-on-apiguardian.patch
+Patch2: 0003-Add-missing-module-static-requires.patch
+Patch3: 0004-Remove-legacy-XML-console-support.patch
+Patch4: 0005-Use-system-AssertJ-module-name.patch
 
-BuildRequires(pre):  maven-local
-BuildRequires:  jpackage-17-compat
-
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(com.univocity:univocity-parsers)
-BuildRequires:  mvn(info.picocli:picocli)
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-21-openjdk-devel
+BuildRequires: maven-local
+BuildRequires: mvn(org.assertj:assertj-core)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(com.univocity:univocity-parsers)
+BuildRequires: mvn(info.picocli:picocli)
 
 BuildArch: noarch
 
@@ -84,22 +88,30 @@ cp -p %SOURCE500 junit-bom/pom.xml
 for pom in $(find -mindepth 2 -name pom.xml); do
 	%pom_add_parent org.fedoraproject.xmvn.junit5:aggregator:any $pom
 	bsn=org.${pom//-/.}
-        %pom_xpath_inject pom:project "<properties><osgi.bsn>${bsn}</osgi.bsn></properties>" $pom
-	%pom_xpath_set -f "pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" provided $pom
+        %pom_xpath_inject pom:project \
+        	"<properties><osgi.bsn>${bsn}</osgi.bsn></properties>" \
+        	$pom
+	%pom_xpath_set -f \
+		"pom:dependency[pom:artifactId='apiguardian-api']/pom:scope" \
+		provided $pom
 	%pom_xpath_set -f "pom:dependency[pom:scope='runtime']/pom:scope" compile $pom
 done
 
 %pom_remove_parent junit-bom
 
-%pom_add_dep org.junit.platform:junit-platform-commons:%platform_version junit-platform-console
-%pom_add_dep org.junit.platform:junit-platform-launcher:%platform_version junit-platform-console
+%pom_add_dep org.junit.platform:junit-platform-commons:%platform_version \
+	junit-platform-console
+%pom_add_dep org.junit.platform:junit-platform-launcher:%platform_version \
+	junit-platform-console
 %pom_add_dep info.picocli:picocli junit-platform-console
 %pom_add_dep com.univocity:univocity-parsers:2.5.4 junit-jupiter-params
 
 %pom_disable_module junit-platform-console-standalone
-%pom_remove_dep org.junit.platform:junit-platform-reporting junit-platform-console
+%pom_remove_dep org.junit.platform:junit-platform-reporting \
+	junit-platform-console
 
-cp -pr junit-platform-console/src/main/java9/* junit-platform-console/src/main/java/
+cp -pr \
+	junit-platform-console/src/main/java9/* junit-platform-console/src/main/java/
 
 %mvn_package :junit-bom
 %mvn_package :aggregator __noinstall
@@ -114,6 +126,9 @@ cp -pr junit-platform-console/src/main/java9/* junit-platform-console/src/main/j
 %doc *.md
 
 %changelog
+* Thu Oct 29 2026 Ivan Khanas <xeno@altlinux.org> 5.14.4-alt2
+- Restore the JUnit Platform Test Kit module descriptor.
+
 * Thu Aug 27 2026 Evgeniy Serov <scala@altlinux.org> 5.14.4-alt1
 - Updated to 5.14.4.
 

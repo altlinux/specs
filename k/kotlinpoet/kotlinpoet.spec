@@ -2,12 +2,12 @@
 
 Name: kotlinpoet
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: Kotlin source generation API and metadata and KSP extensions
 License: Apache-2.0
 Group: Development/Java
-Url: https://square.github.io/kotlinpoet
+URL: https://square.github.io/kotlinpoet
 VCS: https://github.com/square/kotlinpoet.git
 
 Source: %name-%version.tar
@@ -20,6 +20,8 @@ BuildRequires: java-17-openjdk-devel
 BuildRequires: kotlin-compiler
 BuildRequires: kotlin-gradle-plugin
 BuildRequires: xgradle
+BuildRequires: mvn(com.squareup:javapoet)
+BuildRequires: mvn(com.google.truth:truth)
 BuildRequires: mvn(com.google.auto:auto-common)
 BuildRequires: mvn(com.google.devtools.ksp:symbol-processing-api)
 BuildRequires: mvn(com.google.jimfs:jimfs)
@@ -28,6 +30,14 @@ BuildRequires: mvn(com.willowtreeapps.assertk:assertk-jvm)
 BuildRequires: mvn(org.eclipse.jdt:ecj)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-reflect)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-test)
+
+%package javapoet
+Summary: JavaPoet interoperability compatibility module
+Group: Development/Java
+
+%description javapoet
+The last upstream JavaPoet interoperability module, version2.2.0, built from
+its complete original source against the current KotlinPoet JVM library.
 
 %description
 KotlinPoet is a Kotlin and Java API for generating Kotlin source files.
@@ -46,8 +56,12 @@ cp alt-settings.gradle settings.gradle
     -Pkotlin.compiler.execution.strategy=in-process
 
 %install
-%gradle_register --artifacts=kotlinpoet-jvm-,kotlinpoet-metadata-,kotlinpoet-ksp-
-%mvn_artifact %_mavenrepolocal/repository/com/squareup/kotlinpoet/%version/kotlinpoet-%version.pom
+%mvn_package :kotlinpoet-javapoet javapoet
+poet_artifacts='kotlinpoet-jvm-,kotlinpoet-metadata-'
+poet_artifacts="$poet_artifacts,kotlinpoet-ksp-,kotlinpoet-javapoet-"
+%gradle_register --artifacts="$poet_artifacts"
+poet_pom=%_mavenrepolocal/repository/com/squareup/%name/%version
+%mvn_artifact "$poet_pom/kotlinpoet-%version.pom"
 %gradle_install
 
 %check
@@ -55,8 +69,13 @@ cp alt-settings.gradle settings.gradle
     -Pkotlin.compiler.execution.strategy=in-process
 
 %files -f .mfiles
-%doc LICENSE.txt README.md
+%doc LICENSE.txt
+
+%files javapoet -f .mfiles-javapoet
 
 %changelog
+* Mon Nov 02 2026 Ivan Khanas <xeno@altlinux.org> 2.4.0-alt2
+- Restore JavaPoet interoperability compatibility support.
+
 * Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 2.4.0-alt1
 - Initial build for ALT.

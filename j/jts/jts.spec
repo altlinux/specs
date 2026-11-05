@@ -1,25 +1,29 @@
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:          jts
-Version:       1.15.0
-Release:       alt1_4jpp11
-Group:         Development/Java
-Summary:       Java Topology Suite
-License:       EPL-1.0 or BSD
-URL:           https://projects.eclipse.org/projects/locationtech.jts
-Source0:       https://github.com/locationtech/jts/archive/jts-%{version}/jts-jts-%{version}.tar.gz
+%define _unpackaged_files_terminate_build 1
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(com.googlecode.json-simple:json-simple)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.jdom:jdom2)
+Name: jts
+Version: 1.20.0
+Release: alt1
 
-BuildArch:     noarch
-Source44: import.info
+Summary: Java Topology Suite
+License: (EPL-2.0 or BSD-3-Clause) and BSD-3-Clause
+Group: Development/Java
+URL: https://projects.eclipse.org/projects/locationtech.jts
+VCS: https://github.com/locationtech/jts.git
+
+Source0: %name-%version.tar
+Patch0: %name-alt.patch
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-17-openjdk-devel
+BuildRequires: mvn(com.googlecode.json-simple:json-simple)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.commons:commons-csv)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.jdom:jdom2)
 
 %description
 The LocationTech JTS Topology Suite (JTS) is an open source Java software
@@ -58,60 +62,71 @@ Summary: JTS - Parent POMs
 %description parent
 JTS - Parent POMs.
 
+%package lab
+Summary: JTS experimental algorithms
+Group: Development/Java
+
+%description lab
+Experimental geometry algorithms from the JTS laboratory.
+
 %package javadoc
 Group: Development/Java
-Summary: Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
 %description javadoc
-This package contains API documentation for %{name}.
+This package contains API documentation for %name.
 
 %prep
-%setup -q -n jts-jts-%{version}
+%setup -q
+%autopatch -p1
 
-# Uneeded plugins for RPM builds
+# XMvn generates the API documentation and installs Maven artifacts.
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-release-plugin
 
-# Remove this test because junit.swingui is unavailable
-rm modules/core/src/test/java/test/jts/junit/SimpleTest.java
-sed -i -e '/SimpleTest\.class/d' modules/core/src/test/java/test/jts/junit/MasterTester.java
+# These reporting/lint plugins are not available in the build repository.
+# All upstream Java test sources and their Surefire configuration are retained.
+%pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
 
-# Don't bundle deps
+# Install unbundled applications using the system dependencies.
 %pom_remove_plugin :maven-assembly-plugin modules/tests modules/app
 
-# Backward compatibility aliases
-%mvn_alias org.locationtech.jts:jts-core com.vividsolutions:jts-core com.vividsolutions:jts
+# Preserve the existing Maven compatibility aliases.
+%mvn_alias org.locationtech.jts:jts-core \
+    com.vividsolutions:jts-core com.vividsolutions:jts
 %mvn_alias org.locationtech.jts.io:jts-io-common com.vividsolutions:jts-io
 
 %mvn_package ":jts-io*" jts-io
 %mvn_package ":jts{,-modules}" jts-parent
+%mvn_package ":build-tools" jts-parent
 %mvn_package ":jts-tests" jts-app
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.release=8 -Dmaven.javadoc.source=8
 
 %install
 %mvn_install
 
-%files -f .mfiles-%{name}-core
-%doc README.md USING.md MIGRATION.md
-%doc --no-dereference LICENSE*
+%files -f .mfiles-%name-core
+%doc USING.md MIGRATION.md
+%doc LICENSE* OSGEO_LICENSE.txt
 
-%files app -f .mfiles-%{name}-app
-%files example -f .mfiles-%{name}-example
-%files io -f .mfiles-%{name}-io
+%files app -f .mfiles-%name-app
+%files example -f .mfiles-%name-example
+%files io -f .mfiles-%name-io
+%files lab -f .mfiles-%name-lab
 
-%files parent -f .mfiles-%{name}-parent
-%doc --no-dereference LICENSE*
+%files parent -f .mfiles-%name-parent
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE*
-
-
 
 %changelog
+* Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 1.20.0-alt1
+- New version.
+
 * Thu Sep 14 2023 Igor Vlasenko <viy@altlinux.org> 1.15.0-alt1_4jpp11
 - restored in Sisyphus
 
@@ -135,4 +150,3 @@ sed -i -e '/SimpleTest\.class/d' modules/core/src/test/java/test/jts/junit/Maste
 
 * Thu Feb 04 2016 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1_4jpp8
 - java 8 mass update
-

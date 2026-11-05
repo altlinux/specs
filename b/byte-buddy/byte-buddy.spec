@@ -1,27 +1,37 @@
 %define _unpackaged_files_terminate_build 1
+%define gradle_plugin_id net.bytebuddy.byte-buddy-gradle-plugin
 
 Name: byte-buddy
-Version: 1.18.8
+Version: 1.18.17
 Release: alt1
 
 Summary: Runtime code generation for the Java virtual machine
 License: Apache-2.0
 Group: Development/Java
-Url: http://bytebuddy.net
-Vcs: https://github.com/raphw/byte-buddy.git
+URL: http://bytebuddy.net
+VCS: https://github.com/raphw/byte-buddy.git
+
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: fix-shaded-metadata.py
 Patch0: 0001-Remove-annotations-SuppressWarnings-byte-buddy-dep-alt-patch.patch
 Patch1: 0002-Exclude-transitive-opentest4j-from-shade-jar-alt-patch.patch
+Patch2: 0003-module-main-class-internal-name.patch
+Patch3: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-java
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: xgradle
 BuildRequires: maven-local
-BuildRequires: /proc
+BuildRequires: python3
 BuildRequires: rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: java-21-openjdk-devel
 BuildRequires: junit
 BuildRequires: byte-buddy
+BuildRequires: byte-buddy-maven-plugin
+BuildRequires: jarjar-pantsbuild
+BuildRequires: objenesis
 BuildRequires: maven-lib
 BuildRequires: maven-plugin-testing-harness
 BuildRequires: mockito
@@ -59,6 +69,13 @@ Summary: Byte Buddy Maven plugin
 %description maven-plugin
 A plugin for post-processing class files via Byte Buddy in a Maven build.
 
+%package gradle-plugin
+Group: Development/Java
+Summary: Byte Buddy JVM Gradle plugin
+
+%description gradle-plugin
+Gradle integration for enhancing Java and Kotlin JVM classes with Byte Buddy.
+
 %package parent
 Group: Development/Java
 Summary: Byte Buddy parent POM
@@ -73,15 +90,12 @@ concern all modules.
 %setup
 %autopatch -p1
 
-rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineAttachmentTest.java
-rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineForOpenJ9Test.java
-
 # Don't ship android or benchmark modules
 %pom_disable_module byte-buddy-android
 %pom_disable_module byte-buddy-android-test
 %pom_disable_module byte-buddy-benchmark
 
-# Don't ship gradle plugin
+# Build the JVM Gradle plugin below with the system Gradle.
 %pom_disable_module byte-buddy-gradle-plugin
 
 # Remove check plugins unneeded by RPM builds
@@ -95,8 +109,8 @@ rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineForOpenJ9Tes
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :central-publishing-maven-plugin
 
-# Avoid circural dependency
-%pom_remove_plugin :byte-buddy-maven-plugin byte-buddy-dep
+# Use the installed plugin to generate the upstream equals/hashCode and cache
+# methods.
 
 # Drop build dep on findbugs annotations, used only by the above check plugins
 %pom_remove_dep :findbugs-annotations
@@ -104,8 +118,46 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
 
 %pom_remove_dep org.ow2.asm:asm-deprecated
 
+# Mockito is built against shaded ASM, whereas byte-buddy-dep exposes ordinary
+# ASM types. Remap only the build-time test copy, retaining system
+# ASM/Objenesis.
+mkdir -p target
+printf 'rule net.bytebuddy.jar.asm.** org.objectweb.asm.@1\n' \
+  > target/mockito.rules
+java -cp \
+  "%{_javadir}/jarjar-pantsbuild/jarjar.jar:%{_javadir}/objectweb-asm/*" \
+  org.pantsbuild.jarjar.Main process target/mockito.rules \
+  %{_javadir}/mockito/mockito-core.jar target/mockito-unshaded.jar
+# Compile against the system Mockito API, and replace its runtime JAR only in
+# Surefire. Keep ordinary test scope so XMvn installs valid published POMs.
+%pom_add_plugin org.apache.maven.plugins:maven-surefire-plugin byte-buddy-dep \
+  '<configuration>
+     <classpathDependencyExcludes>
+       <classpathDependencyExclude>
+         org.mockito:mockito-core
+       </classpathDependencyExclude>
+     </classpathDependencyExcludes>
+     <additionalClasspathElements>
+       <additionalClasspathElement>
+         ${project.basedir}/../target/mockito-unshaded.jar
+       </additionalClasspathElement>
+     </additionalClasspathElements>
+   </configuration>'
+%pom_add_dep org.objenesis:objenesis::test byte-buddy-dep
+mock_maker=org.mockito.plugins.MockMaker
+mkdir -p byte-buddy-dep/src/test/resources/mockito-extensions
+printf 'mock-maker-subclass\n' \
+  > byte-buddy-dep/src/test/resources/mockito-extensions/$mock_maker
+# This suite targets Mockito 2 subclass semantics, without inline agent
+# attachment.
+mkdir -p byte-buddy-maven-plugin/src/test/resources/mockito-extensions
+printf 'mock-maker-subclass\n' \
+  > byte-buddy-maven-plugin/src/test/resources/mockito-extensions/$mock_maker
+
 %pom_xpath_inject \
-  "pom:profile[pom:id='shade-current']//pom:execution[pom:goals/pom:goal='shade']/pom:configuration" \
+  "pom:profile[pom:id='shade-current']
+   //pom:execution[pom:goals/pom:goal='shade']
+   /pom:configuration" \
   "<artifactSet>
      <includes>
        <include>net.bytebuddy:byte-buddy-dep</include>
@@ -116,9 +168,6 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
   byte-buddy
 
 %build
-# Ignore test failures, there seems to be something different about the
-# bytecode of our recompiled test resources, expect 6 test failures in
-# the byte-buddy-dep module
 %mvn_build -s -- \
   -Dmaven.compiler.source=11 \
   -Dmaven.compiler.target=11 \
@@ -126,27 +175,74 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
   -Dmaven.compiler.release=11 \
   -P'!checks' \
   -Dsourcecode.test.version=11 \
-  -Dmaven.test.skip=true \
-  # Skip tests because of mockito regression.
+  -Dbytecode.test.version=11
+
+# XMvn snapshots reactor dependencies before Shade writes its reduced POM.
+# The shaded artifact contains byte-buddy-dep already; do not expose it twice.
+python3 %SOURCE1
+
+pushd byte-buddy-gradle-plugin
+%gradle_publish --dependency-verification=off --no-daemon --max-workers=4
+popd
 
 %install
 %mvn_install
-# multiple -f flags in %files for <main>: merging -f .mfiles-%name-dep into -f .mfiles-%name
+if [ -d %buildroot%_javadocdir/%name/legal ]; then
+    mv %buildroot%_javadocdir/%name/legal javadoc-legal
+    legal_target=$(realpath -m --relative-to="%_javadocdir/%name" \
+        "%_defaultdocdir/%name-%version/javadoc-legal")
+    ln -s "$legal_target" %buildroot%_javadocdir/%name/legal
+fi
+# multiple -f flags in %files for <main>: merging -f .mfiles-%name-dep into -f
+# .mfiles-%name
 cat .mfiles-%name-dep >> .mfiles-%name
 
+pushd byte-buddy-gradle-plugin
+%gradle_register --artifacts=byte-buddy-gradle-plugin-
+marker_base=%_mavenrepolocal/repository/net/bytebuddy/%name-gradle-plugin
+marker_id=%gradle_plugin_id.gradle.plugin
+marker_dir="$marker_base/$marker_id/%version-jdk5"
+%mvn_artifact "$marker_dir/$marker_id-%version-jdk5.pom"
+%mvn_package net.bytebuddy:byte-buddy-gradle-plugin gradle-plugin
+%mvn_package \
+  %gradle_plugin_id:%gradle_plugin_id.gradle.plugin \
+  gradle-plugin
+%mvn_file net.bytebuddy:byte-buddy-gradle-plugin %name/gradle-plugin
+%mvn_file \
+  %gradle_plugin_id:%gradle_plugin_id.gradle.plugin \
+  %name/gradle-plugin-marker
+%gradle_install
+popd
+
+%check
+pushd byte-buddy-gradle-plugin
+%gradle_check --dependency-verification=off --no-daemon --max-workers=4
+popd
+
 %files -f .mfiles-%name
-%doc README.md release-notes.md
+%doc release-notes.md javadoc-legal
 %doc --no-dereference LICENSE NOTICE
 
 %files agent -f .mfiles-%name-agent
-%doc --no-dereference LICENSE NOTICE
 
 %files maven-plugin -f .mfiles-%name-maven-plugin
 
+%files gradle-plugin -f byte-buddy-gradle-plugin/.mfiles-gradle-plugin
+
 %files parent -f .mfiles-%name-parent
-%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Tue Nov 03 2026 Ivan Khanas <xeno@altlinux.org> 1.18.17-alt1
+- New version.
+
+* Tue Oct 27 2026 Ivan Khanas <xeno@altlinux.org> 1.18.16-alt2
+- Align shaded artifact XMvn dependencies with its reduced POM.
+
+* Tue Oct 27 2026 Ivan Khanas <xeno@altlinux.org> 1.18.16-alt1
+- New version.
+- Encode the module main class as an internal name for modulemaker 1.9.
+- Enable unit tests.
+
 * Thu Aug 27 2026 Evgeniy Serov <scala@altlinux.org> 1.18.8-alt1
 - Automatically updated to 1.18.8.
 - Excluded test dependencies from the shaded JAR.

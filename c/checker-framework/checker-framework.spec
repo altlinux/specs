@@ -2,22 +2,23 @@
 
 Name: checker-framework
 Version: 3.52.0
-Release: alt2
+Release: alt3
 
 Summary: A powerful framework for extending the Java type system
-License: GPL-2.0 WITH Classpath-exception-2.0
+License: GPL-2.0 WITH Classpath-exception-2.0 AND MIT
 Group: Development/Java
-Url: http://checkerframework.org
-Vcs: https://github.com/typetools/checker-framework.git
+URL: https://checkerframework.org
+VCS: https://github.com/typetools/checker-framework.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Source1: checker-compat-qual-2.5.6-sources.jar
+Source2: checker-compat-qual-2.5.6.pom
 Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
-BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
-BuildRequires: jpackage-17-compat
+BuildRequires: java-17-openjdk-devel
 BuildRequires: xgradle
 BuildRequires: shadow-gradle-plugin
 BuildRequires: classgraph
@@ -25,16 +26,18 @@ BuildRequires: plumelib-reflection-util
 BuildRequires: plumelib-hashmap-util
 BuildRequires: plumelib-options
 BuildRequires: plumelib-plume-util
-BuildRequires: junit5
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(com.google.guava:guava)
 
 %description
-Checker Frameworkenhances Java's type system to make it more powerful and
+Checker Framework enhances Java's type system to make it more powerful and
 useful. This lets software developers detect and prevent errors in their
 Java programs. The Checker Framework includes compiler plug-ins ("checkers")
 that find bugs or verify their absence. It also permits you to write your
 own compiler plug-ins.
 
 %package -n checker-qual
+License: MIT
 Summary: Type qualifier annotations for Checker Framework
 Group: Development/Java
 BuildArch: noarch
@@ -53,18 +56,15 @@ will be checked using the Checker Framework.
 Summary: Utility classes for Checker Framework javac integration
 Group: Development/Java
 BuildArch: noarch
-Requires: checker-qual = %EVR
 
 %description -n checker-javacutil
 Utility classes that help the Checker Framework interact with javac.
-This package contains shared utilities used by various Checker Framework components.
+This package contains shared utilities used by Checker Framework components.
 
 %package -n checker-dataflow
 Summary: Dataflow analysis framework for Checker Framework
 Group: Development/Java
 BuildArch: noarch
-Requires: checker-qual = %EVR
-Requires: checker-javacutil = %EVR
 
 %description -n checker-dataflow
 A dataflow framework used by the Checker Framework for static analysis.
@@ -75,7 +75,6 @@ Checker Framework checkers.
 Summary: Shaded dataflow framework for Checker Framework
 Group: Development/Java
 BuildArch: noarch
-Requires: checker-qual = %EVR
 
 %description -n checker-dataflow-shaded
 Shaded version of the dataflow framework to avoid dependency conflicts.
@@ -86,7 +85,6 @@ use in environments where dependency isolation is required.
 Summary: Dataflow framework for Nullaway integration
 Group: Development/Java
 BuildArch: noarch
-Requires: checker-qual = %EVR
 
 %description -n checker-dataflow-nullaway
 Dataflow framework configured for use with Nullaway static analysis tool.
@@ -97,7 +95,6 @@ adapted for Nullaway.
 Summary: Dataflow framework for Error Prone integration
 Group: Development/Java
 BuildArch: noarch
-Requires: checker-qual = %EVR
 
 %description -n checker-dataflow-errorprone
 Dataflow framework configured for use with Error Prone static analysis tool.
@@ -105,58 +102,79 @@ This package provides the dataflow analysis components specifically
 adapted for Error Prone.
 
 %package -n checker-util
+License: MIT
 Summary: Utility classes for Checker Framework
 Group: Development/Java
 BuildArch: noarch
-Requires: checker-qual = %EVR
 
 %description -n checker-util
 General utility classes used throughout the Checker Framework.
 This package provides common utilities and helper functions for
 Checker Framework components.
 
+%package -n checker-compat-qual
+Version: 2.5.6
+License: MIT
+Summary: Legacy nullness compatibility annotations for Checker Framework
+Group: Development/Java
+
+%description -n checker-compat-qual
+Original legacy declaration and type-use nullness annotations. These use a
+distinct Java namespace and coexist with current Checker Framework qualifiers.
+
 %prep
 %setup
 %autopatch -p1
+# This buildSrc only configures the unused upstream formatting plugin.
+mv buildSrc buildSrc.formatting
+mkdir compat-src
+(cd compat-src && jar xf %SOURCE1)
 
 %build
 %gradle_publish
+mkdir compat-classes
+find compat-src -name '*.java' -print | sort > compat-sources.list
+javac --release 8 -encoding UTF-8 -d compat-classes @compat-sources.list
+jar --create --file checker-compat-qual.jar -C compat-classes .
+%mvn_artifact %SOURCE2 checker-compat-qual.jar
 
 %install
 %gradle_register
-
+%mvn_package org.checkerframework:checker-qual checker-qual
+%mvn_package org.checkerframework:javacutil checker-javacutil
+%mvn_package org.checkerframework:dataflow checker-dataflow
+%mvn_package org.checkerframework:dataflow-shaded checker-dataflow-shaded
+%mvn_package org.checkerframework:dataflow-nullaway checker-dataflow-nullaway
+%mvn_package org.checkerframework:dataflow-errorprone \
+    checker-dataflow-errorprone
+%mvn_package org.checkerframework:checker-util checker-util
+%mvn_package org.checkerframework:checker-compat-qual checker-compat-qual
 %gradle_install
 
-%files -n checker-qual
-%_mavenmetadatadir/checker-framework.xml
-%_javadir/checker-framework/checker-qual.jar
-%_mavenpomdir/checker-framework/checker-qual.pom
+%check
+%gradle_check
 
-%files -n checker-javacutil
-%_javadir/checker-framework/javacutil.jar
-%_mavenpomdir/checker-framework/javacutil.pom
+%files -n checker-qual -f .mfiles-checker-qual
+%doc LICENSE.txt
 
-%files -n checker-dataflow
-%_javadir/checker-framework/dataflow.jar
-%_mavenpomdir/checker-framework/dataflow.pom
+%files -n checker-javacutil -f .mfiles-checker-javacutil
 
-%files -n checker-dataflow-shaded
-%_javadir/checker-framework/dataflow-shaded.jar
-%_mavenpomdir/checker-framework/dataflow-shaded.pom
+%files -n checker-dataflow -f .mfiles-checker-dataflow
 
-%files -n checker-dataflow-nullaway
-%_javadir/checker-framework/dataflow-nullaway.jar
-%_mavenpomdir/checker-framework/dataflow-nullaway.pom
+%files -n checker-dataflow-shaded -f .mfiles-checker-dataflow-shaded
 
-%files -n checker-dataflow-errorprone
-%_javadir/checker-framework/dataflow-errorprone.jar
-%_mavenpomdir/checker-framework/dataflow-errorprone.pom
+%files -n checker-dataflow-nullaway -f .mfiles-checker-dataflow-nullaway
 
-%files -n checker-util
-%_javadir/checker-framework/checker-util.jar
-%_mavenpomdir/checker-framework/checker-util.pom
+%files -n checker-dataflow-errorprone -f .mfiles-checker-dataflow-errorprone
+
+%files -n checker-util -f .mfiles-checker-util
+
+%files -n checker-compat-qual -f .mfiles-checker-compat-qual
 
 %changelog
+* Wed Nov 04 2026 Ivan Khanas <xeno@altlinux.org> 3.52.0-alt3
+- Add legacy compatibility annotations and split Maven metadata by package.
+
 * Mon Nov 24 2025 Ivan Khanas <xeno@altlinux.org> 3.52.0-alt2
 - Add checker-dataflow subpackage.
 - Add checker-dataflow-errorprone subpackage.

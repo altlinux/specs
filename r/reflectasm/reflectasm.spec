@@ -1,27 +1,28 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: rpm-build-java
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:          reflectasm
-Version:       1.11.0
-Release:       alt3_8jpp11
-Summary:       High performance Java library that provides reflection by using code generation
-License:       BSD
-URL:           https://github.com/EsotericSoftware/reflectasm
-Source0:       https://github.com/EsotericSoftware/reflectasm/archive/%{name}-%{version}.tar.gz
+%define _unpackaged_files_terminate_build 1
 
+Name: reflectasm
+Version: 1.11.9
+Release: alt2
+
+Summary: Fast Java reflection using generated access classes
+License: BSD-3-Clause
+Group: Development/Java
+URL: https://github.com/EsotericSoftware/reflectasm
+VCS: https://github.com/EsotericSoftware/reflectasm.git
+
+Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-java
 BuildRequires: maven-local
+BuildRequires: rpm-build-java
+BuildRequires: java-21-openjdk-devel
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
-
-BuildArch:     noarch
-Source44: import.info
 
 %description
 ReflectASM is a very small Java library that provides
@@ -33,15 +34,15 @@ is much faster. It can also access primitive fields
 via byte-code to avoid boxing.
 
 %package javadoc
+Summary: Javadoc for %name
 Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %name.
 
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q
+%autopatch -p1
 find -name "*.class" -delete
 find -name "*.jar" -delete
 
@@ -49,27 +50,40 @@ sed -i 's/\r//' license.txt
 # Do not shade asm
 %pom_remove_plugin :maven-shade-plugin
 
-%mvn_file :%{name} %{name}
-%mvn_alias :%{name} "com.esotericsoftware.%{name}:%{name}"
+%mvn_file :%name %name
+%mvn_alias :%name "com.esotericsoftware.%name:%name"
 
-# AssertionFailedError: expected:<1> but was:<0>
-rm -r test/com/esotericsoftware/reflectasm/ClassLoaderTest.java
+# The system ASM dependency must remain visible to OSGi consumers.
+bundle_instructions="pom:build/pom:plugins/pom:plugin"
+bundle_instructions="$bundle_instructions[pom:artifactId='maven-bundle-plugin']"
+bundle_instructions="$bundle_instructions/pom:configuration/pom:instructions"
+reflectasm_module=com.esotericsoftware.reflectasm
+%pom_xpath_set "$bundle_instructions/pom:Import-Package" '*'
+%pom_xpath_inject "$bundle_instructions" \
+    "<Automatic-Module-Name>$reflectasm_module</Automatic-Module-Name>"
+compiler_config="pom:build/pom:plugins/pom:plugin"
+compiler_config="$compiler_config[pom:artifactId='maven-compiler-plugin']"
+compiler_config="$compiler_config/pom:configuration"
+%pom_xpath_set "$compiler_config/pom:source" 8
+%pom_xpath_set "$compiler_config/pom:target" 8
+%pom_xpath_inject "$compiler_config" '<release>8</release>'
 
 %build
-
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.javadoc.source=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.md
 %doc --no-dereference license.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference license.txt
 
 %changelog
+* Tue Nov 03 2026 Ivan Khanas <xeno@altlinux.org> 1.11.9-alt2
+- New version.
+- Support accessors on modern JDKs.
+
 * Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 1.11.0-alt3_8jpp11
 - rebuild with jpackage-default
 
