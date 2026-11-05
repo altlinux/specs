@@ -3,8 +3,8 @@
 %def_with check
 
 Name: libunicode
-Version: 0.9.4
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Summary: Modern C++20 Unicode library
 License: Apache-2.0
@@ -79,6 +79,9 @@ The %{name}-tools package contains tools about %name.
 %_bindir/unicode-query
 
 %changelog
+* Thu Nov 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.5-alt1
+- New version 0.9.5.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.4-alt2
 - Spec refined.
 
