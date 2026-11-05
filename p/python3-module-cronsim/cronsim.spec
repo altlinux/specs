@@ -1,11 +1,11 @@
 Name: python3-module-cronsim
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: A cron expression parser and evaluator
 License: BSD-3-Clause
 Group: Development/Python
-Url: https://pypi.org/project/cronsim
+URL: https://pypi.org/project/cronsim
 VCS: https://github.com/cuu508/cronsim
 
 Source0: %name-%version.tar
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/cronsim-%version.dist-info
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8-alt1
+- 2.8 released
+
 * Wed Oct 22 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 2.7-alt1
 - 2.7 released
 
