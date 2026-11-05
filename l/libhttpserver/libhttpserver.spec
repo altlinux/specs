@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define pkgname httpserver
-%define sover 0
+%define sover 2
 
 %def_disable static
 %def_disable check
 
 Name: libhttpserver
-Version: 0.19.0
+Version: 2.0.1
 Release: alt1
 
 Summary: libhttpserver is a C++ library for building high performance RESTful web servers
@@ -81,7 +81,11 @@ ln -sf ../configure .
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 %_datadir/cmake/Modules/*.cmake
+%_man3dir/%name.3*
 
 %changelog
+* Thu Nov 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 2.0.1-alt1
+- new version
+
 * Mon May 27 2024 Dmitrii Fomchenkov <sirius@altlinux.org> 0.19.0-alt1
 - Initial build for ALT Linux
