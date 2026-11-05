@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-audit
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 BuildArch: noarch
 
@@ -44,6 +44,10 @@ test -e %_sysconfdir/audit/audit.rules.old && mv %_sysconfdir/audit/audit.rules.
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Oct 28 2026 Andrey Kovalev <ded@altlinux.org> 0.3.6-alt1
+- Mark rule action names (always/never), default rule names (rule_N)
+  and rule status (on) for translation.
+
 * Tue Oct 27 2026 Andrey Kovalev <ded@altlinux.org> 0.3.5-alt1
 - Fix typo in expert rule action: "newer" -> "never".
 - Mark service status (Active/Inactive) and log table header for translation.
