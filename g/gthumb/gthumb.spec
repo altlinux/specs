@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: gthumb
-Version: %ver_major
+Version: %ver_major.1
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -93,6 +93,7 @@ This package provides noarch data needed for gThumb to work.
 
 %build
 %meson \
+    -Dbuildtype=release \
     -Dlibtiff=true \
     %{subst_enable_meson_bool libraw libraw} \
     %{subst_enable_meson_bool libheif libheif} \
@@ -125,6 +126,9 @@ This package provides noarch data needed for gThumb to work.
 %doc NEWS README*
 
 %changelog
+* Wed Nov 04 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
 - 4.0 (ported to GTK4/Libadwaita, rewritten in Vala)
 

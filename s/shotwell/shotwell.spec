@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
@@ -80,8 +80,9 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 %add_optflags -DEXPORT_DIALOG_DEFAULT_SCALE=1200
 %endif
 %meson \
-       -Dinstall_apport_hook=false \
-       %{?_enable_face_detection:-Dface_detection=true}
+    -Dbuildtype=release \
+    -Dinstall_apport_hook=false \
+    %{?_enable_face_detection:-Dface_detection=true}
 %nil
 #%%meson_build %name-pot %name-update-po
 %meson_build
@@ -122,6 +123,9 @@ sed -i 's/(&builder/((GVariantBuilder*)\&builder/' \
 
 
 %changelog
+* Wed Nov 04 2026 Yuri N. Sedunov <aris@altlinux.org> 33.1-alt1
+- 33.1
+
 * Sun Sep 13 2026 Yuri N. Sedunov <aris@altlinux.org> 33.0-alt1
 - 33.0 (ported to GTK4)
 
