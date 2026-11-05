@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.18.10
+Version: 1.18.13
 Release: alt1
 
 Summary: Install and Run Python Applications in Isolated Environments
@@ -48,6 +48,9 @@ BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 1.18.13-alt1
+- Updated to 1.18.13.
+
 * Fri Oct 30 2026 Anton Zhukharev <ancieg@altlinux.org> 1.18.10-alt1
 - Updated to 1.18.10.
 
