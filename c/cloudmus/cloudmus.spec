@@ -1,5 +1,5 @@
 Name: cloudmus
-Version: 0.6.4
+Version: 0.7.0
 Release: alt1
 
 Summary: Multi-service cloud music player
@@ -129,6 +129,7 @@ EOF
 # Yandex Music
 cp -a backends/yandex-music/cloudmus_backend_yandex %buildroot%python3_sitelibdir_noarch/
 cp -p backends/yandex-music/icon.svg %buildroot%_datadir/cloudmus/backend-icons/yandex-music.svg
+cp -p backends/yandex-music/logo.svg %buildroot%_datadir/cloudmus/backend-icons/yandex-music-logo.svg
 python3 - backends/yandex-music/manifest.json <<'EOF'
 import json, sys
 m = json.load(open(sys.argv[1]))
@@ -138,6 +139,7 @@ out = {
     "argv": ["/usr/bin/python3", "-m", "cloudmus_backend_yandex"],
     "protocolVersion": m["protocolVersion"],
     "icon": "%_datadir/cloudmus/backend-icons/yandex-music.svg",
+    "logo": "%_datadir/cloudmus/backend-icons/yandex-music-logo.svg",
 }
 json.dump(out, open("%buildroot%_datadir/cloudmus/backends/yandex-music.json", "w"), indent=2)
 EOF
@@ -145,6 +147,7 @@ EOF
 # YouTube Music
 cp -a backends/youtube-music/cloudmus_backend_ytmusic %buildroot%python3_sitelibdir_noarch/
 cp -p backends/youtube-music/icon.svg %buildroot%_datadir/cloudmus/backend-icons/youtube-music.svg
+cp -p backends/youtube-music/logo.svg %buildroot%_datadir/cloudmus/backend-icons/youtube-music-logo.svg
 # Drop bytecode the source trees ship; ALT compiles its own.
 find %buildroot%python3_sitelibdir_noarch -name __pycache__ -exec rm -rf {} +
 python3 - backends/youtube-music/manifest.json <<'EOF'
@@ -156,6 +159,7 @@ out = {
     "argv": ["/usr/bin/python3", "-m", "cloudmus_backend_ytmusic"],
     "protocolVersion": m["protocolVersion"],
     "icon": "%_datadir/cloudmus/backend-icons/youtube-music.svg",
+    "logo": "%_datadir/cloudmus/backend-icons/youtube-music-logo.svg",
 }
 json.dump(out, open("%buildroot%_datadir/cloudmus/backends/youtube-music.json", "w"), indent=2)
 EOF
@@ -179,13 +183,18 @@ EOF
 %python3_sitelibdir_noarch/cloudmus_backend_yandex/
 %_datadir/cloudmus/backends/yandex-music.json
 %_datadir/cloudmus/backend-icons/yandex-music.svg
+%_datadir/cloudmus/backend-icons/yandex-music-logo.svg
 
 %files backend-youtube
 %python3_sitelibdir_noarch/cloudmus_backend_ytmusic/
 %_datadir/cloudmus/backends/youtube-music.json
 %_datadir/cloudmus/backend-icons/youtube-music.svg
+%_datadir/cloudmus/backend-icons/youtube-music-logo.svg
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Mon Oct 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.6.4-alt1
 - 0.6.4
 
