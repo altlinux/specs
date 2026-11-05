@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define api_ver 1.0
-%define beta -rc1
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 %define xdg_name org.freedesktop.IBus
@@ -25,7 +25,7 @@
 
 Name: ibus
 Version: 1.5.35
-Release: alt0.5%(echo %beta|sed 's/-/./')
+Release: alt1%(echo %beta|sed 's/-/./')
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPL-2.1 and Unicode
@@ -367,6 +367,9 @@ xvfb-run %make -k check VERBOSE=1
 %endif
 
 %changelog
+* Thu Nov 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.35-alt1
+- 1.5.35 (no changes since rc1)
+
 * Tue Sep 29 2026 Yuri N. Sedunov <aris@altlinux.org> 1.5.35-alt0.5.rc1
 - 1.5.35-rc1
 
