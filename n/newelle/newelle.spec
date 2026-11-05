@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: newelle
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Ultimate Virtual Assistant
@@ -136,6 +136,9 @@ echo "         Please note that application can't work without these files."
 %_datadir/newelle/*
 
 %changelog
+* Thu Nov 05 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.1-alt1
+- New version 1.6.1.
+
 * Sun Oct 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.0-alt1
 - New version 1.6.0.
 
