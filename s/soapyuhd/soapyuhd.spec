@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyuhd
-Version: 0.4.1
-Release: alt4
+Version: 0.4.2
+Release: alt1
 
 Summary: SoapySDR device support for libuhd
 License: GPL-3.0
@@ -48,6 +48,9 @@ soapysdr-module-uhd package.
 %_libdir/uhd/modules/libsoapySupport.so
 
 %changelog
+* Thu Nov 05 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.2-alt1
+- new version 0.4.2 (with rpmrb script)
+
 * Fri Oct 02 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt4
 - Fix build with uhd-4.11 (closes: #60772).
 
