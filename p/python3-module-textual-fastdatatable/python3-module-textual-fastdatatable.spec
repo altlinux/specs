@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.19.3
+Version: 0.19.5
 Release: alt1
 
 Summary: Reimplementation of Textual's DataTable widget
@@ -63,6 +63,9 @@ can be slow to load large datasets.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Thu Nov 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.19.5-alt1
+- new version
+
 * Mon Oct 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.19.3-alt1
 - new version
 
