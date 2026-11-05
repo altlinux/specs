@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.20.1
+Version: 1.21.0
 Release: alt1
 
 Summary: Python bindings for libgit2
@@ -15,19 +15,11 @@ Url: https://pypi.org/project/pygit2/
 Vcs: https://github.com/libgit2/pygit2
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 BuildRequires: libgit2-devel
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
 
 %description
 Bindings to the libgit2 shared library, implements Git plumbing.
@@ -35,11 +27,7 @@ Bindings to the libgit2 shared library, implements Git plumbing.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-test.txt
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -48,13 +36,17 @@ Bindings to the libgit2 shared library, implements Git plumbing.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra test -k 'not (test_filter or test_buffered_filter)'
+rm -r pygit2
+%pyproject_run_pytest -vra test
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 1.21.0-alt1
+- Updated to 1.21.0.
+
 * Wed Sep 23 2026 Anton Zhukharev <ancieg@altlinux.org> 1.20.1-alt1
 - Updated to 1.20.1.
 
