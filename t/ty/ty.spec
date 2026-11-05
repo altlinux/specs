@@ -8,7 +8,7 @@
 %define zsh_completionsdir %_datadir/zsh/site-functions
 
 Name: %pypi_name
-Version: 0.0.95
+Version: 0.0.97
 Release: alt1
 
 Summary: An extremely fast Python type checker and language server, written in Rust
@@ -106,6 +106,9 @@ mv %buildroot%python3_sitelibdir/* %buildroot%python3_sitelibdir_noarch/
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.97-alt1
+- Updated to 0.0.97.
+
 * Sun Nov 01 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.95-alt1
 - Updated to 0.0.95.
 - Separated from ruff source package.
