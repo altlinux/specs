@@ -3,7 +3,7 @@
 %define nameL org.kde.kjournaldbrowser
 
 Name: kjournald
-Version: 26.08.2
+Version: 26.08.3
 Release: alt1
 
 Summary: Framework for interacting with systemd-journald
@@ -48,6 +48,9 @@ BuildRequires: kf6-kconfig-devel kf6-kirigami-devel kf6-kirigami-addons-devel
 %_datadir/qlogging-categories?/%name.categories
 
 %changelog
+* Fri Nov 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 26.08.3-alt1
+- 26.08.2 -> 26.08.3
+
 * Fri Oct 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 26.08.2-alt1
 - 26.08.1 -> 26.08.2
 
