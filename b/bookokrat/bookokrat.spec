@@ -3,7 +3,7 @@
 %def_with check
 
 Name: bookokrat
-Version: 0.3.12
+Version: 0.3.14
 Release: alt1
 
 Summary: A terminal EPUB / PDF Book Reader
@@ -48,6 +48,9 @@ export RUST_FONTCONFIG_DLOPEN=on
 
 %check
 export SNAPSHOTS=overwrite
+%ifarch %ix86
+export NPROCS=1
+%endif
 %rust_test -- \
     --skip keybinding_actions \
     #
@@ -57,6 +60,9 @@ export SNAPSHOTS=overwrite
 %_bindir/%name
 
 %changelog
+* Thu Nov 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.14-alt1
+- new version
+
 * Thu Jun 11 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.3.12-alt1
 - new version
 
