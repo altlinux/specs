@@ -2,7 +2,7 @@
 %define oname com.jeffser.Nocturne
 
 Name: nocturne
-Version: 1.5.2
+Version: 1.6.0
 Release: alt1
 
 Summary: A modern Navidrome / Jellyfin client
@@ -52,6 +52,9 @@ but it's capable of installing and managing it's own Navidrome instance.
 %doc *.md
 
 %changelog
+* Fri Nov 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0-alt1
+- 1.5.2 -> 1.6.0
+
 * Thu Sep 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.5.2-alt1
 - 1.5.1 -> 1.5.2
 
