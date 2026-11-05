@@ -1,12 +1,6 @@
 %def_disable snapshot
 
-%ifnarch %qt5_qtwebengine_arches
-%def_disable qtwebengine
-%else
-%def_enable qtwebengine
-%endif
-
-%define ver_major 3.5
+%define ver_major 4.1
 %define xdg_name org.openshot.OpenShot
 Name: openshot
 Version: %ver_major.1
@@ -28,28 +22,27 @@ Source: https://github.com/OpenShot/openshot-qt/archive/v%version/%_name-%versio
 Source: %_name-%version.tar
 %endif
 
+#BuildArch: noarch
+
 # blender > 2.80 doesn't support 32-bit
 ExcludeArch: i586 armh
 
-Requires: python3-module-%name >= 0.7
-Requires: blender inkscape xdg-utils
+Requires: blender
+Requires: python3-module-%name >= 1.1
+Requires: inkscape xdg-utils
 # https://bugzilla.altlinux.org/45836
-Requires: python3-module-PyQt5 python3-module-zmq
+Requires: python3-module-pyside6 python3-module-zmq
+Requires: python3-module-sentry-sdk
 
 %add_typelib_req_skiplist typelib(Unity)
 # should be self-satisfied
 %filter_from_requires /[classes\|images\|windows]/d
 # should be provided by blender
 %add_python3_req_skip bpy.props
-%if_enabled qtwebengine
-%add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
-Requires: python3(PyQt5.QtWebEngine)
-%else
-%add_python3_req_skip PyQt5.QtWebEngineCore PyQt5.QtWebEngineWidgets
-%endif
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir rpm-macros-qt5-webengine
-BuildRequires: python3-devel python3-module-setuptools python3-module-PyQt5
+BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires: python3-devel python3(setuptools) python3(wheel)
+BuildRequires: python3-module-pyside6
 
 %description
 OpenShot Video Editor is a free, open-source, non-linear video editor. It
@@ -79,6 +72,9 @@ Xbox, and many more common formats.
 %doc AUTHORS* README*
 
 %changelog
+* Mon Nov 02 2026 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+
 * Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 3.5.1-alt1
 - 3.5.1
 

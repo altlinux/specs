@@ -1,5 +1,5 @@
 %define _name libopenshot
-%define ver_major 0.6
+%define ver_major 1.0
 %define api_ver 10
 %define libopenshot_ver 0.5
 
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: %_name-audio
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: OpenShot Audio Library
@@ -73,6 +73,12 @@ sed -E -i 's/(std::vector<.*feedbackVolume) *\{/\1={/' \
 %_libdir/cmake/OpenShotAudio/
 
 %changelog
+* Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sat Mar 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 

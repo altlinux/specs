@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _name openshot
 
-%define ver_major 0.7
-%define api_ver 30
+%define ver_major 1.1
+%define api_ver 33
 
 %def_enable python
 %def_enable opencv
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: OpenShot Video Library
@@ -27,17 +27,17 @@ Source: https://github.com/OpenShot/%name/archive/v%version/%name-%version.tar.g
 %else
 Source: %name-%version.tar
 %endif
-# Fix babl detection
-Patch1: %name-0.5.0-rh-fix-babl-detection.patch
-# based on http://github.com/EntityFX/libopenshot
+#https://github.com/OpenShot/libopenshot/pull/1088.patch
+Patch10: libopenshot-1.0.0-ffmpeg7-codec-capabilities.patch
 Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 BuildRequires: /proc cmake gcc-c++
-BuildRequires: %name-audio-devel >= 0.6
+BuildRequires: %name-audio-devel >= 1.0.2
 BuildRequires: python3(setuptools._distutils)
 BuildRequires: libgomp-devel libunittest-cpp-devel jsoncpp-devel
-BuildRequires: libalsa-devel qt5-multimedia-devel qt5-svg-devel libzeromq-cpp-devel
+BuildRequires: libalsa-devel qt6-multimedia-devel qt6-svg-devel qt-resvg-devel
+BuildRequires: libvulkan-devel libzeromq-cpp-devel
 BuildRequires: libImageMagick-devel zlib-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel
 BuildRequires: libswresample-devel libswscale-devel
@@ -77,7 +77,7 @@ This package provides Python3 bindings for OpenShot Video Library.
 
 %prep
 %setup
-%patch1 -p1 -b .babl_detection
+#%%patch10 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -88,12 +88,14 @@ This package provides Python3 bindings for OpenShot Video Library.
 %ifarch %e2k
 %add_optflags -DJUCE_NO_INLINE_ASM=1 -DJUCE_USE_SIMD=0
 %endif
-%cmake  -DUSE_SYSTEM_JSONCPP:BOOL=ON \
-	-DMAGICKCORE_HDRI_ENABLE:BOOL=ON \
-	-DMAGICKCORE_QUANTUM_DEPTH=16 \
-	%{?_enable_python:-DENABLE_PYTHON=TRUE} \
-	%{?_enable_opencv:-DENABLE_OPENCV=TRUE} \
-	%{?_enable_check:-DENABLE_TESTS=TRUE}
+%cmake  \
+    -DUSE_QT6=ON \
+    -DUSE_SYSTEM_JSONCPP:BOOL=ON \
+    -DMAGICKCORE_HDRI_ENABLE:BOOL=ON \
+    -DMAGICKCORE_QUANTUM_DEPTH=16 \
+    %{?_enable_python:-DENABLE_PYTHON=TRUE} \
+    %{?_enable_opencv:-DENABLE_OPENCV=TRUE} \
+    %{?_enable_check:-DENABLE_TESTS=TRUE}
 %nil
 %cmake_build
 
@@ -115,6 +117,12 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Tue Nov 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
+* Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Wed Apr 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
