@@ -1,5 +1,5 @@
 Name: python3-module-gpiod
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 
 Summary: Python bindings for libgpiod
@@ -39,6 +39,9 @@ export LINK_SYSTEM_LIBGPIOD=1
 %python3_sitelibdir/gpiod-%version.dist-info
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.6.0-alt1
+- 2.6.0 released
+
 * Thu Jun 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.5.0-alt1
 - 2.5.0 released
 
