@@ -1,16 +1,16 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/dlvhdr/gh-dash/v4
 %global commit_hash 12feb7f
-%global build_date 20261016
+%global build_date 20261027
 
 Name: gh-dash
 Version: 4.26.2
-Release: alt1
+Release: alt2
 
 Summary: A rich terminal UI for GitHub that doesn't break your flow
 License: MIT
 Group: Development/Tools
-Url: https://gh-dash.dev
+URL: https://gh-dash.dev
 VCS: https://github.com/dlvhdr/gh-dash
 
 Source: %name-%version.tar
@@ -20,6 +20,7 @@ Patch: gh-dash-4.26.0-alt-fix-lipgloss-i586.patch
 Requires: github-cli
 
 ExclusiveArch: %go_arches
+
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
 
@@ -28,9 +29,7 @@ BuildRequires: rpm-build-golang
 
 %prep
 %setup -a1
-%ifarch %ix86
 %patch -p1
-%endif
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -53,10 +52,13 @@ export IGNORE_SOURCES=1
 %gotest ./...
 
 %files
-%doc CONTRIBUTING.md README.md
+%doc README.md
 %_bindir/%name
 
 %changelog
+* Tue Oct 27 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.26.2-alt2
+- Cleaned up the spec file.
+
 * Fri Oct 16 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.26.2-alt1
 - Updated to version 4.26.2.
 
@@ -77,4 +79,3 @@ export IGNORE_SOURCES=1
 
 * Mon Mar 23 2026 Dmitry Maksimenkov <dmaks@altlinux.org> 4.23.2-alt1
 - Initial build for ALT.
-
