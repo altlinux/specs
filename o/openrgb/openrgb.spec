@@ -5,8 +5,8 @@
 %endif
 
 Name: openrgb
-Version: 1.0
-Release: alt2.rel
+Version: 1.1
+Release: alt1
 
 %define org_name org.%name.OpenRGB
 
@@ -67,6 +67,9 @@ mkdir -p %buildroot%_udevrulesdir && touch %buildroot%_udevrulesdir/60-%name.rul
 %_iconsdir/hicolor/128x128/apps/%org_name.png
 
 %changelog
+* Fri Oct 23 2026 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt1
+- 1.1.
+
 * Sun Sep 13 2026 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt2.rel
 - 1.0.
 - s/libhidapi/libhidapi-hotplug/.
