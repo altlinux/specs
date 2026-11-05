@@ -61,7 +61,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.4
-Release: alt4
+Release: alt5
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1199,6 +1199,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Nov 05 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt5
+- Backported https://codeberg.org/freeipa/freeipa/issues/10101 (closes: #60444).
+
 * Sat Oct 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.13.4-alt4
 - Revert libgse-private-samba auto-requirement (closes: #61268).
 
