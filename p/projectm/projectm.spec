@@ -3,7 +3,7 @@
 %define major 4
 %define sover %major
 Name: projectm
-Version: 4.1.7
+Version: 4.1.8
 Release: alt1
 
 %define libprojectm libprojectm%{major}_%{sover}
@@ -108,6 +108,9 @@ mv projectm-eval vendor/
 %_pkgconfigdir/projectM*.pc
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 4.1.8-alt1
+- new version
+
 * Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 4.1.7-alt1
 - new version
 
