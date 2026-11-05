@@ -1,8 +1,8 @@
 %set_compress_method none
-%define autoconf_version 2.72
+%define autoconf_version 2.73
 
 Name: autoconf-defaults
-Version: 2.72
+Version: 2.73
 Release: alt1
 Epoch: 2
 
@@ -66,6 +66,9 @@ done
 %_man1dir/ifnames.1.xz
 
 %changelog
+* Sat Sep 26 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 2:2.73-alt1
+- Changed the default autoconf version to 2.73.
+
 * Wed May 14 2025 Gleb F-Malinovskiy <glebfm@altlinux.org> 2:2.72-alt1
 - Changed the default autoconf version to 2.72.
 
