@@ -9,7 +9,7 @@
 %def_disable static
 
 Name: mongoose
-Version: 7.22
+Version: 7.23
 Release: alt1
 
 Summary: An easy-to-use self-sufficient web server
@@ -110,6 +110,9 @@ install -Dpm 0644 %name.h %buildroot%_includedir
 %endif
 
 %changelog
+* Thu Nov 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 7.23-alt1
+- new version
+
 * Thu Jun 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 7.22-alt1
 - new version
 
