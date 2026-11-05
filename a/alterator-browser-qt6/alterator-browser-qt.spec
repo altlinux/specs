@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.13
+Version: 3.7.14
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,9 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.14-alt1
+- add tranlsations: id, mhr, uz
+
 * Thu Oct 15 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.13-alt1
 - don't overlap current widget by qtvirtualkeyboard
 
