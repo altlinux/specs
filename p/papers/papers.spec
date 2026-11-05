@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Papers
 
 Name: papers
-Version: 51.0
+Version: 51.1
 Release: alt1
 
 Summary: A document viewer for PDF and other document formats aimed at the GNOME desktop
@@ -17,7 +17,7 @@ ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
-Source2: config.toml
+Source2: cargo-config.toml
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-macros-meson
@@ -85,7 +85,8 @@ Requires: %name-gir = %EVR
 %prep
 %setup -a1
 %autopatch -p1
-install -vD %SOURCE2 .cargo/config.toml
+[ -d .cargo ] || mkdir .cargo
+cat %_sourcedir/cargo-config.toml >> .cargo/config.toml
 
 %build
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
@@ -147,6 +148,9 @@ export CARGO_PROFILE_RELEASE_STRIP=none
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 51.1-alt1
+- Updated to 51.1.
+
 * Tue Sep 22 2026 Anton Zhukharev <ancieg@altlinux.org> 51.0-alt1
 - Updated to 51.0 (ALT#60656).
 - Dropped i586.
