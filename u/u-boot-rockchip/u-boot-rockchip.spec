@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2026.10
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -39,6 +39,10 @@ sed '/^CONFIG_DEFAULT_FDT_FILE/ s,powkiddy-x55,powkiddy-x35s,' \
 sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3566-powkiddy-x55,rk3568-anbernic-rg-ds,' \
 	< configs/powkiddy-x55-rk3566_defconfig \
 	> configs/anbernic-rg-ds-rk3568_defconfig
+# ALT#61344
+sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3566-powkiddy-x55,rk3566-gamemt-e6p,' \
+	< configs/powkiddy-x55-rk3566_defconfig \
+	> configs/gamemt-e6p-rk3566_defconfig
 # ALT#60207
 sed '/^CONFIG_DEFAULT_FDT_FILE/ s,rk3588s-orangepi-5,rk3588s-orangepi-5-pro,' \
 	< configs/orangepi-5-rk3588s_defconfig \
@@ -107,6 +111,9 @@ cp -a out/* %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.10-alt2
+- added GameMT E6 Plus board (closes: 61344)
+
 * Fri Oct 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.10-alt1
 - 2026.10 released
 
