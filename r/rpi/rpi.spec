@@ -2,7 +2,7 @@
 %def_with check
 
 Name: rpi
-Version: 0.17.1
+Version: 0.20.0
 Release: alt1
 Summary: Coding-agent runtime and terminal CLI inspired by Pi
 License: MIT
@@ -44,6 +44,9 @@ https://rpi.bigfisharc.cn/packages.html.
 %_bindir/rpi
 
 %changelog
+* Thu Nov 05 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.20.0-alt1
+- Updated to version 0.20.0.
+
 * Wed Nov 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.17.1-alt1
 - Updated to version 0.17.1.
 
