@@ -25,7 +25,7 @@
 %define nv_version 595
 %define nv_release 104
 %define nv_minor   02
-%define pkg_rel alt310
+%define pkg_rel alt311
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -234,7 +234,6 @@ ln -sr %buildroot/%nv_lib_dir/libnvcuvid.so.1 %buildroot/%_libdir/libnvcuvid.so.
 %__install -m 0644 %subd/libnvidia-glsi.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-tls.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-gpucomp.so.%tbver %buildroot/%_libdir/
-%__install -m 0644 %subd/libnvidia-tileiras.so.%tbver %buildroot/%_libdir/
 if [  -n "`ls -1d %subd/libnvidia-pkcs11*.so.*`" ] ; then
 %Nif_ver_gteq %ubt_id M110
 %__install -m 0644 %subd/libnvidia-pkcs11-openssl3.so.%tbver %buildroot/%_libdir/
@@ -282,6 +281,7 @@ install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%nv_lib_dir/libnvcuvid.s
 install -m 0644 %subd/libnvidia-nvvm.so.%version %buildroot/%nv_lib_dir/libnvidia-nvvm.so
 install -m 0644 %subd/libnvidia-fbc.so.%version %buildroot/%nv_lib_dir/libnvidia-fbc.so
 install -m 0644 %subd/libnvidia-opticalflow.so.%version %buildroot/%nv_lib_dir/libnvidia-opticalflow.so
+%__install -m 0644 %subd/libnvidia-tileiras.so.%tbver %buildroot/%nv_lib_dir/libnvidia-tileiras.so
 %if "%_lib" != "lib"
 install -m 0644 %subd/libnvoptix.so.%version %buildroot/%nv_lib_dir/libnvoptix.so
 install -m 0644 %subd/nvoptix.bin %buildroot/%nv_lib_dir/
@@ -388,6 +388,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt311
+- fix package libnvidia-tileiras
+
 * Mon Oct 05 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt310
 - new version
 
