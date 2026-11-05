@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0
+Version: 4.1
 Release: alt1
 Summary: Basic inter-process locks
 License: ZPL-2.1
@@ -74,6 +74,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Thu Nov 05 2026 Anton Vyatkin <toni@altlinux.org> 4.1-alt1
+- New version 4.1.
+
 * Tue Sep 22 2026 Anton Vyatkin <toni@altlinux.org> 4.0-alt1
 - New version 4.0.
 
