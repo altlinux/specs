@@ -1,11 +1,11 @@
 Name: python3-module-zlib-ng
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Python bindings for the zlib-ng library
 License: PSF-2.0
 Group: Development/Python
-Url: https://pypi.org/project/zlib-ng
+URL: https://pypi.org/project/zlib-ng
 VCS: https://github.com/pycompression/python-zlib-ng
 
 Source0: %name-%version.tar
@@ -47,6 +47,9 @@ export PYTHON_ZLIB_NG_LINK_DYNAMIC=true
 %python3_sitelibdir/zlib_ng-%version.dist-info
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.0-alt1
+- 1.1.0 released
+
 * Thu Dec 18 2025 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.0-alt1
 - 1.0.0 released
 
