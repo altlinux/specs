@@ -2,7 +2,7 @@
 %define import_path github.com/openbao/openbao
 
 Name: openbao
-Version: 2.6.3
+Version: 2.7.2
 Release: alt1
 
 Summary: Secure secrets and encryption management system
@@ -89,6 +89,48 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Thu Nov 05 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.2-alt1
+- Updated to 2.7.2.
+- Fixes:
+  + GHSA-736f-82w7-hj22: canonicalize resolve paths for CRLs and role IDs
+    (auth/cert, secrets/approle)
+  + GHSA-q824-44ff-f5j5: deny client_type=public with
+    client_credentials=true in the OIDC provider (secrets/identity)
+  + GHSA-h76r-48x5-36hg: deny wildcards in SSH certificate identity
+    templates by default (secrets/ssh)
+  + GHSA-5pmx-2p74-x478: prevent imported key backups from clobbering
+    arbitrary keys through path traversal (secrets/transit)
+  + GHSA-3237-j65r-m5rp: prevent disclosure of tls_acme_eab_mac_key from
+    sys/config/state/sanitized (core)
+  + GHSA-q74w-hv5x-6hxf: do not return a response from the root token
+    generation and rekey endpoints when audit logging fails (core/audit)
+  + GHSA-7m59-mp95-w6ph: ensure an expired Secret ID cannot be used for
+    authentication before tidy runs (auth/approle)
+  + GHSA-5v22-543h-wg96: fix the JSON-decode path for form data login
+    bodies and the TLS connection propagation for role quotas
+    (auth/approle, auth/cert)
+  + GHSA-gf3j-hm38-jhh5: validate the Service Account JWT on renewal,
+    preventing post-revoke usage (auth/kubernetes)
+  + GHSA-8gmq-wv9h-fcwp: require the X-Vault-Request header on the quit
+    endpoint when configured (agent, proxy)
+  + GHSA-fg5x-7whg-6c28: use ResolvePathOperation to define canonical URLs
+    for canonicalized resources (auth/cert, auth/kubernetes, auth/userpass,
+    secrets/pki, core/policies)
+  + GHSA-j6wc-jpvg-xfxq: ensure the plugin command name is relative to
+    plugin_directory (core/plugins)
+  + GHSA-cg72-x35g-xfp8: restrict sys/plugins/catalog writes to the root
+    namespace (core/plugins)
+  + GHSA-hr5j-3j78-4vh2: make denied ACL policy template evaluation return
+    an error instead of silently dropping it (core/policies)
+  + GHSA-mjch-vcw3-hhmf: prevent cross-namespace policy resolution
+    traversal in the LRU policy cache (core/policies)
+  + GHSA-8xxq-mq9m-xmhw: prevent TypeKVPair and TypeHeader from leaking
+    malformed request data into audit logs (sdk)
+  + GHSA-x8fg-h69x-p28f: forbid issuance of non-validated SANs through ACME
+    (secrets/pki)
+  + GHSA-2cjw-94fw-wqjx: remove prompt=none redirection support in the OIDC
+    provider (ui)
+
 * Thu Oct 01 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.6.3-alt1
 - Updated to new version 2.6.3.
 - Fixes:
@@ -154,7 +196,6 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
   + CVE-2026-45808: remove legacy lease endpoints due to cross-namespace lease
     modification (core)
 
-%changelog
 * Wed Apr 22 2026 Maxim Tulskiy <tulskijms@altlinux.org> 2.5.3-alt1
 - Updated to new version 2.5.3.
 - Fixes:
