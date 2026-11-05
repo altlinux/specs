@@ -1,5 +1,5 @@
 Name: cc-switch
-Version: 3.16.5
+Version: 4.0.25
 Release: alt1
 
 Summary: All-in-One Assistant for Claude Code, Codex and Gemini CLI
@@ -11,7 +11,7 @@ Group: Development/Other
 ExcludeArch: %{ix86}
 URL: https://github.com/farion1231/cc-switch
 
-# Source-url: https://github.com/farion1231/cc-switch.git
+# Source-url: https://github.com/farion1231/cc-switch/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
 Source2: %name-node-%version.tar
@@ -97,6 +97,9 @@ install -Dm644 flatpak/com.ccswitch.desktop.metainfo.xml %buildroot%_datadir/met
 %doc LICENSE
 
 %changelog
+* Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.25-alt1
+- New version 4.0.25
+
 * Sat Jul 04 2026 Vitaly Lipatov <lav@altlinux.ru> 3.16.5-alt1
 - Initial build for ALT Sisyphus
 
