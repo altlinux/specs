@@ -1,5 +1,5 @@
 Name: libneon
-Version: 0.32.5
+Version: 0.37.1
 Release: alt1
 Summary: neon is an HTTP and WebDAV client library
 License: LGPLv2+
@@ -32,6 +32,16 @@ Provides lower-level interfaces to directly implement new HTTP
 methods, and higher-level interfaces so that you don't have to
 worry about the lower-level stuff.
 
+%package source
+Summary: Source tarball of neon HTTP and WebDAV client library
+Group: Development/Other
+BuildArch: noarch
+
+%description source
+neon is an HTTP and WebDAV client library, with a C language API.
+This package contains neon source tarball for building programs
+with bundled neon.
+
 %prep
 %setup -n neon-%version
 %patch1 -p1
@@ -50,9 +60,11 @@ worry about the lower-level stuff.
 %install
 %makeinstall_std
 %define docdir %_docdir/neon-%version
-install -pm644 AUTHORS BUGS NEWS README* THANKS TODO doc/*.txt \
+install -pm644 AUTHORS NEWS README* THANKS TODO doc/*.txt \
 	%buildroot/%docdir/
 %find_lang neon
+
+install -Dpm644 %SOURCE0 %buildroot%_usrsrc/%name-source/neon-%version.tar.gz
 
 %files -f neon.lang
 %_libdir/lib*.so.*
@@ -67,7 +79,15 @@ install -pm644 AUTHORS BUGS NEWS README* THANKS TODO doc/*.txt \
 %_man3dir/*
 %docdir
 
+%files source
+%_usrsrc/%name-source
+
 %changelog
+* Tue Nov 03 2026 Mikhail Nogin <joycap@altlinux.org> 0.37.1-alt1
+- Updated to 0.37.1.
+- Rediffed multilib patch.
+- Added source subpackage with neon source tarball.
+
 * Tue Jan 09 2024 Valery Inozemtsev <shrek@altlinux.ru> 0.32.5-alt1
 - 0.32.5
 
