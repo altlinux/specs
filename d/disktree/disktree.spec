@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: disktree
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: GPUI treemap explorer for disk usage, in Omarchy's visual language
@@ -15,7 +15,7 @@ ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
-Source2: config.toml
+Source2: cargo-config.toml
 Patch0: %name-%version-alt.patch
 
 BuildRequires: rust-cargo
@@ -31,14 +31,15 @@ volume's free space in view the whole time.
 %prep
 %setup -a1
 %autopatch -p1
-install -vpD %SOURCE2 .cargo/config.toml
+[ -d .cargo ] || mkdir .cargo
+cat %_sourcedir/cargo-config.toml >> .cargo/config.toml
 
 %build
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
 export CARGO_PROFILE_RELEASE_OPT_LEVEL=3
 export CARGO_PROFILE_RELEASE_DEBUG=true
 export CARGO_PROFILE_RELEASE_STRIP=none
-export CARGO_PROFILE_RELEASE_LTO=fat
+export CARGO_PROFILE_RELEASE_LTO=thin
 export CARGO_PROFILE_RELEASE_DEBUG_ASSERTIONS=false
 export CARGO_PROFILE_RELEASE_INCREMENTAL=false
 export CARGO_PROFILE_RELEASE_OVERFLOW_CHECKS=false
@@ -58,6 +59,9 @@ sed -e "s|@BINDIR@|%_bindir|" -e "s|@VERSION@|%version|" \
 %_desktopdir/disktree.desktop
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.11.0-alt1
+- Updated to 0.11.0.
+
 * Sun Sep 27 2026 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
 - Updated to 0.10.1.
 
