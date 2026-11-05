@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.216
+Version: 4.0.4.217
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -454,6 +454,13 @@ fi
 %files checkinstall
 
 %changelog
+* Sat Oct 31 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.217-alt1
+- Much of brp-alt can now be covered with tests.
+- Restored proper shell quoting in fixup-pkgconfig. (Closes: 61275)
+  Added a regression test to match.
+- Backported from rpm-s-m:
+  + 0e2e0885b4bd ("Remove upper bound on locale length")
+
 * Thu Oct 22 2026 Arseny Maslennikov <arseny@altlinux.org> 4.0.4.216-alt1
 - krosh@:
   + Fixed re-expansion of %%shrink output.
