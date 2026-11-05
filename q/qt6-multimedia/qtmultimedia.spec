@@ -6,7 +6,7 @@
 
 Name: qt6-multimedia
 Version: 6.11.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - Multimedia support
@@ -16,6 +16,7 @@ License:  GPL-3.0-only or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 Patch1: qtmultimedia-fix-build-on-x86-arch.patch
+Patch2: alt-s16format.patch
 
 BuildRequires(pre): rpm-macros-qt6
 BuildRequires(pre): qt6-tools
@@ -117,6 +118,7 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
+%patch2 -p1
 
 # disable some examples
 for e in multimedia/video/qmlvideo multimedia/screencapture ; do
@@ -187,6 +189,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- fix to record in S16 format (closes: 61157)
+
 * Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
 - new version
 
