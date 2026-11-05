@@ -4,7 +4,7 @@
 %define soname 1
 
 Name: Clipper2
-Version: 1.5.4
+Version: 2.0.1
 Release: alt1
 Summary: Open source freeware library for clipping and offsetting lines and polygons
 License: BSL-1.0
@@ -72,5 +72,8 @@ popd
 %_libdir/cmake/clipper2
 
 %changelog
+* Sun Oct 11 2026 L.A. Kostis <lakostis@altlinux.ru> 2.0.1-alt1
+- 2.0.1.
+
 * Fri Jul 18 2025 L.A. Kostis <lakostis@altlinux.ru> 1.5.4-alt1
 - Initial build for ALTLinux.

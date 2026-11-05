@@ -10,8 +10,8 @@
 %define soname 3
 
 Name: manifold
-Version: 3.3.2
-Release: alt3
+Version: 3.5.4
+Release: alt1
 Summary: Geometry library for topological robustness
 License: Apache-2.0
 Group: System/Libraries
@@ -124,6 +124,9 @@ Python3 module for %name
 %endif
 
 %changelog
+* Sun Oct 11 2026 L.A. Kostis <lakostis@altlinux.ru> 3.5.4-alt1
+- 3.5.4.
+
 * Wed Jul 08 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 3.3.2-alt3
 - Fixed FTBFS with modern glibc.
 
