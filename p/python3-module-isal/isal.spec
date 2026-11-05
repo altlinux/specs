@@ -1,5 +1,5 @@
 Name: python3-module-isal
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: Python bindings for the ISA-L library
@@ -48,6 +48,9 @@ export PYTHON_ISAL_LINK_DYNAMIC=1
 %python3_sitelibdir/isal-%version.dist-info
 
 %changelog
+* Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.1-alt1
+- 1.9.1 released
+
 * Tue Nov 03 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.9.0-alt1
 - 1.9.0 released (closes: 60741, 60742)
 
