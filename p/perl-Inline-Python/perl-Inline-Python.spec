@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-Inline-Python
-Version:        0.58
+Version:        0.59
 Release:        alt1
 Summary:        Write Perl subs and classes in Python
 License:        GPLv2+ or Artistic-2.0
@@ -11,7 +11,7 @@ VCS:            git+https://github.com/niner/inline-python-pm
 Source:        	%name-%version.tar
 
 # quick hack not to link with static library
-Patch1: Inline-Python-0.56-use-shared-lib.patch
+Patch1: Inline-Python-0.58-use-shared-lib.patch
 
 BuildRequires: chrpath
 BuildRequires: python3-devel perl(ExtUtils/MakeMaker.pm) perl(Inline.pm) perl(Test/Number/Delta.pm) perl(Test/Deep.pm) perl(Test/More.pm)
@@ -43,6 +43,9 @@ chrpath -d %buildroot%perl_vendorarch/auto/*/*/*.so
 %perl_vendorarch/Inline*
 
 %changelog
+* Thu Nov 05 2026 Anton Zhukharev <ancieg@altlinux.org> 0.59-alt1
+- Updated to 0.59.
+
 * Wed Oct 29 2025 Anton Zhukharev <ancieg@altlinux.org> 0.58-alt1
 - Updated to 0.58.
 
