@@ -3,7 +3,7 @@
 
 Name: lxqt-archiver
 Version: 1.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: A simple & lightweight desktop-agnostic Qt file archiver
 License: GPL-2.0
@@ -14,13 +14,12 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
+BuildRequires: gcc-c++ rpm-build-cmake
 BuildRequires: qt6-base-devel qt6-tools-devel
 BuildRequires: libfm-qt6-devel
 BuildRequires: lxqt2-build-tools
 BuildRequires: libgio-devel
 BuildRequires: libjson-glib-devel
-BuildRequires: lib7zip-devel
 
 %description
 %summary.
@@ -44,6 +43,10 @@ BuildRequires: lib7zip-devel
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1.1
+- NMU: remove unused BuildRequires: lib7zip-devel
+- use BuildRequires: rpm-build-cmake instead of cmake
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - new version (1.4.0)
 
