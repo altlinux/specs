@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 2.9.1
+Version: 2.9.2
 Release: alt1
 Epoch: 1
 Summary: DNS toolkit
@@ -60,6 +60,9 @@ direct manipulation of DNS zones, messages, names, and records.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 05 2026 Stanislav Levin <slev@altlinux.org> 1:2.9.2-alt1
+- 2.9.1 -> 2.9.2
+
 * Fri Oct 30 2026 Stanislav Levin <slev@altlinux.org> 1:2.9.1-alt1
 - 2.9.0 -> 2.9.1
 
