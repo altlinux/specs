@@ -5,7 +5,7 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.76
+Version: 5.82
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -15,8 +15,7 @@ Source1: stunnel.init
 Source3: stunnel.inetd
 
 Patch1: stunnel-config.patch
-Patch2: stunnel-5.67-authpriv.patch
-Patch3: stunnel-5.53-systemd-service.patch
+Patch2: stunnel-5.82-authpriv.patch
 
 Url: http://www.stunnel.org/
 
@@ -25,8 +24,8 @@ Requires(pre): cert-sh-functions
 BuildRequires(pre): libssl-devel >= 0.9.7d
 BuildRequires: openssl >= 0.9.7d
 
-# pod2man
-BuildRequires: perl-podlators
+# man page creation
+BuildRequires: pandoc
 
 # pod2html
 BuildRequires: perl-devel
@@ -86,7 +85,6 @@ Bash completion for %name.
 %setup -q
 %patch1 -p1 -b .fix
 %patch2 -p2
-%patch3 -p2
 
 %build
 #autoreconf
@@ -167,6 +165,16 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Nov 05 2026 L.A. Kostis <lakostis@altlinux.ru> 5.82-alt1
+- New version (5.82).
+- BR: add pandoc for man pages generation.
+- Security fixes (fixed in 5.80):
+  + CVE-2026-70368
+  + CVE-2026-70367
+
+* Mon Jul 27 2026 L.A. Kostis <lakostis@altlinux.ru> 5.79-alt1
+- New version (5.79).
+
 * Sun Jan 18 2026 L.A. Kostis <lakostis@altlinux.ru> 5.76-alt1
 - New version (5.76).
 
