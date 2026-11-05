@@ -2,7 +2,7 @@
 %define rdn_name de.wagnermartin.Plattenalbum
 
 Name: plattenalbum
-Version: 2.7.0
+Version: 2.8.1
 Release: alt1
 Summary: Connect to your music
 License: GPL-3.0
@@ -10,6 +10,7 @@ Group: Sound
 Url: https://github.com/SoongNoonien/plattenalbum
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ managing playlists.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -48,6 +50,10 @@ managing playlists.
 
 
 %changelog
+* Thu Nov 05 2026 Andrey Kovalev <ded@altlinux.org> 2.8.1-alt1
+- Updated to upstream version 2.8.1.
+- Completed Russian translation.
+
 * Tue Sep 15 2026 Andrey Kovalev <ded@altlinux.org> 2.7.0-alt1
 - Updated to upstream version 2.7.0.
 
