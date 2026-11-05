@@ -15,7 +15,7 @@ export CARGO_FEATURE_UNPREFIXED_MALLOC_ON_SUPPORTED_PLATFORMS=1 \
 %nil
 
 Name: %pypi_name
-Version: 1.31.1
+Version: 1.32.0
 Release: alt1
 
 Summary: Static analysis for GitHub Actions
@@ -39,6 +39,7 @@ BuildRequires: /proc
 BuildRequires: libjemalloc-devel
 %pyproject_builddeps_build
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
 %endif
@@ -79,7 +80,7 @@ the metadata; the tool itself is in the zizmor package.
 %check
 %setup_cargo_env
 cargo test %_smp_mflags --release --no-fail-fast -p zizmor
-%pyproject_run_pytest bench/test_bench_basic.py
+%pyproject_run_pytest --session-timeout=600 bench/test_bench_basic.py
 
 %files
 %doc README.md LICENSE
@@ -89,6 +90,9 @@ cargo test %_smp_mflags --release --no-fail-fast -p zizmor
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 05 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.32.0-alt1
+- Updated to 1.32.0.
+
 * Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.31.1-alt1
 - Updated to 1.31.1.
 
