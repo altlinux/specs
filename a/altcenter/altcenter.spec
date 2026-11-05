@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.48
+Release: alt0.49
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,13 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Nov 05 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.49
+- About: fixed crash when desktop environment version is unavailable.
+- Report: fixed translation (ALT #61263).
+- Password settings: excluded "nobody" user and group (ALT #61247).
+- Policy: minor UI improvements.
+- Password policy: fixed PAM detection (ALT #61248).
+
 * Wed Oct 28 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.48
 - Policy: removed redundant SSH root login policy.
 - Policy: fixed invalid policy markers in LightDM and GDM (ALT #60826, ALT #60827).
