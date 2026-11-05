@@ -1,7 +1,7 @@
-%define abiversion 28
+%define abiversion 31
 
 Name: croaring
-Version: 5.2.3
+Version: 5.5.1
 Release: alt1
 
 Summary: Roaring bitmaps in C (and C++)
@@ -14,7 +14,7 @@ Url: https://github.com/RoaringBitmap/CRoaring
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.16
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
 
 %description
@@ -63,6 +63,11 @@ Header files and CMake configuration for developing with CRoaring.
 %_libdir/pkgconfig/roaring.pc
 
 %changelog
+* Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 5.5.1-alt1
+- new version 5.5.1
+- switch to libroaring31 (soname bump).
+- use rpm-build-cmake.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.2.3-alt1
 - new version 5.2.3
 - rename libroaring22 to libroaring28 (soname bump)

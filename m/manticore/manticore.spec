@@ -4,7 +4,7 @@
 
 Name: manticore
 Version: 29.9.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: Manticore full-text search server
 
@@ -183,6 +183,9 @@ done
 %_bindir/index_converter
 
 %changelog
+* Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt2.2
+- rebuild with libroaring31.
+
 * Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 29.9.0-alt2.1
 - index_converter: fix crashes with --config and --path (closes: #61261)
 
