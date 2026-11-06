@@ -4,15 +4,15 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: mujs
-Version: 1.3.9
+Version: 1.3.11
 Release: alt1
 
 Summary: Lightweight Javascript interpreter library
 Group: System/Libraries
-Url: https://mujs.com
 License: ISC
+Url: https://mujs.com
+Vcs: https://github.com/ArtifexSoftware/mujs
 
-# https://github.com/ArtifexSoftware/mujs
 Source: %name-%version.tar
 Patch: %name-alt-makefile.patch
 
@@ -82,6 +82,9 @@ ln -srv %buildroot%_libdir/lib%name.so.%soname %buildroot%_libdir/lib%name.so
 %_libdir/*.a
 
 %changelog
+* Fri Nov 06 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.11-alt1
+- 1.3.11.
+
 * Wed Mar 18 2026 L.A. Kostis <lakostis@altlinux.ru> 1.3.9-alt1
 - 1.3.9.
 
