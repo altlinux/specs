@@ -3,7 +3,7 @@
 
 Name: gz-sim
 Version: 10.5.0
-Release: alt1
+Release: alt2
 
 Summary: Open source robotics simulator
 License: Apache-2.0
@@ -644,6 +644,13 @@ Group: System/Libraries
 %description -n libgz-sim-wind-effects-system%soversion
 This package contains library libgz-sim-wind-effects-system of gz-sim.
 
+%package -n libgz-sim-websocket-server-system%soversion
+Summary: Library of gz-sim-websocket-server-system
+Group: System/Libraries
+
+%description -n libgz-sim-websocket-server-system%soversion
+This package contains library libgz-sim-websocket-server-system of gz-sim.
+
 %package -n libgz-sim-devel
 Summary: Development files for gz-sim
 Group: Development/C++
@@ -1067,6 +1074,10 @@ wait "$XVFB_PID" 2>/dev/null || true
 %_libdir/libgz-sim-lookup-wheel-slip-system.so.%soversion
 %_libdir/libgz-sim-lookup-wheel-slip-system.so.%version
 
+%files -n libgz-sim-websocket-server-system%soversion
+%_libdir/libgz-sim-websocket-server-system.so.%soversion
+%_libdir/libgz-sim-websocket-server-system.so.%version
+
 %files -n libgz-sim-devel
 %_includedir/gz/sim%soversion
 %_libdir/libgz-sim*.so
@@ -1075,10 +1086,11 @@ wait "$XVFB_PID" 2>/dev/null || true
 
 %files -n python3-module-gz-sim
 %python3_sitelibdir/gz
-%python3_sitelibdir/gz/common.cpython-*.so
-%python3_sitelibdir/gz/sim.cpython-*.so
 
 %changelog
+* Thu Nov 05 2026 Pavel Petrykin <silverducks@altlinux.org> 10.5.0-alt2
+- Fix FTBFS: Add libgz-sim-websocket-server-system subpackage.
+
 * Fri Aug 07 2026 Pavel Petrykin <silverducks@altlinux.org> 10.5.0-alt1
 - New version.
 - Make SetPose UI not editable for planes (Closes: 57553).
