@@ -4,7 +4,7 @@
 
 Name: dnf5
 Version: 5.4.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: Command-line package manager
 
@@ -31,9 +31,10 @@ Patch11: %name-alt-apt-pinning.patch
 Patch12: %name-alt-apt-cache-cleanup.patch
 Patch13: %name-alt-bash-completion-dnf5.patch
 Patch14: %name-alt-apt-metadata-refresh.patch
+Patch15: %name-json-c-unused-function.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.21
+BuildRequires: rpm-build-cmake >= 3.21
 BuildRequires: gcc-c++ >= 10.1
 BuildRequires: gettext-tools
 BuildRequires: librpm-devel
@@ -213,6 +214,7 @@ Libdnf5 plugin that allows loading Python plugins.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch15 -p1
 
 %build
 %cmake \
@@ -436,6 +438,10 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.6.0-alt1.1
+- fix build with json-c headers.
+- use rpm-build-cmake instead of cmake.
+
 * Fri Oct 09 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.6.0-alt1
 New version 5.4.6.0
 

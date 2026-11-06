@@ -1,5 +1,5 @@
 Name: libpkgmanifest
-Version: 0.5.9
+Version: 0.6.1
 Release: alt1
 
 Summary: Library for working with RPM package manifests
@@ -9,9 +9,10 @@ Group: System/Libraries
 URL: https://github.com/rpm-software-management/libpkgmanifest
 # Source-url: https://github.com/rpm-software-management/libpkgmanifest/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Patch: libpkgmanifest-0.6.1-alt-no-librpm-rpmver.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
-BuildRequires: cmake >= 3.13 gcc-c++ ctest
+BuildRequires: rpm-build-cmake gcc-c++ ctest
 BuildRequires: libyaml-cpp-devel >= 0.7.0
 BuildRequires: swig >= 4.2.0
 BuildRequires: python3-devel
@@ -40,6 +41,7 @@ Python 3 bindings for the libpkgmanifest library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %cmake \
@@ -48,8 +50,8 @@ Python 3 bindings for the libpkgmanifest library.
     -DWITH_TESTS=ON \
     -DWITH_CODE_COVERAGE=OFF \
     -DVERSION_MAJOR=0 \
-    -DVERSION_MINOR=5 \
-    -DVERSION_PATCH=9
+    -DVERSION_MINOR=6 \
+    -DVERSION_PATCH=1
 %cmake_build
 
 %check
@@ -73,6 +75,9 @@ Python 3 bindings for the libpkgmanifest library.
 %python3_sitelibdir/%name-*.dist-info/
 
 %changelog
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
+- new version 0.6.1
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.5.9-alt1
 - initial build for ALT Sisyphus
 
