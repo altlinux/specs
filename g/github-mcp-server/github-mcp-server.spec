@@ -1,13 +1,13 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/github/github-mcp-server/v2
-%global commit b98d115bbb080e9555466a96656ec4df605aea21
+%global commit 4bcdcdf8d7beee98c9448e73e257308280924cc4
 
 %def_without check
 # tests need network access to the GitHub API, not available in the
 # build environment.
 
 Name: github-mcp-server
-Version: 2.0.3
+Version: 2.1.0
 Release: alt1
 
 Summary: GitHub's official MCP server
@@ -65,6 +65,9 @@ install -Dm644 %SOURCE4 \
 %_userpresetdir/50-github-mcp-server.preset
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+
 * Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.0.3-alt1
 - Updated to 2.0.3.
 
