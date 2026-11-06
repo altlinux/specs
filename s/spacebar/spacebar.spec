@@ -1,8 +1,8 @@
 %define rname spacebar
 
 Name: %rname
-Version: 6.7.5
-Release: alt2
+Version: 6.7.6
+Release: alt1
 %K6init
 
 Group: Networking/Instant messaging
@@ -58,6 +58,9 @@ It uses ModemManager to send and receive messages over mobile networks.
 #%_K6bin/spacebar-fakeserver
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Wed Oct 07 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt2
 - rename package
 

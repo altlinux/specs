@@ -15,8 +15,8 @@
 %define libplasmaweatherion libplasmaweatherion%sover
 
 Name: %rname
-Version: 6.7.5
-Release: alt2
+Version: 6.7.6
+Release: alt1
 #Epoch: 1
 %K6init
 
@@ -232,6 +232,9 @@ touch touch-%_arch
 
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Tue Oct 13 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt2
 - update word-filter.patch
 

@@ -22,8 +22,8 @@
 %define stplr_backend_ver 0.1.4
 
 Name: plasma-%rname
-Version: 6.7.5
-Release: alt4
+Version: 6.7.6
+Release: alt1
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -389,6 +389,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Tue Nov 03 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.5-alt4
 - fix infinite update loading loop when using the Stapler backend
 

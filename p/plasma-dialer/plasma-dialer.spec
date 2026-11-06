@@ -3,7 +3,7 @@
 %define rname plasma-dialer
 
 Name: %rname
-Version: 6.7.5
+Version: 6.7.6
 Release: alt1
 %K6init
 
@@ -78,5 +78,8 @@ metatype headers and the static metatype library.
 %_K6dbus_iface/*telephony*.xml
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Tue Oct 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - initial build

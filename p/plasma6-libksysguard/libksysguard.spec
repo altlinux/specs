@@ -20,7 +20,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma6-%rname
-Version: 6.7.5
+Version: 6.7.6
 Release: alt1
 #Epoch: 1
 %K6init
@@ -38,7 +38,7 @@ Source: %rname-%version.tar
 Patch: alt-killbtn.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
-BuildRequires: libvulkan-devel
+BuildRequires: libvulkan-devel libudev-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: libsensors3-devel libdrm-devel
 BuildRequires: zlib-devel libnl-devel libcap-devel libpcap-devel
@@ -227,6 +227,9 @@ Common polkit files for %name
 
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kgamma
 
 Name: kgamma
-Version: 6.7.5
+Version: 6.7.6
 Release: alt1
 %K6init
 
@@ -55,6 +55,9 @@ BuildRequires: kf6-kcmutils-devel
 
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 

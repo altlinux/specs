@@ -2,7 +2,7 @@
 %define login_defs_cut %_sysconfdir/plasmalogin/login.defs
 
 Name: %rname
-Version: 6.7.5
+Version: 6.7.6
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -180,6 +180,9 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmplasmalogin.policy
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 

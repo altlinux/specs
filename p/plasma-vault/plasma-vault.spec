@@ -1,7 +1,7 @@
 %define rname plasma-vault
 
 Name: plasma-vault
-Version: 6.7.5
+Version: 6.7.6
 Release: alt1
 #Epoch: 1
 %K6init
@@ -12,6 +12,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: /usr/bin/fusermount
+#Requires: gocryptfs
 #Requires: fuse-encfs >= 1.9.1
 #Requires: fuse-cryfs >= 0.9.6
 
@@ -51,6 +52,9 @@ BuildRequires: plasma6-lib-devel plasma6-activities-devel plasma6-libksysguard-d
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 

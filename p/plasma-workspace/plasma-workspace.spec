@@ -24,8 +24,8 @@
 %def_disable bootstrap
 
 Name: %rname
-Version: 6.7.5
-Release: alt2
+Version: 6.7.6
+Release: alt1
 Epoch: 1
 %K6init
 
@@ -50,7 +50,7 @@ Requires: qt6-dbus qt6-declarative qt6-virtualkeyboard dbus-tools-gui
 Requires: libqt6-location
 Requires: kf6-kconfig kf6-kded kf6-kdeclarative
 Requires: kf6-kwallet kf6-solid kf6-kimageformats kf6-kdbusaddons kf6-kio
-#Requires: kio-extras
+Requires: kio-extras
 Requires: kf6-kquickcharts kf6-kirigami
 Requires: plasma6-kpipewire plasma6-kglobalacceld milou knighttime
 Requires: polkit-kde-agent kactivitymanagerd plasma6-plasma5support
@@ -592,6 +592,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_userunitdir/plasma-core.target.d/obe
 
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.6-alt1
+- new version
+
 * Fri Sep 18 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.5-alt2
 - unhide timezone selector map but without regions (closes: 60555) (thanks katze-942)
 

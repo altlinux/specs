@@ -5,7 +5,7 @@
 %endif
 
 Name: %rname
-Version: 6.7.5
+Version: 6.7.6
 Release: alt1
 #Epoch: 1
 %K6init
@@ -16,7 +16,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: xrandr iio-sensor-proxy
-Requires: libkf6itemmodels
+Requires: libkf6itemmodels kf6-kimageformats
 Requires: plasma6-libkscreen-utils plasma6-plasma5support
 Provides: plasma5-kscreen = %EVR
 Obsoletes: plasma5-kscreen < %EVR
@@ -84,6 +84,9 @@ rm -f po/ru/kscreen_common.po.tmp
 
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
+- new version
+
 * Fri Sep 11 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.5-alt1
 - new version
 
