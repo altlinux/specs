@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-anyio
-Version: 4.15.1
+Version: 4.16.0
 Release: alt1
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
@@ -16,17 +16,13 @@ Vcs: https://github.com/agronholm/anyio
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %if_with check
 BuildRequires: python3-module-trio-tests
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 %endif
 
 # either asyncio or trio
@@ -50,11 +46,7 @@ It will blend in with native libraries of your chosen backend.
 %setup
 %autopatch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -77,6 +69,9 @@ It will blend in with native libraries of your chosen backend.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.16.0-alt1
+- Updated to 4.16.0.
+
 * Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.15.1-alt1
 - Updated to 4.15.1.
 
