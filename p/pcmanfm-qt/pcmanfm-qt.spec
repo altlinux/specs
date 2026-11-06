@@ -1,30 +1,31 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-Name:    pcmanfm-qt
-Version: 2.4.1
-Release: alt2
+Name: pcmanfm-qt
+Version: 2.5.0
+Release: alt1
 Epoch: 1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
 License: GPL-2.0-or-later
-Group:   File tools
+Group: File tools
 
-Url:     https://github.com/lxqt/pcmanfm-qt
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/pcmanfm-qt
+
 Source:  %name-%version.tar
 Patch:   %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires(pre): rpm-build-cmake
+BuildRequires: rpm-build-xdg
+BuildRequires: gcc-c++
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: plasma6-layer-shell-qt-devel
 BuildRequires: libfm-qt6-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: liblxqt-devel
-BuildRequires: libmenu-cache-devel
-BuildRequires: rpm-build-xdg
-
-Requires: menu-cache
 
 %description
 PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
@@ -51,6 +52,9 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 1:2.5.0-alt1
+- New version 2.5.0.
+
 * Sat Sep 19 2026 Anton Midyukov <antohami@altlinux.org> 1:2.4.1-alt2
 - Remove OpenAsRoot and OpenAsAdmin actions from ui.
 

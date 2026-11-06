@@ -2,16 +2,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    qps
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 Summary: Visual process status monitor
 License: GPL-2.0-or-later
-Group:   Monitoring
-URL:     https://github.com/lxqt/qps
-Source:  %name-%version.tar
+Group: Monitoring
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/qps
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: qt6-tools-devel
 BuildRequires: lxqt2-build-tools
 BuildRequires: liblxqt-devel >= 2.0.0
@@ -62,6 +63,9 @@ Qps can
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.14.0-alt1
+- New version 2.14.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.13.0-alt1
 - New version 2.13.0.
 

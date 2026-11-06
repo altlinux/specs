@@ -2,21 +2,25 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-qtplugin-qt6
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: LxQt platform integration plugin for Qt
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lxqt-qtplugin
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-qtplugin
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-qt6
-BuildRequires: gcc-c++ cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
 BuildRequires: liblxqt-devel >= 2.1.0
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: libqt6xdg-devel
 BuildRequires: libdbusmenu-lxqt-devel
 BuildRequires: libfm-qt6-devel
@@ -43,6 +47,9 @@ Provides: lxqt-qtplugin = %EVR
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

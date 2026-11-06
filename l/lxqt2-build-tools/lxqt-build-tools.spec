@@ -2,22 +2,27 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt2-build-tools
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD-3-Clause
 Group: Development/Other
 
-Url: https://github.com/lxqt/lxqt-build-tools
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-build-tools
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++ cmake
-BuildRequires: qt6-base-devel qt6-tools-devel glib2-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: glib2-devel
 
 %description
 %summary.
@@ -45,6 +50,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/lxqt2-transupdate
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

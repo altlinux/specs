@@ -1,20 +1,22 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-Name:     lxqt-admin
-Version:  2.4.0
-Release:  alt1
+Name: lxqt-admin
+Version: 2.5.0
+Release: alt1
 
-Summary:  LXQt system administration tool
-License:  LGPL-2.1
-Group:    Graphical desktop/Other
-Url:      https://github.com/lxqt/lxqt-admin
+Summary: LXQt system administration tool
+License: LGPL-2.1
+Group: Graphical desktop/Other
 
-Source:   %name-%version.tar
-Patch:    %name-%version-%release.patch
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-admin
+
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: lxqt2-build-tools
@@ -44,6 +46,9 @@ BuildRequires: libpolkitqt6-qt6-devel
 %doc AUTHORS CHANGELOG *.md
 
 %changelog
+* Thu Nov 05 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

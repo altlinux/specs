@@ -1,18 +1,21 @@
 Name: lxqt-menu-data
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Freedesktop.org application menu definition files
 License: LGPL-2.1-or-later
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lxqt-menu-data
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-menu-data
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: rpm-build-xdg
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
 BuildRequires: qt6-tools-devel
 BuildRequires: lxqt2-build-tools
@@ -53,6 +56,9 @@ Development files for %name.
 %_datadir/cmake/%name
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

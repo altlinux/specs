@@ -2,31 +2,32 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: liblxqt
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Core utility library for LxQt components
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/liblxqt
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/liblxqt
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: qt6-base-devel qt6-tools-devel
-# qt6-x11extras-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++ 
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: kf6-kwindowsystem-devel
-BuildRequires: lxqt2-build-tools libqt6xdg-devel
+BuildRequires: lxqt2-build-tools
+BuildRequires: libqt6xdg-devel
 BuildRequires: libXScrnSaver-devel
 BuildRequires: libpolkitqt6-qt6-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(gio-unix-2.0)
 
 Requires: qt6-svg
-
-Provides: librazorqt = %version
-Obsoletes: librazorqt < 0.7.0
 
 Provides: %name-data = %version
 Obsoletes: %name-data < 0.11.0
@@ -39,7 +40,7 @@ Obsoletes: lxqt-l10n < %EVR
 %package devel
 Summary: Development headers for LXQt library
 Group: Development/C++
-Requires: %name = %version
+Requires: %name = %EVR
 Requires: lxqt2-build-tools
 
 %description devel
@@ -71,6 +72,9 @@ This package provides the development files for LXQt library.
 %_datadir/cmake/*/
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

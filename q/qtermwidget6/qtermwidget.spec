@@ -4,20 +4,24 @@
 %define sover 2
 
 Name: qtermwidget6
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Unicode-enabled, embeddable Qt6 terminal widget
 License: GPL-2.0-or-later
 Group: Terminals
 
-Url: https://github.com/lxqt/qtermwidget
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/qtermwidget
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: lxqt2-build-tools
 
 %description
@@ -88,6 +92,9 @@ This package contains the development headers for %name library.
 %_libdir/cmake/%name/
 
 %changelog
+* Thu Nov 05 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

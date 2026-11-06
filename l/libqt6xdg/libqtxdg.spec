@@ -4,21 +4,27 @@
 %define sover 4
 
 Name: libqt6xdg
-Version: 4.4.0
+Version: 4.5.0
 Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
 License: LGPL-2.1
 Group: System/Libraries
 
-Url: https://github.com/lxqt/libqtxdg
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/libqtxdg
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-qt6
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: qt6-base-devel qt6-svg-devel libmagic-devel
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: lxqt2-build-tools
+BuildRequires: gcc-c++
+BuildRequires: rpm-build-cmake 
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: libmagic-devel
 BuildRequires: libgio-devel
 Requires: libqt6-core = %_qt6_version
 
@@ -63,6 +69,9 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_datadir/cmake/qt6xdg*/
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 4.5.0-alt1
+- New version 4.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 4.4.0-alt1
 - New version 4.4.0.
 

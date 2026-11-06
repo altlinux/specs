@@ -2,26 +2,32 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Session manager
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lxqt-session
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-session
+
 Source0: %name-%version.tar
-Source1: 08lxqt
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: rpm-build-xdg
+BuildRequires: gcc-c++
 BuildRequires: lxqt2-build-tools
 BuildRequires: liblxqt-devel >= 2.0.0
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: qtxdg-tools-devel >= 4.0.0
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libqt6xdg-devel
-BuildRequires: rpm-build-xdg xdg-utils xdg-user-dirs
+BuildRequires: xdg-utils
+BuildRequires: xdg-user-dirs
 BuildRequires: plasma6-layer-shell-qt-devel
 BuildRequires: libudev-devel
 BuildRequires: libproc2-devel
@@ -29,9 +35,6 @@ BuildRequires: libproc2-devel
 Requires: lxqt-themes
 Requires: xdg-utils
 Requires: qtxdg-tools >= 4.0.0
-
-Provides: razorqt-session = %version
-Obsoletes: razorqt-session < 0.7.0
 
 Conflicts: lxqt-common <= 0.11.0
 
@@ -54,19 +57,21 @@ sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
 
 %install
 %cmake_install
-install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 
 %files
-%_man1dir/*
+%_man1dir/*.1.*
 %_bindir/*
 %_xdgconfigdir/autostart/lxqt-xscreensaver-autostart.desktop
 %_desktopdir/*.desktop
 %_datadir/xsessions/*.desktop
 %_datadir/lxqt/*
-%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Nov 05 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+- Drop wmsession.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

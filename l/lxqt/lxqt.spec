@@ -1,10 +1,11 @@
 Name: lxqt
-Version: 2.4.0
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
-Url: https://lxqt-project.org
+URL: https://lxqt-project.org
+
 BuildArch: noarch
 
 %description
@@ -83,6 +84,9 @@ Requires: lxqt-wallet >= 4.0.0
 %files regular
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Sat Sep 19 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt2
 - lxqt-regular: remove dependencies on lxqt-sudo.
 

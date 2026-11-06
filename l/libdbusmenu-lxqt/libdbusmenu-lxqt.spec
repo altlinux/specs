@@ -4,18 +4,22 @@
 %define sover 0
 
 Name: libdbusmenu-lxqt
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: This library provides a Qt implementation of the DBusMenu protocol
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/libdbusmenu-lxqt
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/libdbusmenu-lxqt
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: lxqt2-build-tools
 BuildRequires: qt6-base-devel
 
 %description
@@ -54,6 +58,9 @@ Development files for %name.
 %_pkgconfigdir/dbusmenu-lxqt.pc
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 0.4.0-alt1
 - New version 0.4.0.
 

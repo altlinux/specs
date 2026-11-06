@@ -2,19 +2,23 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Summary: Desktop panel
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lxqt-panel
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-panel
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(pre): rpm-build-xdg
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: rpm-build-xdg
+BuildRequires: gcc-c++
 BuildRequires: liblxqt-devel
 BuildRequires: libqt6xdg-devel
 BuildRequires: lxqt-menu-data-devel >= 2.0.0
@@ -45,12 +49,8 @@ BuildRequires: pkgconfig(libpulse)
 
 BuildRequires: libsysstat-qt6-devel
 
-Provides: razorqt-panel = %version
-Obsoletes: razorqt-panel < 0.7.0
-
 Conflicts: lxqt-common <= 0.11.0
 
-Requires: menu-cache
 Requires: udisks2 gvfs
 Requires: lxqt-menu-data >= 2.0.0
 
@@ -98,6 +98,9 @@ QtWayland::org_kde_plasma_window_management::show_desktop/" \
 %_includedir/*/*.h
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Sun May 31 2026 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
 - New version 2.4.1.
 

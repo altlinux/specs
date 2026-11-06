@@ -2,26 +2,32 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lximage-qt
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lximage-qt
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lximage-qt
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
-BuildRequires: libXdmcp-devel libXfixes-devel libexif-devel
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: libXdmcp-devel
+BuildRequires: libXfixes-devel
+BuildRequires: libexif-devel
 BuildRequires: liblxqt-devel >= 2.0.0
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libfm-qt6-devel
-BuildRequires: libmenu-cache-devel >= 0.5.0
-BuildRequires: glib2-devel libpcre-devel
+BuildRequires: glib2-devel
+BuildRequires: libpcre-devel
 
 %description
 %summary.
@@ -46,6 +52,9 @@ BuildRequires: glib2-devel libpcre-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

@@ -2,21 +2,32 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-config
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL-2.1-or-later
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-config
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
-BuildRequires: liblxqt-devel >= 2.0.0
-BuildRequires: libqt6xdg-devel qt6-base-devel qt6-tools-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: libXau-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXfixes-devel
+BuildRequires: lxqt2-build-tools
+BuildRequires: liblxqt-devel >= 2.5.0
+BuildRequires: pkgconfig(xrender)
+BuildRequires: libqt6xdg-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: plasma6-libkscreen-devel
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: qt6-svg-devel
@@ -37,7 +48,7 @@ Provides: lxqt-config-randr = %version
 Obsoletes: lxqt-config-randr < 0.8.0
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
@@ -61,6 +72,9 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

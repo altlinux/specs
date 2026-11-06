@@ -1,24 +1,26 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-Name:     pavucontrol-qt
-Version:  2.4.0
-Release:  alt1
+Name: pavucontrol-qt
+Version: 2.5.0
+Release: alt1
 
-Summary:  A Pulseaudio mixer in Qt (port of pavucontrol)
-License:  GPL-2.0-only
-Group:    Sound
-Url:      https://github.com/lxqt/pavucontrol-qt
+Summary: A Pulseaudio mixer in Qt (port of pavucontrol)
+License: GPL-2.0-only
+Group: Sound
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/pavucontrol-qt
 
-Source:   %name-%version.tar
+Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: lxqt2-build-tools
-BuildRequires: glib2-devel libpcre-devel
+BuildRequires: glib2-devel
+BuildRequires: libpcre-devel
 BuildRequires: libpulseaudio-devel
 
 %description
@@ -42,6 +44,9 @@ BuildRequires: libpulseaudio-devel
 %doc AUTHORS CHANGELOG LICENSE *.md
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

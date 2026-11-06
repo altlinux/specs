@@ -2,20 +2,24 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-themes
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Themes, graphics and icons for LXQt
-License: LGPL 2.1+ and 3.0, CC-BY-SA 3.0
+License: LGPL-2.1-or-later AND LGPL-3.0 AND CC-BY-SA-3.0
 Group: Graphical desktop/Other
 
-Url: https://lxqt.org
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-themes
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
 BuildRequires: lxqt2-build-tools
 
 Provides: lxqt-common = %version
@@ -41,6 +45,9 @@ Obsoletes: lxqt-common < 0.12.0
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Thu Nov 05 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

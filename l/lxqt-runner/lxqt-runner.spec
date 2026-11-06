@@ -2,21 +2,25 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-runner
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Tool used to launch programs quickly by typing their names
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lxqt-runner
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-runner
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
 BuildRequires: liblxqt-devel >= 2.0.0
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: plasma6-layer-shell-qt-devel
 BuildRequires: rpm-build-xdg
@@ -25,9 +29,6 @@ BuildRequires: libmenu-cache-devel
 BuildRequires: lxqt-globalkeys-devel
 BuildRequires: libpcre-devel
 BuildRequires: libmuparser-devel
-
-Provides: razorqt-runner = %version
-Obsoletes: razorqt-runner < 0.7.0
 
 %description
 %summary.
@@ -52,6 +53,9 @@ Obsoletes: razorqt-runner < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Thu Nov 05 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

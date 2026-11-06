@@ -1,21 +1,23 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-Name:     xdg-desktop-portal-lxqt
-Version:  1.4.0
-Release:  alt1
+Name: xdg-desktop-portal-lxqt
+Version: 1.5.0
+Release: alt1
 
-Summary:  A backend implementation for xdg-desktop-portal
-License:  LGPL-2.1
-Group:    Graphical desktop/Other
-Url:      https://github.com/lxqt/xdg-desktop-portal-lxqt
+Summary: A backend implementation for xdg-desktop-portal
+License: LGPL-2.1
+Group: Graphical desktop/Other
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/xdg-desktop-portal-lxqt
 
-Source:   %name-%version.tar
-Patch:    %name-%version-%release.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
+BuildRequires: lxqt2-build-tools
 BuildRequires: qt6-base-devel
 BuildRequires: kf6-kwindowsystem-devel
 BuildRequires: libgio-devel
@@ -45,6 +47,9 @@ BuildRequires: libfm-qt6-devel
 %_user_unitdir/xdg-desktop-portal-lxqt.service
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
+- New version 1.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 1.4.0-alt1
 - New version 1.4.0.
 

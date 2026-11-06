@@ -1,20 +1,22 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%define sover 17
+%define sover 18
 
 Name: libfm-qt6
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPL-2.1
 Group: System/Libraries
 
-Url: https://github.com/lxqt/libfm-qt
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/libfm-qt
+
 Source: %name-%version.tar
 
-BuildRequires: rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: rpm-build-xdg
 BuildRequires: gcc-c++
 BuildRequires: lxqt2-build-tools
@@ -22,7 +24,6 @@ BuildRequires: libexif-devel
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: pkgconfig(gio-unix-2.0)
-BuildRequires: pkgconfig(libmenu-cache) >= 1.1.0
 BuildRequires: lxqt-menu-data-devel
 
 Requires: lxqt-menu-data >= 2.1.0
@@ -30,11 +31,18 @@ Requires: lxqt-menu-data >= 2.1.0
 %description
 LibFM-Qt is a core library of PCManFM-Qt file manager.
 
+%package -n %name-%sover
+Summary: Core library of PCManFM-Qt file manager
+Group: System/Libraries
+
+%description -n %name-%sover
+LibFM-Qt is a core library of PCManFM-Qt file manager.
+
 %package devel
 Summary: Development files for %name
 Group: Development/Other
 Requires: libexif-devel libmenu-cache-devel
-Requires: %name = %EVR
+Requires: %name-%sover = %EVR
 
 %description devel
 This package contains files needed to build applications using LibFM-Qt.
@@ -58,7 +66,7 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -print0 |
 # We need to fix this upstream
 find %buildroot -size 0 -delete
 
-%files
+%files -n %name-%sover	
 %_libdir/%name.so.%sover
 %_libdir/%name.so.%sover.*
 %_datadir/%name/
@@ -72,6 +80,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

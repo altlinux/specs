@@ -4,20 +4,25 @@
 %define majver 2.2
 
 Name: qterminal
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
 License: GPL-2.0-only
 Group: Terminals
 
-Url: http://github.com/qterminal/qterminal
+URL: https://lxqt-project.org/
+VCS: https://github.com/qterminal/qterminal
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake lxqt2-build-tools
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: rpm-build-cmake
+BuildRequires: gcc-c++
+BuildRequires: lxqt2-build-tools
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
 BuildRequires: libqtermwidget6-devel >= %majver
 BuildRequires: plasma6-layer-shell-qt-devel
 
@@ -63,6 +68,9 @@ at http://qterminal.sourceforge.net/
 %_datadir/%name
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 

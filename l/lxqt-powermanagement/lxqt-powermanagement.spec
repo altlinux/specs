@@ -2,32 +2,34 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-powermanagement
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Powermanagement module for LXQt
 License: LGPL-2.1
 Group: Graphical desktop/Other
 
-Url: https://github.com/lxqt/lxqt-powermanagement
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/lxqt-powermanagement
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc-c++ cmake
+BuildRequires: rpm-build-cmake
+BuildRequires: rpm-build-xdg
+BuildRequires: gcc-c++
 BuildRequires: liblxqt-devel >= 2.0.0
-BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel
-BuildRequires: kf6-kwindowsystem-devel kf6-solid-devel kf6-kidletime-devel
-BuildRequires: rpm-build-xdg libqt6xdg-devel
+BuildRequires: qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: kf6-kwindowsystem-devel
+BuildRequires: kf6-solid-devel
+BuildRequires: kf6-kidletime-devel
+BuildRequires: libqt6xdg-devel
 BuildRequires: lxqt-globalkeys-devel
 
 Requires: upower
-
-Provides: razorqt-autosuspend = %version
-Obsoletes: razorqt-autosuspend < 0.7.0
-
-Provides: razorqt-power = %version
-Obsoletes: razorqt-power < 0.7.0
 
 %description
 %summary.
@@ -52,6 +54,9 @@ Obsoletes: razorqt-power < 0.7.0
 %_xdgconfigdir/*/*
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- New version 2.5.0.
+
 * Mon Apr 20 2026 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
 - New version 2.4.0.
 
