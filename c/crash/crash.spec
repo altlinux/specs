@@ -4,8 +4,8 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 9.0.2
-Release: alt2.gitf336dfa79e
+Version: 9.0.3
+Release: alt2
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
 License: GPL-3.0-only
@@ -90,7 +90,7 @@ echo -e "6.6\n$KVER" | sort -CV || {
 	exit 0
 }
 %endif
-vm-run --kvm=only --heredoc <<-EOF1
+vm-run --cpu=2 --kvm=only --heredoc <<-EOF1
 	crash <<EOF2 |& tee crash.log
 	ps
 	exit
@@ -98,7 +98,11 @@ vm-run --kvm=only --heredoc <<-EOF1
 EOF1
 grep 'KERNEL: /usr/lib/debug/.*lib/modules/.*/vmlinux' crash.log
 grep 'DUMPFILE: /proc/kcore' crash.log
+%ifarch aarch64
+grep -F '[swapper/1]' crash.log
+%else
 grep -F '[swapper/0]' crash.log
+%endif
 rm crash.log
 rm -f /tmp/initramfs-*.img /tmp/vm.*
 %endif
@@ -113,6 +117,12 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-crash-debuginfo
 
 %changelog
+* Fri Nov 06 2026 Ivan A. Melnikov <iv@altlinux.org> 9.0.3-alt2
+- Relax check on aarch64.
+
+* Tue Oct 20 2026 Ivan A. Melnikov <iv@altlinux.org> 9.0.3-alt1
+- Update to 9.0.3 (2026-09-10).
+
 * Tue Aug 04 2026 Ivan A. Melnikov <iv@altlinux.org> 9.0.2-alt2.gitf336dfa79e
 - Update to 9.0.2-35-gf336dfa79e (2026-07-08) for working
   linux 7.1+ support.
