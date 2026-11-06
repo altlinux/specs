@@ -69,7 +69,7 @@ BuildRequires: gcc%_gcc_version-c++
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt0_13
+Release:	alt0_14
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	https://www.tug.org/texlive/LICENSE.TL
@@ -407,7 +407,7 @@ rm -rf libs/luajit
 export CC=%__cc
 export CXX=%__cxx
 export CXXFLAGS="%{optflags} -std=c++17 -fpermissive"
-export CFLAGS="%{optflags}"
+export CFLAGS="%{optflags} -std=gnu17"
 
 #for dvisvgm system libs patches
 ./reautoconf
@@ -605,6 +605,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Fri Nov 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_14
+- NMU: fix build with new autoconf.
+
 * Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 2022-alt0_13
 - NMU: fix build with gcc15.
 
