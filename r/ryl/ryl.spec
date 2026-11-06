@@ -2,7 +2,7 @@
 %def_with check
 
 Name: ryl
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 Summary: Fast YAML linter and formatter
 License: MIT OR Apache-2.0
@@ -48,5 +48,8 @@ understands.
 %_bindir/%name
 
 %changelog
+* Fri Nov 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.29.0-alt1
+- Updated to version 0.29.0.
+
 * Wed Nov 04 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.28.0-alt1
 - Initial build for ALT.
