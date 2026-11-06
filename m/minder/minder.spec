@@ -1,13 +1,17 @@
 %def_disable snapshot
 
 %define _name Minder
-%define ver_major 2.0
-%define rdn_name com.github.phase1geo.minder
+%define ver_major 3.0
+%define rdn_name io.github.phase1geo.minder
 
+%ifarch %ix86
+%def_disable check
+%else
 %def_enable check
+%endif
 
 Name: minder
-Version: %ver_major.9
+Version: %ver_major.0
 Release: alt1
 
 Summary: Mind-mapping application
@@ -43,6 +47,9 @@ BuildRequires: pkgconfig(libmarkdown)
 BuildRequires: pkgconfig(granite-7)
 BuildRequires: pkgconfig(libwebp)
 BuildRequires: vapi(granite-7)
+BuildRequires: pkgconfig(lasem-0.6)
+BuildRequires: pkgconfig(webkitgtk-6.0)
+BuildRequires: pkgconfig(librsvg-2.0)
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -70,11 +77,16 @@ Quickly create visual mind-maps using the keyboard and automatic layout.
 %_iconsdir/hicolor/*/apps/%{rdn_name}*.svg
 %_iconsdir/hicolor/*/mimetypes/application-%rdn_name.svg
 %_datadir/metainfo/%rdn_name.appdata.xml
+# no bakoma fonts in Sisyphus
+%_datadir/fonts/bakoma/
 %_xdgmimedir/packages/%rdn_name.xml
 %doc AUTHORS* README*
 
 
 %changelog
+* Fri Nov 06 2026 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Mon Apr 20 2026 Yuri N. Sedunov <aris@altlinux.org> 2.0.9-alt1
 - 2.0.9
 
