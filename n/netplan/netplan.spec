@@ -1,6 +1,6 @@
 Name:    netplan
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Backend-agnostic network configuration in YAML
 License: GPL-3.0
@@ -35,9 +35,14 @@ Requires:       python3(cffi)
 
 Source:  %name-%version.tar
 
+Patch0: netplan-1.2.2-networkd-dns.patch
 Patch1: netplan-1.1.1-alt-meson.patch
 Patch2: netplan-1.1.1-alt-libexec.patch
 Patch3: netplan-1.2-alt-configure-libexec.patch
+Patch4: netplan-1.2.2-ip-leases-debug.patch
+Patch5: netplan-1.2.2-networkd-start.patch
+Patch6: netplan-1.2.2-networkd-link-files.patch
+Patch7: netplan-1.2.2-nm-managed-devices.patch
 
 %description
 %summary
@@ -82,6 +87,17 @@ mkdir -p %buildroot%_sysconfdir/%name
 %_man8dir/%{name}*
 
 %changelog
+* Fri Nov 06 2026 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt2
+- Fixed ip leases with debug logging (ALT #38625).
+- Started networkd before reloading its configuration and left inactive
+  networkd stopped when removing old configuration (ALT #53301).
+- Stopped treating udev link files as networkd configuration.
+- Started resolved and ALT DNS hooks with networkd, including OVS
+  configurations (ALT #53300).
+- Allowed named Netplan devices to override unmanaged settings from the
+  etcnet-alt plugin while preserving explicit NetworkManager policies
+  (ALT #53299).
+
 * Mon Oct 26 2026 Alexey Shabalin <shaba@altlinux.org> 1.2.2-alt1
 - New version 1.2.2.
 
