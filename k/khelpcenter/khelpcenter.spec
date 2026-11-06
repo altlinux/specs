@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Graphical desktop/KDE
@@ -23,6 +23,7 @@ Source: %rname-%version.tar
 Patch1: khelpcenter-alt-hide-links-on-contents-screen.patch
 Patch2: alt-paths.patch
 Patch3: alt-run-from-root.patch
+Patch4: alt-search-caseins.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-webengine-devel
@@ -42,6 +43,7 @@ KDE help center.
 #%patch1 -p2
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %K6build
@@ -74,6 +76,9 @@ fi
 
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt2
+- set search case insensitive
+
 * Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
 - new version
 
