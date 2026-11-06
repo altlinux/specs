@@ -1,67 +1,62 @@
-# SPEC file for cadaver package
+%define _unpackaged_files_terminate_build 1
 
-Name:    cadaver
-Version: 0.24
+Name: cadaver
+Version: 0.28
 Release: alt1
 
-Summary: a command-line WebDAV client
-Summary(ru_RU.UTF-8): консольный клиент WebDAV
-
+Summary: Command-line WebDAV client
+Summary(ru_RU.UTF-8): Консольный клиент WebDAV
 License: %gpl2plus
-Group:   Networking/File transfer
-URL:     https://notroj.github.io/cadaver/
-
-Packager: Nikolay A. Fetisov <naf@altlinux.org>
+Group: Networking/File transfer
+Url: https://notroj.github.io/cadaver/
+Vcs: https://github.com/notroj/cadaver
 
 Source0: %name-%version.tar
-Patch0:  %name-%version-%release.patch
 
-Patch1:  %name-0.23.2-debian-manpage_hyphen.patch
-Patch2:  %name-0.23.3-alt-glibc-secure_getenv.patch
-
-BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Sun Mar 20 2011
-BuildRequires: libexpat-devel libkeyutils-devel libncurses-devel libneon-devel libreadline-devel libssl-devel zlib-devel
+BuildRequires: rpm-build-licenses
+BuildRequires: libncurses-devel
+BuildRequires: libneon-devel
+BuildRequires: libneon-source
+BuildRequires: libreadline-devel
 
 %description
-cadaver is a command-line WebDAV client for Unix.  It supports
-file upload, download, on-screen display, namespace operations
-(move/copy), collection creation and deletion, and locking
-operations.
+Cadaver is a command-line WebDAV client for Unix. It supports file
+upload, download, on-screen display, in-place editing, namespace
+operations (move/copy), collection creation and deletion, property
+manipulation, and resource locking.
 
 %prep
 %setup
-%patch0 -p1
-
-%patch1 -p1
-%patch2 -p1
+# configure.ac expects the neon source tree in neon/ (autoconf macros
+# and src/Makefile.in); cadaver is still linked with system libneon.
+mkdir -p neon
+tar -xf %_usrsrc/libneon-source/neon-*.tar.gz -C neon --strip-components=1
 
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
 ./autogen.sh
-
-# Add missed automake files:
-for f in config.guess config.sub; do cp -p -- /usr/share/automake/$f .; done
-
-autoconf -f
-%configure --with-ssl=openssl --with-neon
+%configure --with-neon
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 %find_lang %name
 
-%files  -f %name.lang
-%doc FAQ README.md THANKS TODO BUGS INTEROP
+%files -f %name.lang
+%doc FAQ NEWS README.md THANKS TODO
 %doc --no-dereference COPYING
-
 %_bindir/%name
-%_man1dir/%{name}*
+%_man1dir/%name.1*
 
 %changelog
+* Fri Nov 06 2026 Mikhail Nogin <joycap@altlinux.org> 0.28-alt1
+- Updated to 0.28.
+- Used neon macros from libneon-source instead of bundled submodule.
+- Dropped obsolete patches (manpage hyphen, secure_getenv).
+- Cleaned up spec and BuildRequires.
+
 * Wed Dec 07 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.24-alt1
 - New version
 
