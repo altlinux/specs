@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: pam_fabo
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: PAM false bottom module
@@ -46,6 +46,9 @@ FAlse BOttom is a pam module for mapping passwords to actions.
 %doc examples/
 
 %changelog
+* Fri Nov 06 2026 Egor Shestakov <ved@altlinux.org> 0.1.4-alt1
+- Fix depends mode.
+
 * Tue Nov 11 2025 Egor Shestakov <ved@altlinux.org> 0.1.3-alt1
 - Multiple fabo files support.
 - Packaging:
