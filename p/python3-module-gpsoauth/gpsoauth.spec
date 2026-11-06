@@ -1,5 +1,5 @@
 Name: python3-module-gpsoauth
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Python API for google play services oauth
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/gpsoauth-%version.dist-info
 
 %changelog
+* Fri Nov 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.0-alt1
+- 3.0.0 released
+
 * Tue Oct 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt1
 - 2.0.0 released
 
