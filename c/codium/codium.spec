@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %define app_id com.vscodium.codium
-%define ms_commit 08d4889f9ec4a1685d257b9b95de036c8e1ce1e5
+%define ms_commit e646868227c3e3a9e3f24277c8c7220be42c0be7
 %ifarch x86_64
 %define vscode_arch x64
 %endif
@@ -10,7 +10,7 @@
 %define vscode_output VSCode-linux-%vscode_arch
 
 Name: codium
-Version: 1.135.06055
+Version: 1.143.17232
 Release: alt1
 
 Summary: Community build of the Visual Studio Code editor
@@ -21,8 +21,9 @@ VCS: https://github.com/VSCodium/vscodium.git
 
 Source0: %name-%version.tar
 Source1: %name-%version-predownloaded.tar.zst
-Patch0: offline-build.patch
-Patch1: system-electron.patch
+Patch0: %name-%version-alt-offline-build.patch
+Patch1: %name-%version-alt-system-electron.patch
+Patch2: %name-%version-alt-request-url.patch
 
 ExcludeArch: %ix86
 
@@ -75,6 +76,10 @@ export MAX_OLD_SPACE_SIZE=8192
 
 export npm_config_offline=true
 
+# Use the watcher built below instead of architecture-specific npm prebuilds.
+find vscode/node_modules/@parcel -mindepth 1 -maxdepth 1 \
+    -type d -name 'watcher-*' -exec rm -rf -- {} +
+
 . ./prepare_vscode.sh
 
 # Recreate the release VSIX files from unpacked sources and register them.
@@ -126,18 +131,6 @@ find "$appdir/node_modules.asar.unpacked/node-pty/prebuilds" \
     -mindepth 1 -maxdepth 1 ! -name linux-%vscode_arch -exec rm -rf -- {} +
 find "$appdir/node_modules.asar.unpacked/@vscode/ripgrep-universal/bin" \
     -mindepth 1 -maxdepth 1 -type d ! -name linux-%vscode_arch -exec rm -rf -- {} +
-find "$appdir/node_modules.asar.unpacked/@microsoft/mxc-sdk/bin" \
-    -mindepth 1 -maxdepth 1 ! -name %vscode_arch -exec rm -rf -- {} +
-find "$appdir/node_modules.asar.unpacked/@microsoft/mxc-sdk/bin/%vscode_arch" \
-    -type f \( -name '*.exe' -o -name '*-mac' \) -delete
-
-%ifarch aarch64
-for helper in lxc-exec linux-test-proxy; do
-    patchelf --set-interpreter /lib64/ld-linux-aarch64.so.1 \
-        "$appdir/node_modules.asar.unpacked/@microsoft/mxc-sdk/bin/arm64/$helper"
-done
-%endif
-
 cat > %buildroot%_bindir/codium <<'SH'
 #!/bin/sh
 ELECTRON_RUN_AS_NODE=1 exec %_bindir/electron \
@@ -181,7 +174,7 @@ for native in \
     @vscodium/native-keymap/build/Release/keymapping.node \
     @vscodium/policy-watcher/build/Release/vscodium-policy-watcher.node \
     kerberos/build/Release/kerberos.node \
-    @vscode/os-proxy-resolver-linux-%vscode_arch-gnu/os_proxy_resolver.node \
+    @vscodium/os-proxy-resolver-linux-%vscode_arch-gnu/os_proxy_resolver.node \
     node-pty/prebuilds/linux-%vscode_arch/pty.node; do
     ELECTRON_RUN_AS_NODE=1 /usr/bin/electron -e \
         'require(process.argv[1])' "$app/node_modules.asar.unpacked/$native"
@@ -198,6 +191,10 @@ done
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Thu Nov 05 2026 Grant Makyan <karonus@altlinux.org> 1.143.17232-alt1
+- Update version to 1.143.17232.
+- Use the URL API for HTTP requests and proxy selection (Closes: 61109).
+
 * Tue Sep 29 2026 Grant Makyan <karonus@altlinux.org> 1.135.06055-alt1
 - Update to VSCodium 1.135.06055.
 - Use system Electron runtime.
