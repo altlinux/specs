@@ -2,7 +2,7 @@
 
 Name: cardpeek
 Version: 0.8.4
-Release: alt2
+Release: alt2.1
 
 Summary: Cardpeek is a tool to read the contents of ISO7816 smart cards.
 License: GPL-3.0
@@ -55,7 +55,7 @@ It can also read the following cards with limited interpretation of data:
 %patch0 -p1
 
 %build
-autoreconf --install
+autoreconf --install --force
 ./configure --prefix=%_prefix
 %make_build
 
@@ -74,6 +74,9 @@ rm -rf %buildroot/%_datadir/doc/%name/%{name}_ref.en.pdf
 %_man1dir/%name.1.xz
 
 %changelog
+* Fri Nov 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.8.4-alt2.1
+- NMU: fix FTBFS with autoconf>=2.73
+
 * Wed May 13 2026 Nikolai Kostrigin <nickel@altlinux.org> 0.8.4-alt2
 - fix FTBFS caused by spurious arguments in ui_update() calls
   + spec: switch to Vcs tag for upstream URL
