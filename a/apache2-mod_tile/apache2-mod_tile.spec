@@ -11,7 +11,7 @@
 
 Name: apache2-mod_%modname
 Version: 0.8.1
-Release: alt1
+Release: alt1.1
 
 Summary: A system to serve raster tiles
 License: GPL-2.0-only
@@ -72,7 +72,7 @@ sed etc/renderd/renderd.conf.in \
     > etc/renderd/renderd.conf
 
 %build
-%autoreconf
+%autoreconf --replace-handwritten
 %configure
 %make_build \
     renderd_CXXFLAGS='$(MAPNIK_CFLAGS) -DMAPNIK_FONTS_DIR_RECURSE=1'
@@ -132,5 +132,8 @@ __EOF__
 %_man5dir/*.5.*
 
 %changelog
+* Fri Nov 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.8.1-alt1.1
+- NMU: fix FTBFS with autoconf 2.73
+
 * Tue Sep 29 2026 Valery Zabrovsky <brow@altlinux.org> 0.8.1-alt1
 - Initial build for ALT Sisyphus.
