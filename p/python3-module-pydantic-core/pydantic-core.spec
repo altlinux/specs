@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.50.1
+Version: 2.50.4
 Release: alt1
 
 Summary: Core validation logic for pydantic written in rust
@@ -84,6 +84,9 @@ export CFLAGS="$CFLAGS -mno-outline-atomics"
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.50.4-alt1
+- Updated to 2.50.4.
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.50.1-alt1
 - Updated to 2.50.1.
 

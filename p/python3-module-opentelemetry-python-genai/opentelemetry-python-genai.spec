@@ -65,7 +65,7 @@ cd - \
 %def_with check
 
 Name: python3-module-opentelemetry-python-genai
-Version: 1.2
+Version: 1.3
 Release: alt1.%version_beta
 
 Summary: OpenTelemetry instrumentation for generative AI libraries
@@ -145,5 +145,8 @@ ENDTESTS
 %add_genai_files gg
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.3-alt1.b0
+- Updated to 1.3.
+
 * Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.2-alt1.b0
 - Initial build for ALT Sisyphus.

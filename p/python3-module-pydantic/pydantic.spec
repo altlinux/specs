@@ -15,7 +15,7 @@ Extra "%1" for %%pypi_name. \
 }
 
 Name: python3-module-%pypi_name
-Version: 2.14.1
+Version: 2.14.3
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -28,6 +28,7 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: %pyproject_deps_config_name
 Source2: pyproject_deps_pin.py
+Patch: %name-%version-alt.patch
 
 %pyproject_runtimedeps_metadata
 # pydantic verifies the exact pydantic-core version at import time; the
@@ -64,6 +65,7 @@ with pydantic.
 
 %prep
 %setup
+%autopatch -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
@@ -103,6 +105,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.14.3-alt1
+- Updated to 2.14.3.
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.14.1-alt1
 - Updated to 2.14.1.
 

@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.170.12
+Version: 6.170.14
 Release: alt1
 
 Summary: A library for property based testing
@@ -107,6 +107,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.170.14-alt1
+- Updated to 6.170.14.
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.170.12-alt1
 - Updated to 6.170.12.
 
