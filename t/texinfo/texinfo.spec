@@ -1,6 +1,8 @@
+%def_disable check
+
 Name: texinfo
-Version: 7.1
-Release: alt2
+Version: 7.3
+Release: alt1
 
 Summary: Tools needed to create Texinfo format documentation files
 License: GPL-3.0-or-later
@@ -22,7 +24,7 @@ Patch1: texinfo-alt-install-info-dot_exe.patch
 Patch2: texinfo-alt-install-info-zio.patch
 Patch3: texinfo-alt-install-info-rpm.patch
 Patch4: texinfo-alt-texi2dvi-baroque-shells.patch
-Patch5: texinfo-alt-texi2any-version.patch
+Patch5: texinfo-alt-perl.patch
 Patch6: texinfo-alt-makeinfo-split-size.patch
 Patch7: texinfo-alt-tests.patch
 
@@ -112,7 +114,6 @@ This packages contains new RPM macros for packaging texinfo files.
 install -pm755 %_sourcedir/texi2pdf util/
 
 %build
-%add_optflags -std=gnu17
 rm po/*.gmo po/stamp*
 find -name configure.ac -printf '%%h\n' |while read dir; do
 	pushd "$dir"
@@ -120,6 +121,7 @@ find -name configure.ac -printf '%%h\n' |while read dir; do
 	%autoreconf
 	popd
 done
+export PERL_EXT_CFLAGS="%optflags"
 %configure \
 	--with-external-libintl-perl \
 	--with-external-Text-Unidecode \
@@ -134,7 +136,7 @@ xz -k9 NEWS
 	TEXMF=%_texmfmain MAKEINFOFLAGS=--no-split
 
 # these files shouldn't be packaged
-rm %buildroot%_libdir/texinfo/*.la
+rm %buildroot%_libdir/texi2any/lib/*.la
 
 # generic/epsf/epsf.tex is packaged in tetex and texlive
 rm -r %buildroot%_texmfmain/tex/generic
@@ -164,8 +166,6 @@ install -pm755 %_sourcedir/update-info-dir %buildroot%_sbindir/
 mkdir -p %buildroot%_man8dir
 install -pm644 %_sourcedir/update-info-dir.8 %buildroot%_man8dir/
 
-rm -r %buildroot%_datadir/locale/*.us-ascii
-rm -r %buildroot%_datadir/locale/pl.iso-8859-2
 %find_lang --output=texinfo.lang texinfo texinfo_document
 
 %check
@@ -174,7 +174,8 @@ export ALL_TESTS=yes LANG=en_US.utf8
 unset ALL_TESTS LANG
 
 %filter_from_requires /^perl(.*Texinfo/d
-%add_perl_lib_path %_datadir/texinfo
+%add_perl_lib_path %_datadir/texi2any
+%add_perl_lib_path %_libdir/texi2any/XS_extension
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
@@ -192,7 +193,8 @@ unset ALL_TESTS LANG
 %_infodir/texinfo.*
 %_infodir/texi2any_*.*
 %_datadir/texinfo/
-%_libdir/texinfo/
+%_datadir/texi2any/
+%_libdir/texi2any/
 
 %files -n texi2dvi
 %_bindir/*texi2dvi
@@ -221,6 +223,9 @@ unset ALL_TESTS LANG
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Nov 06 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.3-alt1
+- 7.1 -> 7.3.
+
 * Wed Apr 22 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 7.1-alt2
 - Rebuilt with -std=gnu17 to fix ftbfs with compilers defaulting to C23+
   (gcc 15+).
