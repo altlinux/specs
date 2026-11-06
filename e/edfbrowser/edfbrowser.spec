@@ -1,5 +1,5 @@
 Name: edfbrowser
-Version: 2.15
+Version: 2.16
 Release: alt1
 
 Summary: EDF+ and BDF+ viewer and toolbox
@@ -40,6 +40,9 @@ rm -v %buildroot%_datadir/*/edf.png
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Fri Nov 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.16-alt1
+- 2.16 released
+
 * Tue Sep 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.15-alt1
 - 2.15 released
 
