@@ -2,7 +2,7 @@ Name: kernel-image-7.3
 Release: alt1
 %define kernel_src_version	7.3
 %define kernel_base_version	7.3
-%define kernel_sublevel	.1
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -626,6 +626,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Nov 07 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.3-alt1
+- v7.3.3 (2026-11-06).
+
 * Mon Nov 02 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.1-alt1
 - v7.3.1 (2026-10-30).
 - spec: Require /proc from kernel-headers-modules-<flavor>.
