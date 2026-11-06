@@ -3,7 +3,7 @@
 %define __find_requires_filter grep -vF -e 'debug64(libGlassSDK.so)' -e '/usr/lib/debug/usr/lib64/xr-driver/viture/libglasses.so.debug' -e '/usr/lib/debug/usr/lib64/xr-driver/viture/libusb-1.0.so.0.debug'
 
 Name:    breezy-desktop
-Version: 2.12.3
+Version: 2.12.4
 Release: alt1
 
 Summary: XR virtual desktop for KWin 6 and GNOME (XR glasses mirror)
@@ -202,6 +202,15 @@ find %buildroot%_libdir/xr-driver -type f -name '*.so*' -exec patchelf --set-rpa
 if [ -e %buildroot%_libdir/xr-driver/viture/libusb-1.0.so.0.3.0 ]; then
     ln -sf libusb-1.0.so.0.3.0 %buildroot%_libdir/xr-driver/viture/libusb-1.0.so.0
 fi
+# The SDK also ships every OpenCV library three times: the runtime SONAME,
+# the fully versioned file, and an unversioned link-time copy, all with
+# identical contents.  Keep one real file per library and symlink the other
+# names to it, as with libusb above.  The aarch64 build removes them earlier.
+for lib in %buildroot%_libdir/xr-driver/viture/libopencv_*.so.4.2.0; do
+    [ -e "$lib" ] || continue
+    ln -sf "${lib##*/}" "${lib%%.4.2.0}.4.2"
+    ln -sf "${lib##*/}" "${lib%%.4.2.0}"
+done
 
 install -Dm644 modules/XRLinuxDriver/systemd/xr-driver.service %buildroot%_userunitdir/xr-driver.service
 install -dm755 %buildroot%_udevrulesdir
@@ -355,6 +364,9 @@ modprobe uinput 2>/dev/null || :
 %_bindir/breezy_vulkan_logs
 
 %changelog
+* Fri Nov 06 2026 Sergey Palcheh <minergenon@altlinux.org> 2.12.4-alt1
+- new version 2.12.4
+
 * Wed Nov 04 2026 Sergey Palcheh <minergenon@altlinux.org> 2.12.3-alt1
 - new version 2.12.3
 - Enabled aarch64 builds.
