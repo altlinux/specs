@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.87
-Release: alt5
+Release: alt6
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -21,6 +21,7 @@ Patch1: %name-xvt-alt.patch
 Patch2: %name-libgl-drivers-path.patch
 Patch3: %name-steamvr-alt.patch
 Patch4: %name-desktop-checksum-alt.patch
+Patch5: %name-prime-env-alt.patch
 
 BuildRequires(Pre): rpm-build-python3
 
@@ -65,6 +66,7 @@ List of devices Steam and SteamVR will want read/write permissions on, to help d
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %install
 %makeinstall_std
@@ -93,6 +95,11 @@ List of devices Steam and SteamVR will want read/write permissions on, to help d
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Fri Nov 06 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt6
+- Drop NVIDIA PRIME environment variables the client cannot use (no 32-bit
+  NVIDIA GLX vendor library), set blindly e.g. by XFCE/Thunar for desktop
+  files with PrefersNonDefaultGPU (ALT #60816)
+
 * Fri Oct 09 2026 Nazarov Denis <nenderus@altlinux.org> 1.0.0.87-alt5
 - Mark created desktop shortcut as trusted for XFCE (ALT #46246)
 
