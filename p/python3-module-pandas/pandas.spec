@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define oname pandas
 
 %def_disable check
@@ -5,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.6
-Release: alt1
+Release: alt2
 Summary: Python Data Analysis Library
 License: BSD-3-Clause
 Group: Development/Python3
@@ -128,28 +129,28 @@ py.test-3 -n auto \
 
 %files
 %doc *.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.dist-info
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/testing.py
-%exclude %python3_sitelibdir/*/_testing*
-%exclude %python3_sitelibdir/*/conftest.py
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/*/_test*
-%exclude %python3_sitelibdir/*/*/conftest.*
-%exclude %python3_sitelibdir/*/*/*/test*
-%exclude %python3_sitelibdir/*/*/*/_test*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version.dist-info/
+%exclude %python3_sitelibdir/%oname/tests/
+%exclude %python3_sitelibdir/%oname/_testing/_hypothesis.py
+%exclude %python3_sitelibdir/%oname/_testing/__pycache__/_hypothesis.*
+%exclude %python3_sitelibdir/%oname/conftest.py
+%exclude %python3_sitelibdir/%oname/__pycache__/conftest.*
+%exclude %python3_sitelibdir/%oname/util/_test_decorators.py
+%exclude %python3_sitelibdir/%oname/util/__pycache__/_test_decorators.*
+%exclude %python3_sitelibdir/%oname/util/_tester.py
+%exclude %python3_sitelibdir/%oname/util/__pycache__/_tester.*
 
 %files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/testing.py
-%python3_sitelibdir/*/_testing*
-%python3_sitelibdir/*/conftest.py
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/*/_test*
-%python3_sitelibdir/*/*/conftest.*
-%python3_sitelibdir/*/*/*/test*
-%python3_sitelibdir/*/*/*/_test*
+%python3_sitelibdir/%oname/tests/
+%python3_sitelibdir/%oname/conftest.py
+%python3_sitelibdir/%oname/__pycache__/conftest.*
+%python3_sitelibdir/%oname/util/_test_decorators.py
+%python3_sitelibdir/%oname/util/__pycache__/_test_decorators.*
+%python3_sitelibdir/%oname/util/_tester.py
+%python3_sitelibdir/%oname/util/__pycache__/_tester.*
+%python3_sitelibdir/%oname/_testing/_hypothesis.py
+%python3_sitelibdir/%oname/_testing/__pycache__/_hypothesis.*
 
 %if_with docs
 %files docs
@@ -157,6 +158,9 @@ py.test-3 -n auto \
 %endif
 
 %changelog
+* Fri Nov 06 2026 Stanislav Levin <slev@altlinux.org> 3.0.6-alt2
+- NMU: moved public testing module to the main package (closes: #61324).
+
 * Sat Sep 19 2026 Anton Vyatkin <toni@altlinux.org> 3.0.6-alt1
 - New version 3.0.6.
 
