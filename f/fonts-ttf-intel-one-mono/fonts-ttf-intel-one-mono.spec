@@ -3,7 +3,7 @@
 %define fname intel-one-mono
 
 Name: fonts-ttf-%fname
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Intel One Mono font
@@ -47,12 +47,13 @@ to use as well as editable sources.
 %ttf_fonts_install %fname
 
 %files -f %fname.files
-%doc OFL.txt
 
 %changelog
+* Fri Nov 06 2026 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
+- Updated to 1.5.0.
+
 * Mon Sep 30 2024 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - Updated to 1.4.0.
 
 * Wed Aug 23 2023 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
 - Built for ALT Sisyphus.
-
