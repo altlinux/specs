@@ -1,6 +1,6 @@
 Name: rpm-build-cmake
 Version: 4.0.0
-Release: alt3
+Release: alt4
 
 Summary: RPM build enviroment for building RPM packages using cmake
 
@@ -11,7 +11,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: cmake >= %version
+# the macros need cmake 3.20 (ctest --test-dir); cmake 4 only adds the policy minimum, older ones ignore it
+Requires: cmake >= 3.20
 
 Requires: rpm-macros-cmake = %EVR
 
@@ -43,6 +44,9 @@ install -D -m755 cmake.prov.files %buildroot%_libexecdir/rpm/cmake.prov.files
 %_rpmmacrosdir/cmake
 
 %changelog
+* Fri Nov 06 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt4
+- require cmake >= 3.20, not the package version (installs in p11 and c10f2)
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt3
 - rpm-macros-cmake: add %%_cmakedir_noarch (%%_datadir/cmake) for noarch packages
 
