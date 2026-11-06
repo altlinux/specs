@@ -1,13 +1,13 @@
 %def_disable snapshot
 
 %define ver_major 0.6
-%define git_tag f2495d35be437a9c9f2a80019a2f608a42c59da9
+%define git_tag 9c3ba7018679017e4079a990e7587e0472e377ad
 %define rdn_name org.sigxcpu.Livi
 
 %def_enable check
 
 Name: livi
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Livi is a Light Video player for Wayland
@@ -69,6 +69,9 @@ simple.
 %doc README* NEWS
 
 %changelog
+* Fri Nov 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt1
+- 0.6.1
+
 * Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
