@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 6.7.6
-Release: alt1
+Release: alt2
 #Epoch: 1
 %K6init
 
@@ -18,6 +18,7 @@ License: GPL-2.0-or-later
 Requires: kf6-kirigami
 Requires: /usr/bin/coredumpctl
 Requires: python3(psutil) python3(pygdbmi) python3(sentry_sdk)
+Requires: /usr/bin/eu-unstrip
 
 #Provides: plasma5-drkonqi = 1:%version-%release
 #Obsoletes: plasma5-drkonqi < 1:%version-%release
@@ -82,6 +83,9 @@ Compatibility package.
 %_K6notif/*drkonqi*.notifyrc
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt2
+- fix requires
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
 - new version
 
