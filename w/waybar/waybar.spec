@@ -5,7 +5,7 @@
 %define helperdir %_libexecdir/%name
 
 Name: waybar
-Version: 0.15.0
+Version: 0.16.0
 Release: alt1
 
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -16,6 +16,8 @@ VCS: https://github.com/Alexays/Waybar.git
 
 Source: %name-%version.tar
 Patch0: 0001-Revert-hyprland-workspaces-range-find-lint-cleanup.patch
+Patch1: 0002-Install-missing-man-pages.patch
+Patch2: 0003-Fix-backlight-rounding-on-x87.patch
 
 BuildRequires(pre): rpm-build-xdg
 
@@ -74,6 +76,14 @@ BuildRequires: libgps-devel
 %description
 %summary.
 
+%package gps
+Summary: GPS module for Waybar
+Group: Graphical desktop/Other
+Requires: %name = %version-%release
+
+%description gps
+GPS module for Waybar.
+
 %prep
 %setup
 %autopatch -p1
@@ -97,9 +107,18 @@ BuildRequires: libgps-devel
 %config(noreplace) %_xdgconfigdir/%name/config.jsonc
 %config(noreplace) %_xdgconfigdir/%name/style.css
 %_userunitdir/%name.service
+%exclude %_man5dir/waybar-gps.5.*
 %_man5dir/*
 
+%files gps
+%dir %_libdir/waybar
+%_libdir/waybar/waybar-gps.so
+%_man5dir/waybar-gps.5.*
+
 %changelog
+* Fri Nov 06 2026 Anton Zhukharev <ancieg@altlinux.org> 0.16.0-alt1
+- Updated to 0.16.0.
+
 * Fri Jul 24 2026 Anton Zhukharev <ancieg@altlinux.org> 0.15.0-alt1
 - Updated to 0.15.0 (ALT#59924).
 
