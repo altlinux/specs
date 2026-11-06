@@ -1,10 +1,11 @@
+%set_autoconf_version 2.60
 %def_with gpm
 %def_with lua
 %def_with doc
 
 Name: elinks
 Version: 0.20.0
-Release: alt1
+Release: alt2
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -134,6 +135,9 @@ echo '<html><body>TEST</body></html>' | %buildroot%_bindir/elinks -no-numbering 
 %endif
 
 %changelog
+* Fri Nov 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.20.0-alt2
+- fixed FTBFS: set autoconf version 2.60
+
 * Mon Jul 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.20.0-alt1
 - 0.19.1 -> 0.20.0
 
