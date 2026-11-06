@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.6
+Version: 3.6.0
 Release: alt1
 
 Summary: SSE plugin for Starlette
@@ -17,19 +17,12 @@ Vcs: https://github.com/sysid/sse-starlette
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%add_pyproject_deps_check_filter testcontainers
-%pyproject_builddeps_metadata_extra examples
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_filter testcontainers
+%pyproject_configure_with_check_deps metadata_extra examples
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 Server Sent Events for Starlette and FastAPI.
@@ -37,11 +30,7 @@ Server Sent Events for Starlette and FastAPI.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -58,6 +47,9 @@ rm -fv tests/{experimentation,integration}/test_multiple_consumers*.py
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 06 2026 Anton Zhukharev <ancieg@altlinux.org> 3.6.0-alt1
+- Updated to 3.6.0.
+
 * Tue Jul 21 2026 Anton Zhukharev <ancieg@altlinux.org> 3.4.6-alt1
 - Updated to 3.4.6.
 
