@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname org.armagetronad.armagetronad
+%set_autoconf_version 2.60
 
 Name: armagetronad
 Version: 0.2.9.3.1
-Release: alt1
+Release: alt2
 Summary: 3D Tron-like high speed game
 
 Group: Games/Arcade
@@ -90,6 +91,9 @@ rm -v %buildroot/%_bindir/%{name}-master
 %exclude %_datadir/games/%name-dedicated/scripts
 
 %changelog
+* Fri Nov 06 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.9.3.1-alt2
+- fixed FTBFS: set autoconf version 2.60
+
 * Thu Oct 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.9.3.1-alt1
 - 0.2.9.3.0 -> 0.2.9.3.1
 
