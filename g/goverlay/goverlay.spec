@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 1.9.2
+Version: 1.9.4
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -43,6 +43,7 @@ Goverlay makes everything accessible in just a few clicks.
 /usr/libexec/bgmod
 /usr/libexec/bgmod-uninstaller
 /usr/libexec/pascube
+/usr/libexec/bgmod-splash
 %dir %_datadir/%name/assets/icons/
 %dir %_datadir/%name/assets/shaders/
 %dir %_datadir/%name/assets/textures/
@@ -68,6 +69,9 @@ Goverlay makes everything accessible in just a few clicks.
 %_datadir/%name/languages/*
 
 %changelog
+* Fri Nov 06 2026 Ilya Mashkin <oddity@altlinux.ru> 1.9.4-alt1
+- 1.9.4
+
 * Sat Sep 19 2026 Ilya Mashkin <oddity@altlinux.ru> 1.9.2-alt1
 - 1.9.2
 
