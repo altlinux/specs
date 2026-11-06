@@ -5,7 +5,7 @@
 %define pypi_name python-ulid
 
 Name: python3-module-%pypi_name
-Version: 4.0.1
+Version: 4.1.0
 Release: alt1
 
 Summary: ULID implementation for Python
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 
 %if_with check
+BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-pytest
 %add_pyproject_deps_check_filter '^(pyrefly|prek)$'
 %pyproject_builddeps_metadata -- --extra pydantic
@@ -59,7 +60,7 @@ It is:
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --session-timeout=600
 
 %files
 %doc LICENSE README.*
@@ -68,6 +69,9 @@ It is:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.1.0-alt1
+- Updated to 4.1.0.
+
 * Fri Jul 24 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.0.1-alt1
 - Updated to 4.0.1.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: A Python implementation of Lunr.js
@@ -58,6 +58,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.1-alt1
+- Updated to 0.8.1.
+
 * Mon Jun 30 2025 Alexandr Shashkin <dutyrok@altlinux.org> 0.8.0-alt1
 - Initial build for ALT Sisyphus.
 

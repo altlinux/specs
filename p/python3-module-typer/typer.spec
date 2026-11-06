@@ -6,13 +6,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.27.3
+Version: 0.28.0
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
 License: MIT
 Group: Development/Python3
-Url: https://typer.tiangolo.com/
+Url: https://pypi.org/project/typer/
 Vcs: https://github.com/tiangolo/typer
 BuildArch: noarch
 AutoReq: yes, nopython3
@@ -128,6 +128,9 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.28.0-alt1
+- Updated to 0.28.0.
+
 * Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.27.3-alt1
 - Updated to 0.27.3.
 
