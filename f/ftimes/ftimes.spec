@@ -1,6 +1,6 @@
 Name: ftimes
 Version: 3.11.0
-Release: alt3
+Release: alt4
 
 Summary: a system baselining and evidence collection tool
 License: BSD (3-clause), Apache, MIT
@@ -15,8 +15,10 @@ ExclusiveArch: x86_64 %ix86 %e2k
 # optimized out: gnu-config libcloog-isl4 libcom_err-devel libkrb5-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-Pod-Usage
 BuildRequires: libpcre-devel libssl-devel perl-podlators perl-devel
 BuildRequires: perl(Digest/SHA1.pm)
+BuildRequires: /usr/bin/pod2html
 
 %set_gcc_version 14
+%def_without check
 
 %description
 FTimes is a system baselining and evidence collection tool.
@@ -31,6 +33,7 @@ sed -i 's,XMAGIC_PREFIX"/etc/xmagic","/etc/xmagic",' src/xmagic.h
 
 %build
 export CC=%__cc
+%add_optflags -std=gnu11
 %autoreconf
 %configure --bindir=%_bindir --without-ssl
 %make_build
@@ -57,6 +60,9 @@ mv %buildroot/usr/etc/xmagic %buildroot%_sysconfdir/
 # - server-side?
 
 %changelog
+* Fri Nov 06 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.11.0-alt4
+- NMU: fix FTBFS
+
 * Thu Jun 18 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.11.0-alt3
 - NMU: fix FTBFS with gcc 15
 
