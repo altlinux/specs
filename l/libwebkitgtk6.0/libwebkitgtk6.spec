@@ -61,7 +61,7 @@
 
 Name: libwebkitgtk%api_ver
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: Web browser engine
 Group: System/Libraries
@@ -81,6 +81,10 @@ Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 %define gtk_ver 3.22
 %define gtk4_ver 4.6.0
 %define gst_ver 1.24.9
+
+Requires: gst-plugins-base1.0 >= %gst_ver gst-plugins-good1.0 gst-plugins-bad1.0 gst-libav
+Requires: hyphen-en hyphen-ru
+%{?_enable_bubblewrap_sandbox:Requires: bubblewrap >= %bwrap_ver xdg-dbus-proxy}
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-gir rpm-build-python3
 BuildRequires: /proc /dev/pts gcc-c++ cmake ccache unifdef
@@ -428,6 +432,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 
 
 %changelog
+* Fri Nov 06 2026 Yuri N. Sedunov <aris@altlinux.org> 2.54.2-alt1.1
+- fixed runtime dependencies
+
 * Fri Oct 23 2026 Yuri N. Sedunov <aris@altlinux.org> 2.54.2-alt1
 - 2.54.2
 
