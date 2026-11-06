@@ -1,5 +1,10 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
+%define app_id com.mattjakeman.ExtensionManager
+
 Name: gnome-extension-manager
-Version: 0.6.5
+Version: 0.7.0
 Release: alt1
 
 Summary: A utility for browsing and installing GNOME Shell Extensions
@@ -25,6 +30,8 @@ BuildRequires: typelib(Adw)
 BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(blueprint-compiler)
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(glycin-2)
+BuildRequires: pkgconfig(glycin-gtk4-2)
 
 %description
 A native tool for browsing, installing, and managing GNOME Shell Extensions.
@@ -51,12 +58,18 @@ With Extension Manager you can:
 %files -f extension-manager.lang
 %doc README.md
 %_bindir/extension-manager
-%_datadir/applications/*.desktop
-%_datadir/glib-2.0/schemas/com.mattjakeman.ExtensionManager.gschema.xml
-%_datadir/icons/*/*/*/*.svg
-%_datadir/metainfo/*.metainfo.xml
+%_datadir/applications/%app_id.desktop
+%_datadir/dbus-1/services/%app_id.service
+%_datadir/glib-2.0/schemas/%app_id.gschema.xml
+%_datadir/icons/hicolor/scalable/apps/%app_id.svg
+%_datadir/icons/hicolor/symbolic/apps/%app_id-symbolic.svg
+%_datadir/metainfo/%app_id.metainfo.xml
+%_datadir/gnome-shell/search-providers/%app_id.search-provider.ini
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 0.7.0-alt1
+- New version 0.7.0.
+
 * Thu Oct 02 2025 Anton Midyukov <antohami@altlinux.org> 0.6.5-alt1
 - New version 0.6.5.
 
