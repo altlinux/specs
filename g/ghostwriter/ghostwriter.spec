@@ -1,8 +1,8 @@
 %define rname ghostwriter
 
 Name: ghostwriter
-Version: 26.08.2
-Release: alt2
+Version: 26.08.3
+Release: alt1
 %K6init
 
 Group: Editors
@@ -62,6 +62,9 @@ or your novel.
 
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 26.08.2-alt2
 - fixed backup folder reset on cancelling the folder dialog (closes: #54132).
 - fixed "Show unnamed drafts" button opening a wrong URL (closes: #44935).

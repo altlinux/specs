@@ -1,7 +1,7 @@
 %define rname kontrast
 
 Name: %rname
-Version: 26.08.2
+Version: 26.08.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -55,6 +55,9 @@ are correctly accessible.
 %_datadir/metainfo/*kontrast*
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Thu Oct 08 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
