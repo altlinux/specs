@@ -9,7 +9,7 @@
 
 Name: lib%{_name}
 Version: %ver_major.2
-Release: alt3.1
+Release: alt3.2
 
 Summary: GtkSourceView text widget library
 License: LGPL-2.1-or-later
@@ -42,12 +42,12 @@ Obsoletes: %{name}2 < %version-%release
 BuildRequires(pre): rpm-build-gnome rpm-build-python rpm-build-gir
 
 # From configure.ac
-BuildPreReq: intltool >= %intltool_ver
-BuildPreReq: gnome-common
-BuildPreReq: libgtk+2-devel >= %gtk_ver
-BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libGConf-devel
-BuildPreReq: gtk-doc >= 1.0
+BuildRequires: intltool >= %intltool_ver
+BuildRequires: gnome-common
+BuildRequires: libgtk+2-devel >= %gtk_ver
+BuildRequires: libxml2-devel >= %libxml2_ver
+BuildRequires: libGConf-devel
+BuildRequires: gtk-doc >= 1.0
 
 BuildRequires: gcc-c++ perl-XML-Parser zlib-devel libgio-devel libcairo-gobject-devel
 BuildRequires: gobject-introspection-devel
@@ -119,6 +119,7 @@ install -p -m644 %SOURCE1 gtksourceview/libgtksourceview.map
 sed -i 's|\(#\!/usr/bin/env python\)$|\12|' data/language-specs/convert.py
 
 %build
+gettextize -q --copy --force
 %add_optflags -Wno-error=format-nonliteral -Wno-deprecated-declarations -Wno-incompatible-pointer-types
 %autoreconf
 %configure \
@@ -161,6 +162,9 @@ xvfb-run %make -k check VERBOSE=1
 
 
 %changelog
+* Fri Nov 06 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt3.2
+- fixed build with autoconf-2.73
+
 * Tue Nov 12 2024 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt3.1
 - rebuilt with gcc-14
 
