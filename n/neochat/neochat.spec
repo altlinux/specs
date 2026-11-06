@@ -1,8 +1,8 @@
 %define rname neochat
 
 Name: %rname
-Version: 26.08.2
-Release: alt2
+Version: 26.08.3
+Release: alt1
 %K6init
 
 Group: Networking/Chat
@@ -76,6 +76,9 @@ communication protocol for instant messaging. It is a fork of Spectral.
 %_datadir/metainfo/*neochat*.xml
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Fri Oct 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
 - fix compile with gcc-13
 

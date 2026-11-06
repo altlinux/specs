@@ -4,8 +4,8 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: %rname
-Version: 26.08.2
-Release: alt2
+Version: 26.08.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -17,7 +17,6 @@ Provides: kde5-krfb = %EVR
 Obsoletes: kde5-krfb < %EVR
 
 Source: %rname-%version.tar
-Patch1: alt-startup.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel
@@ -66,7 +65,6 @@ Requires: %name-common
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K6build
@@ -100,6 +98,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Tue Oct 20 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
 - fix start krfb (closes: 61131)
 
