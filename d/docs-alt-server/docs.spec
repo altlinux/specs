@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Nov 06 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt2
+- add Kea DHCP (thx Stephen Malchevskii)
+
 * Tue Nov 03 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt1
 - update to ALT Server 11.1.1
 - small improvements (closes #55506)
