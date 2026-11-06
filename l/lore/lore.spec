@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
 # Upstream doesn't support C library versioning.
-%define abiversion 1
+%define abiversion 2
 
 Name: lore
-Version: 0.10.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Lore is a next-generation, open source version control system
@@ -12,10 +12,12 @@ Group: Development/Other
 Url: https://lore.org
 Vcs: https://github.com/EpicGames/lore
 
-ExcludeArch: %ix86 aarch64
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: vendor.tar
+
+Patch0: lore-capi-drop-unversioned-soname.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: rust-cargo
@@ -64,20 +66,21 @@ control system.
 
 %prep
 %setup -a1
+%patch0 -p1
 %rust_prep
 
 %build
 # Not using rust_build macro: it does export RUSTFLAGS="${RUSTFLAGS} -g"
 # RUSTFLAGS as an env var fully replaces build.rustflags
 # from .cargo/config.toml  — this breaks --cfg tokio_unstable/uuid_unstable,
-# which lore-server needs to compile. --config adds -g while keeping the
-# project's own config flags intact.
-cargo build --profile release-lto -j%__nprocs --offline
+# which lore-server needs to compile.
+cargo build --profile release-lto -j%__nprocs --offline \
+	--workspace --exclude lore-capi
 # Cargo doesn’t yet provide a good way to pass specific rustflags to a package.
 # Passing -soname is required to generate SONAME header in output library
 # as rust doesn't generate it by default.
-export RUSTFLAGS="-Clink-arg=-Wl,-soname,liblore.so.%abiversion"
-%rust_build -p lore
+cargo rustc --profile release-lto -j%__nprocs --offline -p lore-capi --lib \
+	-- -C link-arg=-Wl,-soname,liblore.so.%abiversion
 
 %install
 install -Dm 755 target/release-lto/lore %buildroot%_bindir/lore
@@ -115,6 +118,12 @@ cargo test --profile release-lto -j%__nprocs --no-fail-fast \
 %_libdir/liblore.so
 
 %changelog
+* Tue Nov 03 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.12.0-alt1
+- v0.12.0.
+- Bump soname.
+- Fix C library SONAME header generation.
+- Enable build for aarch64.
+
 * Tue Sep 29 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.10.0-alt1
 - v0.10.0.
 
