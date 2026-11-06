@@ -6,7 +6,7 @@
 
 Name: openmw
 Version: 0.51.0
-Release: alt1
+Release: alt2
 
 Summary: OpenMW is an open-source game engine
 License: GPL-3.0-only
@@ -142,8 +142,7 @@ tar -xf %{SOURCE1} -C %_target_platform/extern/fetched/osg --strip-components=1
     -DOPENMW_USE_SYSTEM_GOOGLETEST=ON \
     -DOPENMW_USE_SYSTEM_OSG=OFF \
     -DOPENMW_USE_SYSTEM_RECASTNAVIGATION=ON \
-    -Wno-dev \
-    -Wno-overloaded-virtual \
+    -Wno-author \
     #
 %cmake_build
 
@@ -183,6 +182,9 @@ tar -xf %{SOURCE1} -C %_target_platform/extern/fetched/osg --strip-components=1
 %_bindir/niftest
 
 %changelog
+* Thu Nov 05 2026 Pavel Petrykin <silverducks@altlinux.org> 0.51.0-alt2
+- Fix FTBFS: Compatibility with CMake 4.4.
+
 * Wed Sep 02 2026 Pavel Petrykin <silverducks@altlinux.org> 0.51.0-alt1
 - New version.
 
