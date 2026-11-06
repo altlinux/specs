@@ -13,7 +13,7 @@
 
 Name: krb5
 Version: 1.22.2
-Release: alt2.1
+Release: alt3
 
 %if_without bootstrap
 %if_with doc
@@ -45,6 +45,7 @@ Patch129: krb5-1.11-fedora-run_user_0.patch
 # alt patches:
 Patch200: krb5-1.18-alt-default_keytab_group.patch
 Patch201: krb5-1.22-upstream-fix-strchr-conformance-to-c23.patch
+Patch202: krb5-1.22-upstream-configure.ac-work-with-autoconf-2.73.patch
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
@@ -209,6 +210,7 @@ MIT Kerberos.
 
 %patch200 -p2 -b .default_keytab_group
 %patch201 -p1 -b .c23
+%patch202 -p1 -b .autoconf
 
 # Generate an FDS-compatible LDIF file.
 inldif=src/plugins/kdb/ldap/libkdb_ldap/kerberos.ldif
@@ -521,6 +523,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Fri Nov 06 2026 Ivan A. Melnikov <iv@altlinux.org> 1.22.2-alt3
+- Backport upstream fix for autoconf 2.73 compatibility (fixes FTBFS)
+
 * Wed Oct 07 2026 Michael Shigorin <mike@altlinux.org> 1.22.2-alt2.1
 - E2K: lcc 1.29.16 ftbfs workaround (ilyakurdyukov@)
 
