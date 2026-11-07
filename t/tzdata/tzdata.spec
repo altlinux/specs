@@ -1,6 +1,6 @@
 Name: tzdata
-Version: 2026e
-Release: alt2
+Version: 2026f
+Release: alt1
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -73,7 +73,11 @@ echo '%name%version' > %buildroot%srcdir/VERSION
 %define __spec_install_custom_post hardlink -vc %buildroot
 
 %check
-make -k check CHECK_WEB_PAGES= %make_args
+# Check zonenow.tab at release time, not at build time.
+release_date=$(awk '/^Release / { print $4, $5, $6; exit }' NEWS)
+test -n "$release_date" || exit 1
+check_now_timestamp=$(LC_ALL=C date -d "$release_date" +%%s) || exit 1
+make -k check CHECK_WEB_PAGES= CHECK_NOW_TIMESTAMP="$check_now_timestamp" %make_args
 
 # test basic glibc compatibility
 cat > expected <<'EOF'
@@ -107,6 +111,9 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Sat Nov 07 2026 Anton Farygin <rider@altlinux.org> 2026f-alt1
+- 2026e -> 2026f
+
 * Wed Oct 14 2026 Anton Farygin <rider@altlinux.org> 2026e-alt2
 - Backported upstream commit tzdata-2f298306 "Europe/Uzhgorod, Europe/Zaporozhye now just links"
 - zone1970.tab, zone.tab: country codes updated per RF law
