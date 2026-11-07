@@ -8,7 +8,7 @@
 %def_with check
 
 Name: fzf
-Version: 0.74.5
+Version: 0.75.0
 Release: alt1
 Summary: A general-purpose command-line fuzzy finder
 
@@ -96,6 +96,9 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/fzf.vim
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Sat Nov 07 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.75.0-alt1
+- Updated to version 0.75.0.
+
 * Sun Oct 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.74.5-alt1
 - Updated to version 0.74.5.
 
