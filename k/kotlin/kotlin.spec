@@ -16,6 +16,10 @@
 %define m2_repo %build_home/.m2/repository
 %define share_java_kotlin_dir %_javadir/%name
 %define lib_java_kotlin_dir %_jnidir/%name
+%define bootstrap_metadata_dir %_datadir/maven-metadata/%name-bootstrap
+%define bootstrap_pom_dir %_datadir/%name/bootstrap/maven-poms
+%add_findprov_skiplist %bootstrap_metadata_dir
+%add_findreq_skiplist %bootstrap_metadata_dir
 
 %define build_workers 10
 %define build_heap 6g
@@ -27,7 +31,7 @@
 
 Name: kotlin
 Version: 2.4.21
-Release: alt2
+Release: alt3
 
 Summary: Kotlin compiler distribution
 License: Apache-2.0
@@ -61,6 +65,9 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 BuildRequires: maven
 BuildRequires: maven-local
+BuildRequires: kotlinx-coroutines
+BuildRequires: jetbrains-annotations
+BuildRequires: google-gson
 BuildRequires: gradle
 BuildRequires: zstd
 BuildRequires: node
@@ -222,7 +229,7 @@ if [ "$(getconf LONG_BIT)" = 32 ]; then
     "-Dorg.gradle.project.kotlin.compiler.execution.strategy=$compiler_strategy" \
     "-Dorg.gradle.project.kotlin.daemon.useFallbackStrategy=false" \
     "-Dorg.gradle.project.kotlin.build.disableMappedJarFs=true"
-  maven_daemon_jvmargs=$(printf '%s' "$build_jvmargs $direct_memory_arg" |
+  maven_daemon_jvmargs=$(printf '%%s' "$build_jvmargs $direct_memory_arg" |
     sed 's/^-//; s/ -/,/g')
   export MAVEN_ARGS="-Dkotlin.compiler.daemon.jvmArgs=$maven_daemon_jvmargs"
 fi
@@ -359,7 +366,7 @@ klib_root=%_javadir
 %mvn_package org.jetbrains.kotlin:*:jar:gradle* gradle-plugin
 %mvn_package :*-for-ide ide
 %mvn_package :kotlin-jps* ide
-%mvn_package :kotlin-stdlib* stdlib
+%mvn_package :kotlin-stdlib*:::%kotlin_maven_version stdlib
 %mvn_package :kotlin-reflect reflect
 %mvn_package :kotlin-test* test
 
@@ -460,6 +467,32 @@ while read -r pom; do
       ;;
   esac
 
+  # Retain upstream minima without selecting private bootstrap versions.
+  case "$artifact_id" in
+    kotlin-compiler|kotlin-compiler-embeddable|kotlin-compiler-runner)
+      %pom_change_dep org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm \
+        'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:[1.8.0,)' "$pom"
+      ;;
+    kotlin-dist-for-jps-meta)
+      %pom_change_dep org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm \
+        'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:[1.6.4,)' "$pom"
+      ;;
+    kotlin-build-statistics)
+      %pom_change_dep com.google.code.gson:gson \
+        'com.google.code.gson:gson:[2.11.0,)' "$pom"
+      ;;
+  esac
+  case "$artifact_id" in
+    kotlin-stdlib|kotlin-dist-for-jps-meta)
+      %pom_change_dep org.jetbrains:annotations \
+        'org.jetbrains:annotations:[13.0,)' "$pom"
+      ;;
+    kotlin-maven-plugin)
+      %pom_change_dep org.jetbrains:annotations \
+        'org.jetbrains:annotations:[26.0.2-1,)' "$pom"
+      ;;
+  esac
+
   main_artifact=
   for ext in jar klib; do
     candidate=$dir/$artifact_id-$version.$ext
@@ -513,6 +546,20 @@ done < pom.list
 %mvn_package : maven
 %mvn_install
 
+# Keep private compiler providers out of the default library repositories.
+metadata=%_datadir/maven-metadata/%name-bootstrap-libs.xml
+pomdir=%_datadir/maven-poms/%name/bootstrap
+install -d %buildroot%bootstrap_metadata_dir \
+  %buildroot%_datadir/%name/bootstrap
+mv %buildroot"$metadata" %buildroot%bootstrap_metadata_dir/
+mv %buildroot"$pomdir" %buildroot%bootstrap_pom_dir
+sed -i "s|$pomdir|%bootstrap_pom_dir|g" \
+  %buildroot%bootstrap_metadata_dir/%name-bootstrap-libs.xml
+sed -i \
+  -e "s|$pomdir|%bootstrap_pom_dir|g" \
+  -e "s|%_datadir/maven-metadata/|%bootstrap_metadata_dir/|g" \
+  .mfiles-bootstrap-libs
+
 find %buildroot -type f -name '*-sources.jar' -delete
 find %buildroot -type l -name '*-sources.jar' -delete
 for mfiles in .mfiles-*; do
@@ -558,12 +605,18 @@ done
 %doc license
 
 %files bootstrap-libs -f .mfiles-bootstrap-libs
+%dir %bootstrap_metadata_dir
+%dir %_datadir/%name
+%dir %_datadir/%name/bootstrap
 %doc license vendor-licenses trove-LICENSE.txt trove-README-license.txt
 
 %files ide -f .mfiles-ide
 %doc license
 
 %changelog
+* Thu Nov 05 2026 Ivan Khanas <xeno@altlinux.org> 2.4.21-alt3
+- Isolate private bootstrap metadata from ordinary consumers.
+
 * Sat Oct 31 2026 Ivan Khanas <xeno@altlinux.org> 2.4.21-alt2
 - Build portable Kotlin packages as noarch.
 - Support i586 builds without the optional JDK 25 toolchain.

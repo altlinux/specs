@@ -1,112 +1,153 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+%define srcname JCTools
+
+Name: jctools
+Version: 4.0.7
+Release: alt1
+
+Summary: Java concurrency queues and collection tools
+License: Apache-2.0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: maven-local
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global srcname JCTools
-
-Name:           jctools
-Version:        4.0.5
-Release:        alt1
-Summary:        Java Concurrency Tools for the JVM
-License:        Apache-2.0
-
-URL:            https://github.com/JCTools/JCTools
-Source0:        https://github.com/JCTools/JCTools/archive/v%{version}/%{srcname}-%{version}.tar.gz
-
-BuildArch:      noarch
-
-BuildRequires:  mvn(com.google.guava:guava-testlib)
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.hamcrest:hamcrest)
-Source44: import.info
-
-%description
-This project aims to offer some concurrent data structures
-currently missing from the JDK:
-
-A. SPSC/MPSC/SPMC/MPMC Bounded lock free queues
-A. SPSC/MPSC Unbounded lock free queues
-A. Alternative interfaces for queues
-A. Offheap concurrent ring buffer for ITC/IPC purposes
-A. Single Writer Map/Set implementations
-A. Low contention stats counters
-A. Executor
-
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
+URL: https://github.com/JCTools/JCTools
+VCS: https://github.com/JCTools/JCTools.git
 BuildArch: noarch
 
-%description javadoc
-This package contains javadoc for %{name}.
+Source: %srcname-%version.tar
+Patch: system-jvm.patch
 
+BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
+BuildRequires: maven-local
+BuildRequires: java-17-openjdk-devel
+BuildRequires: maven-plugin-bundle
+BuildRequires: exec-maven-plugin
+BuildRequires: mvn(org.apache.maven.plugins:maven-install-plugin)
+BuildRequires: javaparser
+BuildRequires: osgi-annotation
+BuildRequires: guava-testlib
+BuildRequires: junit
+BuildRequires: hamcrest
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-util)
+
+%description
+JCTools supplies concurrent queues, maps, sets and channels for Java.
+This package includes core, JDK 11 VarHandle, channels and experimental APIs.
+
+%package javadoc
+Summary: API documentation for JCTools
+Group: Development/Java
+
+%description javadoc
+Generated API documentation for JCTools.
+
+%package testlib
+Summary: Shared JCTools test fixtures used by its experimental API
+Group: Development/Java
+
+%description testlib
+Genuine classified test-support artifacts from the JCTools reactor.
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n %srcname-%version
+%autopatch -p1
 
+# The stable upstream tag retains snapshot Maven versions.
+%pom_xpath_set pom:project/pom:version %version
+%pom_xpath_set pom:parent/pom:version %version jctools-*
+%pom_xpath_set pom:properties/pom:junit.version 4.13.1
+%pom_xpath_set pom:properties/pom:hamcrest.version 3.0
+%pom_xpath_set pom:properties/pom:guava-testlib.version 33.7.2-jre
 %pom_change_dep -r org.hamcrest:hamcrest-all org.hamcrest:hamcrest
 
-# drop some failure-prone tests (race conditions?)
-rm jctools-core/src/test/java/org/jctools/queues/MpqSanityTestMpscCompound.java
+# JUnit's legacy aggregate is replaced by the explicit genuine Hamcrest API.
+%pom_xpath_inject "//pom:dependency[pom:artifactId='junit']" '
+<exclusions>
+  <exclusion>
+    <groupId>org.hamcrest</groupId><artifactId>hamcrest-core</artifactId>
+  </exclusion>
+</exclusions>' jctools-core jctools-core-jdk11 jctools-channels \
+    jctools-experimental
 
-# set correct version in all pom.xml files
-%pom_xpath_set pom:project/pom:version %{version}
-%pom_xpath_set pom:parent/pom:version %{version} jctools-{build,core,channels,experimental}
+# Use genuine ASM modules instead of the retired aggregate.
+%pom_change_dep -r org.ow2.asm:asm-all org.ow2.asm:asm
+%pom_add_dep org.ow2.asm:asm-util jctools-channels
 
-# remove plugins unnecessary for RPM builds
-%pom_remove_plugin :coveralls-maven-plugin jctools-core
-%pom_remove_plugin :jacoco-maven-plugin jctools-core
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-source-plugin jctools-core
-%pom_remove_plugin :maven-javadoc-plugin jctools-core
+# JDK 11 uses this classifier only in tests; experimental exports its types.
+%pom_xpath_set "//pom:dependency[pom:type='test-jar']/pom:scope" test \
+    jctools-core-jdk11
 
-# remove tests with additional kotlin dependencies
-%pom_remove_dep org.jetbrains.kotlinx:lincheck-jvm jctools-core
-rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
+%pom_remove_plugin -r :maven-enforcer-plugin
+%pom_remove_plugin -r :maven-source-plugin
+%pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_plugin -r :coveralls-maven-plugin
+%pom_remove_plugin -r :jacoco-maven-plugin
 
-# disable unused modules with unavailable dependencies
+# Lincheck is absent; keep both original test files and assertions.
+# Upstream excludes their execution on JDK 17 and newer.
+%pom_remove_dep -r org.jetbrains.kotlinx:lincheck-jvm
+%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin . '
+<configuration>
+  <testExcludes>
+    <testExclude>**/maps/linearizability_test/**</testExclude>
+  </testExcludes>
+</configuration>'
+
+# Benchmark/JCStress runners are not production libraries.
 %pom_disable_module jctools-benchmarks
 %pom_disable_module jctools-concurrency-test
 
-# incompatible with Java 11 and unused in fedora:
-# https://github.com/JCTools/JCTools/issues/254
-%pom_disable_module jctools-channels
-%pom_disable_module jctools-experimental
-
-%pom_disable_module jctools-build
-%pom_remove_plugin :exec-maven-plugin jctools-core
-
-# do not install internal build tools
+# Execute the genuine source generators in this reactor.
 %mvn_package :jctools-build __noinstall
-
-# do not install unused parent POM
-%mvn_package :jctools-parent __noinstall
-
+%mvn_package :jctools-core:jar:tests: testlib
+%mvn_package :jctools-core-jdk11:jar:tests: testlib
 
 %build
-# Tests time out in Koji
-%mvn_build -s -f
+# Install these freshly built reactor artifacts to Maven Local for Javadoc.
+%mvn_build -j \
+    -G org.apache.maven.plugins:maven-install-plugin:install -- -DskipTests
 
+# Per-module Javadoc retains real classified core fixtures in the classpath.
+mkdir -p target/api
+for module in jctools-core jctools-core-jdk11 jctools-channels \
+              jctools-experimental; do
+    xmvn --batch-mode --offline \
+        -f "$module/pom.xml" org.fedoraproject.xmvn:xmvn-mojo:javadoc
+    cp -pr "$module/target/xmvn-apidocs" "target/api/$module"
+done
+cat >target/api/index.html <<'EOF'
+<!doctype html>
+<meta charset="utf-8">
+<title>JCTools API</title>
+<h1>JCTools API</h1>
+<ul>
+<li><a href="jctools-core/index.html">Core</a></li>
+<li><a href="jctools-core-jdk11/index.html">JDK 11 VarHandle</a></li>
+<li><a href="jctools-channels/index.html">Channels</a></li>
+<li><a href="jctools-experimental/index.html">Experimental</a></li>
+</ul>
+EOF
 
 %install
-%mvn_install
+%mvn_install -J target/api
 
+%check
+%if_with check
+xmvn --batch-mode --offline test
+%endif
 
-%files -f .mfiles-jctools-core
-%doc README.md
-%doc --no-dereference LICENSE
+%files -f .mfiles
+%doc LICENSE
+
+%files testlib -f .mfiles-testlib
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
 
 %changelog
+* Thu Nov 05 2026 Ivan Khanas <xeno@altlinux.org> 4.0.7-alt1
+- New version.
+
 * Tue Dec 23 2025 Anton Meleshnikov <alton@altlinux.org> 4.0.5-alt1
 - new version
 

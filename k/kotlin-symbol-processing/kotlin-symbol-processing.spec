@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kotlin-symbol-processing
-Version: 2.3.12
+Version: 2.3.13
 Release: alt1
 
 Summary: Kotlin Symbol Processing libraries and Analysis API implementation
@@ -27,6 +27,7 @@ BuildRequires: mvn(com.github.ben-manes.caffeine:caffeine)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-core-jvm)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-reflect)
+BuildRequires: mvn(org.jetbrains.kotlinx:kotlinx-serialization-json-jvm)
 
 %description
 Kotlin Symbol Processing provides an API for developing lightweight compiler
@@ -57,8 +58,12 @@ mkdir config-bootstrap parser-bootstrap
     -Pkotlin.compiler.execution.strategy=in-process
 
 %files -f .mfiles
-%doc LICENSE README.md
+%doc LICENSE
 
 %changelog
+* Sat Nov 07 2026 Ivan Khanas <xeno@altlinux.org> 2.3.13-alt1
+- New version.
+- Use the public Serialization runtime for Analysis API.
+
 * Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 2.3.12-alt1
 - Initial build for ALT.

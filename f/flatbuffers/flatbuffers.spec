@@ -1,26 +1,39 @@
-%define desc FlatBuffers is a cross platform serialization library architected \
-for maximum memory efficiency. It allows you to directly access serialized data \
-without parsing/unpacking it first, while still having great forwards/backwards \
-compatibility.
+%define _unpackaged_files_terminate_build 1
+
+%define desc FlatBuffers is a cross platform serialization library \
+architected for maximum memory efficiency. It allows you to directly access \
+serialized data without parsing/unpacking it first, while still having great \
+forwards/backwards compatibility.
 
 Name: flatbuffers
 Version: 25.12.19
-Release: alt1
+Release: alt2
 
 Summary: Memory Efficient Serialization Library
-License: APL
+License: Apache-2.0
 Group: System/Libraries
 
 Url: https://google.github.io/%name/
-Vcs: https://github.com/google/%name
+VCS: https://github.com/google/flatbuffers.git
 
 # https://github.com/google/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-setuptools
-BuildRequires: cmake ctest gcc-c++
+BuildRequires(pre): rpm-macros-java
+
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: gcc-c++
+BuildRequires: java-17-openjdk-devel
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(com.google.truth:truth)
 
 %description
 %desc
@@ -43,10 +56,27 @@ This package contains development part of FlatBuffers.
 %package -n python3-module-%name
 Summary: Python3 files for %name
 Group: Development/Python3
-Requires: lib%name = %EVR
 
 %description -n python3-module-%name
 This package contains python files for %name.
+
+%package -n flatbuffers-java
+Summary: FlatBuffers Java runtime
+Group: Development/Java
+BuildArch: noarch
+
+%description -n flatbuffers-java
+%desc
+This package contains the complete upstream Java runtime, including
+FlexBuffers and reflection support.
+
+%package -n flatbuffers-java-javadoc
+Summary: API documentation for the FlatBuffers Java runtime
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n flatbuffers-java-javadoc
+API documentation for the FlatBuffers Java runtime.
 
 %prep
 %setup
@@ -57,6 +87,11 @@ sed -i 's,-Werror -Wextra -Werror=shadow,,' CMakeLists.txt
 sed -i 's/int &...ExplicitArgumentBarrier,//;s/int &...,//' \
 	include/flatbuffers/flatbuffer_builder.h
 %endif
+
+%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin java
+%pom_remove_plugin :maven-gpg-plugin java
+%pom_remove_plugin :maven-release-plugin java
+%mvn_package :flatbuffers-java flatbuffers-java
 
 %build
 cmake  	-DCMAKE_BUILD_TYPE=Release \
@@ -74,10 +109,9 @@ pushd python
 %python3_build
 popd
 
-%ifnarch %ix86 %arm
-%check
-make test
-%endif
+pushd java
+%mvn_build -s
+popd
 
 %install
 %makeinstall_std
@@ -90,7 +124,17 @@ popd
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir
   )
 
+pushd java
+%mvn_install
+popd
+
+%check
+%ifnarch %ix86 %arm
+make test
+%endif
+
 %files -n lib%name
+%doc LICENSE
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -103,7 +147,14 @@ popd
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
+%files -n flatbuffers-java -f java/.mfiles-flatbuffers-java
+
+%files -n flatbuffers-java-javadoc -f java/.mfiles-javadoc
+
 %changelog
+* Tue Nov 03 2026 Ivan Khanas <xeno@altlinux.org> 25.12.19-alt2
+- Build the upstream Java runtime and run its tests.
+
 * Wed May 13 2026 Nazarov Denis <nenderus@altlinux.org> 25.12.19-alt1
 - New version 25.12.19.
 
