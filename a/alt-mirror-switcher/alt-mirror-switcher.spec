@@ -3,7 +3,7 @@
 
 Name: alt-mirror-switcher
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: Simple local mirror switcher for ALT
 
@@ -15,6 +15,8 @@ Url: https://altlinux.space/shad/alt-mirror-switcher
 BuildArch: noarch
 
 Source: %name-%version.tar
+
+Patch: d9beef5c17.patch
 
 %add_python3_path %_datadir/%name
 
@@ -53,6 +55,7 @@ A terminal simple local mirror switcher for ALT.
 
 %prep
 %setup
+%patch -p1
 rm -v mirrors/ams.sh
 
 %build
@@ -96,6 +99,9 @@ fi
 %_bindir/ams
 
 %changelog
+* Sat Nov 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0-alt2
+- fixed: *.metainfo.xml
+
 * Sat Oct 31 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0-alt1
 - added Hihin Ruslan (ruslandh@) to co-author information
 - added getting timestamp mirror
