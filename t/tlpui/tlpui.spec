@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    tlpui
-Version: 1.9.0
+Version: 1.10.1
 Release: alt1
 
 Summary: A GTK user interface for TLP written in Python
@@ -74,6 +74,9 @@ install -Dm0644 tlpui/icons/themeable/hicolor/scalable/apps/%name.svg \
 %_iconsdir/hicolor/scalable/apps/tlpui.svg
 
 %changelog
+* Fri Nov 06 2026 Andrey Alekseev <parovoz@altlinux.org> 1.10.1-alt1
+- NMU: New version 1.10.1 (Closes: 60911).
+
 * Tue Dec 09 2025 Leonid Znamenok <respublica@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 
