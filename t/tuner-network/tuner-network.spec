@@ -2,7 +2,7 @@
 %define xdg_name ru.ximperlinux.tuner.Network
 
 Name: tuner-network
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 License: GPL-3.0
 
@@ -58,5 +58,19 @@ desktop shell.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Sat Nov 07 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.2.0-alt1
+- Use the NetworkManager keyring format and handle secret request cancellation safely
+- Honor wired 802.1X authentication hints
+- Distinguish keyring errors from connection profile failures
+- Avoid silently replacing unavailable saved hotspot passwords
+- Clear WireGuard endpoints when the field is empty
+- Show VPN connection status without parent device details
+- Break reference cycles in network pages and rows
+
+* Thu Oct 22 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.1-alt1
+- Add Wi-Fi adapter tabs and fix switching freeze
+- Handle missing profiles in hotspot detection
+- Fix initial loading page selection in the connection editor
+
 * Wed Oct 07 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.1.0-alt1
 - Initial build
