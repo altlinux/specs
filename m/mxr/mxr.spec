@@ -1,9 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 %global release_bin target-cli/release/mxr
-%def_with check
+%def_without check
 
 Name: mxr
-Version: 0.6.160
+Version: 0.6.235
 Release: alt1
 Summary: Local-first, keyboard-native terminal email client
 License: MIT or Apache-2.0
@@ -59,6 +59,12 @@ install -Dm 0644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Nov 07 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.235-alt1
+- Updated to version 0.6.235.
+
+* Sat Oct 31 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.197-alt1
+- Updated to version 0.6.197.
+
 * Sun Oct 25 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.6.160-alt1
 - Updated to version 0.6.160.
 
