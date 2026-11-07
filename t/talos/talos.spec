@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path github.com/siderolabs/talos
-%global commit      638bd94939c7c5b3db80756d925b4878cb288470
+%global commit      cf95cccddbce56fe2414c03ad4df17725b879fa0
 %global shortcommit %(c=%commit; echo ${c:0:7})
-%global altkernel 6.18.49-talos
+%global altkernel 6.18.60-talos
 %global latest_distro_tag v11.0
 %global kubernetes_ver 1.36
 %define _libexecdir %prefix/libexec
@@ -15,7 +15,7 @@
 %endif
 
 Name: talos
-Version: 1.13.11
+Version: 1.13.12
 Release: alt1
 
 Summary: A modern OS for Kubernetes
@@ -101,6 +101,10 @@ sed -i \
   -e 's|VENDOR_URL=.*|VENDOR_URL="https://altlinux.org"|' \
   -e 's|DefaultDiscoveryServiceEndpoint =.*|DefaultDiscoveryServiceEndpoint = "https://discovery.altlinux.space/"|' \
   pkg/machinery/constants/constants.go
+
+sed -i \
+  -e 's|ImageFactoryURL = .*|ImageFactoryURL = "https://factory.altlinux.space/"|' \
+  cmd/talosctl/cmd/constants/constants.go
 
 sed -i \
   -e 's|discovery.talos.dev|discovery.altlinux.space|g' \
@@ -210,6 +214,13 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Thu Oct 29 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.12-alt1
+- New version 1.13.2.
+- Display Talos version on the dashboard.
+- Correct ImageFactoryURL. 
+- Backport from upstream:
+  + fix: exclude scheduler config from apiserver config version (c027a947f)
+
 * Mon Oct 12 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.11-alt1
 - New version 1.13.11.
 - Fix build with go 1.27 via updating siderolabs/go-debug.
