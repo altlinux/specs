@@ -2,7 +2,7 @@
 
 Name: awx
 Version: 24.6.1
-Release: alt8
+Release: alt9
 
 Summary: The official command line interface for Ansible AWX
 License: Apache-2.0
@@ -41,6 +41,7 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-wheel
 BuildRequires: npm
+BuildRequires: openssl
 
 Requires: python3-module-logutils
 Requires: python3-module-colorama
@@ -180,6 +181,9 @@ exit 0
 %ghost %apache2_sites_enabled/*.conf
 
 %changelog
+* Sat Nov 07 2026 Andrey Cherepanov <cas@altlinux.org> 24.6.1-alt9
+- Required openssl.
+
 * Mon Jun 29 2026 Andrey Cherepanov <cas@altlinux.org> 24.6.1-alt8
 - Required libxmlsec1-openssl.
 
