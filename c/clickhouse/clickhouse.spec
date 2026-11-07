@@ -28,7 +28,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 26.3.19.3
+Version: 26.3.60.2
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -267,6 +267,13 @@ fi
 %_datadir/bash-completion/completions/clickhouse-local
 
 %changelog
+* Thu Nov 05 2026 Anton Farygin <rider@altlinux.org> 26.3.60.2-alt1
+- 26.3.50.11 -> 26.3.60.2
+- Updated vendored `brotli` to 1.2.1 (Fixes: CVE-2026-111497).
+
+* Tue Oct 13 2026 Anton Farygin <rider@altlinux.org> 26.3.50.11-alt1
+- 26.3.19.3 -> 26.3.50.11
+
 * Wed Aug 19 2026 Anton Farygin <rider@altlinux.org> 26.3.19.3-alt1
 - 26.3.18.32 -> 26.3.19.3
 
