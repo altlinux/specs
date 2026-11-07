@@ -3,8 +3,8 @@
 %define sover 12
 
 Name: fmt
-Version: 12.2.0
-Release: alt3
+Version: 12.2.1
+Release: alt1
 Epoch: 1
 
 Summary: An open-source formatting library for C++
@@ -88,6 +88,9 @@ sed -i '/\[!\[Support/,+1d' README.md
 %_libdir/lib%name.so
 
 %changelog
+* Sat Nov 07 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.1-alt1
+- New version 12.2.1.
+
 * Wed Jul 29 2026 Nazarov Denis <nenderus@altlinux.org> 1:12.2.0-alt3
 - Restore original logo
 
