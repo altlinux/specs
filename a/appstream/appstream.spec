@@ -10,8 +10,8 @@
 %define _libexecdir %_libdir/ascompose%sover_compose
 
 Name:    appstream
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -277,6 +277,9 @@ ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Sat Nov 07 2026 Vladimir Romanov <rirusha@altlinux.org> 1.2.2-alt1
+- New version 1.2.2.
+
 * Sat Oct 17 2026 Vladimir Romanov <rirusha@altlinux.org> 1.2.1-alt2
 - Added vapi build (Closes #56084).
 - Added runtume dependency on libvips-modules (Closes #61096).
