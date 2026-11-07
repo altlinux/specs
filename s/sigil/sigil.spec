@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sigil
-Version: 2.8.1
+Version: 2.8.5
 Release: alt1
 
 %set_verify_elf_method unresolved=relaxed
@@ -152,6 +152,9 @@ ln -sfv %buildroot%_libdir/%name/libsigilgumbo.so %buildroot%_libdir/libsigilgum
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Nov 07 2026 Nikolay Strelkov <snk@altlinux.org> 2.8.5-alt1
+- new version 2.8.5 (with rpmrb script)
+
 * Tue Jul 21 2026 Nikolay Strelkov <snk@altlinux.org> 2.8.1-alt1
 - new version 2.8.1 (with rpmrb script)
 
