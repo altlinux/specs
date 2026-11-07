@@ -10,8 +10,8 @@
 %def_with faketime
 
 Name: sssd
-Version: 2.13.1
-Release: alt2
+Version: 2.13.2
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -983,6 +983,27 @@ chown -f -R %sssd_user:%sssd_user %gpocachepath/ || true
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Fri Nov 06 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.13.2-alt1
+- Update to latest 2.13.2 release.
+- Security fixes:
+  + NSS: limit memory consumed by the negative cache (fixes: CVE-2026-104041).
+- Important fixes:
+  + LDAP: retry the TLS handshake on timeout instead of going offline.
+  + SDAP: fix parsing of repeated attributes, require exact objectClass
+    matches and reject malformed entries with embedded zero bytes.
+  + Kerberos/KCM: fix timestamp integer overflows after year 2038.
+  + PAM: fix local Smartcard authentication with GDM, avoid unwanted
+    Smartcard prompts for gdm-password, export the token name only after
+    successful Smartcard authentication and fix GDM JSON NULL handling.
+  + PAM: support Smartcard authentication in remote desktop sessions by
+    forwarding GDM_AUTH_SESSION_ID and allowing access to the
+    gnome-remote-desktop virtual PC/SC daemon.
+  + SUDO: suppress the ldap_sudo_search_base warning when the sudo provider
+    is disabled.
+- New features and improvements:
+  + NSS: add filter_uids and filter_gids options to exclude individual IDs
+    and ID ranges from LDAP lookups.
+
 * Tue Nov 03 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.13.1-alt2
 - Backport security and stability fixes from upstream sssd-2-13 branch.
 - Security fixes:
