@@ -4,18 +4,21 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
 License: GPL-2.0-only
 Group: Graphics
 
-Url: https://github.com/lxqt/screengrab
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/screengrab
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: /proc
 BuildRequires: cmake
 BuildRequires: lxqt2-build-tools
@@ -76,6 +79,9 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %doc CHANGELOG COPYING README.md AUTHORS
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 3.3.0-alt1
+- New version 3.3.0.
+
 * Mon Apr 27 2026 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt1
 - New version 3.2.0.
 
