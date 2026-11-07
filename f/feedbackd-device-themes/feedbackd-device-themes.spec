@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name-device-themes
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: Device specific feedback themes for Feedbackd
@@ -52,6 +52,9 @@ specific feedback theme files.
 %doc README.* NEWS
 
 %changelog
+* Sat Nov 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.10-alt1
+- 0.8.10
+
 * Tue Jul 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.8.9-alt1
 - 0.8.9
 
