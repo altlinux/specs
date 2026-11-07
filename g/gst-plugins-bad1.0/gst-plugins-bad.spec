@@ -23,7 +23,7 @@
 %def_enable v4l2codecs
 %def_enable gpl
 
-%ifarch x86_64 %ix86
+%ifarch x86_64 %ix86 aarch64
 %def_enable svtjpegxs
 %endif
 
@@ -46,7 +46,7 @@
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -121,7 +121,7 @@ BuildRequires: libwebrtc-devel >= 0.3 pkgconfig(webrtc-audio-processing-1) pkgco
 # since 1.13.x
 BuildRequires: libnice-devel libva-devel liblcms2-devel
 %{?_enable_liblilv:BuildRequires: liblilv-devel}
-%{?_enable_svtjpegxs:BuildRequires: pkgconfig(SvtJpegxs)}
+%{?_enable_svtjpegxs:BuildRequires: pkgconfig(SvtJpegxs) >= 0.10.0}
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check: BuildRequires: /proc %_bindir/gst-tester-%api_ver}
 #BuildRequires: pkgconfig(svtav1enc) 1.8 too old
@@ -245,6 +245,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Sat Nov 07 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.9-alt1
+- 1.28.9 (fixed CVE-2026-116611, CVE-2026-121601, CVE-2026-121611)
+
 * Fri Oct 09 2026 Yuri N. Sedunov <aris@altlinux.org> 1.28.8-alt1
 - 1.28.8
 
