@@ -3,7 +3,7 @@
 %def_with check
 
 Name: velocitty
-Version: 1.0.4
+Version: 1.0.7
 Release: alt1
 
 Summary: Terminal for Linux desktops
@@ -53,6 +53,9 @@ An easy-to-use terminal emulator.
 %_datadir/velocitty/palettes/*
 
 %changelog
+* Sat Nov 07 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.7-alt1
+- New version 1.0.7.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.4-alt1
 - New version 1.0.4.
 
