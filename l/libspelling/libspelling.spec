@@ -9,7 +9,7 @@
 %define api_ver 1
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: A spellcheck library for GTK 4
@@ -128,6 +128,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sat Nov 07 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.11-alt1
+- 0.4.11
+
 * Fri Jan 30 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.10-alt1
 - 0.4.10
 
