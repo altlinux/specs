@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 0.22.2
+Version: 0.23.3
 Release: alt1
 
 Summary: Fast State-of-the-Art Tokenizers for Python
@@ -15,7 +15,6 @@ VCS:     https://github.com/huggingface/tokenizers
 
 Source0: %name-%version.tar
 Source1: %name-vendor-%version.tar
-Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires(pre): rpm-build-python3
@@ -47,7 +46,6 @@ Main features:
 
 %prep
 %setup -a1
-%autopatch -p1
 
 cp -f bindings/python/vendor/Cargo.lock bindings/python/Cargo.lock
 cd bindings/python
@@ -96,5 +94,8 @@ cd bindings/python
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Nov 07 2026 Anton Farygin <rider@altlinux.org> 0.23.3-alt1
+- 0.22.2 -> 0.23.3
+
 * Wed Apr 01 2026 Matvey Pyanov <sen@altlinux.org> 0.22.2-alt1
 - First build for Alt.
