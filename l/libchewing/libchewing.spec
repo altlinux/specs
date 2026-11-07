@@ -1,34 +1,33 @@
+%define _unpackaged_files_terminate_build 1
+%define soname 3
+
+Name: libchewing
+Version: 0.13.1
+Release: alt1
+
+Summary: Intelligent phonetic input method library for Traditional Chinese
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3
-BuildRequires: perl(FileHandle.pm) perl(Text/Wrap.pm) texinfo
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global libchewing_python_dir %{python3_sitelibdir_noarch}
+License: LGPLv2+
 
-%global im_name_zh_TW 新酷音輸入法
-%global name_zh_TW %{im_name_zh_TW}函式庫
+Url: https://chewing.im
+Vcs: https://codeberg.org/chewing/libchewing
 
-Name:           libchewing
-Version:        0.5.1
-Release:        alt1_16
-Summary:        Intelligent phonetic input method library for Traditional Chinese
-Summary(zh_TW): %{name_zh_TW}
+Source: %name-%version.tar.gz
 
-License:        LGPLv2+
-URL:            http://chewing.csie.net/
-Source0:        https://github.com/chewing/%{name}/archive/v%{version}.tar.gz
-# https://github.com/chewing/libchewing/pull/310
-Patch0:         0001-chewing.py-supports-platforms-with-64bit-pointer.patch
-
-BuildRequires:  autoconf automake libtool makeinfo 
-BuildRequires:  libsqlite3-devel
-BuildRequires:  python3-devel
 Requires: sqlite3
-# since f31
-Obsoletes:      python2-libchewing < 0.5.1-13
-Source44: import.info
+
+BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-rust
+BuildRequires: rpm-build-rust
+BuildRequires: perl(FileHandle.pm)
+BuildRequires: perl(Text/Wrap.pm)
+BuildRequires: texinfo
+BuildRequires: cmake gcc-c++ corrosion pkgconfig(ncursesw)
+BuildRequires: libtool ctest
+BuildRequires: makeinfo
+BuildRequires: libsqlite3-devel
+BuildRequires: python3-devel
+
+Obsoletes: python2-libchewing < 0.5.1-13
 
 %description
 libchewing is an intelligent phonetic input method library for Chinese.
@@ -37,76 +36,69 @@ It provides the core algorithm and logic that can be used by various
 input methods. The Chewing input method is a smart bopomofo phonetics
 input method that is useful for inputting Mandarin Chinese.
 
-%description -l zh_TW
-%{name_zh_TW}提供實做了核心選字演算法，以便輸入法程式調用。
-
-%{im_name_zh_TW}是一種智慧型注音/拼音猜字輸入法，透過智慧型的字庫分析、習慣記錄學習與預測分析，
-使拼字輸入的人為選字機率降至最低，進而提升中文輸入、打字的效率。
-
-%package -n %{name}-devel
+%package -n %name-devel
 Group: Development/Other
-Summary:        Development files for libchewing
-Summary(zh_TW): %{name_zh_TW}開發者套件
-Requires:       %{name} = %{version}-%{release}
-
-%description -n %{name}-devel
-Headers and other files needed to develop applications using the %{name}
+Summary: Development files for libchewing
+Requires: %name = %version-%release
+%description -n %name-devel
+Headers and other files needed to develop applications using the %name
 library.
 
-%description -l zh_TW  -n %{name}-devel
-%{name_zh_TW}開發者套件提供了開發%{im_name_zh_TW}相關程式所需的檔案，
-像是標頭檔(header files)，以及函式庫。
-
+%package -n %name%soname
+Group: System/Libraries
+Summary: %name library
+%description -n %name%soname
+%name library.
 
 %package -n python3-module-libchewing
 Group: System/Libraries
-Summary:        Python binding for libchewing
-BuildArch:      noarch
-Summary(zh_TW): %{name_zh_TW} python 綁定
-Requires:       %{name} = %{version}-%{release}
-
+Summary: Python binding for libchewing
+Requires: %name%soname = %EVR
 %description -n python3-module-libchewing
 Python binding of libchewing.
 
-%description -l zh_TW -n python3-module-libchewing
-%{name_zh_TW} python 綁定
-
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%rust_prep
 
 %build
-CFLAGS="%{optflags} -g -DLIBINSTDIR='%{_libdir}'"
-autoreconf -ivf
-%configure --disable-static
-make V=1 RPM_CFLAGS="%{optflags}" %{_smp_mflags}
+%cmake
+%cmake_build
+
+%check
+%ctest -j1
 
 %install
-make DESTDIR=%{buildroot} install INSTALL="install -p"
-rm %{buildroot}%{_libdir}/libchewing.la
-
-mkdir -p %{buildroot}%{libchewing_python_dir}
-cp -p contrib/python/chewing.py %{buildroot}%{libchewing_python_dir}
-
-rm -f %{buildroot}/%{_infodir}/dir
+%cmake_install
+install -d %buildroot%python3_sitelibdir
+cp -a contrib/python/chewing.py %buildroot%python3_sitelibdir/
 
 %files
-%doc README.md AUTHORS COPYING NEWS TODO
-%{_datadir}/%{name}/
-%{_libdir}/*.so.*
-%{_infodir}/%{name}.info.*
+%doc README.md AUTHORS COPYING NEWS
+%_bindir/chewing-cli
+%_datadir/%name
+%_mandir/man1/chewing-cli*.1.xz
 
 %files devel
-%dir %{_includedir}/chewing
-%{_includedir}/chewing/*
-%{_libdir}/pkgconfig/chewing.pc
-%{_libdir}/*.so
+%_includedir/chewing
+%_libdir/cmake/Chewing
+%_libdir/pkgconfig/chewing.pc
+%_libdir/%name.so
+
+%files -n %name%soname
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%{soname}.*
 
 %files -n python3-module-libchewing
-%{libchewing_python_dir}/chewing.py
-%{libchewing_python_dir}/__pycache__/*
+%python3_sitelibdir/chewing.py
+%python3_sitelibdir/__pycache__/*
 
 %changelog
+* Thu Nov 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.13.1-alt1
+- 0.5.1 -> 0.13.1
+- changed URL && VCS
+- builded in accordance with SharedLibsPolicy
+
 * Thu Oct 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_16
 - update to new release by fcimport
 
