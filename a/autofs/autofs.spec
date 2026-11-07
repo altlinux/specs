@@ -3,7 +3,7 @@
 
 Name: autofs
 Version: 5.1.9
-Release: alt4
+Release: alt5
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -143,6 +143,9 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Sat Nov 07 2026 Fr. Br. George <george@altlinux.org> 5.1.9-alt5
+- allow ipv6 link local with proper scope ID
+
 * Fri Nov 06 2026 Fr. Br. George <george@altlinux.org> 5.1.9-alt4
 - ipv6 addressing support in auto.avahi
 
