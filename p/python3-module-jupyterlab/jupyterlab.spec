@@ -8,7 +8,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 4.6.5
+Version: 4.6.6
 Release: alt1
 Summary: JupyterLab computational environment
 License: BSD-3-Clause
@@ -107,6 +107,9 @@ mv %buildroot/usr/etc/jupyter/jupyter_server_config.d/jupyterlab.json \
 %python3_sitelibdir/%pypi_name/browser_check.py
 
 %changelog
+* Sat Nov 07 2026 Anton Vyatkin <toni@altlinux.org> 4.6.6-alt1
+- new version 4.6.6
+
 * Fri Oct 30 2026 Anton Vyatkin <toni@altlinux.org> 4.6.5-alt1
 - new version 4.6.5
 
