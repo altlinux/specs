@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%define soname 3
 
 Name: oneDNN
-Version: 3.13.3
+Version: 3.14.2
 Release: alt1
 
 Summary: oneAPI Deep Neural Network Library
@@ -49,22 +50,6 @@ https://oneapi-spec.uxlfoundation.org/specifications/oneapi/latest/elements/oned
 платформ глубокого обучения, заинтересованных в повышении производительности
 приложений на центральных и графических процессорах.
 
-%prep
-%setup
-
-%build
-%cmake -GNinja \
-    -Wno-dev \
-    -DONEDNN_BUILD_EXAMPLES=OFF \
-    -DONEDNN_BUILD_TESTS=OFF
-%cmake_build
-
-%install
-%cmake_install
-
-%files
-%doc %_docdir/dnnl
-
 %package -n libdnnl
 Summary: oneDNN shared library
 Summary(ru_RU.UTF-8): Разделяемая библиотека oneDNN
@@ -91,10 +76,6 @@ oneAPI Deep Neural Network Library (oneDNN) — открытая кросспл�
 приложений на центральных и графических процессорах.
 
 Этот пакет содержит разделяемую библиотеку dnnl.
-
-%files -n libdnnl
-%_libdir/libdnnl.so.3
-%_libdir/libdnnl.so.3.13
 
 %package -n libdnnl-devel
 Summary: development files for the oneDNN shared library
@@ -124,6 +105,29 @@ oneAPI Deep Neural Network Library (oneDNN) — открытая кросспл�
 Этот пакет содержит файлы и заголовки для разработки с разделяемой библиотекой
 dnnl.
 
+%prep
+%setup
+
+%build
+%cmake -GNinja \
+    -Wno-dev \
+    -DONEDNN_BUILD_EXAMPLES=OFF \
+    -DONEDNN_BUILD_TESTS=OFF
+%cmake_build
+
+%install
+%cmake_install
+
+%ifarch aarch64
+# Bundled KleidiAI is linked statically into libdnnl, not shipped separately.
+rm -f %buildroot%_libdir/libkleidiai_ops.a
+rm -rf %buildroot%_libdir/cmake/KleidiAIOps \
+       %buildroot%_includedir/KleidiAIOps
+%endif
+
+%files
+%doc %_docdir/dnnl
+
 %files -n libdnnl-devel
 %_libdir/libdnnl.so
 %_libdir/cmake/dnnl
@@ -131,7 +135,14 @@ dnnl.
 %_includedir/dnnl*.h
 %_includedir/dnnl*.hpp
 
+%files -n libdnnl
+%_libdir/libdnnl.so.%soname
+%_libdir/libdnnl.so.%soname.*
+
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 3.14.2-alt1
+- 3.13.3 -> 3.14.2
+
 * Wed Sep 30 2026 Georgij Tsarin <crystarm@altlinux.org> 3.13.3-alt1
 - 3.8.1 -> 3.13.3
 
