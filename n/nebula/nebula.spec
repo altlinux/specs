@@ -1,5 +1,5 @@
 Name: nebula
-Version: 1.11.2
+Version: 1.12.0
 Release: alt1
 
 Summary: Scalable overlay networking tool with a focus on performance, simplicity and security
@@ -83,6 +83,10 @@ sed -i \
 %_bindir/nebula-cert
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 1.12.0-alt1
+- 1.11.2 -> 1.12.0
+- Fixed local API socket creation under the systemd sandbox
+
 * Wed Sep 23 2026 Anton Farygin <rider@altlinux.org> 1.11.2-alt1
 - 1.11.1 -> 1.11.2
 
