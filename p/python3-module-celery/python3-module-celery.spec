@@ -13,7 +13,7 @@
 %def_without doc
 
 Name: python3-module-%oname
-Version: 5.6.3
+Version: 5.7.0
 Release: alt1
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
@@ -26,11 +26,6 @@ URL: https://github.com/celery/celery
 Source: %name-%version.tar
 
 #Patch1: %oname-%version-alt-tests.patch
-
-# Patches from Debian
-Patch10: 0005-Disable-pytest-3.3-log-capturing-to-avoid-changing-l.patch
-Patch11: 0007-Set-shell-in-su-invocation.patch
-Patch12: privacy.patch
 
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
@@ -112,8 +107,6 @@ Sphinx documentation plugin used to document tasks.
 %setup
 #patch1 -p1
 #patch10 -p1
-%patch11 -p1
-#patch12 -p1
 
 # avoid using moto (needed for S3 tests)
 subst "s|moto==.*||" requirements/test.txt
@@ -155,6 +148,10 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Sat Nov 07 2026 Vitaly Lipatov <lav@altlinux.ru> 5.7.0-alt1
+- new version 5.7.0
+- remove obsolete patch references
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 5.6.3-alt1
 - new version 5.6.3
 
