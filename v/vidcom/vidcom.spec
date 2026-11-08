@@ -2,7 +2,7 @@
 %define oname io.github.seja_arctic_fox.vidcom
 
 Name: vidcom
-Version: 0.83
+Version: 0.84
 Release: alt1
 
 Summary: Archive your videos easily
@@ -61,6 +61,9 @@ or specifying their paths in the command (CLI).
 %_datadir/glib-2.0/schemas/%oname.gschema.xml
 
 %changelog
+* Mon Nov 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.84-alt1
+- 0.83 -> 0.84
+
 * Fri Aug 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.83-alt1
 - 0.82 -> 0.83
 
