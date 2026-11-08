@@ -3,7 +3,7 @@
 
 Name: libchewing
 Version: 0.13.1
-Release: alt1
+Release: alt2
 
 Summary: Intelligent phonetic input method library for Traditional Chinese
 Group: System/Libraries
@@ -14,7 +14,7 @@ Vcs: https://codeberg.org/chewing/libchewing
 
 Source: %name-%version.tar.gz
 
-Requires: sqlite3
+#Requires: sqlite3
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -27,8 +27,6 @@ BuildRequires: makeinfo
 BuildRequires: libsqlite3-devel
 BuildRequires: python3-devel
 
-Obsoletes: python2-libchewing < 0.5.1-13
-
 %description
 libchewing is an intelligent phonetic input method library for Chinese.
 
@@ -36,26 +34,41 @@ It provides the core algorithm and logic that can be used by various
 input methods. The Chewing input method is a smart bopomofo phonetics
 input method that is useful for inputting Mandarin Chinese.
 
-%package -n %name-devel
+%package devel
 Group: Development/Other
-Summary: Development files for libchewing
-Requires: %name = %version-%release
-%description -n %name-devel
+Summary: Development files for %name
+%description devel
 Headers and other files needed to develop applications using the %name
 library.
 
 %package -n %name%soname
 Group: System/Libraries
 Summary: %name library
+Requires: %name-common
 %description -n %name%soname
 %name library.
 
+%package -n chewing-cli
+Group: Other
+Summary: Command-line tool for %name.
+Obsoletes: libchewing <= 0.13.1-alt1
+%description -n chewing-cli
+This package provides command-line tool for %name.
+
+%package common
+Group: System/Configuration/Other
+BuildArch: noarch
+Obsoletes: libchewing <= 0.13.1-alt1
+Summary: Data files for %name
+%description common
+This package contains data files for %name.
+
 %package -n python3-module-libchewing
-Group: System/Libraries
-Summary: Python binding for libchewing
+Group: Development/Python3
+Summary: Python binding for %name
 Requires: %name%soname = %EVR
 %description -n python3-module-libchewing
-Python binding of libchewing.
+Python binding of %name.
 
 %prep
 %setup
@@ -73,11 +86,13 @@ Python binding of libchewing.
 install -d %buildroot%python3_sitelibdir
 cp -a contrib/python/chewing.py %buildroot%python3_sitelibdir/
 
-%files
-%doc README.md AUTHORS COPYING NEWS
+%files -n chewing-cli
 %_bindir/chewing-cli
-%_datadir/%name
 %_mandir/man1/chewing-cli*.1.xz
+
+%files common
+%doc README.md AUTHORS COPYING NEWS
+%_datadir/%name
 
 %files devel
 %_includedir/chewing
@@ -94,6 +109,10 @@ cp -a contrib/python/chewing.py %buildroot%python3_sitelibdir/
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Sun Nov 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.13.1-alt2
+- fixed missing library dependency on chewing data files (libchewing-common subpackage)
+- chewing-cli moved to a separate subpackage
+
 * Thu Nov 05 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.13.1-alt1
 - 0.5.1 -> 0.13.1
 - changed URL && VCS
