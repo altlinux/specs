@@ -1,13 +1,17 @@
 Name: rs
-Version: 12.3
+Version: 15.0.0p2
 Release: alt1
-Source: rs-12.3.tar
+Source: rs-15.0.0p2.tar
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/%name
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Reshape a data array
 License: BSD-3-Clause
 Group: Text tools
-# svn checkout svn://svn.freebsd.org/base/head/usr.bin/rs
+Patch: fix-tests.patch
+
+# Automatically added by buildreq on Sun Nov 08 2026
+# optimized out: bash5 glibc-kernheaders-generic libatf-c libatf-c++ libgcc15-devel libgpg-error libstdc++-devel python3 python3-base sh5
+BuildRequires: gcc-c++ kyua libatf-sh
 
 %description
 The rs utility reads the standard input, interpreting each line as a row
@@ -18,22 +22,36 @@ terminal viewing.
 
 %prep
 %setup
-# getline double definition
-sed -i 's/getline/get_line/g' %name.c
+%patch -p1
 
 %build
-cc -D'__FBSDID(x)=' -O2 %name.c -o %name
+c++ -D'__FBSDID(x)=' -O2 %name.cc -o %name
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_man1dir
-install -s -m755 %name %buildroot%_bindir/
+install -m755 %name %buildroot%_bindir/
 install %name.1 %buildroot%_man1dir/
 
 %files
 %_bindir/%name
 %_man1dir/%name.*
 
+%check
+cat > tests/Kyuafile <<@@@
+syntax(2)
+test_suite("rs_tests")
+atf_test_program{name="rs_test"}
+@@@
+
+{ echo "#!/usr/bin/atf-sh"; cat tests/rs_test.sh; } > tests/rs_test
+chmod +x tests/rs_test
+PATH=`pwd`:$PATH kyua test -k tests/Kyuafile
+
 %changelog
+* Sun Nov 08 2026 Fr. Br. George <george@altlinux.org> 15.0.0p2-alt1
+- Autobuild version bump to 15.0.0p2
+- Provide tests
+
 * Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 12.3-alt1
 - Autobuild version bump to 12.3
 
