@@ -1,7 +1,7 @@
 Name: jot
-Version: 12.4
-Release: alt2
-Source: jot-12.4.tar
+Version: 15.0.0p2
+Release: alt1
+Source: jot-15.0.0p2.tar
 Patch: %name-urandom.patch
 Patch1: %name-12.3-nocap.patch
 Patch2: %name-12.1-nonegperc.patch
@@ -47,6 +47,9 @@ sed -n '/REGRESSION_TEST/s@.*`\(.*\)., `\(jot .*\).)@./\2 | cmp tests/regress.\1
 sh -e tests/regressLinux.sh
 
 %changelog
+* Sun Nov 08 2026 Fr. Br. George <george@altlinux.org> 15.0.0p2-alt1
+- Autobuild version bump to 15.0.0p2
+
 * Thu Mar 14 2024 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 12.4-alt2
 - Fix build for Elbrus (glibc-2.35)
 
