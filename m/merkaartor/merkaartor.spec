@@ -11,7 +11,7 @@
 
 Name: merkaartor
 Version: 0.20.0
-Release: alt2
+Release: alt3
 
 Summary: an OpenStreetMap editor
 License: GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-3.0-or-later AND (LGPL-2.1-only WITH Qt-LGPL-exception-1.1 OR GPL-3.0-only)
@@ -69,6 +69,9 @@ rm -rf 3rdparty
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 0.20.0-alt3
+- preserved HTTP status and API error details on failed downloads (ALT #61244).
+
 * Wed Oct 07 2026 Valery Zabrovsky <brow@altlinux.org> 0.20.0-alt2
 - NMU: Really build with qtwebengine on supported arches; fix typo.
 
