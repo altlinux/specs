@@ -2,7 +2,7 @@
 %def_with check
 
 Name: rpi
-Version: 0.21.0
+Version: 0.21.1
 Release: alt1
 Summary: Coding-agent runtime and terminal CLI inspired by Pi
 License: MIT
@@ -13,8 +13,6 @@ VCS: https://github.com/bigfish1913/pi-rust
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch: alt-disable-self-update.patch
-# https://github.com/bigfish1913/pi-rust/pull/277
-Patch1: alt-model-select-event.patch
 
 ExcludeArch: %ix86
 
@@ -46,6 +44,9 @@ https://rpi.bigfisharc.cn/packages.html.
 %_bindir/rpi
 
 %changelog
+* Sun Nov 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.1-alt1
+- Updated to version 0.21.1.
+
 * Fri Nov 06 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.0-alt1
 - Updated to version 0.21.0.
 
