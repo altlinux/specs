@@ -2,12 +2,14 @@
 
 Name:    pdfminersix
 Version: 20260107
-Release: alt1
+Release: alt2
 
 Summary: Community maintained fork of pdfminer - we fathom PDF
 License: MIT
 Group:   Other
 URL:     https://github.com/pdfminer/pdfminer.six
+
+Provides: python3-module-pdfminer-six
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -47,6 +49,9 @@ subst 's/^license = .*/license = {text = "MIT"}/' pyproject.toml
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Sat Nov 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20260107-alt2
+- provide properly named python module
+
 * Thu Jan 08 2026 Andrey Cherepanov <cas@altlinux.org> 20260107-alt1
 - New version.
 

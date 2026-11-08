@@ -10,7 +10,7 @@
 Summary: %%summary \
 Group: Development/Python3 \
 Requires: python3-module-%{expand:%%pep503_name %1} \
-%%pyproject_runtimedeps_metadata_extra %2 \
+%%pyproject_runtimedeps -- %3 --extra %2 --depformatextra=%pyproject_depextra_format \
 %%description -n python3-module-%{expand:%%pep503_name %1}+%2 \
 Extra "%2" for %1. \
 %%files -n python3-module-%{expand:%%pep503_name %1}+%2 \
@@ -18,7 +18,7 @@ Extra "%2" for %1. \
 
 Name: python3-module-fastmcp
 Version: 4.1.4
-Release: alt1
+Release: alt2
 
 Summary: The fast, Pythonic way to build MCP servers and clients
 License: Apache-2.0
@@ -49,15 +49,15 @@ The Model Context Protocol (MCP) connects LLMs to tools and data.
 FastMCP is a full MCP application framework for servers, clients, and
 interactive apps.
 
-%add_python_extra fastmcp anthropic
-# %%add_python_extra fastmcp apps # -- no 'prefab-ui' in the repo
-# %%add_python_extra fastmcp azure # -- skip azure
-%add_python_extra fastmcp client
-# %%add_python_extra fastmcp code-mode # -- no 'pydantic-monty' in the repo
-%add_python_extra fastmcp gemini
-%add_python_extra fastmcp mcp
-%add_python_extra fastmcp openai
-%add_python_extra fastmcp server
+%add_python_extra fastmcp anthropic fastmcp_metadata
+%add_python_extra fastmcp apps fastmcp_metadata
+# %%add_python_extra fastmcp azure fastmcp_metadata # -- skip azure
+%add_python_extra fastmcp client fastmcp_metadata
+# %%add_python_extra fastmcp code-mode fastmcp_metadata # -- no 'pydantic-monty' in the repo
+%add_python_extra fastmcp gemini fastmcp_metadata
+%add_python_extra fastmcp mcp fastmcp_metadata
+%add_python_extra fastmcp openai fastmcp_metadata
+%add_python_extra fastmcp server fastmcp_metadata
 
 %package slim
 Summary: The dependency-slim FastMCP package
@@ -74,15 +74,15 @@ The Model Context Protocol (MCP) connects LLMs to tools and data.
 FastMCP is a full MCP application framework for servers, clients, and
 interactive apps.
 
-%add_python_extra fastmcp-slim anthropic
-# %%add_python_extra fastmcp-slim apps # -- no 'prefab-ui' in the repo
-# %%add_python_extra fastmcp-slim azure # -- skip azure
-%add_python_extra fastmcp-slim client
-# %%add_python_extra fastmcp-slim code-mode # -- no 'pydantic-monty' in the repo
-%add_python_extra fastmcp-slim gemini
-%add_python_extra fastmcp-slim mcp
-%add_python_extra fastmcp-slim openai
-%add_python_extra fastmcp-slim server
+%add_python_extra fastmcp-slim anthropic fastmcp_slim_metadata
+%add_python_extra fastmcp-slim apps fastmcp_slim_metadata
+# %%add_python_extra fastmcp-slim azure fastmcp_slim_metadata # -- skip azure
+%add_python_extra fastmcp-slim client fastmcp_slim_metadata
+# %%add_python_extra fastmcp-slim code-mode fastmcp_slim_metadata # -- no 'pydantic-monty' in the repo
+%add_python_extra fastmcp-slim gemini fastmcp_slim_metadata
+%add_python_extra fastmcp-slim mcp fastmcp_slim_metadata
+%add_python_extra fastmcp-slim openai fastmcp_slim_metadata
+%add_python_extra fastmcp-slim server fastmcp_slim_metadata
 
 %prep
 %setup
@@ -131,6 +131,11 @@ cd fastmcp_slim
 %python3_sitelibdir/fastmcp_slim-%version.dist-info/
 
 %changelog
+* Sun Nov 08 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.4-alt2
+- sbolshakov@:
+  + Fixed requires of the +extra subpackages (ALT#61361).
+- Added new fastmcp+apps extra subpackage.
+
 * Wed Oct 28 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.4-alt1
 - Updated to 4.1.4.
 - Set correct unversioned requirements.

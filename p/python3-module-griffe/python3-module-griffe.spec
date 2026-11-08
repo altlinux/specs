@@ -4,7 +4,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API
 License: ISC
@@ -46,6 +46,9 @@ Requires: %name = %EVR
 %package lib
 Summary: Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API
 Group: Development/Python3
+# the griffelib PyPI name (same upstream, same codebase) is what
+# reverse dependencies declare, e.g. fastmcp[server]
+Provides: python3-module-griffelib = %EVR
 
 %description lib
 %summary.
@@ -103,6 +106,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/griffelib-%version.dist-info
 
 %changelog
+* Sat Nov 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.0.0-alt2
+- provide pypi name griffelib for lib subpackage
+
 * Wed Mar 04 2026 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
