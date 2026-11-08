@@ -1,22 +1,34 @@
 #Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%def_enable	build_test
+%def_with check
 
 Name: opencpn
-Version: 5.14.0
+Version: 5.14.2
 Release: alt1
 Summary: A free and open source software for marine navigation
 
-License: GPL-2.0-or-later AND LGPL-2.0-or-later
+License: GPL-2.0-or-later AND LGPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-3.0-or-later AND BSD-2-Clause AND BSD-3-Clause AND BSD-4-Clause-UC AND ODbL-1.0 AND CC-BY-SA-4.0
 Group: Other
 
 URL: https://opencpn.org
 VCS: https://github.com/OpenCPN/OpenCPN
 
-Source: OpenCPN-%version.tar
-Patch1: opencpn-5.14.0-exclude-install-docs.patch
-Patch2: opencpn-5.14.0-init-app-fixes.patch
+Source:  OpenCPN-%version.tar
+
+# Issue: https://github.com/OpenCPN/OpenCPN/issues/5287
+Patch1: opencpn-5.14.2-init-app-fixes.patch
+# PR: https://github.com/OpenCPN/OpenCPN/pull/5491
+Patch2: opencpn-5.14.2-fix-missing-authors-in-about-app.patch
+# PR: https://github.com/OpenCPN/OpenCPN/pull/5511
+# Added option `OCPN_TEST_ERROR_BEHAVIOR` (by default: ANY) to toggle
+# the behavior when an error is encountered in run tests.
+Patch3: opencpn-5.14.2-toggle-test-error-behavior.patch
+# PR: https://github.com/OpenCPN/OpenCPN/pull/5485
+# Fixed local-time DST display
+# and incorrect date conversion with Local Time in CET-1CEST timezone
+# for testing `ocpn::toUsrDateTimeFormat` formatting function.
+Patch4: opencpn-5.14.2-fix-incorrect-local-time-dst-display-and-DateTimeFormatTest.patch
 
 Requires: %name-data = %EVR
 
@@ -49,17 +61,17 @@ BuildRequires: libsndfile-devel
 BuildRequires: libportaudio2-devel
 BuildRequires: libjasper-devel
 # Use git core tools to upstream-patch source under the build local libdnet-1.18.0
-# Sisyphus - libdnet-16.2
+# Sisyphus - libdnet-1.16.4
 BuildRequires: git-core
 
 %description
 OpenCPN is a free software project to create a concise chart plotter
 and navigation software, for use underway or as a planning tool.
 OpenCPN is developed by a team of active sailors using real world
-conditions for program testing and refinement. Files developed in
-this project are copyright (c) The OpenCPN developers and distributed
-using a GPLv2+ license. OpenCPN also uses code from other sources
-with other licenses (look to the LICENSING file).
+conditions for program testing and refinement.
+Files developed in this project are copyright (c) The OpenCPN developers
+and distributed using a GPLv2+ license. OpenCPN also uses code from other
+sources with other licenses (look to the LICENSING file).
 
 %package data
 Summary: Architecture independent files for OpenCPN
@@ -75,6 +87,8 @@ Requires: icon-theme-hicolor
 %setup -n OpenCPN-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 
@@ -83,10 +97,7 @@ Requires: icon-theme-hicolor
 %cmake -DOCPN_BUNDLE_DOCS=OFF \
        -DOCPN_BUNDLE_TCDATA=ON \
        -DOCPN_BUNDLE_GSHHS=ON \
-       -DQT_ANDROID=OFF \
-%if_disabled build_test
-       -DOCPN_BUILD_TEST=OFF
-%endif
+       -DQT_ANDROID=OFF
 
 %cmake_build
 
@@ -99,9 +110,17 @@ Requires: icon-theme-hicolor
 %find_lang --append --output=%name.lang %name-wmm_pi
 %find_lang --append --output=%name.lang %name-chartdldr_pi
 
+# Remove duplicate and unnecessary part files doc
+# Duplicates files installed in the standard documentation dir
+rm %buildroot%_datadir/%name/{*.pdf,LICENSING,COPYING.*}
+rm -r %buildroot%_defaultdocdir/%name
+
+%check
+%cmake_build --target=run-tests
+
 %files
 %doc COPYING.* LICENSING *.md README
-%doc data/*.pdf
+%doc data/*.pdf data/copyright
 
 %_bindir/%name
 %_bindir/%name-cmd
@@ -119,6 +138,16 @@ Requires: icon-theme-hicolor
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Nov 03 2026 Polina Poidenko <polipoki@altlinux.org> 5.14.2-alt1
+- New version 5.14.2.
+- Add copyright.
+- Update License: GPL-3.0-or-later, LGPL-3.0-or-later, BSD-2-Clause,
+  BSD-3-Clause, BSD-4-Clause-UC, ODbL-1.0, CC-BY-SA-4.0.
+- Fix docs installation to keep app-required files in a non-standard directory.
+- about.cpp: Fix missing authors information in "About" dialog.
+- Enable check tests.
+- Fix incorrect local time DST display.
+
 * Tue Jun 30 2026 Polina Poidenko <polipoki@altlinux.org> 5.14.0-alt1
 - New version 5.14.0.
 - Update buildreqs.
