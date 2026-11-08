@@ -4,7 +4,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 6.6.9
+Version: 6.8.0
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -24,9 +24,9 @@ Patch: %name-%version-%release.patch
 
 %define gtk_ver 3.12.0
 %define gi_ver 0.10.1
-%define muffin_ver 4.0.3
+%define muffin_ver 6.8.0
 %define json_glib_ver 0.13.2
-%define cjs_ver 4.0.0
+%define cjs_ver 140.0.0
 %define polkit_ver 0.100
 %define folks_ver 0.5.2
 %define bt_ver 3.0.0
@@ -55,16 +55,19 @@ Obsoletes: %name-data < %EVR
 
 BuildRequires(pre): rpm-build-gir >= 0.7.3
 BuildPreReq: rpm-build-python3
+
 BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: libgtk4-devel
 BuildPreReq: libcjs-devel >= %cjs_ver
 BuildPreReq: libjson-glib-devel >= %json_glib_ver
 BuildRequires: meson
 BuildRequires: gcc-c++
-BuildRequires: libcinnamon-desktop-devel libgnome-keyring-devel libcinnamon-menus-devel
-BuildRequires: libmuffin-devel
+BuildRequires: libcinnamon-desktop-devel >= 6.8.0
+BuildRequires: libgnome-keyring-devel
+BuildRequires: libcinnamon-menus-devel >= 6.8.0
+BuildRequires: libmuffin-devel >= %muffin_ver
 BuildRequires: libstartup-notification-devel libcinnamon-desktop-gir-devel
 BuildRequires: libpolkit-devel libupower-devel libgudev-devel libnm-devel libnm-gir-devel
-BuildRequires: libcanberra-gtk3-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel
 BuildRequires: libcinnamon-menus-gir-devel
 BuildRequires: gst-plugins1.0-devel
@@ -74,6 +77,7 @@ BuildRequires: pkgconfig(gcr-base-3)
 BuildRequires: pkgconfig(libsecret-1)
 BuildRequires: %_bindir/pysassc
 BuildRequires: gcr-libs-gir-devel
+BuildRequires: gcr4-libs-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -89,16 +93,21 @@ BuildRequires: gtk-doc gnome-common intltool
 BuildRequires: at-spi2-atk-devel
 BuildRequires: rpm-build-xdg
 BuildRequires: libxapps-devel libxapps-gir-devel
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(gtk4-layer-shell-0)
+BuildRequires: pkgconfig(libxdo)
+BuildRequires: pkgconfig(systemd)
+BuildRequires: libpam0-devel
 
 # @cow: In https://bugzilla.altlinux.org/42722 we decided to move cinnamon-minimal
 # deps to cinnamon package because there are cases reported when users tried to
 # install cinnamon DE not using the meta package but cinnamon package instead.
 Provides: cinnamon-minimal = %version-%release
 Obsoletes: cinnamon-minimal < 5.6
-Requires: cinnamon-session > 6.0.0
-Requires: nemo
-Requires: cinnamon-screensaver
-Requires: cinnamon-control-center
+Requires: cinnamon-session >= 6.8.0
+Requires: nemo >= 6.8.0
+Requires: cinnamon-screensaver >= 6.8.0
+Requires: cinnamon-control-center >= 6.8.0
 Requires: mintlocale
 Requires: cinnamon-freedesktop-menu
 #Gvfs
@@ -178,17 +187,19 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 # gnome-shell provides typelib(St) as well
 %filter_from_provides /typelib(St)/d
 
-rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon.1
-rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon2d.1
+rm -v %buildroot/%_man1dir/cinnamon-session-cinnamon.1
 
 desktop-file-validate %buildroot%_desktopdir/cinnamon.desktop
-desktop-file-validate %buildroot%_desktopdir/cinnamon2d.desktop
 desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 
 %files
 %exclude %_bindir/%{name}-launcher
 %_bindir/*
+%_sysconfdir/pam.d/cinnamon
 %_libdir/cinnamon/
+%_libexecdir/cinnamon/cinnamon-background-daemon
+%_libexecdir/cinnamon/cinnamon-backup-locker
+%_libexecdir/cinnamon/cinnamon-screensaver-pam-helper
 %_libexecdir/cinnamon/cinnamon-hotplug-sniffer
 %_libexecdir/cinnamon/cinnamon-perf-helper
 %_libexecdir/cinnamon/cinnamon-calendar-server.py
@@ -206,11 +217,14 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %_datadir/desktop-directories/*.directory
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/polkit-1/actions/org.cinnamon.settings-users.policy
+%_datadir/dbus-1/services/org.Cinnamon.Background.service
+%_datadir/dbus-1/services/org.cinnamon.BackupLocker.service
 %python3_sitelibdir_noarch/cinnamon/
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*.svg
 %_iconsdir/hicolor/*/*/*.png
 %_man1dir/*.1.*
+%_userunitdir/cinnamon-background-daemon.service
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -218,6 +232,9 @@ desktop-file-validate %buildroot%_desktopdir/cinnamon-wayland.desktop
 %endif
 
 %changelog
+* Sat Nov 07 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt1
+- New version 6.8.0.
+
 * Sat Jul 25 2026 Anton Midyukov <antohami@altlinux.org> 6.6.9-alt1
 - New version 6.6.9.
 

@@ -1,17 +1,18 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 6.6
+%define ver_major 6.8
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-screensaver
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Cinnamon Screensaver
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://github.com/linuxmint/cinnamon-screensaver
+URL: https://github.com/linuxmint/cinnamon-screensaver
+VCS: https://github.com/linuxmint/cinnamon-screensaver
 
 Provides: screen-saver-engine
 Provides: screen-saver-frontend
@@ -75,11 +76,9 @@ rm -r %buildroot%_datadir/gir-1.0/*.gir
 
 %files
 %_bindir/cinnamon-screensaver
-%_bindir/cinnamon-unlock-desktop
 %_libdir/cinnamon-screensaver/
 %attr(2711,root,chkpwd) %_libdir/cinnamon-screensaver/cinnamon-screensaver-pam-helper
 %attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/cinnamon-screensaver
-%_bindir/cinnamon-screensaver-command
 %_datadir/cinnamon-screensaver/
 %_datadir/dbus-1/services/org.cinnamon.ScreenSaver.service
 %_datadir/applications/org.cinnamon.ScreenSaver.desktop
@@ -88,6 +87,9 @@ rm -r %buildroot%_datadir/gir-1.0/*.gir
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt1
+- new version (6.8.0)
+
 * Wed Dec 17 2025 Anton Midyukov <antohami@altlinux.org> 6.6.1-alt1
 - 6.6.1
 

@@ -1,7 +1,6 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 6.4
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -10,13 +9,14 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: 6.6.4
+Version: 6.8.1
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://github.com/linuxmint/cinnamon-settings-daemon
+URL: https://github.com/linuxmint/cinnamon-settings-daemon
+VCS: https://github.com/linuxmint/cinnamon-settings-daemon
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -87,29 +87,26 @@ client is Cinnamon Control Center.
 %install
 %meson_install
 
-# remove static libraries
-rm -v %buildroot%_libdir/cinnamon-settings-daemon-3.0/*.a
-
 %files
 %doc AUTHORS NEWS
-%dir %_libdir/%name-%api_ver
 %_bindir/csd-*
 %_libdir/%name/csd-*
 %_libexecdir/csd-*
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %config %_datadir/glib-2.0/schemas/*
-%_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.cinnamon.settingsdaemon.datetimemechanism.policy
 %_datadir/polkit-1/actions/org.cinnamon.settings-daemon.plugins.wacom.policy
 %_datadir/dbus-1/system-services/org.cinnamon.SettingsDaemon.DateTimeMechanism.service
 %_datadir/dbus-1/system.d/org.cinnamon.SettingsDaemon.DateTimeMechanism.conf
 %_sysconfdir/xdg/autostart/*.desktop
-%_datadir/applications/*.desktop
 
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.1-alt1
+- New version 6.8.1.
+
 * Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 6.6.4-alt1
 - New version 6.6.4.
 

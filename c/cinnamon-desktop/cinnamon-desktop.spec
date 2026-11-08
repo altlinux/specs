@@ -9,13 +9,14 @@
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: 6.6.2
-Release: alt1
+Version: 6.8.0
+Release: alt2
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
 Group: Graphical desktop/GNOME
-Url: https://github.com/linuxmint/cinnamon-desktop
+URL: https://github.com/linuxmint/cinnamon-desktop
+VCS: https://github.com/linuxmint/cinnamon-desktop
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -44,6 +45,7 @@ BuildRequires: libsystemd-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel gsettings-desktop-schemas-gir-devel}
 BuildRequires: libaccountsservice-devel
 BuildRequires: libudev-devel
+BuildRequires: pkgconfig(libseccomp)
 
 Obsoletes: %name-data < %EVR
 
@@ -148,6 +150,12 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt2
+- Revert "Switch terminal to velocitty".
+
+* Sat Nov 07 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt1
+- New version 6.8.0.
+
 * Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 6.6.2-alt1
 - New version 6.6.2.
 

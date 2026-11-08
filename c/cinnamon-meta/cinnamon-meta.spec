@@ -1,4 +1,4 @@
-%define ver_major 6.6
+%define ver_major 6.8
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -8,7 +8,7 @@ Summary: Cinnamon desktop meta package
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://github.com/linuxmint/Cinnamon
+URL: https://github.com/linuxmint/Cinnamon
 BuildArch: noarch
 
 %description
@@ -51,6 +51,8 @@ Group: Graphical desktop/GNOME
 
 Requires: cinnamon-default = %EVR
 
+# Wayland session
+Requires: cinnamon-session-wayland >= 6.8.0
 # Color manager
 Requires: gnome-color-manager
 # Password keeper
@@ -98,6 +100,10 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt1
+- Bump version.
+- default: Add requirement on cinnamon-session-wayland.
+
 * Thu Dec 11 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
 - bump version
 

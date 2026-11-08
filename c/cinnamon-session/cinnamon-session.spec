@@ -1,30 +1,28 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 6.4
+%define ver_major 6.8
 %define _libexecdirname libexec
 %define _libexecdir %_prefix/%_libexecdirname
 %define _name cinnamon
 
 Name: %{_name}-session
-Version: 6.6.4
+Version: 6.8.0
 Release: alt1
 
 License: GPL-2.0-or-later
 Summary: The cinnamon session programs for the Cinnamon GUI desktop environment
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/cinnamon-session
+VCS: https://github.com/linuxmint/cinnamon-session
 
 Source: %name-%version.tar
 Source1: %{_name}.session
-Source2: %{_name}2d.session
 Source3: %{_name}-wayland.session
 Source4: start%{_name}-common
 Source5: start%{_name}
-Source6: start%{_name}2d
 Source7: start%{_name}-wayland
 Source8: %{_name}.desktop
-Source9: %{_name}2d.desktop
 Source10: %{_name}-wayland.desktop
 Patch: %name-%version-%release.patch
 
@@ -97,21 +95,22 @@ Wayland session for Cinnamon.
 %meson_install
 
 install -pD -m655 %SOURCE1 %buildroot%_datadir/%name/sessions/%{_name}.session
-install -pD -m655 %SOURCE2 %buildroot%_datadir/%name/sessions/%{_name}2d.session
 install -pD -m655 %SOURCE3 %buildroot%_datadir/%name/sessions/%{_name}-wayland.session
 install -pD -m755 %SOURCE4 %buildroot%_datadir/%name/start%{_name}-common
 install -pD -m755 %SOURCE5 %buildroot%_bindir/start%{_name}
-install -pD -m755 %SOURCE6 %buildroot%_bindir/start%{_name}2d
 install -pD -m755 %SOURCE7 %buildroot%_bindir/start%{_name}-wayland
 
 mkdir -p %buildroot%_datadir/xsessions
 install -pD -m655 %SOURCE8 %buildroot%_datadir/xsessions
-install -pD -m655 %SOURCE9 %buildroot%_datadir/xsessions
 
 mkdir -p %buildroot%_datadir/wayland-sessions
 install -pD -m655 %SOURCE10 %buildroot%_datadir/wayland-sessions
 
 rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
+
+# Remove extra systemd overrides
+rm -v %buildroot%_userunitdir/app-cinnamon-.scope.d/app-override.scope.conf
+rm -v %buildroot%_userunitdir/dbus.service.d/dbus-override.service.conf
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
 
@@ -126,7 +125,6 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/%name/start%{_name}-common
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/%{_name}.session
-%_datadir/%name/sessions/%{_name}2d.session
 %_iconsdir/hicolor/*/apps/cinnamon-session-properties.*
 %config %_datadir/glib-2.0/schemas/org.cinnamon.SessionManager.gschema.xml
 %_mandir/man?/*
@@ -141,6 +139,10 @@ rm -f %buildroot%_docdir/%name/dbus/cinnamon-session.html
 %_datadir/wayland-sessions/%{_name}-wayland.desktop
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt1
+- New version 6.8.0.
+- Remove 2d session.
+
 * Thu Jul 02 2026 Anton Midyukov <antohami@altlinux.org> 6.6.4-alt1
 - New version 6.6.4.
 

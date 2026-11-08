@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nemo
-Version: 6.6.3
+Version: 6.8.3
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -75,6 +75,8 @@ BuildRequires: docbook-utils gtk-doc
 BuildRequires: python3-module-polib python3-module-pygobject3
 BuildRequires: libxapps-devel >= 1.0.4
 BuildRequires: pkgconfig(json-glib-1.0)
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(gstreamer-pbutils-1.0)
 %{?_enable_exempi:BuildPreReq: libexempi-devel >= %exempi_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -136,7 +138,7 @@ GObject introspection devel data for the nemo-extension library
 %setup -q
 %patch0 -p1
 
-rm -f data/*.desktop
+#rm -f data/*.desktop
 
 # make check using xvfb-run
 subst 's@\.\/@xvfb-run -a ./@' eel/check-eel src/check-nemo
@@ -193,6 +195,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.3-alt1
+- New version 6.8.3.
+
 * Sun Jan 11 2026 Anton Midyukov <antohami@altlinux.org> 6.6.3-alt1
 - New version 6.6.3.
 

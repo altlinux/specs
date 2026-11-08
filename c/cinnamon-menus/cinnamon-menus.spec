@@ -5,13 +5,14 @@
 %define api_ver 3.0
 
 Name: cinnamon-menus
-Version: 6.6.0
+Version: 6.8.0
 Release: alt1
 
 Summary: Cinnamon desktop menu
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://github.com/linuxmint/cinnamon-menus
+URL: https://github.com/linuxmint/cinnamon-menus
+VCS: https://github.com/linuxmint/cinnamon-menus
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -106,6 +107,9 @@ GObject introspection devel data for the Cinnamon Desktop Menu Library
 
 
 %changelog
+* Sat Nov 07 2026 Anton Midyukov <antohami@altlinux.org> 6.8.0-alt1
+- New version 6.8.0.
+
 * Sun Nov 30 2025 Anton Midyukov <antohami@altlinux.org> 6.6.0-alt1
 - New version 6.6.0.
 

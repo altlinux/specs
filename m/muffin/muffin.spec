@@ -7,14 +7,15 @@
 %define sover 0
 
 Name: muffin
-Version: 6.6.3
+Version: 6.8.1
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 
-Url: https://github.com/linuxmint/muffin
+URL: https://github.com/linuxmint/muffin
+VCS: https://github.com/linuxmint/muffin
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -52,12 +53,15 @@ Requires: zenity
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libgtk+3-devel >= 3.3.3
+BuildPreReq: libgtk4-devel
+BuildPreReq: libgtk4-gir-devel
 BuildPreReq: meson
-BuildRequires: libcanberra-gtk3-devel libstartup-notification-devel
+BuildRequires: pkgconfig(libcanberra)
+BuildRequires: libstartup-notification-devel
 BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libXinerama-devel libXext-devel libSM-devel
 BuildRequires: zenity
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+BuildRequires: gobject-introspection-devel
 BuildRequires: libcinnamon-desktop-devel libcinnamon-desktop-gir-devel
 BuildRequires: libxkbcommon-x11-devel libxkbfile-devel xkeyboard-config-devel
 BuildRequires: libXi-devel libXdamage-devel
@@ -91,7 +95,7 @@ management behaviors to meet the needs of the environment.
 Summary: Shared libraries for %name
 Group: System/Libraries
 # manual dependencies
-Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = 4.0
 
 %description -n lib%name
 Shared libraries for Muffin and its plugins.
@@ -101,7 +105,7 @@ Summary: Development package for %name
 Group: Development/C
 Requires: lib%name = %version-%release
 # manual dependencies
-Requires: gir(Gtk) = 3.0
+Requires: gir(Gtk) = 4.0
 
 %description -n lib%name-devel
 Header files and libraries for developing Muffin plugins.
@@ -150,12 +154,10 @@ environment.
 %meson
 %meson_build
 
-
 %install
 %meson_install
 
 %find_lang %name
-
 
 ln -sf %name/lib%name-clutter-%api_ver.so.%sover \
 %buildroot%_libdir/lib%name-clutter-%api_ver.so.%sover
@@ -166,8 +168,10 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %files -f %name.lang
 %_man1dir/muffin.1*
 %_bindir/muffin
+%_bindir/cinnamon-list-windows
 %_libexecdir/muffin-restart-helper
 %_desktopdir/*.desktop
+%_udevrulesdir/61-muffin.rules
 %doc README.md
 
 %files -n lib%name
@@ -193,6 +197,9 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.1-alt1
+- New version 6.8.1.
+
 * Mon Jan 26 2026 Anton Midyukov <antohami@altlinux.org> 6.6.3-alt1
 - New version 6.6.3.
 
