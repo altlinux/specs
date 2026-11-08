@@ -2,7 +2,7 @@
 %define szsoname 2
 
 Name: libaec
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: Adaptive Entropy Coding library
@@ -87,7 +87,6 @@ and CMake configuration files needed to build applications using libaec.
 %_libdir/libaec.so.%{soname}.*
 
 %files -n libsz%szsoname
-%doc doc/README.SZIP
 %_libdir/libsz.so.%{szsoname}
 %_libdir/libsz.so.%{szsoname}.*
 
@@ -99,6 +98,9 @@ and CMake configuration files needed to build applications using libaec.
 %_libdir/cmake/libaec/
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 1.1.8-alt1
+- 1.1.7 -> 1.1.8
+
 * Wed May 20 2026 Anton Farygin <rider@altlinux.org> 1.1.7-alt1
 - 1.1.6 -> 1.1.7
 
