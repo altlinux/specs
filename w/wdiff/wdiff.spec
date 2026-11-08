@@ -1,12 +1,11 @@
 Name: wdiff
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 Summary: Comparing files on a word per word basis
 License: GPLv3
 Group: Text tools
 Url: http://www.gnu.org/software/wdiff/
 Source: %name-%version.tar.gz
-Patch: gcc15.patch
 
 # Automatically added by buildreq on Fri Jun 19 2026
 # optimized out: bash5 glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libgcc15-devel libgpg-error perl perl-Encode perl-Locale-gettext perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent perl-unicore python3 python3-base sh5
@@ -23,7 +22,6 @@ differences between the original files.
 
 %prep
 %setup
-%patch -p1
 
 %build
 #autoreconf
@@ -44,6 +42,9 @@ differences between the original files.
 %_infodir/*
 
 %changelog
+* Sun Nov 08 2026 Fr. Br. George <george@altlinux.org> 1.2.3-alt1
+- Autobuild version bump to 1.2.3
+
 * Fri Jun 19 2026 Fr. Br. George <george@altlinux.ru> 1.2.2-alt2
 - Fix GCC15 build
 
