@@ -2,29 +2,42 @@
 
 Name: installer-livecd-install
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Special step livecd-install for installers
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
-Url: http://www.altlinux.org/Alterator
-Source:%name-%version.tar
-
-Requires: squashfsprogs
-Requires: libshell
-Requires: alterator-l10n >= 2.5-alt1
-Requires: alterator-browser-qt >= 2.17.0
-Requires: alterator-lookout => 2.4-alt1
-Requires: util-linux
-Requires: installer-scripts-remount-stage2 >= 0.6.0
-BuildRequires: rpm-macros-alterator
-BuildRequires: alterator >= 4.10-alt6
+URL: https://www.altlinux.org/Alterator
+Source: %name-%version.tar
 
 BuildArch: noarch
 
+Requires: %name-backend = %EVR
+Requires: alterator-l10n >= 2.5-alt1
+Requires: alterator-browser-qt >= 2.17.0
+Requires: alterator-lookout => 2.4-alt1
+
+BuildRequires: rpm-macros-alterator
+BuildRequires: alterator >= 4.10-alt6
+
 %description
 %summary.
+
+%package backend
+Summary: %summary (backend)
+Group: System/Configuration/Other
+
+BuildArch: noarch
+
+Requires: alterator-backend3
+Requires: squashfsprogs
+Requires: libshell
+Requires: util-linux
+Requires: installer-scripts-remount-stage2 >= 0.6.0
+
+%description backend
+%summary (backend).
 
 %prep
 %setup
@@ -35,9 +48,14 @@ BuildArch: noarch
 %files
 %_datadir/alterator/steps/*
 %_datadir/alterator/ui/*
+
+%files backend
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt2
+- Separate subpackage installer-livecd-install-backend (Closes: 61346).
+
 * Mon Apr 07 2025 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
 - backend3: add autoinstall support
 - spec: convert License tag to SPDX-format

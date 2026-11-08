@@ -1,11 +1,11 @@
 Name: alterator
 Version: 5.4.6
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: System/Configuration/Other
-Url: http://wiki.sisyphus.ru/Alterator
+URL: https://www.altlinux.org/Alterator
 
 Source: %name-%version.tar
 Patch0: alterator-5.1-compilation-workaround.patch
@@ -18,7 +18,9 @@ Patch4: alterator-5.4.1-fix-call-cc-via-shift-for-guile20.patch
 Provides: %name-common = %version , %name-menu = %version, %name-help = %version, %name-sdk = %version, %name-autoinstall = %version
 Obsoletes: %name-common, %name-menu, %name-help, %name-sdk, %name-autoinstall
 
-Requires: rpm-macros-%name = %version-%release
+Requires: rpm-macros-%name = %EVR
+Requires: %name-filesystem = %EVR
+Requires: %name-backend3 = %EVR
 Requires: alterator-l10n >= 2.9.123
 Requires: alterator-sh-functions
 
@@ -63,11 +65,28 @@ BuildRequires: libguile-vhttpd
 %description
 ALT Linux configurator engine
 
+%package filesystem
+Summary: The basic directory layout for %name
+Group: System/Configuration/Other
+BuildArch: noarch
+
+%description filesystem
+The basic directory layout for alterator %name.
+
+%package backend3
+Summary: backend3 of %name
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: %name-filesystem = %EVR
+
+%description backend3
+backend3 of %name.
+
 %package doc
 Summary: documentation and samples for %name
 Group: System/Configuration/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description doc
 documentation and samples for %name
@@ -145,17 +164,14 @@ EOF
 %files
 %_bindir/*
 
-%dir %_alterator_libdir
-%_alterator_libdir/backend3
 %attr(700,root,root) %dir %_alterator_libdir/hooks
 %_alterator_libdir/interfaces
 %{?!_with_bootstrap:%_alterator_libdir/lookout}
 %_alterator_libdir/type
 %_alterator_libdir/ui
 
-%_alterator_datadir
+%_alterator_datadir/*
 
-%dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/menu
 %attr(700,root,root) %dir %_cachedir/%name
 %attr(700,root,root) %dir %_localstatedir/%name
@@ -174,6 +190,14 @@ EOF
 
 %attr(640,root,root) %_sysconfdir/pam.d/alterator-chkpwd
 
+%files filesystem
+%dir %_sysconfdir/%name
+%dir %_alterator_libdir
+%dir %_alterator_datadir
+
+%files backend3
+%_alterator_libdir/backend3
+
 %files doc
 %doc doc/samples doc/internals
 
@@ -181,6 +205,13 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 5.4.6-alt2
+- Separate subpackages:
+  + alterator-filesystem
+  + alterator-backend3
+- Update URL.
+- Convert License to SPDX format.
+
 * Wed Sep 02 2026 Mikhail Efremov <sem@altlinux.org> 5.4.6-alt1
 - build/xgettext: Fixed compatibility with file 5.x.
 

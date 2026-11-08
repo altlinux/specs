@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.16.39
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPL-2.0-or-later
@@ -25,13 +25,22 @@ installer stage2 itself, they are used by the tools which apply installer
 features to an already installed system, where the whole stage2 is neither
 present nor needed.
 
+%package common-scripts
+Summary: Installer common scripts
+Group: System/Configuration/Other
+Requires: installer-common-functions = %EVR
+
+%description common-scripts
+This package contains common installer scripts.
+
 %package common-base-stage2
 Summary: Installer common stage2 without dependency on Xorg
 Group: System/Configuration/Other
+Requires: installer-common-scripts = %EVR
 
 # filter out unnecessary dependency
 %filter_from_requires /^alterator-wizardface-usermode/d
-Requires: installer-common-functions = %EVR
+
 # because of replace /var/run/alteratord -> /run/alteratord
 Requires: alterator >= 5.4.3
 # installer-preinstall.desktop
@@ -169,16 +178,23 @@ touch %buildroot%_datadir/installer-livecd-steps
 %_sbindir/install2-init-functions
 %_sbindir/install2-sh-functions
 
+%files common-scripts
+%dir %_datadir/install2
+%_datadir/install2/initinstall.d
+%_datadir/install2/preinstall.d
+%_datadir/install2/postinstall.d
+%exclude %_datadir/install2/preinstall.d/30-setup-network.sh
+%exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
+
 %files common-base-stage2
-%_datadir/install2
+%_datadir/install2/steps/
+%ghost %_datadir/install2/variables
 %_prefix/libexec/install2
 %_prefix/lib/systemd/system/install2.service
 %_unitdir/install2.target
 %dir %_unitdir/install2.target.wants
 %_unitdir/install2.target.wants/install2.service
 %exclude %_datadir/install2/livecd-fininstall.d/
-%exclude %_datadir/install2/preinstall.d/30-setup-network.sh
-%exclude %_datadir/install2/preinstall.d/31-enable-networkmanager.sh
 
 %files common-stage2
 %files common-wayland-stage2
@@ -195,6 +211,10 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 1.16.39-alt2
+- Split the install2 shell scripts (initinstall, preinstall, postinstall) into
+  installer-common-sripts (Closes: 61348).
+
 * Wed Oct 14 2026 Mikhail Efremov <sem@altlinux.org> 1.16.39-alt1
 - install2-sh-functions: Don't fail if $datadir/variables is absent.
 - install2-sh-functions: Add rootfs method support.

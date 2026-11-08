@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
 Version: 3.2.7
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -14,12 +14,11 @@ Summary: additional package installation
 License: GPL-3.0-or-later
 Group: System/Configuration/Other
 
-Requires: alterator >= 4.6-alt3 alterator-sh-functions libshell alterator-l10n >= 2.4-alt11
+Requires: %name-backend = %EVR
+Requires: alterator >= 4.6-alt3
+Requires: alterator-l10n >= 2.4-alt11
 Requires: alterator-browser-qt >= 2.17.0
-Requires: apt >= 0.5.15lorg2-alt23
 Requires: alterator-lookout => 2.4-alt1
-Requires: altlinux-repos
-Requires: installer-scripts-remount-stage2 >= 0.6.0
 Conflicts: alterator-fbi < 5.10-alt1
 
 Provides: alterator-apt = %EVR
@@ -39,6 +38,19 @@ Provides: alterator-pkg = %EVR
 %description
 additional package installation
 
+%package backend
+Summary: Backend for %name
+Group: System/Configuration/Other
+Requires: alterator-sh-functions
+Requires: alterator-backend3
+Requires: apt >= 0.5.15lorg2-alt23
+Requires: libshell
+Requires: altlinux-repos
+Requires: installer-scripts-remount-stage2 >= 0.6.0
+
+%description backend
+Backend for %name.
+
 %prep
 %setup -n alterator-pkg-%version
 
@@ -49,8 +61,10 @@ additional package installation
 %makeinstall
 
 %files
-%_bindir/alterator-pkg-functions
 %_datadir/alterator/ui/*
+
+%files backend
+%_bindir/alterator-pkg-functions
 %_libexecdir/alterator/hooks/pkg-preinstall.d
 %_datadir/install2/initinstall.d/*
 %_datadir/install2/postinstall.d/*
@@ -58,6 +72,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 3.2.7-alt2
+- Separate subpackage installer-alterator-pkg (Closes: 61347).
+
 * Tue Jan 27 2026 Dmitry Terekhin <jqt4@altlinux.org> 3.2.7-alt1
 - Use the selected edition in pkg-size, pkg-install, 91-pkg-size.sh
 
