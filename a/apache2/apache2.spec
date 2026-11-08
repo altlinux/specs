@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.69
+Version: 2.4.70
 Release: alt1
 Epoch: 1
 
@@ -1434,6 +1434,9 @@ exit 0
 %_mandir/man8/suexec*
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 1:2.4.70-alt1
+- 2.4.69 -> 2.4.70
+
 * Sat Oct 03 2026 Anton Farygin <rider@altlinux.org> 1:2.4.69-alt1
 - 2.4.68 -> 2.4.69
 - Fixes:
