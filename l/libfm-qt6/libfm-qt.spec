@@ -1,10 +1,9 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
-%define sover 18
 
 Name: libfm-qt6
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: Core library of PCManFM-Qt file manager
 License: LGPL-2.1
@@ -14,6 +13,9 @@ URL: https://lxqt-project.org/
 VCS: https://github.com/lxqt/libfm-qt
 
 Source: %name-%version.tar
+
+# https://bugzilla.altlinux.org/61369
+Obsoletes: %name-18 < %EVR
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-cmake
@@ -31,18 +33,11 @@ Requires: lxqt-menu-data >= 2.1.0
 %description
 LibFM-Qt is a core library of PCManFM-Qt file manager.
 
-%package -n %name-%sover
-Summary: Core library of PCManFM-Qt file manager
-Group: System/Libraries
-
-%description -n %name-%sover
-LibFM-Qt is a core library of PCManFM-Qt file manager.
-
 %package devel
 Summary: Development files for %name
 Group: Development/Other
 Requires: libexif-devel libmenu-cache-devel
-Requires: %name-%sover = %EVR
+Requires: %name = %EVR
 
 %description devel
 This package contains files needed to build applications using LibFM-Qt.
@@ -66,9 +61,8 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.h' -print0 |
 # We need to fix this upstream
 find %buildroot -size 0 -delete
 
-%files -n %name-%sover	
-%_libdir/%name.so.%sover
-%_libdir/%name.so.%sover.*
+%files
+%_libdir/%name.so.*
 %_datadir/%name/
 %_xdgmimedir/packages/%name-mimetypes.xml
 
@@ -80,6 +74,9 @@ find %buildroot -size 0 -delete
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt2
+- Rename package libfm-qt6-18 with libfm-qt6 (Closes: 61369).
+
 * Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 
