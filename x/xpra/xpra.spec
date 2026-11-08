@@ -2,7 +2,7 @@
 %def_with wayland
 
 Name: xpra
-Version: 6.5.4
+Version: 6.5.5
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -251,6 +251,9 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.5-alt1
+- update to 6.5.5.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.4-alt1
 - new version 6.5.4
 - add missing Requires: python3-module-pygobject3
