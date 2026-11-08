@@ -2,7 +2,7 @@
 
 
 Name: sqlite3
-Version: 3.53.3
+Version: 3.54.1
 Release: alt1
 Summary: An Embeddable SQL Database Engine
 License: ALT-Public-Domain
@@ -214,6 +214,9 @@ cp -ar doc/* %buildroot%pkgdocdir/
 %_datadir/lemon
 
 %changelog
+* Sun Nov 01 2026 Denis Medvedev <nbr@altlinux.org> 3.54.1-alt1
+- 3.54.1
+
 * Thu Jul 16 2026 Denis Medvedev <nbr@altlinux.org> 3.53.3-alt1
 - 3.53.3
 Fixes: CVE-2026-11822, CVE-2026-11824
