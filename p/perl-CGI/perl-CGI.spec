@@ -4,7 +4,7 @@ BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Encode.pm) perl(Encode/CN.pm) 
 # END SourceDeps(oneline)
 %define module_name CGI
 Name: perl-CGI
-Version: 4.72
+Version: 5.02
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -13,7 +13,6 @@ Group: Development/Perl
 
 URL: https://metacpan.org/module/CGI
 Source0: http://www.cpan.org/authors/id/L/LE/LEEJO/%{module_name}-%{version}.tar.gz
-Patch0:  CGI-4.15-Make-Test-Deep-and-Test-NoWarnings-tests-optional.patch
 
 BuildArch: noarch
 
@@ -48,7 +47,6 @@ with built-in support for mod_perl and mod_perl2 as well as FastCGI.
 
 %prep
 %setup -q -n %{module_name}-%{version}
-#patch0 -p1
 iconv -f iso8859-1 -t utf-8 < Changes > Changes.1
 mv Changes.1 Changes
 sed -i 's?usr/bin perl?usr/bin/perl?' t/init.t
@@ -66,6 +64,30 @@ chmod -c -x examples/*
 %perl_vendor_privlib/Fh.pm
 
 %changelog
+* Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 5.02-alt1
+- NMU: new version 5.02.
+- fixes:
+  + CVE-2026-120631: prevent regex denial of service in cookie expiry parsing.
+  + CVE-2026-120632: prevent regex DoS in multipart/related headers.
+  + CVE-2026-120650: enforce request size, parameter, and upload limits.
+  + CVE-2026-120651: prevent infinite loop on short request bodies.
+  + CVE-2026-120645: escape submitted optgroup values in scrolling_list.
+  + CVE-2026-120646: avoid symbolic dereferences in uploadInfo().
+  + CVE-2026-120639: reject CRLF header injection in response headers.
+  + CVE-2026-120644: validate cookie path, domain, and expires attributes.
+  + CVE-2026-120647: escape quotes in attachment filenames.
+  + CVE-2026-120633: validate Host and X-Forwarded-Host in generated URLs.
+  + CVE-2026-120638: prevent entity decoding bypass in redirects.
+  + CVE-2026-120636: validate URLs built from the client supplied REQUEST_URI.
+  + CVE-2026-120643: escape raw single quotes in generated URLs.
+  + CVE-2026-120648: escape comment text that could terminate HTML comments.
+  + CVE-2026-120634: reset buffered CGI::Carp warnings between requests.
+  + CVE-2026-120635: enforce RFC multipart boundary and parameter parsing.
+  + CVE-2026-120641: reject path traversal in uploaded filenames.
+  + CVE-2026-120640: prevent client fields from forging request bodies.
+  + CVE-2026-120642: preserve taint on client supplied values.
+  + CVE-2026-120637: ignore process arguments for unknown methods.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.72-alt1
 - NMU: new version 4.72.
 
