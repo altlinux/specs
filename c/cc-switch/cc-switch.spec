@@ -1,5 +1,5 @@
 Name: cc-switch
-Version: 4.0.25
+Version: 4.0.26
 Release: alt1
 
 Summary: All-in-One Assistant for Claude Code, Codex and Gemini CLI
@@ -97,6 +97,9 @@ install -Dm644 flatpak/com.ccswitch.desktop.metainfo.xml %buildroot%_datadir/met
 %doc LICENSE
 
 %changelog
+* Sat Nov 07 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.26-alt1
+- New version 4.0.26.
+
 * Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.25-alt1
 - New version 4.0.25
 
