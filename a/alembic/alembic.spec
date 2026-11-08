@@ -6,7 +6,7 @@
 
 Name: alembic
 Version: 1.8.12
-Release: alt1
+Release: alt2
 Summary: Open framework for storing and sharing scene data
 Group: Graphics
 License: BSD-3-Clause and BSL-1.0
@@ -14,9 +14,13 @@ URL: https://www.alembic.io
 
 VCS: https://github.com/alembic/alembic.git
 Source: %name-%version.tar
+Patch0: alembic-1.8.12-archive-errors.patch
+Patch1: alembic-1.8.12-abcecho-help.patch
+Patch2: alembic-1.8.12-parallel-curves-test.patch
 
 BuildRequires: boost-devel
 BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
 BuildRequires: libhdf5-devel
 
@@ -56,6 +60,9 @@ applications that use %{name}.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && \
 	mv -f ACKNOWLEDGEMENTS.txt.conv ACKNOWLEDGEMENTS.txt
@@ -83,6 +90,9 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 
 %cmake_build
 
+%check
+LD_LIBRARY_PATH="$PWD/%_cmake__builddir/lib/Alembic" %ctest
+
 %install
 %cmakeinstall_std
 
@@ -107,6 +117,12 @@ iconv -f iso8859-1 -t utf-8 ACKNOWLEDGEMENTS.txt > ACKNOWLEDGEMENTS.txt.conv && 
 %_libdir/libAlembic.so
 
 %changelog
+* Thu Oct 15 2026 Anton Farygin <rider@altlinux.org> 1.8.12-alt2
+- Report archive open failures without HDF5 diagnostics (ALT#61075).
+- Handle abcecho --help and -h (ALT#61076).
+- Run the test suite during package build.
+- Fix the archive filename collision in parallel geometry tests.
+
 * Sun Jul 26 2026 Anton Farygin <rider@altlinux.org> 1.8.12-alt1
 - 1.8.11 -> 1.8.12
 
