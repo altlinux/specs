@@ -1,7 +1,7 @@
 Summary: Automated Testing Framework
 Group: Development/Tools
 Name: atf
-Version: 0.21
+Version: 0.26
 Release: alt1
 License: BSD
 Url: http://code.google.com/p/kyua/wiki/ATF
@@ -37,10 +37,13 @@ There is no main package being built here.  This is unused.
 # that the call below can pick it up.
 cp -p %SOURCE1 README.Fedora
 
-%build
+%conf
+%autoreconf
 %configure INSTALL="/usr/bin/install -p" --disable-static
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+%build
 make %{?_smp_mflags} pkgtestsdir=%_testsdir testsdir=%_testsdir
 
 %check
@@ -92,7 +95,6 @@ ATF C bindings.
 %files -n libatf-c
 %_libdir/libatf-c.so.*
 %_datadir/man/man1/atf-test-program*
-%_datadir/man/man4/atf-test-case*
 
 %package -n libatf-c-devel
 Group: Development/Tools
@@ -112,7 +114,7 @@ develop tests that use the ATF C bindings.
 %_includedir/atf-c
 %_libdir/libatf-c.so
 %_libdir/pkgconfig/atf-c.pc
-%_man3dir/atf-c-api*
+#_man3dir/atf-c-api*
 %_man3dir/atf-c.*
 
 %package -n libatf-c++
@@ -147,7 +149,7 @@ develop applications that use the ATF C++ bindings.
 %_includedir/atf-c++
 %_libdir/libatf-c++.so
 %_libdir/pkgconfig/atf-c++.pc
-%_man3dir/atf-c++-api*
+#_man3dir/atf-c++-api*
 %_man3dir/atf-c++.*
 
 %package -n libatf-sh
@@ -185,10 +187,13 @@ applications that use the ATF POSIX shell bindings.
 %_datadir/aclocal/atf-sh.m4
 %_libdir/pkgconfig/atf-sh.pc
 %_man1dir/atf-check*
-%_man3dir/atf-sh-api*
+#_man3dir/atf-sh-api*
 %_man3dir/atf-sh.*
 
 %changelog
+* Sun Nov 08 2026 Fr. Br. George <george@altlinux.org> 0.26-alt1
+- Autobuild version bump to 0.26
+
 * Fri Jan 24 2020 Fr. Br. George <george@altlinux.ru> 0.21-alt1
 - Autobuild version bump to 0.21
 
