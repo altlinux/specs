@@ -1,18 +1,21 @@
 %define _unpackaged_files_terminate_build 1
 
+# Both the release suffix and the soversion are part of the upstream SONAME.
+%define libbranch 3.7
+%define soversion 0
+%define abiversion %{libbranch}_%{soversion}
+
 %def_disable check
 %def_with debugtools
 # According to the "ExclusiveArch:" from the dpdk.
 %ifarch x86_64 %ix86 aarch64 ppc64le
 %def_with dpdk
 # afxdp build with numa, disable it for arm
-# Disable until updating to version v3.1.0 where was added support for building
-# with libxdp and libbpf >= 0.7.
 %def_enable afxdp
 %endif
 
 Name: openvswitch
-Version: 3.3.8
+Version: 3.7.1
 Release: alt1
 
 Summary: An open source, production quality, multilayer virtual switch
@@ -34,6 +37,7 @@ Patch0005: 0005-ovs-fix-linking.patch
 Patch0006: 0006-ovs-Python-3-support.patch
 Patch0007: 0007-Use-local-LSB-functions.patch
 Patch0008: 0008-Avoid-autoreq-on-systemd-utils.patch
+Patch0009: 0009-ovs-fix-startup-ordering-with-ifupdown2.patch
 
 Obsoletes: %name-controller <= 2.3.1-alt1
 Obsoletes: %name-ovsdbmonitor <= 2.3.1-alt1
@@ -43,7 +47,6 @@ Obsoletes: openvswitch-common < 2.14.0-alt1
 # force apt to update openvswith with etcnet
 Conflicts: etcnet <= 0.9.18
 
-Requires: lib%name = %EVR
 # util-linux-2.32-alt2
 Requires: pam0(runuser)
 %filter_from_requires /lsb-release/d
@@ -71,6 +74,17 @@ and protocols (e.g. NetFlow, sFlow, RSPAN, ERSPAN, CLI, LACP,
 across multiple physical servers similar to VMware's vNetwork
 distributed vswitch or Cisco's Nexus 1000V.
 
+%package source
+Summary: Open vSwitch sources
+Group: Development/Other
+BuildArch: noarch
+AutoReqProv: no
+
+%description source
+Open vSwitch sources with common ALT patches applied, stored in
+%_usrsrc/%name-%version.tar for building dependent packages such as OVN
+without bundling Open vSwitch sources.
+
 %package -n kernel-source-%name
 Group: Development/Kernel
 License: GPLv2+
@@ -95,13 +109,45 @@ with useful information about Open vSwitch on this system
 and place it in %_logdir/ovs-bugtool, and ovs-test to check
 Linux drivers for performance and vlan problems.
 
-%package -n lib%name
+%package -n lib%name%abiversion
 License: Apache-2.0
-Summary: Open vSwitch core libraries
+Summary: Open vSwitch core library
 Group: System/Libraries
 
-%description -n lib%name
-Contains the shared libraries used by Open vSwitch and any eventual extensions.
+%description -n lib%name%abiversion
+The Open vSwitch core shared library.
+
+%package -n libofproto%abiversion
+License: Apache-2.0
+Summary: Open vSwitch OpenFlow protocol library
+Group: System/Libraries
+
+%description -n libofproto%abiversion
+The Open vSwitch OpenFlow protocol shared library.
+
+%package -n libovsdb%abiversion
+License: Apache-2.0
+Summary: Open vSwitch database library
+Group: System/Libraries
+
+%description -n libovsdb%abiversion
+The Open vSwitch database shared library.
+
+%package -n libsflow%abiversion
+License: SISSL
+Summary: Open vSwitch sFlow library
+Group: System/Libraries
+
+%description -n libsflow%abiversion
+The Open vSwitch sFlow shared library.
+
+%package -n libvtep%abiversion
+License: Apache-2.0
+Summary: Open vSwitch VTEP library
+Group: System/Libraries
+
+%description -n libvtep%abiversion
+The Open vSwitch VTEP shared library.
 
 %package vtep
 Group: Networking/Other
@@ -116,7 +162,11 @@ A VTEP emulator that uses Open vSwitch for forwarding.
 Summary: Open vSwitch Devel Libraries
 License: Apache-2.0
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: lib%name%abiversion = %EVR
+Requires: libofproto%abiversion = %EVR
+Requires: libovsdb%abiversion = %EVR
+Requires: libsflow%abiversion = %EVR
+Requires: libvtep%abiversion = %EVR
 Provides: %name-devel = %EVR
 Obsoletes: %name-devel < 2.14.0-alt1
 
@@ -139,10 +189,12 @@ This package provides IPsec tunneling support for OVS tunnels.
 Summary: Open vSwitch python3 bindings
 Group: Development/Python3
 License: Apache-2.0
+Requires: python3-module-graphviz
 %add_python3_req_skip pywintypes win32con win32file msvcrt
 
 %description -n python3-module-%name
-Python3 bindings for the Open vSwitch database
+Python3 bindings for the Open vSwitch database and the ovs-flowviz
+flow visualization tool.
 
 %prep
 %setup
@@ -152,10 +204,16 @@ Python3 bindings for the Open vSwitch database
 %patch0006 -p1
 %patch0007 -p1
 %patch0008 -p1
+%patch0009 -p1
+sed -i "s/ike-daemon=libreswan/ike-daemon=strongswan/" rhel/usr_lib_systemd_system_openvswitch-ipsec.service
+
+# Save common patched sources before architecture-specific changes and build.
+tar --owner=root --group=root --mode=u+w,go-w,go+rX \
+    -cf ../%name-%version-source.tar -C .. %name-%version
+
 %ifarch %e2k
 sed -i "s/__has_extension(c_atomic)/0/" lib/ovs-atomic.h
 %endif
-sed -i "s/ike-daemon=libreswan/ike-daemon=strongswan/" rhel/usr_lib_systemd_system_openvswitch-ipsec.service
 
 %build
 export PYTHON3=%__python3
@@ -180,6 +238,8 @@ make rhel/usr_lib_systemd_system_ovs-vswitchd.service
 %install
 export PYTHON3=%__python3
 %makeinstall_std
+
+install -pDm0644 ../%name-%version-source.tar %buildroot%_usrsrc/%name-%version.tar
 
 install -dm0755 %buildroot%_sysconfdir/%name
 install -pDm0755 %SOURCE11 %buildroot%_initdir/%name
@@ -286,7 +346,6 @@ fi
 %_man1dir/ovsdb-server.*
 %_man1dir/ovsdb-tool.*
 %_man5dir/ovs-vswitchd.conf.db.*
-%_man5dir/ovsdb.local-config.*
 %_man5dir/ovsdb-server.*
 %_man5dir/ovsdb.*
 %_man7dir/ovs-fields.*
@@ -360,28 +419,57 @@ fi
 %_datadir/%name/scripts/ovs-vtep
 %_datadir/%name/vtep.ovsschema
 
-%files -n lib%name
-%_libdir/libofproto*.so.*
-%_libdir/libopenvswitch*.so.*
-%_libdir/libovsdb*.so.*
-%_libdir/libsflow*.so.*
-%_libdir/libvtep*.so.*
+%files -n lib%name%abiversion
+%_libdir/libopenvswitch-%libbranch.so.%soversion
+%_libdir/libopenvswitch-%libbranch.so.%soversion.*
+
+%files -n libofproto%abiversion
+%_libdir/libofproto-%libbranch.so.%soversion
+%_libdir/libofproto-%libbranch.so.%soversion.*
+
+%files -n libovsdb%abiversion
+%_libdir/libovsdb-%libbranch.so.%soversion
+%_libdir/libovsdb-%libbranch.so.%soversion.*
+
+%files -n libsflow%abiversion
+%_libdir/libsflow-%libbranch.so.%soversion
+%_libdir/libsflow-%libbranch.so.%soversion.*
+
+%files -n libvtep%abiversion
+%_libdir/libvtep-%libbranch.so.%soversion
+%_libdir/libvtep-%libbranch.so.%soversion.*
 
 %files -n lib%name-devel
 %_includedir/openflow
 %_includedir/openvswitch
-%_libdir/libofproto*.so
-%_libdir/libopenvswitch*.so
-%_libdir/libovsdb*.so
-%_libdir/libsflow*.so
-%_libdir/libvtep*.so
+%_libdir/libofproto.so
+%_libdir/libopenvswitch.so
+%_libdir/libovsdb.so
+%_libdir/libsflow.so
+%_libdir/libvtep.so
 %_pkgconfigdir/*.pc
 
+%files source
+%_usrsrc/%name-%version.tar
+
 %files -n python3-module-openvswitch
+%_bindir/ovs-flowviz
+%_man8dir/ovs-flowviz.*
 %python3_sitelibdir/ovs
 %python3_sitelibdir/ovs-*.egg-info
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 3.7.1-alt1
+- fixed OVS startup ordering with ifupdown2 (closes: #61073)
+- 3.3.9 -> 3.7.1
+- packaged ovs-flowviz with its manual page and graph visualization dependencies
+- removed duplicate ovsdb.local-config manual page entry
+- split shared libraries into ABI-versioned packages per Shared Libs Policy
+- packaged Open vSwitch sources with common ALT patches in openvswitch-source
+
+* Sat Oct 24 2026 Anton Farygin <rider@altlinux.org> 3.3.9-alt1
+- 3.3.8 -> 3.3.9
+
 * Fri Feb 27 2026 Anton Farygin <rider@altlinux.org> 3.3.8-alt1
 - 3.3.7 -> 3.3.8
 - renamed bash completion scripts to valid names (closes: #57388)

@@ -1,9 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 %define rpmstate /run/openvswitch-rpm-state-
 
+# Keep the dp_packet ABI identical to the system Open vSwitch build.
+%ifarch x86_64 %ix86 aarch64 ppc64le
+%def_with dpdk
+%def_enable afxdp
+%endif
+
 Name: ovn
-Version: 24.03.5
+Version: 26.09.0
 Release: alt1
+
+%define soversion 26.09
+%define libname lib%{name}%{soversion}_0
 
 Summary: Open Virtual Network support
 License: Apache-2.0 AND LGPL-2.1-only AND SISSL
@@ -12,18 +21,19 @@ Group: Networking/Other
 URL: https://www.ovn.org
 Vcs: https://github.com/ovn-org/ovn.git
 Source0: %name-%version.tar
-Source1: ovs.tar
 Source2: %name.tmpfiles
+Source3: ovs-packet-abi.c
 
 Patch11: 0001-ovn-fix-linking.patch
 Patch12: 0002-ovn-var_run-to-run.patch
 Patch13: 0003-execute-ovn-as-openvswitch-user.patch
+Patch14: 0004-ovn-ovs-3.7-compat.patch
 
 Provides: openvswitch-ovn-common = %EVR
 Obsoletes: openvswitch-ovn-common < 2.14.0
 Provides: openvswitch-ovn = %EVR
 Obsoletes: openvswitch-ovn < 2.14.0
-Requires: lib%name = %EVR
+Requires: %libname = %EVR
 Requires: openvswitch >= 3.3.0
 
 BuildRequires(pre): rpm-build-python3
@@ -31,10 +41,13 @@ BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
 BuildRequires: graphviz libssl-devel openssl groff
 BuildRequires: libopenvswitch-devel
+BuildRequires: openvswitch-source >= 3.7.1
 BuildRequires: libcap-ng-devel
 BuildRequires: libunwind-devel
 BuildRequires: libunbound-devel
 BuildRequires: glibc-kernheaders
+%{?_with_dpdk:BuildRequires: dpdk-devel >= 23.11.3 libpcap-devel libnuma-devel rdma-core-devel libmnl-devel}
+%{?_enable_afxdp:BuildRequires: libbpf-devel >= 0.7 libxdp-devel libelf-devel libnuma-devel}
 BuildRequires: python3-devel python3-module-setuptools python3-module-OpenSSL python3-module-sphinx
 
 %define ovs_dir %_builddir/ovs
@@ -45,19 +58,21 @@ abstraction.  OVN complements the existing capabilities of OVS to add
 native support for virtual network abstractions, such as virtual L2 and L3
 overlays and security groups.
 
-%package -n lib%name
+%package -n %libname
 License: Apache-2.0
 Summary: Open Virtual Network core libraries
 Group: System/Libraries
+# Unversioned 26.09 packages own the same SONAME; older ABIs may coexist.
+Conflicts: lib%name >= 26.09
 
-%description -n lib%name
+%description -n %libname
 This subpackage contains the OVN shared libraries.
 
 %package -n lib%name-devel
 Summary: Development files for Open Virtual Network
 License: Apache-2.0
 Group: Development/C
-Requires: lib%name = %EVR
+Requires: %libname = %EVR
 
 %description -n lib%name-devel
 Devel libraries and headers for Open Virtual Network.
@@ -121,11 +136,13 @@ with useful information about Open Virtual Network on this system.
 %prep
 %setup
 mkdir -p %ovs_dir
-tar -xf %SOURCE1 -C %ovs_dir
+tar -xf %_usrsrc/openvswitch-*.tar -C %ovs_dir --strip-components=1
 
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
+cp %SOURCE3 tests/ovs-packet-abi.c
 
 %build
 export PYTHON3=%__python3
@@ -139,6 +156,10 @@ pushd %ovs_dir
     --enable-shared \
     --enable-ndebug \
     --enable-ssl \
+    %{subst_enable afxdp} \
+%if_with dpdk
+    --with-dpdk=shared \
+%endif
     --with-rundir=/run/openvswitch \
     --with-logdir=%_logdir/openvswitch \
     --with-dbdir=%_localstatedir/openvswitch \
@@ -147,6 +168,10 @@ pushd %ovs_dir
 %make_build
 popd
 
+# OVN does not import DPDK_NETDEV or DPDK include flags from OVS config.h.
+%if_with dpdk
+export OVS_CFLAGS="-DDPDK_NETDEV $(pkg-config --cflags libdpdk)"
+%endif
 %autoreconf
 %configure \
     --with-ovs-source=%ovs_dir \
@@ -158,6 +183,13 @@ popd
     --with-dbdir=%_localstatedir/%name \
     --with-pkidir=%_localstatedir/openvswitch/pki
 %make_build
+
+%check
+# Compile with OVN's flags, but link and load the installed system OVS library.
+make tests/ovs-packet-abi.o
+%__cc %optflags -o tests/ovs-packet-abi tests/ovs-packet-abi.o -L%_libdir -lopenvswitch -ldl
+ldd tests/ovs-packet-abi
+env -u LD_LIBRARY_PATH -u LD_PRELOAD ./tests/ovs-packet-abi
 
 %install
 export PYTHON3=%__python3
@@ -363,12 +395,13 @@ fi
 %dir %attr(0755, openvswitch, openvswitch) %_localstatedir/%name
 %_tmpfilesdir/%name.conf
 
-%files -n lib%name
-%_libdir/lib%{name}*.so.*
+%files -n %libname
+%_libdir/lib%{name}-%{soversion}.so.0
+%_libdir/lib%{name}-%{soversion}.so.0.*
 
 %files -n lib%name-devel
 %_includedir/%name
-%_libdir/lib%{name}*.so
+%_libdir/lib%{name}.so
 
 %files docker
 %_bindir/ovn-docker-overlay-driver
@@ -379,6 +412,7 @@ fi
 %_bindir/ovn-ic
 %_man8dir/ovn-northd.*
 %_man8dir/ovn-ic.*
+%_man7dir/ovn-logical-flows.*
 %_datadir/%name/ovn-nb.ovsschema
 %_datadir/%name/ovn-sb.ovsschema
 %_datadir/%name/ovn-ic-nb.ovsschema
@@ -390,7 +424,12 @@ fi
 
 %files host
 %_bindir/ovn-controller
+%_bindir/ovn-br-controller
+%_bindir/ovn-brctl
 %_man8dir/ovn-controller.*
+%_man8dir/ovn-br-controller.*
+%_man5dir/ovn-br.*
+%_datadir/%name/ovn-br.ovsschema
 %_unitdir/ovn-controller.service
 %_prefix/lib/firewalld/services/ovn-host-firewall-service.xml
 
@@ -404,6 +443,13 @@ fi
 %_datadir/%name/scripts/ovn-bugtool-*
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 26.09.0-alt1
+- 24.03.5 -> 26.09.0
+- package the shared library as libovn26.09_0 per Shared Libs Policy
+- match system OVS DPDK and AF_XDP build configuration
+- compile OVN with the DPDK dp_packet layout
+- check packet ABI and OpenFlow packet-in/out against the system OVS library
+
 * Tue May 20 2025 Alexey Shabalin <shaba@altlinux.org> 24.03.5-alt1
 - 24.03.5
 
