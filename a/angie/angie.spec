@@ -13,8 +13,8 @@
 %def_with xslt
 
 Name: angie
-Version: 1.12.1
-Release: alt2
+Version: 1.12.4
+Release: alt1
 
 Summary: Efficient, powerful and scalable reverse proxy and web server
 License: BSD-2-Clause
@@ -31,7 +31,7 @@ Provides: webserver
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: libpcre2-devel
-BuildRequires: LibreSSL-devel
+BuildRequires: libssl-devel
 BuildRequires: make
 BuildRequires: perl-devel
 BuildRequires: perl-JSON
@@ -95,8 +95,6 @@ export PERL_MM_OPT=INSTALLSITEARCH=%perlpath
   --prefix=/ \
   --group=%angie_user \
   --user=%angie_user \
-  --with-cc-opt="-I../libressl/build/include" \
-  --with-ld-opt="-L../libressl/build/lib" \
   --conf-path=%angie_etc/angie.conf \
   --error-log-path=%angie_log/errors.log \
   --http-client-body-temp-path=%angie_spool/tmp/client \
@@ -271,6 +269,11 @@ mv %buildroot/html/{50x.html,index.html} \
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 1.12.4-alt1
+- 1.12.1 -> 1.12.4
+- Switched from LibreSSL to system OpenSSL to support variables in
+  ssl_certificate and ssl_certificate_key required by ACME (closes: #61335).
+
 * Wed Aug 12 2026 Anton Farygin <rider@altlinux.org> 1.12.1-alt2
 - Fixed dynamic module discovery in tests (closes: #60140).
 - Fixed Perl module packaging by using a private upstream-compatible path.
