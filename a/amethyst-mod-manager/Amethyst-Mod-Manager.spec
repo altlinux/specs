@@ -2,7 +2,7 @@
 %define oname io.github.Amethyst.ModManager
 
 Name: amethyst-mod-manager
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: A Linux native mod manager for a variety of games
@@ -65,6 +65,9 @@ rm -rf %buildroot/usr/lib
 %exclude %_datadir/doc/
 
 %changelog
+* Sun Nov 08 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.6.3-alt1
+- 2.6.2 -> 2.6.3
+
 * Sat Nov 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.6.2-alt1
 - 2.6.1 -> 2.6.2
 
