@@ -4,7 +4,7 @@
 %def_with doc
 Name: beremiz
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -27,7 +27,7 @@ BuildRequires(pre): python3-module-sphinx
 %endif #doc
 
 Requires: matiec
-Requires: gcc-c++
+Requires: gcc
 #Requires: CanFestival-3-source
 #Requires: beremiz-modbus-source
 #Requires: bacnet-stack-source
@@ -187,6 +187,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 #exclude %_datadir/%name/etherlab
 
 %changelog
+* Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
+- Replace requirement on gcc-c++ with gcc.
+
 * Sat Oct 31 2026 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt1
 - New version 1.6.1.
 
