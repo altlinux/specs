@@ -2,7 +2,7 @@
 %global import_path codeberg.org/git-pages/git-pages-cli
 
 Name:    git-pages-cli
-Version: 1.10.0
+Version: 1.13.1
 Release: alt1
 
 Summary: Command-line tool for publishing a site to a git-pages server
@@ -46,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Sun Nov 08 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.1-alt1
+- New version 1.13.1.
+
 * Thu Jun 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.10.0-alt1
 - New version 1.10.0.
 
