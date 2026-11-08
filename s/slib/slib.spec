@@ -1,11 +1,12 @@
 # http://bugzilla.gnome.org/show_bug.cgi?id=347922
 # guile -c "(use-modules (ice-9 slib)) (require 'printf)"
 Name: slib
-Version: 3c1
+Version: 3c3
 Release: alt1
 
 Summary: platform independent library for scheme
-License: distributable, see individual files for copyright
+
+License: SLIB
 Group: Development/Scheme
 
 BuildArch: noarch
@@ -19,9 +20,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://groups.csail.mit.edu/mac/ftpdir/scm/%name-%version.tar
 
-# for 3a4, update with new version (made manually due automatic build overhead)
+# Generated with Guile using (require 'new-catalog); refresh for each version.
 Source1: slibcat
-Patch: slib-3a4-guile.patch
 # explicitly added texinfo for info files
 BuildRequires: texinfo
 
@@ -84,12 +84,12 @@ This package provides files necessary to use slib with mzscheme
 
 %prep
 %setup -q -n slib
-#patch -p1 -b .guile
 %__subst "s|/usr/lib/slib|%_datadir/%name|g" guile.init
+%__subst 's|(else %site-dir)|(else (lambda () "%_datadir/guile/site/"))|' guile-2.init guile-3.init
 
 %install
 mkdir -p %buildroot%_datadir/slib/
-cp *.scm guile.init *.xyz *.txt *.dat *.ps %buildroot%_datadir/slib/
+cp *.scm guile*.init *.xyz *.txt *.dat *.ps %buildroot%_datadir/slib/
 
 mkdir -p %buildroot%_infodir
 install -m644 slib.info %buildroot%_infodir
@@ -111,7 +111,7 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 %_infodir/*.info*
 
 %files guile
-%_datadir/%name/guile.init
+%_datadir/%name/guile*.init
 %dir %_datadir/guile/site/
 %_datadir/guile/site/%name/
 %_datadir/guile/site/slibcat
@@ -122,6 +122,13 @@ install -m644 %SOURCE1 %buildroot%_datadir/guile/site/slibcat
 #%ghost %_libdir/plt2/slibcat
 
 %changelog
+* Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3c3-alt1
+- new version 3c3
+- install the Guile 2 and Guile 3 initialization files
+- remove the unused legacy Guile patch
+- use the SLIB license name
+- refresh the Guile catalog and use its installed location
+
 * Sun Jan 26 2025 Vitaly Lipatov <lav@altlinux.ru> 3c1-alt1
 - new version 3c1 (with rpmrb script)
 
