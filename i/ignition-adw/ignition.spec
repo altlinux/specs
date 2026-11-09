@@ -5,7 +5,7 @@
 
 Name: ignition-adw
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 Summary: Manage startup apps and scripts
 License: GPL-3.0-or-later
@@ -78,6 +78,9 @@ rm -r %buildroot%_datadir/locale/zh_Hans
 %doc README.md
 
 %changelog
+* Mon Nov 09 2026 Vladislav Petrukhin <vladp@altlinux.org> 2.4.1-alt2
+- Fix translations of desktop apps.
+
 * Mon Sep 21 2026 Vladislav Petrukhin <vladp@altlinux.org> 2.4.1-alt1
 - 2.4.1
 
