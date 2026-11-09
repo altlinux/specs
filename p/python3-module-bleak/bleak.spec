@@ -1,5 +1,5 @@
 Name: python3-module-bleak
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
@@ -17,6 +17,10 @@ Autoreq: yes, nopython3
 
 BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %add_pyproject_deps_check_filter bumble
+# Windows-only vhci driver client, used only by removed tests/integration
+%add_pyproject_deps_check_filter winvhci
+# only needed for upstream CI reruns; sisyphus has 16.1, upstream wants >=16.7
+%add_pyproject_deps_check_filter pytest.rerunfailures
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
 %pyproject_builddeps_check
@@ -48,6 +52,9 @@ rm -fr tests/integration
 %python3_sitelibdir/bleak-%version.dist-info
 
 %changelog
+* Mon Nov 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.0-alt1
+- 3.1.0 released
+
 * Tue May 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.2-alt1
 - 3.0.2 released
 
