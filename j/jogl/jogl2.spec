@@ -1,16 +1,20 @@
-Name:    jogl
+%define _unpackaged_files_terminate_build 1
+
+Name: jogl
 Version: 2.6.0
-Release: alt2
+Release: alt3
 Epoch: 1
-%global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
 
 # For a breakdown of the licensing, see LICENSE.txt
 License: BSD and MIT and Apache-2.0 and Apache-1.1
 Group: Development/Java
 URL: http://jogamp.org/
-VCS: https://github.com/sgothel/jogl
+VCS: https://github.com/sgothel/jogl.git
 Source0: %name-%version.tar
+Source1: jogl-all-%version.pom
+Source2: jogl-module-name.mf
+Source3: jogl-java-excludes.properties
 
 Patch0: cc-attributes-in-build.patch
 Patch1: build-only-for-x11.patch
@@ -21,10 +25,16 @@ Patch4: aarch64-build.patch
 ExcludeArch: armh %ix86
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: gcc-c++ rpm-build-java
-BuildRequires: /proc
+BuildRequires: gcc-c++
+BuildRequires: rpm-build-java
+BuildRequires: java-25-openjdk-devel
 BuildRequires: jpackage-utils
-BuildRequires: gluegen-devel = %{version}
+BuildRequires: gluegen-devel
+BuildRequires: mvn(org.jogamp.gluegen:gluegen-rt)
+BuildRequires: ant-antlr
+BuildRequires: ant-contrib
+BuildRequires: ant-junit
+BuildRequires: cpptasks
 BuildRequires: eclipse-swt
 BuildRequires: libXt-devel
 BuildRequires: libXrender-devel
@@ -33,9 +43,6 @@ BuildRequires: libXrandr-devel
 BuildRequires: libXcursor-devel
 BuildRequires: libXi-devel
 BuildRequires: maven-local
-
-Requires: jpackage-utils
-Requires: gluegen = %{version}
 
 Provides: jogl2 = %EVR
 Obsoletes: jogl2 < %EVR
@@ -52,6 +59,7 @@ open-source technologies initiated by the Game Technology Group at
 Sun Microsystems.
 
 %package doc
+BuildArch: noarch
 Group: Development/Java
 Summary: User manual for jogl
 Provides: jogl2-doc = %EVR
@@ -63,14 +71,6 @@ User manual for jogl.
 %prep
 %setup
 %autopatch -p1
-
-rm -rf src/nativewindow/classes/jogamp/nativewindow/jawt/{drm,ios,macosx,windows}
-rm -rf src/nativewindow/classes/jogamp/nativewindow/{javafx,drm,ios,macosx,windows}
-rm -rf src/nativewindow/classes/com/jogamp/nativewindow/{javafx,macosx,ios,windows}
-rm -rf src/jogl/classes/jogamp/opengl/{macosx,ios,windows}
-rm -rf src/newt/classes/jogamp/newt/driver/{egl/gbm,macosx,ios,windows}
-rm -rf src/newt/classes/jogamp/newt/{javafx,swt}
-rm -rf src/newt/classes/com/jogamp/newt/{javafx,swt}
 
 # Remove bundled dependencies
 find -name "*.jar" -type f -exec rm {} \;
@@ -91,70 +91,66 @@ done
 # git executable should not be used, use true (to avoid checkout) instead
 sed -i 's/executable="git"/executable="true"/' make/build-common.xml
 
-# install in _javadir
-%mvn_file org.jogamp.jogl:jogl %{name}
-%mvn_alias org.jogamp.jogl:jogl "org.jogamp.jogl:jogl-all"
+cp %SOURCE1 pom.xml
+%pom_add_dep org.jogamp.gluegen:gluegen-rt:%version
+
+%mvn_file org.jogamp.jogl:jogl-all %name
 
 %build
-# zerg's girar armh hack:
-(while true; do date; sleep 7m; done) &
-# end armh hack, kill it when girar will be fixed
 cd make
 
 # As we never cross-compile this package, the SDK root is always /
 export TARGET_PLATFORM_ROOT=/
 
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
-xargs -t ant <<EOF
- -verbose
- -Dc.compiler.debug=true
- -Djavacdebug=true
- -Djavac.memorymax=512m
- -Dcommon.gluegen.build.done=true
- -Dtarget.sourcelevel=1.8
- -Dtarget.targetlevel=1.8
- -Dantlr.jar=%{_javadir}/antlr.jar
- -Djunit.jar=%{_javadir}/junit.jar
- -Dant.jar=%{_javadir}/ant.jar
- -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
- -Dgluegen.jar=%{_javadir}/gluegen.jar
- -Dgluegen-rt.jar=%{_jnidir}/gluegen-rt.jar
- -Dswt.jar=%{_jnidir}/swt.jar
-
- -Djava.excludes.all='com/jogamp/newt/util/applet*/**/*.java com/jogamp/audio/**/*.java jogamp/opengl/gl2/fixme/**/*.java com/jogamp/opengl/test/**/*.java'
-
- -Djavadoc.link=%{_javadocdir}/java
- -Dgluegen.link=%{_javadocdir}/gluegen
-
+%ant \
+ -propertyfile %SOURCE3 \
+ -verbose \
+ -Dc.compiler.debug=true \
+ -Djavacdebug=true \
+ -Djavac.memorymax=512m \
+ -Dcommon.gluegen.build.done=true \
+ -Dtarget.sourcelevel=1.8 \
+ -Dtarget.targetlevel=1.8 \
+ -Dantlr.jar=%{_javadir}/antlr.jar \
+ -Djunit.jar=%{_javadir}/junit.jar \
+ -Dant.jar=%{_javadir}/ant.jar \
+ -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar \
+ -Dgluegen.jar=%{_javadir}/gluegen.jar \
+ -Dgluegen-rt.jar=%{_jnidir}/gluegen-rt.jar \
+ -Dswt.jar=%{_jnidir}/swt.jar \
+ -Djavadoc.link=%{_javadocdir}/java \
+ -Dgluegen.link=%{_javadocdir}/gluegen \
  build.nativewindow build.jogl build.newt build.graphui build.oculusvr one.dir javadoc.public
-EOF
 
 cd ..
-export JAVA_HOME=/usr/lib/jvm/java
+%jar ufm build/jar/jogl-all.jar %SOURCE2
+%mvn_artifact pom.xml build/jar/jogl-all.jar
 
 %install
 %mvn_install
-mkdir -p %{buildroot}%{_javadir}/%{name} \
-    %{buildroot}%{_libdir}/%{name} \
-    %{buildroot}%{_javadir}
-install -Dpm 0644 build/jar/jogl-all.jar %{buildroot}%{_jnidir}/%{name}.jar
+mkdir -p %{buildroot}%{_libdir}/%{name}
 ln -s ../../..%{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/
 install -t %{buildroot}%{_libdir}/%{name}/ build/lib/*.so
 
 # Make the doc package
 mkdir -p %{buildroot}%{_docdir}/%{name}
 cp -rdf doc/* %{buildroot}%{_docdir}/%{name}
-cp -t %{buildroot}%{_docdir}/%{name}/ README.md LICENSE.txt CHANGELOG.txt
+cp -t %{buildroot}%{_docdir}/%{name}/ CHANGELOG.txt
 
-%files
-%doc README.md LICENSE.txt CHANGELOG.txt
+%files -f .mfiles
+%doc LICENSE.txt CHANGELOG.txt
 %{_libdir}/%{name}
-%{_jnidir}/%{name}.jar
 
 %files doc
 %{_docdir}/%{name}
 
 %changelog
+* Sat Nov 07 2026 Ivan Khanas <xeno@altlinux.org> 1:2.6.0-alt3
+- Register the genuine Maven artifact, runtime dependency and module name.
+- Preserve the Linux build selection without removing upstream sources.
+- Require the GlueGen runtime artifact during compilation.
+- Build with JDK 25 for current SWT while retaining the Java 8 target.
+
 * Tue Jul 07 2026 Arseniy Kostevich <faux@altlinux.org> 1:2.6.0-alt2
 - FTBFS: change swt path.
 

@@ -1,19 +1,24 @@
 %def_without check
+# The optional full runtime suite needs this package installed: the ALT JNI
+# loader uses its system path. Validate it against the newly built RPM.
+
+%define _unpackaged_files_terminate_build 1
 
 Name: gluegen
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Epoch: 1
-%global src_name gluegen-v%{version}
-Summary: Java/JNI glue code generator to call out to ANSI C
 
+Summary: Java/JNI glue code generator to call out to ANSI C
 License: BSD
 Group: Development/Java
 URL: https://github.com/sgothel/gluegen
-VCS: https://github.com/sgothel/gluegen
+VCS: https://github.com/sgothel/gluegen.git
 
 Source0: %name-%version.tar
 Source1: jcpp.tar
+Source2: gluegen-rt-%version.pom
+Source3: gluegen-%version.pom
 
 Patch0: disable-static-linking.patch
 Patch1: cc-attributes-in-build.patch
@@ -22,11 +27,13 @@ Patch3: alt-system-japicmp.patch
 Patch4: alt-disable-tests-build-and-release-archive.patch
 Patch5: alt-disable-archive-7z.patch
 Patch6: use-system-jni.patch
+Patch7: alt-system-test-classpath.patch
 
 ExcludeArch: armh %ix86
 
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
+BuildRequires: java-21-openjdk-devel
 BuildRequires: jpackage-utils
 BuildRequires: ant-antlr
 BuildRequires: ant-contrib
@@ -34,10 +41,12 @@ BuildRequires: ant-junit
 BuildRequires: cpptasks
 BuildRequires: maven-local
 BuildRequires: japicmp
+BuildRequires: guava
+BuildRequires: hamcrest
+BuildRequires: javassist
 
 Provides: gluegen2 = %EVR
 Obsoletes: gluegen2 < %EVR
-Requires: jpackage-utils
 
 %filter_from_requires /profile.ant/d
 %filter_from_requires /android-tools/d
@@ -58,17 +67,12 @@ Summary: GlueGen devel utilities required to build JOGL
 Provides: gluegen2-devel = %EVR
 Obsoletes: gluegen2-devel < %EVR
 
-Requires: %{name} = %{version}-%{release}
-Requires: ant-antlr
-Requires: ant-contrib
-Requires: ant-junit
-Requires: cpptasks
-
 %description devel
 GlueGen devel utilities provide some ant targets and shared files to build
 application.
 
 %package javadoc
+BuildArch: noarch
 Group: Development/Java
 Summary: Javadoc for GlueGen
 Provides: gluegen2-javadoc = %EVR
@@ -78,6 +82,7 @@ Obsoletes: gluegen2-javadoc < %EVR
 Javadoc for GlueGen.
 
 %package doc
+BuildArch: noarch
 Group: Development/Java
 Summary: GlueGen's user manual
 Provides: gluegen2-doc = %EVR
@@ -97,9 +102,14 @@ GlueGen's user manual.
 sed -e "s|%%{_libdir}|%{_libdir}|;s|%%{name}|%{name}|" %{PATCH6} \
     >use-system-jni.patch
 /usr/bin/patch -s -p1 --fuzz=0 <use-system-jni.patch
+%patch7 -p1
+
+# Keep archived versions as test data, separate from build dependencies.
+mkdir .test-fixtures
+mv make/lib/v2.* .test-fixtures/
 
 # Remove bundled dependencies
-find -name "*.jar" -type f -exec rm {} \;
+find -name "*.jar" -type f ! -path "./.test-fixtures/*" -exec rm {} \;
 find -name "*.apk" -type f -exec rm {} \;
 rm -fr make/lib
 
@@ -111,11 +121,14 @@ find make/scripts -type f -name "*.sh" -exec chmod +x {} +
 
 # Fix script-without-shebang
 find make/scripts -type f -name "*.sh" -exec sed -i -e '1i#!/bin/sh' {} +
+%mvn_file org.jogamp.gluegen:gluegen-rt %name-rt
+%mvn_file org.jogamp.gluegen:gluegen %name %_javadir/%name
+%mvn_package org.jogamp.gluegen:gluegen devel
 
 %build
 
 cd make
-ant \
+%ant \
  -verbose \
  -Dc.compiler.debug=true \
  -Djavacdebug=false \
@@ -132,23 +145,17 @@ ant \
  -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar \
  -Djavadoc.link=%{_javadocdir}/java \
  all \
- javadoc \
- maven.install
+ javadoc
+cd ..
+%mvn_artifact %SOURCE2 build/gluegen-rt.jar
+%mvn_artifact %SOURCE3 build/gluegen.jar
 
 %install
-mkdir -p %{buildroot}%{_javadir}/%{name} \
-    %{buildroot}%{_libdir}/%{name} \
-    %{buildroot}%{_jnidir}
+%mvn_install
+mkdir -p %{buildroot}%{_libdir}/%{name}
 
-install build/gluegen.jar %{buildroot}%{_javadir}/%{name}.jar
-install build/gluegen-rt.jar %{buildroot}%{_jnidir}/%{name}-rt.jar
 ln -s ../../..%{_jnidir}/%{name}-rt.jar %{buildroot}%{_libdir}/%{name}/
 install build/obj/libgluegen_rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}_rt.so
-
-# Provide JPP pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 build/pom-gluegen.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 build/pom-gluegen-rt.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-rt.pom
 
 # Make the devel package. This package is needed to build JOGL2
 %global gluegen_devel_dir %{_datadir}/gluegen
@@ -164,12 +171,15 @@ cp -rdf build/javadoc/gluegen/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 # Make the doc package
 mkdir -p %{buildroot}%{_docdir}/%{name}
 cp -rdf doc/manual/* %{buildroot}%{_docdir}/%{name}
-cp LICENSE.txt %{buildroot}%{_docdir}/%{name}/
-cp LICENSE.txt %{buildroot}%{_javadocdir}/%{name}/
 
 %check
+# Rebuild the nested-JAR fixture from its upstream Java sources.
+(cd test/TestJarsInJar && sh -e make.sh)
+mkdir -p make/lib
+cp -a .test-fixtures/* make/lib/
+cp test/TestJarsInJar/TestJarsInJar.jar make/lib/
 cd make
-_JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/natives" xargs -t ant <<EOF
+_JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/obj:../build/test/build/natives" xargs -t ant <<EOF
  -verbose
  -Djavacdebug=true
  -Dc.compiler.debug=true
@@ -181,34 +191,35 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
  -Djunit.jar=%{_javadir}/junit.jar
  -Dant.jar=%{_javadir}/ant.jar
  -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar
- -Dgluegen.jar=%{buildroot}%{_javadir}/%{name}.jar
- -Dgluegen-rt.jar=%{buildroot}%{_libdir}/%{name}/%{name}-rt.jar
+ -Dgluegen.jar=../build/gluegen.jar
+ -Dgluegen-rt.jar=../build/gluegen-rt.jar
  -Dswt.jar=%{_libdir}/eclipse/swt.jar
+ -Dtest.jcpp.guava.jar=%_javadir/guava/guava.jar
+ -Dtest.dependencies.classpath="$(build-classpath hamcrest/hamcrest javassist)"
 
+ gluegen.package.native
  junit.run
 EOF
 
 rm -fr %{buildroot}%{_jnidir}/test
 
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_jnidir}/%{name}-rt.jar
 %{_libdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}-rt.pom
 
-%files devel
-%{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
+%files devel -f .mfiles-devel
 %{gluegen_devel_dir}
 
 %files javadoc
-%exclude %{_docdir}/%{name}/LICENSE.txt
 %{_javadocdir}/%{name}
 
 %files doc
 %{_docdir}/%{name}
 
 %changelog
+* Sat Nov 07 2026 Ivan Khanas <xeno@altlinux.org> 1:2.6.0-alt2
+- Register genuine runtime and generator Maven artifacts.
+
 * Fri Jun 12 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.6.0-alt1
 - New version.
 - Built from upstream Git https://github.com/sgothel/gluegen.
