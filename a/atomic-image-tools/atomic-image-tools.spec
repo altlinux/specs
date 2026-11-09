@@ -3,9 +3,11 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%define _libexecdir %_prefix/libexec
+
 Name: atomic-image-tools
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 Summary: Some tools for ALT Atomic builder image
 License: GPL-3.0-or-later
@@ -41,5 +43,8 @@ BuildRequires: pkgconfig(libxml-2.0)
 %_libexecdir/get-os-metainfo
 
 %changelog
+* Tue Nov 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1.0-alt2
+- Fixed get-os-metainfo path.
+
 * Tue Nov 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1.0-alt1
 - Initial build.
