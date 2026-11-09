@@ -1,18 +1,19 @@
 Summary: A smaller version of the Bourne shell
 Name: ash
-Version: 0.5.11.18.g6f6d1f2
-Release: alt3
+Version: 0.5.13.5
+Release: alt1
 
 License: BSD-3-Clause
 Group: Shells
 Url: http://gondor.apana.org.au/~herbert/dash/
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
+Vcs: https://git.kernel.org/pub/scm/utils/dash/dash.git
 
 Source: %name-%version.tar
 Patch01: 0001-Implement-losetup-as-builtin.patch
 Patch02: 0002-Use-CFLAGS-to-compile-helpers.patch
 Patch03: 0003-Enable-large-file-support-when-available.patch
+Patch04: 0004-exec-make-find_builtin-return-const-struct-builtincm.patch
+Patch05: 0005-parser-make-p-a-const-pointer-for-the-strchr-result-.patch
 
 Conflicts: mkinitrd <= 1:1.7
 Provides: dash
@@ -99,6 +100,9 @@ ln -s %name.1 %buildroot/%_man1dir/dash.1
 /bin/%name.static
 
 %changelog
+* Mon Nov 09 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.13.5-alt1
+- v0.5.11-18-g6f6d1f2 -> v0.5.13.5.
+
 * Thu Apr 25 2024 Alexey Gladkov <legion@altlinux.ru> 0.5.11.18.g6f6d1f2-alt3
 - Turn off -Werror on e2k.
 
