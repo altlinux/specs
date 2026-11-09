@@ -19,7 +19,7 @@
 %def_enable check
 
 Name: gthumb
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: An image file viewer and browser for GNOME
@@ -126,6 +126,9 @@ This package provides noarch data needed for gThumb to work.
 %doc NEWS README*
 
 %changelog
+* Mon Nov 09 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.2-alt1
+- 4.0.2
+
 * Wed Nov 04 2026 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
