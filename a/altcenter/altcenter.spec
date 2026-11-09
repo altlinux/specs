@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.49
+Release: alt0.50
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,12 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Nov 09 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.50
+- Password policy: added localization.
+- Password policy: minor UI improvements.
+- Password policy: added passwdqc max length and enforce settings.
+- Password policy: added passwdqc N0-N4 policy support.
+
 * Thu Nov 05 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.49
 - About: fixed crash when desktop environment version is unavailable.
 - Report: fixed translation (ALT #61263).
