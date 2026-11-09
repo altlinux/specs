@@ -1,7 +1,7 @@
-%define sover 4
+%define sover 5
 
 Name: ffmpegthumbnailer
-Version: 2.3.0
+Version: 2.4.1
 Release: alt1
 
 Summary: Lightweight video thumbnailer that can be used by file managers
@@ -86,6 +86,9 @@ developers to generate thumbnails in their projects.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
+- New version 2.4.1.
+
 * Sat Dec 27 2025 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
 - New version 2.3.0.
 
