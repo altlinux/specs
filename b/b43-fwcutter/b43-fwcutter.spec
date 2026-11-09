@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: b43-fwcutter
-Version: 015
+Version: 019
 Release: alt1
 
 Summary: Utility for extracting Broadcom 43xx firmware (for b43 driver).
@@ -35,6 +35,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_man1dir/*
 
 %changelog
+* Mon Nov 09 2026 Egor Ignatov <egori@altlinux.org> 019-alt1
+- 019 release.
+
 * Tue Sep 27 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 015-alt1
 - 015 release.
 
