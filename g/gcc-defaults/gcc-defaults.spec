@@ -1,6 +1,6 @@
 %set_compress_method none
 
-%define gcc_branch 15
+%define gcc_branch 16
 %define psuffix -%gcc_branch
 
 %define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
@@ -17,7 +17,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt2
+Release: alt1
 License: None
 Group: Development/Other
 
@@ -344,6 +344,9 @@ ln_bin \
 %endif
 
 %changelog
+* Mon Sep 14 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 16-alt1
+- Changed the default compiler to gcc16.
+
 * Thu Apr 30 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 15-alt2
 - Added libgcc-devel subpackage.
 

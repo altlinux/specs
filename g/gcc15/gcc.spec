@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 15.3.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -106,8 +106,8 @@ Url: https://gcc.gnu.org/
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
-%def_enable precompat
-%def_disable compat
+%def_disable precompat
+%def_enable compat
 
 # For some architectures we do not want multilib support.
 %ifarch riscv64 loongarch64
@@ -2119,6 +2119,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue Sep 15 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 15.3.1-alt3
+- Rebuilt in gcc15 compatibility mode.
+
 * Mon Aug 31 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 15.3.1-alt2
 - Rebuilt in precompat mode to prepare for gcc16 build.
 
