@@ -1,5 +1,5 @@
 Name: vpcs
-Version: 0.8.4
+Version: 0.8.5
 Release: alt1
 
 Summary: Virtual PC Simulator
@@ -46,6 +46,9 @@ cp man/vpcs.1.xz %buildroot/%_man1dir/
 %_man1dir/vpcs.1.*
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 0.8.5-alt1
+- New version 0.8.5.
+
 * Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 0.8.4-alt1
 - New version 0.8.4.
 
