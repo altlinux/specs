@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.35
+Version: 10.36
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -63,6 +63,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_datadir/alterator-framework/modules/users/ts/users_ru.qm
 
 %changelog
+* Mon Nov 09 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 10.36-alt1
+- fix incorrect behavior when removing user avatar
+
 * Fri Aug 28 2026 Andrey Cherepanov <cas@altlinux.org> 10.35-alt1
 - web-interface: hide allow_su option if visible_wheel condition is false.
 
