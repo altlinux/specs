@@ -3,17 +3,16 @@
 
 %define fsname f2fs
 Name: %fsname-tools
-Version: 1.16.0
-Release: alt2
+Version: 1.17.0
+Release: alt1
 
 Summary: Tools for Flash-Friendly File System (F2FS)
 
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 URL: http://sourceforge.net/projects/f2fs-tools
-# https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git
+VCS: https://git.kernel.org/pub/scm/linux/kernel/git/jaegeuk/f2fs-tools.git
 Source: %name-%version.tar
-Patch1: f2fs-tools-1.16.0-c23.patch
 
 Provides: %fsname-utils = %version-%release
 Provides: mkfs.%fsname = %version-%release
@@ -99,6 +98,9 @@ install -m 644 mkfs/f2fs_format_utils.h %buildroot%_includedir
 %endif
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 1.17.0-alt1
+- New version 1.17.0.
+
 * Sat Jun 13 2026 Anton Midyukov <antohami@altlinux.org> 1.16.0-alt2
 - NMU: fix FTBFS with gcc15.
 
