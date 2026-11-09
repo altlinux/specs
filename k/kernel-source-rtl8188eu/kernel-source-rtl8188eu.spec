@@ -3,7 +3,7 @@
 
 Name: kernel-source-%module_name
 Version: 5.13.3
-Release: alt1.git%git_rev
+Release: alt2.git%git_rev
 
 Summary: Realtek RTL8188EU Wireless Lan Driver for Linux
 License: GPL-2.0
@@ -14,6 +14,7 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: kernel-modules-rtl8188eu-5.13.3-alt-regulatory-fix.patch
 
 BuildRequires(pre): rpm-build-kernel
 
@@ -22,6 +23,7 @@ BuildRequires(pre): rpm-build-kernel
 
 %prep
 %setup -c
+%patch0 -p1
 
 %install
 mkdir -p %kernel_srcdir
@@ -31,5 +33,8 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Thu Oct 15 2026 Ulysses Apokin <ulysses@altlinux.org> 5.13.3-alt2.git163badb
+- Fix FTBFS with kernel > 6.1.39.
+
 * Tue May 16 2023 Andrey Cherepanov <cas@altlinux.org> 5.13.3-alt1.git163badb
 - Initial build for Sisyphus.
