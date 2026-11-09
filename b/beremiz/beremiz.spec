@@ -3,8 +3,8 @@
 
 %def_with doc
 Name: beremiz
-Version: 1.6.1
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 Summary: Integrated development environment for machine automation
 Summary(ru_RU.UTF-8): Интегрированная среда разработки для ПЛК
@@ -187,6 +187,9 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 #exclude %_datadir/%name/etherlab
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 1.6.2-alt1
+- New version 1.6.2.
+
 * Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 1.6.1-alt2
 - Replace requirement on gcc-c++ with gcc.
 
@@ -215,51 +218,50 @@ chmod 644  $(find %buildroot%_datadir/%name -type f -name "*.py")
 - New snapshot.
 
 * Mon Nov 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20250821.2
-- do not use dos2unix
+- Do not use dos2unix.
 
 * Sun Aug 24 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.1.20250821.1
-- new snapshot
+- New snapshot.
 
 * Wed Jun 18 2025 Anton Midyukov <antohami@altlinux.org> 1.4-alt0.0.20250506.1
-- new snapshot
+- New snapshot.
 
 * Mon Nov 25 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt7.20190221
-- fix shebang
-- beremiz.desktop: run in terminal
+- Fix shebang.
+- beremiz.desktop: run in terminal.
 
 * Sat Sep 21 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt6.20190221
-- add_python_req_skip autobahn
+- Add python req skip autobahn.
 
 * Mon May 13 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt5.20190221
-- fix build without doc
+- Fix build without doc.
 
 * Wed Apr 03 2019 Anton Midyukov <antohami@altlinux.org> 1.2-alt4.20190221
-- New snapshot
+- New snapshot.
 
 * Mon Dec 03 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt3.20181012
-- New snapshot
+- New snapshot.
 
 * Fri Sep 07 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt2.20180816
-- New snapshot
-- Added support protocols: modbus and BACnet
-- Fix tests
+- New snapshot.
+- Added support protocols: modbus and BACnet.
+- Fixed tests.
 
 * Wed Jun 06 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20180523
-- New snapshot
+- New snapshot.
 
 * Sat Mar 10 2018 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20180305
-- New snapshot
+- New snapshot.
 
 * Thu Sep 28 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170917
-- New snapshot
+- New snapshot.
 
 * Mon Sep 04 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170828
-- New snapshot
+- New snapshot.
 
 * Sun Jul 09 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170705
-- New snapshot
+- New snapshot.
 - Added missing requires.
 
 * Sat Jul 01 2017 Anton Midyukov <antohami@altlinux.org> 1.2-alt1.20170628
 - Initial build for ALT Linux Sisyphus.
-
