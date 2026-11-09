@@ -1,4 +1,4 @@
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1.0
 
 %def_enable introspection
@@ -8,7 +8,7 @@
 
 Name: gtk-vnc
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: VNC viewer widget
 Group: System/Libraries
@@ -25,7 +25,7 @@ Requires: libgtk3vnc = %EVR
 %define gtk_ver 3.22
 %define gnutls_ver 3.6.0
 %define sasl_ver 2.1.27
-%define gmp_ver 6.0.0
+%define gmp_ver 6.2.0
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson
@@ -228,6 +228,9 @@ library.
 %endif
 
 %changelog
+* Sun Nov 08 2026 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Fri Feb 28 2025 Michael Shigorin <mike@altlinux.org> 1.5.0-alt2
 - E2K: use gthread instead of homegrown setjmp hacks (ilyakurdyukov@)
 

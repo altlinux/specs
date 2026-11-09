@@ -1,8 +1,9 @@
+%define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
 %define _name syncbus
 %define __name phosh-session-services
-%define ver_major 0.2
+%define ver_major 0.3
 %define rdn_name mobi.phosh.syncbus
 
 %def_disable demo
@@ -10,7 +11,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Phosh Session Services
@@ -80,6 +81,11 @@ export GETTEXT_SYSTEM=1
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/mobi.phosh.OsUpdater.desktop
 %_iconsdir/hicolor/symbolic/apps/mobi.phosh.OsUpdater-symbolic.svg
+# push-distributor
+%_libexecdir/phosh-push-distributor
+%_userunitdir/phosh-push-distributor.service
+%_desktopdir/org.unifiedpush.Distributor.phosh.desktop
+%_datadir/dbus-1/services/org.unifiedpush.Distributor.phosh.service
 %doc README* NEWS
 
 %{?_enable_demo:
@@ -87,6 +93,9 @@ export GETTEXT_SYSTEM=1
 %_libexecdir/phosh-%name-demo}
 
 %changelog
+* Sun Nov 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - 0.2.1
 

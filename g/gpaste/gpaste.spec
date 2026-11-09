@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: gpaste
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GPaste is a clipboard management system
@@ -194,6 +194,9 @@ sed -i 's/\.alpha//' meson.build
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Sun Nov 08 2026 Yuri N. Sedunov <aris@altlinux.org> 51.3-alt1
+- 51.3
+
 * Wed Oct 28 2026 Yuri N. Sedunov <aris@altlinux.org> 51.2-alt1
 - 51.2
 
