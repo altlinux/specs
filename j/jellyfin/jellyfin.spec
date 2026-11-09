@@ -2,7 +2,7 @@
 %define OutputPath64 server
 
 Name:    jellyfin
-Version: 12.3
+Version: 12.4
 Release: alt1
 
 Summary: The Free Software Media System - Server Backend & API
@@ -19,6 +19,7 @@ Source3: %name.sysusers
 BuildRequires: dotnet-sdk-%dotnetver
 BuildRequires: /proc
 BuildRequires: pkgconfig(fontconfig)
+BuildRequires: liblttng-ust
 
 Requires: %name-web
 Requires: ffmpeg
@@ -89,6 +90,9 @@ fi
 %dir %attr(2770,%name,%name) %_sharedstatedir/%name
 
 %changelog
+* Mon Nov 09 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.4-alt1
+- New version.
+
 * Fri Oct 23 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.3-alt1
 - New version.
 

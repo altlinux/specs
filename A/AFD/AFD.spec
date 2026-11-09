@@ -2,7 +2,7 @@
 
 Name:    AFD
 Version: 1.4.21
-Release: alt1
+Release: alt1.1
 
 Summary: A tool to distribute data
 License: GPL-2.0
@@ -50,6 +50,8 @@ to control everything from one interface: mon_ctrl
 touch AUTHORS NEWS
 ln -s Changelog ./ChangeLog
 ln -s README.configure README
+ln -s ac-tools m4
+autopoint --force
 %autoreconf --include=ac-tools
 %configure \
     --enable-systemd=yes \
@@ -252,6 +254,9 @@ fi
 %_tmpfilesdir/afdmon.conf
 
 %changelog
+* Mon Nov 09 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.4.21-alt1.1
+- Fix FTBFS with autoconf>=2.73 (thx glebfm@)
+
 * Tue Oct 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.4.21-alt1
 - New version.
 

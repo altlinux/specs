@@ -1,7 +1,7 @@
 %define bname jellyfin
 
 Name:    %bname-web
-Version: 12.3
+Version: 12.4
 Release: alt1
 
 Summary: The Free Software Media System - Official Web Client
@@ -40,6 +40,9 @@ cp -Rfv dist/* %buildroot%_libexecdir/%bname/%name
 %_libexecdir/%bname/%name
 
 %changelog
+* Mon Nov 09 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.4-alt1
+- New version.
+
 * Fri Oct 23 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 12.3-alt1
 - New version.
 
