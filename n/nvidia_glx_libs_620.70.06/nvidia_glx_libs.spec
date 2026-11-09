@@ -18,10 +18,10 @@
 %define subd ./
 %endif
 
-%define nv_version 595
-%define nv_release 104
-%define nv_minor   02
-%define pkg_rel alt3
+%define nv_version 620
+%define nv_release 70
+%define nv_minor   06
+%define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
 %define nv_version_full %nv_version.%nv_release
@@ -295,6 +295,9 @@ install -m 0644 %SOURCE300 %buildroot/%_unitdir/
 %endif
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt1
+- new version
+
 * Mon Oct 26 2026 Sergey V Turchin <zerg@altlinux.org> 595.104.02-alt3
 - update requires (closes: 61188)
 

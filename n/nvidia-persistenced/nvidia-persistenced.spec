@@ -1,5 +1,5 @@
 Name: nvidia-persistenced
-Version: 595.91.07
+Version: 620.70.06
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -52,5 +52,8 @@ sed -i "s/__USER__/root/" %buildroot/%_unitdir/%name.service
 %_man1dir/*%{name}*
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt1
+- new version
+
 * Thu Sep 03 2026 Sergey V Turchin <zerg@altlinux.org> 595.91.07-alt1
 - initial build

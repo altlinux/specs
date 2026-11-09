@@ -1,5 +1,5 @@
 Name: nvidia-modprobe
-Version: 570.124.04
+Version: 620.70.06
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -40,6 +40,9 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD STRIP_CMD=true NV_KEEP_UNSTRIPPED_BINA
 
 
 %changelog
+* Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt1
+- new version
+
 * Mon Mar 03 2025 Sergey V Turchin <zerg@altlinux.org> 570.124.04-alt1
 - new version
 
