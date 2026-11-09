@@ -1,5 +1,5 @@
 Name: kodi-addon-visualization-spectrum
-Version: 22.1.0
+Version: 22.1.1
 Release: alt1
 
 Summary: Spectrum visualization for Kodi
@@ -32,6 +32,9 @@ BuildRequires: pkgconfig(gl)
 %_datadir/kodi/addons/visualization.spectrum
 
 %changelog
+* Mon Nov 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.1.1-alt1
+- 22.1.1 released
+
 * Tue Jun 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.1.0-alt1
 - 22.1.0 released
 
