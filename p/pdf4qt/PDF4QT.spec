@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define soname 1
 
 Name: pdf4qt
-Version: 1.6.0.0
-Release: alt2
+Version: 1.7.0.0
+Release: alt1
 
 Summary: Open source PDF editor
 
@@ -17,11 +18,21 @@ ExcludeArch: i586
 Source: %name-%version.tar
 
 BuildRequires(Pre): rpm-macros-cmake
-BuildRequires: cmake clang qt6-base-devel qt6-tools-devel
-BuildRequires: qt6-svg-devel qt6-speech-devel libcups-devel
-BuildRequires: zlib-devel libfreetype-devel libopenjpeg2.0-devel
-BuildRequires: openjpeg-tools2.0 libjpeg-devel blend2d-devel
-BuildRequires: liblcms2-devel tbb-devel
+BuildRequires: cmake
+BuildRequires: clang qt6-base-devel
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-svg-devel
+BuildRequires: qt6-speech-devel
+BuildRequires: libcups-devel
+BuildRequires: zlib-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libopenjpeg2.0-devel
+BuildRequires: openjpeg-tools2.0
+BuildRequires: libjpeg-devel
+BuildRequires: blend2d-devel
+BuildRequires: liblcms2-devel
+BuildRequires: tbb-devel
+BuildRequires: libClipper2-devel
 
 %description
 %summary.
@@ -68,6 +79,7 @@ sed -i 's/left < right.second/right.second > left/' Pdf4QtLibCore/sources/pdfnam
 %endif
 
 %build
+%add_optflags -Wno-narrowing
 %cmake -DCMAKE_BUILD_TYPE=Release
 %cmake_build
 
@@ -99,6 +111,9 @@ sed -i 's/left < right.second/right.second > left/' Pdf4QtLibCore/sources/pdfnam
 %_libdir/libPdf4QtLibWidgets.so.%{soname}.*
 
 %changelog
+* Mon Nov 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.0.0-alt1
+- 1.6.0.0 -> 1.7.0.0
+
 * Fri Jul 17 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.6.0.0-alt2
 - e2k build fix
 
