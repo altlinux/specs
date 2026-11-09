@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.40.0
+Version: 0.42.0
 Release: alt1
 
 Summary: A concise API for running subprocesses using asyncio
@@ -54,7 +54,7 @@ Benefits:
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %if_with check
-%pyproject_deps_resync_check_poetry dev
+%pyproject_deps_resync_check_depgroup dev
 %endif
 
 %build
@@ -72,5 +72,8 @@ Benefits:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 30 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.42.0-alt1
+- Updated to 0.42.0.
+
 * Tue Jul 07 2026 Andrey Kuzma <kuzmaav@altlinux.org> 0.40.0-alt1
 - Initial build for Sisyphus.
