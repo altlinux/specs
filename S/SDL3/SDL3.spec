@@ -2,7 +2,7 @@
 
 Name: SDL3
 Version: 3.4.20
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer
 License: Zlib and MIT
@@ -37,7 +37,7 @@ BuildRequires: libibus-devel
 BuildRequires: libpulseaudio-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libslang2
-BuildRequires: libsndio7-devel
+BuildRequires: libsndio-devel
 BuildRequires: libsoup3.0-devel
 BuildRequires: libudev-devel
 %ifnarch %e2k
@@ -103,6 +103,9 @@ to develop SDL applications.
 %_pkgconfigdir/sdl3.pc
 
 %changelog
+* Mon Nov 09 2026 Nazarov Denis <nenderus@altlinux.org> 3.4.20-alt2
+- Rebuild with sndio 1.11.0 (libsndio.so.9) (closes: #61349).
+
 * Wed Nov 04 2026 Nazarov Denis <nenderus@altlinux.org> 3.4.20-alt1
 - New version 3.4.20.
 
