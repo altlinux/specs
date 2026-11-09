@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define        gemname crass
 
 Name:          gem-crass
-Version:       1.0.6
+Version:       1.0.8
 Release:       alt1
 Summary:       A Ruby CSS parser that's fully compliant with the CSS Syntax Level 3 specification
 License:       MIT
@@ -14,19 +15,18 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
-BuildRequires: gem(minitest) >= 5.0.8
-BuildRequires: gem(rake) >= 10.1.0
-BuildConflicts: gem(minitest) >= 6
+BuildRequires: gem(minitest) >= 6.0.6
+BuildRequires: gem(rake) >= 13.3.1
+BuildConflicts: gem(minitest) >= 7
 BuildConflicts: gem(rake) >= 14
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
+%ruby_use_gem_dependency rake >= 13.3.1,rake < 14
 Obsoletes:     ruby-crass < %EVR
 Provides:      ruby-crass = %EVR
-Provides:      gem(crass) = 1.0.6
+Provides:      gem(crass) = 1.0.8
 
 
 %description
@@ -47,14 +47,14 @@ Features:
 
 
 %package       -n gem-crass-doc
-Version:       1.0.6
+Version:       1.0.8
 Release:       alt1
 Summary:       A Ruby CSS parser that's fully compliant with the CSS Syntax Level 3 specification documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета crass
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(crass) = 1.0.6
+Requires:      gem(crass) = 1.0.8
 
 %description   -n gem-crass-doc
 A Ruby CSS parser that's fully compliant with the CSS Syntax Level 3
@@ -80,17 +80,17 @@ Features:
 
 
 %package       -n gem-crass-devel
-Version:       1.0.6
+Version:       1.0.8
 Release:       alt1
 Summary:       A Ruby CSS parser that's fully compliant with the CSS Syntax Level 3 specification development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета crass
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(crass) = 1.0.6
-Requires:      gem(minitest) >= 5.0.8
-Requires:      gem(rake) >= 10.1.0
-Conflicts:     gem(minitest) >= 6
+Requires:      gem(crass) = 1.0.8
+Requires:      gem(minitest) >= 6.0.6
+Requires:      gem(rake) >= 13.3.1
+Conflicts:     gem(minitest) >= 7
 Conflicts:     gem(rake) >= 14
 
 %description   -n gem-crass-devel
@@ -142,6 +142,9 @@ Features:
 
 
 %changelog
+* Tue Nov 03 2026 Dina Tagantseva <dinchik@altlinux.org> 1.0.8-alt1
+- ^ 1.0.6 -> 1.0.8
+
 * Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 1.0.6-alt1
 - ^ 1.0.5 -> 1.0.6
 

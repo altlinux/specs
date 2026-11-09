@@ -2,7 +2,7 @@
 %define  pkgname sanitize
 
 Name: gem-%pkgname
-Version: 7.0.0
+Version: 7.0.2
 Release: alt1
 
 Summary: Ruby HTML and CSS sanitizer 
@@ -65,5 +65,8 @@ Documentation files for %{name}.
 %ruby_gemdocdir
 
 %changelog
+* Tue Nov 03 2026 Dina Tagantseva <dinchik@altlinux.org> 7.0.2-alt1
+- New version 7.0.2.
+
 * Tue Apr 28 2026 Aleksandr Dovydenkov <asd@altlinux.org> 7.0.0-alt1
 - Initial build for ALT Linux.
