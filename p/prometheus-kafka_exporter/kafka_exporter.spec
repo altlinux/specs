@@ -2,8 +2,8 @@
 %define mod kafka_exporter
 
 Name:    prometheus-kafka_exporter
-Version: 1.9.0
-Release: alt4
+Version: 1.11.0
+Release: alt1
 
 Summary: Kafka exporter for Prometheus
 License: Apache-2.0
@@ -14,12 +14,6 @@ Source: %mod-%version.tar
 Source1: vendor.tar
 Source2: %name.sysconfig
 Source3: %name.service
-Patch1: 0001-Updating-dependencies-to-fix-CVEs.patch
-Patch2: 0002-substitute-pkg-errors-by-stdlib-errors.patch
-Patch3: 0003-update-go.mod.patch
-Patch4: 0004-use-q-instead-s-to-safely-quote-strings.patch
-Patch5: 0005-format-code-using-gofumpt-with-no-extra-parameters-j.patch
-Patch6: 0006-Update-go-and-IBM-sarama-versions-to-address-CVEs.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.25.8
@@ -32,7 +26,6 @@ JMX exporter.
 
 %prep
 %setup -n %mod-%version
-%autopatch -p1
 tar xf %SOURCE1
 
 %build
@@ -72,6 +65,12 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/kafka-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Fri Oct 30 2026 Andrey Cherepanov <cas@altlinux.org> 1.11.0-alt1
+- New version.
+
+* Wed Sep 09 2026 Andrey Cherepanov <cas@altlinux.org> 1.10.0-alt1
+- New version (fixes: CVE-2025-22869, CVE-2025-22870, CVE-2025-22872).
+
 * Fri May 15 2026 Andrey Cherepanov <cas@altlinux.org> 1.9.0-alt4
 - Update vendoring libraries (fixes: CVE-2025-22869, CVE-2025-22870,
   CVE-2025-22872, CVE-2025-47914, CVE-2025-58181) and rebuild with new golang.
