@@ -3,7 +3,7 @@
 %define libname lib%name%sover
 
 Name:    lexbor
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Development of an open source HTML renderer library
@@ -60,5 +60,8 @@ Development headers, CMake and pkg-config files for lexbor.
 %_libdir/pkgconfig/lexbor.pc
 
 %changelog
+* Fri Nov 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.1-alt1
+- 3.0.1
+
 * Tue Sep 01 2026 Sergey Palcheh <minergenon@altlinux.org> 3.0.0-alt1
 - Initial build for Sisyphus
