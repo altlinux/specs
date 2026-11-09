@@ -3,7 +3,7 @@
 %def_with check
 
 Name: postcard
-Version: 1.14.1
+Version: 1.15.0
 Release: alt1
 
 Summary: A modern email client for GNOME
@@ -64,6 +64,9 @@ PYTHONPATH=src python3 -m pytest -q
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Nov 09 2026 Vladislav Eliseev <general@altlinux.org> 1.15.0-alt1
+- New version 1.15.0.
+
 * Tue Oct 20 2026 Vladislav Eliseev <general@altlinux.org> 1.14.1-alt1
 - New version 1.14.1.
 
