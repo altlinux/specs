@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.10.0
+Version: 2.11.2
 Release: alt1
 
 Summary: A powerful HTTP client that lives in your terminal
@@ -66,6 +66,9 @@ ln -sf %_licensedir/Apache-2.0 LICENSE
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 09 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.11.2-alt1
+- Updated to 2.11.2.
+
 * Thu Apr 02 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.10.0-alt1
 - Updated to 2.10.0.
 - Remodernized packaging.
