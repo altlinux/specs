@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.3
+Version: 2.8.7
 Release: alt1
 
 Summary: Rust HTTP server for Python applications built on top of Hyper and Tokio
@@ -53,9 +53,9 @@ cat << EOF > .cargo/config.toml
 [source.crates-io]
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/gi0baro/pyo3-log.git?branch=pyo3-027"]
+[source."git+https://github.com/gi0baro/pyo3-log.git?branch=relaxed-pyo3-pin"]
 git = "https://github.com/gi0baro/pyo3-log.git"
-branch = "pyo3-027"
+branch = "relaxed-pyo3-pin"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/gi0baro/tls-listener.git?branch=0.11.x"]
@@ -100,6 +100,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Nov 09 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.8.7-alt1
+- Updated to 2.8.7.
+
 * Tue Sep 15 2026 Andrey Kuzma <kuzmaav@altlinux.org> 2.8.3-alt1
 - Updated to 2.8.3.
 
