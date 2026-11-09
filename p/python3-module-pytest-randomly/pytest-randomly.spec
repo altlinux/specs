@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 Summary: Pytest plugin to randomly order tests and control random.seed
 License: MIT
@@ -14,18 +14,9 @@ Url: https://pypi.org/project/pytest-randomly/
 Vcs: https://github.com/pytest-dev/pytest-randomly
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 Randomness in testing can be quite powerful to discover hidden flaws in the
@@ -43,11 +34,7 @@ filled in randomly due to not being specified.
 %prep
 %setup
 %patch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -63,6 +50,9 @@ filled in randomly due to not being specified.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 09 2026 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 5.0.0 -> 5.1.0
+
 * Wed Sep 02 2026 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.1.0 -> 5.0.0
 
