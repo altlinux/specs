@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 6.7.6
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Other
@@ -14,7 +14,7 @@ License: GPL-2.0-or-later AND LGPL-2.0-or-later AND GPL-3.0-only
 
 Source: %rname-%version.tar
 
-#Requires: ModemManager callaudiod
+Requires: ModemManager callaudiod
 Requires: kf6-kirigami kf6-kirigami-addons
 
 BuildRequires(pre): rpm-build-kf6
@@ -78,6 +78,9 @@ metatype headers and the static metatype library.
 %_K6dbus_iface/*telephony*.xml
 
 %changelog
+* Mon Nov 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt2
+- update requires
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
 - new version
 
