@@ -2,7 +2,7 @@
 %define import_path github.com/TecharoHQ/anubis.git
 
 Name: anubis
-Version: 1.27.0
+Version: 1.28.2
 Release: alt1
 
 Group: Networking/WWW
@@ -18,7 +18,8 @@ Patch: %name-%version.patch
 ExclusiveArch: x86_64 aarch64 ppc64le riscv64 loongarch64
 
 BuildRequires(pre): rpm-macros-golang rpm-macros-nodejs
-BuildRequires: rpm-build-golang golang >= 1.26.3
+BuildRequires: rpm-build-golang golang >= 1.27.3
+BuildRequires: rpm-build-rust rust-wasm32-unknown-unknown-target wasmtime binaryen
 BuildRequires: npm
 BuildRequires: node >= 18 node-devel
 BuildRequires: esbuild brotli gzip zstd
@@ -46,14 +47,16 @@ export LDFLAGS="-X github.com/TecharoHQ/anubis.Version=%version"
 export NODE_OPTIONS=--max_old_space_size=2048
 export PATH="$PATH:$PWD/node_modules/.bin"
 pushd lib/challenge/preact
-./build.sh
+bash ./build.sh
 popd
-pushd lib/challenge/proofofwork
-./build.sh
+pushd lib/challenge/challengepage
+bash ./build.sh
 popd
 go generate
-web/build.sh
-xess/build.sh
+bash ./wasm/scripts/build_wasm.sh
+bash ./wasm/scripts/build_wasm2js.sh
+bash web/build.sh
+bash xess/build.sh
 %golang_prepare
 %golang_build cmd/%name
 %golang_build cmd/robots2policy
@@ -89,6 +92,9 @@ rm -f data/embed.go
 %ghost %dir %_localstatedir/%name
 
 %changelog
+* Mon Nov 09 2026 Alexey Shabalin <shaba@altlinux.org> 1.28.2-alt1
+- New version 1.28.2.
+
 * Tue Oct 06 2026 Alexey Shabalin <shaba@altlinux.org> 1.27.0-alt1
 - New version 1.27.0.
 
