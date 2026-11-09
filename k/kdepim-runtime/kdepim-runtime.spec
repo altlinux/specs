@@ -10,8 +10,8 @@
 %define libakonadi_singlefileresource_widget libakonadi-singlefileresource-widget%pim_sover
 
 Name: %rname
-Version: 26.08.2
-Release: alt2
+Version: 26.08.3
+Release: alt1
 %K6init
 
 ExcludeArch: %not_qt6_qtwebengine_arches
@@ -190,6 +190,9 @@ mv %buildroot/%_K6xdgmime/kdepim{,5}-mime.xml
 
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Wed Oct 14 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
 - build etebase backend (closes: 60806)
 

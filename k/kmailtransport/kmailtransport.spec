@@ -1,8 +1,8 @@
 %define rname kmailtransport
 
 Name: %rname
-Version: 26.08.2
-Release: alt2
+Version: 26.08.3
+Release: alt1
 %K6init
 
 Group: Graphical desktop/KDE
@@ -82,6 +82,9 @@ Requires: %name-common >= %EVR
 
 
 %changelog
+* Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Wed Oct 21 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
 - fix changing the default transport (closes: #61139)
 
