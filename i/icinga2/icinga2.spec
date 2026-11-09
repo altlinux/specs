@@ -37,7 +37,7 @@ License:        GPL-2.0-or-later
 Group:          Monitoring
 
 Name:           icinga2
-Version:        2.16.0
+Version:        2.16.6
 Release:        alt1
 URL:            https://www.icinga.com/
 Vcs:            https://github.com/Icinga/icinga2.git
@@ -366,6 +366,21 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Mon Nov 09 2026 Paul Wolneykien <manowar@altlinux.org> 2.16.6-alt1
+- New version 2.16.6.
+- Fixes:
+  + GHSA-chm5-8fg3-g6fw The default email notification scripts may
+    allow command injection from the recipient address.
+  + GHSA-33vf-h78f-99p3 Attacker-Controlled Comparator crashes Array#sort.
+  + GHSA-hhxh-8qx6-pxc3 Multiple instances of log injections.
+  + GHSA-vwj4-g6h6-65gj ASLR bypass via addresses from API call exception
+    stack trace.
+  + GHSA-2hhr-ccxm-x85p /v1/objects: supposedly inaccessible related objects
+    can be accessed in filter expressions.
+
+* Fri May 22 2026 Paul Wolneykien <manowar@altlinux.org> 2.16.1-alt1
+- New version 2.16.1.
+
 * Tue May 12 2026 Paul Wolneykien <manowar@altlinux.org> 2.16.0-alt1
 - New version 2.16.0.
 
