@@ -1,6 +1,6 @@
 Name: python3-module-pykodi
-Version: 0.2.7
-Release: alt3
+Version: 0.3.0
+Release: alt1
 
 Summary: Python interface for Kodi
 License: BSD
@@ -38,6 +38,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/pykodi-%version.dist-info
 
 %changelog
+* Mon Nov 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.0-alt1
+- 0.3.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.7-alt3
 - revert unsolicited packaging changes
 
