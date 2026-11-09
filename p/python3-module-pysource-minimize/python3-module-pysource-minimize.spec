@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: minimize python source code to find bugs more easily
@@ -49,5 +49,8 @@ BuildRequires: python3-module-pysource-codegen
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Mon Nov 09 2026 Anton Vyatkin <toni@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+
 * Wed Oct 14 2026 Anton Vyatkin <toni@altlinux.org> 0.10.1-alt1
 - Initial build for Sisyphus.
