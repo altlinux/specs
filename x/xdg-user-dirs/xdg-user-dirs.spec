@@ -3,8 +3,8 @@
 %endif
 
 Name: xdg-user-dirs
-Version: 0.19
-Release: alt2
+Version: 0.20
+Release: alt1
 Summary: Handles user special directories
 Group: Graphical desktop/Other
 License: GPLv2+ and MIT
@@ -18,7 +18,7 @@ Patch1: user-dirs-fix-encoding-0.13-alt.patch
 Patch2: xdg-user-dirs-0.14-alt-home.patch
 Patch3: user-dirs-update-fix-0.13-alt.patch
 
-BuildRequires: xsltproc docbook-style-xsl
+BuildRequires: xsltproc docbook-style-xsl meson
 
 %description
 Contains xdg-user-dirs-update that updates folders in a users
@@ -29,15 +29,12 @@ homedirectory based on the defaults configured by the administrator.
 %patch1 -p2
 %patch2 -p1
 
-export ACLOCAL_PATH=%_datadir/gettext/m4
-%autoreconf
-
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 mkdir -p %buildroot%_x11sysconfdir/profile.d
 mkdir -p %buildroot%_controldir/
 mkdir -p %buildroot%_controldir/
@@ -81,6 +78,9 @@ fi
 %_man5dir/*user-dir*
 
 %changelog
+* Mon Nov 09 2026 Sergey V Turchin <zerg@altlinux.org> 0.20-alt1
+- new version
+
 * Mon Jul 27 2026 Sergey V Turchin <zerg@altlinux.org> 0.19-alt2
 - fix to build with new gettext
 
