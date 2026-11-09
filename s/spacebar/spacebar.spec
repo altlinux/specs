@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 6.7.6
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Networking/Instant messaging
@@ -15,7 +15,7 @@ Obsoletes: kde6-spacebar < %EVR
 
 Source: %rname-%version.tar
 
-#Requires: ModemManager
+Requires: ModemManager
 Requires: kf6-kirigami kf6-kirigami-addons
 
 BuildRequires(pre): rpm-build-kf6
@@ -58,6 +58,9 @@ It uses ModemManager to send and receive messages over mobile networks.
 #%_K6bin/spacebar-fakeserver
 
 %changelog
+* Mon Nov 09 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt2
+- update requires
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
 - new version
 
