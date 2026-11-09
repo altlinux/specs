@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.2.0
-Release: alt1
+Version: 0.3.0
+Release: alt2
 Summary: Programmable debugger
 License: LGPL-2.1-or-later
 Group:   Development/Debuggers
@@ -128,6 +128,13 @@ rm -f /tmp/initramfs-*.img /tmp/vm.*
 %files -n kernel-ci-drgn-debuginfo
 
 %changelog
+* Mon Nov 09 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt2
+- Fix reading compressed sections with relocations
+  (https://github.com/osandov/drgn/pull/668).
+
+* Tue Oct 20 2026 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt1
+- Update to v0.3.0 (2026-10-09).
+
 * Sat May 02 2026 Vitaly Chikunov <vt@altlinux.org> 0.2.0-alt1
 - Update to v0.2.0 (2026-04-29).
 
