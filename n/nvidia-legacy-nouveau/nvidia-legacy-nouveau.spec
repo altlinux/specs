@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nvidia-legacy-nouveau
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 
-Summary: Use nouveau for NVIDIA GPUs older than Maxwell
+Summary: Use nouveau for NVIDIA GPUs below the proprietary-support boundary
 License: GPL-2.0-or-later
 Group: System/Configuration/Hardware
 Url: https://altlinux.space/rauty/nvidia-legacy-nouveau
@@ -28,15 +28,14 @@ BuildRequires: installer-common-functions
 BuildRequires: hwdata
 
 %description
-Proprietary NVIDIA branches available in the repository either do not
-support GPUs older than Maxwell or work badly with them. This package
+The nvidia 340 branch is not available in the repository. This package
 provides the nvidia-legacy-nouveau tool: if every NVIDIA GPU in the
-system is older than Maxwell, it lifts the nouveau blacklist and keeps
-the proprietary driver from loading; otherwise it keeps the proprietary
-driver.
+system is below the proprietary-support boundary, it lifts the nouveau
+blacklist and keeps the proprietary driver from loading; otherwise it
+keeps the proprietary driver.
 
 %package -n installer-feature-nvidia-legacy-nouveau-stage2
-Summary: Installer hook to use nouveau for NVIDIA GPUs older than Maxwell
+Summary: Installer hook to use nouveau below the proprietary-support boundary
 Group: System/Configuration/Other
 Requires: %name = %EVR
 
@@ -73,6 +72,9 @@ export NVIDIA_LEGACY_NOUVEAU_PROG=nvidia-legacy-nouveau
 %_datadir/install2/preinstall.d/40-nvidia-legacy-nouveau.sh
 
 %changelog
+* Mon Nov 09 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.2.0-alt1
+- Use the nvidia 390 support boundary.
+
 * Mon Oct 26 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.1.0-alt1
 - Initial build.
 - Use nouveau for NVIDIA GPUs older than Maxwell (Closes: 56688).
