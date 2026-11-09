@@ -1,7 +1,7 @@
 %define soname 12
 
 Name: primesieve
-Version: 12.16
+Version: 12.17
 Release: alt1
 Summary: A prime number generator
 License: BSD-2-Clause
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-ninja ctest
-BuildRequires: gcc-c++ cmake >= 3.7 doxygen texlive asciidoc-a2x graphviz
+BuildRequires: gcc-c++ cmake >= 3.9 doxygen texlive asciidoc-a2x graphviz
 
 %description
 primesieve is a command-line program that generates primes using the
@@ -85,6 +85,9 @@ ctest
 %_pkgconfigdir/primesieve.pc
 
 %changelog
+* Mon Nov 09 2026 Leontiy Volodin <lvol@altlinux.org> 12.17-alt1
+- New version 12.17.
+
 * Wed Sep 30 2026 Leontiy Volodin <lvol@altlinux.org> 12.16-alt1
 - New version 12.16.
 
