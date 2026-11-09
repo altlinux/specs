@@ -1,38 +1,41 @@
-Name:     spi-tools
-Version:  1.1.0
-Release:  alt1
+Name: spi-tools
+Version: 1.2.0
+Release: alt1
 
-Summary:  Simple command line tools to help using Linux spidev devices
-License:  GPL-2.0
-Group:    System/Kernel and hardware
-Url:      https://github.com/cpb-/spi-tools
-
-Packager: Anton Midyukov <antohami@altlinux.org>
+Summary: Simple command line tools to help using Linux spidev devices
+License: GPL-2.0-only
+Group: System/Kernel and hardware
+URL: https://github.com/cpb-/spi-tools
+VCS: https://github.com/cpb-/spi-tools
 
 Source:   %name-%version.tar
 
+Buildrequires(pre): rpm-macros-cmake
+Buildrequires: rpm-build-cmake
 Buildrequires: help2man
 
 %description
-%summary
+%summary.
 
 %prep
 %setup
 
 %build
-%autoreconf 
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
 %_bindir/*
-%_man1dir/*
-%doc *.md
+%_man1dir/*.1.*
+%doc README.md LICENSE
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
+- New version 1.2.0.
+
 * Wed Jul 15 2026 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - New version 1.1.0.
 
