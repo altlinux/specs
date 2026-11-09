@@ -4,7 +4,7 @@
 %define _localstatedir /var
 
 Name: thermald
-Version: 2.5.12
+Version: 2.5.13
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -119,6 +119,9 @@ exit 0
 %_man8dir/*.8.*
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 2.5.13-alt1
+- New version 2.5.13.
+
 * Thu Sep 10 2026 Anton Midyukov <antohami@altlinux.org> 2.5.12-alt1
 - New version 2.5.12.
 - Add upstream fixes:
