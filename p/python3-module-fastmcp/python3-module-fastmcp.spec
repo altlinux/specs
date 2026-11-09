@@ -1,6 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name fastmcp
-%define mod_name fastmcp
 
 # check requires the Internet connection
 %def_without check
@@ -17,8 +15,8 @@ Extra "%2" for %1. \
 }
 
 Name: python3-module-fastmcp
-Version: 4.1.4
-Release: alt2
+Version: 4.1.6
+Release: alt1
 
 Summary: The fast, Pythonic way to build MCP servers and clients
 License: Apache-2.0
@@ -84,6 +82,27 @@ interactive apps.
 %add_python_extra fastmcp-slim openai fastmcp_slim_metadata
 %add_python_extra fastmcp-slim server fastmcp_slim_metadata
 
+%package tasks
+Summary: Background task execution for FastMCP servers via the io.modelcontextprotocol/tasks extension (SEP-2663)
+Group: Development/Python3
+Url: https://pypi.org/project/fastmcp-tasks/
+# manually manage runtime dependencies with metadata
+AutoReq: yes, nopython3
+%pyproject_runtimedeps -- fastmcp_tasks_metadata --depformatextra=%pyproject_depextra_format
+%pyproject_builddeps -- fastmcp_tasks_pep518
+%pyproject_builddeps -- fastmcp_tasks_pep517
+
+%description tasks
+A complete implementation of background tasks for the Model Context Protocol -
+the io.modelcontextprotocol/tasks extension defined in SEP-2663.
+
+The MCP tasks extension is a Final SEP, but as of this writing it ships in the
+ecosystem as a schema and a prose specification - no language SDK provides a
+working runtime for it. fastmcp-tasks is, to our knowledge, the first: a full
+server-side implementation of the protocol, built on the durable execution
+engine (docket) that FastMCP has run in production since v3. If you want to
+actually run MCP background tasks today, this is the implementation.
+
 %prep
 %setup
 %autopatch -p1
@@ -102,6 +121,13 @@ cd fastmcp_slim
 %pyproject_deps_resync fastmcp_slim_pep518 pep518
 %pyproject_deps_resync fastmcp_slim_pep517 pep517
 %pyproject_deps_resync fastmcp_slim_metadata metadata
+cd -
+
+#fastmcp-tasks
+cd fastmcp_tasks
+%pyproject_deps_resync fastmcp_tasks_pep518 pep518
+%pyproject_deps_resync fastmcp_tasks_pep517 pep517
+%pyproject_deps_resync fastmcp_tasks_metadata metadata
 
 %build
 # fastmcp
@@ -110,6 +136,11 @@ cd fastmcp_slim
 # fastmcp-slim
 cd fastmcp_slim
 %pyproject_build
+cd -
+
+# fastmcp-tasks
+cd fastmcp_tasks
+%pyproject_build
 
 %install
 # fastmcp
@@ -117,6 +148,11 @@ cd fastmcp_slim
 
 # fastmcp-slim
 cd fastmcp_slim
+%pyproject_install
+cd -
+
+# fastmcp-tasks
+cd fastmcp_tasks
 %pyproject_install
 
 %check
@@ -127,10 +163,18 @@ cd fastmcp_slim
 
 %files slim
 %_bindir/fastmcp
-%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/fastmcp/
 %python3_sitelibdir/fastmcp_slim-%version.dist-info/
 
+%files tasks
+%python3_sitelibdir/fastmcp_tasks/
+%python3_sitelibdir/fastmcp_tasks-%version.dist-info/
+
 %changelog
+* Mon Nov 09 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.6-alt1
+- Updated to 4.1.6.
+- Packaged fastmcp-tasks.
+
 * Sun Nov 08 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.4-alt2
 - sbolshakov@:
   + Fixed requires of the +extra subpackages (ALT#61361).

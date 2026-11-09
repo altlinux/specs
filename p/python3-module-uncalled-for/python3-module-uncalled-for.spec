@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Async dependency injection for Python functions
@@ -17,21 +17,15 @@ Vcs: https://github.com/chrisguidry/uncalled-for
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
 # 'codespell' is provided by 'codespell' package, not 'python3-module-codespell'
-%add_pyproject_deps_check_filter codespell
+%pyproject_configure_with_check_filter codespell
+%pyproject_configure_with_check_filter loq
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
+%if_with check
 BuildRequires: codespell
-%add_pyproject_deps_check_filter loq
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 %endif
 
 %description
@@ -44,11 +38,7 @@ when the function runs. No ceremony, no container, no configuration.
 %setup
 %autopatch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -64,5 +54,8 @@ when the function runs. No ceremony, no container, no configuration.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 09 2026 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
+- Updated to 0.6.0.
+
 * Wed Aug 19 2026 Anton Zhukharev <ancieg@altlinux.org> 0.4.0-alt1
 - Packaged for ALT Sisyphus.
