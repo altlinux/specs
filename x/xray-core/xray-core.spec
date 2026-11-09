@@ -1,5 +1,5 @@
 Name: xray-core
-Version: 26.10.31
+Version: 26.11.9
 Release: alt1
 
 Summary: Project X
@@ -63,6 +63,10 @@ go build -o xray -trimpath -ldflags "-X github.com/xtls/xray-core/core.build=v%v
 %_unitdir/xray@.service
 
 %changelog
+* Mon Nov 09 2026 Nazarov Denis <nenderus@altlinux.org> 26.11.9-alt1
+- New version 26.11.9.
+- Updated GeoIP and Domain lists.
+
 * Sat Oct 31 2026 Nazarov Denis <nenderus@altlinux.org> 26.10.31-alt1
 - New version 26.10.31.
 
