@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:    forgejo-mcp
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
 
 %global import_path git.b4mad.industries/agentic-forges/forgejo-mcp/v%(echo %{version} | cut -d. -f1)
@@ -47,6 +47,9 @@ export IGNORE_SOURCES=1
 %_bindir/%name
 
 %changelog
+* Mon Nov 09 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.4.1-alt1
+- New version 3.4.1.
+
 * Sun Nov 08 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.4.0-alt1
 - New version 3.4.0.
 
