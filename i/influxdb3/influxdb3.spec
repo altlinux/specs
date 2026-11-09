@@ -6,8 +6,8 @@
 %define rust_lto "thin"
 
 Name: influxdb3
-Version: 3.11.5
-Release: alt2
+Version: 3.12.2
+Release: alt1
 Summary: Scalable datastore for metrics, events, and real-time analytics
 License: Apache-2.0 and MIT
 Group: Databases
@@ -77,6 +77,9 @@ export GIT_HASH_SHORT=%git_hash_short
 %_bindir/%name
 
 %changelog
+* Sun Nov 08 2026 Alexander Makeenkov <amakeenk@altlinux.org> 3.12.2-alt1
+- Updated to version 3.12.2.
+
 * Tue Oct 27 2026 Sergey Zhidkih <rx1513@altlinux.org> 3.11.5-alt2
 - Fixed FTBFS with new rust macros.
 
