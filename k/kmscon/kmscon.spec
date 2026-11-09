@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 10.1.0
+Version: 10.1.1
 Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
@@ -32,6 +32,7 @@ BuildRequires: xsltproc docbook-style-xsl docbook-dtds
 
 # check
 BuildRequires: alt-issue
+BuildRequires: fonts-ttf-dejavu
 
 # https://bugzilla.altlinux.org/60164
 Requires: fontconfig
@@ -76,6 +77,9 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example \
 %_man5dir/%name.conf.5.*
 
 %changelog
+* Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 10.1.1-alt1
+- New version 10.1.1.
+
 * Wed Oct 28 2026 Anton Midyukov <antohami@altlinux.org> 10.1.0-alt1
 - New version 10.1.0.
 
