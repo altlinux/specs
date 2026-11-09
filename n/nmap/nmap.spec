@@ -1,6 +1,6 @@
 Name: nmap
-Version: 7.94
-Release: alt4
+Version: 7.993
+Release: alt1
 Epoch: 20020501
 
 Summary: Network exploration tool and security scanner
@@ -21,10 +21,10 @@ Source1: zenmap-root
 
 Requires: chrooted-resolv
 BuildRequires: gcc-c++, libcap-devel
-BuildRequires: libpcap-devel >= 2:0.8, libpcre-devel, libssl-devel, libssh2-devel, zlib-devel
+BuildRequires: libpcap-devel >= 2:0.8, libpcre2-devel, libssl-devel, libssh2-devel, zlib-devel
 # nmap/configure.ac:836:    # We need Lua 5.4 exactly
 %{?_with_liblua:BuildRequires: liblua5.4-devel}
-%{?_with_ndiff:BuildRequires: python3-devel python3-module-setuptools}
+%{?_with_ndiff:BuildRequires: python3-devel python3-module-setuptools python3-module-setuptools-gettext python3-module-build python3-module-installer}
 %{?_with_zenmap:BuildRequires: libpam-devel python3-devel}
 
 # Nmap Lua scripts are self-contained;
@@ -43,8 +43,6 @@ and more.
 %package -n zenmap
 Summary: The GTK+ frontend for Nmap
 Group: Monitoring
-BuildArch: noarch
-%_python3_set_noarch
 %add_python3_req_skip gobject
 Requires: %name = %EVR
 Requires: typelib(Gtk) = 3.0
@@ -87,17 +85,21 @@ export ac_cv_dnet_linux_procfs=yes
 %install
 %makeinstall_std STRIP=:
 
-rm %buildroot%_bindir/uninstall_ndiff
+%if %_lib != lib
+mkdir -p %buildroot%_libdir/python3
+mv %buildroot/usr/lib/python3/site-packages %buildroot%_libdir/python3/site-packages
+rm -rf %buildroot/usr/lib/python3
+%endif
+
 rm %buildroot%_mandir/*/man1/nmap.*
 
 %if_with zenmap
 install -pD -m755 %_sourcedir/zenmap-root \
 	%buildroot%_bindir/zenmap-root
 mkdir -p %buildroot%_liconsdir
-ln -s ../../../../zenmap/pixmaps/zenmap.png %buildroot%_liconsdir/
+cp -v %buildroot%_libdir/python3/site-packages/zenmapCore/data/pixmaps/zenmap.png %buildroot%_liconsdir/
 %find_lang zenmap
-rm %buildroot%_bindir/{nmapfe,uninstall_zenmap,xnmap}
-rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
+rm %buildroot%_bindir/{nmapfe,xnmap}
 %endif
 
 %set_verify_elf_method strict
@@ -121,6 +123,7 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %_man1dir/ndiff.*
 %python3_sitelibdir/ndiff.py
 %python3_sitelibdir/__pycache__/ndiff*
+%python3_sitelibdir/ndiff-%{version}.dist-info
 %endif
 %if_with nping
 %_bindir/nping
@@ -131,17 +134,19 @@ rm %buildroot%_datadir/zenmap/su-to-zenmap.sh
 %if_with zenmap
 %files -n zenmap -f zenmap.lang
 %_bindir/zenmap*
-%_datadir/zenmap
 %_man1dir/zenmap.*
 %_liconsdir/*
 %_desktopdir/zenmap*.desktop
 %python3_sitelibdir/radialnet
 %python3_sitelibdir/zenmapCore
 %python3_sitelibdir/zenmapGUI
-%python3_sitelibdir/zenmap-%{version}-*.egg-info
+%python3_sitelibdir/zenmap-%{version}.dist-info
 %endif
 
 %changelog
+* Wed Oct 28 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 20020501:7.993-alt1
+- Updated to 7.993.
+
 * Mon May 05 2025 Anton Midyukov <antohami@altlinux.org> 20020501:7.94-alt4
 - NMU:
   + zenmap: use pkexec in zenmap-root instead consolehelper.
