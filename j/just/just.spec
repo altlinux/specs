@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: just
-Version: 1.47.1
+Version: 1.59.0
 Release: alt1
 Summary: Just a command runner
 License: CC0-1.0
@@ -59,6 +59,8 @@ install -Dpm0644 just.fish %buildroot%_datadir/fish/vendor_completions.d/just.fi
 install -Dpm0644 just.1 -t %buildroot%_man1dir
 
 %check
+XDG_RUNTIME_DIR="$(mktemp -d %_tmppath/just-runtime.XXXXXX)"
+export XDG_RUNTIME_DIR
 # `--color=never -- --color=never` does not work.
 cargo test %_smp_mflags --release --offline --no-fail-fast -- --skip completions
 PATH=%buildroot%_bindir:$PATH
@@ -81,6 +83,9 @@ just version | grep -Fx '%name %version'
 %_datadir/fish/vendor_completions.d/just.fish
 
 %changelog
+* Thu Oct 29 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.59.0-alt1
+- new version 1.59.0
+
 * Sat Mar 21 2026 Vitaly Chikunov <vt@altlinux.org> 1.47.1-alt1
 - Update to 1.47.1 (2026-03-16).
 
