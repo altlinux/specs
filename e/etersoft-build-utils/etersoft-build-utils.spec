@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.3.9
+Version: 3.3.10
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -72,6 +72,36 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.10-alt1
+- rpmgs: resolve watch sources for explicit versions
+- rpmgs: recognize archive URLs in VCS metadata
+- download_url: retry without browser User-Agent if an archive URL is HTML
+- gita: disapprove with the same arguments as approve
+- rpmgs: no npm install for a package-lock.json in a subdir of a Go project
+- download_url: retry without the browser User-Agent on download failure
+  (SourceForge answers it with 403)
+- rpmbs: -S uploads the src.rpm built from the gear repo
+  instead of pushing the repo (packages maintained from src.rpm)
+- hasher: separate directories for concurrent builds
+  (HASHER_AUTO_SLOTS, -S SLOT)
+- hasher: per-build temporary apt.conf and sources.list
+- rpmgs: commit the stored upstream tags alone, stop on gear errors
+- rpmgs: .gear/predownloaded-skip-npm skips pnpm and yarn install too
+- gitask: merge NEW from TASK... puts all subtasks of tasks into one
+  (src.rpm re-uploaded)
+- gita acl: accept both 'PACKAGE show' and 'show PACKAGE' orders,
+  branch name in any case
+- gita add: pass NAME.git=TAG as 'repo NAME.git TAG'
+  (girar misreads a name starting with a digit)
+- gita approve: skip empty (removed) subtask slots when listing all subtasks
+- gita: share task_subtasks() helper for skipping empty subtask slots
+- rpmbs: recreate a removed personal gitery repo before pushing
+- loginhsh -c: clean up hasher without removing its directory
+- recover the empty chroot scaffold left by an interrupted hsh-mkchroot
+- myhsh: pass HASHER_NPROCS as hsh --nprocs
+- rpmgs: store upstream tags on the first merge without .gear/tags
+  (closes: #54908)
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 3.3.9-alt1
 - rpmrb: add -U option to build without uploading to girar
 - rpmgs: warn if merging an upstream tag left the tree unchanged (ALT bug 60117)
