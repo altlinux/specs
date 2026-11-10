@@ -2,7 +2,7 @@
 %def_with check
 
 Name: biome
-Version: 2.6.4
+Version: 2.6.6
 Release: alt1
 Summary: A fast formatter, linter and analyzer for web projects
 License: MIT or Apache-2.0
@@ -57,7 +57,7 @@ if BIOME_BINARY=disabled target/release/biome upgrade > upgrade.log 2>&1; then
     exit 1
 fi
 grep -F 'no such command or positional: `upgrade`' upgrade.log
-%rust_test -p biome_cli --offline --locked --config vendor/config.toml -- \
+%rust_test -p biome_cli --locked --config vendor/config.toml -- \
     --skip cases::help::upgrade_help
 
 %files
@@ -65,6 +65,9 @@ grep -F 'no such command or positional: `upgrade`' upgrade.log
 %doc LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Tue Nov 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.6.6-alt1
+- Updated to version 2.6.6.
+
 * Mon Nov 02 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.6.4-alt1
 - Updated to version 2.6.4.
 
