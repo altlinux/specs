@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define shortname comps
 %define major 0
 %define libname lib%shortname%major
@@ -6,7 +7,7 @@
 %def_enable docs
 
 Name: libcomps
-Version: 0.1.24
+Version: 0.1.25
 Release: alt1
 
 Summary: Comps XML file manipulation library
@@ -121,9 +122,12 @@ sphinx-build-3  %name/src/python/docs/doc-sources html
 %endif
 
 %files -n python3-module-libcomps
-%python3_sitelibdir/%name/
+%python3_sitelibdir/*
 
 %changelog
+* Wed Nov 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.25-alt1
+- 0.1.24 -> 0.1.25
+
 * Tue Feb 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.24-alt1
 - 0.1.23 -> 0.1.24
 
