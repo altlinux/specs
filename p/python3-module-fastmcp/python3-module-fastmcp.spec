@@ -15,7 +15,7 @@ Extra "%2" for %1. \
 }
 
 Name: python3-module-fastmcp
-Version: 4.1.6
+Version: 4.1.7
 Release: alt1
 
 Summary: The fast, Pythonic way to build MCP servers and clients
@@ -49,13 +49,15 @@ interactive apps.
 
 %add_python_extra fastmcp anthropic fastmcp_metadata
 %add_python_extra fastmcp apps fastmcp_metadata
-# %%add_python_extra fastmcp azure fastmcp_metadata # -- skip azure
+%add_python_extra fastmcp azure fastmcp_metadata
 %add_python_extra fastmcp client fastmcp_metadata
-# %%add_python_extra fastmcp code-mode fastmcp_metadata # -- no 'pydantic-monty' in the repo
+%add_python_extra fastmcp code-mode fastmcp_metadata
 %add_python_extra fastmcp gemini fastmcp_metadata
 %add_python_extra fastmcp mcp fastmcp_metadata
 %add_python_extra fastmcp openai fastmcp_metadata
 %add_python_extra fastmcp server fastmcp_metadata
+%add_python_extra fastmcp tasks fastmcp_slim_metadata
+%add_python_extra fastmcp jev fastmcp_metadata
 
 %package slim
 Summary: The dependency-slim FastMCP package
@@ -74,13 +76,14 @@ interactive apps.
 
 %add_python_extra fastmcp-slim anthropic fastmcp_slim_metadata
 %add_python_extra fastmcp-slim apps fastmcp_slim_metadata
-# %%add_python_extra fastmcp-slim azure fastmcp_slim_metadata # -- skip azure
+%add_python_extra fastmcp-slim azure fastmcp_slim_metadata
 %add_python_extra fastmcp-slim client fastmcp_slim_metadata
-# %%add_python_extra fastmcp-slim code-mode fastmcp_slim_metadata # -- no 'pydantic-monty' in the repo
+%add_python_extra fastmcp-slim code-mode fastmcp_slim_metadata
 %add_python_extra fastmcp-slim gemini fastmcp_slim_metadata
 %add_python_extra fastmcp-slim mcp fastmcp_slim_metadata
 %add_python_extra fastmcp-slim openai fastmcp_slim_metadata
 %add_python_extra fastmcp-slim server fastmcp_slim_metadata
+%add_python_extra fastmcp-slim jev fastmcp_slim_metadata
 
 %package tasks
 Summary: Background task execution for FastMCP servers via the io.modelcontextprotocol/tasks extension (SEP-2663)
@@ -171,6 +174,11 @@ cd fastmcp_tasks
 %python3_sitelibdir/fastmcp_tasks-%version.dist-info/
 
 %changelog
+* Tue Nov 10 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.7-alt1
+- Updated to 4.1.7.
+- Added new fastmcp+azure, fastmcp+code-mode, fastmcp+tasks and fastmcp+jev
+  extra subpackages.
+
 * Mon Nov 09 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.6-alt1
 - Updated to 4.1.6.
 - Packaged fastmcp-tasks.
