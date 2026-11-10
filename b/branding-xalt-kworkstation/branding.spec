@@ -23,14 +23,14 @@
 %define fakebrand xalt
 
 %define major 11
-%define minor 4
+%define minor 5
 %define bugfix 0
 %define altversion %major.%minor
 %define altmajor %major
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -521,6 +521,13 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg at altlinux dot org> 11.5.0-alt1
+- clear status
+- update slideshow
+
+* Thu Oct 15 2026 Sergey V Turchin <zerg at altlinux dot org> 11.5.0-alt0.1
+- new beta
+
 * Mon Aug 03 2026 Sergey V Turchin <zerg at altlinux dot org> 11.4.0-alt2
 - apply kde global settings at first run
 
