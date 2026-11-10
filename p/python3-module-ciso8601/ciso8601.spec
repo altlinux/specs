@@ -1,6 +1,6 @@
 Name: python3-module-ciso8601
-Version: 2.3.3
-Release: alt2
+Version: 2.4.1
+Release: alt1
 
 Summary: ISO8601/RFC3339 date time strings converter
 License: MIT
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/ciso8601-%version.dist-info
 
 %changelog
+* Tue Nov 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.4.1-alt1
+- 2.4.1 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.3.3-alt2
 - revert unsolicited packaging changes
 
