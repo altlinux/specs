@@ -2,7 +2,7 @@
 %def_with check
 
 Name: mdcat
-Version: 2.19.0
+Version: 2.20.0
 Release: alt1
 Summary: cat for markdown
 License: MPL-2.0
@@ -84,6 +84,9 @@ install -Dm 0644 mdpick.fish %buildroot%_datadir/fish/vendor_completions.d/mdpic
 %_datadir/fish/vendor_completions.d/mdpick.fish
 
 %changelog
+* Tue Nov 10 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.20.0-alt1
+- Updated to version 2.20.0.
+
 * Mon Nov 02 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.19.0-alt1
 - Updated to version 2.19.0.
 - Set lessi as default pager instead of less for mdless.
