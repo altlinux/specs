@@ -11,7 +11,7 @@
 
 Name:    appstream
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: Utilities to generate, maintain and access the AppStream Xapian database
 # library; LGPLv2+, tools: GPLv2+
@@ -167,6 +167,9 @@ sed -i 's/fromUtf8(res)/fromUtf8((gchar*)res)/' qt/*.cpp
 find -name '*.cpp' -type f -exec \
 	sed -E -i 's/g_autofree (gchar \**)\*/g_autofree_edg(\1) /' {} \;
 sed -i "s/-Werror=shadow/-Wno-error=shadow/" meson.build
+# error: identifier "LANDLOCK_ACCESS_FS_TRUNCATE" is undefined
+sed -i '/abi >= ASW_LANDLOCK_ABI_TRUNCATE/{N;s/^.*/#ifdef LANDLOCK_ACCESS_FS_TRUNCATE\n&\n#endif/}' \
+	compose/worker/asw-sandbox.c
 %endif
 sed -i "s|'AppStreamQt'|'AppStreamQt6'|" qt/meson.build
 
@@ -277,6 +280,9 @@ ln -s libAppStreamQt6.so %buildroot/%_libdir/libAppStreamQt.so
 %_datadir/gir-1.0/AppStreamCompose-1.0.gir
 
 %changelog
+* Tue Nov 10 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.2-alt2
+- e2k build fix
+
 * Sat Nov 07 2026 Vladimir Romanov <rirusha@altlinux.org> 1.2.2-alt1
 - New version 1.2.2.
 
