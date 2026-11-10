@@ -1,5 +1,5 @@
 Name: ardour
-Version: 9.8
+Version: 9.10
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -78,6 +78,9 @@ sed -i "/conf.env.append_value('CXXFLAGS_OSX', '-F/s|conf.env|pass # conf.env|" 
 %endif
 
 %build
+# gcc16 defaults to gnu++23: upstream u8"..." literals become char8_t and
+# no longer convert to char; restore pre-C++20 u8 semantics
+export CXXFLAGS="$CXXFLAGS -fno-char8_t"
 LC_ALL=C.utf8 ./waf configure \
 	--prefix=%_prefix \
 	--bindir=%_bindir \
@@ -134,6 +137,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Tue Nov 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.10-alt1
+- 9.10 released
+
 * Sat Aug 29 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.8-alt1
 - 9.8 released
 
