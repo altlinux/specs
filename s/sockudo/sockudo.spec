@@ -5,7 +5,7 @@
 %define _pseudouser_home     %_localstatedir/sockudo
 
 Name: sockudo
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: A self-hosted realtime platform
@@ -107,6 +107,9 @@ done
 %dir %attr(0750,%_pseudouser_user,%_pseudouser_group) %_pseudouser_home
 
 %changelog
+* Tue Nov 10 2026 Mikhail Nogin <joycap@altlinux.org> 5.2.0-alt1
+- Update to v5.2.0.
+
 * Tue Oct 06 2026 Mikhail Nogin <joycap@altlinux.org> 5.1.0-alt1
 - Update to v5.1.0.
 
