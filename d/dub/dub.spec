@@ -4,7 +4,7 @@
 ExclusiveArch: %ix86 x86_64
 
 Name: dub
-Version: 1.42.0
+Version: 1.43.0
 Release: alt1
 Summary: Package and build management system for D
 Group: Development/Other
@@ -56,6 +56,9 @@ install -Dm755 bin/dub %buildroot%_bindir/dub
 %_bindir/dub
 
 %changelog
+* Tue Nov 10 2026 Andrey Kovalev <ded@altlinux.org> 1.43.0-alt1
+- updated from 1.42.0 to 1.43.0
+
 * Tue Aug 18 2026 Anton Farygin <rider@altlinux.org> 1.42.0-alt1
 - 1.41.0 -> 1.42.0
 

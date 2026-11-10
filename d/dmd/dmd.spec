@@ -10,7 +10,7 @@ ExclusiveArch: %ix86 x86_64
 %endif
 
 Name: dmd
-Version: 2.113.0
+Version: 2.114.0
 Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
@@ -189,6 +189,7 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_includedir/dmd/druntime/import/*.d
 %_includedir/dmd/druntime/import/__importc_builtins.di
 %_includedir/dmd/druntime/import/importc.h
+%_includedir/dmd/druntime/import/include/importc_msvc_builtins.h
 
 %files -n libdruntime-devel-static
 %_libdir/libdruntime.a
@@ -205,6 +206,9 @@ cp -r ../tools/man/man1/* %buildroot%_man1dir/
 %_libdir/libphobos2.a
 
 %changelog
+* Tue Nov 10 2026 Andrey Kovalev <ded@altlinux.org> 2.114.0-alt1
+- updated from 2.113.0 to 2.114.0
+
 * Wed Sep 02 2026 Andrey Kovalev <ded@altlinux.org> 2.113.0-alt1
 - Updated to upstream version 2.113.0.
 
