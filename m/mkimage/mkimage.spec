@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 
 Summary: Simple image creator
@@ -88,6 +88,13 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Tue Nov 10 2026 Anton Midyukov <antohami@altlinux.org> 0.3.10-alt1
+- mki-pack-hybrid-grubpc-grub-efi: save command to pack iso.
+- mki-pack-grub-efi: save command to pack iso.
+- mki-pack-grubpc: save command to pack iso.
+- mki-pack-isolinux: save command to pack iso.
+- mki-pack-isodata: save command to pack iso.
+
 * Mon Apr 20 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.3.9-alt1
 - Added support of custom run-scripts, run-image-scripts,
   and run-image-patches targets.
