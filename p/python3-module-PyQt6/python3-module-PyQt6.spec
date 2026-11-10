@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 6.11.0
-Release: alt2
+Release: alt3
 
 Summary: Python 3 bindings for Qt 6
 License: GPL-3.0
@@ -27,6 +27,11 @@ Patch2: alt-touint128.patch
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires(pre): rpm-build-python3 >= 0.1.9.2-alt1
+
+%ifarch %e2k
+# error: cpio archive too big - 4969M
+%define optflags_debug -g0
+%endif
 
 BuildRequires: python3-devel
 
@@ -151,6 +156,9 @@ sip-build \
 #python3_sitelibdir/PyQt6/__pycache__/pyrcc*
 
 %changelog
+* Tue Nov 10 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.11.0-alt3
+- e2k build fix
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 6.11.0-alt2
 - Build QtPdf and QtPdfWidgets bindings on supported architectures.
 
