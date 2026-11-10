@@ -2,7 +2,7 @@
 %define _libexec %_prefix/libexec
 
 Name: chawan
-Version: 0.4.4
+Version: 0.5.2
 Release: alt1
 
 Summary: TUI web browser
@@ -44,5 +44,8 @@ as a terminal pager
 %_mandir/man7/cha-*.7*
 
 %changelog
+* Tue Nov 10 2026 Mikhail Nogin <joycap@altlinux.org> 0.5.2-alt1
+- Update to v0.5.2.
+
 * Wed Aug 05 2026 Mikhail Nogin <joycap@altlinux.org> 0.4.4-alt1
 - Initial built for Sisyphus.
