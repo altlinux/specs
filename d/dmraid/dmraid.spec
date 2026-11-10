@@ -2,7 +2,7 @@
 
 Name: dmraid
 Version: 1.0.0.rc16
-Release: alt5
+Release: alt6
 
 Summary: dmraid (Device-mapper RAID tool and library)
 Group: System/Base
@@ -33,6 +33,7 @@ Patch24: dmraid-fix-build-to-honour-cflags-var.patch
 Requires: kpartx
 
 BuildRequires: libdevmapper-devel libdevmapper-event-devel libdevmapper-devel-static
+BuildRequires: libatomic-devel-static
 
 %description
 DMRAID supports RAID device discovery, RAID set activation and display of
@@ -103,6 +104,9 @@ rm -f %buildroot/%_libdir/lib%name.a
 %_libdir/lib%name-events-isw.so
 
 %changelog
+* Tue Nov 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0.rc16-alt6
+- NMU: fix FTBFS with gcc16
+
 * Thu Apr 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.0.0.rc16-alt5
 - NMU: fix FTBFS with gcc15
 
