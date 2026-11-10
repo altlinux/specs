@@ -5,7 +5,7 @@
 %define        gemname test-unit
 
 Name:          gem-test-unit
-Version:       3.6.2
+Version:       3.7.8
 Release:       alt1
 Summary:       An xUnit family unit testing framework for Ruby
 License:       Ruby or BSD-2-Clause and PSF-2.0
@@ -33,7 +33,7 @@ BuildRequires: gem(power_assert) >= 0
 Requires:      gem(power_assert) >= 0
 Obsoletes:     ruby-test-unit < %EVR
 Provides:      ruby-test-unit = %EVR
-Provides:      gem(test-unit) = 3.6.2
+Provides:      gem(test-unit) = 3.7.8
 
 
 %description
@@ -47,14 +47,14 @@ writing tests, checking results and automated testing in Ruby.
 
 %if_enabled    doc
 %package       -n gem-test-unit-doc
-Version:       3.6.2
+Version:       3.7.8
 Release:       alt1
 Summary:       An xUnit family unit testing framework for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test-unit
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(test-unit) = 3.6.2
+Requires:      gem(test-unit) = 3.7.8
 
 %description   -n gem-test-unit-doc
 An xUnit family unit testing framework for Ruby documentation files.
@@ -66,14 +66,14 @@ An xUnit family unit testing framework for Ruby documentation files.
 
 %if_enabled    devel
 %package       -n gem-test-unit-devel
-Version:       3.6.2
+Version:       3.7.8
 Release:       alt1
 Summary:       An xUnit family unit testing framework for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета test-unit
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(test-unit) = 3.6.2
+Requires:      gem(test-unit) = 3.7.8
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(yard) >= 0
@@ -106,6 +106,7 @@ An xUnit family unit testing framework for Ruby development package.
 %doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
+%_bindir/test-unit
 
 %if_enabled    doc
 %files         -n gem-test-unit-doc
@@ -120,6 +121,9 @@ An xUnit family unit testing framework for Ruby development package.
 
 
 %changelog
+* Tue Nov 10 2026 Alexander Danilov <admsasha@altlinux.org> 3.7.8-alt1
+- ^ 3.6.2 -> 3.7.8 (closes #61397)
+
 * Wed May 08 2024 Pavel Skrylev <majioa@altlinux.org> 3.6.2-alt1
 - ^ 3.5.3 -> 3.6.2
 - * relicensed
