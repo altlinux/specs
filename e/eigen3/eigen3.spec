@@ -3,7 +3,7 @@
 
 Name: %{oname}3
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary: A lightweight C++ template library for vector and matrix math
 License: Apache-2.0 AND MPL-2.0 AND BSD-3-Clause AND Minpack
@@ -108,6 +108,7 @@ export PATH=$PATH:%_libdir/pastix/bin
 
 %cmake -GNinja \
 	-Wno-dev \
+	-DEIGEN_PRERELEASE_VERSION="" \
         -DEIGEN_BUILD_SHARED_LIBS=ON \
         -DEIGEN_BUILD_BLAS=ON \
         -DEIGEN_BUILD_LAPACK=ON \
@@ -162,6 +163,9 @@ cd -
 %endif
 
 %changelog
+* Tue Nov 10 2026 Anton Farygin <rider@altlinux.org> 5.0.1-alt2
+- Fixed source and reported versions (ALT #61399).
+
 * Wed Mar 11 2026 Anton Farygin <rider@altlinux.org> 5.0.1-alt1
 - 5.0.0 -> 5.0.1
 
