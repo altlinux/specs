@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: exfatprogs
-Version: 1.4.3
+Version: 1.4.4
 Release: alt1
 
 Summary:  Official utilities for exFAT file system
@@ -62,6 +62,9 @@ at the level of exfat utilities in windows.
 %doc NEWS README*
 
 %changelog
+* Tue Nov 10 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
+- 1.4.4
+
 * Thu Aug 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt1
 - 1.4.3
 
