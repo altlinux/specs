@@ -4,7 +4,7 @@
 %def_with check
 
 Name: nim
-Version: 2.2.10
+Version: 2.4.0
 Release: alt1
 
 Summary: Statically typed compiled systems programming language
@@ -19,7 +19,8 @@ Source0: %name-%version.tar
 Source1: csources_v3-master.tar.gz
 # https://github.com/nim-lang/checksums/archive/0b8e46379c5bc1bf73d8b3011908389c60fb9b98.tar.gz
 # commit 0b8e46379c5bc1bf73d8b3011908389c60fb9b98 (2.0.1)
-Source2: checksums-master.tar.gz
+Source2: checksums-5c132cd332cce5d64a0da9ac3e4c9664313dccb4.tar.gz
+Source3: nimony-668edddcaa5651051e7683a38a04f31fba778f35.tar.gz
 Patch: %name-%version-alt.patch
 
 %if_with bootstrap
@@ -81,12 +82,23 @@ Debugging tools for the Nim programming language:
 nim-gdb is a GDB helper script for debugging Nim programs with GDB
 Python support. nim_dbg is a debug build of the Nim compiler itself.
 
+%package -n nim-testament
+Summary: Test runner for Nim projects
+Group: Development/Other
+Requires: %name = %EVR
+
+%description -n nim-testament
+Testament is the official test runner for Nim projects.
+It supports test isolation, multiple compilation targets,
+test reports and automated regression testing.
+
 %prep
-%setup -a1 -a2
+%setup -a1 -a2 -a3
 %autopatch -p1
 mv csources_v3-master csources_v3
 mkdir -p dist
-mv checksums-master dist/checksums
+mv checksums-5c132cd332cce5d64a0da9ac3e4c9664313dccb4 dist/checksums
+mv nimony-668edddcaa5651051e7683a38a04f31fba778f35 dist/nimony
 
 %build
 %if_with bootstrap
@@ -120,6 +132,13 @@ install -Dm644 config/nimdoc.cfg %buildroot%_sysconfdir/nim/nimdoc.cfg
 # Install nim-gdb Python module
 install -Dm644 tools/debug/nim-gdb.py %buildroot%_datadir/nim/debug/nim-gdb.py
 
+# Nim testing tool
+install -Dm755 bin/testament %buildroot%_bindir/testament
+
+# Tools used by Nim incremental compilation
+install -Dm755 bin/nifler %buildroot%_bindir/nifler
+install -Dm755 bin/nifmake %buildroot%_bindir/nifmake
+
 %check
 export PATH="$PWD/bin:$PATH"
 testament --targets:c pat tests/stdlib/tos.nim
@@ -131,6 +150,8 @@ testament --targets:c pat tests/stdlib/tos.nim
 %dir %_sysconfdir/nim
 %config(noreplace) %_sysconfdir/nim/nim.cfg
 %config(noreplace) %_sysconfdir/nim/nimdoc.cfg
+%_bindir/nifler
+%_bindir/nifmake
 
 %files -n nimgrep
 %_bindir/nimgrep
@@ -146,6 +167,12 @@ testament --targets:c pat tests/stdlib/tos.nim
 %_bindir/nim_dbg
 %_datadir/nim/debug/nim-gdb.py
 
+%files -n nim-testament
+%_bindir/testament
+
 %changelog
+* Tue Nov 10 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Tue May 26 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.2.10-alt1
 - Initial build for ALT Sisyphus.

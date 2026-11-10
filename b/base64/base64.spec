@@ -6,7 +6,7 @@
 %define libname libbase64
 
 Name: base64
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Summary: Fast Base64 stream encoder/decoder with SIMD acceleration
@@ -90,5 +90,8 @@ ctest --test-dir %_target_platform --output-on-failure
 %_libdir/cmake/base64/
 
 %changelog
+* Tue Nov 10 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.5.3-alt1
+- Updated to 0.5.3.
+
 * Mon Aug 31 2026 Timofei Fedotov <sovtouch@altlinux.org> 0.5.2-alt1
 - Initial build for ALT Sisyphus.
