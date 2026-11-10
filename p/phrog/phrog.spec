@@ -11,7 +11,7 @@
 
 Name: phrog
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: Mobile device greeter
 Group: Graphical desktop/GNOME
@@ -58,7 +58,7 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %build
 export GETTEXT_SYSTEM=1
 %rust_build
-%__cargo run --offline --package xtask -- dist-data greetd-config.toml --greetd-vt 1 --greetd-user _greeter
+%rust_run --package xtask -- dist-data greetd-config.toml --greetd-vt 1 --greetd-user _greeter
 
 %install
 export GETTEXT_SYSTEM=1
@@ -99,6 +99,9 @@ dbus-run-session xvfb-run -a phoc -E "cargo test --release --frozen"
 %doc README*
 
 %changelog
+* Tue Nov 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1.1
+- fixed build with new rpm-macros-rust
+
 * Wed Jun 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.53.0-alt1
 - 0.53.0
 
