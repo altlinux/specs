@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.3.8
+Version: 0.4.0
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -20,7 +20,7 @@ Patch0: %name-%version-%release.patch
 Patch1: ddm-0.3.0-alt-pam.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
-BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel treeland-protocols libwayland-client-devel libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
+BuildRequires: gcc-c++ deepin-extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel treeland-protocols libwayland-client-devel libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
 
 %description
 %summary.
@@ -63,6 +63,7 @@ The package provides development files for libddm-common.
 sed -i 's|/etc/default/locale|%_sysconfdir/locale.conf|' services/*.pam
 
 %build
+export ECM_DIR=%_datadir/DDE-ECM
 %DQ6build \
   -DUID_MIN=1000 \
   -DUID_MAX=60000 \
@@ -118,6 +119,9 @@ exit 0
 %_libdir/cmake/DDM/Common*.cmake
 
 %changelog
+* Wed Oct 21 2026 Leontiy Volodin <lvol@altlinux.org> 0.4.0-alt1
+- New version 0.4.0.
+
 * Fri Aug 28 2026 Leontiy Volodin <lvol@altlinux.org> 0.3.8-alt1
 - New version 0.3.8.
 

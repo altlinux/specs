@@ -7,7 +7,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 6.1.96
+Version: 6.1.113
 Release: alt1
 
 Summary: New control center for Linux Deepin
@@ -22,6 +22,7 @@ Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-control-center-6.1.4-alt-qch.patch
 Patch2: deepin-control-center-6.1.40-alt-fixes-underlinked-libs.patch
+Patch3: deepin-control-center-6.1.106-alt-fixes-qt6.10.patch
 
 #FAILED: src/plugin-mouse/CMakeFiles/mouse.dir/mouse_autogen/OYYSJO5W5K/qrc_mouse.cpp.o
 #virtual memory exhausted: Cannot allocate memory
@@ -41,12 +42,26 @@ Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 %description
 New control center for Linux Deepin.
 
+%package -n libdcc-wallpaper-thumbnailer
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libdcc-wallpaper-thumbnailer
+This package provides library for %name.
+
 %package -n lib%repo%sover
 Summary: Library for %name
 Group: System/Libraries
 Requires: libdqt6-qmlmodels = %_dqt6_version
 
 %description -n lib%repo%sover
+This package provides library for %name.
+
+%package -n libdcc-shared-utils%sover
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n libdcc-shared-utils%sover
 This package provides library for %name.
 
 %package -n lib%repo-devel
@@ -60,7 +75,10 @@ This package provides development files for %name.
 
 %prep
 %setup -n %repo-%version
-%autopatch -p1
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p2
 # We do not use dpkg and deepinid.
 sed -e '/add_subdirectory(src\/plugin-privacy)/d;' \
     -e '/add_subdirectory(src\/plugin-deepinid)/d;' \
@@ -125,7 +143,6 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 %_datadir/dsg/configs/org.deepin.region-format.json
-%dir %_datadir/%repo/
 %_userunitdir/org.deepin.dde.control-center.service
 %dir %_datadir/deepin-debug-config/
 %dir %_datadir/deepin-debug-config/deepin-debug-config.d/
@@ -133,21 +150,34 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/accounts/accounts.so
 %dir %_datadir/deepin-log-viewer/
 %dir %_datadir/deepin-log-viewer/deepin-log.conf.d/
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.dde.control-center.json
+%dir %_datadir/%repo/
+%dir %_datadir/%repo/permission-interfaces/
+%_datadir/%repo/permission-interfaces/org.deepin.dcc-inputdevice.json
 # package outside find_lang
 %dir %_datadir/%repo/translations/
 %dir %_datadir/%repo/translations/v1.1/
 %_datadir/%repo/translations/v1.1/dde-control-center_ky@Arab.qm
 
+%files -n libdcc-wallpaper-thumbnailer
+%_libdir/libdcc-wallpaper-thumbnailer.so
+
 %files -n lib%repo%sover
 %_libdir/lib%repo.so.%{sover}*
 
+%files -n libdcc-shared-utils%sover
+%_libdir/libdcc-shared-utils.so.%{sover}*
+
 %files -n lib%repo-devel
 %_libdir/lib%repo.so
+%_libdir/libdcc-shared-utils.so
 %dir %_libdir/cmake/DdeControlCenter/
 %_libdir/cmake/DdeControlCenter/DdeControlCenter*.cmake
 %_includedir/%repo/
 
 %changelog
+* Thu Nov 05 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.113-alt1
+- New version 6.1.113.
+
 * Fri Jun 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.1.96-alt1
 - New version 6.1.96.
 

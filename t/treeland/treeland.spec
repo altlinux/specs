@@ -5,7 +5,7 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.9.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Wayland compositor for DDE
@@ -22,7 +22,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja patchelf
 # Automatically added by buildreq on Mon Jul 27 2026
 # optimized out: cmake cmake-modules dqt6-base-common dqt6-base-devel dqt6-tools dtk6core gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 hwdata libX11-devel libcairo-gobject libcap-ng libcdio-paranoia libcrypt-devel libddm-common-devel libddm-common0 libdisplay-info libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-opengl libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-quickcontrols2 libdqt6-quicktemplates2 libdqt6-remoteobjects libdqt6-shadertools libdqt6-test libdqt6-waylandclient libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgcc15-devel libgdk-pixbuf libglvnd-devel libgpg-error libopencore-amrnb0 libopencore-amrwb0 libp11-kit librabbitmq-c4 libraw1394-11 libsasl2-3 libspirv-tools0 libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-cursor-devel libwayland-egl libwayland-server libx265-216 libxcb-devel libxcb-render-util libxcbutil-icccm libxkbcommon-devel ninja-build ocl-icd pipewire-jack-libs pipewire-libs pkg-config python3 python3-base samba-common-libs sh5 vulkan-headers wayland-devel xorg-proto-devel
-BuildRequires: ddm-devel dqt6-declarative-devel dqt6-remoteobjects-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-wayland-devel dtk6-common-devel glslang libXau-devel libdisplay-info-devel libdqt6-concurrent libdqt6-qmlcompiler libdqt6-quicktest libdrm-devel libdtk6declarative-devel libdtk6systemsettings-devel libgbm-devel libinput-devel liblcms2-devel libmpv-devel libpam-devel libpixman-devel libseat1-devel libsystemd-devel libvulkan-devel libwayland-egl-devel libwayland-server-devel libxcb-render-util-devel libxcbutil-errors-devel libxcbutil-icccm-devel libliftoff-devel treeland-protocols wayland-protocols wlr-protocols
+BuildRequires: ddm-devel dqt6-declarative-devel dqt6-remoteobjects-devel dqt6-shadertools-devel dqt6-tools-devel dqt6-wayland-devel dqt6-httpserver-devel dqt6-websockets-devel dtk6-common-devel glslang libXau-devel libdisplay-info-devel libdqt6-concurrent libdqt6-qmlcompiler libdqt6-quicktest libdrm-devel libdtk6declarative-devel libdtk6systemsettings-devel libgbm-devel libinput-devel liblcms2-devel libmpv-devel libpam-devel libpixman-devel libseat1-devel libsystemd-devel libvulkan-devel libwayland-egl-devel libwayland-server-devel libxcb-render-util-devel libxcbutil-errors-devel libxcbutil-icccm-devel libliftoff-devel treeland-protocols wayland-protocols wlr-protocols
 BuildRequires: hwdata-devel xorg-xwayland-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -173,6 +173,7 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_libexecdir/treeland-xwayland
 %_unitdir/treeland.service
 %_datadir/dbus-1/system.d/org.deepin.compositor1.conf
+%_datadir/polkit-1/actions/org.deepin.dde.treeland-debug.policy
 %dir %_userunitdir/dde-session-pre.target.wants/
 %_userunitdir/dde-session-pre.target.wants/treeland*
 %dir %_userunitdir/dde-session-shutdown.target.wants/
@@ -208,8 +209,8 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_libdir/libtreeland.so
 %_libdir/libtreeland-protocol-capture-v1.so
 %dir %_includedir/treeland/
-%dir %_includedir/treeland/modules/
-%_includedir/treeland/modules/personalization/
+%_includedir/treeland/modules/
+%_includedir/treeland/common/
 %_libdir/cmake/treeland/
 
 %files -n libdwaylibserver%sover
@@ -232,6 +233,9 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/pkgconfig/waylib-wlroots.pc
 
 %changelog
+* Tue Nov 10 2026 Leontiy Volodin <lvol@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+
 * Wed Aug 26 2026 Leontiy Volodin <lvol@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 

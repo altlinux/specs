@@ -1,5 +1,5 @@
 Name: treeland-protocols
-Version: 0.5.10
+Version: 0.9.0
 Release: alt1
 
 Summary: Wayland protocol extensions for treeland
@@ -8,6 +8,8 @@ License: MIT
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/treeland-protocols
 Vcs: https://github.com/linuxdeepin/treeland-protocols
+
+BuildArch: noarch
 
 # Source-url: https://github.com/linuxdeepin/treeland-protocols/archive/%version/%name-%version.tar.xz
 Source: %name-%version.tar
@@ -21,11 +23,8 @@ BuildRequires: gcc-c++ cmake
 %prep
 %setup
 %patch -p1
-# cmake and pc files installed in libdir only
-sed -i 's|CMAKE_INSTALL_DATADIR|CMAKE_INSTALL_LIBDIR|g' \
-  cmake/CMakeLists.txt
-sed -i 's|${pc_sysrootdir}||' \
-  cmake/treeland-protocols.pc.in
+sed -e 's|${pc_sysrootdir}||' \
+    -i cmake/treeland-protocols.pc.in
 
 %build
 %cmake
@@ -38,11 +37,14 @@ sed -i 's|${pc_sysrootdir}||' \
 %doc LICENSES/ README*.md debian/changelog
 %dir %_datadir/%name/
 %_datadir/%name/treeland*.xml
-%dir %_libdir/cmake/TreelandProtocols/
-%_libdir/cmake/TreelandProtocols/TreelandProtocolsConfig*.cmake
-%_pkgconfigdir/%name.pc
+%dir %_datadir/cmake/TreelandProtocols/
+%_datadir/cmake/TreelandProtocols/TreelandProtocolsConfig*.cmake
+%_datadir/pkgconfig/%name.pc
 
 %changelog
+* Thu Nov 05 2026 Leontiy Volodin <lvol@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Tue Aug 18 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.10-alt1
 - New version 0.5.10.
 

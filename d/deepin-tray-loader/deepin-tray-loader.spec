@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-tray-loader
-Version: 2.0.39
+Version: 2.0.44
 Release: alt1
 
 Summary: Tray plugins that integrated into task bar for DDE
@@ -18,9 +18,9 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
-BuildRequires: gcc-c++ extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel libgio-devel kf6-kwindowsystem-devel wayland-protocols
+BuildRequires: gcc-c++ deepin-extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel dqt6-svg-devel dtk6-common-devel libdtk6widget-devel libxcbutil-image-devel libxcbutil-devel libXtst-devel libxcbutil-icccm-devel libXcursor-devel libudev-devel libcups-devel libgio-devel dkf6-kwindowsystem-devel wayland-protocols
 BuildRequires: dqt6-wayland-devel libwayland-egl-devel libwayland-server-devel
-BuildRequires: vulkan-headers libdqt6-concurrent
+BuildRequires: vulkan-headers libdqt6-concurrent libdqt6-quick
 
 Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 
@@ -38,6 +38,7 @@ DDE wirelesscasting plugin for dde-dock.
 %package -n libdde-trayplugin-interface%soverdti
 Summary: Library for %name
 Group: System/Libraries
+Requires: libdqt6-gui = %_dqt6_version libdqt6-waylandclient = %_dqt6_version
 
 %description -n libdde-trayplugin-interface%soverdti
 Library for %name.
@@ -81,6 +82,7 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
   $(find ./plugins -name '*CMakeLists.txt')
 
 %build
+export ECM_DIR=%_datadir/DDE-ECM
 %DQ6build \
   -DBUILD_SHARED_LIBS=ON \
   -DLIB_DESTINATION=%_lib \
@@ -98,6 +100,10 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %doc README* debian/changelog
 %_libexecdir/trayplugin-loader
 %_dqt6_plugindir/wayland-shell-integration/libplugin-shell.so
+%_userunitdir/dde-tray-loader.target
+%_userunitdir/dde-tray-loader@.service
+%dir %_userunitdir/dde-tray-loader.target.wants/
+%_userunitdir/dde-tray-loader.target.wants/dde-tray-loader*.service
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.dde.tray-loader/
@@ -168,6 +174,10 @@ sed -i '/LIBRARY DESTINATION/s|lib/dde-dock|${LIB_DESTINATION}/dde-dock|' \
 %_datadir/dde-dock/icons/dcc-setting/dcc-wireless-casting.dci
 
 %changelog
+* Thu Nov 05 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.44-alt1
+- New version 2.0.44.
+- Built on separate kf6 libs.
+
 * Fri Aug 21 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.39-alt1
 - New version 2.0.39.
 

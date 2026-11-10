@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.37
+Version: 2.0.61
 Release: alt1
 
 Summary: Plugins for DDE
@@ -17,10 +17,10 @@ Vcs: https://github.com/linuxdeepin/dde-shell
 # Source-url: %url/archive/%version/%repo-%version.tar.gz
 Source: %repo-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: deepin-shell-2.0.3-alt-fixes-bad-symbols.patch
+Patch1: deepin-shell-2.0.61-archlinux-qt6.10.patch
 
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6 patchelf
-BuildRequires: cmake extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel libicu-devel libgtest-devel
+BuildRequires: cmake deepin-extra-cmake-modules dqt6-base-devel dqt6-tools-devel dqt6-5compat-devel dqt6-declarative-devel dqt6-wayland-devel libdqt6-waylandcompositor dtk6-common-devel libdtk6widget-devel wayland-protocols libwayland-egl-devel libwayland-server-devel libxcbutil-icccm-devel libXtst-devel libxcbutil-devel libsystemd-devel libyaml-cpp-devel deepin-tray-loader-devel dde-dock-devel libcups-devel treeland-protocols deepin-application-manager-devel libicu-devel libgtest-devel deepin-api-devel
 BuildRequires: libdqt6-qmlcompiler dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql libdqt6-waylandeglcompositorhwintegration vulkan-headers libdqt6-test libdqt6-quicktemplates2 libdqt6-wlshellintegration
 %if_with clang
 BuildRequires: clang-devel
@@ -30,6 +30,7 @@ BuildRequires: gcc-c++
 
 Requires: libdqt6-gui = %_dqt6_version
 Requires: libdqt6-qml = %_dqt6_version
+Requires: libdqt6-quick = %_dqt6_version
 Requires: libdqt6-quicktemplates2 = %_dqt6_version
 Requires: libdqt6-waylandclient = %_dqt6_version
 Requires: libdqt6-waylandcompositor = %_dqt6_version
@@ -70,11 +71,23 @@ Group: Development/C++
 %description -n libds-notification-shared-devel
 Header files and libraries for libds-notification-shared.
 
+%package -n lib%repo-dock%sover
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n lib%repo-dock%sover
+Library for %name.
+
+%package -n lib%repo-dock-devel
+Summary: Development package for libdde-shell-dock
+Group: Development/C++
+
+%description -n lib%repo-dock-devel
+Header files and libraries for libdde-shell-dock.
+
 %prep
 %setup -n %repo-%version
 %autopatch -p1
-sed -i 's|/usr/lib/dde-dock/plugins/|%_libdir/dde-dock/plugins/|g' \
-  panels/dock/loadtrayplugins.h
 
 %build
 %if_with clang
@@ -84,6 +97,7 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
+export ECM_DIR=%_datadir/DDE-ECM
 export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtQuickTemplates2/%_dqt6_version:$CPLUS_INCLUDE_PATH
 %DQ6build \
     -DINCLUDE_INSTALL_DIR=%_includedir/%repo \
@@ -95,11 +109,14 @@ export CPLUS_INCLUDE_PATH=%_dqt6_headerdir/QtQuickTemplates2/%_dqt6_version:$CPL
 %DQ6install
 %find_lang --with-qt %repo
 patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificationcenterpanelplugin.so --add-rpath %_libdir/dde-shell
+patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-needed lib%repo.so.%sover
+patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-needed libdtk6gui.so.6
 
 %files -f %repo.lang
 %doc README.md LICENSE debian/changelog
 %_bindir/%repo
 %_userunitdir/%{repo}*.service
+%_desktopdir/org.deepin.dde-shell.desktop
 %dir %_libdir/dde-shell/
 %_libdir/dde-shell/org.deepin.ds*.so
 %dir %_dqt6_qmldir/org/deepin/
@@ -162,7 +179,21 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/notificationcenter/libnotificatio
 %files -n libds-notification-shared-devel
 %_libdir/libds-notification-shared.so
 
+%files -n lib%repo-dock%sover
+%_libdir/lib%repo-dock.so.%{sover}*
+
+%files -n lib%repo-dock-devel
+%_libdir/lib%repo-dock.so
+%dir %_libdir/cmake/DDEShellDock/
+%_libdir/cmake/DDEShellDock/*.cmake
+%dir %_includedir/dde-shell/
+%dir %_includedir/dde-shell/dock/
+%_includedir/dde-shell/dock/*.h
+
 %changelog
+* Thu Nov 05 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.61-alt1
+- New version 2.0.61 (thanks archlinux for the patch).
+
 * Thu Apr 16 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.37-alt1
 - New version 2.0.37.
 

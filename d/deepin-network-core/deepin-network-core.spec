@@ -5,7 +5,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 2.0.105
+Version: 2.0.108
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: LGPL-3.0-or-later and GPL-3.0-or-later
@@ -82,6 +82,7 @@ export CPLUS_INCLUDE_PATH="\
 %_dqt6_headerdir/QtCore/%_dqt6_version:\
 $CPLUS_INCLUDE_PATH"
 %DQ6build \
+  -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
   -DLIB_DESTINATION=%_lib \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DCMAKE_MODULE_LINKER_FLAGS='-L%_dqt6_libdir -L%_DK6lib -L%_DK6link' \
@@ -161,6 +162,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/network/network.so -
 %_libdir/lib%repo.so
 
 %changelog
+* Thu Nov 05 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.108-alt1
+- New version 2.0.108.
+
 * Tue Oct 20 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.105-alt1
 - New version 2.0.105.
 - Built on separate kf6 libs.
