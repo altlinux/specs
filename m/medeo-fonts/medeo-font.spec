@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: medeo-fonts
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: An open type family for Latin and Cyrillic by DNF
@@ -74,5 +74,8 @@ cd ../../MedeoMonoNerdFont/ttf
 %files -n fonts-ttf-medeo-mono-nerd-font -f fonts/MedeoMonoNerdFont/ttf/medeo-mono-nerd-font.files
 
 %changelog
+* Tue Nov 10 2026 Anton Zhukharev <ancieg@altlinux.org> 1.1.0-alt1
+- Updated to 1.1.0.
+
 * Tue Nov 10 2026 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
 - Packaged for ALT Sisyphus.
