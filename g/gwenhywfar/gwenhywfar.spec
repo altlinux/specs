@@ -1,6 +1,6 @@
 Name:     gwenhywfar
-Version:  5.14.1
-Release:  alt2
+Version:  5.14.2
+Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
 License:  LGPL-2.1+
@@ -141,6 +141,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_datadir/gwenhywfar/gwenbuild/builders
 
 %changelog
+* Tue Nov 10 2026 Andrey Cherepanov <cas@altlinux.org> 5.14.2-alt1
+- New version.
+
 * Tue Jun 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 5.14.1-alt2
 - NMU: fix FTBFS with gettext 1.0
 
