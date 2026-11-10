@@ -1,7 +1,7 @@
 %define repo fga
 
 Name: gap-fga
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: GAP: Free Group Algorithms
 License: GPL-2.0-or-later
@@ -43,6 +43,9 @@ write any such automorphism as word in these generators.
 %gap_sitelib/%repo/
 
 %changelog
+* Tue Nov 10 2026 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
+- New version 1.5.1.
+
 * Tue Sep 30 2025 Leontiy Volodin <lvol@altlinux.org> 1.5.0-alt1
 - New version 1.5.0.
 - Updated url tag.
