@@ -6,7 +6,7 @@
 
 Name: python3-module-%mod_name
 Version: 1.28.2
-Release: alt1
+Release: alt2
 
 Summary: PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents
 License: AGPL-3.0-or-later
@@ -27,6 +27,7 @@ BuildRequires: python3-module-mupdf
 BuildRequires: gcc gcc-c++
 BuildRequires: libfreetype-devel
 BuildRequires: python3-dev
+BuildRequires: python3-module-pipcl
 %if_with check
 BuildRequires: /proc
 BuildRequires: tesseract-langpack-en
@@ -35,7 +36,6 @@ BuildRequires: python3-modules-sqlite3
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-Pillow
 BuildRequires: python3-module-fonttools
-BuildRequires: python3-module-pipcl
 %endif
 
 Requires: python3-module-mupdf
@@ -108,6 +108,10 @@ SKIP="$SKIP and not test_2246 and \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 10 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.28.2-alt2
+- Made pipcl an unconditional build dependency.
+- Backported upstream fix for building with SWIG 4.5.
+
 * Sat Sep 26 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 1.28.2-alt1
 - New version (1.28.2).
 
