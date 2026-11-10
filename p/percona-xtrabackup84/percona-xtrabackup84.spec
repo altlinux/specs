@@ -1,11 +1,12 @@
 %global pxbu_major_minor 84
 
 %def_with man
+%set_gcc_version      15
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.4.0
-Release: alt3
+Release: alt4
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -20,11 +21,11 @@ Conflicts: percona-xtrabackup24
 Conflicts: percona-xtrabackup80
 
 # Automatically added by buildreq on Tue Jun 02 2026
-BuildRequires: cmake doxygen gcc-c++ libaio-devel libcurl-devel libev-devel libfido2-devel libgcrypt-devel
+BuildRequires: cmake doxygen gcc15-c++ libaio-devel libcurl-devel libev-devel libfido2-devel libgcrypt-devel
 BuildRequires: libicu-devel libldap-devel liblz4-devel libncurses-devel libproc2-devel libprotobuf-lite-devel
 BuildRequires: libsasl2-devel libzstd-devel python3-dev libtirpc-devel python3-module-sphinx
 %ifarch x86_64
-BuildRequires: libquadmath-devel
+BuildRequires: libquadmath15-devel
 %endif
 
 ExcludeArch: ppc64le %ix86 %arm %mips32 ppc
@@ -44,6 +45,8 @@ sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/Encod
 tar xfv %SOURCE2 -C extra/libkmip
 
 %build
+export CC=%__cc
+export CXX=%__cxx
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %cmake -DWITH_BOOST=libboost -DBUILD_CONFIG=xtrabackup_release -DWITH_PROTOBUF=system \
   -DCMAKE_INSTALL_PREFIX=%prefix -DWITH_SSL=system -DINSTALL_MANDIR=%_mandir -DWITH_MAN_PAGES=1 \
@@ -93,6 +96,9 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Tue Nov 10 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt4
+- Use GCC 15 (Fix FTBS)
+
 * Wed Sep 23 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt3
 - 8.4.0-7
 
