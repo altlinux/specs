@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.60.0
-Release: alt2
+Version: 2.61.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -73,7 +73,7 @@ Requires: cpio
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
-Patch: 0001-luks-Fix-regression-parsing-etc-luks.keys-with-empty.patch
+Patch0: 0001-runtime-Suppress-messages-from-udevadm.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -438,6 +438,24 @@ fi
 %prefix/lib/kernel/install.d/50-make-initrd.install
 
 %changelog
+* Tue Nov 10 2026 Anton Midyukov <antohami@altlinux.org> 2.61.0-alt1
+- Feature plymouth:
+  + Include XKB and Compose data in initramfs for localized password input.
+- Feature luks:
+  + Prevent duplicate entries when updating /etc/luks.keys.
+- Feature network:
+  + Prevent race conditions between IPv4 and IPv6 DHCP configuration on
+    the same interface.
+- Feature runtime:
+  + Parse RDLOG and STOP boot parameters early so logging and break points
+    take effect before services start.
+  + Freeze rootdelay countdown while paused to prevent timeout expiration
+    during interactive prompts.
+  + Monitor mount events via fanotify to avoid holding an open descriptor
+    on /proc during root switch.
+  + Replace runlevel directory symlinks with declarative /etc/rc.d/rc.order.
+  + Suppress messages from udevadm.
+
 * Sat Oct 31 2026 Anton Midyukov <antohami@altlinux.org> 2.60.0-alt2
 - luks: Fix regression parsing /etc/luks.keys with empty key-device
   (Closes: 61272).

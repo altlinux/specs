@@ -10,7 +10,7 @@
 %endif
 
 Name: %parent-%child
-Version: 0.1.6
+Version: 0.1.7
 Release: alt1
 
 Summary: %child modules set for %parent
@@ -46,8 +46,8 @@ Summary: The module %child-core for %parent
 Group: System/Configuration/Boot and Init
 BuildArch: noarch
 # [2.23.0] commit 78001064a introduces has_feature()
-# [2.36.0] commit db32bd39d introduces rootdelay_reset_timer()
-Requires: %parent >= 2.36.0
+# [2.61.0] commit 419171172 introduces rootdelay_set_deadline()
+Requires: %parent >= 2.61.0
 AutoReq: noshell, noshebang
 
 %description core
@@ -230,6 +230,10 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Nov 10 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.7-alt1
+- reduce dependence on make-initrd rootdelay
+- update the documentation
+
 * Tue Oct 27 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.6-alt1
 - improve the step 'liveboot' (ALT #60732)
 - fix bugs and improve other bootchain modules
