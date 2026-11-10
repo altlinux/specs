@@ -61,7 +61,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.13.4
-Release: alt5
+Release: alt6
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -193,7 +193,7 @@ BuildRequires: python3(pycodestyle)
 BuildRequires: python3(docker)
 BuildRequires: python3(sphinx)
 BuildRequires: python3-module-paramiko
-BuildRequires: python3-module-pki-base >= %pki_version
+BuildRequires: python3-module-dogtag-pki >= %pki_version
 %endif
 
 %global desc_common \
@@ -252,7 +252,7 @@ Conflicts: freeipa-server <= 4.13.1-alt6
 # not public packages and modules
 %filter_from_provides /python3(wsgi\(\..*\)\?)/d
 %filter_from_provides /python3(migration\(\..*\)\?)/d
-# manually manage dependency on python-pki
+# manually manage dependency on python-dogtag-pki
 %filter_from_requires /python3(pki\(\..*\)\?)/d
 
 %description server-core
@@ -269,10 +269,10 @@ What is NOT installed:
 Summary: The IPA authentication server
 Group: System/Base
 Requires: %name-server-core
-Requires: python3-module-pki-base >= %pki_version
-Requires: pki-ca >= %pki_version
-Requires: pki-kra >= %pki_version
-Requires: pki-acme >= %pki_version
+Requires: python3-module-dogtag-pki >= %pki_version
+Requires: dogtag-pki-ca >= %pki_version
+Requires: dogtag-pki-kra >= %pki_version
+Requires: dogtag-pki-acme >= %pki_version
 
 %description server
 %desc_common
@@ -1199,6 +1199,9 @@ fi
 %python3_sitelibdir/ipaplatform-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Nov 10 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt6
+- Explicitly require Dogtag PKI (closes: #61395).
+
 * Thu Nov 05 2026 Stanislav Levin <slev@altlinux.org> 4.13.4-alt5
 - Backported https://codeberg.org/freeipa/freeipa/issues/10101 (closes: #60444).
 
