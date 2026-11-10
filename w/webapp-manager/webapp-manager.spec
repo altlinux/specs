@@ -1,15 +1,18 @@
-Name:     webapp-manager
-Version:  1.4.6
-Release:  alt2
+%define _unpackaged_files_terminate_build 1
 
-Summary:  Run websites as if they were apps
-License:  GPLv3
-Group:    Networking/Other
-Url:      https://github.com/linuxmint/webapp-manager
+Name: webapp-manager
+Version: 1.4.7
+Release: alt1
+
+Summary: Run websites as if they were apps
+License: GPL-3.0-or-later
+Group: Networking/Other
+
+Url: https://xapp-project.org
+Vcs: https://github.com/linuxmint/webapp-manager
 
 BuildArch: noarch
 
-# Source-url: https://github.com/linuxmint/webapp-manager/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch: common-1.4.2-alt-fixes.patch
@@ -64,6 +67,11 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Wed Nov 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.7-alt1
+- 1.4.6 -> 1.4.7
+- changed URL and added VCS
+- changed license
+
 * Fri Sep 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.6-alt2
 - builded without altlinux-menus
 
