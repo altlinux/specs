@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.5.0
+Version: 8.5.1
 Release: alt1
 Summary: Composable command line interface toolkit
 License: BSD-3-Clause
@@ -14,17 +14,11 @@ Url: https://pypi.org/project/click/
 Vcs: https://github.com/pallets/click.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 # required by tests/test_utils.py::test_echo_via_pager
 BuildRequires: /usr/bin/less
 BuildRequires: /usr/bin/cat
@@ -43,11 +37,7 @@ implement an intended CLI API.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -63,6 +53,9 @@ implement an intended CLI API.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 09 2026 Stanislav Levin <slev@altlinux.org> 8.5.1-alt1
+- 8.5.0 -> 8.5.1
+
 * Thu Aug 27 2026 Stanislav Levin <slev@altlinux.org> 8.5.0-alt1
 - 8.4.2 -> 8.5.0
 
