@@ -5,7 +5,6 @@
 %def_enable egl
 %def_enable gles2
 
-%define dri_drivers_add() %{expand:%%global dri_drivers %{?dri_drivers:%dri_drivers,}%{1}}
 %define gallium_drivers_add() %{expand:%%global gallium_drivers %{?gallium_drivers:%gallium_drivers,}%{1}}
 %define vulkan_drivers_add() %{expand:%%global vulkan_drivers %{?vulkan_drivers:%vulkan_drivers,}%{1}}
 
@@ -22,30 +21,19 @@
 
 %define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel %e2k loongarch64
 
-# Mesa builds radeon and nouveau support as megadrivers
-%define dri_megadriver_arches %radeon_arches %nouveau_arches
-%define gallium_megadriver_arches %radeon_arches %nouveau_arches
-# XA state tracker requires at least one of the following gallium drivers: nouveau, freedreno, i915, svga
-%define xa_arches %nouveau_arches %armsoc_arches %svga_arches
-
 %gallium_drivers_add softpipe
 %gallium_drivers_add llvmpipe
 %ifarch %radeon_arches
-%dri_drivers_add r100
-%dri_drivers_add r200
 %gallium_drivers_add r300
 %gallium_drivers_add r600
 %gallium_drivers_add radeonsi
 %endif
 %ifarch %intel_arches
-%dri_drivers_add i915
-%dri_drivers_add i965
 %gallium_drivers_add i915
 %gallium_drivers_add crocus
 %gallium_drivers_add iris
 %endif
 %ifarch %nouveau_arches
-%dri_drivers_add nouveau
 %gallium_drivers_add nouveau
 %endif
 %ifarch %virgl_arches
@@ -98,8 +86,8 @@
 %endif
 %vulkan_drivers_add swrast
 
-%define ver_major 26.2
-%define ver_minor 6
+%define ver_major 26.3
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -306,6 +294,7 @@ Mesa-based DRI drivers
 %patch -p1
 
 tar -xf subprojects.tar
+tar -xf subprojects/packagecache/venus-protocol-1.1.3.tar.gz -C subprojects/
 
 %build
 export ALTWRAP_LLVM_VERSION=%llvmver
@@ -314,7 +303,7 @@ export ALTWRAP_LLVM_VERSION=%llvmver
 	-Dplatforms=x11,wayland \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
-	-Dvulkan-layers='device-select, anti-lag, overlay, screenshot' \
+	-Dvulkan-layers='device-select, overlay, screenshot' \
 	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc, av1dec, av1enc, vp9dec, mpeg12dec, jpegdec' \
 %ifarch x86_64
 	-Dintel-rt=enabled \
@@ -426,14 +415,12 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/X11/modules/dri/zink_dri.so
 %_libdir/libvulkan_lvp.so
 %_libdir/libVkLayer_MESA_device_select.so
-%_libdir/libVkLayer_MESA_anti_lag.so
 %dir %_datadir/drirc.d
 %_datadir/drirc.d/00-mesa-defaults.conf
 %_datadir/drirc.d/00-zink-defaults.conf
 %_datadir/drirc.d/00-lavapipe-defaults.conf
 %_datadir/vulkan/icd.d/lvp_icd*.json
 %_datadir/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json
-%_datadir/vulkan/implicit_layer.d/VkLayer_MESA_anti_lag.json
 
 %files -n vulkan-mesa-layers
 %_bindir/mesa-*.py
@@ -488,6 +475,7 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %_libdir/dri/r*_drv_video.so
 %_datadir/drirc.d/00-r?00-defaults.conf
 %_datadir/drirc.d/00-radeonsi-defaults.conf
+%_datadir/drirc.d/01-radv-performance.conf
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
 %_datadir/vulkan/icd.d/radeon_icd*.json
@@ -536,6 +524,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Nov 10 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.3.0-alt1
+- 26.3.0
+
 * Thu Oct 29 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.2.6-alt1
 - 26.2.6
 
