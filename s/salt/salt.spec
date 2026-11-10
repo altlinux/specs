@@ -2,7 +2,7 @@
 
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3008.3
+Version: 3008.5
 Release: alt1
 Epoch: 1
 License: Apache-2.0
@@ -43,6 +43,14 @@ BuildRequires: python3-module-pycryptodome >= 3.19.1
 BuildRequires: python3-module-pycryptodomex >= 3.19.1
 BuildRequires: python3-module-GitPython >= 3.1.41
 BuildRequires: python3-module-jinja2
+
+# Documentation
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinxcontrib-httpdomain
+BuildRequires: python3-module-myst-parser
+BuildRequires: python3-module-tornado
+BuildRequires: python3-module-looseversion
+BuildRequires: python3-module-cherrypy
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects requests.packages.urllib3.util.ssl_
 
@@ -85,7 +93,7 @@ through a simple yet manageable interface.
 %package master
 Summary: Management component for salt, a parallel remote execution system
 Group: System/Configuration/Other
-Requires: python3-module-salt = %version-%release
+Requires: python3-module-salt = %EVR
 AutoReq: yes, noshell
 %py3_requires xxhash
 
@@ -104,14 +112,34 @@ Salt minion is queried and controlled from the master.
 %package api
 Summary: API for salt
 Group: System/Configuration/Other
-Requires: python3-module-salt = %version-%release
+Requires: python3-module-salt = %EVR
 AutoReq: yes, noshell
+%py3_requires cherrypy
 
 %description api
 salt-api is a modular interface on top of Salt that can provide
 a variety of entry points into a running Salt system. It can start
 and manage multiple interfaces allowing a REST API to coexist
 with XMLRPC or even a Websocket API.
+
+%package cloud
+Summary: Cloud provisioner for Salt, a parallel remote execution system
+Group: System/Configuration/Other
+Requires: %name-master = %EVR
+%py3_requires libcloud
+ 
+%description cloud
+The salt-cloud tool provisions new cloud VMs, installs salt-minion on them, and
+adds them to the master's collection of controllable minions.
+
+%package ssh
+Summary: Agentless SSH-based version of Salt, a parallel remote execution system
+Group: System/Configuration/Other
+Requires: %name-master = %EVR
+ 
+%description ssh
+The salt-ssh tool can run remote execution functions and states without the use
+of an agent (salt-minion) service.
 
 %prep
 %setup
@@ -127,6 +155,7 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' salt/*)
 subst 's|/usr/local/bin/python2.7|%__python3|' salt/cloud/deploy/bootstrap-salt.sh
 
 %build
+make -C doc man SPHINXBUILD=/usr/bin/sphinx-build BUILDDIR=.
 %pyproject_build
 
 %install
@@ -213,19 +242,12 @@ install -D -m 0644 %SOURCE11 %buildroot%python3_sitelibdir/%name/utils/pkg
 %files master
 %config(noreplace) %_sysconfdir/salt/master
 %config(noreplace) %_sysconfdir/salt/master.d
-%config(noreplace) %_sysconfdir/salt/roster
 %config %_sysconfdir/bash_completion.d/*
 %config(noreplace) %dir %_sysconfdir/bash_completion.d
 %config(noreplace) %_sysconfdir/logrotate.d/salt-master
 %config(noreplace) %_sysconfdir/salt/pki/master
 %config(noreplace) %_sysconfdir/sysconfig/salt-master
 %config(noreplace) %_sysconfdir/sysconfig/salt-syndic
-%_sysconfdir/salt/cloud.conf.d
-%_sysconfdir/salt/cloud.deploy.d
-%_sysconfdir/salt/cloud.maps.d
-%_sysconfdir/salt/cloud.profiles.d
-%_sysconfdir/salt/cloud.providers.d
-%config(noreplace) %_sysconfdir/salt/cloud
 %ghost %_logdir/salt/master
 %_var/cache/salt
 %_initdir/salt-master
@@ -233,21 +255,27 @@ install -D -m 0644 %SOURCE11 %buildroot%python3_sitelibdir/%name/utils/pkg
 %_unitdir/salt-master.service
 %_unitdir/salt-syndic.service
 %_bindir/salt
-%_bindir/salt-cloud
 %_bindir/salt-cp
 %_bindir/salt-key
 %_bindir/salt-master
 %_bindir/salt-pip
 %_bindir/salt-run
-%_bindir/salt-ssh
 %_bindir/salt-syndic
 %_bindir/spm
+%_man1dir/salt.1*
+%_man1dir/salt-cp.1*
+%_man1dir/salt-key.1*
+%_man1dir/salt-master.1*
+%_man1dir/salt-run.1*
+%_man1dir/salt-syndic.1*
+%_man1dir/spm.1*
 
 %files api
 %config(noreplace) %_sysconfdir/sysconfig/salt-api
 %_bindir/salt-api
 %_initdir/salt-api
 %_unitdir/salt-api.service
+%_man1dir/salt-api.1*
 
 %files minion
 %config(noreplace) %_sysconfdir/salt/minion
@@ -263,8 +291,31 @@ install -D -m 0644 %SOURCE11 %buildroot%python3_sitelibdir/%name/utils/pkg
 %_bindir/salt-call
 %_bindir/salt-minion
 %_bindir/salt-proxy
+%_man1dir/salt-call.1*
+%_man1dir/salt-minion.1*
+%_man1dir/salt-proxy.1*
+
+%files cloud
+%config(noreplace) %_sysconfdir/%name/cloud
+%_bindir/%name-cloud
+%_man1dir/%name-cloud.1*
+%_sysconfdir/%name/cloud.conf.d
+%_sysconfdir/%name/cloud.deploy.d
+%_sysconfdir/%name/cloud.maps.d
+%_sysconfdir/%name/cloud.profiles.d
+%_sysconfdir/%name/cloud.providers.d
+ 
+%files ssh
+%config(noreplace) %_sysconfdir/%name/roster
+%_bindir/%name-ssh
+%_man1dir/%name-ssh.1*
 
 %changelog
+* Tue Nov 10 2026 Andrey Cherepanov <cas@altlinux.org> 1:3008.5-alt1
+- New version.
+- New packages: salt-cloud and salt-ssh.
+- Added man pages.
+
 * Thu Oct 01 2026 Andrey Cherepanov <cas@altlinux.org> 1:3008.3-alt1
 - New version.
 
