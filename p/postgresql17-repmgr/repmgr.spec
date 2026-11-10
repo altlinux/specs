@@ -3,8 +3,8 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name: postgresql%pg_ver-%prog_name
-Version: 5.5.0
-Release: alt5
+Version: 5.5.1
+Release: alt1
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -100,6 +100,11 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Tue Nov 10 2026 Alexei Takaseev <taf@altlinux.org> 5.5.1-alt1
+- 5.5.1
+    * OVE-20261110-0001 (Security fix: properly escape values
+      substituted into externally-configured notification commands)
+
 * Thu Mar 19 2026 Alexei Takaseev <taf@altlinux.org> 5.5.0-alt5
 - Use LLVM if it used in PostgreSQL
 
