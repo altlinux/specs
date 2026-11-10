@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.8.1
-Release: alt3
+Version: 2.9.0
+Release: alt1
 
 Summary: Database-backed Periodic Tasks
 License: BSD-3-Clause
@@ -34,6 +34,7 @@ BuildRequires: python3-module-cron-descriptor
 Source0: %name-%version.tar
 
 Patch: %name-%version-%release.patch
+Patch1: django-celery-beat-v2.9.0-fix-celery-5.7b1.patch
 
 %description
 This extension enables you to store the periodic task schedule in the
@@ -60,6 +61,9 @@ and how often they should run.
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Tue Nov 10 2026 Yaroslav Bahtin <alpacost@altlinux.org> 2.9.0-alt1
+- 2.8.1 -> 2.9.0
+
 * Sat Mar 28 2026 Yaroslav Bahtin <alpacost@altlinux.org> 2.8.1-alt3
 - Fixed FTBFS (cron-descriptor >= 2.0)
 
