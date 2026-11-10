@@ -1,18 +1,17 @@
 %add_optflags %optflags_shared
-%define soname 20
+%define soname 21
 
 Name: dcmtk
-Version: 3.7.0
-Release: alt2
+Version: 3.7.1
+Release: alt1
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT
 Group: Graphics
 
-Url: https://dcmtk.org/dcmtk.php.en
+Url: https://dcmtk.org/en/dcmtk/
 VCS: https://github.com/DCMTK/dcmtk
 Source: %name-%version.tar
-Patch0: dcmtk-3.7.0-CVE-2026-5663.patch
 
 Requires: lib%name%soname = %EVR
 BuildRequires: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
@@ -50,7 +49,6 @@ NB: a project using tuples from this library will fail to build
 
 %prep
 %setup
-%patch0 -p1
 
 %ifarch %e2k
 sed -i '/"fenv.h" HAVE_FENV_H/d' CMake/GenerateDCMTKConfigure.cmake
@@ -99,6 +97,9 @@ sed -i -E '/ofstd_(std_|tuple)/d' ofstd/tests/tests.cc
 %_libdir/cmake/dcmtk/*.cmake
 
 %changelog
+* Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 3.7.1-alt1
+- 3.7.0 -> 3.7.1
+
 * Tue Jun 09 2026 Anton Farygin <rider@altlinux.org> 3.7.0-alt2
 - Fixes:
   + CVE-2026-5663 OS command injection via a crafted DICOM C-STORE request

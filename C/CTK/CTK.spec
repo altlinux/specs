@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: CTK
-Version: 2026.08.06
-Release: alt2
+Version: 2026.09.02
+Release: alt1
 Summary: A set of common support code for medical imaging, surgical navigation, and related purposes
 License: Apache-2.0
 Group: Development/Tools
@@ -181,6 +181,9 @@ done
 %python3_sitelibdir/*.so
 
 %changelog
+* Mon Nov 09 2026 Anton Farygin <rider@altlinux.org> 2026.09.02-alt1
+- 2026.08.06 -> 2026.09.02
+
 * Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 2026.08.06-alt2
 - fixed standalone CTKCorePythonQt import (ALT #60111)
 
