@@ -10,7 +10,7 @@
 
 Name: civetweb
 Version: 1.16
-Release: alt3.git588860e
+Release: alt4.git588860e
 
 Summary: Embedded C/C++ web server
 License: MIT
@@ -128,6 +128,12 @@ rm -rf src/third_party/sqlite3.c src/third_party/sqlite3.h \
 # scripting tests (lua-script, sqlite-script, lua-extras-script, duktape-script): enabled by default, skip with --without scripting_tests
 mkdir -p output
 %__cc %optflags -o output/cgi_test.cgi unittest/cgi_test.c
+# The installed CMake package must work for C and C++ consumers
+cmake -S test/cmake-consumer -B consumer-build \
+    -DCMAKE_PREFIX_PATH=%buildroot%_prefix
+cmake --build consumer-build
+LD_LIBRARY_PATH=%buildroot%_libdir \
+    ctest --test-dir consumer-build --output-on-failure
 cd %_cmake__builddir
 %if_with scripting_tests
 CTEST_EXCLUDE='test-publicserver-minimal-https?-client|test-publicserver-start-stop-http-server-ipv6'
@@ -157,6 +163,34 @@ vm-run --kvm=cond --sbin \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 09 2026 Andrey Kuznetcov <morgonf@altlinux.org> 1.16-alt4.git588860e
+- fix request handling bugs, sent upstream:
+  * multipart file names with spaces, broken by the CVE-2025-9648 fix
+    (PR #1447)
+  * more than 64 request headers silently dropped (PR #1448)
+  * chunk sizes overflowing the request content length (PR #1449)
+  * request bytes echoed in the response status line (PR #1457)
+  * websocket frames with reserved opcodes or long control frames
+    (PR #1458)
+  * read errors in the Duktape conn.read() binding (PR #1459)
+  * websocket connection kept open after a partial frame write
+    (PR #1460)
+  * Content-Length near INT64_MAX keeping a keep-alive connection
+    with an unread body (PR #1461)
+  * uninitialised length in the Lua mg.base64_decode() (PR #1462)
+  * unchecked hash and lost :include= lines when modifying the
+    passwords file (PR #1463)
+  * endless loop in mg_get_cookie() with an empty name (PR #1467)
+  * crash on an empty Lua server page (PR #1466)
+  * unchecked allocation in WebDAV MOVE and COPY (PR #1468)
+- backport upstream PRs #1443, #1451 (httpoxy), #1454, #1455, #1414,
+  PR #1442 and PR #1415
+- fix the installed CMake package: pkg-config targets of the system Lua,
+  SQLite and Duktape leaked into civetweb::civetweb and broke every
+  consumer since 1.16-alt2; %%check now builds C and C++ consumers
+  (test from PR #1465)
+- %%check now runs 69 tests
+
 * Mon Jul 20 2026 Andrey Kuznetcov <morgonf@altlinux.org> 1.16-alt3.git588860e
 - fix remote stack-buffer-overflow in mg_handle_form_request() multipart
   preamble scan (upstream issue #1404); add a regression test
