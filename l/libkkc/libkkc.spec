@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/valadoc pkgconfig(gio-2.0)
 
 Name:		libkkc
 Version:	0.3.5
-Release:	alt2_24
+Release:	alt3_24
 Summary:	Japanese Kana Kanji conversion library
 
 License:	GPLv3+
@@ -20,6 +20,7 @@ Patch0:		libkkc-HEAD.patch
 Patch1:         libkkc-POT.skip.patch
 Patch2:         libkkc-vala-abstract-create.patch
 Patch3: libkkc-pr40-int-conversion-fix.patch
+Patch4: libkkc-0.3.5-girscanner-gcc16-workaround.patch
 
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires:  gcc-c++
@@ -82,11 +83,7 @@ The %{name}-common package contains the arch-independent data that
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
+%autopatch -p1
 
 [ -f README.md ] || cp -p %SOURCE1 .
 autoreconf -f
@@ -132,6 +129,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_bindir}/kkc
 
 
 %changelog
+* Wed Nov 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.3.5-alt3_24
+- fixed FTBFS
+
 * Wed Dec 03 2025 Aleksandr Shamaraev <shad@altlinux.org> 0.3.5-alt2_24
 - FTBFS:fix: build with gcc14 (thnx Fedora).
 
