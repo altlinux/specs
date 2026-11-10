@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 Summary: Modern REST framework for Django with types and async support
 License: MIT
@@ -30,6 +30,7 @@ BuildRequires: python3-module-django-dbbackend-sqlite3
 %add_pyproject_deps_check_filter pytest-custom-exit-code
 %add_pyproject_deps_check_filter slotscheck
 %add_pyproject_deps_check_filter wemake-python-styleguide
+%add_pyproject_deps_check_filter strict-no-cover
 # not packaged in Sisyphus
 %add_pyproject_deps_check_filter xmltodict-rs
 
@@ -85,6 +86,9 @@ and OpenAPI schema generation.
 %python3_sitelibdir/__pycache__/%dmr_pytest_name.*
 
 %changelog
+* Tue Nov 10 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.17.0-alt1
+- New version (0.17.0).
+
 * Thu Oct 08 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.16.0-alt1
 - New version (0.16.0).
 
