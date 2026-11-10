@@ -4,7 +4,7 @@
 
 Name: qt6-declarative
 Version: 6.11.2
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -61,7 +61,7 @@ Source4: find-requires.sh
 #BuildRequires: ccmake glslang libGLU-devel libxkbcommon-devel python-modules-compiler python3-dev qt6-shadertools-devel rpm-build-qml tbb-devel
 BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
 BuildRequires: rpm-build-python3
-BuildRequires: glibc-devel qt6-base-devel qt6-shadertools-devel qt6-svg-devel
+BuildRequires: glibc-devel  qt6-shadertools-devel qt6-svg-devel qt6-languageserver-devel
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
 %if_disabled bootstrap
 BuildRequires: qt6-tools
@@ -764,6 +764,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
+- build qmlls (thanks parovoz@alt) (closes: 61103)
+
 * Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
 - new version
 
