@@ -21,8 +21,8 @@
 %define basedir	%_datadir/icingaweb2
 
 Name:           icingaweb2-module-director
-Version:        1.11.5
-Release:        alt2
+Version:        1.12.1
+Release:        alt1
 
 Summary:        Config module for Icinga 2
 License:        GPL-2.0-or-later
@@ -32,7 +32,6 @@ URL:            https://icinga.com
 Vcs:            https://github.com/Icinga/icingaweb2-module-director.git
 
 Source0:        https://github.com/Icinga/%name/archive/v%version/%name-%version.tar
-Patch0:         director-no-deprecated-modules.patch
 
 BuildRequires(pre): rpm-build-php-version
 BuildRequires:  php%php_defver-devel
@@ -55,7 +54,6 @@ Director is a config module for Icinga 2.
 
 %prep
 %setup
-%patch0 -p2
 
 %build
 
@@ -101,6 +99,9 @@ getent passwd %icingadirector_user >/dev/null || useradd -c "Icinga2 director" -
 %_unitdir/icinga-director.service
 
 %changelog
+* Tue Nov 10 2026 Paul Wolneykien <manowar@altlinux.org> 1.12.1-alt1
+- New version 1.12.1.
+
 * Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 1.11.5-alt2
 - Select PHP version using %%php_defver macro.
 

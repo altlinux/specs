@@ -21,8 +21,8 @@
 %define module_name incubator
 
 Name: icingaweb2-module-%module_name
-Version: 0.22.0
-Release: alt2
+Version: 0.23.0
+Release: alt1
 Summary: Bleeding edge Icinga Web 2 libraries
 License: MIT
 Group: Monitoring
@@ -30,8 +30,6 @@ Url: https://www.icinga.org
 Vcs: https://github.com/Icinga/icingaweb2-module-incubator.git
 
 Source0: https://github.com/Icinga/icingaweb2-module-%module_name/archive/v%version/%name-%version.tar
-Patch0:  incubator-no-deprecated-modules.patch
-Patch1:  upstream-Fix-form-validation.patch
 
 BuildArch: noarch
 
@@ -45,8 +43,6 @@ Icinga Web 2 - ReactPHP-based 3rd party libraries
 
 %prep
 %setup
-%patch0 -p2
-%patch1 -p1
 
 %build
 
@@ -66,6 +62,9 @@ cp -pv *.md *.php *.info %buildroot%basedir/modules/%module_name
 %basedir/modules/%module_name/*
 
 %changelog
+* Tue Nov 10 2026 Paul Wolneykien <manowar@altlinux.org> 0.23.0-alt1
+- New version 0.23.0.
+
 * Mon Dec 29 2025 Paul Wolneykien <manowar@altlinux.org> 0.22.0-alt2
 - Select PHP version using %%php_defver macro.
 

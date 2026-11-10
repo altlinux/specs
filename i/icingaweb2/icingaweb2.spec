@@ -19,8 +19,8 @@
 %define webdir %_var/www/vhosts/%name
 
 Name:           icingaweb2
-Version:        2.12.5
-Release:        alt3
+Version:        2.14.1
+Release:        alt1
 
 Summary:        Icinga Web
 License:        GPL-2.0-or-later
@@ -32,7 +32,6 @@ Vcs:            https://github.com/Icinga/icingaweb2.git
 Source0:        https://github.com/Icinga/icingaweb2/archive/v%version/%name-%version.tar
 Patch0:         icingaweb2-skip-etc-open.patch
 Patch1:         icingaweb2-cli-stderr.patch
-Patch2:         icingaweb2-fix-setup-fpm-flag.patch
 Patch3:         icingaweb2-token-chgrp-alt.patch
 
 Requires:       icinga-l10n >= 1.1.0
@@ -143,7 +142,6 @@ Classic styles (branding) for Icinga Web 2.
 %setup
 %patch0 -p2
 %patch1 -p2
-%patch2 -p1
 %patch3 -p2
 
 %build
@@ -258,7 +256,6 @@ grep -F '%_var/run/php%php_defver-fpm/%name.socket' ./nginx-icingaweb2.conf
 %exclude %_datadir/%name/public/img
 %exclude %_datadir/%name/application/fonts
 %exclude %_datadir/%name/modules/doc/public/css
-%exclude %_datadir/%name/modules/monitoring/public/css
 %exclude %_datadir/%name/public/css
 %_datadir/%name/schema
 %dir %webdir
@@ -299,10 +296,24 @@ grep -F '%_var/run/php%php_defver-fpm/%name.socket' ./nginx-icingaweb2.conf
 %_datadir/%name/public/img
 %_datadir/%name/application/fonts
 %_datadir/%name/modules/doc/public/css
-%_datadir/%name/modules/monitoring/public/css
 %_datadir/%name/public/css
 
 %changelog
+* Tue Nov 10 2026 Paul Wolneykien <manowar@altlinux.org> 2.14.1-alt1
+- New version 2.14.1.
+
+* Tue Nov 10 2026 Paul Wolneykien <manowar@altlinux.org> 2.13.2-alt1
+- New version 2.13.2.
+- Fixes:
+  + GHSA-mph2-hvq4-8423 Remove the standalone chart endpoints to prevent
+    file reads and denial of service.
+  + GHSA-jff6-vjrf-q9gj Match usernames literally in database and LDAP
+    backends.
+  + GHSA-grpw-587v-93vw Escape navigation item labels in sidebar submenu
+    headers.
+  + GHSA-fmf2-272p-p3r9 Restrict remembered device management to the
+    user's own devices.
+
 * Tue Aug 25 2026 Anton Midyukov <antohami@altlinux.org> 2.12.5-alt3
 - icingaweb2-nginx: disable ipv6 by default.
 

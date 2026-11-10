@@ -2,7 +2,7 @@
 %define pname icingaweb2
 
 Name:           icingaweb2-style-altsp
-Version:        0.1.1
+Version:        0.1.2
 Release:        alt1
 
 Summary:        ALT SP styling for Icinga Web 2
@@ -15,6 +15,7 @@ BuildRequires:  icingaweb2-style-classic
 
 Provides:       %pname-style = %version-%release
 Conflicts:      %pname-style
+Conflicts:      %pname < 2.14.1
 
 BuildArch:      noarch
 
@@ -34,10 +35,12 @@ ALT SP styling for Icinga Web 2.
 %_datadir/%pname/public/img
 %_datadir/%pname/application/fonts
 %_datadir/%pname/modules/doc/public/css
-%_datadir/%pname/modules/monitoring/public/css
 %_datadir/%pname/public/css
 
 %changelog
+* Tue Nov 10 2026 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
+- Drop modules/monitoring/ paths (also dropped in icingaweb2 >= 2.14.1).
+
 * Thu Oct 24 2024 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
 - Hide the first two social icons on the about page.
 - Hide the first two social icons on the login page.

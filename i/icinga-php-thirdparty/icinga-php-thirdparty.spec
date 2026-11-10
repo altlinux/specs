@@ -14,8 +14,8 @@
 %global basedir %_datadir/icinga-php/vendor
 
 Name:           icinga-php-thirdparty
-Version:        0.13.1
-Release:        alt3
+Version:        1.1.0
+Release:        alt1
 Summary:        Icinga PHP Thirdparty for Icinga Web 2
 License:        MIT
 Group:          Monitoring
@@ -38,11 +38,9 @@ which can be integrated as library into Icinga Web 2.
 %prep
 %setup
 %patch0 -p2
-find vendor/shardj -type f -name "*.php" -exec chmod -x {} \;
 find vendor/predis -type f -name "*.sh" -exec chmod +x {} \;
 chmod -x vendor/ezyang/htmlpurifier/library/HTMLPurifier/DefinitionCache/Serializer/README
-chmod -x vendor/shardj/zf1-future/README-GIT.md
-chmod -x vendor/shardj/zf1-future/library/Zend/Locale/Data/fy.xml
+chmod -x vendor/icinga/zf1/library/Zend/Locale/Data/fy.xml
 
 # unsuitable
 truncate -s0 vendor/masterminds/html5/README.md
@@ -68,6 +66,30 @@ fdupes %buildroot%basedir
 %basedir
 
 %changelog
+* Mon Nov 09 2026 Paul Wolneykien <manowar@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
+* Mon Nov 09 2026 Paul Wolneykien <manowar@altlinux.org> 1.0.1-alt1
+- New version 1.0.1.
+- Fixes:
+  + GHSA-x424-64qh-5j54 A malformed HTTP chunked body can lead to a
+    denial-of-service and peg the CPU.
+  + GHSA-g4f2-2pf3-2pwj Unbounded HTTP Client Response Header
+    Buffering Leads to Memory Exhaustion DoS.
+  + GHSA-v5mv-p594-2x33 Noncanonical host can bypass host-based checks.
+  + GHSA-f7vp-7xgx-4w4r Noncanonical cookie domain keeps subdomain scope.
+  + GHSA-wm3w-8rrp-j577 Host-only cookie scope is not preserved.
+  + GHSA-f283-ghqc-fg79 Unbounded response cookies risk denial of service.
+  + GHSA-h95v-h523-3mw8 URI fragments disclosed in redirect Referer headers.
+  + GHSA-94pj-82f3-465w Proxy-Authorization headers can be sent to origin
+    servers.
+  + GHSA-cx96-42px-69fm Local file read due to improper file path
+    validation in SVG images encoded as data-URI.
+  + GHSA-wvh6-f5jh-8gw4 Chroot Validation Bypass.
+
+* Mon Nov 09 2026 Paul Wolneykien <manowar@altlinux.org> 0.14.0-alt1
+- New version 0.14.0.
+
 * Tue Oct 06 2026 Paul Wolneykien <manowar@altlinux.org> 0.13.1-alt3
 - Truncate unsuitable README.
 - Updated timezone data according to zones in actual use.
