@@ -4,7 +4,7 @@
 
 Name:    KTX-Software
 Version: 4.4.2
-Release: alt1
+Release: alt2
 
 Summary: KTX (Khronos Texture) Library and Tools
 License: Apache-2.0
@@ -48,6 +48,7 @@ Group: Development/C++
 %setup
 
 %build
+%add_optflags -std=gnu++17
 %cmake
 %cmake_build
 
@@ -72,5 +73,8 @@ Group: Development/C++
 %_cmakedir/*
 
 %changelog
+* Tue Nov 10 2026 Artem Semenov <savoptik@altlinux.org> 4.4.2-alt2
+- Fixed FTBFS after gcc 16 update.
+
 * Tue Oct 06 2026 Artem Semenov <savoptik@altlinux.org> 4.4.2-alt1
 - Initial build for Sisyphus.
