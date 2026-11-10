@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mod_name
-Version: 3.0.11
+Version: 3.0.13
 Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
@@ -14,19 +14,10 @@ Url: https://pypi.org/project/kafka-python/
 VCS: https://github.com/dpkp/kafka-python.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-Provides: python3-module-%pypi_name = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%add_pyproject_deps_check_filter docker-py
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_deps metadata_extra crc32c
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 This module provides low-level protocol support for Apache Kafka as well
@@ -39,11 +30,7 @@ and Snappy compression is also supported for message sets.
 %patch -p1
 # not used anywhere anyway
 rm -r %mod_name/vendor/
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile requirements-dev.txt
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -62,6 +49,9 @@ rm -r %buildroot%python3_sitelibdir/test/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 09 2026 Stanislav Levin <slev@altlinux.org> 3.0.13-alt1
+- 3.0.11 -> 3.0.13
+
 * Thu Aug 27 2026 Stanislav Levin <slev@altlinux.org> 3.0.11-alt1
 - 3.0.8 -> 3.0.11
 
