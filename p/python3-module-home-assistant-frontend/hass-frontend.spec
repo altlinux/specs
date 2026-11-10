@@ -1,5 +1,5 @@
 Name: python3-module-home-assistant-frontend
-Version: 20261028.4
+Version: 20261028.5
 Release: alt1
 
 Summary: Home automation platform -- frontend
@@ -28,6 +28,9 @@ tar xf %SOURCE0 -C %buildroot%python3_sitelibdir/
 %python3_sitelibdir/home_assistant_frontend-*-info
 
 %changelog
+* Tue Nov 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20261028.5-alt1
+- 20261028.5
+
 * Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 20261028.4-alt1
 - 20261028.4
 
