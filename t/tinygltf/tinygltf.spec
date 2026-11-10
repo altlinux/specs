@@ -1,5 +1,5 @@
 Name:    tinygltf
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 
 Summary: Header only C11 tiny glTF 2.0 library
@@ -43,6 +43,9 @@ This package contains development files for %name.
 %_includedir/tinygltf_json_c.h
 
 %changelog
+* Tue Nov 10 2026 Sergey Palcheh <minergenon@altlinux.org> 3.1.0-alt1
+- new version 3.1.0
+
 * Fri Sep 04 2026 Sergey Palcheh <minergenon@altlinux.org> 3.0.1-alt1
 - new version 3.0.1
 
