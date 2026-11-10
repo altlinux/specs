@@ -2,8 +2,8 @@
 %define import_path github.com/git-bug/git-bug
 
 Name: git-bug
-Version: 0.11.0
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: Distributed, offline-first bug tracker embedded in git
 License: GPL-3.0-or-later
@@ -69,6 +69,9 @@ install -Dpm 0644 -t %buildroot%_man1dir doc/man/*.1
 %_man1dir/*
 
 %changelog
+* Tue Nov 10 2026 Ulysses Apokin <ulysses@altlinux.org> 0.12.0-alt1
+- New version.
+
 * Thu Oct 15 2026 Ulysses Apokin <ulysses@altlinux.org> 0.11.0-alt2
 - Build binary with embedded web UI.
 
