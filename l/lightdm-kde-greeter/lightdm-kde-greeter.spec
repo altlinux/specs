@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: lightdm-kde-greeter
-Version: 6.1.7
+Version: 6.1.8
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE6 Greeter
@@ -18,8 +18,7 @@ Url: https://invent.kde.org/plasma/lightdm-kde-greeter.git
 Source: %name-%version.tar
 Source1: %fallback_session_filename
 
-Patch1: recent-russian-translations.patch
-Patch2: remove-numlock-indication.patch
+Patch1: remove-numlock-indication.patch
 
 %ifarch aarch64
 %define optflags_lto %nil
@@ -64,7 +63,6 @@ This is a fork of KDE4-based LightDM greeter engine for KDE6.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 %K6build \
@@ -120,6 +118,10 @@ fi
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Fri Oct 30 2026 Anton Golubev <golubevan@altlinux.org> 6.1.8-alt1
+- store multiple last logged-in users
+- remove russian translations for recent changes patch
+
 * Mon Oct 12 2026 Anton Golubev <golubevan@altlinux.org> 6.1.7-alt1
 - add screen reader support
 - remove patch reverting port from powermanagement dataengine
