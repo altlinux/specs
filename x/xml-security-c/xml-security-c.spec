@@ -3,7 +3,7 @@
 
 Name: xml-security-c
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: C++ Implementation of W3C security standards for XML
 
@@ -58,6 +58,7 @@ This package contains the utility programs.
 %setup
 
 %build
+%add_optflags -std=gnu++17
 %autoreconf
 %configure \
   --disable-debug \
@@ -84,6 +85,9 @@ This package contains the utility programs.
 %_bindir/xsec-*
 
 %changelog
+* Wed Nov 11 2026 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt2
+- Fixed build with gcc16.
+
 * Thu Oct 17 2024 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1
 - New version 3.0.0.
 - Changed url tag.
