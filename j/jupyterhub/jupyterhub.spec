@@ -1,7 +1,7 @@
 %def_without check
 
 Name:    jupyterhub
-Version: 6.1.1
+Version: 6.2.0
 Release: alt1
 
 Summary: Multi-user server for Jupyter notebooks
@@ -53,6 +53,9 @@ Group: Development/Python3
 %python3_sitelibdir/%{pyproject_distinfo %name}
 
 %changelog
+* Wed Nov 11 2026 Anton Vyatkin <toni@altlinux.org> 6.2.0-alt1
+- new version 6.2.0
+
 * Sun Oct 25 2026 Anton Vyatkin <toni@altlinux.org> 6.1.1-alt1
 - new version 6.1.1
 
