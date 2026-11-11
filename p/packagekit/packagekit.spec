@@ -5,8 +5,8 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.3.6
-Release:   alt2
+Version:   1.4.0
+Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -144,7 +144,6 @@ sed -i -E 's|g_autofree (gchar \**)\*|g_autofree_edg(\1) |' backends/apt/*.cpp
 	-Dsystemd=true \
 	-Doffline_update=true \
 	-Dgtk_doc=true \
-	-Dlocal_checkout=false \
 	-Dpython_backend=true \
 	-Ddaemon_tests=false \
 	-Dlegacy_tools=true \
@@ -300,9 +299,9 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %files -n lib%name-glib-devel
 %_libdir/libpackagekit-glib2.so
 %_pkgconfigdir/packagekit-glib2.pc
-%dir %_includedir/PackageKit
-%dir %_includedir/PackageKit/packagekit-glib2
-%_includedir/PackageKit/packagekit-glib*/*.h
+%dir %_includedir/packagekit
+%dir %_includedir/packagekit/packagekit-glib2
+%_includedir/packagekit/packagekit-glib*/*.h
 %_datadir/dbus-1/interfaces/*.xml
 %_datadir/gir-1.0/PackageKitGlib-1.0.gir
 %_datadir/gtk-doc/html/PackageKit
@@ -328,6 +327,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Tue Nov 10 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.0-alt1
+- new version
+
 * Thu Sep 17 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.3.6-alt2
 - set packagekit-offline-update to conflict with getty and kmsconvt
 
