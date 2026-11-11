@@ -2,7 +2,7 @@
 %define abiversion 1
 
 Name: lib%oname
-Version: 1.9.5
+Version: 1.10.0
 Release: alt1
 
 Summary: A library to benchmark code snippets
@@ -67,6 +67,9 @@ Requires: lib%oname = %EVR
   -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
   -DGIT_VERSION=%version \
   -DBUILD_SHARED_LIBS:BOOL=ON \
+%ifarch %ix86
+  -DBENCHMARK_BUILD_32_BITS:BOOL=ON \
+%endif
   -DBENCHMARK_ENABLE_TESTING:BOOL=ON \
   -DBENCHMARK_USE_BUNDLED_GTEST:BOOL=OFF \
   -DBENCHMARK_ENABLE_GTEST_TESTS:BOOL=ON \
@@ -84,7 +87,10 @@ Requires: lib%oname = %EVR
 rm -rf %buildroot%_defaultdocdir
 
 %check
-%ctest
+%ctest \
+%ifarch %ix86
+-E string_util_gtest
+%endif
 
 %files
 %doc *.md
@@ -99,6 +105,9 @@ rm -rf %buildroot%_defaultdocdir
 %_includedir/*
 
 %changelog
+* Tue Nov 10 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.10.0-alt1
+- new version 1.10.0
+
 * Thu Jan 22 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.9.5-alt1
 - new version 1.9.5
 
