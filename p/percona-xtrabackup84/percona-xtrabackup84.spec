@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %global pxbu_major_minor 84
 
 %def_with man
@@ -6,9 +7,10 @@
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.4.0
-Release: alt4
+Release: alt5
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
+VCS: https://github.com/percona/percona-xtrabackup.git
 Group: Databases
 Source: %name-%version.tar
 Source2: libkmip.tar
@@ -21,7 +23,7 @@ Conflicts: percona-xtrabackup24
 Conflicts: percona-xtrabackup80
 
 # Automatically added by buildreq on Tue Jun 02 2026
-BuildRequires: cmake doxygen gcc15-c++ libaio-devel libcurl-devel libev-devel libfido2-devel libgcrypt-devel
+BuildRequires: cmake doxygen gcc15-c++ libaio-devel libcurl-devel libev-devel libfido2-devel libgcrypt-devel zlib-devel
 BuildRequires: libicu-devel libldap-devel liblz4-devel libncurses-devel libproc2-devel libprotobuf-lite-devel
 BuildRequires: libsasl2-devel libzstd-devel python3-dev libtirpc-devel python3-module-sphinx
 %ifarch x86_64
@@ -66,6 +68,7 @@ export CXX=%__cxx
 
 %install
 %cmake_install
+rm -f %buildroot%_includedir/kmip*.h %buildroot%_prefix/lib/libkmip*.a %buildroot%_libdir/libkmip*.a
 rm -rf %buildroot/usr/docs/INFO_SRC
 rm -rf %buildroot/usr/lib/private/libprotobuf*
 rm -rf %buildroot/usr/lib/libmysqlservices.a
@@ -96,6 +99,12 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Wed Nov 11 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt5
+- thanks to rauty@:
+    build: Fix FTBFS with system zlib
+    build: Exclude internal libkmip development files
+    build: Add upstream VCS URL
+
 * Tue Nov 10 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt4
 - Use GCC 15 (Fix FTBS)
 
