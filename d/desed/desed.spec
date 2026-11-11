@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: desed
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 
 Summary: Debugger for Sed
@@ -39,5 +39,8 @@ install -Dpm 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.xz
 
 %changelog
+* Wed Nov 11 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.2.3-alt1
+- new version
+
 * Fri May 15 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.2.2-alt1
 - initial build for ALT Linux
