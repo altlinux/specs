@@ -4,7 +4,7 @@
 
 Name: brial
 Version: 1.2.15
-Release: alt1
+Release: alt2
 Summary: Framework for Boolean Rings
 # The entire source code is GPLv2+ except the Cudd directory that is BSD
 License: GPL-2.0+ and BSD-3-Clause
@@ -122,6 +122,9 @@ make check
 %endif
 
 %changelog
+* Wed Nov 11 2026 Leontiy Volodin <lvol@altlinux.org> 1.2.15-alt2
+- Fixed build with gcc16.
+
 * Thu Oct 02 2025 Leontiy Volodin <lvol@altlinux.org> 1.2.15-alt1
 - New version 1.2.15.
 
