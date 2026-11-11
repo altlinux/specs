@@ -1,7 +1,7 @@
 %def_without doc
 
 Name: keepass
-Version: 2.61.1
+Version: 2.62
 Release: alt1
 
 Summary: Password manager
@@ -140,6 +140,9 @@ popd
 %endif
 
 %changelog
+* Wed Nov 11 2026 Oleg Solovyov <mcpain@altlinux.org> 2.62-alt1
+- new version: 2.62
+
 * Mon May 04 2026 Oleg Solovyov <mcpain@altlinux.org> 2.61.1-alt1
 - new version: 2.61.1
 
