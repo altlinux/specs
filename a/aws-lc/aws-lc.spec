@@ -1,7 +1,7 @@
 %define sover 1
 
 Name: aws-lc
-Version: 5.12.0
+Version: 5.13.0
 Release: alt1
 
 Summary: General-purpose cryptographic library maintained by AWS
@@ -91,6 +91,9 @@ conflicts with system OpenSSL.
 %_libdir/ssl/
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.13.0-alt1
+- new version 5.13.0
+
 * Sun Nov 01 2026 Vitaly Lipatov <lav@altlinux.ru> 5.12.0-alt1
 - new version 5.12.0
 
