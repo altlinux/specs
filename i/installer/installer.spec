@@ -1,15 +1,16 @@
 Name: installer
 Version: 1.16.39
-Release: alt2
+Release: alt3
 
 Summary: Installer common parts
 License: GPL-2.0-or-later
 Group: System/Configuration/Other
 
-Url: http://www.altlinux.org/Installer
+URL: http://www.altlinux.org/Installer
 Source: %name-%version.tar
 
 BuildRequires: glibc-devel-static
+BuildRequires: libatomic-devel-static
 
 %description
 This package contains common installer parts.
@@ -211,6 +212,9 @@ touch %buildroot%_datadir/installer-livecd-steps
 %ghost %_datadir/installer-livecd-steps
 
 %changelog
+* Wed Nov 11 2026 Anton Midyukov <antohami@altlinux.org> 1.16.39-alt3
+- Add build dependency on libatomic-devel-static (Fix FTBFS).
+
 * Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 1.16.39-alt2
 - Split the install2 shell scripts (initinstall, preinstall, postinstall) into
   installer-common-sripts (Closes: 61348).
