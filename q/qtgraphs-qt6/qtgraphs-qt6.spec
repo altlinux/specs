@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: %_name-qt6
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Qt Graphs library for data visualization
@@ -108,6 +108,9 @@ This package provudes Qt Graphs examples.
 %_libdir/qt6/examples/*
 
 %changelog
+* Wed Nov 11 2026 Yuri N. Sedunov <aris@altlinux.org> 6.11.3-alt1
+- 6.11.3
+
 * Sat Aug 29 2026 Yuri N. Sedunov <aris@altlinux.org> 6.11.2-alt1
 - 6.11.2
 
