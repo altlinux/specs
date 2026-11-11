@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 2.1.10
-Release: alt2
+Version: 2.1.11
+Release: alt1
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -40,6 +40,7 @@ Summary: Data files for %name
 Group: Games/Cards
 License: ALT-Public-Domain and GPLv2+
 BuildArch: noarch
+Requires: %name-data-common = %EVR
 
 %description data
 PokerTH is a poker game written in C++/Qt6. You can play the popular
@@ -68,7 +69,7 @@ Summary: Data files for QML %name client
 Group: Games/Cards
 License: ALT-Public-Domain and GPLv2+
 BuildArch: noarch
-Requires: %name-data = %version-%release
+Requires: %name-data-common = %EVR
 
 %description qml-data
 PokerTH is a poker game written in C++/Qt6. You can play the popular
@@ -76,6 +77,21 @@ PokerTH is a poker game written in C++/Qt6. You can play the popular
 play network games with people all over the world.
 
 This package contents data files for QML %name client.
+
+%package data-common
+Summary: Common data files for %name
+Group: Games/Cards
+License: ALT-Public-Domain and GPLv2+
+BuildArch: noarch
+
+%description data-common
+PokerTH is a poker game written in C++/Qt6. You can play the popular
+"Texas Hold'em" poker variant against up to nine computer-opponents or
+play network games with people all over the world.
+
+This package contains data files shared by both the widget and QML
+clients: example avatars, sound effects, license texts and other
+misc files.
 
 %package server
 Summary: Server-side components for %name
@@ -137,9 +153,9 @@ rm %buildroot%_datadir/pokerth/data/fonts/NotoColorEmoji.ttf
 %_desktopdir/pokerth.desktop
 
 %files data
-%_datadir/pokerth
-%exclude %_datadir/pokerth/data/gfx/qml/
-%_pixmapsdir/pokerth.png
+%_datadir/pokerth/data/translations/
+%_datadir/pokerth/data/gfx/gui/
+%_datadir/pokerth/data/gfx/cards/
 
 %files qml
 %_bindir/pokerth_qml-client
@@ -148,12 +164,24 @@ rm %buildroot%_datadir/pokerth/data/fonts/NotoColorEmoji.ttf
 %files qml-data
 %_datadir/pokerth/data/gfx/qml/
 
+%files data-common
+%_datadir/pokerth
+%exclude %_datadir/pokerth/data/gfx/qml/
+%exclude %_datadir/pokerth/data/gfx/gui/
+%exclude %_datadir/pokerth/data/gfx/cards/
+%exclude %_datadir/pokerth/data/translations/
+%_pixmapsdir/pokerth.png
+
 %files server
 %_bindir/pokerth_chatcleaner
 %_bindir/pokerth_dedicated_server
 %_bindir/pokerth_official_server
 
 %changelog
+* Wed Nov 11 2026 Mikhail Efremov <sem@altlinux.org> 2.1.11-alt1
+- Moved common data to separate subpackage.
+- Updated to 2.1.11.
+
 * Fri Oct 30 2026 Mikhail Efremov <sem@altlinux.org> 2.1.10-alt2
 - Use system Noto Color Emoji font instead of bundled one.
 
