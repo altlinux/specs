@@ -1,6 +1,6 @@
 Name: autogen
 Version: 5.18.16
-Release: alt2
+Release: alt3
 
 Summary: AutoGen - The Automated Program Generator
 License: GPL-3.0-or-later AND GPL-2.0-or-later AND LGPL-2.1-or-later AND LGPL-2.0-or-later AND BSD-2-Clause
@@ -16,6 +16,7 @@ Patch5: suse_05-sprintf-overflow.patch
 Patch6: suse_06-autogen-avoid-GCC-code-analysis-bug.patch
 Patch7: suse_07-installable-programs.patch
 Patch8: autogen-gcc-const.patch
+Patch9: autogen-unused-optno.patch
 
 # Automatically added by buildreq on Sun Dec 10 2017
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 guile22 libgc-devel libgmp-devel perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl pkg-config python-base
@@ -80,6 +81,7 @@ This package is needed to write programs that use AutoOpts API.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 rm doc/autogen.info*
 
 %build
@@ -123,6 +125,9 @@ make -k check
 %_man3dir/*.3.*
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.18.16-alt3
+- Fix build with GCC unused-but-set-variable warning.
+
 * Fri Oct 30 2026 Vitaly Lipatov <lav@altlinux.ru> 5.18.16-alt2
 - Fix build with current GCC (const correctness)
 
