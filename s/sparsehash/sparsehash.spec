@@ -1,16 +1,19 @@
 Name: sparsehash
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Summary: Google's extremely memory-efficient C++ hash_map implementation
 License: BSD
 Group: Development/C++
 
 URL: https://github.com/%name/%name
+Vcs: https://github.com/%name/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/%name/%name/archive/%name-%version/%name-%name-%version.tar.gz
 Source: %name-%name-%version.tar
+
+Patch1: sparsehash-cxx20-allocator-rebind.patch
 
 BuildRequires: gcc-c++
 
@@ -36,6 +39,7 @@ and one that optimizes for speed.
 
 %prep
 %setup -n %name-%name-%version
+%patch1 -p1
 
 %build
 %configure
@@ -51,6 +55,10 @@ and one that optimizes for speed.
 %_pkgconfigdir/lib%name.pc
 
 %changelog
+* Thu Nov 12 2026 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt2
+- Fixed FTBFS with gcc 16 (C++20): replaced removed std::allocator::rebind
+  member template with std::allocator_traits::rebind_alloc
+
 * Thu Feb 11 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt1
 - Version 2.0.4
 
