@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.8.2
+Version: 0.9.0
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -29,13 +29,20 @@ Supports automatic translation into Russian.
 
 %build
 %install
-install -Dm755 %name %buildroot%_bindir/%name
+install -Dm755 src/%name %buildroot%_bindir/%name
 
 %files
 %_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Wed Nov 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.0-alt1
+- added a mechanism to skip an update if a timeout or other error occurs with the SOCKS proxy.
+- added auto-check and auto-update of packages summary from the project repository
+- fixed: used local maintainer name file just when --enable-translate
+- added escaping of some characters
+- update to grep due to a change in the maintainers file format, intended to eliminate duplicate entries in the selection
+
 * Wed Nov 04 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.2-alt1
 - 0.8.1 -> 0.8.2
 
