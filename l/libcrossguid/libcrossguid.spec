@@ -1,5 +1,5 @@
 Name: libcrossguid
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Epoch: 1
 
@@ -50,6 +50,9 @@ This package contains development part of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.2.3-alt1
+- 0.2.3
+
 * Tue Jan 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:0.2.2-alt1
 - v0.2.2-52-gca1bf4b
 
