@@ -2,7 +2,7 @@
 %define pypi_name pytest_tap
 
 Name: python3-module-%modname
-Version: 3.5
+Version: 3.6
 Release: alt1
 
 Summary: Test Anything Protocol (TAP) reporting plugin for pytest
@@ -41,6 +41,9 @@ data in a standard way.
 %doc AUTHORS LICENSE
 
 %changelog
+* Wed Nov 11 2026 Yuri N. Sedunov <aris@altlinux.org> 3.6-alt1
+- 3.6
+
 * Thu Jan 30 2025 Yuri N. Sedunov <aris@altlinux.org> 3.5-alt1
 - 3.5
 
