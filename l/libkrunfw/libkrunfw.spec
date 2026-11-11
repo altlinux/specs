@@ -1,8 +1,8 @@
-%define kernel linux-6.12.109
+%define kernel v5.6.3-6.12.115
 %define so_version 5
 
 Name:    libkrunfw
-Version: 5.6.2
+Version: 5.6.3
 Release: alt1
 
 Summary: A dynamic library bundling the guest payload consumed by libkrun
@@ -14,7 +14,7 @@ Vcs:     https://github.com/libkrun/libkrunfw.git
 ExclusiveArch: x86_64 aarch64
 
 Source: %name-%version.tar
-Source1: %kernel.tar.xz
+Source1: %kernel.tar.gz
 	
 BuildRequires:  git-core
 BuildRequires:  python3-module-elftools
@@ -55,6 +55,9 @@ cp %SOURCE1 tarballs
 %_libdir/libkrunfw.so
 
 %changelog
+* Wed Nov 11 2026 Maxim Slipenko <maks1ms@altlinux.org> 5.6.3-alt1
+- New version 5.6.3.
+
 * Sat Sep 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 5.6.2-alt1
 - New version 5.6.2.
 
