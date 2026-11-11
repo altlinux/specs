@@ -1,5 +1,5 @@
 Name: python3-module-onvif-parsers
-Version: 3.0.0
+Version: 3.2.0
 Release: alt1
 
 Summary: Parsers for ONVIF events
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/onvif_parsers-%version.dist-info
 
 %changelog
+* Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.2.0-alt1
+- 3.2.0 released
+
 * Mon Nov 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.0.0-alt1
 - 3.0.0 released
 
