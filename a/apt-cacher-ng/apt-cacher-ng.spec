@@ -1,6 +1,6 @@
 Name: apt-cacher-ng
 Version: 3.7.5
-Release: alt1
+Release: alt3
 
 Summary: Caching HTTP download proxy for software packages
 
@@ -12,9 +12,11 @@ Url: https://www.unix-ag.uni-kl.de/~bloch/acng/
 Source: %name-%version.tar
 Source2: acng.init
 Patch0: acng-conf.patch
+Patch1: acng-alt-vfilepattern.patch
+Patch2: gcc16-cstdint.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ pkg-config
+BuildRequires: rpm-build-cmake gcc-c++ pkg-config
 BuildRequires: bzlib-devel liblzma-devel zlib-devel
 BuildRequires: libevent-devel libcares-devel
 BuildRequires: libssl-devel
@@ -31,7 +33,7 @@ resource usage.
 
 %prep
 %setup
-%patch0 -p 1
+%autopatch -p 1
 
 %build
 %cmake \
@@ -86,6 +88,13 @@ chmod ug+rw %_logdir/%name/* ||:
 %preun_service acng
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt3
+- fix build with GCC 16 (include <cstdint> for fixed-width integer types)
+- replace BuildRequires: cmake with rpm-build-cmake
+
+* Thu Oct 29 2026 Paul Wolneykien <manowar@altlinux.org> 3.7.5-alt2
+- Fix: Build-in patterns for ALT-specific repository indices (patch).
+
 * Wed Mar 12 2026 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
 - new version 3.7.5 (major update from 0.8.5)
 - switch to cmake build with proper paths
