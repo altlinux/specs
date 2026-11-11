@@ -9,7 +9,7 @@
 
 Name: libowt-tg
 Version: 4.3.0.15
-Release: alt2
+Release: alt3
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -30,6 +30,7 @@ Patch1: 0011-cmake-external.cmake-add-link_libyuv-function.patch
 Patch2: 0012-cmake-libwebrtcbuild.cmake-add-tg_owt-libyuv-only-if.patch
 Patch3: 0013-CMakeLists.txt-use-external-libyuv.patch
 Patch4: 0004-use-system-openssl-ca-store.patch
+Patch5: 0005-Fix-building-with-GCC-16.patch
 
 Patch2000: %name-e2k.patch
 
@@ -121,6 +122,7 @@ develop programs which make use of %name.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p1
+%patch5 -p1
 %ifarch %e2k
 %patch2000 -p2
 sed -i 's/~Result() = default;//' src/modules/congestion_controller/goog_cc/loss_based_bwe_v2.h
@@ -185,6 +187,9 @@ rm -rv %buildroot%_includedir/tg_owt/third_party/{pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.15-alt3
+- fix build with GCC 16.
+
 * Sun Oct 25 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.15-alt2
 - backport system OpenSSL CA trust support from tg_owt PR #181.
 - replaced BuildRequires: cmake with rpm-build-cmake.
