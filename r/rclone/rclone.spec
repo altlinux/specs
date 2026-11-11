@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: rclone
-Version: 1.75.2
+Version: 1.76.0
 Release: alt1
 Summary: "rsync" for cloud storage
 License: MIT
@@ -81,6 +81,9 @@ diff COPYING /tmp/COPYING
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Nov 09 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.76.0-alt1
+- new version 1.76.0
+
 * Fri Oct 23 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.75.2-alt1
 - new version 1.75.2
 
