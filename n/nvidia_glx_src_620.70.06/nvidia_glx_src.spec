@@ -25,7 +25,7 @@
 %define nv_version 620
 %define nv_release 70
 %define nv_minor   06
-%define pkg_rel alt311
+%define pkg_rel alt312
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -345,7 +345,7 @@ tar -c kernel-source-%module_name-open-%module_version | bzip2 -c > \
 
 # install firmware
 mkdir -p %buildroot/lib/firmware/nvidia/%version/
-install firmware/gsp*.bin %buildroot/lib/firmware/nvidia/%version/
+install -m 0644 firmware/*.bin %buildroot/lib/firmware/nvidia/%version/
 
 # install scripts
 mkdir -p %buildroot/%_bindir
@@ -381,7 +381,7 @@ fi
 
 %files -n firmware-%module_name-%version
 %dir /lib/firmware/nvidia/%version/
-/lib/firmware/nvidia/%version/gsp*.bin
+/lib/firmware/nvidia/%version/*.bin
 
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
@@ -391,6 +391,9 @@ fi
 %endif
 
 %changelog
+* Wed Nov 11 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt312
+- fix package firmware
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt311
 - new version
 
