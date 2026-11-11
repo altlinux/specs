@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: oo7
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Secret Service provider
@@ -196,6 +196,9 @@ done
 }
 
 %changelog
+* Wed Nov 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt1
+- 0.7.1
+
 * Mon Nov 09 2026 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 
