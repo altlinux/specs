@@ -1,11 +1,11 @@
 %def_disable snapshot
-# removed in 1.12
-%def_disable ffmpeg
+# removed in 1.12, restored in 1.20
+%def_enable ffmpeg
 # test_rpm failed
 %def_disable check
 
 Name: libextractor
-Version: 1.19
+Version: 1.20
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -33,6 +33,7 @@ BuildRequires: libopus-devel libvorbis-devel libflac-devel
 BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
 BuildRequires: libjpeg-devel gst-plugins1.0-devel
 BuildRequires: pkgconfig(poppler-cpp) pkgconfig(smf)
+BuildRequires: libmagic-devel
 %if_enabled ffmpeg
 BuildRequires: libavcodec-devel libavutil-devel
 BuildRequires: libavformat-devel libswresample-devel libswscale-devel
@@ -108,6 +109,9 @@ export LIBEXTRACTOR_PREFIX=%buildroot%_libdir
 %_man3dir/*
 
 %changelog
+* Wed Nov 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.20-alt1
+- 1.20
+
 * Fri Jul 31 2026 Yuri N. Sedunov <aris@altlinux.org> 1.19-alt1
 - 1.19
 
