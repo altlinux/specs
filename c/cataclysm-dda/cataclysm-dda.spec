@@ -1,6 +1,6 @@
 Name: cataclysm-dda
 Version: 0.I.1
-Release: alt1
+Release: alt2
 
 Summary: Turn-based survival game set in a post-apocalyptic world
 License: CC-BY-SA-3.0 and GPLv2+ and OFL-1.1 and BSL-1.0 and Zlib and MIT and BSD-3-Clause
@@ -10,6 +10,9 @@ URL: https://cataclysmdda.org/
 Vcs: https://github.com/CleverRaven/Cataclysm-DDA.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+#Patch backported from upstream git (master branch)
+Patch100: fix-gcc16-build.patch
 
 BuildRequires: gcc-c++ libncursesw-devel
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libfreetype-devel
@@ -102,6 +105,8 @@ Data files for %name-sdl.
 %setup
 %patch -p1
 
+%patch100 -p1
+
 %ifarch %e2k
 sed -i 's/-Werror/-Wno-error/g' Makefile CMakeLists.txt
 sed -i 's/<binary_op, 15>/<binary_op, 14>/' src/math_parser_impl.h
@@ -166,6 +171,9 @@ LC_ALL=C.UTF-8 make -k PCH=0 RUNTESTS=1 check
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 11 2026 Mikhail Efremov <sem@altlinux.org> 0.I.1-alt2
+- Fixed build with GCC16.
+
 * Wed Sep 23 2026 Mikhail Efremov <sem@altlinux.org> 0.I.1-alt1
 - Updated to 0.I-1.
 
