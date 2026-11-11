@@ -1,4 +1,4 @@
-%define git_version 9ec952b9f9668e9fa97e29a4c2b51e951674df2a
+%define git_version ed27c686770872022f4c1de04f6b0ac5d5384ded
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -63,7 +63,7 @@
 %endif
 
 Name: ceph
-Version: 19.2.7
+Version: 20.2.5
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -96,7 +96,6 @@ Source28: c-ares.tar
 #Source29: dmclock.tar
 Source30: seastar.tar
 Source31: fmt.tar
-Source32: cpp_redis.tar
 Source33: rook-client-python.tar
 Source34: s3select.tar
 Source35: libkmip.tar
@@ -107,6 +106,8 @@ Source39: csvparser.tar
 Source40: opentelemetry-cpp.tar
 Source41: qatlib.tar
 Source42: qatzip.tar
+Source43: BLAKE3.tar
+Source44: nvmeof-gateway.tar
 
 Patch: %name-%version.patch
 # https://github.com/ceph/s3select/pull/169
@@ -125,14 +126,14 @@ BuildRequires(pre): rpm-macros-cmake
 %if_with system_boost
 BuildRequires: boost-asio-devel boost-beast-devel boost-devel >= 1.79.0 boost-program_options-devel boost-intrusive-devel
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel boost-msm-devel
-BuildRequires: boost-locale-devel
+BuildRequires: boost-locale-devel boost-redis-devel
 %endif
 BuildRequires: gcc-c++
 BuildRequires: libaio-devel libblkid-devel libcryptsetup-devel libnbd-devel
 %{?_with_liburing:BuildRequires: liburing-devel}
 BuildRequires: libcurl-devel >= 7.32 libexpat-devel libcap-ng-devel libcap-devel
 BuildRequires: libstdc++-devel-static
-BuildRequires: libfuse-devel libkeyutils-devel
+BuildRequires: libfuse3-devel libkeyutils-devel
 BuildRequires: libldap-devel libnss-devel
 #BuildRequires: libkrb5-devel
 BuildRequires: libssl-devel libudev-devel libxfs-devel libbtrfs-devel libnl-devel
@@ -166,7 +167,7 @@ BuildRequires: liblua5-devel >= 5.3 liblua5-devel-static >= 5.3
 %{?_with_zbd:BuildRequires: libzbd-devel}
 %{?_with_pmem:BuildRequires: libpmem-devel libpmemobj-devel libdaxctl-devel >= 63 libndctl-devel >= 63}
 %{?_with_grafana:BuildRequires: jsonnet}
-%{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc-devel}
+%{?_with_system_arrow:BuildRequires: arrow-devel >= 4.0.0 libparquet-devel libprotobuf-devel libgrpc-devel grpc-plugins}
 %{?_with_system_utf8proc:BuildRequires: libutf8proc-devel >= 2.2.0}
 BuildRequires: liblmdb-devel
 %ifarch %e2k
@@ -301,43 +302,52 @@ system. One or more instances of ceph-mon form a Paxos part-time
 parliament cluster that provides extremely reliable and durable storage
 of cluster membership, configuration, and state.
 
+%package mon-client-nvmeof
+Summary: Ceph NVMe-oF gateway monitor client
+Group: System/Base
+Requires: librados2 = %EVR
+%description mon-client-nvmeof
+The NVMe-oF gateway monitor client sends gateway beacons to Ceph monitors
+and distributes ANA state to NVMe-oF gateways.
+
 %package mgr
 Summary: Ceph Manager Daemon
 Group: System/Base
 Requires: ceph-base = %EVR
 Requires: ceph-mgr-modules-core = %EVR
+Obsoletes: ceph-mgr-restful < %EVR
+Obsoletes: ceph-mgr-zabbix < %EVR
 AutoProv: no
 
 %if_with python3
 %py3_provides ceph_module
+%py3_provides cherrypy_mgr
 %py3_provides mgr_module
 %py3_provides mgr_util
 %py3_provides object_format
 %endif
 
 %description mgr
-ceph-mgr enables python modules that provide services (such as the REST
-module derived from Calamari) and expose CLI hooks.  ceph-mgr gathers
-the cluster maps, the daemon metadata, and performance counters, and
-exposes all these to the python modules.
+ceph-mgr enables Python modules that provide services and expose CLI hooks.
+It collects cluster maps, daemon metadata, and performance counters and
+makes them available to the modules.
 
 %package mgr-modules-core
-Summary: Ceph Manager modules which are always enabled
+Summary: Core modules for Ceph Manager Daemon
 Group: System/Base
 Conflicts: ceph-mgr < 15.2.5-alt1
 %if_with python3
 %py3_provides orchestrator
 %endif
 %description mgr-modules-core
-ceph-mgr-modules-core provides a set of modules which are always
-enabled by ceph-mgr.
+ceph-mgr-modules-core provides core manager modules and additional
+modules that can be enabled as needed.
 
 %package mgr-dashboard
 Summary: Dashboard module for Ceph Manager Daemon
 Group: Monitoring
 Requires: ceph-mgr = %EVR
-Requires: ceph-mgr-restful = %EVR
-%{?_with_grafana:Requires: ceph-grafana-dashboards = %EVR}
+%{?_with_grafana:Requires: grafana-dashboards-ceph = %EVR}
 %if_with python3
 %py3_requires routes
 %endif
@@ -370,14 +380,6 @@ Group: Monitoring
 Requires: ceph-mgr = %EVR
 AutoProv: no
 %description mgr-prometheus
-%summary.
-
-%package mgr-restful
-Summary: Restful module for Ceph Manager Daemon
-Group: Monitoring
-Requires: ceph-mgr = %EVR
-AutoProv: no
-%description mgr-restful
 %summary.
 
 %package mgr-telegraf
@@ -427,18 +429,10 @@ AutoProv: no
 ceph-mgr-cephadm is a ceph-mgr module for orchestration functions using
 the integrated cephadm deployment tool management operations.
 
-%package mgr-zabbix
-Summary: Zabbix module for Ceph Manager Daemon
-Group: Monitoring
-Requires: ceph-mgr = %EVR
-AutoProv: no
-%description mgr-zabbix
-%summary.
-
 %package fuse
 Summary: Ceph fuse-based client
 Group: System/Kernel and hardware
-Requires: fuse
+Requires: fuse3
 Requires: python3
 %description fuse
 FUSE based client for Ceph distributed network file system
@@ -684,10 +678,27 @@ performance, reliability, and scalability. This is a shared library
 allowing applications to access a Ceph distributed file system via a
 POSIX-like interface.
 
+%package -n libcephfs-proxy2
+Summary: Proxy library for libcephfs
+Group: System/Libraries
+Requires: libcephfs-daemon = %EVR
+
+%description -n libcephfs-proxy2
+The libcephfs proxy library lets applications share CephFS mounts.
+
+%package -n libcephfs-daemon
+Summary: Daemon for the libcephfs proxy
+Group: System/Base
+Requires: libcephfs2 = %EVR
+
+%description -n libcephfs-daemon
+The libcephfs proxy daemon shares CephFS mounts between applications.
+
 %package -n libcephfs-devel
 Summary: Ceph distributed file system headers
 Group: Development/C
 Requires: libcephfs2 = %EVR
+Requires: libcephfs-proxy2 = %EVR
 Requires: librados-devel = %EVR
 Conflicts: ceph-devel < %EVR
 Provides: libcephfs2-devel = %EVR
@@ -749,6 +760,7 @@ This package contains the Java libraries for the Ceph File System.
 %package -n cephfs-shell
 Summary: Interactive shell for Ceph file system
 Group: Shells
+Requires: python3-module-cephfs = %EVR
 %py3_requires cmd2
 %py3_requires colorama
 %py3_requires cephfs
@@ -856,7 +868,6 @@ tar -xf %SOURCE30 -C src/seastar
 %if_without system_fmt
 tar -xf %SOURCE31 -C src/fmt
 %endif
-tar -xf %SOURCE32 -C src/cpp_redis
 tar -xf %SOURCE33 -C src/pybind/mgr/rook/rook-client-python
 tar -xf %SOURCE34 -C src/s3select
 tar -xf %SOURCE38 -C src/s3select/rapidjson
@@ -873,6 +884,8 @@ tar -xf %SOURCE40 -C src/jaegertracing/opentelemetry-cpp
 %endif
 tar -xf %SOURCE41 -C src/qatlib
 tar -xf %SOURCE42 -C src/qatzip
+tar -xf %SOURCE43 -C src/BLAKE3
+tar -xf %SOURCE44 -C src/nvmeof/gateway
 
 %patch -p1
 %patch1 -p1
@@ -1033,6 +1046,7 @@ export CPPFLAGS="$java_inc"
 %else
     -DWITH_QATDRV:BOOL=OFF -DWITH_QATLIB:BOOL=OFF -DWITH_QATZIP:BOOL=OFF \
 %endif
+    -DWITH_UADK:BOOL=OFF \
 %ifarch %arm
     -DWITH_RDMA:BOOL=OFF \
 %endif
@@ -1556,12 +1570,16 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_unitdir/ceph-mon.target
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/mon
 
+%files mon-client-nvmeof
+%_bindir/ceph-nvmeof-monitor-client
+
 %files mgr
 %_bindir/ceph-mgr
 %_datadir/ceph/mgr/__pycache__
 %_datadir/ceph/mgr/mgr_module.*
 %_datadir/ceph/mgr/mgr_util.*
 %_datadir/ceph/mgr/object_format.*
+%_datadir/ceph/mgr/cherrypy_mgr.*
 %_unitdir/ceph-mgr@.service
 %_unitdir/ceph-mgr.target
 %attr(750,ceph,ceph) %dir %_localstatedir/ceph/mgr
@@ -1577,6 +1595,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_datadir/ceph/mgr/mds_autoscaler
 %_datadir/ceph/mgr/mirroring
 %_datadir/ceph/mgr/nfs
+%_datadir/ceph/mgr/nvmeof
 %_datadir/ceph/mgr/orchestrator
 %_datadir/ceph/mgr/osd_perf_query
 %_datadir/ceph/mgr/osd_support
@@ -1585,6 +1604,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_datadir/ceph/mgr/rbd_support
 %_datadir/ceph/mgr/rgw
 %_datadir/ceph/mgr/selftest
+%_datadir/ceph/mgr/smb
 %_datadir/ceph/mgr/snap_schedule
 %_datadir/ceph/mgr/stats
 %_datadir/ceph/mgr/status
@@ -1606,9 +1626,6 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %files mgr-prometheus
 %_datadir/ceph/mgr/prometheus
 
-%files mgr-restful
-%_datadir/ceph/mgr/restful
-
 %files mgr-rook
 %_datadir/ceph/mgr/rook
 
@@ -1620,9 +1637,6 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 
 %files mgr-telegraf
 %_datadir/ceph/mgr/telegraf
-
-%files mgr-zabbix
-%_datadir/ceph/mgr/zabbix
 
 %files fuse
 %_bindir/ceph-fuse
@@ -1661,9 +1675,11 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/radosgw-token
 %_bindir/radosgw-object-expirer
 %_bindir/rgw-policy-check
+%_bindir/rgw-policy-test
 %_mandir/man8/ceph-diff-sorted.8*
 %_mandir/man8/radosgw.8*
 %_mandir/man8/rgw-policy-check.8*
+%_mandir/man8/rgw-policy-test.8*
 %_logdir/radosgw
 %dir %_localstatedir/ceph/radosgw
 %_unitdir/ceph-radosgw@.service
@@ -1680,7 +1696,6 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/ceph-bluestore-tool
 %_bindir/ceph-erasure-code-tool
 %_bindir/ceph-objectstore-tool
-%_bindir/ceph-osdomap-tool
 %_bindir/ceph-osd
 %_libexecdir/ceph/ceph-osd-prestart.sh
 %_mandir/man8/ceph-clsinfo.8*
@@ -1783,10 +1798,18 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %dir %_sysconfdir/ceph
 %_libdir/libcephfs.so.*
 
+%files -n libcephfs-proxy2
+%_libdir/libcephfs_proxy.so.*
+
+%files -n libcephfs-daemon
+%_sbindir/libcephfsd
+
 %files -n libcephfs-devel
 %dir %_includedir/cephfs
 %_includedir/cephfs/*
 %_libdir/libcephfs.so
+%_libdir/libcephfs_proxy.so
+%_pkgconfigdir/cephfs.pc
 
 %files -n cephfs-top
 # temporary exclude
@@ -1856,7 +1879,7 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 
 %files exporter
 %_bindir/ceph-exporter
-%_unitdir/ceph-exporter.service
+%_unitdir/ceph-exporter@.service
 
 %files node-proxy
 %_sbindir/ceph-node-proxy
@@ -1908,6 +1931,33 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Wed Nov 11 2026 Alexey Shabalin <shaba@altlinux.org> 20.2.5-alt1
+- 20.2.5.
+- Packaged the libcephfs proxy library and daemon.
+- Packaged the NVMe-oF gateway monitor client.
+- Switched ceph-fuse to FUSE 3.
+- Fixed build with Boost 1.92 in neorados (upstream).
+- Fixed build with system zstd (upstream).
+- Added boost-redis-devel to build requirements.
+- Fixed RGW Lua build with Boost.Process 1.92 (upstream).
+- Fixed RGW SSD build with Boost.Asio 1.92 (upstream).
+- Fixed build with GCC 16 in Formatter, MDS and RGW SWIFT (upstream).
+- Fixed the libcephfs pkg-config version for RPM Provides generation.
+- Fixed Python dependency resolution for mgr CherryPy modules.
+- Disabled UADK on aarch64 to avoid fetching sources during the build.
+- Dropped ceph-mgr-restful and ceph-mgr-zabbix after upstream removed them.
+- Enabled only iostat when creating a cluster; disabled nfs and nvmeof
+  by default.
+- Disabled the orchestrator and telemetry mgr modules by default; kept
+  upstream defaults for the other always-on modules.
+- Fixed mgr module loading without NOTIFY_TYPES (upstream).
+- Restored the legacy auth_supported option for PVE clients (Proxmox).
+- Fixed CephX authentication with mixed cipher and pending keys
+  (Proxmox).
+- Added manual pending-key promotion and key fingerprints for staged
+  client key rotation (Proxmox).
+- Fixed EC shard truncation after enabling EC optimizations (Proxmox).
+
 * Tue Oct 27 2026 Alexey Shabalin <shaba@altlinux.org> 19.2.7-alt1
 - Update to 19.2.7.
 - Use bundled RocksDB because system RocksDB 11.8.1 has incompatible APIs.
