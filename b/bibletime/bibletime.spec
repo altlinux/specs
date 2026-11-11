@@ -1,6 +1,6 @@
 Name: bibletime
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: BibleTime is a Bible study application based on Qt
 Summary(ru_RU.UTF-8): BibleTime - простое в использовании средство для изучения Библии
@@ -13,11 +13,11 @@ Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 # Source-url: https://github.com/bibletime/bibletime/archive/v%version.tar.gz
 Source: %name/%name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: bibletime-c++20-spaceship.patch
 
 BuildRequires(pre): rpm-build-licenses rpm-macros-cmake
 
-BuildRequires: cmake libclucene-core-devel libssl-devel
+BuildRequires: rpm-build-cmake libclucene-core-devel libssl-devel
 BuildRequires: libsword-devel >= 1.7
 BuildRequires: librsvg-utils
 
@@ -49,7 +49,7 @@ Documentation for %name.
 
 %prep
 %setup
-#patch -p1
+%patch -p1
 # currently breaks build
 subst 's/-Werror //' CMakeLists.txt
 
@@ -78,6 +78,10 @@ rm -f %buildroot%_iconsdir/%name.svg
 %_docdir/BibleTime/
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt2
+- fix build with GCC 16 (C++20 spaceship operators)
+- replace BuildRequires: cmake with rpm-build-cmake
+
 * Wed Jul 01 2026 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - new version 3.2.0
 - build with Qt6 (port from Qt5)
