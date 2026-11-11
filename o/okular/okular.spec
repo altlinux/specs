@@ -10,7 +10,7 @@
 
 Name: %rname
 Version: 26.08.3
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: Office
@@ -31,6 +31,7 @@ Patch4: alt-add-indication-for-document-loading-process.patch
 Patch5: alt-add-crypropro-option.patch
 Patch6: alt-xdg-current-desktop.patch
 Patch7: alt-fix-revision-preview-crash.patch
+Patch8: alt-def-print-annots.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-phonon-devel qt6-svg-devel
@@ -117,6 +118,7 @@ Summary: %name library
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 sed -i '/^find_package.*QMobipocket/d' CMakeLists.txt
 %patch7 -p2
+%patch8 -p1
 
 tmp_file=`mktemp`
 msgcat --use-first po/ru/okular.po %SOURCE10 >"$tmp_file"
@@ -194,6 +196,9 @@ fi
 
 
 %changelog
+* Wed Nov 11 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt2
+- don't print pdf annotations by default (closes: 58897)
+
 * Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
 - new version
 
