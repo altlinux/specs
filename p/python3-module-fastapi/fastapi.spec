@@ -3,55 +3,48 @@
 %define module_name %pypi_name
 %def_with check
 
-%define add_python_extra() \
-%{expand:%%package -n %%name+%1 \
-Summary: %%summary \
-Group: Development/Python3 \
-Requires: %%name \
-%%pyproject_runtimedeps_metadata_extra %1 \
-%%description -n %%name+%1' \
-Extra "%1" for %%pypi_name. \
-%%files -n %%name+%1 \
-}
-
 Name: python3-module-%pypi_name
-Version: 0.162.0
+Version: 0.162.3
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
 License: MIT
 Group: Development/Python3
-Url: https://fastapi.tiangolo.com/
+Url: https://pypi.org/project/fastapi/
 Vcs: https://github.com/fastapi/fastapi
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Source2: clean_coverage_usage.py
+Source1: clean_coverage_usage.py
 Patch: %name-%version-alt.patch
 
-# Manually manage extra dependencies with metadata.
-AutoReq: yes, nopython3
 # Some packages require fastapi-slim, but it's fastapi with the no installed
 # certain requirements.
 Provides: %name-slim = %EVR
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+# Sisyphus has no python3-module-uvicorn+standard subpackage yet, so
+# uvicorn[standard] is dropped from the extras, which get uvicorn through
+# python3-module-fastapi-cli+standard.
+%pyproject_configure_with_runtime_filter 'uvicorn$'
+
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
+%pyproject_configure_with_check_deps metadata_extra all
+# No +extra subpackages of these exist in Sisyphus: the plain packages and
+# the extras' deps are required instead.
+%pyproject_configure_with_check_filter 'uvicorn$' 'pwdlib$' 'pytest-xdist$'
+BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-pwdlib
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-psutil
 # Upstream says that Argon2 has superiority over bcrypt
 # See https://github.com/fastapi/fastapi/pull/13917
 BuildRequires: python3-module-argon2-cffi
 BuildRequires: python3-module-pytest-timeout
-# anyio[trio] maps to plain anyio: no anyio+trio subpackage exists.
-BuildRequires: python3-module-trio
 # test_translate.py drives the git binary in a scratch repository.
 BuildRequires: git-core
-%pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra all
-%pyproject_builddeps_check
 %endif
+%pyproject_configure_pypi_package
 
 %description
 FastAPI is a modern, fast (high-performance), web framework for
@@ -75,21 +68,18 @@ The key features are:
   standards for APIs: OpenAPI (previously known as Swagger) and JSON
   Schema.
 
-%add_python_extra standard
-%add_python_extra standard-no-fastapi-cloud-cli
-%add_python_extra all
+%pyproject_configure_pypi_subpackage standard
+%pyproject_configure_pypi_subpackage standard-no-fastapi-cloud-cli
+%pyproject_configure_pypi_subpackage opentelemetry
+%pyproject_configure_pypi_subpackage all
 
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 # Clean of the using coverage module, because we don't needs to it.
-%SOURCE2 tests/
+%SOURCE1 tests/
 
 %build
 %pyproject_build
@@ -114,6 +104,9 @@ ENDTESTS
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.162.3-alt1
+- Updated to 0.162.3.
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.162.0-alt1
 - Updated to 0.162.0.
 

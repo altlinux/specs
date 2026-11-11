@@ -5,7 +5,7 @@
 
 Name: python3-module-anyio
 Version: 4.16.0
-Release: alt1
+Release: alt2
 
 Summary: High level compatibility layer for multiple asynchronous event loop implementations
 License: MIT
@@ -42,6 +42,8 @@ AnyIO can also be adopted into a library or application incrementally -
 bit by bit, no full refactoring necessary.
 It will blend in with native libraries of your chosen backend.
 
+%pyproject_configure_pypi_subpackage trio
+
 %prep
 %setup
 %autopatch -p1
@@ -69,6 +71,9 @@ It will blend in with native libraries of your chosen backend.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.16.0-alt2
+- Packaged the trio extra.
+
 * Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 4.16.0-alt1
 - Updated to 4.16.0.
 

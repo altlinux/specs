@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -15,23 +15,19 @@ Group: Development/Python3
 Url: https://pypi.org/project/typer/
 Vcs: https://github.com/tiangolo/typer
 BuildArch: noarch
-AutoReq: yes, nopython3
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Source2: clean_coverage.py
+Source1: clean_coverage.py
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
 BuildRequires: python3-module-wheel
-%pyproject_builddeps_build
 %if_with check
 BuildRequires: /proc
-%pyproject_builddeps_check
-%pyproject_builddeps_metadata
+BuildRequires: python3-module-pytest-timeout
 %endif
+%pyproject_configure_pypi_package
 
 %description
 Typer is a library for building CLI applications that users will love
@@ -67,11 +63,7 @@ typer-slim now simply installs (all of) Typer.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 %build
 for tiangolo_build_package in %slim_pypi_name %pypi_name; do
@@ -93,7 +85,7 @@ popd
 
 %check
 # Clean of the using coverage module, because we don't needs to it.
-%SOURCE2 tests/
+%SOURCE1 tests/
 # Increase terminal line size, because some tests (test_not_exists from
 # test_tutorial002.py and test_tutorial002_an.py) don't pass at narrow
 # terminals.
@@ -113,7 +105,7 @@ export TERM="xterm-256color"
 ## test_show_completion and test_install_completion
 # Deselect these tests because of typer doesn't support SH, but this shell is
 # run in hasher.
-%pyproject_run_pytest -nauto \
+%pyproject_run_pytest --session-timeout=600 -nauto \
     --deselect="tests/test_completion/test_completion.py::test_show_completion" \
     --deselect="tests/test_completion/test_completion.py::test_install_completion"
 
@@ -128,6 +120,9 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.29.0-alt1
+- Updated to 0.29.0.
+
 * Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.28.0-alt1
 - Updated to 0.28.0.
 

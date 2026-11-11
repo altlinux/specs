@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.0.32
-Release: alt1
+Release: alt2
 
 Summary: Run and manage FastAPI apps from the command line with FastAPI CLI
 License: MIT
@@ -15,19 +15,23 @@ Vcs: https://github.com/fastapi/fastapi-cli
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Source2: clean_coverage.py
+Source1: clean_coverage.py
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+# Sisyphus has no python3-module-uvicorn+standard subpackage yet, so
+# uvicorn[standard] is required as the plain uvicorn.
+%pyproject_configure_with_runtime_filter 'uvicorn$'
+Requires: python3-module-uvicorn
+
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
+%pyproject_configure_with_check_filter 'uvicorn$'
+BuildRequires: python3-module-uvicorn
 BuildRequires: python3-module-fastapi-cloud-cli
 BuildRequires: python3-module-httpx2
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest-timeout
 %endif
+%pyproject_configure_pypi_package
 
 %description
 Run and manage FastAPI apps from the command line with FastAPI CLI.
@@ -35,13 +39,13 @@ Run and manage FastAPI apps from the command line with FastAPI CLI.
 FastAPI CLI is a command line program fastapi that you can use to serve
 your FastAPI app, manage your FastAPI project, and more.
 
+%pyproject_configure_pypi_subpackage standard
+%pyproject_configure_pypi_subpackage standard-no-fastapi-cloud-cli
+%pyproject_configure_pypi_subpackage new
+
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -51,8 +55,8 @@ your FastAPI app, manage your FastAPI project, and more.
 
 %check
 # Clean of the using coverage module, because we don't needs to it.
-%SOURCE2 tests/
-%pyproject_run_pytest tests
+%SOURCE1 tests/
+%pyproject_run_pytest --session-timeout=600 tests
 
 %files
 %doc README.* LICENSE
@@ -60,6 +64,9 @@ your FastAPI app, manage your FastAPI project, and more.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.32-alt2
+- Packaged the standard, standard-no-fastapi-cloud-cli and new extras.
+
 * Thu Sep 03 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.32-alt1
 - Updated to 0.0.32.
 

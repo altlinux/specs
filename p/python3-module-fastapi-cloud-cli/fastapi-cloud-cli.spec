@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.26.0
+Version: 0.27.1
 Release: alt1
 
 Summary: Deploy and manage FastAPI Cloud apps from the command line
@@ -15,32 +15,33 @@ Vcs: https://github.com/fastapilabs/fastapi-cloud-cli
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
+# Sisyphus has no python3-module-uvicorn+standard subpackage yet, so
+# uvicorn[standard] is required as the plain uvicorn.
+%pyproject_configure_with_runtime_filter 'uvicorn$'
+Requires: python3-module-uvicorn
 
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%pyproject_configure_with_check_filter 'uvicorn$'
+BuildRequires: python3-module-uvicorn
 BuildRequires: python3-module-coverage
+BuildRequires: python3-module-pytest-timeout
 BuildRequires: git
 %endif
+%pyproject_configure_pypi_package
 
 %description
 %summary.
 
+%pyproject_configure_pypi_subpackage standard
+
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -54,7 +55,7 @@ BuildRequires: git
 # Rich wraps the printed file name mid-word and
 # test_create_token_human_output_does_not_print_token_value fails.
 # Keep the temp root short so the paths fit into 80 columns.
-%pyproject_run_pytest --basetemp=/tmp/pytest
+%pyproject_run_pytest --session-timeout=600 --basetemp=/tmp/pytest
 
 %files
 %doc README.md LICENSE
@@ -62,6 +63,9 @@ BuildRequires: git
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.27.1-alt1
+- Updated to 0.27.1.
+
 * Fri Sep 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.26.0-alt1
 - Updated to 0.26.0.
 

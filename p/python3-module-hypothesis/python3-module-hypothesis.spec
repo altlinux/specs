@@ -7,7 +7,7 @@
 %def_with relaxed_check
 
 Name: python3-module-%pypi_name
-Version: 6.170.14
+Version: 6.170.15
 Release: alt1
 
 Summary: A library for property based testing
@@ -17,28 +17,28 @@ Url: https://pypi.org/project/hypothesis/
 VCS: https://github.com/HypothesisWorks/hypothesis
 
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-Source2: test.in
-Source3: cargo-vendor-config.py
-Source4: cargo-config.toml.in
-Source5: crates.tar
+Source1: test.in
+Source2: cargo-vendor-config.py
+Source3: cargo-config.toml.in
+Source4: crates.tar
 Patch0: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
+BuildRequires: rpm-build-pyproject
 BuildRequires: rust-cargo
 BuildRequires: /proc
 BuildRequires: python3-dev
 %if_with check
-BuildRequires: python3-module-pytest-timeout
+# The tox.ini testenv lists its deps with -r only, which is not collected.
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_with_check_deps metadata_extra all
+%pyproject_configure_with_check_deps pip_reqfile test.in
+%pyproject_configure_with_check_filter dpcontracts
 %if_without crosshair_check
-%add_pyproject_deps_check_filter hypothesis-crosshair
-%add_pyproject_deps_check_filter crosshair-tool
+%pyproject_configure_with_check_filter hypothesis-crosshair
+%pyproject_configure_with_check_filter crosshair-tool
 %endif
-%add_pyproject_deps_check_filter dpcontracts
-%pyproject_builddeps_metadata_extra all
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest-timeout
 # needed by pexpect
 BuildRequires: /dev/pts
 # filtered by default
@@ -52,10 +52,7 @@ BuildRequires: python3-module-pandas-tests
 # needed by test_writes_gitignore_to_new_storage_dir
 BuildRequires: git-core
 %endif
-%add_python3_req_skip dpcontracts pandas
-
-# Manually manage extras dependencies with metadata.
-AutoReq: yes, nopython3
+%pyproject_configure_pypi_package
 
 %description
 Hypothesis is an advanced testing library for Python. It lets you write tests
@@ -63,15 +60,27 @@ which are parametrized by a source of examples, and then generates simple and
 comprehensible examples that make your tests fail. This lets you find more bugs
 in your code with less work.
 
+%pyproject_configure_pypi_subpackage cli
+%pyproject_configure_pypi_subpackage codemods
+%pyproject_configure_pypi_subpackage ghostwriter
+%pyproject_configure_pypi_subpackage pytz
+%pyproject_configure_pypi_subpackage dateutil
+%pyproject_configure_pypi_subpackage lark
+%pyproject_configure_pypi_subpackage numpy
+%pyproject_configure_pypi_subpackage pandas
+%pyproject_configure_pypi_subpackage pytest
+%pyproject_configure_pypi_subpackage redis
+%pyproject_configure_pypi_subpackage django
+%pyproject_configure_pypi_subpackage watchdog
+%pyproject_configure_pypi_subpackage zoneinfo
+
 %prep
-%setup -a5
+%setup -a4
 %autopatch -p1
-%SOURCE3 --in %SOURCE4 --out .cargo/config.toml --root "%buildroot%prefix"
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_pipreqfile %SOURCE2
-%endif
+%SOURCE2 --in %SOURCE3 --out .cargo/config.toml --root "%buildroot%prefix"
+# requirements/test.in lies outside the exported hypothesis/ tree.
+install -m0644 %SOURCE1 test.in
+%pyproject_setup_deps
 
 %build
 export CARGO_HOME=${PWD}/cargo
@@ -107,6 +116,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/_hypothesis_globals.py
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.170.15-alt1
+- Updated to 6.170.15.
+
 * Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 6.170.14-alt1
 - Updated to 6.170.14.
 

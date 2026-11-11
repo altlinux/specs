@@ -5,46 +5,41 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.36.1
+Version: 0.36.2
 Release: alt1
 
 Summary: Create and update inline snapshots in your python tests
 License: MIT
 Group: Development/Python3
-Url: https://15r10nk.github.io/inline-snapshot/latest/
+Url: https://pypi.org/project/inline-snapshot/
 Vcs: https://github.com/15r10nk/inline-snapshot
 
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
+BuildRequires: rpm-build-pyproject
 %if_with check
 BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-dirty-equals
 BuildRequires: python3-module-mypy
 BuildRequires: python3-module-black
 BuildRequires: python3-module-isort
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
 %endif
+%pyproject_configure_pypi_package
 
 %description
 %summary.
 
+%pyproject_configure_pypi_subpackage black
+%pyproject_configure_pypi_subpackage dirty-equals
+
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -61,6 +56,9 @@ BuildRequires: python3-module-isort
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.36.2-alt1
+- Updated to 0.36.2.
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.36.1-alt1
 - Updated to 0.36.1.
 
