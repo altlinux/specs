@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.4.2
+Version: 2.4.4
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
@@ -153,7 +153,6 @@ fi
 %dir %_sysconfdir/zfs/zpool.d
 %config(noreplace) %_sysconfdir/zfs/zpool.d/*
 %config(noreplace) %_sysconfdir/sysconfig/zfs
-%config(noreplace) %_sysconfdir/sudoers.d/zfs
 %_sysconfdir/zfs/zfs-functions
 %_sysconfdir/zfs/*.example
 %_sysconfdir/modules-load.d/%name.conf
@@ -199,6 +198,10 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Wed Nov 11 2026 Anton Farygin <rider@altlinux.org> 2.4.4-alt1
+- 2.4.2 -> 2.4.4
+- removed obsolete /etc/sudoers.d/zfs from the file list
+
 * Thu Jun 04 2026 Anton Farygin <rider@altlinux.org> 2.4.2-alt1
 - 2.4.0 -> 2.4.2
 
