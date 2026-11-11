@@ -6,7 +6,7 @@
 
 Name:          gem-test-unit
 Version:       3.7.8
-Release:       alt1
+Release:       alt1.1
 Summary:       An xUnit family unit testing framework for Ruby
 License:       Ruby or BSD-2-Clause and PSF-2.0
 Group:         Development/Ruby
@@ -28,6 +28,8 @@ BuildRequires: gem(bigdecimal) >= 0
 BuildRequires: gem(power_assert) >= 0
 %endif
 
+%ruby_regard_path_tokens test
+
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      gem(power_assert) >= 0
@@ -48,7 +50,7 @@ writing tests, checking results and automated testing in Ruby.
 %if_enabled    doc
 %package       -n gem-test-unit-doc
 Version:       3.7.8
-Release:       alt1
+Release:       alt1.1
 Summary:       An xUnit family unit testing framework for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета test-unit
 Group:         Development/Documentation
@@ -67,7 +69,7 @@ An xUnit family unit testing framework for Ruby documentation files.
 %if_enabled    devel
 %package       -n gem-test-unit-devel
 Version:       3.7.8
-Release:       alt1
+Release:       alt1.1
 Summary:       An xUnit family unit testing framework for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета test-unit
 Group:         Development/Ruby
@@ -121,6 +123,9 @@ An xUnit family unit testing framework for Ruby development package.
 
 
 %changelog
+* Wed Nov 11 2026 Pavel Skrylev <majioa@altlinux.org> 3.7.8-alt1.1
+- ! fixed lost test folder
+
 * Tue Nov 10 2026 Alexander Danilov <admsasha@altlinux.org> 3.7.8-alt1
 - ^ 3.6.2 -> 3.7.8 (closes #61397)
 
