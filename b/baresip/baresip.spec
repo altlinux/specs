@@ -1,6 +1,6 @@
-%define sover 29
+%define sover 30 
 Name: baresip
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
@@ -13,7 +13,7 @@ Url: https://github.com/baresip/baresip
 Source: %name-%version.tar
 
 BuildRequires: rpm-build-cmake gcc-c++ libssl-devel zlib-devel
-BuildRequires: libre-devel >= 4.12.0
+BuildRequires: libre-devel >= 4.13.0
 
 Obsoletes: %{name}-mpa < 4.3.0
 Obsoletes: %{name}-g726 < 4.8.0
@@ -510,6 +510,9 @@ This module provides the X11 video output driver.
 %_libdir/%name/modules/x11.so
 
 %changelog
+* Wed Nov 11 2026 Ilya Demyanov <turbid@altlinux.org> 4.13.0-alt1
+- new version 4.13.0
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.12.0-alt1
 - new version 4.12.0
 - move libbaresip.so.29 to libbaresip29 subpackage (Shared Libs Policy)

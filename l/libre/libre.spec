@@ -1,7 +1,7 @@
 %define oname re
-%define sover 45
+%define sover 46
 Name: libre
-Version: 4.12.0
+Version: 4.13.0
 Release: alt1
 
 Summary: Generic library for real-time communications with async IO support
@@ -52,6 +52,9 @@ rm -f %buildroot/%_libdir/%name.a
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Nov 11 2026 Ilya Demyanov <turbid@altlinux.org> 4.13.0-alt1
+- new version 4.13.0
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.12.0-alt1
 - new version 4.12.0
 - use rpm-build-cmake instead of cmake in BuildRequires
