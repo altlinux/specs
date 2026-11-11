@@ -1,5 +1,5 @@
 %define kernel_base_version	7.3
-%define kernel_sublevel        .0
+%define kernel_sublevel        .4
 
 Name: kernel-image-mp
 Version: %kernel_base_version%kernel_sublevel
@@ -98,6 +98,9 @@ rm -vf %buildroot%kerneldir/build
 %ghost %kerneldir/modules.symbols.bin
 
 %changelog
+* Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.3.4-alt1
+- 7.3.4
+
 * Wed Nov 04 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.3.0-alt1
 - 7.3
 
