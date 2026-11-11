@@ -1,6 +1,6 @@
 Name:    VirtualGamePad-PC
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: Windows and Linux server for Virtual Gamepad
 License: GPL-3.0
@@ -40,7 +40,10 @@ install -Dm644 res/logos/GamepadIcon.svg %buildroot%_iconsdir/hicolor/scalable/a
 %_desktopdir/VGamepadPC.desktop
 %_iconsdir/hicolor/scalable/apps/VGamepadPC.svg
 
-
 %changelog
+* Wed Nov 11 2026 Sergey Palcheh <minergenon@altlinux.org> 0.4.1-alt2
+- Fixed FTBFS on Linux: added missing <unistd.h> include for access(),
+  R_OK, W_OK in preferences.cpp.
+
 * Wed Jun 24 2026 Sergey Palcheh <minergenon@altlinux.org> 0.4.1-alt1
 - Initial build for Sisyphus
