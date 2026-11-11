@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-kdtree
-Version: 0.17
+Version: 1.1.1
 Release: alt1
 
 Summary: A Python implementation of a kd-tree
@@ -38,6 +38,9 @@ Source: %name-%version.tar
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.1.1-alt1
+- 0.17 -> 1.1.1
+
 * Thu Sep 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.17-alt1
 - 0.16 -> 0.17
 
