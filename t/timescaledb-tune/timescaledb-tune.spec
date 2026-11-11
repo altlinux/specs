@@ -1,8 +1,8 @@
 %define import_path github.com/timescale/timescaledb-tune
 
 Name:     timescaledb-tune
-Version:  0.19.0
-Release:  alt2
+Version:  0.19.1
+Release:  alt1
 Summary:  is a program for tuning a TimescaleDB database
 License:  Apache-2.0
 Group:    Databases
@@ -47,6 +47,10 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Wed Nov 11 2026 Alexei Takaseev <taf@altlinux.org> 0.19.1-alt1
+- 0.19.1
+- OVE-20261111-0003: Backport to c10f2 and c11f1 support new version TimescaleDB
+
 * Tue Oct 27 2026 Alexei Takaseev <taf@altlinux.org> 0.19.0-alt2
 - Added an ALT-specific path to the configuration file (ALT #61228)
 
