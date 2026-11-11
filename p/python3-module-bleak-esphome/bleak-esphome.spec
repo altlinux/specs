@@ -1,6 +1,6 @@
 Name: python3-module-bleak-esphome
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: Bleak backend of ESPHome
 License: MIT
@@ -10,6 +10,8 @@ VCS: https://github.com/bluetooth-devices/bleak-esphome
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
+
+Patch0: fix-bleak3-disconnected-callback.patch
 
 Autoreq: yes, nopython3
 %pyproject_runtimedeps_metadata
@@ -26,6 +28,7 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 
 %prep
 %setup
+%patch0 -p1
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
 %pyproject_deps_resync_check_poetry dev
@@ -44,6 +47,9 @@ BuildRequires(pre): rpm-build-pyproject >= 0.2.0
 %python3_sitelibdir/bleak_esphome-%version.dist-info
 
 %changelog
+* Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.0-alt2
+- fixed build with bleak 3.1
+
 * Tue Oct 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.1.0-alt1
 - 4.1.0 released
 
