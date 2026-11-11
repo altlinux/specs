@@ -6,7 +6,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 2.6.5
+Version: 2.6.6
 Release: alt1
 
 Summary: PyTorch framework for high-performance AI research
@@ -33,8 +33,8 @@ BuildRequires: python3-module-jsonargparse
 %if_with check
 # Required by the enabled LightningCLI tests.
 BuildRequires: python3-module-jsonargparse+signatures
-# torch.compile tests use TorchInductor, which requires a C++ compiler.
-BuildRequires: gcc-c++
+# TorchInductor tests compile C++ kernels with OpenMP.
+BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-tensorboardX
 %endif
@@ -51,10 +51,9 @@ ExclusiveArch: x86_64 aarch64
 
 Source: %name-%version.tar
 
-Patch1: pytorch-lightning-2.6.5-upstream-checkpoint-security.patch
-Patch2: pytorch-lightning-2.6.5-upstream-persistent-workers-shutdown.patch
-Patch3: pytorch-lightning-2.6.5-upstream-torch-compile-logging.patch
-Patch4: pytorch-lightning-2.6.5-upstream-lr-finder-weights-only.patch
+Patch1: pytorch-lightning-2.6.5-upstream-persistent-workers-shutdown.patch
+Patch2: pytorch-lightning-2.6.5-upstream-torch-compile-logging.patch
+Patch3: pytorch-lightning-2.6.5-upstream-lr-finder-weights-only.patch
 
 %description
 Why PyTorch Lightning?
@@ -135,6 +134,10 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 10 2026 Nikita Shmatko <nash@altlinux.org> 2.6.6-alt1
+- Updated to version 2.6.6.
+- Added OpenMP development files for TorchInductor tests.
+
 * Mon Oct 26 2026 Nikita Shmatko <nash@altlinux.org> 2.6.5-alt1
 - Updated to version 2.6.5.
 - Enabled tests.
