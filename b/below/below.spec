@@ -2,7 +2,7 @@
 
 Name: below
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: A time traveling resource monitor for modern Linux systems
 License: Apache-2.0
@@ -49,6 +49,7 @@ cargo-vendor-checksum --vendor vendor --all
 %install
 %rust_install
 
+install -d %buildroot%_logdir/%name
 install -Dpm 644 ./etc/%name.service %buildroot%_unitdir/%name.service
 install -Dpm 644 ./etc/logrotate.conf %buildroot%_logrotatedir/%name.conf
 install -Dpm 644 ./below/%name.1 %buildroot%_man1dir/%name.1
@@ -64,11 +65,15 @@ install -Dpm 644 ./below/%name.1 %buildroot%_man1dir/%name.1
 
 %files
 %doc README.md
+%dir %_logdir/%name
 %_bindir/%name
 %_unitdir/%name.service
 %_man1dir/%name.1*
 %config(noreplace) %_logrotatedir/%name.conf
 
 %changelog
+* Wed Nov 11 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.11.0-alt2
+- fix missing log directory on first launch (closes: 59739)
+
 * Thu Jun 25 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 0.11.0-alt1
 - initial build for ALT Linux
