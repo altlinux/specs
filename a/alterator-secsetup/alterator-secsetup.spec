@@ -1,5 +1,5 @@
 Name: alterator-secsetup
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Source: %name-%version.tar
@@ -42,6 +42,9 @@ install -m 0644 secsetup.conf %buildroot%_sysctldir/
 %_datadir/alterator-secsetup/*
 
 %changelog
+* Thu Nov 05 2026 Oleg Solovyov <mcpain@altlinux.org> 2.3-alt1
+- also look for new libreoffice package
+
 * Tue Mar 11 2025 Oleg Solovyov <mcpain@altlinux.org> 2.2-alt1
 - bump MIN_UID (Closes: #53373)
 
