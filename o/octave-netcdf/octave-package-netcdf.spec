@@ -4,8 +4,8 @@ BuildRequires: makeinfo texinfo
 %def_with _octave_arch
 %define octpkg netcdf
 Name: octave-%octpkg
-Version: 1.0.17
-Release: alt2
+Version: 1.0.21
+Release: alt1.1
 Summary: A NetCDF interface for Octave
 
 Group: Sciences/Mathematics
@@ -16,6 +16,7 @@ Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Pac
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
+BuildRequires: rpm-build-python3
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 BuildRequires: gnu-config
@@ -51,6 +52,11 @@ cp -at src /usr/share/gnu-config/config.{guess,sub}
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.21-alt1.1
+- NMU:
+    + updated to 1.0.21.
+    + add BR for rpm-build-python3.
+
 * Wed Dec 27 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.0.17-alt2
 - NMU: fixed FTBFS on LoongArch (use fresh config.{guess,sub})
 

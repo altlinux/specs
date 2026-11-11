@@ -5,13 +5,14 @@ BuildRequires: /usr/bin/octave-config makeinfo pkgconfig(nettle)
 %define octpkg general
 Epoch: 1
 Name: octave-%octpkg
-Version: 2.1.4
-Release: alt1
+Version: 2.1.5
+Release: alt1.1
 Summary: General
 
 Group: Sciences/Mathematics
 License: GPLv3+, modified BSD, public domain
 URL: http://octave.sf.net
+VCS: https://github.com/gnu-octave/octave-general.git
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -49,6 +50,11 @@ cp -at src /usr/share/gnu-config/config.{guess,sub}
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1:2.1.5-alt1.1
+- NMU:
+    + updated to 2.1.5.
+    + added VCS tag.
+
 * Fri Aug 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:2.1.4-alt1
 - New version.
 

@@ -5,8 +5,8 @@ BuildRequires: makeinfo
 %define octpkg miscellaneous
 Epoch: 4
 Name: octave-%octpkg
-Version: 1.3.1
-Release: alt1
+Version: 1.3.3
+Release: alt1.1
 Summary: Miscellaneous functions
 
 Group: Sciences/Mathematics
@@ -57,6 +57,9 @@ Miscellaneous tools that don't fit somewhere else.
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 4:1.3.3-alt1.1
+- NMU: updated to 1.3.3.
+
 * Tue May 12 2026 Anton Midyukov <antohami@altlinux.org> 4:1.3.1-alt1
 - New version 1.3.1.
 - Add patch to python3 support.

@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave-config gcc-fortran makeinfo
 %define octpkg control
 Epoch: 1
 Name: octave-%octpkg
-Version: 4.1.1
-Release: alt1
+Version: 4.3.0
+Release: alt1.1
 Summary: Computer-Aided Control System Design
 
 Group: Sciences/Mathematics
@@ -47,6 +47,9 @@ Computer-Aided Control System Design (CACSD) Tools for GNU Octave, based on the 
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1:4.3.0-alt1.1
+- NMU: updated to 4.3.0.
+
 * Thu Feb 13 2025 Andrey Cherepanov <cas@altlinux.org> 1:4.1.1-alt1
 - New version.
 - Update URL and source.

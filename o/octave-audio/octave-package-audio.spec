@@ -4,13 +4,14 @@ BuildRequires: makeinfo texinfo
 %def_with _octave_arch
 %define octpkg audio
 Name: octave-%octpkg
-Version: 2.0.10
-Release: alt1
+Version: 2.0.12
+Release: alt1.1
 Summary: Audio Toolbox
 
 Group: Sciences/Mathematics
 License: GPLv3+
 URL: http://octave.sourceforge.net
+VCS: https://github.com/gnu-octave/octave-audio.git
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 
@@ -52,6 +53,11 @@ cp -at src  /usr/share/gnu-config/config.{guess,sub}
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 2.0.12-alt1.1
+- NMU:
+    + updated to 2.0.12.
+    + specified VCS.
+
 * Sun Feb 22 2026 Andrey Cherepanov <cas@altlinux.org> 2.0.10-alt1
 - New version.
 

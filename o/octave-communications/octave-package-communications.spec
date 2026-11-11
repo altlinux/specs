@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave makeinfo
 %define octpkg communications
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.2.7
-Release: alt1
+Version: 1.2.8
+Release: alt1.1
 Summary: Communications
 
 Group: Sciences/Mathematics
@@ -47,6 +47,9 @@ functions, Modulation and Galois Fields
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1:1.2.8-alt1.1
+- NMU: updated to 1.2.8.
+
 * Wed Feb 19 2025 Andrey Cherepanov <cas@altlinux.org> 1:1.2.7-alt1
 - new version
 

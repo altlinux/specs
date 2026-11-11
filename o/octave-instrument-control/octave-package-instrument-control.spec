@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/octave-config /usr/bin/rpcgen libtirpc-devel linux-gpib-
 %def_with _octave_arch
 %define octpkg instrument-control
 Name: octave-%octpkg
-Version: 0.9.1
-Release: alt1
+Version: 0.10.1
+Release: alt1.1
 Summary: Instrument Control
 
 Group: Sciences/Mathematics
@@ -16,6 +16,7 @@ Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Pac
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
+BuildRequires: rpm-build-python3
 %if_with _octave_arch
 BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel
 %else
@@ -46,6 +47,11 @@ Low level I/O functions for serial, i2c, spi, parallel, tcp, gpib, vxi11, udp an
 %endif
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.10.1-alt1.1
+- NMU:
+    + updated to 0.10.1
+    + added BR for rpm-build-python3.
+
 * Tue Dec 26 2023 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt1
 - regenerated from template by package builder
 
