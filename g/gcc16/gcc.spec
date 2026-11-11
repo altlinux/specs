@@ -4,7 +4,7 @@
 
 Name: gcc%gcc_branch
 Version: 16.2.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -19,7 +19,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20260828
+%define snapshot 20261111
 
 %define srcver %version-%snapshot-%release
 %define srcfilename gcc-%srcver
@@ -2132,6 +2132,11 @@ rm -f %buildroot%_libdir/libstdc++.modules.json
 %endif #with_pdf
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 16.2.1-alt2
+- Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
+  + releases/gcc-16 (snapshot 20261111)
+  commit r16-9939-g2cc1be9c9bf78ba01ee37fa09d9906060685cb56.
+
 * Mon Sep 14 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 16.2.1-alt1
 - Updated to 16.2.1.
 - Updated to merged branches from https://gcc.gnu.org/git/gcc.git:
