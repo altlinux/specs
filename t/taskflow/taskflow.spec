@@ -1,6 +1,6 @@
 Name: taskflow
 Version: 4.1.0
-Release: alt2
+Release: alt3
 
 Summary: Modern C++ header-only library for parallel and heterogeneous task programming
 
@@ -17,6 +17,8 @@ Patch1: taskflow-system-doctest.patch
 Patch2: taskflow-object-pool-32bit.patch
 # inline (zero-worker) executor mode, needed by grok: https://github.com/taskflow/taskflow/pull/802
 Patch3: taskflow-inline-executor-pr802.patch
+# Fix libstdc++ 16 moving from mutable scan input iterators (AUR patch)
+Patch4: taskflow-gcc16-inclusive-scan.patch
 
 BuildArch: noarch
 
@@ -46,6 +48,7 @@ This package contains the header files, CMake config and pkg-config file.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %cmake \
@@ -72,6 +75,9 @@ This package contains the header files, CMake config and pkg-config file.
 %_datadir/pkgconfig/taskflow.pc
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt3
+- fix InclusiveScan tests with GCC 16.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt2
 - add inline (zero-worker) executor mode (upstream PR #802), needed by grok
 
