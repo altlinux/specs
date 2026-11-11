@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: libtatsu
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Library handling the communication with Apple's Tatsu Signing Server (TSS)
@@ -64,6 +64,9 @@ This package provides files for development using %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 11 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Thu Nov 05 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - 1.1.0
 
