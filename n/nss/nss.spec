@@ -7,8 +7,8 @@
 %define optflags_lto %nil
 
 Name: nss
-Version: 3.132
-Release: alt3
+Version: 3.133
+Release: alt1
 
 Summary: Netscape Network Security Services(NSS)
 License: MPL-2.0
@@ -27,8 +27,7 @@ Source6: system-pkcs11.txt
 Patch001: 0001-Disable-test-dbtest-r-w-in-a-readonly-directory.patch
 Patch002: 0002-ALT-Disable-flaky-tests.patch
 Patch003: 0003-Disable-ssl_policy_pkix_ocsp-test.patch
-Patch004: 0004-signver-Exit-with-0-after-a-successful-A.patch
-Patch005: 0005-pk11wrap-Support-unknown-key-algorithms.patch
+Patch004: 0004-Bug-2087030-fall-back-to-deriving-CKA_ID-from-encode.patch
 ### End Patches
 
 BuildRequires: gcc-c++
@@ -279,6 +278,9 @@ popd
 %files -n libnss-nssckbi-checkinstall
 
 %changelog
+* Wed Nov 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.133-alt1
+- New version.
+
 * Sun Nov 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.132-alt3
 - Accept certificates with unknown key algorithms (Closes: 61235).
 
