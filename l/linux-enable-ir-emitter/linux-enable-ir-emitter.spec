@@ -1,6 +1,6 @@
 Name: linux-enable-ir-emitter
 Version: 7.0.0
-Release: alt1.beta2
+Release: alt2
 
 Summary: Enables infrared cameras that are not directly enabled out-of-the box
 License: MIT
@@ -99,5 +99,8 @@ id -Gn %username | grep -qsw video || usermod -a -G video %username >/dev/null 2
 %attr(755,%username,%username) %sysuser_dir
 
 %changelog
+* Wed Nov 11 2026 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt2
+- Updated to 7.0.0 release.
+
 * Mon Jul 06 2026 Mikhail Efremov <sem@altlinux.org> 7.0.0-alt1.beta2
 - Initial build.
