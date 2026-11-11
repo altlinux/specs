@@ -1,7 +1,6 @@
 %define module HTTP-Body
-
 Name: perl-%module
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: %module - HTTP Body Parser
@@ -9,7 +8,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source0: http://www.cpan.org/authors/id/G/GE/GETTY/%{module}-%{version}.tar.gz
+Source0: https://cpan.metacpan.org/authors/id/G/GE/GETTY/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +33,13 @@ export TEST_POD=1
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.25-alt1
+- new version 1.25
+- fixes:
+  + CVE-2026-117500: bound upload filename suffix handling.
+  + CVE-2026-117501: validate chunk framing and limit chunk-size lines.
+  + CVE-2026-121006: limit chunked body trailer size and line count.
+
 * Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 1.24-alt1
 - new version 1.24
 - fixes:
