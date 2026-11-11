@@ -4,12 +4,12 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 Summary: A reStructuredText renderer for rich
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/rich-rst
+URL: https://pypi.org/project/rich-rst
 VCS: https://github.com/wasi-master/rich-rst
 
 Source: %name-%version.tar
@@ -63,6 +63,9 @@ find tests/ -name "*.py" -exec sed -i -E 's/from rich_rst\._vendor import/import
 %doc README.md LICENSE
 
 %changelog
+* Wed Nov 11 2026 Vladislav Eliseev <general@altlinux.org> 2.2.0-alt1
+- New version 2.2.0.
+
 * Tue Jul 07 2026 Vladislav Eliseev <general@altlinux.org> 2.1.0-alt1
 - New version 2.1.0.
 - Unvendored docutils to fix broken dependencies.
