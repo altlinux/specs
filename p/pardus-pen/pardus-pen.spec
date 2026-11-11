@@ -1,6 +1,6 @@
 Name: pardus-pen
 Version: 4.3.0
-Release: alt1
+Release: alt2
 
 Summary: Fast tool for drawing with a pen over the screen
 License: GPL-3.0-or-later
@@ -9,6 +9,7 @@ Url: https://github.com/pardus/pardus-pen
 
 # Source-url: https://github.com/pardus/pardus-pen.git/tree/debian/%version
 Source: %name-%version.tar
+Patch0: meson-no-werror.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson qt6-base-devel qt6-svg-devel
@@ -22,6 +23,7 @@ screenshots, PDF import and saving of drawings.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 export PATH=%_libdir/qt6/libexec:$PATH
@@ -46,5 +48,8 @@ export PATH=%_libdir/qt6/libexec:$PATH
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt2
+- fixed build with GCC 16
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.0-alt1
 - initial build for Sisyphus
