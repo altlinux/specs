@@ -13,7 +13,7 @@
 %def_disable nvfwreset
 
 Name: mstflint
-Version: 4.37.0.1
+Version: 4.38.0.1
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -83,6 +83,9 @@ sed -i "s|^#!/usr/bin/python$|#!/usr/bin/python3|" common/autocomplete/mft_help_
 rm -rf %buildroot%_includedir
 rm -f  %buildroot%_libdir/*.a
 rm -f  %buildroot%_libdir/%name/*.a
+pushd %buildroot/usr
+sed -i "s|^#!/usr/bin/env python.*|#!/usr/bin/python3|" `find . -name \*.py`
+popd
 
 %files
 %_bindir/*
@@ -93,6 +96,12 @@ rm -f  %buildroot%_libdir/%name/*.a
 %_man1dir/*
 
 %changelog
+* Tue Nov 10 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.38.0.1-alt1
+- v4.38.0-1
+
+* Tue Sep 22 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.37.0.1.1-alt1
+- v4.37.0-1.1
+
 * Tue Sep 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 4.37.0.1-alt1
 - v4.37.0-1
 

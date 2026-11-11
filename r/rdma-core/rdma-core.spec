@@ -10,7 +10,7 @@
 %def_enable pyverbs
 
 Name: rdma-core
-Version: 62.0
+Version: 65.1
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -27,9 +27,11 @@ Patch: %name-%version.patch
 Patch2000: %name-e2k.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-ninja-build
 BuildRequires: binutils
-BuildRequires: cmake >= 3.18.1 rpm-macros-cmake
-BuildRequires: ninja-build rpm-macros-ninja-build
+BuildRequires: cmake >= 3.18.1
+BuildRequires: ninja-build
 BuildRequires: libudev-devel
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
@@ -279,6 +281,9 @@ sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE
 %else
     -DNO_PYVERBS=1 \
 %endif
+%ifarch %ix86
+    -DCMAKE_C_FLAGS:STRING="%optflags -Wno-incompatible-pointer-types" \
+%endif
     -DPYTHON_EXECUTABLE:PATH=%__python3 \
     -DCMAKE_INSTALL_PYTHON_ARCH_LIB:PATH=%python3_sitelibdir
 
@@ -354,6 +359,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %config(noreplace) %_sysconfdir/modprobe.d/truescale.conf
 %_unitdir/rdma-hw.target
 %_unitdir/rdma-load-modules@.service
+%_unitdir/rdma-load-modules@.service.d/
 %_udevrulesdir/../rdma_rename
 %_udevrulesdir/60-rdma-ndd.rules
 %_udevrulesdir/60-rdma-persistent-naming.rules
@@ -368,6 +374,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_sbindir/rdma_topo
 %_man7dir/rxe*
 %_man8dir/rdma-ndd.*
+%_prefix/lib/sysusers.d/rdma.conf
 
 %files devel
 %docdir/MAINTAINERS
@@ -387,7 +394,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_man3dir/efadv*
 %_man7dir/efadv*
 %_man3dir/hnsdv*
+%_man3dir/ionic_dv*
 %_man7dir/hnsdv*
+%_man7dir/ionicdv*
 %_man3dir/mlx5dv*
 %_man3dir/manadv*
 %_man7dir/manadv*
@@ -620,6 +629,10 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %endif
 
 %changelog
+* Wed Nov 11 2026 Andrew A. Vasilyev <andy@altlinux.org> 65.1-alt1
+- New version 65.1.
+- Fix double "extern C" block in providers/mlx5/mlx5dv.h.
+
 * Tue Mar 03 2026 Alexey Shabalin <shaba@altlinux.org> 62.0-alt1
 - updated from 60.0 to 62.0
 
