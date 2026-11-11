@@ -3,7 +3,7 @@
 
 Name: gz-common
 Version: 7.3.0
-Release: alt1
+Release: alt2
 
 Summary: Gazebo Common : AV, Graphics, Events, and much more
 License: Apache-2.0
@@ -12,7 +12,7 @@ Url: https://gazebosim.org/libs/common/
 Vcs: https://github.com/gazebosim/gz-common
 
 Source: %name-%version.tar
-Patch1: gz-common-7.0.0-alt-fix-path-conflict-when-tests-parallelized.patch
+Patch1: %name-%version-alt.patch
 
 # XXX: gz_remotery_vis calls `xdg-open` if available tries
 # XXX: `open` if not (presumably to support both Linux and macos).
@@ -191,6 +191,9 @@ This package contains development files of gz-common.
 %_pkgconfigdir/gz-common-testing.pc
 
 %changelog
+* Mon Nov 09 2026 Pavel Petrykin <silverducks@altlinux.org> 7.3.0-alt2
+- Deflake two timing-sensitive tests in UNIT_WorkerPool_TEST.
+
 * Mon Aug 10 2026 Pavel Petrykin <silverducks@altlinux.org> 7.3.0-alt1
 - New version.
 
