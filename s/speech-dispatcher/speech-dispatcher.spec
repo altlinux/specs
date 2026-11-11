@@ -22,7 +22,7 @@
 
 Name: speech-dispatcher
 Version: 0.12.1
-Release: alt3
+Release: alt4
 
 Summary: A speech output processing service
 License: GPL-2.0-or-later
@@ -341,6 +341,7 @@ Obsoletes: %name-module-generic < %EVR
 %package -n %shortname-module-cicero
 Group: Sound
 Summary: Cicero support for %name
+requires: cicero
 Requires: %name = %EVR
 Provides: %name-module-cicero = %EVR
 Obsoletes: %name-module-cicero < %EVR
@@ -414,6 +415,9 @@ find %buildroot%_libdir -name '*.la' -delete
 %find_lang %name
 
 %changelog
+* Wed Nov 11 2026 Artem Semenov <savoptik@altlinux.org> 0.12.1-alt4
+- Added req to cicero to spd-module-cicero.
+
 * Tue Sep 08 2026 Artem Semenov <savoptik@altlinux.org> 0.12.1-alt3
 - Created rpm-macros-spd subpackage.
 - Renamed modules to short name.
