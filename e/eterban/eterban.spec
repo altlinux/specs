@@ -1,12 +1,12 @@
 %define defphp php%php_defver
 
 Name: eterban
-Version: 0.10
-Release: alt1
+Version: 0.12
+Release: alt2
 
 Summary: Etersoft ban service
 
-License: AGPLv3
+License: AGPL-3.0-only
 Group: Development/Other
 Url: http://wiki.etersoft.ru/eterban
 
@@ -18,6 +18,7 @@ BuildArchitectures: noarch
 # error: File must begin with "/": %webserver_htdocsdir/maintenance/
 BuildRequires(pre): rpm-macros-webserver-common
 BuildRequires(pre): rpm-build-python3 rpm-build-php
+BuildRequires: wget
 
 #Requires: python3 python3-module-redis-py
 %add_python3_lib_path /usr/share/eterban
@@ -37,6 +38,8 @@ Summary: Etersoft ban service: gateway
 Group: Development/Other
 Requires: eterban-common = %EVR
 Requires: iptables ipset conntrack-tools
+Requires: crontabs logrotate
+Requires: python3
 
 %description gateway
 Etersoft ban service.
@@ -47,6 +50,8 @@ Group: Development/Other
 Requires: eterban-common = %EVR
 Requires: nginx
 Requires: %defphp-redis
+Requires: %defphp-fpm-fcgi
+Requires: %defphp-openssl
 
 %description web
 Etersoft ban service.
@@ -60,6 +65,29 @@ Requires: fail2ban
 %description fail2ban
 Etersoft ban service.
 
+%post common
+if [ -f /etc/%name/settings.ini ]; then
+    if rpm -q --quiet %name-web && getent group %webserver_group >/dev/null; then
+        chown root:%webserver_group /etc/%name/settings.ini
+        chmod 640 /etc/%name/settings.ini
+    else
+        chown root:root /etc/%name/settings.ini
+        chmod 600 /etc/%name/settings.ini
+    fi
+fi
+
+%post web
+if [ -f /etc/%name/settings.ini ] && getent group %webserver_group >/dev/null; then
+    chown root:%webserver_group /etc/%name/settings.ini
+    chmod 640 /etc/%name/settings.ini
+fi
+
+%postun web
+if [ "$1" = 0 ] && [ -f /etc/%name/settings.ini ]; then
+    chown root:root /etc/%name/settings.ini
+    chmod 600 /etc/%name/settings.ini
+fi
+
 %prep
 %setup
 
@@ -71,6 +99,7 @@ Etersoft ban service.
 mkdir -p %buildroot%_datadir/%name/
 mkdir -p %buildroot/etc/%name/
 mkdir -p %buildroot/etc/cron.hourly/
+mkdir -p %buildroot/etc/logrotate.d/
 mkdir -p %buildroot/etc/fail2ban/action.d/
 mkdir -p %buildroot%systemd_unitdir
 mkdir -p %buildroot/var/log/eterban/
@@ -78,15 +107,19 @@ mkdir -p %buildroot%webserver_htdocsdir/%name/
 mkdir -p %buildroot/etc/nginx/sites-enabled.d/
 
 install -m 755 -D gateway/usr/bin/eterban.sh %buildroot%_bindir/%name
-cp -a gateway/usr/share/%name/* %buildroot%_datadir/%name/
+install -m 755 gateway/usr/share/%name/*.py %buildroot%_datadir/%name/
+install -m 644 ban-internal-server/data/www/int2.py %buildroot%_datadir/%name/eterban_internal.py
 
-install -m 644 common/etc/eterban/* %buildroot/etc/%name/
+install -m 644 common/etc/eterban/settings.ini %buildroot/etc/%name/settings.ini
+install -m 644 common/etc/eterban/whitelist.txt %buildroot/etc/%name/whitelist.txt
 
 install -m 644 gateway/etc/systemd/system/* %buildroot/%systemd_unitdir
-install -m 644 gateway/etc/cron.hourly/* %buildroot/etc/cron.hourly/
+install -m 755 gateway/etc/cron.hourly/get_firehol_ip.sh %buildroot/etc/cron.hourly/get_firehol_ip.sh
+install -m 644 gateway/etc/logrotate.d/eterban-gateway %buildroot/etc/logrotate.d/eterban-gateway
 
 install -m 644 ban-server/data/www/* %buildroot%webserver_htdocsdir/%name/
 install -m 644 ban-server/etc/nginx/sites-enabled.d/* %buildroot/etc/nginx/sites-enabled.d/
+sed -i 's|@PHP_FPM_SOCKET@|/var/run/php%php_defver-fpm/php%php_defver-fpm.sock|' %buildroot/etc/nginx/sites-enabled.d/eterban.conf
 
 install -m 644 prod-server/etc/fail2ban/action.d/* %buildroot/etc/fail2ban/action.d/
 
@@ -94,35 +127,67 @@ cp -a prod-server/usr/share/%name/* %buildroot%_datadir/%name/
 
 %post gateway
 %post_service %name
+%post_service %name-api
+%post_service %name-internal
 
 %preun gateway
 %preun_service %name
-
+%preun_service %name-api
+%preun_service %name-internal
 
 %files common
-%config(noreplace) /etc/%name/settings.ini
+%config(noreplace) %attr(0600,root,root) /etc/%name/settings.ini
+%config(noreplace) /etc/%name/whitelist.txt
+%_datadir/%name/ban.py
 
 %files gateway
 %systemd_unitdir/eterban.service
 %_bindir/eterban
 %dir /var/log/eterban/
-%config(noreplace) /etc/cron.hourly/get_firehol_ip.sh
+/etc/cron.hourly/get_firehol_ip.sh
+%config(noreplace) /etc/logrotate.d/eterban-gateway
 %dir %_datadir/%name/
 %_datadir/%name/eterban_switcher.py
 %_datadir/%name/unban.py
 %_datadir/%name/autoban_manager.py
 %_datadir/%name/autoban_cli.py
-%_datadir/%name/__pycache__/
+%_datadir/%name/eterban_api.py
+%_datadir/%name/eterban_internal.py
+%_datadir/%name/filter_firehol.py
+%systemd_unitdir/eterban-api.service
+%systemd_unitdir/eterban-internal.service
+%exclude %_datadir/%name/__pycache__/*
 
 %files web
 %webserver_htdocsdir/%name/
 %config(noreplace) /etc/nginx/sites-enabled.d/eterban.conf
 
 %files fail2ban
-%_datadir/%name/ban.py
 %config(noreplace) /etc/fail2ban/action.d/eterban.conf
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12-alt2
+- gateway: add ban_server_internal for the internal ban page address
+- README: document a separate web node and cleanup of local files
+
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.12-alt1
+- gateway: exempt whitelisted destinations from internal ban DNAT
+- gateway: drop whitelisted networks when importing firehol_level1
+- gateway: remove CLI unbans from the Redis active bans set
+- eterban: do not fail count and list on IPv4-only gateways
+
+* Tue Jul 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt3
+- gateway: do not restore legacy ipset snapshots over active sets
+
+* Tue Jul 28 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt2
+- gateway: restore Redis Stream command consumption after reconnect
+- gateway: send public and internal ban redirects to separate ports
+- packaging: harden services and correct installed file ownership
+
+* Wed Jul 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.11-alt1
+- gateway: support list of WAN interfaces via i_interfaces config option
+- spec: add whitelist.txt to common package
+
 * Thu Jan 29 2026 Vitaly Lipatov <lav@altlinux.ru> 0.10-alt1
 - eterban_switcher.py: return error on redis connection error
 - add auto-unban with exponential backoff
