@@ -1,50 +1,52 @@
 %define        _unpackaged_files_terminate_build 1
 
 %ifarch loongarch64
-%def_disable legacy_numeric
+%def_disable   legacy_numeric
 %else
-%def_enable legacy_numeric
+%def_enable    legacy_numeric
 %endif
 
 Name:          geogram
-Version:       1.10.0
+Version:       1.10.1
 Release:       alt1
 Summary:       Geogram library by INRIA
-License:       BSD-3-Clause
+License:       BSD-3-Clause AND MIT
 Group:         Sciences/Mathematics
 Url:           https://brunolevy.github.io/geogram/
 Vcs:           https://github.com/BrunoLevy/geogram.git
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: pkg-config
 BuildRequires: hostinfo
 BuildRequires: gcc-c++
-BuildRequires: doxygen
-BuildRequires: liblua5.3-devel
-#BuildRequires: libexploragram-devel
-#BuildRequires: libhlbfgs-devel
-BuildRequires: libglfw3-devel
-BuildRequires: libdnet-devel
-BuildRequires: libgomp-devel
-BuildRequires: libGLU-devel
-BuildRequires: libXxf86vm-devel
-BuildRequires: libXcursor-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXi-devel
-BuildRequires: libGLU-devel
-BuildRequires: libXrandr-devel
-BuildRequires: libimgui-devel
-BuildRequires: libImGuiColorTextEdit-devel
-BuildRequires: librply-devel
-BuildRequires: libmeshb-devel
+BuildRequires: cmake(imgui)
+BuildRequires: cmake(ImGuiColorTextEdit)
+BuildRequires: pkgconfig(glfw3)
+BuildRequires: pkgconfig(glu)
+BuildRequires: pkgconfig(lua-5.4)
+BuildRequires: pkgconfig(stb)
+BuildRequires: pkgconfig(tbb)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xxf86vm)
+BuildRequires: pkgconfig(zlib)
 BuildRequires: amgcl-devel
-BuildRequires: tbb-devel
-BuildRequires: libxatlas-devel
+BuildRequires: libann-devel
+BuildRequires: libdnet-devel
+#BuildRequires: libexploragram-devel
+BuildRequires: libgomp-devel
+#BuildRequires: libhlbfgs-devel
+BuildRequires: libmeshb-devel
+BuildRequires: libopennl-devel
+BuildRequires: librply-devel
 BuildRequires: libtetgen-devel
 BuildRequires: libtriangle-devel
-BuildRequires: zlib-devel
-BuildRequires: libopennl-devel
+BuildRequires: libxatlas-devel
 
 %description
 Geogram is a programming library of geometric algorithms. It includes a simple
@@ -82,22 +84,29 @@ Summary:       Development files for %name
 
 Requires:      lib%{name} = %EVR
 Requires:      cmake
-Requires:      hostinfo
-Requires:      gcc-c++
-Requires:      doxygen
-Requires:      libtetgen-devel
-Requires:      libtriangle-devel
-Requires:      liblua5.3-devel
-Requires:      libglfw3-devel
+Requires:      cmake(imgui)
+Requires:      cmake(ImGuiColorTextEdit)
+Requires:      pkgconfig(glfw3)
+Requires:      pkgconfig(glu)
+Requires:      pkgconfig(lua-5.4)
+Requires:      pkgconfig(stb)
+Requires:      pkgconfig(tbb)
+Requires:      pkgconfig(xcursor)
+Requires:      pkgconfig(xi)
+Requires:      pkgconfig(xinerama)
+Requires:      pkgconfig(xrandr)
+Requires:      pkgconfig(xxf86vm)
+Requires:      pkgconfig(zlib)
+Requires:      amgcl-devel
+Requires:      libann-devel
 Requires:      libdnet-devel
 Requires:      libgomp-devel
-Requires:      libGLU-devel
-Requires:      libXxf86vm-devel
-Requires:      libXcursor-devel
-Requires:      libXinerama-devel
-Requires:      libXi-devel
-Requires:      libGLU-devel
-Requires:      libXrandr-devel
+Requires:      libmeshb-devel
+Requires:      libopennl-devel
+Requires:      librply-devel
+Requires:      libtetgen-devel
+Requires:      libtriangle-devel
+Requires:      libxatlas-devel
 
 %description   -n lib%{name}-devel
 Geogram is a programming library of geometric algorithms. It includes a simple
@@ -134,7 +143,9 @@ Group:         Development/C++
 Summary:       Development files for %name
 
 Requires:      lib%{name}-gfx = %EVR
-Requires:      lib%{name}-devel = %EVR
+Requires:      cmake(imgui)
+Requires:      cmake(ImGuiColorTextEdit)
+Requires:      pkgconfig(%{name})
 
 %description   -n lib%{name}-gfx-devel
 Geogram is a programming library of geometric algorithms. It includes a simple
@@ -176,8 +187,11 @@ Transport in 3d that scales up to 1 million Dirac masses.
        -DGEOGRAMGFX_SYSTEM_NAME=%{name}_gfx \
        -DVORPALINE_BUILD_DYNAMIC:BOOL=ON \
        -DGEOGRAM_USE_SYSTEM_GLFW3:BOOL=ON \
+       -DGEOGRAM_USE_SYSTEM_TEXT_EDITOR:BOOL=ON \
+       -DGEOGRAM_LIB_ONLY:BOOL=OFF \
+       -DGEOGRAM_TEST_INSTALL_PREFIX=%buildroot%_prefix \
+       -DGEOGRAM_TEST_BUILD_JOBS=${NPROCS:-%__nprocs} \
        -DGEOGRAM_WITH_HLBFGS:BOOL=OFF \
-       -DVORPALINE_VERSION_RC:BOOL=OFF \
        -DGEOGRAM_WITH_LUA:BOOL=OFF \
        -DGEOGRAM_WITH_THIRD_PARTIES:BOOL=OFF \
        -DGEOGRAM_WITH_TBB=ON \
@@ -192,7 +206,11 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %cmake_build %{?_enable_legacy_numeric:-j1}
 
 %install
-%cmakeinstall_std
+%cmake_install
+
+
+%check
+%ctest
 
 
 %files
@@ -211,23 +229,34 @@ Transport in 3d that scales up to 1 million Dirac masses.
 %endif
 
 %files         -n lib%{name}-gfx
+%doc src/lib/geogram_gfx/imgui_ext/IMGUI_STDLIB_LICENSE.txt
 %_libdir/lib%{name}_gfx*.so.*
 
 %files         -n lib%{name}-devel
 %_includedir/%{name}/
-%_libdir/cmake/*
+%_cmakedir/modules/FindGeogram.cmake
 %_pkgconfigdir/%{name}.pc
 %_libdir/lib%{name}.*so
 %if_enabled legacy_numeric
 %_libdir/lib%{name}_num*.so
 %endif
-   
+
 %files         -n lib%{name}-gfx-devel
 %_includedir/%{name}_gfx/
 %_pkgconfigdir/%{name}_gfx.pc
 %_libdir/lib%{name}_gfx*.so
 
 %changelog
+* Tue Nov 10 2026 Pavel Skrylev <majioa@altlinux.org> 1.10.1-alt1
+- ^ 1.10.0 -> 1.10.1
+- + standalone ImGuiColorTextEdit support
+- * build dependencies for the Geogram-enabled editor and compatible ImGui
+- + CTest checks for installed editor, OpenNL, TetGen and Triangle integration
+- * run %%check through %%ctest with consumer preparation handled by CMake
+- * use unversioned CMake and pkg-config dependencies where RPM provides them
+- * group development dependencies by type and sort them alphabetically
+- * synchronize development dependencies with build requirements
+
 * Sat Aug 08 2026 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
 - ^ 1.9.9p21.2 -> 1.10.0
 

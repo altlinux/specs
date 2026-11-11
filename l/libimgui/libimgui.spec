@@ -2,23 +2,25 @@
 %define        oname imgui
 
 Name:          lib%oname
-Version:       1.91.5
+Version:       1.93.0
 Release:       alt1
-Summary:       Dear ImGui: Bloat-free Graphical User interface for C++ with minimal dependencies
+Summary:       Dear ImGui: Bloat-free Graphical User interface for C++ with minimal dependencies with docking support
 License:       MIT
 Group:         Sciences/Mathematics
 Url:           https://www.dearimgui.com/
-Vcs:           https://github.com/ocornut/imgui.git
+Vcs:           https://github.com/ocornut/imgui/tree/docking
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-macros-cmake
+Patch:         cmake.patch
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: liballegro5.2-devel
-BuildRequires: libfreeglut-devel
-BuildRequires: libglfw3-devel
-BuildRequires: libSDL2-devel
-BuildRequires: libvulkan-devel
+BuildRequires: pkgconfig(allegro)
+BuildRequires: pkgconfig(freeglut)
+BuildRequires: pkgconfig(glfw3)
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(sdl3)
+BuildRequires: pkgconfig(vulkan)
 Conflicts:     imgui
 
 %description
@@ -51,20 +53,20 @@ non-standard.
 * Portable, minimize dependencies, run on target (consoles, phones, etc.).
 * Efficient runtime and memory consumption.
 * Battle-tested, used by many major actors in the game industry.
-
+* NOTE: Docking support
 
 %package       devel
 Group:         Development/C++
-Summary:       Development files for %name
+Summary:       Dear ImGui: Bloat-free Graphical User interface for C++ with minimal dependencies with docking support development files
 
 Requires:      cmake
 Requires:      gcc-c++
-Requires:      liballegro-devel
-Requires:      liballegro5.2-devel
-Requires:      libfreeglut-devel
-Requires:      libglfw3-devel
-Requires:      libSDL2-devel
-Requires:      libvulkan-devel
+Requires:      pkgconfig(allegro)
+Requires:      pkgconfig(freeglut)
+Requires:      pkgconfig(glfw3)
+Requires:      pkgconfig(sdl2)
+Requires:      pkgconfig(sdl3)
+Requires:      pkgconfig(vulkan)
 Conflicts:     imgui-devel
 
 %description   devel
@@ -99,19 +101,26 @@ non-standard.
 * Portable, minimize dependencies, run on target (consoles, phones, etc.).
 * Efficient runtime and memory consumption.
 * Battle-tested, used by many major actors in the game industry.
+* NOTE: Docking support
 
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%cmake -DARCH:STRING=%_arch \
-       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-
+%cmake \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DWITH_ALLEGRO5=ON \
+   -DWITH_SDL2=ON \
+   -DWITH_SDL3=ON \
+   -DWITH_QNX=OFF \
+   %nil
 %cmake_build
 
 %install
 %cmakeinstall_std
+
 
 %files
 %doc docs/README*
@@ -125,5 +134,8 @@ non-standard.
 
 
 %changelog
+* Tue Nov 10 2026 Pavel Skrylev <majioa@altlinux.org> 1.93.0-alt1
+- ^ 1.91.5 -> 1.93.0
+
 * Mon Nov 25 2024 Pavel Skrylev <majioa@altlinux.org> 1.91.5-alt1
 - initial build for Sisyphus

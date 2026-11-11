@@ -2,19 +2,21 @@
 %define        oname ImGuiColorTextEdit
 
 Name:          lib%oname
-Version:       1.0.0
+Version:       1.93.0
 Release:       alt1
 Summary:       Colorizing text editor for ImGui
 License:       MIT
 Group:         Sciences/Mathematics
-Url:           https://github.com/BalazsJako/ImGuiColorTextEdit
-Vcs:           https://github.com/BalazsJako/ImGuiColorTextEdit.git
+Url:           https://github.com/goossens/ImGuiColorTextEdit
+Vcs:           https://github.com/malbajun/ImGuiColorTextEdit.git
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-cmake
 BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
-BuildRequires: libimgui-devel
+BuildRequires: cmake(imgui)
+BuildRequires: libimgui-devel >= 1.93.0
 
 %description
 Syntax highlighting text editor for ImGui.
@@ -53,14 +55,14 @@ Main features:
 
 %package       devel
 Group:         Development/C++
-Summary:       Development files for %name
+Summary:       Colorizing text editor for ImGui development files
 
-Requires:      cmake
-Requires:      gcc-c++
-Requires:      libimgui-devel
+Requires:      %name = %EVR
+Requires:      cmake(imgui)
+Requires:      libimgui-devel >= 1.93.0
 
 %description   devel
-Development files for %name.
+Colorizing text editor for ImGui development files.
 
 Syntax highlighting text editor for ImGui.
 
@@ -100,26 +102,43 @@ Main features:
 %setup
 
 %build
-%cmake -DARCH:STRING=%_arch \
-       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-
+%cmake \
+   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DENABLE_GEOGRAM=ON \
+   -DENABLE_BALAZS=ON \
+   -DBUILD_SHARED_LIBS=ON \
+   -DCMAKE_INSTALL_LIBDIR=%_lib \
+   -DBUILD_TESTING=ON \
+   %nil
 %cmake_build
 
+%check
+%ctest
+
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc README.md CONTRIBUTING LICENSE
-%_libdir/%{name}.*so.*
-%_libdir/%{name}*.*so.*
+%_libdir/lib%{oname}.so.*
 
 %files         devel
 %doc README.md CONTRIBUTING LICENSE
-%_includedir/%{oname}*
-%_cmakedir/*
-%_libdir/%{name}*.*so
+%_includedir/%{oname}/
+%_cmakedir/%{oname}/
+%_libdir/lib%{oname}.so
 
 
 %changelog
+* Tue Nov 10 2026 Pavel Skrylev <majioa@altlinux.org> 1.93.0-alt1
+- ^ 1.0.0 -> 1.93.0
+- * rebased to current goossens upstream with optional standalone Geogram
+    and Balazs support.
+- * Check the ImGui version through libimgui-devel while retaining its CMake
+    requirement.
+- * required the separate ctest package for the build-time regression checks.
+- + installed modular language headers and exported CMake targets.
+- * run editor regression checks during package build.
+
 * Thu Nov 28 2024 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus
