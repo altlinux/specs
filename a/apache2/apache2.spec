@@ -12,7 +12,7 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.70
+Version: 2.4.71
 Release: alt1
 Epoch: 1
 
@@ -1434,6 +1434,13 @@ exit 0
 %_mandir/man8/suexec*
 
 %changelog
+* Thu Nov 12 2026 Anton Farygin <rider@altlinux.org> 1:2.4.71-alt1
+- 2.4.70 -> 2.4.71
+- Fixes:
+  * CVE-2026-119618: mod_http2: heap corruption and RCE in assign_headers
+  * CVE-2026-109163: mod_vhost_alias 1 byte stack buffer overwrite
+  * CVE-2026-106023: mod_md NULL pointer dereference leads to child process crash
+
 * Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 1:2.4.70-alt1
 - 2.4.69 -> 2.4.70
 
