@@ -1,8 +1,8 @@
 %define        _unpackaged_files_terminate_build 1
 
 Name:          rvm
-Version:       1.29.12.126
-Release:       alt0.3
+Version:       1.29.12.236.2
+Release:       alt0.1
 Summary:       Ruby enVironment Manager (RVM)
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -13,7 +13,6 @@ BuildArch:     noarch
 Autoreq:       yes,noshell
 Source:        %name-%version.tar
 Source1:       %name.sh
-Patch:         %name-%EVR.patch
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /proc /dev
 BuildRequires: curl
@@ -28,15 +27,15 @@ Requires:      gcc-c++
 Requires:      doxygen
 Requires:      autoconf
 Requires:      groff-base
-Requires:      libssl-devel
-Requires:      libgmp-devel
-Requires:      libreadline-devel
-Requires:      libdb4-devel
-Requires:      libffi-devel
+Requires:      pkgconfig(gmp)
+Requires:      pkgconfig(readline)
+Requires:      pkgconfig(zlib)
+Requires:      pkgconfig(libssl)
+Requires:      pkgconfig(libffi)
+Requires:      pkgconfig(ncursesw)
+Requires:      pkgconfig(yaml-0.1)
 Requires:      libgdbm-devel
-Requires:      libncursesw-devel
-Requires:      zlib-devel
-Requires:      libyaml-devel
+Requires:      libdb4-devel
 %ifarch %valgrind_arches
 Requires:      valgrind-devel
 %endif
@@ -99,7 +98,6 @@ Development code package.
 
 %prep
 %setup
-%autopatch -p1
 
 %install
 ./install --auto-dotfiles --path %buildroot%_libexecdir/%name
@@ -117,6 +115,9 @@ ln -rvs %buildroot%_logdir/%name %buildroot%_localstatedir/%name/log
 ls %buildroot%_libexecdir/%name/bin/*| while read f; do fn="$(basename "$f")"; ln -s %_libexecdir/%name/bin/"$fn" %buildroot%_bindir/"$fn"; done
 cp -rp %buildroot%_libexecdir/%name/config/* %buildroot%_sysconfdir/%name/
 install -D -p -m 0644 %SOURCE1 %buildroot%_sysconfdir/bashrc.d/%name.sh
+
+%check
+bash tests/path_cleanup_test.sh
 
 %pre
 ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
@@ -142,6 +143,18 @@ ln -sf /proc/self/fd /dev/fd >/dev/null 2>&1 || exit 0
 
 
 %changelog
+* Thu Nov 12 2026 Pavel Skrylev <majioa@altlinux.org> 1.29.12.236.2-alt0.1
+- ^ 1.29.12p126 -> 1.29.12p236.2
+- * rebase ALT integration on current upstream
+- ! preserved shared command directories when switching Ruby
+- ! fix repeated shell initialization
+- ! fixed, closing:
+ + ALT #61415
+
+* Thu Nov 12 2026 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.4
+- ! preserve shared command directories when switching Ruby
+- ! use the private RVM bin directory by default
+
 * Sat Oct 17 2026 Pavel Skrylev <majioa@altlinux.org> 1.29.12.126-alt0.3
 - ! fixed waste messages when some disorders in rvm symlink structure were found
 - - disabled noreplace for bashrc.d script
