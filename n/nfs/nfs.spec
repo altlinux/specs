@@ -1,5 +1,5 @@
 Name: nfs
-Version: 2.9.2
+Version: 3.1.1
 Release: alt1
 Epoch: 1
 
@@ -37,7 +37,6 @@ PreReq: %name-utils = %epoch:%version-%release
 Requires(post): %post_service
 Requires(preun): %preun_service
 Requires: keyutils >= 1.4-alt2
-Conflicts: libnfsidmap < 0.23
 
 %package server
 Summary: The Linux NFS server
@@ -52,14 +51,10 @@ Summary: The Linux NFS services utilities
 Group: Networking/Other
 
 PreReq: control
-Requires: rpcbind >= 0.2.0-alt1
-Conflicts: mount < 2.12r-alt2
-Conflicts: nfs-clients = 1:1.0.10-alt2
 
 %package stats
 Summary: The Linux NFS stats utilities
 Group: Networking/Other
-Conflicts: nfs-utils < 1:1.2.4-alt0.4
 
 %description
 This package provides the Linux NFS utilities and server.
@@ -315,6 +310,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:3.1.1-alt1
+- 3.1.1 released
+
 * Thu Jul 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:2.9.2-alt1
 - 2.9.2 released
 
