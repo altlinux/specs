@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 6.5.36
+Version: 6.5.40
 Release: alt1
 Epoch: 1
 
@@ -87,7 +87,6 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 # pzip is only available on x86_64 and aarch64 -- see deepin-compressor/src/CMakeLists.txt
 %dir %_libexecdir/%name/
 %_libexecdir/%name/pzip
-%_libexecdir/%name/punzip
 %endif
 %_datadir/dbus-1/interfaces/com.deepin.Compressor.xml
 %_datadir/dbus-1/services/com.deepin.Compressor.service
@@ -99,9 +98,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.compressor/
-%_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor.method.json
+%_datadir/dsg/configs/org.deepin.compressor/org.deepin.compressor*.json
 
 %changelog
+* Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.40-alt1
+- New version 6.5.40.
+
 * Tue Oct 13 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.36-alt1
 - New version 6.5.36.
 
