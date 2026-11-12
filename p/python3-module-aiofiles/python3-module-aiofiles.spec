@@ -1,19 +1,19 @@
 %define  modulename aiofiles
 
 Name:    python3-module-%modulename
-Version: 23.2.1
+Version: 25.1.0
 Release: alt1
 
 Summary: File support for asyncio
 License: Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/Tinche/aiofiles
-# Source-url: https://pypi.python.org/packages/source/a/aiofiles/aiofiles-%version.tar.gz
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildArch: noarch
 
+# Source-url: https://pypi.python.org/packages/source/a/aiofiles/aiofiles-%version.tar.gz
 Source:  %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -37,6 +37,9 @@ BuildRequires: python3(poetry-core) python3-module-hatchling
 %doc *.md LICENSE
 
 %changelog
+* Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 25.1.0-alt1
+- new version 25.1.0
+
 * Thu Jun 12 2025 Aleksandr Shamaraev <shad@altlinux.org> 23.2.1-alt1
 - 23.1.0 -> 23.2.1
 
