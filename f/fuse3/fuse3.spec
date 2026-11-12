@@ -1,5 +1,5 @@
 Name: fuse3
-Version: 3.18.1
+Version: 3.18.3
 Release: alt1
 
 %define abiversion 4
@@ -104,6 +104,11 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 10 2026 Evgeny Sinelnikov <sin@altlinux.org> 3.18.3-alt1
+- update to latest release 3.18.3
+- major fixes from upstream:
+  + fixed POSIX ACL support, memory leak fix, low-level API safety.
+
 * Sat Jan 24 2026 Evgeny Sinelnikov <sin@altlinux.org> 3.18.1-alt1
 - update to latest release 3.18.1
 - build with libuirng (fuse-over-io-uring communication)
