@@ -5,8 +5,8 @@
 %define _docsinstalldir %_defaultdocdir/%variant
 
 Name: docs-%variant
-Version: 11.4
-Release: alt2
+Version: 11.5
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -51,6 +51,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Jun 22 2026 Elena Mishina <lepata@altlinux.org> 11.5-alt1
+- update to ALT Kworkstation 11.5BETA
+- typo fixes (closes #59743)
+
 * Mon Jun 22 2026 Elena Mishina <lepata@altlinux.org> 11.4-alt2
 - update to ALT Kworkstation 11.4
 
