@@ -11,7 +11,7 @@
 
 Name: libcng-dpapi
 Version: 0.0.6
-Release: alt1
+Release: alt2
 
 Summary: Client library for CNG-DPAPI
 License: GPLv2+
@@ -21,7 +21,7 @@ Url: https://github.com/august-alt/libcng-dpapi
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake cmake-modules gcc-c++
 BuildRequires: libkrb5-devel samba-devel samba-common-libs libgkdi-devel
-%if "%altbranch" == "c10f2"
+%if "%altbranch" == "c10f2" || "%altbranch" == "p10_e2k"
 BuildRequires: libssl3-devel
 %else
 BuildRequires: libssl-devel
@@ -66,6 +66,9 @@ develop programs which make use of %name
 %_libdir/cng-dpapi/CNGDpApiConfig.cmake
 
 %changelog
+* Thu Nov 12 2026 Vladimir Rubanov <august@altlinux.org> 0.0.6-alt2
+- Add check for p10_e2k.
+
 * Tue Oct 27 2026 Vladimir Rubanov <august@altlinux.org> 0.0.6-alt1
 - Implement ECDH_P256/P384 curves support.
 - Improve integration testing.
