@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.11.2
-Release: alt2
+Version: 6.11.3
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -49,6 +49,7 @@ Source1: qml6
 Source2: qml6.env
 Source3: find-provides.sh
 Source4: find-requires.sh
+Patch1: qtdeclarative-fix-teardown-hang-with-quickpixmapreader.patch
 
 %include %SOURCE1
 %qml6_req_skipall 1
@@ -497,6 +498,7 @@ Requires: libqt6-core = %_qt6_version
 %prep
 %include %SOURCE2
 %setup -n %qt_module-everywhere-src-%version -a10
+%patch1 -p1
 # disable some examples
 for e in qml/dynamicscene quick/imageprovider quick/imageresponseprovider quickcontrols/attachedstyleproperties ; do
     exam=`basename $e`
@@ -732,8 +734,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_qt6_bindir/qml*
 %_qt6_bindir/svgtoqml*
 %_qt6_libexecdir/qml*
-%_qt6_plugindir/qmltooling/*
-%_qt6_plugindir/qmllint/*
+%_qt6_plugindir/qmltooling/
+%_qt6_plugindir/qmllint/
+%_qt6_plugindir/qmlls/
 %_qt6_libdir/libQt*.so
 %_qt6_libdatadir/libQt*.so
 %_qt6_libdir/libQt*.prl
@@ -764,6 +767,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.3-alt1
+- new version
+
 * Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
 - build qmlls (thanks parovoz@alt) (closes: 61103)
 

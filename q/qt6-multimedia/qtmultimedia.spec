@@ -5,8 +5,8 @@
 %def_enable pulse
 
 Name: qt6-multimedia
-Version: 6.11.2
-Release: alt2
+Version: 6.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - Multimedia support
@@ -189,6 +189,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.3-alt1
+- new version
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
 - fix to record in S16 format (closes: 61157)
 

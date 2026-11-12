@@ -3,7 +3,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: qt6-quick3dphysics
-Version: 6.11.2
+Version: 6.11.3
 Release: alt1
 
 Group: System/Libraries
@@ -142,6 +142,9 @@ done
 %_qt6_examplesdir/*
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.3-alt1
+- new version
+
 * Wed Aug 26 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt1
 - new version
 

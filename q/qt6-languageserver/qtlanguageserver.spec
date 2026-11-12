@@ -1,22 +1,27 @@
-%define _unpackaged_files_terminate_build 1
 %define optflags_lto -ffat-lto-objects
 %global qt_module qtlanguageserver
 
 Name:    qt6-languageserver
-Version: 6.11.2
+Version: 6.11.3
 Release: alt1
+%if "%version" == "%{get_version qt6-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
+Group:   System/Libraries
 Summary: Qt6 - Language Server module
 License: GPL-3.0-only
-Group:   System/Libraries
-
 URL: https://www.qt.io
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
+%if_disabled bootstrap
+BuildRequires: qt6-tools
+%endif
 BuildRequires: cmake ninja-build glibc-devel qt6-base-devel
-BuildRequires(pre): qt6-tools
 
 %description
 The Qt Language Server component provides an implementation of the Language
@@ -57,5 +62,8 @@ done
 %_qt6_archdatadir/mkspecs/modules/*.pri
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.3-alt1
+- new version
+
 * Mon Nov 09 2026 Andrey Alekseev <parovoz@altlinux.org> 6.11.2-alt1
 - initial build for sisyphus

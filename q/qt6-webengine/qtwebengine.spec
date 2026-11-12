@@ -32,8 +32,8 @@
 %endif
 
 Name: qt6-webengine
-Version: 6.11.2
-Release: alt3
+Version: 6.11.3
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -52,12 +52,11 @@ Patch12: qtwebengine-fix-arm-build.patch
 Patch13: qtwebengine-use-openh264.patch
 Patch14: qtwebengine-SIOCGSTAMP.patch
 Patch15: qtwebengine-chromium-141-glibc-2.42-SYS_SECCOMP.patch
+Patch16: qtwebengine-fix-delay-signature.patch
 # Debian
 Patch200: remove_catapult_3rdparty.patch
 Patch201: remove_catapult_core.patch
 Patch202: compressing_files.patch
-# SuSE
-Patch300: Fix-renderer-crash-when-registering-ICU-encoding-names.patch
 # LoongArch
 Patch3500: qt6-webengine-6.7.1-loongarch64.patch
 
@@ -215,12 +214,11 @@ Obsoletes: %name < %EVR
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 #
 #%patch200 -p1
 #%patch201 -p1
 %patch202 -p1
-#
-%patch300 -p1
 %ifarch loongarch64
 %patch3500 -p2
 %endif
@@ -438,6 +436,9 @@ done
 %_pkgconfigdir/Qt?*.pc
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.3-alt1
+- new version
+
 * Mon Sep 28 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt3
 - add fix against QTBUG-149435, QTBUG-149946
 

@@ -35,8 +35,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.11.2
-Release: alt2
+Version: 6.11.3
+Release: alt1
 %if "%version" == "%{get_version qt6-tools-common}"
 %def_disable bootstrap
 %else
@@ -59,7 +59,6 @@ Patch1: qtbase-version-check.patch
 Patch2: qtbase-CMake-Install-objects-files-into-ARCHDATADIR.patch
 Patch3: qtbase-use-only-major-minor-for-private-api-tag.patch
 # UPSTREAM
-Patch50: qtbase-qiconloader-dont-consider-fallbackthemename-in-themename.patch
 # Debian
 Patch100: remove_rpath_from_examples.patch
 Patch101: enable_skip_plugins.patch
@@ -401,8 +400,6 @@ Requires: %name-common
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#
-%patch50 -p1
 #
 %patch100 -p1
 %patch101 -p1
@@ -860,6 +857,9 @@ done
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Tue Nov 10 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.3-alt1
+- new version
+
 * Fri Oct 23 2026 Sergey V Turchin <zerg@altlinux.org> 6.11.2-alt2
 - update requires
 
