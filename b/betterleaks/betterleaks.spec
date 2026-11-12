@@ -2,7 +2,7 @@
 %global import_path github.com/betterleaks/betterleaks
 
 Name: betterleaks
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 Summary: A Better Secrets Scanner built for configurability and speed
 License: MIT
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 
 
 %changelog
+* Mon Nov 09 2026 Egor Ignatov <egori@altlinux.org> 1.10.0-alt1
+- New version 1.10.0.
+
 * Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 1.9.0-alt1
 - New version 1.9.0.
 
