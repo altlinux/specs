@@ -3,7 +3,7 @@
 %def_without check
 
 Name: writefreely
-Version: 0.17.2
+Version: 0.17.3
 Release: alt1
 Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 
@@ -127,6 +127,22 @@ echo "writefreely: for database migration see https://blog.writefreely.org/tag:r
 %preun_systemd writefreely
 
 %changelog
+* Thu Nov 12 2026 Pavel Nakonechnyi <zorg@altlinux.org> 0.17.3-alt1
+- version 0.17.3
+- fixes:
+  + GHSA-7jv7-gf23-wcqq: authentication bypass via API access tokens
+  + GHSA-cx5r-gg25-76ph: private and password-protected blog content exposed via the ActivityPub outbox
+  + GHSA-wvrr-gx9p-xvxm: server-side request forgery (SSRF) via WebFinger lookups
+  + GHSA-7635-vx4w-qww7: unauthenticated SSRF via ActivityPub inbox actor / object resolution
+  + GHSA-22qx-x758-m72p: IPv6 transition address bypass of SSRF protections in federation
+  + GHSA-mp2f-3fq8-r9vj: add CSRF protection to account settings endpoints (/me and /api/me)
+  + GHSA-g4m9-5p4q-ch24: Enforce the maximum blogs per user limit when creating blogs via the API
+  + GHSA-7mmq-gh5f-97p3: Prevent users from changing settings on another user's blog via the API
+  + GHSA-wqc7-9ph9-m5fm: Prevent users from changing metadata on blogs they don't own
+  + GHSA-cwxm-8ch5-j2vh: stored XSS via unsanitized post slugs in RSS, email, and ActivityPub output
+  + GHSA-hwfg-mg9c-cvgf: Prevent users from pinning or unpinning other users' posts
+  + UNASSIGNED: Enforce signup checks consistently across all registration paths, extending the invite code validation from v0.17.2 to API and OAuth signups
+
 * Mon Aug 10 2026 Pavel Nakonechnyi <zorg@altlinux.org> 0.17.2-alt1
 - version 0.17.2
 - Fixes:
