@@ -1,15 +1,15 @@
 Name: deepin-clone
 Version: 5.0.15.0.4.bc86
-Release: alt3
+Release: alt4
 
 Summary: Disk and partition backup/restore tool
 
 License: GPL-3.0+
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/deepin-clone
+URL: https://github.com/linuxdeepin/deepin-clone
 VCS: https://github.com/linuxdeepin/deepin-clone
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-clone/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -29,6 +29,8 @@ BuildRequires: gcc-c++ deepin-gettext-tools dtkcore libdtkwidget-devel dtk6-comm
 sed -i 's|Version=0.1|Version=%version|' app/%name.desktop
 
 %build
+# gcc16
+%add_optflags -std=gnu++17
 export CMAKE_PREFIX_PATH=%_dqt5_libdir/cmake:$CMAKE_PREFIX_PATH
 export PATH=%_dqt5_bindir:$PATH
 %cmake \
@@ -67,6 +69,9 @@ chmod +x %buildroot%_sbindir/deepin-clone-ionice
 %_datadir/polkit-1/actions/com.deepin.pkexec.%name.policy
 
 %changelog
+* Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt4
+- Fixed build with gcc16.
+
 * Fri Oct 17 2025 Leontiy Volodin <lvol@altlinux.org> 5.0.15.0.4.bc86-alt3
 - Fixed build with dtk 5.7.23.
 - Added VCS tag.
