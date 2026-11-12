@@ -19,7 +19,7 @@
 %{!?_priority_distbranch:%global _priority_distbranch sisyphus}
 
 Name: ollama
-Version: 0.40.15
+Version: 0.40.16
 Release: alt1
 Summary: Get up and running with large language models
 License: MIT
@@ -140,6 +140,13 @@ backends="${backends:+$backends;}vulkan"
 # The superbuild (cmake/local.cmake) builds the Go binary, llama-server,
 # CPU backend variants and the requested GPU backends, and stages them all
 # under OLLAMA_LIB_DIR for %cmake_install.
+%if_with cuda
+# nvcc in ExternalProject sub-builds does not inherit
+# CMAKE_CUDA_HOST_COMPILER (only GGML_/LLAMA_ args are forwarded), so it
+# picks the default system g++, which nvcc may not support (FTBFS with
+# gcc16). Export the host compiler for every nvcc invocation.
+%cuda_export
+%endif
 %cmake -DOLLAMA_VERSION:STRING=%version \
 	-DOLLAMA_LLAMA_BACKENDS:STRING="$backends" \
 %if_with cuda
@@ -225,6 +232,9 @@ kill %%?ollama
 %endif
 
 %changelog
+* Wed Nov 11 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.40.16-alt1
+- Updated to version 0.40.16.
+
 * Sat Nov 07 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.40.15-alt1
 - Updated to version 0.40.15.
 
