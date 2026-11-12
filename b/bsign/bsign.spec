@@ -1,6 +1,6 @@
 Name: bsign
 Version: 0.4.5
-Release: alt2
+Release: alt3
 
 Summary: Embed hash and signature in elf executables
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildPreReq: libstdc++-devel-static
+BuildRequires: libatomic-devel-static
 
 BuildRequires: gcc-c++
 
@@ -43,6 +44,9 @@ mkdir %buildroot
 %doc %_docdir/%name/
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.5-alt3
+- fix static build with GCC 16: add BuildRequires: libatomic-devel-static
+
 * Thu Feb 21 2019 Vitaly Lipatov <lav@altlinux.ru> 0.4.5-alt2
 - fix build
 
