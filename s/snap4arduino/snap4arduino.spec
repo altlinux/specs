@@ -3,14 +3,13 @@
 
 Name: snap4arduino
 Version: 10.3.6
-Release: alt1
+Release: alt2
 
 Summary: Visual programming environment for Arduino boards
 License: AGPL-3.0
 Group: Education
-URL: https://snap4arduino.rocks
+Url: https://snap4arduino.rocks
 VCS: https://github.com/bromagosa/Snap4Arduino.git
-
 ExcludeArch: %ix86
 
 Source0: %name-%version.tar
@@ -35,7 +34,7 @@ BuildRequires: desktop-file-utils
 
 # Node module scripts are private application resources. The native addon is
 # installed separately so RPM still scans its ELF dependencies.
-%add_findreq_skiplist %_libdir/%name/app/*
+%add_findreq_skiplist %_libdir/snap4arduino/app/*
 
 %description
 Snap4Arduino combines the Snap! visual programming environment with Arduino
@@ -43,7 +42,6 @@ board control through the Firmata protocol.
 
 %prep
 %setup -a1
-%patch -P 0 -p1
 (cd sources && sha256sum -c SHA256SUMS)
 (cd npm/tarballs && sha256sum -c ../SHA256SUMS)
 tar -xf sources/snap-%snap_revision.tar.gz
@@ -55,8 +53,7 @@ npm --prefix npm ci --offline --ignore-scripts --omit=dev --no-audit --no-fund
 # The addon is compiled locally for the target architecture.
 rm -rf npm/node_modules/@serialport/bindings-cpp/prebuilds
 
-%patch -P 1 -p1 -d npm
-%patch -P 2 -p1 -d npm
+%autopatch -p1
 
 %build
 # node-gyp supplies the compiler and Node headers through its dependencies.
@@ -69,58 +66,63 @@ cp -a npm/node_modules app/
 cp npm/package-lock.json app/
 
 %install
-install -d %buildroot%_libdir/%name
-cp -a app %buildroot%_libdir/%name/
+install -d %buildroot%_libdir/snap4arduino
+cp -a app %buildroot%_libdir/snap4arduino
 # Keep the compiled addon outside the JS resource skiplist so RPM scans its ELF
 # dependencies and generates debuginfo. A relative link also permits relocation.
-addon_dir=%buildroot%_libdir/%name/app/node_modules/@serialport/bindings-cpp
+addon_dir=%buildroot%_libdir/snap4arduino/app/node_modules/@serialport/bindings-cpp
 install -m755 "$addon_dir/build/Release/bindings.node" \
-    %buildroot%_libdir/%name/serialport.node
+    %buildroot%_libdir/snap4arduino/serialport.node
 rm -rf "$addon_dir/build"
 install -d "$addon_dir/build/Release"
 ln -s ../../../../../../serialport.node \
     "$addon_dir/build/Release/bindings.node"
-install -D -m644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
+install -D -m644 %SOURCE3 %buildroot%_desktopdir/snap4arduino.desktop
 for size in 16 32 48 128 256; do
     install -D -m644 assets/icons/${size}x${size}x32.png \
-        %buildroot%_iconsdir/hicolor/${size}x${size}/apps/%name.png
+        %buildroot%_iconsdir/hicolor/${size}x${size}/apps/snap4arduino.png
 done
 
 install -d %buildroot%_bindir
-cat > %buildroot%_bindir/%name <<'EOF'
+cat > %buildroot%_bindir/snap4arduino <<'EOF'
 #!/bin/sh
-exec /usr/bin/electron %_libdir/%name/app "$@"
+exec /usr/bin/electron %_libdir/snap4arduino/app "$@"
 EOF
-chmod 755 %buildroot%_bindir/%name
+chmod 755 %buildroot%_bindir/snap4arduino
 
 # Snap! translations are JavaScript files rather than gettext catalogs.
-%find_lang --without-mo --custom-file-script=%SOURCE4 %name
+%find_lang --without-mo --custom-file-script=%SOURCE4 snap4arduino
 # List the other private resources separately to avoid duplicate locale entries.
 # Remove ignore files now; brp-cleanup would remove them after this list is made.
-find %buildroot%_libdir/%name/app -name .gitignore -delete
-find %buildroot%_libdir/%name -type d -printf '"%%p"\n' | \
-    sed 's/^/%%dir /' > %name.files
-find %buildroot%_libdir/%name ! -type d \
+find %buildroot%_libdir/snap4arduino/app -name .gitignore -delete
+find %buildroot%_libdir/snap4arduino -type d -printf '"%%p"\n' | \
+    sed 's/^/%%dir /' > snap4arduino.files
+find %buildroot%_libdir/snap4arduino ! -type d \
     ! -path '*/locale/lang-*.js' ! -path '*/s4a/lang-*.js' \
-    -printf '"%%p"\n' >> %name.files
-sed -i 's|%buildroot||' %name.files
-cat %name.lang >> %name.files
+    -printf '"%%p"\n' >> snap4arduino.files
+sed -i 's|%buildroot||' snap4arduino.files
+cat snap4arduino.lang >> snap4arduino.files
 
 %check
-desktop-file-validate %buildroot%_desktopdir/%name.desktop
-test "$(cat %buildroot%_libdir/%name/app/version)" = "%version"
-test -f %buildroot%_libdir/%name/app/node_modules/firmata/lib/firmata.js
-for module in %buildroot%_libdir/%name/app/desktop/*.js; do
+desktop-file-validate %buildroot%_desktopdir/snap4arduino.desktop
+test "$(cat %buildroot%_libdir/snap4arduino/app/version)" = "%version"
+test -f %buildroot%_libdir/snap4arduino/app/node_modules/firmata/lib/firmata.js
+for module in %buildroot%_libdir/snap4arduino/app/desktop/*.js; do
     node --check "$module"
 done
-node -e 'require("%buildroot%_libdir/%name/app/desktop/serial").list((err) => { if (err) throw err; })'
+node -e 'require("%buildroot%_libdir/snap4arduino/app/desktop/serial").list((err) => { if (err) throw err; })'
 
-%files -f %name.files
+%files -f snap4arduino.files
 %doc README.md CHANGELOG.md LICENSE
-%_bindir/%name
-%_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_bindir/snap4arduino
+%_desktopdir/snap4arduino.desktop
+%_iconsdir/hicolor/*/apps/snap4arduino.png
 
 %changelog
+* Thu Nov 12 2026 Grant Makyan <karonus@altlinux.org> 10.3.6-alt2
+- Keep startup file read errors visible after language loading (Closes: 61429).
+- Offer to save projects before closing (Closes: 61430).
+- Localize native project dialogs into Russian.
+
 * Tue Oct 27 2026 Grant Makyan <karonus@altlinux.org> 10.3.6-alt1
 - Initial build for ALT.
