@@ -3,7 +3,7 @@
 %set_verify_elf_method strict,lfs=relaxed
 
 Name: firejail
-Version: 0.9.80
+Version: 0.9.82.2
 Release: alt1
 Summary: Linux namespaces sandbox program
 License: GPLv2+
@@ -57,12 +57,14 @@ using Linux namespaces. It includes a sandbox profile for Mozilla Firefox.
 %_man1dir/firecfg.1*
 %_man1dir/firemon.1*
 %_man1dir/jailcheck.1*
-%_man5dir/%name-login.5*
 %_man5dir/%name-profile.5*
 %_man5dir/%name-users.5*
 %config %_sysconfdir/%name
 
 %changelog
+* Thu Nov 12 2026 Anton Farygin <rider@altlinux.org> 0.9.82.2-alt1
+- 0.9.80 -> 0.9.82.2
+
 * Fri Mar 20 2026 Anton Farygin <rider@altlinux.org> 0.9.80-alt1
 - 0.9.78 -> 0.9.80
 - firecfg: warn when symlinks won't intercept commands
