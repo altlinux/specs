@@ -3,7 +3,7 @@
 %define uuid %_name@altlinux.org
 
 Name: gnome-shell-extension-%_name
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Saving a GNOME user session
@@ -48,6 +48,9 @@ sessions.
 %_datadir/metainfo/%_name.metainfo.xml
 
 %changelog
+* Thu Nov 12 2026 David Sultaniiazov <x1z53@altlinux.org> 1.0.7-alt1
+- Update to 1.0.7 (closes #61450).
+
 * Mon Mar 30 2026 David Sultaniiazov <x1z53@altlinux.org> 1.0.6-alt1
 - Update to 1.0.6.
 - Fix URL and VCS spell.
