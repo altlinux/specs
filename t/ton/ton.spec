@@ -2,7 +2,7 @@
 
 Name: ton
 Version: 2026.08
-Release: alt1
+Release: alt2
 
 Summary: TON - The Open Network tools
 
@@ -45,9 +45,10 @@ Source8: %name-libraptorq-%version.tar
 Source9: %name-secp256k1-%version.tar
 
 Patch2: ton-use-system-libs.patch
+Patch3: rocksdb-gcc16-cstdint.patch
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake >= 3.17
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
 
 BuildRequires: git-core
@@ -151,6 +152,7 @@ storage-daemon-cli
 %prep
 %setup -a4 -a5 -a6 -a7 -a8 -a9
 %patch2 -p1
+%patch3 -p1
 
 # Use system abseil instead of bundled subdirectory build
 %__subst 's|add_subdirectory(third-party/abseil-cpp EXCLUDE_FROM_ALL)|find_package(absl REQUIRED)|' CMakeLists.txt
@@ -226,6 +228,10 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.08-alt2
+- fix build with GCC 16 (add missing <cstdint> includes in bundled RocksDB)
+- add BuildRequires: rpm-build-cmake
+
 * Wed Oct 07 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.08-alt1
 - new version 2026.08
 - extend co_return disambiguation to rldp2
