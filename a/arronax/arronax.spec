@@ -15,14 +15,15 @@ Arronax supports most of the keys specified by the Desktop Entry Specification \
 including quicklists.
 
 Name: arronax
-Version: 0.8
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary: Create and modify application, file and URI starters
 
 Group: Development/Tools
 License: GPLv3
-Url: https://www.florian-diesch.de/software/arronax/
+URL: https://www.florian-diesch.de/software/arronax
+VCS: https://codeberg.org/diesch/arronax
 
 Source: %name-%version.tar
 
@@ -67,6 +68,14 @@ License: GPLv3
 %description -n mate-file-manager-%name
 %descr
 
+%package -n thunar-%name
+Summary: Python3 library for creation and modifying of application starters
+Group: Development/Python3
+License: GPLv3
+
+%description -n thunar-%name
+%descr
+
 %prep
 %setup
 
@@ -96,7 +105,13 @@ License: GPLv3
 %files -n mate-file-manager-%name
 %_datadir/caja-python/extensions/caja-arronax.py
 
+%files -n thunar-%name
+%_datadir/thunarx-python/extensions/thunar-arronax.py
+
 %changelog
+* Thu Nov 05 2026 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Build new version.
+
 * Sat Jul 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.8-alt2
 - Add icons package (thx to mike@).
 
