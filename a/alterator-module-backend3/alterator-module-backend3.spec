@@ -1,5 +1,5 @@
 Name: alterator-module-backend3
-Version: 0.2.4
+Version: 0.3.0
 Release: alt1
 
 Summary: Module for using backend3 scripts
@@ -33,6 +33,13 @@ Alterator-manager module for using backend3 scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Thu Nov 12 2026 Ivan Savin <svn17@altlinux.org> 0.3.0-alt1
+- Update svace workflow (shishkovna@).
+- Add allowed_parameters and immutable_defaults to method descriptors to
+  restrict caller fields and protect defaults from overrides. Reject
+  disallowed input before backend startup or stdin writes. Preserve existing
+  behavior when both options are omitted (the-nexi@).
+
 * Wed Oct 21 2026 Ivan Savin <svn17@altlinux.org> 0.2.4-alt1
 - Substituting the parameters "action" and "_objects" made it possible to
   execute code that the creator of the method had not intended to be run. For
