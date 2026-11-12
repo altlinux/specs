@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _name jxl
-%define ver_major 0.12
-%define sover 0.12
+%define ver_major 0.13
+%define sover 0.13
 %define libname lib%_name%sover
 
 %def_enable tools
@@ -31,13 +31,20 @@ Source: %name-%version.tar
 
 %define gif_ver 5.1
 %define hwy_ver 1.2.0
+%define brotli_ver 1.2.1
+
+%ifarch aarch64
+%define optflags_lto %nil
+BuildRequires: /proc
+%endif
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build
-#BuildRequires: libgif-devel >= %gif_ver
+BuildRequires: libgif-devel >= %gif_ver
 BuildRequires: highway-devel >= %hwy_ver
 BuildRequires: libjpeg-devel openexr-devel libpng-devel libwebp-devel
-BuildRequires: libavif-devel libbrotli-devel liblcms2-devel zlib-devel
+BuildRequires: libavif-devel libbrotli-devel >= %brotli_ver
+BuildRequires: liblcms2-devel libskia-devel zlib-devel
 %{?_enable_plugins:BuildRequires: libgdk-pixbuf-devel}
 %{?_enable_man:BuildRequires: asciidoc-a2x}
 %{?_enable_tests:BuildRequires: libgtest-devel}
@@ -86,15 +93,19 @@ This package provides JPEG XL tools.
 %ifarch %ix86
 %add_optflags %(getconf LFS_CFLAGS) -msse
 %endif
+
 %cmake -GNinja \
     -DJPEGXL_FORCE_SYSTEM_HWY=ON \
     -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
     -DJPEGXL_FORCE_SYSTEM_GTEST=ON \
     -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
-    %{?_enable_tools:-DJPEGXL_ENABLE_TOOLS=ON} \
-    -DJPEGXL_ENABLE_MANPAGES=ON \
+    %{?_disable_tools:-DJPEGXL_ENABLE_TOOLS=OFF} \
+    %{?_disable_man:-DJPEGXL_ENABLE_MANPAGES=OFF} \
     %{?_enable_plugins:-DJPEGXL_ENABLE_PLUGINS=ON} \
     %{?_disable_tests:-DBUILD_TESTING=OFF} \
+%ifarch aarch64
+    -DJPEGXL_ENABLE_LTO=OFF \
+%endif
 %nil
 %cmake_build
 
@@ -136,6 +147,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Nov 11 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Thu Jul 02 2026 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
 - 0.12.0
 
