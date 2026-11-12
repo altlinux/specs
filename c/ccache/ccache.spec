@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ccache
-Version: 4.14.2
+Version: 4.14.3
 Release: alt1
 
 Summary: Compiler cache
@@ -65,6 +65,9 @@ EOF
 %prefix/lib/rpm/ccache.filetrigger
 
 %changelog
+* Thu Nov 12 2026 Anton Farygin <rider@altlinux.org> 4.14.3-alt1
+- 4.14.2 -> 4.14.3
+
 * Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 4.14.2-alt1
 - 4.14.1 -> 4.14.2
 
