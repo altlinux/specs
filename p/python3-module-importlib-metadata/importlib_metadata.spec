@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -14,25 +14,17 @@ Url: https://pypi.org/project/importlib-metadata/
 VCS: https://github.com/python/importlib_metadata.git
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-
-# PyPI name(dash, underscore)
+# legacy, still used
 %py3_provides %pypi_name
 Provides: python3-module-importlib_metadata = %EVR
 Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
-
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+# pytest-perf is not packaged and perf tests are skipped anyway
+%pyproject_configure_with_check_filter pytest-perf
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %if_with check
-# pytest-perf is not packaged and perf tests are skipped anyway
-%add_pyproject_deps_check_filter pytest-perf
-%pyproject_builddeps_metadata_extra test
-
 # internal CPython's test package
 BuildRequires: python3(test)
 %endif
@@ -50,8 +42,7 @@ CPython.
 %setup
 %patch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -60,13 +51,18 @@ CPython.
 %pyproject_install
 
 %check
-%pyproject_run_pytest -vra --ignore exercises.py
+# skip doctest due to incompatibility of this project with pytest < 9.2
+%{expand:%(%__python3 -c 'import pytest; pytest.version_tuple < (9, 2) and print("%%define skip_doctest 1")')}
+%pyproject_run_pytest -vra --ignore exercises.py %{?skip_doctest:-o=addopts=}
 
 %files
 %python3_sitelibdir/%mod_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 10 2026 Stanislav Levin <slev@altlinux.org> 10.2.0-alt1
+- 10.1.0 -> 10.2.0
+
 * Mon Oct 26 2026 Stanislav Levin <slev@altlinux.org> 10.1.0-alt1
 - 9.1.0 -> 10.1.0
 
