@@ -4,7 +4,7 @@
 %define dmusic_ver 1
 
 Name: deepin-music
-Version: 7.0.61
+Version: 7.0.71
 Release: alt1
 
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
@@ -21,7 +21,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-ninja rpm-macros-dqt6
 # Automatically added by buildreq on Wed Aug 13 2025
 # optimized out: cmake cmake-modules dqt6-base-devel dqt6-tools gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libavcodec-devel libavutil-devel libcairo-gobject libdouble-conversion3 libdqt6-core libdqt6-core5compat libdqt6-dbus libdqt6-gui libdqt6-multimedia libdqt6-network libdqt6-opengl libdqt6-printsupport libdqt6-qml libdqt6-qmlmeta libdqt6-qmlmodels libdqt6-qmlworkerscript libdqt6-quick libdqt6-sql libdqt6-waylandclient libdqt6-widgets libdqt6-xml libdtk6core-devel libdtk6gui-devel libdtk6log-devel libgdk-pixbuf libglvnd-devel libgpg-error libmpris-dqt6-1 libopencore-amrnb0 libopencore-amrwb0 libp11-kit librabbitmq-c4 libsasl2-3 libssl-devel libstartup-notification libstdc++-devel libwayland-client libwayland-cursor libx265-215 libxkbcommon-devel ninja-build ocl-icd pkg-config python3 python3-base samba-common-libs sh5 vulkan-headers zlib-devel
-BuildRequires: dqt6-5compat-devel dqt6-declarative-devel dqt6-multimedia-devel dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-tools-devel libSDL2-devel libavformat-devel libdtk6declarative-devel libdtk6widget-devel libicu-devel libmpris-dqt6-devel libvlc-devel taglib-devel
+BuildRequires: dqt6-5compat-devel dqt6-declarative-devel dqt6-multimedia-devel dqt6-sql-interbase dqt6-sql-mysql dqt6-sql-odbc dqt6-sql-postgresql dqt6-tools-devel dqt6-svg-devel libSDL2-devel libavformat-devel libdtk6declarative-devel libdtk6widget-devel libicu-devel libmpris-dqt6-devel libvlc-devel taglib-devel libswresample-devel libdqt6-qmlcompiler
 
 %if_with clang
 BuildRequires: clang-devel
@@ -30,6 +30,7 @@ BuildRequires: lld-devel
 BuildRequires: gcc-c++
 %endif
 
+Requires: libdqt6-qml = %_dqt6_version
 Requires: vlc-mini ffmpeg dtk6declarative
 
 %description
@@ -87,8 +88,8 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/deepin-music/
-%_datadir/dsg/configs/deepin-music/org.deepin.music.json
+%dir %_datadir/dsg/configs/org.deepin.music/
+%_datadir/dsg/configs/org.deepin.music/org.deepin.music.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -102,6 +103,9 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %_libdir/lib%repo.so
 
 %changelog
+* Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 7.0.71-alt1
+- New version 7.0.71.
+
 * Tue Jul 21 2026 Leontiy Volodin <lvol@altlinux.org> 7.0.61-alt1
 - New version 7.0.61.
 
