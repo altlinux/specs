@@ -5,19 +5,21 @@
 
 Name:          libcaca
 Version:       0.99.20.3.1
-Release:       alt0.2
+Release:       alt0.3
 Summary:       Text mode graphics library
 Group:         System/Libraries
 License:       WTFPL
 Url:           http://caca.zoy.org/wiki/libcaca
 Vcs:           https://github.com/cacalabs/libcaca.git
+AutoReqProv:   yes,noruby
 
 Source:        %name-%version.tar
 BuildRequires: gcc-c++
-BuildRequires: imlib2-devel
-BuildRequires: libncurses-devel
-BuildRequires: libslang2-devel
-BuildRequires: zlib-devel
+BuildRequires: pkgconfig(imlib2)
+BuildRequires: pkgconfig(ncurses)
+BuildRequires: pkgconfig(slang)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(zlib)
 %if_enabled doc
 BuildRequires: doxygen
 BuildRequires: texmf-latex-tabu
@@ -37,7 +39,13 @@ drawing, as well as powerful image to text conversion routines.
 %package       devel
 Summary:       Development files for libcaca
 Group:         Development/C
+AutoReqProv:   yes,noruby
 Requires:      %name = %version-%release
+Requires:      pkgconfig(imlib2)
+Requires:      pkgconfig(ncurses)
+Requires:      pkgconfig(slang)
+Requires:      pkgconfig(x11)
+Requires:      pkgconfig(zlib)
 
 %description   devel
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -50,6 +58,7 @@ compile applications or shared objects that use libcaca.
 %package       -n caca-utils
 Summary:       Text mode graphics utilities
 Group:         Graphics
+AutoReqProv:   yes,noruby
 Requires:      %name = %version-%release
 
 %description   -n caca-utils
@@ -73,9 +82,11 @@ such as line and ellipses drawing, triangle filling and sprite blitting.
 %package       -n ruby-caca
 Summary:       Ruby bindings for libcaca
 Group:         Graphics
+BuildRequires: pkgconfig(ruby)
+BuildRequires: rpm-macros-ruby ruby
+Requires:      ruby
 Provides:      ruby-libcaca = %EVR, ruby-module-libcaca = %EVR
 Obsoletes:     ruby-module-libcaca < %EVR, ruby-libcaca < %EVR
-BuildRequires: rpm-macros-ruby libruby-devel ruby
 
 %description   -n ruby-caca
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -89,9 +100,10 @@ This package contains Ruby bindings for libcaca.
 %package       -n python3-module-caca
 Summary:       Python3 module bindings for libcaca
 Group:         Other
+AutoReqProv:   yes,noruby
 BuildArch:     noarch
-Requires:      %name = %version-%release
 BuildRequires: python3-devel
+Requires:      %name = %version-%release
 
 %description   -n python3-module-caca
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -119,7 +131,7 @@ export PYTHON=%__python3
 	--enable-x11 \
 	--enable-imlib2 \
 	--x-libraries=%_x11libdir \
-	--enable-debug \
+	--disable-debug \
 	%{subst_enable python} \
 	%{subst_enable ruby} \
 	%{subst_enable doc} \
@@ -134,6 +146,20 @@ rm %buildroot%_libdir/*.la
 rm -r %buildroot%_man3dir
 rm -f %buildroot%_docdir/libcucul-dev
 mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
+%endif
+
+%check
+%make_build check
+%if_enabled ruby
+for ruby_path_order in lib-first arch-first; do
+	if [ "$ruby_path_order" = lib-first ]; then
+		ruby_paths="-I%buildroot%ruby_vendorlibdir -I%buildroot%ruby_vendorarchdir"
+	else
+		ruby_paths="-I%buildroot%ruby_vendorarchdir -I%buildroot%ruby_vendorlibdir"
+	fi
+	LD_BIND_NOW=1 LD_LIBRARY_PATH="%buildroot%_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
+		%__ruby $ruby_paths ruby/t/check-load.rb
+done
 %endif
 
 %files
@@ -178,6 +204,17 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %endif
 
 %changelog
+* Thu Nov 12 2026 Pavel Skrylev <majioa@altlinux.org> 0.99.20.3.1-alt0.3
+- + check staged Ruby bindings with both load-path orders
+- * use pkgconfig development dependencies
+- ! disable terminal debug output
++ ALT #60840
+- ! restrict Ruby dependency generation to the Ruby bindings
++ ALT #60764
+- ! export and load the Ruby extension with hidden visibility and LTO
+- ! preserve Ruby canvas dimensions when resizing
+- ! render Ruby bitmaps without private libcaca symbols or buffer overruns
+
 * Wed Sep 30 2026 Pavel Skrylev <majioa@altlinux.org> 0.99.20.3.1-alt0.2
 - ! fixed some bugs, closing ALT #60764
 
