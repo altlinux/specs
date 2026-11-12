@@ -3,7 +3,7 @@
 
 Name: sword
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -19,12 +19,12 @@ Source: http://www.crosswire.org/ftpmirror/pub/sword/source/v%major/%name-%versi
 Source2: sword_icons.tar
 
 Requires: lib%name = %EVR
+Patch0: sword-gcc16.patch
 
-BuildRequires: bc cppunit-devel gcc-c++ libclucene-core-devel libcurl-devel libicu-devel zlib-devel
+BuildRequires: bc cppunit-devel gcc-c++ libclucene-core-devel libcurl-devel libicu-devel rpm-build-cmake zlib-devel
 
 %if_with cmake
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
 %endif
 
 # http://site.icu-project.org/download/61#TOC-Migration-Issues
@@ -58,6 +58,7 @@ will need to develop applications which will use the SWORD Bible Framework.
 
 %prep
 %setup
+%patch0 -p2
 
 %ifarch %e2k
 # mcst#4060
@@ -116,6 +117,10 @@ make tests
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt2
+- fix build with GCC 16 (C++20 stream restrictions in tests)
+- replace BuildRequires: cmake with rpm-build-cmake
+
 * Sun Mar 03 2024 Vitaly Lipatov <lav@altlinux.ru> 1.9.0-alt1
 - new version 1.9.0 (with rpmrb script)
 
