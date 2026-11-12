@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: runawk
-Version: 1.6.2
+Version: 1.7.0
 Release: alt1
 
 Summary: Wrapper for AWK providing modules
@@ -34,6 +37,7 @@ This package contains examples for RunAWK.
 %build
 %mkc_env
 %mkcmake_configure
+export STRIP=:
 %mkcmake_build
 
 %check
@@ -43,6 +47,7 @@ export TMPDIR=/tmp
 
 %install
 %mkc_env
+export STRIPFLAG=
 %mkcmake_install
 
 %files
@@ -60,6 +65,10 @@ export TMPDIR=/tmp
 #   (uses runawk, isn't used by runawk)
 
 %changelog
+* Thu Nov 12 2026 Aleksey Cheusov <cheusov@altlinux.org> 1.7.0-alt1
+- 1.7.0-alt1: update to 1.7.0
+- Do not strip runawk executable
+
 * Thu Oct 15 2026 Aleksey Cheusov <cheusov@altlinux.org> 1.6.2-alt1
 - 1.6.2-alt1: update to 1.6.2
 
