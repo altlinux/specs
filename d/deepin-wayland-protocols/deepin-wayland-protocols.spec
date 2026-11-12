@@ -1,5 +1,5 @@
 Name: deepin-wayland-protocols
-Version: 1.10.0.32
+Version: 1.10.0.33
 Release: alt1
 
 Summary: Wayland protocols for DDE
@@ -13,7 +13,7 @@ Vcs: https://github.com/linuxdeepin/deepin-wayland-protocols
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ extra-cmake-modules
+BuildRequires: gcc-c++ deepin-extra-cmake-modules
 
 %description
 The package provides the wayland protocols for the DDE.
@@ -30,6 +30,7 @@ The package provides development files for %name.
 %autopatch -p1
 
 %build
+export ECM_DIR=%_datadir/DDE-ECM
 %cmake
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -46,6 +47,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DeepinWaylandProtocols/*.cmake
 
 %changelog
+* Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 1.10.0.33-alt1
+- New version 1.10.0.33.
+- Built on separate kf6 libs.
+
 * Mon Aug 10 2026 Leontiy Volodin <lvol@altlinux.org> 1.10.0.32-alt1
 - New version 1.10.0.32.
 
