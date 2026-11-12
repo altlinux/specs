@@ -4,17 +4,17 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.5.48
+Version: 6.5.49
 Release: alt1
 
 Summary: A more user-friendly system monitor
 
 License: GPL-3.0+
 Group: Monitoring
-Url: https://github.com/linuxdeepin/deepin-system-monitor
-Vcs: https://github.com/linuxdeepin/deepin-system-monitor
+URL: https://github.com/linuxdeepin/deepin-system-monitor
+VCS: https://github.com/linuxdeepin/deepin-system-monitor
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-system-monitor/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-system-monitor-6.5.8-alt-fix-GNUInstallDirs.patch
@@ -42,16 +42,12 @@ BuildRequires: gcc-c++
 %autopatch -p1
 
 %build
-# fix gcc14
-# https://github.com/linuxdeepin/developer-center/issues/10558
-%add_optflags -Wno-error=incompatible-pointer-types
 %if_enabled clang
 %define optflags_lto -flto=thin
 export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CPLUS_INCLUDE_PATH=%_includedir/qt6:$CPLUS_INCLUDE_PATH
 %DQ6build \
     -DLIB_DESTINATION=%_lib \
     -DLIB_INSTALL_DIR=%_libdir \
@@ -127,6 +123,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-log-viewer/deepin-log.conf.d/org.deepin.system-monitor.json
 
 %changelog
+* Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.49-alt1
+- New version 6.5.49.
+- Cleanup spec.
+
 * Wed Oct 21 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.48-alt1
 - New version 6.5.48.
 
