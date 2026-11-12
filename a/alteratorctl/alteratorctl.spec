@@ -2,7 +2,7 @@
 %define short_name actl
 
 Name: alteratorctl
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: CLI for alterator-explorer
@@ -17,7 +17,7 @@ BuildRequires: libpolkit-devel libjson-glib-devel
 
 Requires: alterator-manager >= 0.1.32
 Requires: alterator-module-executor >= 0.1.29
-Requires: alterator-backend-packages >= 0.2.19
+Requires: alterator-backend-packages >= 0.2.21
 Requires: alterator-backend-component >= 0.3.6
 Requires: alterator-backend-browsing >= 0.1.0
 Requires: alterator-interface-edition >= 0.4.2
@@ -60,6 +60,9 @@ ln -s %_bindir/%name %buildroot%_bindir/%short_name
 %_datadir/fish/vendor_completions.d/%short_name.fish
 
 %changelog
+* Wed Nov 11 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.3-alt1
+- Fixed HTML output formatting (thx Pavel Khromov).
+
 * Mon Sep 21 2026 Pavel Khromov <hromovpi@altlinux.org> 0.4.2-alt1
 - Added:
   + External sources support;

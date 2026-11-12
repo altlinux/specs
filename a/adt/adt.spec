@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: adt
-Version: 0.1.16
+Version: 0.1.17
 Release: alt1
 
 Summary: ALT Diagnostic tool
@@ -63,6 +63,9 @@ install -v -p -m 644 -D setup/adt.application %buildroot%_datadir/alterator/appl
 %_man1dir/%name.1*
 
 %changelog
+* Wed Nov 11 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.17-alt1
+- Remove obsolete --help-all option from manpages (thx Andrey Alekseev).
+
 * Wed Sep 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.16-alt1
 - fix test launch sequence (thx Alexey Saprunov)
 - fix version header generation (thx Alexey Saprunov)

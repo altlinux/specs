@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-packages
-Version: 0.7.0
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Summary: ALT Packages - Alterator application for managing system packages and package repositories
 License: GPLv2+
@@ -31,7 +31,7 @@ BuildRequires: nlohmann-json-devel
 
 Requires: libqt6-quickcontrols2
 Requires: alterator-entry >= 0.4.13-alt1
-Requires: alterator-backend-packages >= 0.2.14-alt1
+Requires: alterator-backend-packages >= 0.2.21-alt1
 Requires: alterator-backend-source >= 0.1.6-alt1
 Requires: alterator-backend-categories
 Requires: alt-components >= 0.6.16
@@ -67,6 +67,17 @@ and package repositories through apt and rpm.
 %_K6dbus_srv/*.service
 
 %changelog
+* Wed Nov 11 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.7.1-alt1
+- Changed (thx Oleg Chagaev):
+  + reworked the additional repositories dialog;
+  + updated translations.
+- Fixed (thx Oleg Chagaev):
+  + repository cards were not refreshed on palette changes.
+- Fixed:
+  + manually installed packages scheduled for removal were not shown;
+  + excluded package names were not quoted for the APT backend;
+  + transaction progress dialog was not retranslated.
+
 * Fri Oct 23 2026 Andrey Alekseev <parovoz@altlinux.org> 0.7.0-alt2
 - Added missing dependency
 

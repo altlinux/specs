@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.20
+Version: 0.2.21
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -67,6 +67,11 @@ through apt and rpm.
 %doc CHANGELOG.md docs/*
 
 %changelog
+* Wed Nov 11 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.21-alt1
+- Fix ShellCheck warnings (thx Nikita Shishkov).
+- Fix CheckApply when pkgpriorities blocks transaction simulation.
+- Fix package removal when a configured CD-ROM repository is unavailable.
+
 * Fri Jul 03 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.20-alt1
 - Add documentation to interfaces (thx Voropaev Dmitriy and Sergey Savelev).
 - Remove the LICENSE from the documentation, according to policy docs.
