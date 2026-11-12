@@ -1,10 +1,10 @@
 Name: sngrep
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: sngrep is a tool for displaying SIP calls message flows from terminal
 
-License: GPLv2+
+License: GPL-3.0-or-later with OpenSSL exception
 Group: Networking/Other
 Url: https://github.com/irontec/sngrep
 
@@ -42,8 +42,12 @@ as PCAP viewer.
 %_sysconfdir/sngreprc
 %_bindir/sngrep
 %_man8dir/sngrep.8*
+%doc LICENSE.OpenSSL
 
 %changelog
+* Wed Nov 11 2026 Ilya Demyanov <turbid@altlinux.org> 1.9.0-alt2
+- fix License tag (GPL-3.0-or-later with OpenSSL-exception)
+
 * Tue Oct 06 2026 Ilya Demyanov <turbid@altlinux.org> 1.9.0-alt1
 - new upstream version
 
