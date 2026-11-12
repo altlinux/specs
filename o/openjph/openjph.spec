@@ -1,8 +1,8 @@
-%define soname 0.31
+%define soname 0.33
 %def_with check
 
 Name: openjph
-Version: 0.31.0
+Version: 0.33.0
 Release: alt1
 Summary: High-throughput JPEG 2000 (HTJ2K) encoder/decoder and library
 License: BSD-2-Clause
@@ -46,7 +46,7 @@ Development files for building software that uses the OpenJPH library.
 sed -i '/#else/,/#endif/ {
 	s|^#define[[:space:]]\+SRC_FILE_DIR[[:space:]]\+.*|#define SRC_FILE_DIR "%_builddir/%name-%version/jp2k_test_codestreams-%version/openjph/"|
 	s|^#define[[:space:]]\+REF_FILE_DIR[[:space:]]\+.*|#define REF_FILE_DIR "%_builddir/%name-%version/jp2k_test_codestreams-%version/openjph/references/"|
-	}' tests/test_executables.cpp
+	}' tests/test_executables.cpp tests/test_nlt.cpp
 
 %build
 # On 32-bit x86 (i586) there is no SSE2; floats traverse the x87 stack
@@ -104,6 +104,9 @@ sed -i '/#else/,/#endif/ {
 %_libdir/cmake/openjph/
 
 %changelog
+* Thu Nov 12 2026 Anton Farygin <rider@altlinux.org> 0.33.0-alt1
+- 0.31.0 -> 0.33.0
+
 * Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 0.31.0-alt1
 - 0.30.1 -> 0.31.0
 
