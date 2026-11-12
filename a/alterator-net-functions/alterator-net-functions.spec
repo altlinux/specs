@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Requires: libshell >= 0.1.3 etcnet
@@ -41,6 +41,9 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Thu Nov 12 2026 Mikhail Efremov <sem@altlinux.org> 2.1.4-alt1
+- list_bridge_types: Don't list ovsbr if openvswitch is not installed.
+
 * Mon Nov 25 2024 Anton Midyukov <antohami@altlinux.org> 2.1.3-alt1
 - Remove function "list_eth" (replaced to alterator-hw-functions >= 0.7.8)
 
