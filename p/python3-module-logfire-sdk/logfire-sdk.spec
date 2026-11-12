@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.4.0
+Version: 5.6.0
 Release: alt1
 
 Summary: Observability and telemetry tooling for Python built on OpenTelemetry
@@ -61,16 +61,17 @@ BuildRequires: python3-module-openai-agents
 %pyproject_configure_with_check_filter '^pyarrow-stubs$'
 # Backport for Python < 3.10, a no-op on the packaged interpreter.
 %pyproject_configure_with_check_filter '^eval-type-backport$'
-# Not packaged for ALT yet: the Monty sandboxed interpreter and the
-# Snowflake driver.
+# Not packaged for ALT yet: the Monty sandboxed interpreter, the
+# Snowflake driver and the Logfire Fleet client.
 %pyproject_configure_with_check_filter '^pydantic-monty$'
 %pyproject_configure_with_check_filter '^snowflake-connector-python$'
+%pyproject_configure_with_check_filter '^logfire-fleet-otel$'
 %endif
 %pyproject_configure_pypi_package
 # The extras whose deps are all in ALT are packaged as the subpackages
 # below. Not packaged, their deps are missing: agent-sandboxes
 # (pydantic-monty-client), datasets (pydantic-evals), dspy and litellm
-# (openinference instrumentations).
+# (openinference instrumentations), fleet (logfire-fleet-otel).
 
 %description
 Logfire is an observability tool built on OpenTelemetry: structured
@@ -212,5 +213,8 @@ ln -s logfire-sdk/dist dist
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.6.0-alt1
+- Updated to 5.6.0.
+
 * Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.4.0-alt1
 - Initial build for ALT Sisyphus.

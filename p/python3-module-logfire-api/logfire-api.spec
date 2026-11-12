@@ -3,7 +3,7 @@
 %define module_name logfire_api
 
 Name: python3-module-logfire-api
-Version: 5.4.0
+Version: 5.6.0
 Release: alt1
 
 Summary: Shim for the Logfire SDK which does nothing unless Logfire is installed
@@ -49,6 +49,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.6.0-alt1
+- Updated to 5.6.0.
+
 * Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.4.0-alt1
 - Updated to 5.4.0.
 

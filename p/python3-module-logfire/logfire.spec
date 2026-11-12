@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 5.4.0
+Version: 5.6.0
 Release: alt1
 
 Summary: Pydantic Logfire Python SDK and command-line interface
@@ -36,7 +36,7 @@ and pulls in the SDK from the python3-module-logfire-sdk package.
 # Each extra subpackage below requires the matching logfire-sdk one.
 # Not packaged, their deps are missing from ALT: agent-sandboxes
 # (pydantic-monty-client), datasets (pydantic-evals), dspy and litellm
-# (openinference instrumentations).
+# (openinference instrumentations), fleet (logfire-fleet-otel).
 %pyproject_configure_pypi_subpackage gateway
 %pyproject_configure_pypi_subpackage system-metrics
 %pyproject_configure_pypi_subpackage asgi
@@ -88,6 +88,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.6.0-alt1
+- Updated to 5.6.0.
+
 * Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.4.0-alt1
 - Updated to 5.4.0.
 - Repackaged as a thin wrapper with a CLI launcher whereas the SDK
