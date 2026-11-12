@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: mate-system-monitor
-Version: 1.28.1
+Version: 1.28.2
 Release: alt1
 Epoch: 1
 Summary: Process and resource monitor
@@ -56,6 +56,9 @@ sed -i "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g}" s
 %_man1dir/*.1*
 
 %changelog
+* Thu Nov 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.2-alt1
+- 1.28.2
+
 * Tue Feb 27 2024 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
 - 1.28.1
 
