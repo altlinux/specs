@@ -3,7 +3,7 @@
 
 Name: lazarus
 Version: 4.8
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Lazarus Component Library and IDE
@@ -34,6 +34,7 @@ Patch12: lazarus-lcl-with-multple-widget-sets.patch
 # Other patches
 Patch13: lazarus-customform-sigsegv-fix.patch
 Patch14: lazarus_fpc_3.2.3-alt.patch
+Patch15: lazarus-fix-start-with-ru-locale.patch
 
 BuildRequires(pre): qt5-base-devel
 BuildRequires(pre): qt6-base-devel
@@ -159,6 +160,7 @@ subst 's|/usr/lib/|%{_libdir}/|' %PATCH4
 %patch12 -p1
 %patch13 -p2
 %patch14 -p0
+%patch15 -p1
 
 install -D -p -m 0644 %SOURCE3 tools/install/linux/environmentoptions.xml
 #sed -i -e 's,@version@,%version,g' tools/install/linux/helpoptions.xml docs/index.ru.html
@@ -404,6 +406,9 @@ subst 's|#!.*python$|#!%__python3|' %buildroot%_libdir/lazarus/components/GLScen
 %_libdir/libQt6Pas.so
 
 %changelog
+* Wed Nov 11 2026 Grigory Ustinov <grenka@altlinux.org> 1:4.8-alt2
+- NMU: Fixed first-time launch in russian locale.
+
 * Wed Jun 10 2026 Andrey Cherepanov <cas@altlinux.org> 1:4.8-alt1
 - New version.
 
