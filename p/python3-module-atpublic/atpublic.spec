@@ -2,10 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define modulename atpublic
+%define subproj packages/atpublic
 %def_with check
 
 Name: python3-module-%modulename
-Version: 7.0.0
+Version: 9.0.0
 Release: alt1
 
 Summary: @public and @private decorators for Python
@@ -13,7 +14,7 @@ Group: Development/Python3
 License: Apache-2.0
 
 URL: https://pypi.org/project/atpublic
-VCS: https://gitlab.com/warsaw/public
+VCS: https://gitlab.com/flufl/public
 
 Source: %name-%version.tar
 BuildArch: noarch
@@ -36,7 +37,7 @@ to simply infer all the public names, and populate the __all__ for you.
 %setup
 
 %build
-%pyproject_build
+%pyproject_build %subproj --outdir dist
 
 %install
 %pyproject_install
@@ -45,11 +46,16 @@ to simply infer all the public names, and populate the __all__ for you.
 %pyproject_run_pytest -vra
 
 %files
-%doc LICENSE README.rst docs
+%doc %subproj/{LICENSE,README.rst}
 %python3_sitelibdir_noarch/public
 %python3_sitelibdir_noarch/%modulename-%version.dist-info
 
 %changelog
+* Wed Nov 11 2026 Polina Poidenko <polipoki@altlinux.org> 9.0.0-alt1
+- New version 9.0.0.
+- Removed accidentally added sphinx documentation source files.
+- Changed the link to the project repository: 'warsaw/public' -> 'flufl/public'.
+
 * Wed Apr 15 2026 Polina Poidenko <polipoki@altlinux.org> 7.0.0-alt1
 - New version 7.0.0.
 
