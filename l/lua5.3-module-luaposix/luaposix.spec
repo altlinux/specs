@@ -6,49 +6,58 @@
 %define oversion %version-%rockspecrev
 
 Name: lua%luaver-module-%oname
-Version: 37.0
+Version: 38
 Release: alt1.%rockspecrev
 
 Summary: Lua bindings for POSIX APIs
 License: MIT
 Group: Development/Other
 Url: https://github.com/luaposix/luaposix
+Vcs: https://github.com/luaposix/luaposix
 
 Source: %name-%version.tar
 
-BuildRequires(pre): lua%luaver-luarocks
 BuildRequires(pre): rpm-macros-lua
+BuildRequires: rpm-build-lua
 BuildRequires: liblua%luaver-devel
+BuildRequires: lua%luaver-luarocks
+BuildRequires: lua%luaver-module-luarocks-build-luke
 
-Provides: luarocks%luaver(%oname) = %EVR
-# clean lua(posix) requirement which is a self provide
+# A computed require('posix.' .. name) yields a bogus lua(posix.).
 %filter_from_requires /lua%luaver(posix\.)/d
 
 %description
-This is a POSIX binding for LuaJIT, Lua 5.3; like most libraries it simply binds
-to C APIs on the underlying system, so it won't work on non-POSIX systems.
-However, it does try to detect the level of POSIX conformance of the underlying
-system and bind only available APIs.
+This is a POSIX binding for LuaJIT, Lua 5.3; like most libraries it
+simply binds to C APIs on the underlying system, so it won't work on
+non-POSIX systems. However, it does try to detect the level of POSIX
+conformance of the underlying system and bind only available APIs.
 
-For a while, luaposix contained support for curses functionality too, but now
-that has its own lcurses repository again, where it is being maintained
-separately.
+For a while, luaposix contained support for curses functionality too,
+but now that has its own lcurses repository again, where it is being
+maintained separately.
 
 %prep
 %setup
 
+%build
+luarocks-%luaver make --verbose --local --deps-mode all --pack-binary-rock \
+	%oname-%oversion.rockspec
+
 %install
-%luarocks_make %oname-%oversion.rockspec
+luarocks-%luaver install --verbose --local --deps-mode none \
+	--no-manifest --tree %buildroot%prefix %oname-%oversion.*.rock
 %luarocks_move_docs doc
 
 %files
-%doc AUTHORS NEWS* README*
-%lua_modulesdir/*
-%lua_modulesdir_noarch/*
+%doc LICENSE README.md docs_from_rockstree/*
+%lua_modulesdir/posix
+%lua_modulesdir_noarch/posix
 %luarocks_dbdir/%oname
-%exclude %luarocks_dbdir/manifest
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 38-alt1.1
+- Updated to 38.
+
 * Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 37.0-alt1.1
 - Updated to 37.0.
 
