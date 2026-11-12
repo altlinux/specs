@@ -5,28 +5,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.18
+Version: 0.0.19
 Release: alt1
 
 Summary: Asyncer, async and await, focused on developer experience
 License: MIT
 Group: Development/Python3
-Url: https://asyncer.tiangolo.com/
+Url: https://pypi.org/project/asyncer/
 Vcs: https://github.com/fastapi/asyncer
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest-timeout
 %endif
+%pyproject_configure_pypi_package
 
 %description
 Asyncer is a small library built on top of AnyIO.
@@ -49,12 +46,7 @@ view.
 %prep
 %setup
 %autopatch -p1
-
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -63,7 +55,7 @@ view.
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --session-timeout=600
 
 %files
 %doc LICENSE README.md
@@ -71,6 +63,9 @@ view.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.19-alt1
+- Updated to 0.0.19.
+
 * Wed Jul 01 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.18-alt1
 - Updated to 0.0.18.
 

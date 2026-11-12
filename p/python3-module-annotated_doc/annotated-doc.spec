@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%module_name
-Version: 0.0.5
+Version: 0.0.6
 Release: alt1
 
 Summary: Document parameters, class attributes, return types, and variables inline, with Annotated
@@ -15,19 +15,14 @@ Vcs: https://github.com/fastapi/annotated-doc
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-Provides: python3-module-%pypi_name = %EVR
-
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest-timeout
 %endif
+%pyproject_configure_pypi_package
 
 %description
 Document parameters, class attributes, return types, and variables
@@ -63,11 +58,7 @@ Reasons to use annotated-doc:
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -76,7 +67,7 @@ Reasons to use annotated-doc:
 %pyproject_install
 
 %check
-%pyproject_run_pytest
+%pyproject_run_pytest --session-timeout=600
 
 %files
 %doc README.md LICENSE
@@ -84,6 +75,9 @@ Reasons to use annotated-doc:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.6-alt1
+- Updated to 0.0.6.
+
 * Tue Jul 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.5-alt1
 - Updated to 0.0.5.
 

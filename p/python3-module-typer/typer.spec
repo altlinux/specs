@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.29.0
+Version: 0.29.1
 Release: alt1
 
 Summary: Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -64,6 +64,8 @@ typer-slim now simply installs (all of) Typer.
 %setup
 %autopatch -p1
 %pyproject_setup_deps
+# Clean up the coverage module usage, as we don't need it.
+%SOURCE1 tests/
 
 %build
 for tiangolo_build_package in %slim_pypi_name %pypi_name; do
@@ -84,8 +86,6 @@ popd
 %__mv %buildroot%_bindir/{%pypi_name,%pypi_name.py3}
 
 %check
-# Clean of the using coverage module, because we don't needs to it.
-%SOURCE1 tests/
 # Increase terminal line size, because some tests (test_not_exists from
 # test_tutorial002.py and test_tutorial002_an.py) don't pass at narrow
 # terminals.
@@ -120,6 +120,9 @@ export TERM="xterm-256color"
 %python3_sitelibdir/%{pyproject_distinfo %slim_pypi_name}
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.29.1-alt1
+- Updated to 0.29.1.
+
 * Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.29.0-alt1
 - Updated to 0.29.0.
 

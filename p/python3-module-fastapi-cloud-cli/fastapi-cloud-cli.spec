@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.27.1
+Version: 0.28.0
 Release: alt1
 
 Summary: Deploy and manage FastAPI Cloud apps from the command line
@@ -63,6 +63,9 @@ BuildRequires: git
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.28.0-alt1
+- Updated to 0.28.0.
+
 * Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.27.1-alt1
 - Updated to 0.27.1.
 

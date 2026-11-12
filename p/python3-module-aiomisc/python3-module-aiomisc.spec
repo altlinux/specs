@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 18.0.37
+Version: 18.0.40
 Release: alt1
 
 Summary: Miscellaneous utils for asyncio
@@ -18,26 +18,16 @@ Vcs: https://github.com/aiokitchen/aiomisc
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
+BuildRequires: rpm-build-pyproject
 %if_with check
 BuildRequires: python3-module-pytest-timeout
-%add_pyproject_deps_check_filter autodoc
-%add_pyproject_deps_check_filter collective-checkdocs
-%add_pyproject_deps_check_filter coveralls
-%add_pyproject_deps_check_filter grpc-stubs
-%add_pyproject_deps_check_filter grpcio-tools
-%add_pyproject_deps_check_filter grpcio-reflection
-%add_pyproject_deps_check_filter pytest-rst
-%add_pyproject_deps_check_filter sphinx-autobuild
-%add_pyproject_deps_check_filter sphinx-intl
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+%pyproject_configure_with_check_filter autodoc collective-checkdocs grpcio-tools
+%pyproject_configure_with_check_filter grpcio-reflection pytest-rst
 %endif
+%pyproject_configure_pypi_package
 
 %description
 Miscellaneous utils for asyncio.
@@ -59,6 +49,16 @@ pools, connection pools, circuit breaker pattern, and retry mechanisms
 such as asyncbackoff and asyncretry to make your asyncio code more
 robust and easier to maintain.
 
+%pyproject_configure_pypi_subpackage aiohttp
+%pyproject_configure_pypi_subpackage asgi
+%pyproject_configure_pypi_subpackage carbon
+%pyproject_configure_pypi_subpackage cron
+%pyproject_configure_pypi_subpackage dns
+%pyproject_configure_pypi_subpackage raven
+%pyproject_configure_pypi_subpackage rich
+%pyproject_configure_pypi_subpackage uvicorn
+%pyproject_configure_pypi_subpackage uvloop
+
 %prep
 %setup
 %autopatch -p1
@@ -69,11 +69,7 @@ sed -i "/^version_info/s/= .*$/= $TRIPLE/" aiomisc/version.py
 sed -i '/^__version__/s/= .*$/= "%version"/' aiomisc/version.py
 
 export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
@@ -91,6 +87,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION="%version"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 18.0.40-alt1
+- Updated to 18.0.40.
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 18.0.37-alt1
 - Updated to 18.0.37.
 

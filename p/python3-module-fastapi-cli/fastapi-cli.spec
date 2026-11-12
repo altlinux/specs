@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.32
-Release: alt2
+Version: 0.0.33
+Release: alt1
 
 Summary: Run and manage FastAPI apps from the command line with FastAPI CLI
 License: MIT
@@ -64,6 +64,9 @@ your FastAPI app, manage your FastAPI project, and more.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.33-alt1
+- Updated to 0.0.33.
+
 * Wed Nov 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.32-alt2
 - Packaged the standard, standard-no-fastapi-cloud-cli and new extras.
 

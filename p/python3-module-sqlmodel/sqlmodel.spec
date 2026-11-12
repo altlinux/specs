@@ -4,30 +4,33 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.48
+Version: 0.0.49
 Release: alt1
 
 Summary: SQL databases in Python, designed for simplicity, compatibility, and robustness
 License: MIT
 Group: Development/Python3
-Url: https://sqlmodel.tiangolo.com/
+Url: https://pypi.org/project/sqlmodel/
 Vcs: https://github.com/fastapi/sqlmodel
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
+# No +extra subpackages of these exist in Sisyphus: the plain packages are
+# required instead (greenlet is what the asyncio extra of sqlalchemy adds).
+%pyproject_configure_with_check_filter 'sqlalchemy$' 'psycopg$' 'pymysql$'
+BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-psycopg
+BuildRequires: python3-module-pymysql
 BuildRequires: python3-module-black
 BuildRequires: python3-module-greenlet
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
+BuildRequires: python3-module-pytest-timeout
 %endif
+%pyproject_configure_pypi_package
 
 %description
 SQLModel is a library for interacting with SQL databases from Python code,
@@ -52,11 +55,7 @@ The key features are:
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup tests
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -66,7 +65,7 @@ The key features are:
 
 %check
 export PYTHONPATH="$PYTHONPATH:$(realpath ./)"
-%pyproject_run_pytest -q -Wignore tests
+%pyproject_run_pytest --session-timeout=600 -q -Wignore tests
 
 %files
 %doc README.md LICENSE
@@ -74,6 +73,9 @@ export PYTHONPATH="$PYTHONPATH:$(realpath ./)"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.49-alt1
+- Updated to 0.0.49.
+
 * Sun Oct 11 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.48-alt1
 - Updated to 0.0.48.
 
