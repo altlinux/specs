@@ -1,41 +1,44 @@
-Name:           jboss-parent
-Version:        52
-Release:        alt1
+%define _unpackaged_files_terminate_build 1
 
-Summary:        JBoss Parent POM
-License:        Apache-2.0
-Group:          Development/Java
-URL:            http://www.jboss.org/
-VCS:            https://github.com/jboss/jboss-parent-pom.
+Name: jboss-parent
+Version: 55
+Release: alt1
 
-Source0:        %name-%version.tar
+Summary: JBoss Parent POM
+License: Apache-2.0
+Group: Development/Java
+URL: https://www.jboss.org/
+VCS: https://github.com/jboss/jboss-parent-pom.git
 
-BuildRequires(pre):  maven-local
-BuildRequires:  jpackage-default
+Source: %name-%version.tar
 
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildArch: noarch
 
-BuildArch:      noarch
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
 
 %description
-The Project Object Model files for JBoss packages.
+Common Maven parent POM for JBoss projects.
 
 %prep
 %setup
-
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc README.adoc
 
 %changelog
+* Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 55-alt1
+- New version.
+
 * Wed Mar 25 2026 Evgeniy Serov <scala@altlinux.org> 52-alt1
 - Updated to 52.
 

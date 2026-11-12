@@ -1,5 +1,5 @@
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -18,7 +18,7 @@ BuildRequires: jpackage-default
 
 Name:           scalacheck
 Version:        1.15.4
-Release:        alt1_3jpp11
+Release:        alt2
 Summary:        Property-based testing for Scala
 
 License:        BSD
@@ -32,7 +32,8 @@ Source2:       %{name}.mf
 Source3:       Generate.java
 %endif
 
-ExcludeArch:    %ix86 armh
+BuildArch:      noarch
+ExcludeArch:    armh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
@@ -106,6 +107,9 @@ sbt package deliverLocal publishM2Configuration
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Nov 11 2026 Ivan Khanas <xeno@altlinux.org> 1.15.4-alt2
+- Build as a noarch package.
+
 * Fri Sep 22 2023 Andrey Cherepanov <cas@altlinux.org> 1.15.4-alt1_3jpp11
 - NMU: Do not build for armh
 

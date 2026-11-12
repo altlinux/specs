@@ -1,61 +1,80 @@
-%define rev 4
+%define _unpackaged_files_terminate_build 1
+%define nativever 1.5.7-26
+%ifarch %ix86
+%define with_ffm false
+%else
+%define with_ffm true
+%endif
 
-Name:    zstd-jni
-Version: 1.5.6
-Release: alt1.%rev
+Name: zstd-jni
+Version: 1.5.7.26
+Release: alt1
 
-Summary: JNI binding for Zstd
-License: BSD-2-Clause
-Group:   Development/Java
-Url:     https://github.com/luben/zstd-jni
+Summary: Java JNI and FFM bindings for Zstandard
+License: BSD-2-Clause and BSD-3-Clause
+Group: Development/Java
+URL: https://github.com/luben/zstd-jni
+VCS: https://github.com/luben/zstd-jni.git
 
 Source: %name-%version.tar
-Source1: sbt-launch.tar
-Patch0: zstd-jni-link-to-pthread.patch
+Patch0: build-desktop-with-system-zstd.patch
 
-BuildRequires(pre): cmake
-BuildRequires(pre): rpm-build-java
-BuildRequires(pre): rpm-build-ninja
-BuildRequires: libzstd-devel
-BuildRequires: /proc java-openjdk-devel
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: rpm-build-java
+BuildRequires: xgradle
+# FFM needs Java 22; upstream permits the full JNI API on an older JDK.
+%ifarch %ix86
+BuildRequires: java-21-openjdk-devel
+%else
+BuildRequires: java-25-openjdk-devel
+%endif
+BuildRequires: cmake
+BuildRequires: rpm-build-ninja
+BuildRequires: gcc
+BuildRequires: pkgconfig(libzstd)
+BuildRequires: mvn(org.jetbrains:annotations)
 
 %description
-JNI bindings for Zstd native library that provides fast and high compression
-lossless algorithm for Android, Java and all JVM languages:
-- static compress/decompress methods
-- implementation of InputStream and OutputStream for transparent compression
-  of data streams fully compatible with the "zstd" program.
-- minimal performance overhead
+JNI and Foreign Function and Memory API bindings for Zstandard compression.
+The base Java API targets Java 8. Builds with a Java 22+ compiler also include
+the Multi-Release FFM implementation. All builds use the system Zstandard library.
 
-%package -n lib%name
-Summary: Library for %name
+%package -n libzstd-jni
+Summary: Java Zstandard bindings with the matching native library
 Group: Development/Java
 
-%description -n lib%name
-JNI bindings for Zstd native library that provides fast and high compression
-lossless algorithm for Android, Java and all JVM languages:
-- static compress/decompress methods
-- implementation of InputStream and OutputStream for transparent compression
-  of data streams fully compatible with the "zstd" program.
-- minimal performance overhead
+%description -n libzstd-jni
+Java compression APIs and their matching native JNI/FFM bridge, linked to
+the system Zstandard library. Includes streams, buffers and dictionaries.
+The FFM implementation is included in builds made with a Java 22+ compiler.
 
 %prep
 %setup
-%patch0 -p1
-tar xf %SOURCE1 -C ~
+%autopatch -p1
+mkdir native-notices
+cp -p src/main/native/LICENSE native-notices/
 
 %build
 %cmake -GNinja -Wno-dev
-%ninja_build -C "%_cmake__builddir"
+%ninja_build -C %_cmake__builddir
+cd alt-jvm
+%gradle_publish -PwithFfm=%with_ffm
 
 %install
-install -Dpm0664 "%_cmake__builddir"/libzstd-jni-%{version}-%rev.so %buildroot%_libdir/libzstd-jni-%{version}-%rev.so
+install -Dpm755 %_cmake__builddir/libzstd-jni-%nativever.so \
+    %buildroot%_libdir/libzstd-jni-%nativever.so
+cd alt-jvm
+%gradle_register
+%gradle_install
 
-%files -n lib%name
-%doc *.md
-%_libdir/libzstd-jni-*.so
+%files -n libzstd-jni -f alt-jvm/.mfiles
+%doc LICENSE native-notices
+%_libdir/libzstd-jni-%nativever.so
 
 %changelog
+* Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 1.5.7.26-alt1
+- New version.
+
 * Fri Dec 20 2024 Andrey Cherepanov <cas@altlinux.org> 1.5.6-alt1.4
 - New version for kafka-3.8.1.
 

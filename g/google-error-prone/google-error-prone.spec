@@ -2,7 +2,7 @@
 
 Name: google-error-prone
 Version: 2.52.0
-Release: alt1
+Release: alt2
 
 Summary: Catch common Java mistakes as compile-time errors
 License: Apache-2.0
@@ -63,6 +63,7 @@ BuildRequires: guice7-assistedinject
 BuildRequires: guice7-servlet
 BuildRequires: guice7-testlib
 BuildRequires: google-guice7
+BuildRequires: mvn(com.google.j2objc:j2objc-annotations)
 BuildRequires: mvn(com.google.jimfs:jimfs)
 BuildRequires: mvn(com.google.protobuf:protobuf-java)
 BuildRequires: mvn(com.google.protobuf:protobuf-java-util)
@@ -236,6 +237,9 @@ surefire="$surefire[pom:artifactId='maven-surefire-plugin']"
 %files docgen-processor -f .mfiles-error_prone_docgen_processor
 
 %changelog
+* Wed Nov 11 2026 Ivan Khanas <xeno@altlinux.org> 2.52.0-alt2
+- Add the J2ObjC annotations build dependency.
+
 * Wed Nov 04 2026 Ivan Khanas <xeno@altlinux.org> 2.52.0-alt1
 - New version.
 

@@ -1,71 +1,49 @@
-Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+%define _unpackaged_files_terminate_build 1
 
-Name:           httpcomponents-project
-Summary:        Common POM file for HttpComponents
-Version:        12
-Release:        alt1_4jpp11
-License:        ASL 2.0
-URL:            https://hc.apache.org/
-Source0:        https://archive.apache.org/dist/httpcomponents/httpcomponents-parent/httpcomponents-parent-%{version}-source-release.zip
-Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
-BuildArch:      noarch
+Name: httpcomponents-project
+Version: 15
+Release: alt1
 
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(org.apache:apache:pom:)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-%endif
-Source44: import.info
+Summary: Common Maven POM for Apache HttpComponents
+License: Apache-2.0
+Group: Development/Java
+URL: https://hc.apache.org/
+VCS: https://github.com/apache/httpcomponents-parent.git
 
-Obsoletes: hc-project < 4.1.1-alt1_1jpp6
-Provides: hc-project = %version-%release
+Source: %name-%version.tar
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
+BuildRequires: mvn(org.apache:apache:pom:)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
 %description
-Common Maven POM file for HttpComponents. This project should be
-required only for building dependant packages with Maven. Please don't
-use it as runtime requirement.
+Common Maven parent POM for Apache HttpComponents projects.
 
 %prep
-%setup -q -n httpcomponents-parent-%{version}
-
-cp -p %{SOURCE1} .
-
-%pom_remove_plugin :clirr-maven-plugin
-%pom_remove_plugin :docbkx-maven-plugin
-%pom_remove_plugin :maven-site-plugin
+%setup
 %pom_remove_plugin :animal-sniffer-maven-plugin
 %pom_remove_plugin :apache-rat-plugin
-
-# Version <= 8 had this AID
-%mvn_alias : :project
+%pom_remove_plugin :maven-site-plugin
+%mvn_alias :httpcomponents-parent :project
+%mvn_package :*::sources: __noinstall
 
 %build
-%mvn_file  : %{name}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 15-alt1
+- New version.
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 12-alt1_4jpp11
 - update
 

@@ -1,32 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define asm_ver 9.8
+%define asm_ver 9.11.1
 
 Name: lombok
 Version: 1.18.44
-Release: alt1
+Release: alt2
 
 Summary: Java annotation processor library
 License: MIT
 Group: Development/Java
-Url: https://projectlombok.org
-Vcs: https://github.com/projectlombok/lombok.git
+URL: https://projectlombok.org
+VCS: https://github.com/projectlombok/lombok.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
 Patch0: lombok-java11.patch
+Patch1: lombok-system-dependencies.patch
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: /proc
 BuildRequires: rpm-build-java
 BuildRequires: maven-local
-BuildRequires: jpackage-default
+BuildRequires: java-17-openjdk-devel
 BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-codec
-BuildRequires: httpcomponents-client
-BuildRequires: httpcomponents-core
 BuildRequires: ivy-local
 BuildRequires: ivyplusplus
 BuildRequires: cmdreader
@@ -43,11 +41,7 @@ annotation-driven code generation.
 %autopatch -p1
 
 IVY_JAR='%_javadir/ivyplusplus.jar'
-HTTP_CP='%_javadir/commons-logging.jar:'
-HTTP_CP="${HTTP_CP}%_javadir/commons-codec.jar:"
-HTTP_CP="${HTTP_CP}%_javadir/httpcomponents/httpclient.jar:"
-HTTP_CP="${HTTP_CP}%_javadir/httpcomponents/httpcore.jar"
-IVYPLUSPLUS_CP="lib/ivyplusplus.jar:${HTTP_CP}"
+IVYPLUSPLUS_CP="lib/ivyplusplus.jar:%_javadir/apache-ivy/ivy.jar:%_javadir/ecj/ecj.jar"
 
 sed -i \
   -e "s#<get src=\"[^\"]*/ivyplusplus.jar\"#<copy file=\"$IVY_JAR\"#" \
@@ -72,10 +66,6 @@ sed -i \
   -e 's/name="cmdreader" rev="1.5" conf="build,stripe->runtime"/name="cmdreader" rev="1.5" conf="build,stripe->default"/' \
   buildScripts/ivy.xml
 
-sed -i \
-  -e '/name="packing.basedirs"/s#build/lombok-main8"#build/lombok-main8,build/lombok-deps"#' \
-  -e 's#<target name="dist" depends="version, compile"#<target name="dist" depends="version, compile, -deps.unpack"#' \
-  buildScripts/compile.ant.xml
 
 %build
 ant -Divy.mode=local dist
@@ -87,8 +77,11 @@ sed 's/@VERSION@/%version/g' doc/maven-pom.xml > build/lombok-%version.pom
 %mvn_install
 
 %files -f .mfiles
-%doc README.md LICENSE AUTHORS
+%doc LICENSE AUTHORS
 
 %changelog
+* Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 1.18.44-alt2
+- Support current ECJ and use system runtime dependencies.
+
 * Thu Apr 09 2026 Ivan Khanas <xeno@altlinux.org> 1.18.44-alt1
 - First build for ALT.
