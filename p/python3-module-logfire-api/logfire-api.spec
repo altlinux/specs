@@ -3,7 +3,7 @@
 %define module_name logfire_api
 
 Name: python3-module-logfire-api
-Version: 5.1.1
+Version: 5.4.0
 Release: alt1
 
 Summary: Shim for the Logfire SDK which does nothing unless Logfire is installed
@@ -14,13 +14,14 @@ VCS: https://github.com/pydantic/logfire
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
+# The shim has no tests of its own: tests/test_logfire_api.py exercises
+# it in python3-module-logfire-sdk.
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_pypi_package
 
 %description
 %summary.
@@ -29,8 +30,7 @@ BuildRequires: rpm-build-pyproject
 %setup
 %autopatch -p1
 cd logfire-api
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 cd -
 
 %build
@@ -49,5 +49,8 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.4.0-alt1
+- Updated to 5.4.0.
+
 * Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 5.1.1-alt1
 - Initial build for ALT Sisyphus.
