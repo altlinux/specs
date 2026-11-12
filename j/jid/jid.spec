@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: jid
-Version: 0.7.6
+Version: 1.1.3
 Release: alt1
 Summary: JSON incremental digger
 License: MIT
@@ -36,5 +36,8 @@ install -Dp cmd/jid/jid %buildroot%_bindir/jid
 %_bindir/jid
 
 %changelog
+* Tue Nov 10 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.3-alt1
+- new version 1.1.3
+
 * Sun Nov 27 2022 Vitaly Chikunov <vt@altlinux.org> 0.7.6-alt1
 - First import v0.7.6-7-gdabb3ff (2022-04-16).
