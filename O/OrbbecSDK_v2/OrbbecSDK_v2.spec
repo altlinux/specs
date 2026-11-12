@@ -1,6 +1,6 @@
 Name:    OrbbecSDK_v2
 Version: 2.10.6
-Release: alt1
+Release: alt2
 
 Summary: Software development kit for Orbbec 3D depth cameras and LiDARs
 License: MIT
@@ -13,6 +13,7 @@ Patch0: OrbbecSDK_v2-2.8.7-fix-libdir.patch
 Patch1: OrbbecSDK_v2-2.8.7-fix-rpath.patch
 Patch2: OrbbecSDK_v2-2.8.7-fix-threads.patch
 Patch3: OrbbecSDK_v2-2.8.7-fix-arch-detect.patch
+Patch4: OrbbecSDK_v2-2.10.6-fix-unused-var.patch
 
 # Prebuilt extension libraries are provided only for x86_64 and arm64.
 ExcludeArch: i586 %arm
@@ -80,6 +81,7 @@ OrbbecSDK_v2.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %cmake \
@@ -174,6 +176,9 @@ rmdir %buildroot/usr/examples >/dev/null 2>&1 || true
 %_docdir/%name/api/
 
 %changelog
+* Thu Nov 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.10.6-alt2
+- fixed build with gcc 16 (-Werror=unused-but-set-variable)
+
 * Sat Oct 10 2026 Sergey Palcheh <minergenon@altlinux.org> 2.10.6-alt1
 - new version 2.10.6
 
