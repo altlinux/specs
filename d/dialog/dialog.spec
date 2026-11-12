@@ -1,5 +1,5 @@
 %define major 1.3
-%define snapshot 20260107
+%define snapshot 20260721
 %def_disable static
 
 Name: dialog
@@ -102,6 +102,9 @@ rm -v %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Nov 12 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3.20260721-alt1
+- new version
+
 * Tue May 19 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1.3.20260107-alt1
 - new verion
 
