@@ -3,7 +3,7 @@
 %def_with check
 
 Name: noctalia
-Version: 5.4.1
+Version: 5.5.0
 Release: alt1
 
 Summary: A sleek, customizable desktop shell crafted for Wayland
@@ -14,7 +14,6 @@ Url: https://docs.noctalia.dev
 VCS: https://github.com/noctalia-dev/noctalia
 
 Source: %name-%version.tar
-Source1: %name.service
 Source2: %name.pam
 Patch0: %name-%version-alt.patch
 
@@ -70,6 +69,7 @@ BuildRequires: pkgconfig(xkbcommon)
 %if_with check
 # for tests: annotation_raster needs a real "Sans" font
 BuildRequires: fonts-ttf-dejavu
+BuildRequires: pipewire
 %endif
 
 %add_findreq_skiplist %_datadir/noctalia/assets/templates/*/*.sh
@@ -113,7 +113,7 @@ install -Dm644 noctalia.bash %buildroot%_datadir/bash-completion/completions/noc
 install -Dm644 _noctalia %buildroot%_datadir/zsh/site-functions/_noctalia
 install -Dm644 noctalia.fish %buildroot%_datadir/fish/vendor_completions.d/noctalia.fish
 
-install -Dm644 %SOURCE1 %buildroot%_userunitdir/noctalia.service
+install -Dm644 %__builddir/noctalia.service %buildroot%_userunitdir/noctalia.service
 install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/noctalia
 
 %check
@@ -135,6 +135,9 @@ install -Dm640 %SOURCE2 %buildroot%_sysconfdir/pam.d/noctalia
 %_userunitdir/noctalia.service
 
 %changelog
+* Thu Nov 12 2026 Egor Ignatov <egori@altlinux.org> 5.5.0-alt1
+- New version 5.5.0.
+
 * Fri Oct 30 2026 Egor Ignatov <egori@altlinux.org> 5.4.1-alt1
 - New version 5.4.1.
 
