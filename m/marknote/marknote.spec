@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 1.6.0
-Release: alt2
+Release: alt3
 %K6init
 
 Group: Text tools
@@ -16,6 +16,8 @@ License: BSD-3-Clause AND CC-BY-SA-4.0 AND CC0-1.0 AND GPL-2.0-only AND GPL-2.0-
 #Requires:      qml6(org.kde.sonnet)
 
 Source: %rname-%version.tar
+Source10: po-add-ru.po
+Patch1: alt-i18n.patch
 
 BuildRequires(pre): rpm-build-kf6
 # Automatically added by buildreq on Wed Jun 04 2025 (-bi)
@@ -38,7 +40,12 @@ making it easy to use your notes outside of Marknote as well as inside the app.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' plasma-runner-marknote.desktop
+
+msgcat --use-first %SOURCE10 po/ru/marknote.po > po/ru/marknote.po.tmp
+cat po/ru/marknote.po.tmp > po/ru/marknote.po
+rm -f po/ru/marknote.po.tmp
 
 %build
 %K6build \
@@ -59,6 +66,9 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 %_datadir/metainfo/*marknote*
 
 %changelog
+* Thu Nov 12 2026 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt3
+- fix i18n
+
 * Mon Sep 21 2026 Sergey V Turchin <zerg@altlinux.org> 1.6.0-alt2
 - fix build requires
 
