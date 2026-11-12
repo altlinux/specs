@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: efivar
-Version: 39
+Version: 40
 Release: alt1
 
 Summary: Tools to manage UEFI variables
@@ -14,7 +14,9 @@ Patch0: %name-%version-%release.patch
 
 Requires: %name-libs = %version-%release
 
-BuildRequires: libpopt-devel libabigail
+BuildRequires: libabigail
+BuildRequires: libpopt-devel
+BuildRequires: libssl-devel
 
 %description
 efivar provides a simple command line interface to the UEFI variable facility.
@@ -50,6 +52,7 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FL
 %doc README.md COPYING
 %_bindir/efivar
 %_bindir/efisecdb
+%_bindir/sbchooser
 %_mandir/man1/*
 
 %files -n lib%name-devel
@@ -62,6 +65,9 @@ make libdir=%_libdir bindir=%_bindir CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FL
 %_libdir/*.so.*
 
 %changelog
+* Thu Nov 12 2026 Egor Ignatov <egori@altlinux.org> 40-alt1
+- New version 40.
+
 * Tue Feb 06 2024 Egor Ignatov <egori@altlinux.org> 39-alt1
 - 38 -> 39
 
