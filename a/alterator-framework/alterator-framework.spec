@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-framework
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Qt 6-based host application for Alterator QML modules
@@ -61,6 +61,10 @@ install -d %buildroot%_datadir/alterator-framework/modules
 
 
 %changelog
+* Tue Oct 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.4-alt1
+- Add timeout property to BackendOperation (thx Oleg Chagaev).
+- Bump API version to 1.5 (thx Oleg Chagaev).
+
 * Wed Sep 16 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.3-alt1
 - New features (thx Oleg Chagaev):
   + Add toText() and toObject() helpers to BackendUiData.

@@ -1,7 +1,7 @@
 %define mname update-kernel
 
 Name: alterator-update-kernel
-Version: 1.6
+Version: 1.7
 Release: alt1
 
 Url: http://altlinux.org/alterator
@@ -16,6 +16,7 @@ BuildRequires(pre): alterator >= 4.10-alt1
 BuildRequires(pre): alterator-lookout
 
 BuildRequires: guile22-devel
+BuildRequires: qt6-tools
 
 %description
 An alterator module with graphical and web interface that implements
@@ -52,7 +53,26 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 %_alterator_backend3dir/%mname
 %_datadir/dbus-1/interfaces/*.xml
 
+%_alterator_datadir/backends/%{mname}.backend
+%_datadir/polkit-1/actions/org.altlinux.alterator.update-kernel.policy
+
+%dir %_datadir/alterator-framework/modules/%mname
+%_datadir/alterator-framework/modules/%mname/manifest.json
+%_datadir/alterator-framework/modules/%mname/main.qml
+%_datadir/alterator-framework/modules/%mname/KernelCommand.qml
+%_datadir/alterator-framework/modules/%mname/InstallDialog.qml
+%_datadir/alterator-framework/modules/%mname/StatusMessage.qml
+%_datadir/alterator-framework/modules/%mname/KernelData.js
+%dir %_datadir/alterator-framework/modules/%mname/ts
+%_datadir/alterator-framework/modules/%mname/ts/update-kernel_ru.qm
+
 %changelog
+* Tue Oct 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 1.7-alt1
+- Add D-Bus backend and Alterator Framework frontend (thx Oleg Chagaev).
+- Improve kernel and module management, including module updates without a
+  kernel update (thx Oleg Chagaev).
+- Improve package operation error reporting (thx Oleg Chagaev).
+
 * Fri Dec 05 2025 Ivan Savin <svn17@altlinux.org> 1.6-alt1
 - Fix bug with install modules. Now, when installing modules without
   installing the kernel, the version of the marked modules is checked, and if
@@ -127,5 +147,4 @@ export GUILE_LOAD_PATH=/usr/share/alterator/lookout
 
 * Thu Aug 13 2020 Ivan Savin <svn17@altlinux.org> 0.1-alt1
 - Initial commit.
-
 
