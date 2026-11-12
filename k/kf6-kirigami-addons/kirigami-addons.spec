@@ -6,7 +6,7 @@
 %define libkirigamiaddonscomponents libkirigamiaddonscomponents%sover
 
 Name: kf6-%rname
-Version: 1.14.2
+Version: 1.16.1
 Release: alt1
 %K6init
 
@@ -26,6 +26,7 @@ Requires: libkf6itemmodels
 Requires: libkf6iconthemes
 
 Source: %rname-%version.tar
+Patch1: alt-i18n.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-base-devel qt6-declarative-devel qt6-tools-devel
@@ -76,6 +77,7 @@ Requires: %name-common >= %EVR
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build \
@@ -112,6 +114,9 @@ Requires: %name-common >= %EVR
 %_K6lib/libKirigamiAddonsComponents.so.*
 
 %changelog
+* Thu Nov 12 2026 Sergey V Turchin <zerg@altlinux.org> 1.16.1-alt1
+- new version
+
 * Wed Sep 30 2026 Sergey V Turchin <zerg@altlinux.org> 1.14.2-alt1
 - new version
 
