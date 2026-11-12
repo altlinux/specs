@@ -2,7 +2,7 @@
 %global __find_debuginfo_files %nil
 
 Name: plasma-addon-alt-weather
-Version: 2.2.4
+Version: 2.2.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -52,6 +52,9 @@ The weather forecast addon for KDE Workspace 6 Plasma
 %_datadir/metainfo/*
 
 %changelog
+* Thu Nov 12 2026 Daniil-Viktor Ratkin <krf10@altlinux.org> 2.2.5-alt1
+- fixes for standalone app
+
 * Tue Jun 30 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.2.4-alt1
 - Install wind/pressure/humidity status icons into hicolor so themes
   that do not inherit breeze can find them.
