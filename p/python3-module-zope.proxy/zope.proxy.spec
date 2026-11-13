@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.3
+Version: 7.4
 Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL-2.1
@@ -14,23 +14,13 @@ Group: Development/Python3
 Url: https://pypi.org/project/zope.proxy/
 Vcs: http://github.com/zopefoundation/zope.proxy
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-# mapping from PyPI name
-# https://www.altlinux.org/Management_of_Python_dependencies_sources#Mapping_project_names_to_distro_names
-Provides: python3-module-%{pep503_name %pypi_name} = %EVR
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
 # switched to native namespace
 Requires: python3-module-zope >= 3.3.0-alt10
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
 # zope.security is optional circular tests dependency
 # zope.security (runtime) => zope.proxy (check) => zope.security
-%add_pyproject_deps_check_filter '%{pep503_name zope.security}$'
-%pyproject_builddeps_metadata_extra test
-%endif
+%pyproject_configure_with_check_filter '%{pep503_name zope.security}$'
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 Proxies are special objects which serve as mostly-transparent wrappers
@@ -48,8 +38,7 @@ This package contains development files for %pypi_name.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -75,6 +64,9 @@ This package contains development files for %pypi_name.
 %python3_sitelibdir/%ns_name/%mod_name/*.c
 
 %changelog
+* Fri Nov 13 2026 Stanislav Levin <slev@altlinux.org> 7.4-alt1
+- 7.3 -> 7.4
+
 * Tue Aug 25 2026 Stanislav Levin <slev@altlinux.org> 7.3-alt1
 - 7.2 -> 7.3
 
