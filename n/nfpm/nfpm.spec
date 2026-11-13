@@ -1,11 +1,12 @@
 Name:    nfpm
-Version: 2.48.0
+Version: 2.49.0
 Release: alt1
 
 Summary: Simple deb, rpm, apk and arch linux packager written in Go
 License: MIT
-Group:   Other
-Url:     https://github.com/goreleaser/nfpm
+Group:   Development/Tools
+URL:     https://nfpm.goreleaser.com
+VCS:     https://github.com/goreleaser/nfpm
 
 Source: %name-%version.tar
 Source1: %name-development-%version.tar
@@ -98,6 +99,9 @@ mkdir -p %buildroot%_datadir/zsh_completion.d/
 %_datadir/zsh_completion.d/_%name
 
 %changelog
+* Fri Nov 13 2026 Sergey Palcheh <minergenon@altlinux.org> 2.49.0-alt1
+- new version 2.49.0
+
 * Tue Oct 13 2026 Sergey Palcheh <minergenon@altlinux.org> 2.48.0-alt1
 - new version 2.48.0
 
