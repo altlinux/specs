@@ -3,7 +3,7 @@
 Name: ansible-core
 Summary: A radically simple IT automation system
 Version: 2.22.0
-Release: alt1
+Release: alt2
 
 License: GPL-3.0
 Group: System/Configuration/Other
@@ -29,7 +29,7 @@ BuildRequires: python3-module-resolvelib
 BuildRequires: python3-module-wheel
 
 Requires: ca-certificates >= 2015.10.29
-%py3_requires ansible
+Requires: python3-module-ansible = %EVR
 %py3_requires paramiko
 %py3_requires resolvelib
 %py3_requires yaml
@@ -86,6 +86,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Nov 13 2026 Andrey Cherepanov <cas@altlinux.org> 2.22.0-alt2
+- Required python3-module-ansible with same version (ALT #61465).
+
 * Fri Nov 06 2026 Andrey Cherepanov <cas@altlinux.org> 2.22.0-alt1
 - New version (fixes: CVE-2026-89091, CVE-2026-105929, CVE-2026-11332).
 
