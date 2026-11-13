@@ -22,7 +22,7 @@
 %def_without ffmpeg_static
 
 Name:    telegram-desktop
-Version: 7.4.1
+Version: 7.4.3
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -381,6 +381,14 @@ ln -s Telegram %buildroot%_bindir/telegramdesktop
 %doc README.md changelog.txt LICENSE LEGAL
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 7.4.3-alt1
+- new version 7.4.3 (closes: #61460)
+- bundled QuickJS: refuse "await using" outside async functions
+  (use-after-return reachable from widget scripts, quickjs ca3594d)
+
+* Thu Nov 12 2026 Vitaly Lipatov <lav@altlinux.ru> 7.4.2-alt1
+- new version 7.4.2
+
 * Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 7.4.1-alt1
 - new version 7.4.1
 
