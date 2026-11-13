@@ -2,19 +2,19 @@
 %define _unpackaged_files_terminate_build 1
 
 %add_python3_path %_libdir/obs-scripting/
-%add_python3_path %_datadir/obs/obs-plugins/frontend-tools/scripts/
+%add_python3_path %_datadir/obs/obs-modules/core/frontend-tools/scripts/
 
-%define websocket_version 5.7.4
+%define websocket_version 5.7.6
 #%%define browser_version 2.26.3
 
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 32.2.2
+Version: 33.0.1
 Release: alt1
 License: GPL-2.0-or-later
 Group: Video
-URL: https://github.com/obsproject/obs-studio
+URL: https://obsproject.com/
 VCS: https://github.com/obsproject/obs-studio.git
 Source: %name-%version.tar
 Source1: obs-websocket-%websocket_version.tar
@@ -68,7 +68,7 @@ BuildRequires: pkgconfig(libpci)
 BuildRequires: pkgconfig(rnnoise)
 BuildRequires: pipewire-libs-devel
 BuildRequires: libdrm-devel
-BuildRequires: libmbedtls-compat-devel
+BuildRequires: libmbedtls-3.6-devel
 BuildRequires: libuuid-devel
 BuildRequires: libfdk-aac-devel
 BuildRequires: libdatachannel-devel
@@ -163,6 +163,10 @@ sed -e 's|include/EGL/eglplatform.h||g' -i deps/glad/CMakeLists.txt
 mv plugins/obs-qsv11/CMakeLists.txt plugins/obs-qsv11/CMakeLists.txt.disabled
 touch plugins/obs-qsv11/CMakeLists.txt
 
+# Allow dependencies exported with the NOCONFIG configuration.
+sed -i '/^[[:space:]]*None$/a\    NOCONFIG' \
+    cmake/common/bootstrap.cmake
+
 %build
 %add_optflags -I%_sourcedir/%name-%version/libobs
 %cmake \
@@ -173,7 +177,6 @@ touch plugins/obs-qsv11/CMakeLists.txt
 	-DOBS_COMPILE_DEPRECATION_AS_WARNING=ON \
 	-DENABLE_BROWSER=OFF \
 	-DENABLE_WEBRTC=ON \
-	-DBUILD_VST=OFF \
 	-DENABLE_NEW_MPEGTS_OUTPUT=OFF \
 	-DENABLE_AJA=OFF \
 	-DENABLE_JACK=ON \
@@ -198,7 +201,7 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.*
 %_libdir/obs-scripting/
-%_libdir/obs-plugins
+%_libdir/obs-modules/
 %_datadir/metainfo/*
 
 %files -n libobs
@@ -218,6 +221,11 @@ touch plugins/obs-qsv11/CMakeLists.txt
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Tue Nov 03 2026 Evgeniy Serov <scala@altlinux.org> 33.0.1-alt1
+- New version 33.0.1.
+- Update websocket to 5.7.6.
+- Build with VST support.
+
 * Wed Sep 02 2026 Evgeniy Serov <scala@altlinux.org> 32.2.2-alt1
 - New version 32.2.2.
 - Update websocket to 5.7.4.

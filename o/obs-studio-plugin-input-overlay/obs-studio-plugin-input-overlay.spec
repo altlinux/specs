@@ -3,15 +3,15 @@
 
 Name: obs-studio-plugin-input-overlay
 Summary: Show keyboard, gamepad and mouse input on stream (plugin for OBS studio)
-Version: 5.0.5
-Release: alt2
+Version: 5.1.3
+Release: alt1
 License: GPL-2.0
 Group: Video
-Url: https://github.com/univrsal/input-overlay
+URL: https://github.com/univrsal/input-overlay
+VCS: https://github.com/univrsal/input-overlay
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: obs-studio-plugin-input-overlay-5.0.5-alt-add-sdl-disable-lsx-flag.patch
 
 ExcludeArch: ppc64le
 
@@ -19,13 +19,16 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libobs-devel
+BuildRequires: libSDL3-devel
+BuildRequires: extra-cmake-modules
+BuildRequires: libinput-devel
 BuildRequires: libXtst-devel
 BuildRequires: libxkbcommon-x11-devel
-BuildRequires: libxkbfile-devel
 BuildRequires: libXt-devel
-BuildRequires: libXinerama-devel
+BuildRequires: libXrandr-devel
+BuildRequires: libwayland-client-devel
+BuildRequires: wayland-protocols
 BuildRequires: qt6-base-devel
-BuildRequires: libSDL2-devel
 
 Requires: obs-studio-base
 
@@ -35,26 +38,29 @@ Requires: obs-studio-base
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 rmdir deps/libuiohook
 mv libuiohook deps/ 
 
 %build
-%add_optflags
-%cmake
+%cmake -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
 %cmake_build
 
 %install
 %cmake_install
-mkdir -p %buildroot%_libdir/obs-plugins %buildroot%_datadir/obs/obs-plugins
-mv %buildroot/usr/data/obs-plugins/input-overlay %buildroot%_datadir/obs/obs-plugins
-mv %buildroot/usr/obs-plugins/*/input-overlay.so %buildroot%_libdir/obs-plugins
 
 %files
-%_datadir/obs/obs-plugins/input-overlay
-%_libdir/obs-plugins/input-overlay.so
+%_datadir/obs/obs-modules/plugins/input-overlay/
+%_libdir/obs-modules/plugins/input-overlay.so
+%dir %_libdir/input-overlay
+%_libdir/input-overlay/libuiohook.so
+%_libdir/input-overlay/libuiohook-x11.so
+%_libdir/input-overlay/libuiohook-wayland.so
+%_libdir/input-overlay/libuiohook-xrecord.so
 
 %changelog
+* Tue Nov 03 2026 Evgeniy Serov <scala@altlinux.org> 5.1.3-alt1
+- New version 5.1.3.
+
 * Wed Aug 14 2024 Ivan A. Melnikov <iv@altlinux.org> 5.0.5-alt2
 - Fix fbtbfs on loongarch64 (thx k0tran@).
 
