@@ -29,8 +29,8 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 2.2.7
-Release: alt2
+Version: 2.3.0
+Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
 # %%__strip at the top), so the binary is deliberately without debuginfo: keep
@@ -87,6 +87,11 @@ Patch6: %name-desktop-no-updater.patch
 # at run time into the main chunk - the app directory is assembled without a
 # node_modules tree.
 Patch7: %name-desktop-bundle-runtime-deps.patch
+# Desktop client: run the packaged CLI from the app directory's symlink
+# instead of staging a copy of the binary into the user data directory; the
+# stage cleanup, which sweeps the executable's parent directory, stays away
+# from the app directory for the same reason.
+Patch8: %name-desktop-no-cli-staging.patch
 
 BuildRequires: bun
 # Bun's shell resolves its own executable through /proc; without this the
@@ -132,9 +137,8 @@ Requires: electron >= 42
 
 %description desktop
 %name-desktop is the Electron desktop client of %name. The opencode server
-is the packaged %name binary, which the client resolves and stages on first
-run; it ships the syntax highlighting grammars and shells out to ripgrep
-and git itself.
+is the packaged %name binary, which the client runs in place; it ships the
+syntax highlighting grammars and shells out to ripgrep and git itself.
 
 The client does not update itself: updates arrive with the package.
 
@@ -150,6 +154,7 @@ The client does not update itself: updates arrive with the package.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 # This bunfig only configures `bun test`/dev preloads, which the build does
 # not run.
@@ -365,6 +370,12 @@ fi
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Fri Nov 13 2026 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
+- Update to 2.3.0
+- Stop staging a copy of the CLI binary into the user data directory: the
+  desktop client runs the packaged CLI in place, and the staged copies older
+  releases left behind are cleaned up
+
 * Thu Nov 12 2026 Nazarov Denis <nenderus@altlinux.org> 2.2.7-alt2
 - Embed the web UI into the binary: since 2.x the server has no proxy to the
   upstream web app, and without the embedded assets opencode serve answered
