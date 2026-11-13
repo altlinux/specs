@@ -4,29 +4,21 @@
 
 %def_with check
 
-# %%python3_set_limited_api is not supported yet
-
 Name: python3-module-%pypi_name
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/xxhash/
 VCS: https://github.com/ifduyue/python-xxhash.git
-
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_without_limited_api
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 BuildRequires: libxxhash-devel
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%endif
 
 %description
 xxhash is a Python binding for the xxHash library.
@@ -34,12 +26,9 @@ xxhash is a Python binding for the xxHash library.
 %prep
 %setup
 %patch -p1
-
 # remove bundled libs
 rm -r deps
-
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 # make use of system xxhash library
@@ -52,7 +41,11 @@ export XXHASH_LINK_SO=1
 
 %check
 # skip benchmark and type stub tests
-rm tests/test_benchmark.py tests/test_stubs_pyright.py
+rm tests/test_benchmark.py \
+    tests/test_stubs_pyright.py \
+    tests/test_benchmark_xxh3_short.py \
+    tests/test_benchmark_xxh3_long.py \
+
 # simulate editable install via symlink
 rm -r %mod_name
 ln -s "$(%pyproject_run -- python -P -c 'from pathlib import Path; import %mod_name; print(Path(%mod_name.__file__).parent)')"
@@ -63,6 +56,9 @@ ln -s "$(%pyproject_run -- python -P -c 'from pathlib import Path; import %mod_n
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 13 2026 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
+- 4.0.2 -> 4.1.0
+
 * Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 4.0.2-alt1
 - 4.0.1 -> 4.0.2
 
