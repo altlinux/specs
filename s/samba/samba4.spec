@@ -67,6 +67,13 @@
 %def_with systemd
 %def_enable avahi
 %def_enable spotlight
+%def_with prometheus
+
+%if_with systemd
+%def_with varlink
+%else
+%def_without varlink
+%endif
 
 %ifarch x86_64 aarch64 ppc64le
 %def_with libcephfs
@@ -122,14 +129,14 @@
 %endif
 
 %define talloc_version 2.4.3
-%define tevent_version 0.16.2
-%define tdb_version 1.4.13
+%define tevent_version 0.17.1
+%define tdb_version 1.4.14
 %define ldb_version 2.11.0
 %define lmdb_version 0.9.16
 
 Name:    samba
-Version: 4.22.11
-Release: alt5
+Version: 4.23.13
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -165,7 +172,6 @@ Source200: README.dc
 Source201: README.downgrade
 
 Patch: %rname-%version-alt.patch
-Patch10: samba-grouppwd.patch
 
 Provides: samba4 = %version-%release
 Obsoletes: samba4 < %version-%release
@@ -276,6 +282,8 @@ BuildRequires: python3-module-pyldb-devel
 %{?_enable_avahi:BuildRequires: libavahi-devel}
 %{?_enable_glusterfs:BuildRequires: libglusterfs-api-devel}
 %{?_with_libcephfs:BuildRequires: ceph-devel}
+%{?_with_prometheus:BuildRequires: libevent-devel}
+%{?_with_varlink:BuildRequires: pkgconfig(libvarlink) >= 24}
 
 # Build spotlight without tracker backend if enabled.
 #{?_enable_spotlight:BuildRequires: tracker-devel}
@@ -837,6 +845,14 @@ Requires: samba-libs = %version-%release
 %description dcerpc
 The samba-dcerpc package contains binaries that serve DCERPC over named pipes.
 
+%package prometheus
+Summary: SMB Prometheus exporter
+Group: System/Servers
+Requires: %name = %version-%release
+
+%description prometheus
+Support for exporting metrics via Prometheus
+
 %package ctdb
 Summary: A Clustered Database based on Samba's Trivial Database (TDB)
 Group: System/Servers
@@ -954,7 +970,6 @@ libsamba_util private headers.
 %prep
 %setup -q -n %rname-%version
 %patch -p1
-%patch10 -p1
 
 %if_with separate_heimdal_server
 rm -rf ../%rname-%version-separate-heimdal-server
@@ -962,6 +977,8 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %endif
 
 %build
+# workaround https://gitlab.com/ita1024/waf/-/issues/2472
+export PYTHONARCHDIR=%python3_sitelibdir
 
 %define _talloc_lib ,talloc,pytalloc,pytalloc-util
 %if_without talloc
@@ -1033,6 +1050,7 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 	--private-libraries=%_samba4_private_libraries \\\
 %if_with systemd \
 	--systemd-install-services \\\
+	--with-systemd \\\
 	--with-systemddir=%_unitdir \\\
 %endif \
 %if_with winbind \
@@ -1042,6 +1060,12 @@ cp -a ../%rname-%version ../%rname-%version-separate-heimdal-server
 %endif \
 %if_with testsuite \
 	--enable-selftest \\\
+%endif \
+%if_with prometheus \
+	--with-prometheus-exporter \\\
+%endif \
+%if_with varlink \
+	--with-systemd-userdb \\\
 %endif \
 %if_with profiling_data \
 	--with-profiling-data \\\
@@ -1150,6 +1174,10 @@ chmod 0755 %buildroot%_samba_dc_mod_libdir/bin/samba-tool
 printf "%_sbindir/samba_downgrade_db\t%_samba_dc_mod_libdir/sbin/samba_downgrade_db\t50\n" >> %buildroot%_altdir/samba-heimdal
 chmod 0755 %buildroot%_samba_dc_mod_libdir/sbin/samba_downgrade_db
 
+%if_with prometheus
+printf "%_sbindir/smb_prometheus_endpoint\t%_samba_dc_mod_libdir/sbin/smb_prometheus_endpoint\t50\n" >> %buildroot%_altdir/samba-heimdal
+%endif
+
 mkdir -p %buildroot%_libdir/krb5/plugins/libkrb5
 touch %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 printf "%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so\t%_samba_dc_mod_libdir/krb5/winbind_krb5_locator.so\t50\n" >> %buildroot%_altdir/samba-heimdal
@@ -1190,6 +1218,11 @@ chmod 0755 %buildroot%_samba_mod_libdir/bin/samba-tool
 mv %buildroot%_sbindir/samba_downgrade_db %buildroot%_samba_mod_libdir/sbin/
 printf "%_sbindir/samba_downgrade_db\t%_samba_mod_libdir/sbin/samba_downgrade_db\t20\n" >> %buildroot%_altdir/samba-mit-dc-client
 chmod 0755 %buildroot%_samba_mod_libdir/sbin/samba_downgrade_db
+
+%if_with prometheus
+mv %buildroot%_sbindir/smb_prometheus_endpoint %buildroot%_samba_mod_libdir/sbin/
+printf "%_sbindir/smb_prometheus_endpoint\t%_samba_mod_libdir/sbin/smb_prometheus_endpoint\t20\n" > %buildroot%_altdir/samba-mit-prometheus
+%endif
 
 %endif
 
@@ -1872,6 +1905,8 @@ control role-sambashare enabled
 %_samba_mod_libdir/libndr-samba-private-samba.so
 %_samba_mod_libdir/libndr-samba4-private-samba.so
 %_samba_mod_libdir/libnetif-private-samba.so
+%_samba_mod_libdir/libngtcp2-crypto-gnutls-private-samba.so
+%_samba_mod_libdir/libngtcp2-private-samba.so
 %_samba_mod_libdir/libnpa-tstream-private-samba.so
 %_samba_mod_libdir/libposix-eadb-private-samba.so
 %if_without libwbclient
@@ -1882,6 +1917,7 @@ control role-sambashare enabled
 %_samba_mod_libdir/libsamba-debug-private-samba.so
 %_samba_mod_libdir/libsamba-modules-private-samba.so
 %_samba_mod_libdir/libsamba-security-private-samba.so
+%_samba_mod_libdir/libsamba-security-trusts-private-samba.so
 %_samba_mod_libdir/libsamba-sockets-private-samba.so
 %_samba_mod_libdir/libsamba3-util-private-samba.so
 %_samba_mod_libdir/libsamdb-common-private-samba.so
@@ -1889,7 +1925,6 @@ control role-sambashare enabled
 %_samba_mod_libdir/libserver-id-db-private-samba.so
 %_samba_mod_libdir/libserver-role-private-samba.so
 %_samba_mod_libdir/libshares-private-samba.so
-%_samba_mod_libdir/libsmb-transport-private-samba.so
 %_samba_mod_libdir/libsmbclient-raw-private-samba.so
 %_samba_mod_libdir/libsmbd-shim-private-samba.so
 %_samba_mod_libdir/libsmbpasswdparser-private-samba.so
@@ -1948,6 +1983,7 @@ control role-sambashare enabled
 
 %_samba_mod_libdir/libprinter-driver-private-samba.so
 %_samba_mod_libdir/libprinting-migrate-private-samba.so
+%_samba_mod_libdir/libquic-private-samba.so
 %_samba_mod_libdir/libregistry-private-samba.so
 %_samba_mod_libdir/libsmbldaphelper-private-samba.so
 %_samba_mod_libdir/libsmbd-base-private-samba.so
@@ -2312,13 +2348,17 @@ control role-sambashare enabled
 %if_enabled etcd_mutex
 %files ctdb-etcd-mutex
 %_libexecdir/ctdb/ctdb_etcd_lock
+%if_with doc
 %_man7dir/ctdb-etcd.7*
+%endif #doc
 %endif
 
 %if_enabled ceph_mutex
 %files ctdb-ceph-mutex
 %_libexecdir/ctdb/ctdb_mutex_ceph_rados_helper
+%if_with doc
 %_man7dir/ctdb_mutex_ceph_rados_helper.7*
+%endif #doc
 %endif
 %endif #clustering_support
 
@@ -2327,6 +2367,19 @@ control role-sambashare enabled
 %files util-private-headers
 %dir %_includedir/samba-4.0/private
 %_includedir/samba-4.0/private
+
+%if_with prometheus
+%files prometheus
+%if_with separate_heimdal_server
+%_altdir/samba-mit-prometheus
+%_samba_mod_libdir/sbin/smb_prometheus_endpoint
+%else
+%_sbindir/smb_prometheus_endpoint
+%endif
+%if_with doc
+%_man8dir/smb_prometheus_endpoint.8*
+%endif #doc
+%endif
 
 %if_with ldb
 %files -n libldb
@@ -2380,6 +2433,19 @@ control role-sambashare enabled
 %endif
 
 %changelog
+* Fri Nov 06 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.23.13-alt1
+- Update to security release of Samba 4.23
+- Major changes from upstream:
+  + SMB3 over QUIC support.
+  + SMB3 Unix Extensions enabled by default.
+  + Modern write time update logic matching Windows 10/Server 2016.
+  + Per-share profiling stats.
+  + smb_prometheus_endpoint utility for metrics export.
+  + samba-tool domain backup --no-secrets option.
+- Systemd Integration: Added Varlink service support in winbindd for modern
+  systemd-userdbd integration (allows user/group resolution via userdbctl
+  without nss_winbind.so).
+
 * Sat Oct 31 2026 Evgeny Sinelnikov <sin@altlinux.org> 4.22.11-alt5
 - Made the libgse-private-samba.so private ABI visible to RPM via
   find-provides on %%_samba_mod_libdir, without publishing other

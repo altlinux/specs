@@ -4,8 +4,8 @@
 %global talloc_version 2.4.3
 
 Name: libtevent
-Version: 0.16.2
-Release: alt1.1
+Version: 0.17.1
+Release: alt1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -18,11 +18,13 @@ BuildRequires: libtalloc-devel >= %talloc_version
 BuildRequires: zlib-devel
 BuildRequires: libcmocka-devel >= 1.1.3
 
-BuildRequires: socket_wrapper >= 1.3.4
+BuildRequires: socket_wrapper >= 1.5.0
 BuildRequires: nss_wrapper >= 1.1.13
 BuildRequires: resolv_wrapper >= 1.1.8
 BuildRequires: uid_wrapper >= 1.2.7
-BuildRequires: pam_wrapper >= 1.1.4
+BuildRequires: pam_wrapper >= 1.1.8
+
+BuildRequires: libngtcp2-devel >= 1.12
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -58,6 +60,8 @@ Python3 bindings for libtevent
 %patch -p1
 
 %build
+# workaround https://gitlab.com/ita1024/waf/-/issues/2472
+export PYTHONARCHDIR=%python3_sitelibdir
 %undefine _configure_gettext
 %configure \
 	--disable-rpath \
@@ -90,6 +94,9 @@ make test < /dev/null
 %python3_sitelibdir/__pycache__/tevent.*
 
 %changelog
+* Wed Sep 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 0.17.1-alt1
+- New version for samba-4.23
+
 * Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 0.16.2-alt1.1
 - NMU: pack *.abi3.so extension module instead of *.cpython-*.so
 

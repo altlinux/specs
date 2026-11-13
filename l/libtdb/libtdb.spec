@@ -3,8 +3,8 @@
 %def_with check
 
 Name: libtdb
-Version: 1.4.13
-Release: alt1.1
+Version: 1.4.14
+Release: alt1
 
 Summary: A trivial database system
 License: LGPLv3+
@@ -92,6 +92,8 @@ Python3 bindings for libtdb
 
 %build
 %undefine _configure_gettext
+# workaround https://gitlab.com/ita1024/waf/-/issues/2472
+export PYTHONARCHDIR=%python3_sitelibdir
 %configure \
            --disable-rpath \
            --bundled-libraries=NONE \
@@ -126,6 +128,9 @@ make test
 %python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
 
 %changelog
+* Wed Sep 02 2026 Evgeny Sinelnikov <sin@altlinux.org> 1.4.14-alt1
+- Update to release for samba-4.23
+
 * Mon Jul 06 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.13-alt1.1
 - NMU: pack *.abi3.so extension module instead of *.cpython-*.so
 
