@@ -1,6 +1,6 @@
 Name: poweroff-notify-daemon
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt3
 
 Summary: Daemon for scheduled PC shutdown with GUI notifications
 Summary(ru_RU.UTF-8): Демон запланированного выключения ПК с GUI-уведомлениями
@@ -147,6 +147,20 @@ fi
 %_pixmapsdir/poweroff-daemon.png
 
 %changelog
+* Fri Nov 13 2026 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt3
+- New version.
+
+* Thu Nov 12 2026 Anton Shevtsov <shevtsov.anton@gmail.com> 1.0.2-alt2
+- Restore 1.0.1 deadline recalculation on manual and periodic config reload
+- Correct date/time wording and the final shutdown notification
+
+* Wed Nov 11 2026 Anton Shevtsov <shevtsov.anton@gmail.com> 1.0.2-alt1
+- Fix notification action callbacks to accept user_data
+- Keep warning notifications alive until closed so DBus actions are delivered
+- Preserve extensions on reload unless the effective schedule changes
+- Validate configuration atomically and support inline comments
+- Replace blocking final delay with a cancellable GLib timer
+
 * Mon Oct 12 2026 Andrey Cherepanov <cas@altlinux.org> 1.0.1-alt2
 - Build for Sisyphus.
 - Remove gtk-update-icon-cache, as this is handled by a filetrigger.
@@ -155,7 +169,7 @@ fi
 - Fix wrong icons
 - Add GROUP support
  * [group:name] — domain group rules (override default)
- 
+
 * Thu Oct 08 2026 Anton Shevtsov <shevtsov.anton@gmail.com> 1.0.0-alt1
 - Initial release
 - Implemented GUI daemon with AyatanaAppIndicator3 support
