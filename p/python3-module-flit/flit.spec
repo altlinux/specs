@@ -1,14 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name flit
-%define pypi_name_core flit-core
-# tomli is required for Python < 3.11, it's debundled and the metadata can't be
-# patched
-%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
@@ -19,70 +15,26 @@ VCS: https://github.com/pypa/flit
 BuildArch: noarch
 
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-# flit and flit-core are built from the same repo
-%add_pyproject_deps_build_filter %pypi_name_core
-%pyproject_builddeps_build
-%if_with check
-%add_pyproject_deps_check_filter %pypi_name_core
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 Flit is a simple way to put Python packages and modules on PyPI. It tries to
 require less thought about packaging and help you avoid common mistakes
 
-%package -n python3-module-%pypi_name_core
-Summary: Distribution-building parts of Flit
-License: BSD
-Group: Development/Python3
-# previously flit_core was a part of flit
-Conflicts: python3-module-flit <= 3.6.0
-%py3_provides %pypi_name_core
-# required for older branches having Python < 3.11
-%if %tomli
-Requires: python3-module-tomli
-%endif
-
-%description -n python3-module-%pypi_name_core
-Distribution-building parts of Flit.
-
 %prep
 %setup
 %autopatch -p1
-# debundle tomli, required on Python < 3.11
-rm -r flit_core/flit_core/vendor/
-export PYTHONPATH=$(pwd)/flit_core
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+%pyproject_setup_deps
 
 %build
-# build PEP517 backend
-pushd flit_core
-%pyproject_build
-popd
-
-# actually it should be built with self-hosted backend
-export PYTHONPATH=$(pwd)/flit_core
 %pyproject_build
 
 %install
-pushd flit_core
-%pyproject_install
-popd
 %pyproject_install
 
 %check
-# build backend is required in subprocesses
-export PYTHONPATH=$(pwd)/flit_core
 %pyproject_run_pytest -ra -Wignore
 
 %files
@@ -90,11 +42,10 @@ export PYTHONPATH=$(pwd)/flit_core
 %python3_sitelibdir/flit/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
-%files -n python3-module-%pypi_name_core
-%python3_sitelibdir/flit_core/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
-
 %changelog
+* Fri Nov 13 2026 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
+- 4.1.0 -> 4.2.0
+
 * Wed Sep 30 2026 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
 - 4.0.2 -> 4.1.0
 
