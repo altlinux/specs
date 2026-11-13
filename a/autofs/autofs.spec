@@ -2,13 +2,14 @@
 %def_with rpcgen
 
 Name: autofs
-Version: 5.1.9
-Release: alt5
+Version: 5.2.0
+Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
 Group: System/Kernel and hardware
-Url: ftp://ftp.kernel.org/pub/linux/daemons/autofs/v4/
+URL: https://www.kernel.org/pub/linux/daemons/autofs/v5/
+VCS: https://git.kernel.org/pub/scm/linux/storage/autofs/autofs.git
 
 Source: %name-%version.tar
 
@@ -143,6 +144,9 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.2.0-alt1
+- 5.2.0 released
+
 * Sat Nov 07 2026 Fr. Br. George <george@altlinux.org> 5.1.9-alt5
 - allow ipv6 link local with proper scope ID
 
