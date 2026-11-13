@@ -1,7 +1,7 @@
 %global import_path github.com/mudler/LocalAI
 
 Name: localai
-Version: 4.11.0
+Version: 4.12.1
 Release: alt1
 
 Summary: Open-source AI engine
@@ -19,6 +19,7 @@ Source2: launcher.png
 
 Patch0: %name-%version.patch
 Patch1: localai-4.6.2-alt1-prepare-for-alt.patch
+Patch2: localai-4.12.1-alt-fix-test.patch
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
@@ -76,6 +77,9 @@ export IGNORE_SOURCES=1
 
 
 %changelog
+* Tue Oct 27 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.12.1-alt1
+- Updated to 4.12.1.
+
 * Tue Oct 13 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 4.11.0-alt1
 - Updated to 4.11.0.
 
