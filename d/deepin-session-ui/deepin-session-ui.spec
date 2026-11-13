@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 6.0.50
+Version: 6.0.51
 Release: alt1
 
 Summary: Deepin desktop-environment - Session UI module
@@ -110,6 +110,9 @@ export READELF="llvm-readelf"
 %_datadir/dsg/configs/org.deepin.dde.session.ui/org.deepin.dde.session.ui.json
 
 %changelog
+* Fri Nov 13 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.51-alt1
+- New version 6.0.51.
+
 * Wed Oct 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.50-alt1
 - New version 6.0.50.
 
