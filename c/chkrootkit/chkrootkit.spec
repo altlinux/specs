@@ -1,6 +1,6 @@
 Name: chkrootkit
 Version: 0.58b
-Release: alt2
+Release: alt3
 
 Summary: Check rootkits
 Summary(ru_RU.UTF-8): Поиск троянских коней и закладок в программах
@@ -13,6 +13,7 @@ Source: ftp://ftp.pangeia.com.br/pub/seg/pac/%name-%version.tar.gz
 Patch0: chkrootkit-alt-libpath.patch
 
 BuildRequires: glibc-devel-static
+BuildRequires: libatomic-devel-static
 
 Requires: binutils coreutils findutils sed gawk grep net-tools procps crontabs
 Requires: /usr/bin/ssh
@@ -39,7 +40,7 @@ Chkrootkit является набором утилит для поиска тр
 
 %prep
 %setup
-%patch0 -p2
+%autopatch -p2
 subst 's|@CHKROOTKIT_DIR@|%_libdir/%name|' %name
 
 %build
@@ -49,7 +50,7 @@ make sense CC="%{__cc} $RPM_OPT_FLAGS -D_FILE_OFFSET_BITS=64" CFLAGS="$CFLAGS -s
 install -Dpm0755 chkrootkit %buildroot%_sbindir/chkrootkit
 
 for p in \
-	check_wtmpx  \
+    check_wtmpx  \
     chkdirs  \
     chklastlog  \
     chkproc  \
@@ -58,7 +59,7 @@ for p in \
     ifpromisc  \
     strings-static \
     ; do
-	install -pD -m 755 "$p" "%buildroot%_libdir/%name/$p"
+        install -pD -m 755 "$p" "%buildroot%_libdir/%name/$p"
 done
 
 mkdir -p %buildroot%cron_daily
@@ -73,6 +74,9 @@ __EOF__
 %attr(700,root,root) %cron_daily/%name
 
 %changelog
+* Fri Nov 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.58b-alt3
+- NMU: fix FTBFS with gcc16.
+
 * Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 0.58b-alt2
 - FTBFS: built with -std=gnu17.
 
