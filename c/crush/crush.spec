@@ -8,7 +8,7 @@
 %define go_builddir .build
 
 Name: crush
-Version: 0.100.0
+Version: 0.101.0
 Release: alt1
 Summary: The glamourous AI coding agent for your favourite terminal
 License: FSL-1.1-MIT
@@ -77,6 +77,9 @@ cd %go_builddir/src/%import_path/
 %_man1dir/%name.1*
 
 %changelog
+* Fri Nov 13 2026 Ivan A. Melnikov <iv@altlinux.org> 0.101.0-alt1
+- 0.101.0
+
 * Thu Nov 05 2026 Ivan A. Melnikov <iv@altlinux.org> 0.100.0-alt1
 - 0.100.0
 
