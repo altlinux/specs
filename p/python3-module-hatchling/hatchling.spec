@@ -3,7 +3,7 @@
 %define mod_name %pypi_name
 
 Name: python3-module-%pypi_name
-Version: 1.32.4
+Version: 1.33.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -12,14 +12,10 @@ Url: https://pypi.org/project/hatchling
 VCS: https://github.com/pypa/hatch
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: pyproject_deps.json
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -27,9 +23,7 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
-
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -46,6 +40,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 13 2026 Stanislav Levin <slev@altlinux.org> 1.33.0-alt1
+- 1.32.4 -> 1.33.0
+
 * Thu Oct 01 2026 Stanislav Levin <slev@altlinux.org> 1.32.4-alt1
 - 1.32.0 -> 1.32.4
 
