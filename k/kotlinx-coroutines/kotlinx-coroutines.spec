@@ -2,12 +2,12 @@
 
 Name: kotlinx-coroutines
 Version: 1.11.0
-Release: alt1
+Release: alt2
 
-Summary: Kotlin coroutines JVM runtime, test scheduler and Swing dispatcher
+Summary: Kotlin coroutines JVM runtime and integrations
 License: Apache-2.0
 Group: Development/Java
-Url: https://github.com/Kotlin/kotlinx.coroutines
+URL: https://github.com/Kotlin/kotlinx.coroutines
 VCS: https://github.com/Kotlin/kotlinx.coroutines.git
 BuildArch: noarch
 
@@ -23,20 +23,36 @@ BuildRequires: kotlin-gradle-plugin
 BuildRequires: kotlin-maven
 BuildRequires: rpm-build-java
 BuildRequires: xgradle
+BuildRequires: mvn(org.ow2.asm:asm)
+BuildRequires: mvn(org.ow2.asm:asm-commons)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-reflect)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-stdlib)
 BuildRequires: mvn(org.jetbrains.kotlinx:atomicfu-jvm)
-BuildRequires: mvn(org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm)
 BuildRequires: mvn(org.jetbrains:annotations)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(net.bytebuddy:byte-buddy)
+BuildRequires: mvn(net.bytebuddy:byte-buddy-agent)
+BuildRequires: mvn(net.java.dev.jna:jna)
+BuildRequires: mvn(net.java.dev.jna:jna-platform)
+BuildRequires: mvn(io.projectreactor.tools:blockhound)
+BuildRequires: mvn(org.hamcrest:hamcrest)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.jetbrains.kotlin:kotlin-test-junit)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires: mvn(org.junit.platform:junit-platform-testkit)
+BuildRequires: mvn(com.google.code.gson:gson)
+BuildRequires: mvn(ch.qos.logback:logback-classic)
 
 # Supersede bootstrap metadata to avoid duplicate XMvn SYSTEM providers.
 Provides: gradle-kotlinx-coroutines = %version-%release
 Obsoletes: gradle-kotlinx-coroutines
 
 %description
-Kotlin coroutines JVM runtime, virtual-time test scheduler and Swing
-main dispatcher. Built from upstream sources using system Kotlin and
-AtomicFU. The IntelliJ fork is available in a separate subpackage.
+Kotlin coroutines JVM runtime, virtual-time test scheduler, Swing
+main dispatcher, SLF4J context integration and debug instrumentation.
+Built from upstream sources using system Kotlin and AtomicFU.
+The IntelliJ fork is available in a separate subpackage.
 
 %package intellij
 Summary: JetBrains patched coroutines for IntelliJ threading integration
@@ -54,18 +70,16 @@ per application class loader.
 %patch -p1
 cp -a alt-jvm kotlinx-coroutines-intellij-%version/
 # Android lint annotations are unnecessary for the desktop JVM build.
+agent_dir=kotlinx-coroutines-intellij-%version
 sed -i '/import android.annotation[.]/d; /@SuppressLint/d' \
-    kotlinx-coroutines-intellij-%version/kotlinx-coroutines-core/jvm/src/debug/internal/AgentPremain.kt
+    "$agent_dir/kotlinx-coroutines-core/jvm/src/debug/internal/AgentPremain.kt"
 
 %build
-# Rebuilds must not register stale publications from an earlier attempt.
-rm -rf "$HOME/.m2/repository/org/jetbrains/kotlinx/kotlinx-coroutines-"*
-rm -rf "$HOME/.m2/repository/org/jetbrains/intellij/deps/kotlinx"
-%gradle_publish -p alt-jvm --no-daemon --max-workers=4 \
+%gradle_publish -Dorg.gradle.java.home=%_jvmdir/java-21-openjdk -p alt-jvm --no-daemon \
     -PreleaseVersion=%version \
     -Pkotlin.compiler.execution.strategy=in-process
-%gradle_publish -p kotlinx-coroutines-intellij-%version/alt-jvm \
-    --no-daemon --max-workers=4 \
+%gradle_publish -Dorg.gradle.java.home=%_jvmdir/java-21-openjdk -p kotlinx-coroutines-intellij-%version/alt-jvm \
+    --no-daemon \
     -Pkotlin.compiler.execution.strategy=in-process
 
 %install
@@ -87,16 +101,27 @@ rm -rf "$HOME/.m2/repository/org/jetbrains/intellij/deps/kotlinx"
 artifacts=kotlinx-coroutines-core-jvm-
 artifacts="$artifacts,kotlinx-coroutines-test-jvm-"
 artifacts="$artifacts,kotlinx-coroutines-swing-"
+artifacts="$artifacts,kotlinx-coroutines-slf4j-,kotlinx-coroutines-debug-"
 %gradle_register --artifacts="$artifacts"
 %gradle_install
+
+%check
+%gradle_check -Dorg.gradle.java.home=%_jvmdir/java-21-openjdk \
+    -p alt-jvm --no-daemon -PreleaseVersion=%version \
+    -Pkotlin.compiler.execution.strategy=in-process
+%gradle_check -Dorg.gradle.java.home=%_jvmdir/java-21-openjdk \
+    -p kotlinx-coroutines-intellij-%version/alt-jvm --no-daemon \
+    -Pkotlin.compiler.execution.strategy=in-process
 
 %files -f .mfiles
 %doc LICENSE.txt
 
 %files intellij -f .mfiles-intellij
-%doc kotlinx-coroutines-intellij-%version/LICENSE.txt
 %doc kotlinx-coroutines-intellij-%version/IntelliJ-patches.md
 
 %changelog
+* Wed Nov 04 2026 Ivan Khanas <xeno@altlinux.org> 1.11.0-alt2
+- Build SLF4J context integration and debug instrumentation.
+
 * Tue Oct 27 2026 Ivan Khanas <xeno@altlinux.org> 1.11.0-alt1
 - Initial build for ALT.

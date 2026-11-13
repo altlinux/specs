@@ -1,30 +1,33 @@
-Name:           guava
-Version:        33.5.0
-Release:        alt1
+%define _unpackaged_files_terminate_build 1
 
-Summary:        Google core libraries for Java
-License:        Apache-2.0 AND CC0-1.0
-Group:          Development/Java
-URL:            https://guava.dev
-VCS:            https://github.com/google/guava
-BuildArch:      noarch
+Name: guava
+Version: 33.8.0
+Release: alt1
 
-Source0:        %name-%version.tar
+Summary: Google core libraries for Java
+License: Apache-2.0 AND CC0-1.0
+Group: Development/Java
+URL: https://guava.dev
+VCS: https://github.com/google/guava
+BuildArch: noarch
 
-Patch0:         0001-remove-missing-dependenvies-frome-module-info.patch
+Source0: %name-%version.tar
+Patch0: guava-java21-test-compat.patch
 
-BuildRequires(pre): maven-local
-BuildRequires:  jpackage-default
-
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(com.google.errorprone:error_prone_core)
-BuildRequires:  mvn(com.google.errorprone:error_prone_annotations)
-BuildRequires:  mvn(org.jspecify:jspecify)
-BuildRequires:  mvn(com.google.truth:truth)
-BuildRequires:  mvn(com.google.jimfs:jimfs)
-BuildRequires:  mvn(org.mockito:mockito-core)
-BuildRequires:  jurand
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
+BuildRequires: junit
+BuildRequires: mvn(com.google.code.findbugs:jsr305)
+BuildRequires: mvn(com.google.testparameterinjector:test-parameter-injector)
+BuildRequires: mvn(com.google.truth:truth)
+BuildRequires: mvn(com.google.jimfs:jimfs)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(com.google.errorprone:error_prone_annotations)
+BuildRequires: mvn(com.google.j2objc:j2objc-annotations)
+BuildRequires: mvn(org.jspecify:jspecify)
 
 %description
 Guava is a set of core Java libraries from Google that includes new collection
@@ -34,8 +37,8 @@ It is widely used on most Java projects within Google, and widely used by many
 other companies as well.
 
 %package testlib
-Group:          Development/Java
-Summary:        The guava-testlib artifact
+Group: Development/Java
+Summary: The guava-testlib artifact
 
 %description testlib
 Guava testlib is a set of Java classes for more convenient unit testing.
@@ -44,7 +47,11 @@ Guava testlib is a set of Java classes for more convenient unit testing.
 %setup
 %autopatch -p1
 
-%pom_disable_module guava-tests
+# Include the real internal runtime module before recursive POM cleanup.
+%pom_xpath_inject pom:modules "<module>futures/failureaccess</module>"
+%pom_xpath_inject pom:parent "<relativePath>../..</relativePath>" futures/failureaccess
+%pom_xpath_set pom:parent/pom:version %{version}-jre futures/failureaccess
+
 %pom_disable_module guava-gwt
 
 %pom_remove_plugin -r :central-publishing-maven-plugin
@@ -55,41 +62,43 @@ Guava testlib is a set of Java classes for more convenient unit testing.
 %pom_remove_plugin -r :maven-enforcer-plugin
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
 
+# Caliper is unavailable in Sisyphus; omit benchmarks, retaining unit tests.
+%pom_remove_dep com.google.caliper:caliper guava-tests
+%pom_remove_plugin org.codehaus.mojo:build-helper-maven-plugin guava-tests
+
 %pom_remove_dep -r :listenablefuture
-%pom_remove_dep -r :j2objc-annotations
 
 %pom_xpath_remove pom:jdkToolchain
 
 %pom_xpath_remove pom:annotationProcessorPaths
 sed -i /Xplugin:ErrorProne/d pom.xml
 
-# Fix with missing j2objc dependency
-jurand -i -s -a guava guava-testlib \
-  -p com[.]google[.]j2objc[.]annotations[.] \
-  -m com[.]google[.].*[.]annotations \
-
-%pom_xpath_inject pom:modules "<module>futures/failureaccess</module>"
-%pom_xpath_inject pom:parent "<relativePath>../..</relativePath>" futures/failureaccess
-%pom_xpath_set pom:parent/pom:version %{version}-jre futures/failureaccess
-
 %mvn_package :guava-parent guava
 %mvn_package :failureaccess guava
 
 %mvn_package :guava-bom __noinstall
+%mvn_package :guava-tests __noinstall
 %mvn_package :guava:module: __noinstall
 
 %build
-%mvn_build -f -s -j
+# Large Surefire reports need more heap in the 32-bit Maven process.
+if [ "$(getconf LONG_BIT)" = 32 ]; then
+    export MAVEN_OPTS="${MAVEN_OPTS:+$MAVEN_OPTS }-Xmx2g"
+fi
+%mvn_build -s -j
 
 %install
 %mvn_install
 
 %files -f .mfiles-guava
-%doc CONTRIBUTORS LICENSE *.md
+%doc LICENSE
 
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 33.8.0-alt1
+- New version.
+
 * Fri Feb 27 2026 Evgeniy Serov <scala@altlinux.org> 33.5.0-alt1
 - Updated to 33.5.0.
 

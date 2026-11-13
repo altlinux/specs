@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: checker-framework
-Version: 3.52.0
-Release: alt3
+Version: 4.4.0
+Release: alt1
+%global framework_version %version
 
 Summary: A powerful framework for extending the Java type system
 License: GPL-2.0 WITH Classpath-exception-2.0 AND MIT
 Group: Development/Java
-URL: https://checkerframework.org
+URL: http://checkerframework.org
 VCS: https://github.com/typetools/checker-framework.git
 BuildArch: noarch
 
@@ -18,16 +19,16 @@ Patch0: %name-%version-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: rpm-build-java-osgi
-BuildRequires: java-17-openjdk-devel
+BuildRequires: java-21-openjdk-devel
 BuildRequires: xgradle
 BuildRequires: shadow-gradle-plugin
-BuildRequires: classgraph
+BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: plumelib-reflection-util
+BuildRequires: mvn(org.plumelib:javac-parse)
 BuildRequires: plumelib-hashmap-util
-BuildRequires: plumelib-options
 BuildRequires: plumelib-plume-util
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: graphviz
 
 %description
 Checker Framework enhances Java's type system to make it more powerful and
@@ -59,7 +60,7 @@ BuildArch: noarch
 
 %description -n checker-javacutil
 Utility classes that help the Checker Framework interact with javac.
-This package contains shared utilities used by Checker Framework components.
+This package contains shared utilities used by various Checker Framework components.
 
 %package -n checker-dataflow
 Summary: Dataflow analysis framework for Checker Framework
@@ -114,6 +115,7 @@ Checker Framework components.
 
 %package -n checker-compat-qual
 Version: 2.5.6
+Release: alt4
 License: MIT
 Summary: Legacy nullness compatibility annotations for Checker Framework
 Group: Development/Java
@@ -125,13 +127,15 @@ distinct Java namespace and coexist with current Checker Framework qualifiers.
 %prep
 %setup
 %autopatch -p1
-# This buildSrc only configures the unused upstream formatting plugin.
+# This buildSrc contains only the unused upstream Spotless formatting plugin.
 mv buildSrc buildSrc.formatting
 mkdir compat-src
 (cd compat-src && jar xf %SOURCE1)
 
 %build
-%gradle_publish
+%gradle_publish -PreleaseVersion=%framework_version \
+    -Dorg.gradle.java.home=%_jvmdir/java-21-openjdk
+
 mkdir compat-classes
 find compat-src -name '*.java' -print | sort > compat-sources.list
 javac --release 8 -encoding UTF-8 -d compat-classes @compat-sources.list
@@ -140,24 +144,27 @@ jar --create --file checker-compat-qual.jar -C compat-classes .
 
 %install
 %gradle_register
+
 %mvn_package org.checkerframework:checker-qual checker-qual
 %mvn_package org.checkerframework:javacutil checker-javacutil
 %mvn_package org.checkerframework:dataflow checker-dataflow
 %mvn_package org.checkerframework:dataflow-shaded checker-dataflow-shaded
 %mvn_package org.checkerframework:dataflow-nullaway checker-dataflow-nullaway
-%mvn_package org.checkerframework:dataflow-errorprone \
-    checker-dataflow-errorprone
+%mvn_package org.checkerframework:dataflow-errorprone checker-dataflow-errorprone
 %mvn_package org.checkerframework:checker-util checker-util
 %mvn_package org.checkerframework:checker-compat-qual checker-compat-qual
+
 %gradle_install
 
 %check
-%gradle_check
+%gradle_check -PreleaseVersion=%framework_version \
+    -Dorg.gradle.java.home=%_jvmdir/java-21-openjdk
 
 %files -n checker-qual -f .mfiles-checker-qual
-%doc LICENSE.txt
+%doc checker-qual/LICENSE.txt
 
 %files -n checker-javacutil -f .mfiles-checker-javacutil
+%doc LICENSE.txt
 
 %files -n checker-dataflow -f .mfiles-checker-dataflow
 
@@ -168,10 +175,14 @@ jar --create --file checker-compat-qual.jar -C compat-classes .
 %files -n checker-dataflow-errorprone -f .mfiles-checker-dataflow-errorprone
 
 %files -n checker-util -f .mfiles-checker-util
+%doc checker-util/LICENSE.txt
 
 %files -n checker-compat-qual -f .mfiles-checker-compat-qual
 
 %changelog
+* Wed Nov 11 2026 Ivan Khanas <xeno@altlinux.org> 4.4.0-alt1
+- New version.
+
 * Wed Nov 04 2026 Ivan Khanas <xeno@altlinux.org> 3.52.0-alt3
 - Add legacy compatibility annotations and split Maven metadata by package.
 

@@ -1,34 +1,30 @@
-%define _fontsdir %_datadir/fonts
-
-%global fontname fontawesome-web
+%define _unpackaged_files_terminate_build 1
+%define fontname fontawesome-web
 
 Name: fonts-font-awesome-web
-Version: 6.7.2
+Version: 7.3.1
 Release: alt1
+
 Summary: Iconic font set, web files
-Group: System/Fonts/True type
 License: OFL-1.1 and MIT and CC-BY-4.0
+Group: System/Fonts/True type
 URL: https://fontawesome.com
+VCS: https://github.com/FortAwesome/Font-Awesome.git
+BuildArch: noarch
+
+Source: %fontname-%version.tar
+
+BuildRequires(pre): rpm-macros-nodejs
+BuildRequires: rpm-build-nodejs
+BuildRequires: node
 
 Provides: fonts-ttf-%fontname = %EVR
 Obsoletes: fonts-ttf-%fontname < %EVR
-
 Provides: fonts-web-%fontname = %EVR
 Obsoletes: fonts-web-%fontname = %EVR
 
-# https://use.fontawesome.com/releases/v%version/fontawesome-free-%version-web.zip
-Source0: %fontname-%version.tar
-
-BuildArch: noarch
-
 %description
-Font Awesome gives you scalable vector icons that can instantly be
-customized a.. size, color, drop shadow, and anything that can be done with the
-power of CSS.
-
-This package contains CSS, SCSS and LESS style files as well as Web Open Font
-Format version 2, Embedded OpenType and SVG font files which are
-typically used on the web.
+Font Awesome provides scalable vector icons with CSS, SCSS and web fonts.
 
 %package compat
 Summary: Iconic font set, v4/v5 compatible files
@@ -36,81 +32,77 @@ Group: System/Fonts/True type
 Requires: %name = %EVR
 
 %description compat
-Font Awesome gives you scalable vector icons that can instantly be
-customized a.. size, color, drop shadow, and anything that can be done with the
-power of CSS.
-
-This package contains v4/v5 compatible shims to ease upgrade from previous
-versions.
+Compatibility CSS, SCSS and web fonts for older Font Awesome styles.
 
 %package -n fonts-svg-%fontname
-Summary: Iconic font set, svg files
+Summary: Iconic font set, SVG files
 Group: System/Fonts/True type
-Requires: %name = %EVR
 
 %description -n fonts-svg-%fontname
-Font Awesome gives you scalable vector icons that can instantly be
-customized a.. size, color, drop shadow, and anything that can be done with the
-power of CSS.
-
-This package contains CSS, SCSS and LESS style files as well as Web Open Font
-Format version 2, Embedded OpenType and SVG font files which are
-typically used on the web.
+SVG icons, sprites and SVG object definitions from Font Awesome Free.
 
 %package -n javascript-%fontname
-Summary: Iconic font set, js files
-Group: System/Fonts/True type
-Requires: fonts-svg-%fontname = %EVR
-
+Summary: Font Awesome JavaScript and npm modules
+Group: Development/Other
 Provides: fonts-js-%fontname = %EVR
 Obsoletes: fonts-js-%fontname < %EVR
 
 %description -n javascript-%fontname
-Font Awesome gives you scalable vector icons that can instantly be
-customized a.. size, color, drop shadow, and anything that can be done with the
-power of CSS.
-
-This package contains JS which can be used together with SVG for people who
-prefer to use SVGs to display icons. People who want to use advanced features
-like Power Transforms.
+Font Awesome browser JavaScript and the complete official npm modules,
+including SVG core, common types and the free icon definitions.
 
 %prep
 %setup -q -n %fontname-%version
 
 %install
-mkdir -p %buildroot%_datadir/%name/{webfonts,js,css,less,scss,sprites}
-mkdir -p %buildroot%_datadir/%name/svgs/{brands,regular,solid}
-for d in webfonts js css less scss svgs/brands svgs/regular svgs/solid sprites; do
-install -m0644 $d/* %buildroot%_datadir/%name/$d/
+install -d %buildroot%_datadir/%name
+for d in webfonts js css scss svgs svgs-full sprites sprites-full \
+    svg-objects svg-full-objects; do
+    cp -a "$d" %buildroot%_datadir/%name/
 done
+install -d %buildroot%nodejs_sitelib/@fortawesome
+cp -a js-packages/@fortawesome/* %buildroot%nodejs_sitelib/@fortawesome/
+# The complete license is installed once in the main package.
+rm %buildroot%nodejs_sitelib/@fortawesome/*/LICENSE.txt
+rm %buildroot%nodejs_sitelib/@fortawesome/*/README.md
 
 %files
 %doc LICENSE.txt
-%_datadir/%name
+%dir %_datadir/%name
+%_datadir/%name/css
+%_datadir/%name/scss
+%_datadir/%name/webfonts
 %exclude %_datadir/%name/css/v4-*
 %exclude %_datadir/%name/css/v5-*
-%exclude %_datadir/%name/less/v4-*
 %exclude %_datadir/%name/scss/v4-*
 %exclude %_datadir/%name/webfonts/fa-v4*
-%exclude %_datadir/%name/js
-%exclude %_datadir/%name/svgs
-%exclude %_datadir/%name/sprites
 
 %files compat
 %_datadir/%name/css/v4-*
 %_datadir/%name/css/v5-*
-%_datadir/%name/less/v4-*
 %_datadir/%name/scss/v4-*
 %_datadir/%name/webfonts/fa-v4*
 
 %files -n fonts-svg-%fontname
+%dir %_datadir/%name
 %_datadir/%name/svgs
+%_datadir/%name/svgs-full
 %_datadir/%name/sprites
+%_datadir/%name/sprites-full
+%_datadir/%name/svg-objects
+%_datadir/%name/svg-full-objects
 
 %files -n javascript-%fontname
+%dir %_datadir/%name
+%dir %nodejs_sitelib
 %_datadir/%name/js
+%dir %nodejs_sitelib/@fortawesome
+%nodejs_sitelib/@fortawesome/*
 
 %changelog
+* Wed Nov 11 2026 Ivan Khanas <xeno@altlinux.org> 7.3.1-alt1
+- New version.
+
 * Tue Apr 21 2026 L.A. Kostis <lakostis@altlinux.ru> 6.7.2-alt1
 - 6.7.2.
 

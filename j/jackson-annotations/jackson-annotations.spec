@@ -1,26 +1,26 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jackson-annotations
-Version: 2.22
+Version: 2.23
 Release: alt1
 
 Summary: Core annotations for Jackson data processor
 License: Apache-2.0
 Group: Development/Java
-Url: https://github.com/FasterXML/jackson-annotations
-Vcs: https://github.com/FasterXML/jackson-annotations.git
-BuildArch: noarch
+URL: https://github.com/FasterXML/jackson-annotations
+VCS: https://github.com/FasterXML/jackson-annotations.git
 
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-java
-BuildRequires: jpackage-default
+BuildRequires: java-17-openjdk-devel
 BuildRequires: maven-local
-
-BuildRequires: jackson-parent
-BuildRequires: junit5
+BuildRequires: mvn(com.fasterxml.jackson:jackson-parent:pom:)
 BuildRequires: maven-plugin-bundle
-BuildRequires: moditect-maven-plugin
+BuildRequires: mvn(org.moditect:moditect-maven-plugin)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
+
+BuildArch: noarch
 
 %description
 Core annotations used for value types,
@@ -31,6 +31,7 @@ used by Jackson data-binding package.
 %prep
 %setup
 
+%pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :cyclonedx-maven-plugin
 %pom_remove_plugin :gradle-module-metadata-maven-plugin
 
@@ -43,10 +44,12 @@ used by Jackson data-binding package.
 %mvn_install
 
 %files -f .mfiles
-%doc README.md release-notes/*
 %doc LICENSE
 
 %changelog
+* Tue Nov 10 2026 Ivan Khanas <xeno@altlinux.org> 2.23-alt1
+- New version.
+
 * Mon Aug 10 2026 Evgeniy Serov <scala@altlinux.org> 2.22-alt1
 - Updated to 2.22.
 

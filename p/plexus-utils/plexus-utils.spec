@@ -1,26 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: plexus-utils
-Version: 4.0.2
+Version: 4.1.0
 Release: alt1
 
 Summary: Plexus Common Utilities
 License: Apache-2.0
 Group: Development/Java
-Url: https://codehaus-plexus.github.io/plexus-utils/
-Vcs: https://github.com/codehaus-plexus/plexus-utils.git
+URL: https://codehaus-plexus.github.io/plexus-utils/
+VCS: https://github.com/codehaus-plexus/plexus-utils.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-17-openjdk-devel
 BuildRequires: rpm-build-java-osgi
-BuildRequires: /proc
-BuildRequires: jpackage-default
 BuildRequires: maven-local
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires: mvn(org.codehaus.plexus:plexus-xml)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
 
 %description
 The Plexus project seeks to create end-to-end developer tools for
@@ -30,7 +32,7 @@ reusable components for hibernate, form processing, jndi, i18n,
 velocity, etc. Plexus also includes an application server which
 is like a J2EE application server, without all the baggage.
 
-%{?javadoc_package}
+%javadoc_package
 
 %prep
 %setup
@@ -40,33 +42,28 @@ is like a J2EE application server, without all the baggage.
 
 # Generate OSGI info
 %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
-%pom_xpath_inject "pom:build/pom:plugins" "
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <extensions>true</extensions>
-          <configuration>
-            <instructions>
-              <_nouses>true</_nouses>
-              <Export-Package>org.codehaus.plexus.util.*;org.codehaus.plexus.util.cli.*;org.codehaus.plexus.util.cli.shell.*;org.codehaus.plexus.util.dag.*;org.codehaus.plexus.util.introspection.*;org.codehaus.plexus.util.io.*;org.codehaus.plexus.util.reflection.*;org.codehaus.plexus.util.xml.*;org.codehaus.plexus.util.xml.pull.*</Export-Package>
-            </instructions>
-          </configuration>
-        </plugin>"
+%pom_add_plugin org.apache.felix:maven-bundle-plugin . '
+  <extensions>true</extensions>
+  <configuration>
+    <instructions>
+      <_nouses>true</_nouses>
+      <Export-Package>org.codehaus.plexus.util.*</Export-Package>
+    </instructions>
+  </configuration>'
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 \
-  -Dmaven.compiler.target=1.8 \
-  -Dmaven.javadoc.source=1.8 \
-  -Dmaven.compiler.release=8 \
-  #
+%mvn_build -s
 
 %install
 %mvn_install
 
-%files -f .mfiles
-%doc --no-dereference NOTICE.txt LICENSE.txt
+%files -f .mfiles-%name
+%doc NOTICE.txt LICENSE.txt
 
 %changelog
+* Tue Nov 10 2026 Ivan Khanas <xeno@altlinux.org> 4.1.0-alt1
+- New version.
+
 * Fri Aug 15 2025 Ivan Khanas <xeno@altlinux.org> 4.0.2-alt1
 - New version.
 - Rename artifact.
