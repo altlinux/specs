@@ -2,7 +2,7 @@
 %define app_id ru.basealt.WeatherAdw
 
 Name: alt-weather-adw
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 # Missing alt-identify-client on i586
@@ -66,6 +66,9 @@ affect correct operation of the application.
 %doc README.md
 
 %changelog
+* Fri Nov 13 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.7-alt1
+- removed unrequired request
+
 * Thu Nov 12 2026 Alexander Davydzik <paladindev@altlinux.org> 1.1.6-alt1
 - fixed about dialog
 
