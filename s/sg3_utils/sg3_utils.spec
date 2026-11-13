@@ -1,10 +1,11 @@
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%define _udevlibdir %_libexecdir/udev
 
 Name: sg3_utils
-Version: 1.48
-Release: alt2
+Version: 1.49
+Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
 License: GPL-2.0-or-later and BSD-2-Clause
@@ -12,6 +13,16 @@ Group: System/Kernel and hardware
 Url: https://sg.danny.cz/sg/sg3_utils.html
 # https://sg.danny.cz/sg/p/%name-%version.tar.xz
 Source: %name-%version.tar
+#  https://redhat.atlassian.net/browse/RHEL-259877
+Patch0: RHEL-259877-1-rescan-scsi-bus.sh.8-add-description-and-examples.patch
+Patch1: RHEL-259877-2-doc-remove-external-links-from-man-pages-and-test-da.patch
+#  https://redhat.atlassian.net/browse/RHEL-261987
+Patch2: RHEL-261987-sg_dd-fix-help-continuing-into-main-copy-logic.patch
+#  https://redhat.atlassian.net/browse/RHEL-260341
+Patch3: RHEL-260341-sg_inq-avoid-including-0-bytes-in-SCSI-name-strings.patch
+#  https://redhat.atlassian.net/browse/RHEL-266581
+Patch4: RHEL-266581-sg_inq-escape-forward-slash-in-SCSI_MODEL-and-SCSI_VENDOR.patch
+
 Requires: libsgutils = %EVR
 
 %add_findreq_skiplist %_bindir/rescan-scsi-bus.sh
@@ -57,24 +68,44 @@ Udev rules which are associated with the utilities in the %name package.
 
 %prep
 %setup
-sed -i s/libsgutils2/libsgutils/g */Makefile.*
-sed -i s/2:0:0/1:0:0/ lib/Makefile.*
+%autopatch -p1
 
 %build
 %autoreconf
 %configure --disable-static
+
+# Don't use rpath!
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+# Fix filename references to other udev rules
+sed -i 's|55-scsi-sg3_id.rules|61-scsi-sg3_id.rules|' scripts/*.rules
+sed -i 's|58-scsi-sg3_symlink.rules|63-scsi-sg3_symlink.rules|' scripts/*.rules
+sed -i 's|59-scsi-cciss_id.rules|65-scsi-cciss_id.rules|' scripts/*.rules
+sed -i 's|59-fc-wwpn-id.rules|63-fc-wwpn-id.rules|' scripts/*.rules
+
 %make_build
 
 %install
 %makeinstall_std
-# https://bugzilla.altlinux.org/39183
-ln -s libsgutils.so %buildroot%_libdir/libsgutils2.so
+rm -rf %buildroot%_libdir/*.la
 
+%define rescan_script rescan-scsi-bus.sh
+install -p -m 755 scripts/%rescan_script %buildroot%_bindir
+( cd %buildroot%_bindir; ln -sf %rescan_script scsi-rescan )
+
+# install all extra udev rules
 mkdir -p %buildroot%_udevrulesdir
-for rulesname in 00-scsi-sg3_config 54-before-scsi-sg3_id 55-scsi-sg3_id 58-scsi-sg3_symlink 40-usb-blacklist 59-fc-wwpn-id; do
-    install -m 644 scripts/$rulesname.rules %buildroot%_udevrulesdir/
-done
-install -m 755 scripts/fc_wwpn_id %buildroot%_udevrulesdir/../
+mkdir -p %buildroot%_udevlibdir
+install -p -m 644 scripts/00-scsi-sg3_config.rules %buildroot%_udevrulesdir
+install -p -m 644 scripts/40-usb-blacklist.rules %buildroot%_udevrulesdir
+# need to run after 60-persistent-storage.rules
+install -p -m 644 scripts/55-scsi-sg3_id.rules %buildroot%_udevrulesdir/61-scsi-sg3_id.rules
+# need to run after 62-multipath.rules
+install -p -m 644 scripts/58-scsi-sg3_symlink.rules %buildroot%_udevrulesdir/63-scsi-sg3_symlink.rules
+install -p -m 644 scripts/59-scsi-cciss_id.rules %buildroot%_udevrulesdir/65-scsi-cciss_id.rules
+install -p -m 644 scripts/59-fc-wwpn-id.rules %buildroot%_udevrulesdir/63-fc-wwpn-id.rules
+install -p -m 755 scripts/fc_wwpn_id %buildroot%_udevlibdir
 
 %files
 %_bindir/*
@@ -94,6 +125,9 @@ install -m 755 scripts/fc_wwpn_id %buildroot%_udevrulesdir/../
 %_udevrulesdir/../fc_wwpn_id
 
 %changelog
+* Thu Nov 12 2026 Andrey Cherepanov <cas@altlinux.org> 1.49-alt1
+- New version (fixes: CVE-2026-16313).
+
 * Fri Jun 21 2024 Alexey Shabalin <shaba@altlinux.org> 1.48-alt2
 - Drop sg3_utils-alt-rescan-scsi-bus.patch.
 - Disable autoreq for rescan-scsi-bus.sh.
