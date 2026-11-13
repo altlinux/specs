@@ -1,7 +1,7 @@
 %global import_path github.com/kubeshark/kubeshark
 
 Name: kubeshark
-Version: 53.5.0
+Version: 53.6.0
 Release: alt1
 
 Summary:  Network Observability for SREs & AI Agents
@@ -52,6 +52,9 @@ export IGNORE_SOURCES=1
 
 
 %changelog
+* Thu Oct 22 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 53.6.0-alt1
+- Updated to 53.6.0.
+
 * Thu Oct 08 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 53.5.0-alt1
 - Updated to 53.5.0.
 
