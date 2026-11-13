@@ -19,7 +19,7 @@
 %def_enable smart
 
 Name: %{_name}2
-Version: 2.11.2
+Version: 2.12.0
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -44,7 +44,7 @@ Obsoletes: %_name
 %define gudev_ver 165
 %define libatasmart_ver 0.17
 %define dbus_ver 1.4.0
-%define blockdev_ver 3.4
+%define blockdev_ver 3.6
 %define libmount_ver 2.30
 
 Requires(pre): control
@@ -310,6 +310,9 @@ fi
 %exclude %_libdir/%name/modules/*.la
 
 %changelog
+* Fri Nov 13 2026 Yuri N. Sedunov <aris@altlinux.org> 2.12.0-alt1
+- 2.12.0
+
 * Sun Aug 09 2026 Yuri N. Sedunov <aris@altlinux.org> 2.11.2-alt1
 - 2.11.2 (fixed CVE-2026-7867)
 
