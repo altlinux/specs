@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.2
+Version: %branch.3
 Release: alt1
 Source0: %origname-%version.tar
 Patch0: fix-flaky-double-squash-test.patch
@@ -186,6 +186,17 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Fri Nov 13 2026 Alexander Burmatov <thatman@altlinux.org> 6.1.3-alt1
+- New version 6.1.3.
+- Fixes for the following security vulnerabilities:
+  + CVE-2026-108147: Potential memory exhaustion in MultiPartParser via base64-encoded file upload
+  + CVE-2026-111211: Potential log injection via unescaped geometry form values
+  + CVE-2026-111362: Server-side request forgery via crs member of GeoJSON geometries
+  + CVE-2026-113593: Potential exposure of private data via empty and missing Vary headers
+  + CVE-2026-113733: Password hash disclosure to "view only" admin users with custom user models
+  + CVE-2026-114582: Server-side request forgery via SpatialReference string input
+- Some bugfixes.
+
 * Tue Oct 13 2026 Alexander Burmatov <thatman@altlinux.org> 6.1.2-alt1
 - New version 6.1.2.
 - Fixes for the following security vulnerabilities:

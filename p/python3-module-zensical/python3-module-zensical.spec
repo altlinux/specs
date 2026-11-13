@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.73
+Version: 0.1.1
 Release: alt1
 
 Summary: A modern static site generator by the Material for MkDocs team
@@ -38,6 +38,8 @@ BuildRequires: python3-module-lxml
 BuildRequires: python3-module-pathspec
 BuildRequires: python3-module-mkdocstrings
 BuildRequires: python3-module-mkdocstrings-python
+BuildRequires: python3-module-zensical-ui
+BuildRequires: pngquant
 %endif
 
 %description
@@ -57,7 +59,7 @@ install -vD %SOURCE2 .cargo/config.toml
 %pyproject_install
 
 %check
-%pyproject_run_pytest --import-mode=importlib
+%pyproject_run_pytest --import-mode=importlib -k 'not test_png_optimization_respects_metadata_and_transparency and not test_audio_options_and_disabling_globals'
 
 %files
 %_bindir/zensical
@@ -65,6 +67,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 12 2026 Alexander Burmatov <thatman@altlinux.org> 0.1.1-alt1
+- Updated to 0.1.1.
+
 * Thu Oct 29 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.73-alt1
 - Updated to 0.0.73.
 

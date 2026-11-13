@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.1.0
+Version: 7.0.0
 Release: alt1
 
 Summary: Simple tagging for django
@@ -52,6 +52,9 @@ python3 -m django test -v 2 --settings=tests.settings
 %python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Fri Nov 13 2026 Alexander Burmatov <thatman@altlinux.org> 7.0.0-alt1
+- Version updated to 7.0.0.
+
 * Mon Nov 11 2024 Alexander Burmatov <thatman@altlinux.org> 6.1.0-alt1
 - Version updated to 6.1.0.
 

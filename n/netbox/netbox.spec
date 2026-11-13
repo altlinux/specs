@@ -1,7 +1,7 @@
 %def_with docs
 
 Name:    netbox
-Version: 4.7.4
+Version: 4.7.5
 Release: alt1
 
 Summary: The premier source of truth powering network automation
@@ -25,10 +25,10 @@ BuildRequires: python3-module-mkdocs >= 1.6.1
 BuildRequires: python3-module-mkdocs-material-extensions
 BuildRequires: python3-module-mkdocstrings >= 1.0.8
 BuildRequires: python3-module-mkdocstrings-python >= 2.0.10
-BuildRequires: python3-module-zensical >= 0.0.73
+BuildRequires: python3-module-zensical >= 0.1.0
 %endif
 Requires: python3-module-colorama >= 0.4.6
-Requires: python3-module-django >= 6.1.2
+Requires: python3-module-django >= 6.1.3
 Requires: python3-module-django-cors-headers >= 4.9.0
 Requires: python3-module-django-debug-toolbar >= 8.0.0
 Requires: python3-module-django-filter >= 26.2
@@ -40,7 +40,7 @@ Requires: python3-module-django-redis >= 7.0.0
 Requires: python3-module-django-rich >= 2.2.0
 Requires: python3-module-django-rq >= 4.2.0
 Requires: python3-module-django-storages >= 1.14.6
-Requires: python3-module-django-taggit >= 6.1.0
+Requires: python3-module-django-taggit >= 7.0.0
 Requires: python3-module-django-tables2 >= 3.0.1
 Requires: python3-module-django-timezone-field >= 7.2.2
 Requires: python3-module-djangorestframework >= 3.18.3
@@ -49,11 +49,11 @@ Requires: python3-module-drf-spectacular-sidecar >= 2026.10.1
 Requires: python3-module-feedparser >= 6.0.14
 Requires: python3-module-jinja2 >= 3.1.6
 Requires: python3-module-jsonschema >= 4.26.0
-Requires: python3-module-markdown >= 3.11.2
+Requires: python3-module-markdown >= 3.11.3
 Requires: python3-module-netaddr >= 1.3.0
 Requires: python3-module-nh3 >= 0.3.7
 Requires: python3-module-pillow >= 13.0.0
-Requires: python3-module-psycopg >= 3.3.6
+Requires: python3-module-psycopg >= 3.3.8
 Requires: python3-module-pymdown-extensions >= 12.1
 Requires: python3-module-yaml >= 6.0.3
 Requires: python3-module-redis-py >= 8.1.0
@@ -62,11 +62,11 @@ Requires: python3-module-rq >= 2.12.0
 Requires: python3-module-social-app-django >= 6.1.0
 Requires: python3-module-social-core >= 5.2.0
 Requires: python3-module-sorl-thumbnail >= 13.4.0
-Requires: python3-module-strawberry-graphql >= 0.338.0
-Requires: python3-module-strawberry-django >= 0.93.0
+Requires: python3-module-strawberry-graphql >= 0.341.2
+Requires: python3-module-strawberry-django >= 0.96.3
 Requires: python3-module-svgwrite >= 1.4.3
 Requires: python3-module-tablib >= 3.10.0
-Requires: python3-module-tzdata >= 2026.5
+Requires: python3-module-tzdata >= 2026.6
 Requires: python3-module-packaging
 Requires: python3-module-django-auth-ldap
 Requires: python3-module-sentry-sdk
@@ -211,6 +211,9 @@ cert-sh generate apache2-netbox ||:
 %ghost %_sysconfdir/nginx/sites-enabled.d/netbox.conf
 
 %changelog
+* Thu Nov 12 2026 Alexander Burmatov <thatman@altlinux.org> 4.7.5-alt1
+- New 4.7.5 version.
+
 * Thu Oct 29 2026 Alexander Burmatov <thatman@altlinux.org> 4.7.4-alt1
 - New 4.7.4 version.
 
