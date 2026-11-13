@@ -1,5 +1,5 @@
 Name: radicle-httpd
-Version: 0.30.0
+Version: 0.31.0
 Release: alt1
 
 Summary: A Radicle HTTP daemon exposing a JSON HTTP API
@@ -42,14 +42,14 @@ This package contains webapp used with radicle-httpd daemon.
 cargo vendor --manifest-path explorer/Cargo.toml
 tar cf %SOURCE1 .cargo vendor
 rm -rf npm-cache/*
-npm ci --cache "$PWD/npm-cache" --cpu=arm64 --os=linux --libc=glibc --prefix explorer
-npm ci --cache "$PWD/npm-cache" --cpu=x64   --os=linux --libc=glibc --prefix explorer
+npm ci --ignore-scripts --cache "$PWD/npm-cache" --cpu=arm64 --os=linux --libc=glibc
+npm ci --ignore-scripts --cache "$PWD/npm-cache" --cpu=x64   --os=linux --libc=glibc
 tar cf %SOURCE2 npm-cache
 %endif
-npm ci --offline --cache "$PWD/npm-cache" --prefix explorer
+npm ci --offline --ignore-scripts --cache "$PWD/npm-cache"
 
 %build
-export GIT_HEAD=86ba3917
+export GIT_HEAD=11cf896b
 cargo build %_smp_mflags --release --offline --manifest-path explorer/crates/radicle-httpd/Cargo.toml
 cargo build %_smp_mflags --release --offline --manifest-path explorer/crates/radicle-search/Cargo.toml
 VITE_RUNTIME_CONFIG=true npm run build --prefix explorer
@@ -76,6 +76,9 @@ cp -a explorer/build %buildroot%_datadir/radicle-web
 %_datadir/radicle-web
 
 %changelog
+* Fri Nov 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.31.0-alt1
+- 0.31.0 released
+
 * Mon Oct 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.30.0-alt1
 - 0.30.0 released
 
