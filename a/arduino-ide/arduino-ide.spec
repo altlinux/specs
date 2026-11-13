@@ -4,13 +4,14 @@
 
 Name: arduino-ide
 Version: 2.3.10
-Release: alt3
+Release: alt4
 
-Summary: IDE for Arduino boards and compatible microcontroller platforms.
-Group: Education
+Summary: IDE for Arduino boards and compatible microcontroller platforms
 License: AGPL-3.0
-URL: https://arduino.cc
+Group: Education
+Url: https://arduino.cc
 VCS: https://github.com/arduino/arduino-ide.git
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: %name-%version-predownloaded.tar
@@ -20,15 +21,6 @@ Patch1: system-electron-skip-theia-ffmpeg.patch
 Patch2: system-electron-drivelist-lazy-bindings.patch
 Patch3: system-electron-disable-node-pty-native.patch
 Patch4: system-native-node-modules.patch
-
-ExcludeArch: %ix86
-
-BuildRequires: /proc
-BuildRequires: node
-BuildRequires: yarn
-BuildRequires: electron = %electron_version
-BuildRequires: libsecret
-BuildRequires: libxkbfile
 
 Requires: electron = %electron_version
 Requires: arduino-cli
@@ -40,6 +32,13 @@ Requires: ripgrep
 Requires: node-parcel-watcher
 Requires: node-keytar
 Requires: node-native-keymap
+
+BuildRequires: /proc
+BuildRequires: node
+BuildRequires: yarn
+BuildRequires: electron = %electron_version
+BuildRequires: libsecret
+BuildRequires: libxkbfile
 
 %description
 The Arduino Integrated Development Environment (IDE) is the official software
@@ -99,6 +98,9 @@ install -m644 -D %buildroot%_libdir/arduino-ide/resources/app/resources/icons/51
 %_iconsdir/arduino-ide.png
 
 %changelog
+* Fri Nov 13 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt4
+- Show sketch windows even without ready-to-show on Wayland (Closes: 61380).
+
 * Mon Nov 02 2026 Grant Makyan <karonus@altlinux.org> 2.3.10-alt3
 - Fix Russian interface translations. (Closes: 61050)
 
