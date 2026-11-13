@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: mate-file-manager
-Version: 1.28.0
-Release: alt2
+Version: 1.28.1
+Release: alt1
 Epoch: 1
 Summary: File manager for MATE
 License: GPLv2+ and LGPLv2+
@@ -106,6 +106,9 @@ mkdir -p %buildroot%_libdir/caja/extensions-2.0
 %_datadir/gtk-doc/html/libcaja-extension
 
 %changelog
+* Fri Nov 13 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.1-alt1
+- 1.28.1
+
 * Thu Aug 27 2026 Valery Zabrovsky <brow@altlinux.org> 1:1.28.0-alt2
 - NMU: Show 'Open With' dialog in case of unknown mime type.
 
