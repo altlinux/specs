@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.11.2
+Version: 1.11.3
 Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
@@ -559,6 +559,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Nov 13 2026 Anton Farygin <rider@altlinux.org> 1:1.11.3-alt1
+- 1.11.2 -> 1.11.3 (Fixes: CVE-2026-116779)
+
 * Thu Aug 13 2026 Anton Farygin <rider@altlinux.org> 1:1.11.2-alt1
 - 1.11.1 -> 1.11.2
 - fs_encode: treat only the part after the last dot as the file
