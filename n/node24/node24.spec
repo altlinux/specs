@@ -5,7 +5,7 @@
 # the private prefix /usr/lib/node24 with unversioned node/npm/npx in bin/
 # (PATH=/usr/lib/node24/bin:$PATH selects Node.js 24 as node), no alternatives.
 %define major 24
-%define node_version 24.22.1
+%define node_version 24.22.3
 
 %define node_prefix %_prefix/lib/node%major
 
@@ -25,7 +25,7 @@
 %define c_ares_version 1.34.9
 
 # check deps/llhttp/include/llhttp.h
-%define llhttp_version 9.4.3
+%define llhttp_version 9.4.4
 
 # check deps/openssl/openssl/include/openssl/opensslv.h
 %define openssl_version 3.5.9
@@ -45,8 +45,8 @@
 # check deps/zstd/lib/zstd.h
 %define zstd_version 1.5.7
 
-# check deps/sqlite/sqlite3.h (bundled 3.53.4)
-%define sqlite_version 3.53.3
+# check deps/sqlite/sqlite3.h (bundled 3.54.1)
+%define sqlite_version 3.54.1
 
 # bundled: simdjson 4.6.11 (Sisyphus libsimdjson is older),
 # simdutf 6.4.0 (Sisyphus simdutf 9.x has another API), uvwasi 0.0.23,
@@ -67,7 +67,7 @@
 %def_disable check
 
 Name: node%major
-Version: %node_version
+Version: 24.22.3
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript (Node.js %major LTS)
@@ -308,6 +308,27 @@ chmod 0755 %buildroot%_rpmlibdir/nodejs%{major}_native.req
 %node_prefix/node_modules/
 
 %changelog
+* Thu Nov 12 2026 Vitaly Lipatov <lav@altlinux.ru> 24.22.3-alt1
+- new version 24.22.3
+- require libsqlite3-devel 3.54.1 (was 3.53.3).
+- fixes:
+  + CVE-2026-123828: Node.js releases include security fixes.
+  + CVE-2026-123829: Node.js releases include security fixes.
+  + CVE-2026-123862: Node.js releases include security fixes.
+  + CVE-2026-123863: Node.js releases include security fixes.
+  + CVE-2026-123864: Node.js releases include security fixes.
+  + CVE-2026-123865: Node.js releases include security fixes.
+  + CVE-2026-123866: Node.js releases include security fixes.
+  + CVE-2026-123867: Node.js releases include security fixes.
+  + CVE-2026-123868: Node.js releases include security fixes.
+  + CVE-2026-123871: Node.js releases include security fixes.
+  + CVE-2026-123872: Node.js releases include security fixes.
+  + CVE-2026-123873: Node.js releases include security fixes.
+  + CVE-2026-123874: Node.js releases include security fixes.
+  + CVE-2026-123875: Node.js releases include security fixes.
+  + CVE-2026-123877: Node.js releases include security fixes.
+  + CVE-2026-126051: Node.js releases include security fixes.
+
 * Thu Oct 22 2026 Vitaly Lipatov <lav@altlinux.ru> 24.22.1-alt1
 - new version 24.22.1
 - require libcares-devel 1.34.9 (was 1.34.8) and libbrotli-devel 1.2.1.
