@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Module for creating simple ASCII tables
@@ -16,29 +16,18 @@ Url: https://pypi.org/project/texttable
 Vcs: https://github.com/foutaise/texttable
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
 # not packaged
-%add_pyproject_deps_check_filter cjkwrap
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_with_check_filter cjkwrap
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 texttable is a module to generate a formatted text table, using ASCII characters.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -55,6 +44,9 @@ texttable is a module to generate a formatted text table, using ASCII characters
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 13 2026 Stanislav Levin <slev@altlinux.org> 1.7.3-alt1
+- 1.7.2 -> 1.7.3
+
 * Tue Oct 20 2026 Stanislav Levin <slev@altlinux.org> 1.7.2-alt1
 - 1.7.1 -> 1.7.2
 
