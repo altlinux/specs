@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.0
+Version: 7.1
 Release: alt1
 Summary: Zope Untrusted Python Library
 License: ZPL-2.1
@@ -15,19 +15,9 @@ Url: https://pypi.org/project/zope-untrustedpython
 Vcs: https://github.com/zopefoundation/zope.untrustedpython
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-# setuptools(pkg_resources) is used by namespace root which is not used in ALT
-%add_pyproject_deps_runtime_filter setuptools
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata_extra test
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 %summary.
@@ -35,11 +25,7 @@ BuildRequires(pre): rpm-build-pyproject
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_tox tox.ini testenv
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -57,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %exclude %python3_sitelibdir/%ns_name/%mod_name/__pycache__/tests.*
 
 %changelog
+* Fri Nov 13 2026 Stanislav Levin <slev@altlinux.org> 7.1-alt1
+- 7.0 -> 7.1
+
 * Fri Mar 13 2026 Stanislav Levin <slev@altlinux.org> 7.0-alt1
 - 6.2 -> 7.0.
 
