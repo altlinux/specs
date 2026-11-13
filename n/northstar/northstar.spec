@@ -1,5 +1,5 @@
 Name: northstar
-Version: 1.0.20
+Version: 1.0.22
 Release: alt1
 
 Summary: Small GTK web browser written from scratch in C
@@ -49,7 +49,7 @@ small, secure, and readable by a single person end to end.
 %setup
 
 %build
-%meson 
+%meson -Djs_engine=quickjs-ng
 %meson_build
 
 %install
@@ -65,5 +65,8 @@ rm %buildroot%_bindir/open-internet-browser
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Fri Nov 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.22-alt1
+- 1.0.22 released
+
 * Fri Nov 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.20-alt1
 - 1.0.20 released
