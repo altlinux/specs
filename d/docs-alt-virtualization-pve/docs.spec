@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.2
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Nov 13 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt2
+- small improvements (ALT 61419)
+- fix typos (ALT 61419, 61419)
+
 * Mon Oct 26 2026 Elena Mishina <lepata@altlinux.org> 11.2-alt1
 - update to ALT Virtualization PVE 11.2beta
 
