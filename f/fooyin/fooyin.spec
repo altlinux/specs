@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fooyin
-Version: 0.14.1
+Version: 0.15.1
 Release: alt1
 
 Summary: Music player built around customisation
@@ -105,6 +105,9 @@ echo '%%lang(zh) %_datadir/%name/translations/fooyin_zh_Hant.qm' >> %name.lang
 %_libdir/cmake/%name/
 
 %changelog
+* Fri Nov 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.15.1-alt1
+- New version 0.15.1.
+
 * Sun Nov 01 2026 Andrew A. Vasilyev <andy@altlinux.org> 0.14.1-alt1
 - New version 0.14.1.
 - NMU: fix FTBFS.
