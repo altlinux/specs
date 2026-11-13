@@ -1,6 +1,6 @@
 Name: python3-module-pymetno
-Version: 0.13.0
-Release: alt2
+Version: 0.14.0
+Release: alt1
 
 Provides: python3-module-metno = %EVR
 Obsoletes: python3-module-metno
@@ -21,6 +21,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
@@ -29,6 +30,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements-test.txt
 
 %build
 %pyproject_build
@@ -36,12 +38,18 @@ BuildRequires(pre): rpm-build-pyproject
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %doc LICENSE README.*
 %python3_sitelibdir/metno
 %python3_sitelibdir/pymetno-%version.dist-info
 
 %changelog
+* Fri Nov 13 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.14.0-alt1
+- 0.14.0 released
+
 * Mon Mar 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.13.0-alt2
 - revert unsolicited packaging changes
 
