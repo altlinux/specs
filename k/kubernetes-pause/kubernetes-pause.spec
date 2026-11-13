@@ -1,6 +1,6 @@
 Name:     kubernetes-pause
 Version:  3.10.2
-Release:  alt1
+Release:  alt2
 
 Summary:  This executable can be used as a minimal init process inside a container
 License:  Apache-2.0
@@ -10,6 +10,7 @@ Url:      https://raw.githubusercontent.com/kubernetes/kubernetes/v1.36.1/build/
 Source:   %name-%version.tar
 
 BuildRequires: glibc-devel-static
+BuildRequires: libatomic-devel-static
 
 %description
 %summary.
@@ -27,6 +28,9 @@ install -m0755 -D pause %buildroot/%_bindir/kubernetes-pause
 %_bindir/kubernetes-pause
 
 %changelog
+* Fri Nov 13 2026 Mikhail Gordeev <obirvalger@altlinux.org> 3.10.2-alt2
+- Fix FTBFS with gcc16
+
 * Mon Jun 01 2026 Alexander Stepchenko <geochip@altlinux.org> 3.10.2-alt1
 - 3.10.1 -> 3.10.2 (only version bump for k8s 1.36, no functional changes).
 
