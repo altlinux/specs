@@ -6,8 +6,8 @@
 %def_with freerdp3
 
 Name: remmina
-Version: 1.4.43
-Release: alt2
+Version: 1.4.44
+Release: alt1
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -368,6 +368,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 13 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.44-alt1
+- New version.
+
 * Wed Sep 23 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.43-alt2
 - Built with KF6 (ALT #60653).
 
