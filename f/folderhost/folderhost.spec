@@ -8,7 +8,7 @@
 %endif
 
 Name:    folderhost
-Version: 26.8.0
+Version: 26.11.0
 Release: alt1
 
 License: GPL-3.0
@@ -25,6 +25,7 @@ Source4: %name.sysusers
 Source5: %name.sysconfig
 
 Patch1: folderhost-26.5.1-build_for_loongarch64_without_swc.patch
+Patch2: folderhost-26.10.0-esbuild_destructuring.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: rpm-build-nodejs
@@ -57,6 +58,7 @@ and manage users with zero dependencies.
 # $ git commit -m "Update node js modules"
 %setup -a 1 -a 2 -q
 %patch1 -p1
+%patch2 -p1
 
 %if_with aarch
 # Use native rollup
@@ -128,6 +130,12 @@ install -Dm 0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 %dir %attr(0750, _%name, _%name) %_sharedstatedir/%name
 
 %changelog
+* Wed Nov 11 2026 Sergey Savelev <medovi@altlinux.org> 26.11.0-alt1
+- New version 26.11.0.
+
+* Tue Oct 13 2026 Sergey Savelev <medovi@altlinux.org> 26.10.0-alt1
+- New version 26.10.0.
+
 * Thu Sep 03 2026 Sergey Savelev <medovi@altlinux.org> 26.8.0-alt1
 - New version 26.8.0.
 
