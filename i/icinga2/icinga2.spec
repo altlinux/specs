@@ -38,7 +38,7 @@ Group:          Monitoring
 
 Name:           icinga2
 Version:        2.16.6
-Release:        alt1
+Release:        alt2
 URL:            https://www.icinga.com/
 Vcs:            https://github.com/Icinga/icinga2.git
 
@@ -155,9 +155,8 @@ Provides Nano syntax highlighting for icinga2.
 %patch100 -p1
 
 %ifarch %e2k
-# compiler bug workaround
-sed -i '/Lazy(const Lazy/s/explicit//' lib/base/object.hpp
-sed -i 's/operator Lazy<U>()/Lazy<U> edg_fix_dummy()/' lib/base/object.hpp
+# error: unrecognized command line option
+sed -i 's/-Wrange-loop-construct//' CMakeLists.txt
 %endif
 
 %build
@@ -366,6 +365,9 @@ fi
 %_datadir/nano/%name.nanorc
 
 %changelog
+* Fri Nov 13 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.16.6-alt2
+- e2k build fix
+
 * Mon Nov 09 2026 Paul Wolneykien <manowar@altlinux.org> 2.16.6-alt1
 - New version 2.16.6.
 - Fixes:
