@@ -66,8 +66,8 @@
 %endif
 
 Name: blender
-Version: 4.5.14
-Release: alt2
+Version: 4.5.16
+Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -185,6 +185,10 @@ BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink 
 
 %if_with hip
 BuildRequires: hip-devel
+%if "%_priority_distbranch" == "sisyphus"
+# HIP Clang 18 is incompatible with libstdc++ 16 headers.
+BuildRequires: gcc14-c++
+%endif
 %endif
 
 %if_with hiprt
@@ -395,6 +399,9 @@ export ALTWRAP_LLVM_VERSION=rocm
 %cmake -G Ninja \
 %if_with hip
 	-DWITH_CYCLES_HIP_BINARIES:BOOL=ON \
+%if "%_priority_distbranch" == "sisyphus"
+	-DHIP_HIPCC_FLAGS="--gcc-install-dir=$(dirname "$(%_bindir/g++-14 -print-libgcc-file-name)")" \
+%endif
 %endif #hip
 %if_with cuda
 	-DWITH_CYCLES_CUDA_BINARIES:BOOL=ON \
@@ -537,6 +544,9 @@ install -Dm644 %SOURCE2 %buildroot%_datadir/thumbnailers/blender.thumbnailer
 %endif
 
 %changelog
+* Sat Nov 14 2026 Anton Farygin <rider@altlinux.org> 4.5.16-alt1
+- 4.5.14 -> 4.5.16
+
 * Wed Sep 16 2026 Mikhail Tergoev <fidel@altlinux.org> 4.5.14-alt2
 - Rebuild with nvidia-cuda-toolkit 13.2.1.
 - spec: use rpm-macros-cuda-toolkit (host compiler and GPU arch list
