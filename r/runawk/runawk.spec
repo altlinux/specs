@@ -3,7 +3,7 @@
 
 Name: runawk
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Wrapper for AWK providing modules
 License: MIT
@@ -13,7 +13,7 @@ Url: http://runawk.sourceforge.net
 Source: %name-%version.tar
 Packager: Aleksey Cheusov <cheusov@altlinux.org>
 
-BuildRequires: mk-configure >= 0.34.2-alt4
+BuildRequires: mk-configure >= 0.40.3-alt2
 BuildRequires: rpm-macros-mk-configure
 
 %description
@@ -37,7 +37,6 @@ This package contains examples for RunAWK.
 %build
 %mkc_env
 %mkcmake_configure
-export STRIP=:
 %mkcmake_build
 
 %check
@@ -47,7 +46,6 @@ export TMPDIR=/tmp
 
 %install
 %mkc_env
-export STRIPFLAG=
 %mkcmake_install
 
 %files
@@ -65,6 +63,9 @@ export STRIPFLAG=
 #   (uses runawk, isn't used by runawk)
 
 %changelog
+* Sat Nov 14 2026 Aleksey Cheusov <cheusov@altlinux.org> 1.7.0-alt2
+- Use latest mk-configure and simplify build spec
+
 * Thu Nov 12 2026 Aleksey Cheusov <cheusov@altlinux.org> 1.7.0-alt1
 - 1.7.0-alt1: update to 1.7.0
 - Do not strip runawk executable
