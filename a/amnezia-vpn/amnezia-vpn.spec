@@ -9,7 +9,7 @@
 
 Name: amnezia-vpn
 Version: 5.1.0.6
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -36,6 +36,9 @@ Source6: libagw-%libagw_version.tar
 Source4: vendor.tar
 
 Patch0: %name-tun2-sudo.patch
+Patch1: %name-dns-fallback.patch
+Patch2: %name-killswitch-dns.patch
+Patch3: %name-openvpn-modules.patch
 
 BuildRequires: golang
 BuildRequires: libsecret-devel
@@ -80,6 +83,9 @@ This package contains systemd service files.
 %prep
 %setup -n amnezia-client-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -211,6 +217,10 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sun Nov 15 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.0.6-alt2
+- Fix DNS resolve on Linux with killswitch enabled (ALT #52679)
+- Fix OpenVPN container NAT setup on recreate (ALT #52679)
+
 * Thu Nov 05 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.0.6-alt1
 - Version 5.1.0.6
 - Update amnezia-xray-bindings to 1.5.0
