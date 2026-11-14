@@ -5,7 +5,7 @@
 %global __find_debuginfo_files %nil
 
 Name: nwg-drawer
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: Application drawer for wlroots-based Wayland compositors
@@ -52,6 +52,9 @@ make install DESTDIR=%buildroot
 %_datadir/%name/*
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.6-alt1
+- New version 0.7.6.
+
 * Sat Mar 28 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.5-alt1
 - New version 0.7.5.
 
