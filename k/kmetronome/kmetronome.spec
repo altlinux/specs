@@ -3,8 +3,8 @@
 %def_without check
 
 Name: kmetronome
-Version: 1.4.1
-Release: alt2
+Version: 1.4.2
+Release: alt1
 
 Summary: MIDI based metronome using the ALSA sequencer
 License: GPL-2.0-or-later
@@ -57,6 +57,12 @@ usage and very accurate timing thanks to the ALSA sequencer
 %_desktopdir/net.sourceforge.kmetronome.desktop
 %exclude %_datadir/dbus-1/interfaces/net.sourceforge.kmetronome.xml
 %_datadir/dbus-1/services/net.sourceforge.kmetronome.service
+%_datadir/doc/kmetronome/kmetronome/cs/index.html
+%_datadir/doc/kmetronome/kmetronome/de/index.html
+%_datadir/doc/kmetronome/kmetronome/en/index.html
+%_datadir/doc/kmetronome/kmetronome/es/index.html
+%_datadir/doc/kmetronome/kmetronome/fr/index.html
+%_datadir/doc/kmetronome/kmetronome/tr/index.html
 %_iconsdir/hicolor/*/apps/kmetronome.png
 %_iconsdir/hicolor/scalable/apps/kmetronome.svgz
 %dir %_datadir/kmetronome
@@ -64,6 +70,9 @@ usage and very accurate timing thanks to the ALSA sequencer
 %_datadir/metainfo/net.sourceforge.kmetronome.metainfo.xml
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.2-alt1
+- new version 1.4.2 (with rpmrb script)
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.4.1-alt2
 - Spec refined.
 
