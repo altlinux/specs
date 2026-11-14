@@ -5,7 +5,7 @@ Name: art
 # NOTE: run
 #       ./tools/generateReleaseInfo
 #       on each update
-Version: 1.26.9
+Version: 1.26.11
 Release: alt1
 
 Summary: Advanced raw photo development program
@@ -79,6 +79,7 @@ sed -i "s/sisyphus/master/" ReleaseInfo.cmake
 %doc README.md
 %_bindir/ART
 %_bindir/ART-cli
+%_bindir/ART-dialogs
 %_desktopdir/ART.desktop
 %_iconsdir/hicolor/*/apps/ART.png
 %_man1dir/ART.1.*
@@ -93,6 +94,9 @@ sed -i "s/sisyphus/master/" ReleaseInfo.cmake
 %_datadir/doc/ART/RELEASE_NOTES.txt
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.26.11-alt1
+- New version 1.26.11.
+
 * Thu Sep 17 2026 Nikolay Strelkov <snk@altlinux.org> 1.26.9-alt1
 - New version 1.26.9.
 
