@@ -1,5 +1,5 @@
 Name: rustdesk
-Version: 1.4.9
+Version: 1.5.3
 Release: alt1
 
 Summary: An open-source remote desktop, and alternative to TeamViewer
@@ -8,7 +8,7 @@ Group: Networking/Remote access
 Url: https://rustdesk.com/
 Vcs: https://github.com/rustdesk/rustdesk.git
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 Source1: hbb_common.tar
@@ -23,7 +23,7 @@ Patch3: %name-%version-alt-fix-main-page-ru.patch
 Patch4: %name-%version-alt-change-ffmpeg-opts.patch
 Patch5: %name-%version-alt-libsciter-path-fix.patch
 Patch6: %name-%version-alt-disable-update-notify.patch
-Patch7: %name-%version-alt-fix-build-with-gcc15.patch
+Patch7: %name-%version-alt-fix-build-with-gcc>=15.patch
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
@@ -84,7 +84,7 @@ cargo-vendor-checksum --all --ignore-missing
 #build static libs and headers via vcpkg
 export VCPKG_ROOT=$HOME/vcpkg-env
 export VCPKG_FORCE_SYSTEM_BINARIES=1
-vcpkg install --no-downloads --overlay-ports=res/vcpkg libvpx libyuv opus aom ffmpeg
+vcpkg install --no-downloads --overlay-ports=res/vcpkg libvpx libyuv opus aom ffmpeg mfx-dispatch
 #build binary
 python3 res/inline-sciter.py
 cargo build %_smp_mflags --offline --release --bin %name --features inline,hwcodec,unix-file-copy-paste
@@ -117,6 +117,10 @@ install -D res/128x128.png %buildroot%_datadir/pixmaps/%name.png
 %_datadir/pixmaps/*.png
 
 %changelog
+* Sat Nov 14 2026 Anton Kurachenko <srebrov@altlinux.org> 1.5.3-alt1
+- New version 1.5.3.
+- Dropped aarch64 build (GUI is broken).
+
 * Sun Jul 12 2026 Anton Kurachenko <srebrov@altlinux.org> 1.4.9-alt1
 - New version 1.4.9.
 
