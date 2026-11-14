@@ -3,7 +3,7 @@
 
 %define _unpackaged_files_terminate_build 1
 
-%define api_version 0.1
+%define api_version 0.2
 %define gir_name Deser
 
 %define sname libsession
@@ -75,7 +75,7 @@ Requires: %sname%api_version = %EVR
 %autopatch -p1
 
 %build
-%meson
+%meson -Dsession=enabled -Djson=enabled -Dyaml=enabled -Dtoml=enabled
 %meson_build
 
 %install
@@ -111,5 +111,8 @@ Requires: %sname%api_version = %EVR
 %_girdir/%gir_sname-%api_version.gir
 
 %changelog
+* Sat Nov 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.0-alt1
+- New version: 0.2.0-alt1.
+
 * Tue Nov 03 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1.0-alt1
 - Initail build.

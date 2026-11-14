@@ -7,8 +7,8 @@
 %define soversion 0
 
 Name: libcase
-Version: %soversion.2
-Release: alt4
+Version: %soversion.3
+Release: alt1
 
 Summary: Library with various useful widgets for your application
 License: GPL-3.0-or-later
@@ -101,6 +101,11 @@ Requires: %name%soversion-gir = %EVR
 %_girdir/%girname-%soversion.gir
 
 %changelog
+* Sat Nov 14 2026 Vladimir Romanov <rirusha@altlinux.org> 0.3-alt1
+- New version: 0.2.
+- Full release notes:
+  https://altlinux.space/rirusha/libcase/releases/tag/v0.2.
+
 * Thu Sep 03 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt4
 - Added patch.
 
@@ -112,6 +117,7 @@ Requires: %name%soversion-gir = %EVR
 - Fixed summary.
 
 * Thu Jul 30 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2-alt1
+- New version: 0.2.
 - ComboRow: Added navigation-sidebar style to nested ListView.
 - ComboRow: Added sheet-title property.
 - Added InfinityCarousel.

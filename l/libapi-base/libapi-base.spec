@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_version 7
-%define minor_version 11
+%define minor_version 12
 %define gir_name ApiBase
 
 %define yaml_api_version 0.1
@@ -168,6 +168,11 @@ Requires: %sname%api_version-gir = %EVR
 %_girdir/%yaml_gir_name-%yaml_api_version.gir
 
 %changelog
+* Sat Nov 14 2026 Vladimir Romanov <rirusha@altlinux.org> 7.12-alt1
+- New version: 7.12.
+- Full release notes:
+  https://altlinux.space/rirusha/libapi-base/releases/tag/v7.12
+
 * Tue Sep 29 2026 Vladimir Romanov <rirusha@altlinux.org> 7.11-alt1
 - New version: 7.11.
 - Property nick now taken as is without any conversion.
