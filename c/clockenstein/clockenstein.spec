@@ -3,8 +3,8 @@
 %def_with check
 
 Name: clockenstein
-Version: 2.0.2
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
 Summary: Calendar application for Linux Desktops
 License: GPL-3.0-only
@@ -61,6 +61,7 @@ BuildRequires: python3(babel)
 BuildRequires: python3(rich)
 BuildRequires: python3(pycurl)
 BuildRequires: libgsound-gir
+BuildRequires: libsecret-gir
 %endif
 
 %description
@@ -142,8 +143,13 @@ export LC_ALL=C
 %_datadir/glib-2.0/schemas/org.x.clockenstein.gschema.xml
 %_iconsdir/hicolor/scalable/apps/clockenstein-calendar.svg
 %_iconsdir/hicolor/scalable/apps/clockenstein-clocks.svg
+%_datadir/metainfo/org.x.clockenstein.Calendar.metainfo.xml
+%_datadir/metainfo/org.x.clockenstein.Clocks.metainfo.xml
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.3-alt1
+- New version 2.0.3.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.2-alt2
 - Spec refined.
 
