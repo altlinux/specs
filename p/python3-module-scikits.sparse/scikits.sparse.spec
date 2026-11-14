@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Summary: Sparse matrix tools extending scipy.sparse, but with incompatible licenses
@@ -57,6 +57,9 @@ decomposition.
 %python3_sitelibdir/%{pyproject_distinfo scikit_sparse}
 
 %changelog
+* Sat Nov 14 2026 Anton Vyatkin <toni@altlinux.org> 0.5.1-alt1
+- New version 0.5.1.
+
 * Wed Mar 04 2026 Anton Vyatkin <toni@altlinux.org> 0.5.0-alt1
 - New version 0.5.0.
 
