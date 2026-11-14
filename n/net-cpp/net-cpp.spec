@@ -5,7 +5,7 @@
 %def_without check
 
 Name: net-cpp
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: A simple yet beautiful networking API for C++14
@@ -109,6 +109,9 @@ sed -i "s/-std=c++17/-std=c++14/" CMakeLists.txt
 %_datadir/doc/net-cpp/*
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.3-alt1
+- New version 3.2.3.
+
 * Sat Jun 27 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.2-alt1
 - New version 3.2.2.
 
