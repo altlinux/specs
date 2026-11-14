@@ -2,7 +2,7 @@
 
 Name: xd-torrent
 Version: 0.4.8
-Release: alt1
+Release: alt2
 
 Summary: An I2P BitTorrent client
 
@@ -21,6 +21,7 @@ Source13: xd-torrent.tmpfiles
 
 Patch1: 020-xd-torrent-rename-service-paths.patch
 Patch2: 030-xd-torrent-service-hardening.patch
+Patch3: 040-fix-parallel-webui-assets.patch
 
 ExcludeArch: %ix86
 
@@ -38,6 +39,7 @@ An I2P BitTorrent client.
 %setup -a1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export CGO_CPPFLAGS="%optflags"
@@ -80,6 +82,9 @@ export GOFLAGS=-mod=vendor
 %config(noreplace) %_sysconfdir/xd.conf
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt2
+- fix parallel build of web assets.
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.8-alt1
 - new version 0.4.8
 
