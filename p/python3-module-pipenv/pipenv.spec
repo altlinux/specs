@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2026.10.3
+Version: 2026.11.0
 Release: alt1
 
 Summary: Python Development Workflow for Humans
@@ -71,6 +71,9 @@ pipenv --site-packages run python3 -m pytest -vra -o=addopts= --import-mode=appe
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 13 2026 Artem Krasovskiy <aibure@altlinux.org> 2026.11.0-alt1
+- Updated to 2026.11.0.
+
 * Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 2026.10.3-alt1
 - Updated to 2026.10.3.
 
