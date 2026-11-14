@@ -14,7 +14,7 @@
 
 Name: firefox
 Version: 160.0
-Release: alt1
+Release: alt2
 
 Summary: Fast, private and secure web browser
 Summary(ru_RU.UTF-8): Быстрый, приватный и безопасный браузер
@@ -388,6 +388,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Fri Nov 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt2
+- Fix FTBFS with system Pydantic by using system typing_extensions.
+
 * Tue Nov 10 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt1
 - New version.
 - Fixes:
