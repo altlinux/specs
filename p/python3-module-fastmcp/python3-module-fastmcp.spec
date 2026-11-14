@@ -15,7 +15,7 @@ Extra "%2" for %1. \
 }
 
 Name: python3-module-fastmcp
-Version: 4.1.7
+Version: 4.2.0
 Release: alt1
 
 Summary: The fast, Pythonic way to build MCP servers and clients
@@ -174,6 +174,9 @@ cd fastmcp_tasks
 %python3_sitelibdir/fastmcp_tasks-%version.dist-info/
 
 %changelog
+* Sat Nov 14 2026 Anton Zhukharev <ancieg@altlinux.org> 4.2.0-alt1
+- Updated to 4.2.0.
+
 * Tue Nov 10 2026 Anton Zhukharev <ancieg@altlinux.org> 4.1.7-alt1
 - Updated to 4.1.7.
 - Added new fastmcp+azure, fastmcp+code-mode, fastmcp+tasks and fastmcp+jev
