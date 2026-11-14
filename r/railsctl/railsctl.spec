@@ -1,5 +1,5 @@
 Name:          railsctl
-Version:       1.0.2
+Version:       1.0.3
 Release:       alt1
 Summary:       Ruby-on-Rails control script
 License:       MIT
@@ -24,6 +24,9 @@ install -D -m 755 %name %buildroot%_sbindir/%name
 
 
 %changelog
+* Sun Nov 15 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.3-alt1
+- ! fixed bundle function in part of without envs
+
 * Mon Feb 03 2025 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1
 - * changed bunlde function to apply install with test,dev first before update
 
