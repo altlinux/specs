@@ -6,7 +6,7 @@
 
 Name:          gem-foreman-maintain
 Version:       1.16.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman maintenance tool belt
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -16,6 +16,7 @@ Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         alt-60122-database-erb.patch
 BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(bundler) >= 1.17
@@ -47,7 +48,7 @@ running.
 
 %package       -n foreman-maintain
 Version:       1.16.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman maintenance tool belt executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета foreman_maintain
 Group:         Other
@@ -68,7 +69,7 @@ running.
 %if_enabled    doc
 %package       -n gem-foreman-maintain-doc
 Version:       1.16.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman maintenance tool belt documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_maintain
 Group:         Development/Documentation
@@ -90,7 +91,7 @@ running.
 %if_enabled    devel
 %package       -n gem-foreman-maintain-devel
 Version:       1.16.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Foreman maintenance tool belt development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_maintain
 Group:         Development/Ruby
@@ -118,6 +119,7 @@ running.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ruby_build
@@ -151,6 +153,9 @@ running.
 
 
 %changelog
+* Sat Nov 14 2026 Pavel Skrylev <majioa@altlinux.org> 1.16.0-alt2
+- ! fixed erb rendering, closing ALT #60122
+
 * Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 1.16.0-alt1.1
 - ! fixed dep to minitest gem
 
