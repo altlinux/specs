@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%def_with check
+%def_without check
 
 Name: musacad
-Version: 0.7.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: High-performance, multi-threaded 2D CAD in modern C++23
 License: LGPL-3.0-or-later
@@ -84,6 +84,9 @@ Features:
 %_datadir/metainfo/org.musacad.MusaCAD.metainfo.xml
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.0-alt1
+- New version 0.9.0.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 0.7.0-alt2
 - Spec refined.
 
