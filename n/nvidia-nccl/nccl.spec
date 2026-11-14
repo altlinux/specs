@@ -2,16 +2,11 @@
 
 %define soversion 2
 
-# NVCC is incompatible with GCC 15, use GCC 12 as host compiler.
-%define nvcc_host_gcc_version 12
-%define nvcc_host_cc  %_bindir/gcc-%nvcc_host_gcc_version
-%define nvcc_host_cxx %_bindir/g++-%nvcc_host_gcc_version
-
 Name:    nvidia-nccl
-Version: 2.31.2
+Version: 2.32.6
 Release: alt1
 
-Summary: Optimized primitives for collective multi-GPU communication
+Summary: NVIDIA library for multi-GPU communication
 License: Apache-2.0 AND BSD-3-Clause
 Group:   System/Libraries
 URL: 	 https://developer.nvidia.com/nccl
@@ -21,10 +16,11 @@ Source: nvidia-nccl-%version.tar
 
 ExclusiveArch: x86_64 aarch64
 
-BuildRequires: gcc%nvcc_host_gcc_version-c++
-BuildRequires: nvidia-cuda-devel
+BuildRequires(pre): rpm-macros-cuda-toolkit
+BuildRequires: %cuda_buildreq
 BuildRequires: libcudart
 BuildRequires: python3
+BuildRequires: libssl-devel
 
 %description
 NCCL (pronounced "Nickel") is a stand-alone library
@@ -41,7 +37,9 @@ For more information on NCCL usage, please refer to the NCCL documentation.
 
 %package 	-n libnccl%soversion
 Group: System/Libraries
-Summary: Optimized primitives for collective multi-GPU communication
+Summary: NVIDIA library for multi-GPU communication
+# OpenSSL libraries are loaded via dlopen and are not detected automatically.
+Requires: libssl3 libcrypto3
 
 %description 	-n libnccl%soversion
 NCCL (pronounced "Nickel") is a stand-alone library
@@ -68,15 +66,21 @@ Requires: libnccl%soversion = %EVR
 %setup
 
 %build
-export CC=%nvcc_host_cc
-export CXX=%nvcc_host_cxx
-export NVCC_CCBIN=%nvcc_host_cxx
+export CC=%cuda_host_cc
+export CXX=%cuda_host_cxx
+export NVCC_CCBIN=%cuda_host_cxx
+export TLS_BACKEND=OPENSSL3
 
 export CUDARTLIB=cudart
 export CUDA_HOME=%_usr
 %make_build src.build
 
 %install
+export CC=%cuda_host_cc
+export CXX=%cuda_host_cxx
+export NVCC_CCBIN=%cuda_host_cxx
+export TLS_BACKEND=OPENSSL3
+
 export CUDARTLIB=cudart
 export CUDA_HOME=%_usr
 export PREFIX=%buildroot/%_prefix
@@ -87,11 +91,17 @@ install -d %buildroot%_pkgconfigdir
 
 mv %buildroot%_libexecdir/* %buildroot%_libdir/
 
-# Delete static library
-rm -rv %buildroot/%_libdir/libnccl_static.a
+# Use system paths in pkg-config metadata.
+sed -i \
+    -e 's|^prefix=.*|prefix=%_prefix|' \
+    -e 's|^libdir=.*|libdir=%_libdir|' \
+    %buildroot%_pkgconfigdir/nccl.pc
+
+# Remove the unused static library.
+rm -v %buildroot%_libdir/libnccl_static.a
 
 %files 		-n libnccl%soversion
-%doc *.md LICENSE.txt
+%doc *.md LICENSE.txt ThirdPartyNotices.txt
 %_libdir/libnccl.so.%{soversion}*
 
 %files 		-n libnccl-devel
@@ -102,6 +112,13 @@ rm -rv %buildroot/%_libdir/libnccl_static.a
 %_libdir/libnccl.so
 
 %changelog
+* Wed Nov 11 2026 Nikita Shmatko <nash@altlinux.org> 2.32.6-alt1
+- New version 2.32.6.
+- Used CUDA toolkit macros to select the host compiler.
+- Packaged third-party notices.
+- Fixed paths in pkg-config metadata.
+- Enabled the OpenSSL 3 TLS backend.
+
 * Tue Sep 01 2026 Alexey Shabalin <shaba@altlinux.org> 2.31.2-alt1
 - New version 2.31.2.
 - Build with gcc11 for compat with p11.
