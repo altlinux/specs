@@ -3,7 +3,7 @@
 %def_without check
 
 Name: reticulum
-Version: 1.5.5
+Version: 1.6.0
 Release: alt1
 
 Summary: The cryptography-based networking stack for building unstoppable networks with LoRa, Packet Radio, WiFi and everything in between
@@ -79,6 +79,9 @@ Python module for reticulum.
 %doc LICENSE
 
 %changelog
+* Fri Nov 13 2026 Artem Krasovskiy <aibure@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Wed Oct 28 2026 Artem Krasovskiy <aibure@altlinux.org> 1.5.5-alt1
 - Updated to 1.5.5.
 
