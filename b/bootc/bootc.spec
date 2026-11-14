@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.16.11
+Version: 1.17.3
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -81,8 +81,8 @@ fi
 %_unitdir/%name-*
 %_docdir/%name/
 %_man5dir/%{name}*
+%_man7dir/%{name}*
 %_man8dir/%{name}*
-%_man8dir/system-reinstall-%{name}*
 %_datadir/bash-completion/completions/%name
 %_datadir/elvish/lib/%name.elv
 %_datadir/fish/vendor_completions.d/%name.fish
@@ -92,8 +92,12 @@ fi
 
 %files -n system-reinstall-%name
 %_bindir/system-reinstall-%name
+%_man8dir/system-reinstall-%{name}*
 
 %changelog
+* Fri Oct 30 2026 Vladimir Romanov <rirusha@altlinux.org> 1.17.3-alt1
+- New version 1.17.3.
+
 * Fri Sep 04 2026 Vladimir Romanov <rirusha@altlinux.org> 1.16.11-alt1
 - New version 1.16.11.
 
