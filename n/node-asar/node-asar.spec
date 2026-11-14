@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-asar
-Version: 4.3.1
+Version: 4.3.2
 Release: alt1
 
 Summary: Simple extensive tar-like archive format with indexing
@@ -83,6 +83,9 @@ cmp src/asar.ts check.out/asar.ts
 %nodejs_sitelib/%node_module
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.2-alt1
+- new version 4.3.2
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
 - new version 4.3.1
 - build lib from TypeScript sources with node-typescript
