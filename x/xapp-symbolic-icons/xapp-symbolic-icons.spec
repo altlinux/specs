@@ -3,7 +3,7 @@
 %def_without check
 
 Name: xapp-symbolic-icons
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 
 Summary: Set of symbolic icons for GTK applications and projects
@@ -53,6 +53,9 @@ xsi-replace-adwaita-symbolic
 %_iconsdir/hicolor/scalable/actions/xsi-*.svg
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.2-alt1
+- New version 1.1.2.
+
 * Sat Oct 31 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.1-alt1
 - New version 1.1.1.
 
