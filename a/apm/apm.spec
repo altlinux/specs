@@ -3,10 +3,16 @@
 
 %define _unpackaged_files_terminate_build 1
 
+%define libname lib%name
+%define gir_name Apm
 %define service_id org.altlinux.APM
+%define service_id2 org.altlinux.APM2
+
+%define sover 0.8
+%define minor 0
 
 Name: apm
-Version: 0.7.1
+Version: %sover.%minor
 Release: alt1
 
 Summary: Atomic Package Manager
@@ -28,9 +34,15 @@ BuildRequires(pre): rpm-macros-golang
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: rpm-build-golang
+BuildRequires: rpm-build-vala
 BuildRequires: meson
 BuildRequires: gcc-c++
 BuildRequires: libapt-devel
+BuildRequires: pkgconfig(appstream)
+BuildRequires: vala
+BuildRequires: pkgconfig(libdeser-0.2)
+BuildRequires: gobject-introspection-devel
+BuildRequires: gir(Deser) = 0.2
 BuildRequires: pkgconfig(systemd)
 BuildRequires: /proc
 
@@ -39,6 +51,20 @@ APM is a universal application for managing both system packages
 and packages from distrobox. It consolidates all functions into
 a single API, provides interaction via a DBUS service, and offers
 optional support for atomic images based on ALT Linux.
+
+%package -n %libname%sover
+Summary: DBus library of %name
+Group: System/Libraries
+
+%description -n %libname%sover
+%summary.
+
+%package -n %libname%sover-devel
+Summary: Development files for DBus library of %name
+Group: Development/Other
+
+%description -n %libname%sover-devel
+%summary.
 
 %prep
 %setup -a1
@@ -75,11 +101,32 @@ done
 %_sysconfdir/apt/apt.conf.d/99-apm-update.conf
 %_datadir/apt/scripts/update-apm.lua
 %_datadir/%name/grpconf.d
-%doc README.en.md
-%doc README.md
-%doc README.ru.md
+%doc README*
+
+%files -n %libname%sover
+%_libdir/%libname.so.%sover
+%_libdir/%libname.so.%sover.%minor
+%_typelibdir/%gir_name-%sover.typelib
+
+%files -n %libname%sover-devel
+%_libdir/%libname.so
+%_includedir/%libname-%sover.h
+%_pkgconfigdir/%libname-%sover.pc
+%_vapidir/%libname-%sover.vapi
+%_vapidir/%libname-%sover.deps
+%_girdir/%gir_name-%sover.gir
 
 %changelog
+* Sun Nov 15 2026 Vladimir Romanov <rirusha@altlinux.org> 0.8.0-alt1
+- New version: 0.8.0.
+- Improved DBus API (`APM2`).
+- Added `libapm` as symbol library for new DBus API.
+- Dropped https API and WebSocker support.
+- Added `metainfo` field in `branding` module.
+- Fixed `release-override` in classic systems.
+- Full release note here:
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.8.0
+
 * Sun Oct 25 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.1-alt1
 - New version: 0.7.1.
 - Reworked APT transactions around a plan/apply flow; execution now applies
