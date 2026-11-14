@@ -6,7 +6,7 @@
 
 Name: mk-configure
 Version: 0.40.3
-Release: alt1
+Release: alt2
 
 Summary: Build system on top of bmake
 License: BSD-2-Clause and MIT and ISC
@@ -128,6 +128,10 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Sat Nov 14 2026 Aleksey Cheusov <cheusov@altlinux.org> 0.40.3-alt2
+- mkc_compiler_settings: create $HOME/.mkmake directory
+- mk-configure.macros: STRIPFLAG defaults to empty string
+
 * Fri Oct 23 2026 Aleksey Cheusov <cheusov@altlinux.org> 0.40.3-alt1
 - 0.40.3
 
