@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.5
-Release: alt6
+Release: alt7
 
 Summary: Android Debug CLI tools
 License: APL
@@ -58,6 +58,9 @@ Patch104: loong64.patch
 Patch200: alt-libziparchive-compile-fix.patch
 Patch201: alt-absl-workaround.patch
 Patch202: alt-mkf2fs-path.patch
+Patch203: alt-libbase-cstdint.patch
+Patch204: alt-libziparchive-cstdint.patch
+Patch205: alt-fastboot-cstdint.patch
 
 # LoongArch
 Patch3500: boringssl-loongarch64.patch
@@ -163,6 +166,9 @@ popd
 %patch200 -p1
 %patch201 -p1
 %patch202 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
 %patch3500 -p1
 %patch3501 -p1
 
@@ -368,6 +374,9 @@ done
 %aprefix
 
 %changelog
+* Sat Nov 14 2026 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt7
+- Fix build failures
+
 * Sat Jun 20 2026 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt6
 - Harden Clang include path evaluation
 - Still use Clang 21.1 due to issues with build on aarch64
