@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapybladerf
-Version: 0.4.2
+Version: 0.4.4
 Release: alt1
 
 Summary: bladeRF device support for SoapySDR
@@ -38,5 +38,8 @@ transmit and receive.
 %_libdir/SoapySDR/modules0.8/libbladeRFSupport.so
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.4-alt1
+- new version 0.4.4 (with rpmrb script)
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.2-alt1
 - Initial build for Sisyphus

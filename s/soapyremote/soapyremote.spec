@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyremote
-Version: 0.5.3
+Version: 0.5.4
 Release: alt1
 
 Summary: Use SoapySDR devices over network
@@ -41,6 +41,9 @@ modules on the server as if they were local module
 %_sysctldir/10-SoapySDRServer.conf
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.4-alt1
+- New version 0.5.4.
+
 * Sun Oct 11 2026 Nikolay Strelkov <snk@altlinux.org> 0.5.3-alt1
 - New version 0.5.3.
 

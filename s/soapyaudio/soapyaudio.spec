@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyaudio
-Version: 0.1.1
+Version: 0.1.2
 Release: alt1
 
 Summary: Audio device support for SoapySDR
@@ -42,5 +42,8 @@ available.
 %_libdir/SoapySDR/modules0.8/libaudioSupport.so
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.1.2-alt1
+- new version 0.1.2 (with rpmrb script)
+
 * Sun Jun 08 2025 Nikolay Strelkov <snk@altlinux.org> 0.1.1-alt1
 - Initial build for Sisyphus

@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: sdrangel
-Version: 8.0.0
-Release: alt2
+Version: 8.2.0
+Release: alt1
 
 Summary: Qt-based SDR front-end for various devices
 License: GPL-3.0-or-later
@@ -58,6 +58,7 @@ BuildRequires: libhidapi-devel
 BuildRequires: pkgconfig(libavdevice)
 BuildRequires: pkgconfig(libavfilter)
 BuildRequires: pkgconfig(hamlib)
+BuildRequires: pkgconfig(libzstd)
 
 ## Hardware libraries
 BuildRequires: pkgconfig(libairspy)
@@ -215,6 +216,9 @@ patchelf %buildroot%_libdir/sdrangel/pluginssrv/*.so --add-rpath %_libdir/sdrang
 %_datadir/metainfo/org.sdrangel.SDRangel.metainfo.xml
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 8.2.0-alt1
+- New version 8.2.0.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 8.0.0-alt2
 - Spec refined.
 

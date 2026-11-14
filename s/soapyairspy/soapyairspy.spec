@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyairspy
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Airspy device support for SoapySDR
@@ -38,5 +38,8 @@ defined radio hardware can make use of Airspy receivers.
 %_libdir/SoapySDR/modules0.8/libairspySupport.so
 
 %changelog
+* Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.1-alt1
+- new version 0.2.1 (with rpmrb script)
+
 * Mon Jun 09 2025 Nikolay Strelkov <snk@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus
