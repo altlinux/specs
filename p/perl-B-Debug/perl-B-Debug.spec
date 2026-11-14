@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-B-Debug
 Version: 1.26
-Release: alt1
+Release: alt1.1
 Summary: B::Debug - Walk Perl syntax tree, printing debug info about ops
 
 Group: Development/Perl
@@ -11,6 +11,7 @@ Url: %CPAN B-Debug
 Source0: http://www.cpan.org/authors/id/R/RU/RURBAN/B-Debug-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: perl-devel
+%filter_from_requires /^perl.B.Asmdata.pm./d
 
 %description
 %summary
@@ -29,6 +30,9 @@ BuildRequires: perl-devel
 %doc Changes README Artistic Copying
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 1.26-alt1.1
+- NMU: drop false dependency on B::Asmdata (perl-B-C is removed)
+
 * Mon Dec 18 2017 Igor Vlasenko <viy@altlinux.ru> 1.26-alt1
 - automated CPAN update
 
