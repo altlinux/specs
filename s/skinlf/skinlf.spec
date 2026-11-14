@@ -1,109 +1,67 @@
+%define _unpackaged_files_terminate_build 1
+%def_with check
+
 Name: skinlf
 Version: 6.7
-Release: alt3.1
-Summary: Skin look and feel Skinning library for java
+Release: alt4
 
+Summary: Skinning library for Java Swing applications
+License: Apache-2.0 AND Zlib AND Apache-1.1
 Group: Development/Java
-License: ASL 2.0 and zlib and ASL 1.1
-Url: http://skinlf.dev.java.net/
-
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-
-Source: %name-%version-clean.tar.gz
-# Original Source# Contains code that we cannot ship.
-# Download the upstream tarball and invoke this script while in the
-# tarball's directory
-# ./skinlf-generate-tarball.sh 6.7-20060722
-Source1: %name-generate-tarball.sh
-
+Url: https://sourceforge.net/projects/skinlf/
 BuildArch: noarch
 
-#See http://bollin.googlecode.com/svn/libskinlf-java/trunk
-#for patchset maintained by Scilab developer, Sylvestre Ledru.
-# These patches have been modified.
-Patch: skinlf-nosun-jimi-patch.patch
-#Release file does not contain building tools. thats CVS only. Don't know which CVS revision to check out for release CVS.
-Patch1: skinlf-build-xml-patch.patch
-#Create common.xml as release omits building tools
-Patch2: skinlf-common-xml-patch.patch
-#org.apache.xpath has been removed from JDK1.5 and above
-#patch to use com.sun.org.apache.xpath.internal.XPathAPI instead
-Patch3: skinlf-sun-jdk1.5-xpath-patch.patch
+Source: %name-%version.tar
+Source1: SkinLFSmokeTest.java
+Patch0: %name-%version-imageio.patch
+Patch1: %name-%version-build.patch
+Patch2: %name-%version-common.patch
+Patch3: %name-%version-jdk-xpath.patch
 
-BuildRequires: laf-plugin ant ant-nodeps rpm-build-java dos2unix
-%if "%{version}" == "6.7"
-# this old wersion can't be  built with java 11
-BuildRequires: java-1.8.0-devel
-%else
-# but latest upstream versions shoud be ok
-BuildRequires: java-devel-default
-%endif
+BuildRequires(pre): rpm-build-java
+BuildRequires: ant dos2unix java-1.8.0-devel laf-plugin
 
 %description
-Skin Look And Feel is a java framework that is  able to read GTK (The
-Gimp ToolKit) and KDE (The K Desktop Environment) skins to enhance
-your application.
-SkinLF supports GUI controls such as Buttons, Checks, Radios, Scrollbars,
-Progress Bar, Lists,  Tables, Internal Frames, Colors, Background
-Textures, Regular Windows.
+Skin Look And Feel (SkinLF) is a skinning library for Java Swing
+applications. It reads image-based GTK and KDE themes to customize
+buttons, menus, scrollbars, tables, internal frames and other widgets.
 
 %prep
 %setup -q
-%patch0
+%autopatch -p1
 
-#building patches
-%patch1
-%patch2
-#Code fixing
-%patch3
-
-#dos2unix Doc files
-for i in "CHANGES README LICENSE LICENSE_nanoxml" ;
-do
-	dos2unix $i;
-done
-
-#Remove jar files
-rm -f ./lib/examples.jar
-rm -f ./lib/nativeskin.jar
-rm -f ./lib/skinlf.jar
-
-#rm due to dubious license
-rm -f ./src/examples/Clock.java
-
-#Sanitise package -- disallow jar files
-JAR_files=""
-for j in $(find -name \*.jar); do
-if [ ! -L $j ] ; then
-	JAR_files="$JAR_files $j"
-	fi
-done
-
-if [ ! -z "$JAR_files" ] ; then
-	echo "These JAR files should be deleted and symlinked to system JAR files: $JAR_files"
-	#Uncomment this line before accepting package
-	exit 1
-fi
+dos2unix LICENSE LICENSE_nanoxml
 
 %build
 ant
-#Construct-a-jar Dont use ant jar as it tries to unpack laf-plugin
-pushd build/classes
-jar cf %name-%version.jar .
-popd
+jar cf skinlf-%version.jar -C build/classes . \
+    -C src com/l2fprod/gui/plaf/skin/resources
 
 %install
-mkdir -p %buildroot/%_javadir
-install -m644 ./build/classes/%name-%version.jar -D %buildroot%_javadir/%name-%version.jar
-cd %buildroot%_javadir/
-ln -s %name-%version.jar %name.jar
+install -Dm644 skinlf-%version.jar %buildroot%_javadir/skinlf-%version.jar
+ln -s skinlf-%version.jar %buildroot%_javadir/skinlf.jar
+
+%check
+mkdir -p build/test-classes
+javac -cp %buildroot%_javadir/skinlf-%version.jar \
+    -d build/test-classes %SOURCE1
+java -Djava.awt.headless=true \
+    -cp build/test-classes:%buildroot%_javadir/skinlf-%version.jar:%_javadir/laf-plugin.jar \
+    SkinLFSmokeTest lib/themepack.zip
 
 %files
-%doc CHANGES README LICENSE  LICENSE_nanoxml
-%_javadir/%name.jar
-%_javadir/%name-%version.jar
+%doc LICENSE LICENSE_nanoxml
+%_javadir/skinlf.jar
+%_javadir/skinlf-%version.jar
 
 %changelog
+* Sat Nov 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 6.7-alt4
+- Fix FTBFS: remove the obsolete ant-nodeps build dependency.
+- Remove prebuilt JARs and the Windows DLL from the source tree.
+- Include resource bundles required for look-and-feel initialization.
+- Add a headless smoke test for the packaged library.
+- Spec cleanup.
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 6.7-alt3.1
 - NMU: java11 support
 
@@ -146,4 +104,3 @@ ln -s %name-%version.jar %name.jar
 
 * Sat Nov 01 2008 <mycae(a!t)yahoo.com> 6.7-1
 - Create spec file
-
