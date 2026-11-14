@@ -10,7 +10,7 @@
 %endif
 
 Name: frei0r-plugins
-Version: 3.6.0
+Version: 3.7.1
 Release: alt1
 
 Summary: A free software collection of video effect plugins
@@ -98,6 +98,9 @@ sed -i 's/defined(__SSE4_1__)/0/' src/filter/tint0r/tint0r.c
 %endif
 
 %changelog
+* Sat Nov 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.7.1-alt1
+- updated from 3.6.0 to 3.7.1
+
 * Tue Sep 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.6.0-alt1
 - updated from 3.5.0 to 3.6.0
 
