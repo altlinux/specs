@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.1
+Version: 5.1.0
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -73,6 +73,9 @@ popd
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 5.0.1-alt1
 - new version 5.0.1
 
