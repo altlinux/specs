@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.30
-Release: alt1
+Version: 0.0.32
+Release: alt1.1.gdb16513
 
 Summary: Level-up your Hypothesis tests with CrossHair
 License: MIT
@@ -17,18 +17,10 @@ Vcs: https://github.com/pschanely/hypothesis-crosshair
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch0: %name-%version-alt.patch
 
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 Add the power of solver-based symbolic execution to your Hypothesis
@@ -37,11 +29,10 @@ tests with CrossHair.
 %prep
 %setup
 %autopatch -p1
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
+%pyproject_setup_deps
+# Findability checks are not meaningful for symbolic providers.
+sed -i '/_realize_objects=_realize_objects,/a\        check_findability=False,' \
+       hypothesis_crosshair_provider/crosshair_provider_test.py
 
 %build
 %pyproject_build
@@ -57,6 +48,9 @@ tests with CrossHair.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Nov 15 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.32-alt1.1.gdb16513
+- Updated to 0.0.32.
+
 * Wed Aug 26 2026 Anton Zhukharev <ancieg@altlinux.org> 0.0.30-alt1
 - Updated to 0.0.30.
 
