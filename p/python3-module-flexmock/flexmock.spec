@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Mock/Stub/Spy library for Python
@@ -48,6 +48,9 @@ mocks, stubs and fakes.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sat Nov 14 2026 Anton Vyatkin <toni@altlinux.org> 0.14.0-alt1
+- New version 0.14.0.
+
 * Sun Jan 11 2026 Anton Vyatkin <toni@altlinux.org> 0.13.0-alt1
 - New version 0.13.0.
 
