@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Compress-Raw-Zlib
 Name: perl-%dist
-Version: 2.225
+Version: 2.226
 Release: alt1
 
 Summary: Low-level interface to the zlib compression library
@@ -54,6 +54,9 @@ export ZLIB_INCLUDE=%{_includedir}
 %perl_vendor_autolib/Compress
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.226-alt1
+- NMU: new version 2.226.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 2.225-alt1
 - NMU: new version 2.225.
 
