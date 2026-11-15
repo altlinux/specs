@@ -2,7 +2,7 @@
 
 Name: ipe
 Version: 7.2.30
-Release: alt1
+Release: alt2
 
 Summary: Ipe extensible drawing editor
 License: GPL-3.0-or-later
@@ -11,6 +11,8 @@ Url: https://ipe.otfried.org
 Vcs: https://github.com/otfried/ipe
 
 Source: %name-%version.tar
+
+Patch: %name-%version-%release.patch
 
 BuildRequires: pkgconfig(Qt6Gui)
 BuildRequires: pkgconfig(lua5.4)
@@ -45,6 +47,7 @@ plugins for the Ipe editor.
 
 %prep
 %setup
+%patch -p1
 
 %build
 pushd src
@@ -132,5 +135,8 @@ install -Dm644 artwork/ipe.iconset/icon_512x512.png %buildroot%_iconsdir/hicolor
 %_libdir/libipelua.so
 
 %changelog
+* Sun Nov 15 2026 Nikolay Strelkov <snk@altlinux.org> 7.2.30-alt2
+- Fixed FTBFS.
+
 * Sat Feb 14 2026 Nikolay Strelkov <snk@altlinux.org> 7.2.30-alt1
 - Initial build for Sisyphus
