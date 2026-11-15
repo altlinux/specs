@@ -2,7 +2,7 @@
 %define nameD aiostream
 
 Name: python3-module-aiostream
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary: Generator-based operators for asynchronous iteration
@@ -37,6 +37,9 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 %python3_sitelibdir/%{pyproject_distinfo %nameD}/
 
 %changelog
+* Mon Nov 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.2-alt1
+- 0.8.1 -> 0.8.2
+
 * Wed Sep 16 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.1-alt1
 - 0.8.0 -> 0.8.1
 
