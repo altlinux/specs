@@ -2,8 +2,8 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.8.1
-Release: alt2
+Version: 0.8.2
+Release: alt1
 
 Summary: An open-source Shazam client for Linux.
 License: GPL-3.0-only
@@ -13,8 +13,6 @@ VCS: https://github.com/marin-m/SongRec
 
 Source0: %name-%version.tar
 Source1: vendor.tar
-
-Patch: e5a2935f209d07cd163608d790e0ad816fe21450.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -43,7 +41,6 @@ your input device.
 %prep
 %setup -a1
 %rust_prep
-%patch -p1
 
 %build
 %rust_build 
@@ -72,6 +69,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Sun Nov 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.2-alt1
+- 0.8.1 -> 0.8.2
+
 * Thu Nov 12 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.1-alt2
 - fixed: app start minimized (ALT #61403)
 
