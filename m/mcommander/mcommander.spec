@@ -10,7 +10,7 @@
 
 Name: mcommander
 Version: 6.1.0
-Release: alt1
+Release: alt2
 Summary: Twin-panel text-mode file manager with loadable panel plugins
 License: GPL-3.0-or-later
 Group: File tools
@@ -135,7 +135,7 @@ rm -vf %buildroot%_libexecdir/mcommander/extfs.d/s3+
 %find_lang %name
 
 %check
-%make_build check XFAIL_TESTS="mctree_view mcterm_pty_send"
+%make_build check XFAIL_TESTS="mcterm_pty_send"
 
 %files -f %{name}.lang
 %doc COPYING
@@ -170,5 +170,8 @@ rm -vf %buildroot%_libexecdir/mcommander/extfs.d/s3+
 %_datadir/mcommander/lua/
 
 %changelog
+* Sun Nov 15 2026 Nikolay Strelkov <snk@altlinux.org> 6.1.0-alt2
+- Fixed FTBFS.
+
 * Sun Sep 27 2026 Nikolay Strelkov <snk@altlinux.org> 6.1.0-alt1
 - Initial build for Sisyphus
