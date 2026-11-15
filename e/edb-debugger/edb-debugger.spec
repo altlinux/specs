@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: edb-debugger
-Version: 1.5.0
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Cross platform x86/x86-64 debugger
 License: GPL-2.0
@@ -59,6 +59,9 @@ install -Dm 644 edb.appdata.xml %buildroot%_datadir/metainfo/edb.appdata.xml
 %_datadir/metainfo/edb.appdata.xml
 
 %changelog
+* Sun Nov 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.0-alt1
+- New version 1.6.0.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.5.0-alt2
 - Spec refined.
 
