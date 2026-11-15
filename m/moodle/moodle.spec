@@ -3,8 +3,8 @@
 %def_without pam
 
 Name: moodle
-Version: 5.3.0
-Release: alt2
+Version: 5.3.1
+Release: alt1
 
 Summary: The world's open source learning platform
 License: GPL-3.0+
@@ -254,6 +254,10 @@ install -Dpm0644 %SOURCE3 %buildroot%_sysconfdir/php/%php_version/apache2-mod_ph
 %endif
 
 %changelog
+* Thu Nov 12 2026 Andrey Cherepanov <cas@altlinux.org> 5.3.1-alt1
+- New version (fixes: CVE-2026-47759, CVE-2026-47761, CVE-2026-47762,
+  CVE-2026-123655).
+
 * Tue Oct 13 2026 Andrey Cherepanov <cas@altlinux.org> 5.3.0-alt2
 - Rebuilt with default PHP.
 
