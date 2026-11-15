@@ -2,19 +2,26 @@
 %def_with check
 
 Name: fulcio
-Version: 1.8.8
+Version: 1.10.0
 Release: alt1
 
 Summary: Sigstore OIDC PKI
 License: Apache-2.0
-Group: Development/Tools
+Group: System/Servers
 VCS: https://github.com/sigstore/fulcio
 Url: https://docs.sigstore.dev/certificate_authority/overview/
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Source2: fulcio.service
+Source3: fulcio.sysconfig
+Source4: fulcio.sysusers
+Source5: fulcio-serve.yaml
+Source6: README.ALT
+Source7: fulcio-config.yaml
 
 BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-macros-systemd
 
 %description
 A Free-to-Use CA For Code Signing
@@ -26,6 +33,7 @@ Fulcio only issues short-lived certificates that are valid for 10 minutes.
 
 %prep
 %setup -a1
+cp %SOURCE6 .
 
 %build
 
@@ -37,6 +45,12 @@ LDFLAGS="-X sigs.k8s.io/release-utils/version.gitVersion=%version-%release"
 %install
 install -vDm 755 ./fulcio %buildroot/%_bindir/fulcio
 install -vDm 755 ./certificate-maker %buildroot/%_bindir/certificate-maker
+
+install -vDm 644 %SOURCE2 %buildroot%_unitdir/fulcio.service
+install -vDm 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/fulcio
+install -vDm 644 %SOURCE4 %buildroot%_sysusersdir/fulcio.conf
+install -vDm 640 %SOURCE5 %buildroot%_sysconfdir/fulcio/serve.yaml
+install -vDm 640 %SOURCE7 %buildroot%_sysconfdir/fulcio/config.yaml
 
 install -d %buildroot%_datadir/bash-completion/completions \
            %buildroot%_datadir/zsh/site-functions \
@@ -50,10 +64,26 @@ done
 %check
 %gotest ./cmd/... ./pkg/...
 
+%pre
+%sysusers_create_package fulcio %SOURCE4
+
+%post
+%post_systemd fulcio.service
+
+%preun
+%preun_systemd fulcio.service
+
 %files
-%doc LICENSE README.md docs/setup.md docs/certificate-maker.md config/identity/config.yaml
+%doc LICENSE README.md README.ALT docs/setup.md docs/oidc.md docs/hsm-support.md
+%doc docs/certificate-maker.md config/identity/config.yaml
 %_bindir/fulcio
 %_bindir/certificate-maker
+%_unitdir/fulcio.service
+%_sysusersdir/fulcio.conf
+%config(noreplace) %_sysconfdir/sysconfig/fulcio
+%dir %attr(0750,root,_fulcio) %_sysconfdir/fulcio
+%config(noreplace) %attr(0640,root,_fulcio) %_sysconfdir/fulcio/config.yaml
+%config(noreplace) %attr(0640,root,_fulcio) %_sysconfdir/fulcio/serve.yaml
 %_datadir/bash-completion/completions/fulcio
 %_datadir/bash-completion/completions/certificate-maker
 %_datadir/zsh/site-functions/_fulcio
@@ -62,6 +92,13 @@ done
 %_datadir/fish/vendor_completions.d/certificate-maker.fish
 
 %changelog
+* Sun Nov 15 2026 Egor Ignatov <egori@altlinux.org> 1.10.0-alt1
+- New version 1.10.0.
+
+* Mon Oct 05 2026 Egor Ignatov <egori@altlinux.org> 1.8.8-alt2
+- Add systemd unit running fulcio serve as _fulcio system user.
+- Add configs in /etc/fulcio and /etc/sysconfig/fulcio (see README.ALT).
+
 * Tue Jul 14 2026 Egor Ignatov <egori@altlinux.org> 1.8.8-alt1
 - New version 1.8.8.
 
