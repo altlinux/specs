@@ -3,8 +3,8 @@
 %def_with check
 
 Name: rio
-Version: 0.5.29
-Release: alt2
+Version: 0.5.32
+Release: alt1
 Summary: A hardware-accelerated GPU terminal emulator
 License: MIT
 Group: Terminals
@@ -28,6 +28,10 @@ BuildRequires: termutils-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(freetype2)
+
+%if_with check
+BuildRequires: /dev/pts
+%endif
 
 Provides: xvt
 Provides: x-terminal-emulator
@@ -99,6 +103,9 @@ install -Dm0644 %bin_name-bindings.5 %buildroot%_man5dir/%bin_name-bindings.5
 %_man5dir/%bin_name-bindings.5*
 
 %changelog
+* Sun Nov 15 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.32-alt1
+- Updated to version 0.5.32.
+
 * Tue Nov 03 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.5.29-alt2
 - Enabled audio notifications (closes: #61312).
 
