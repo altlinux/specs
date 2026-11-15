@@ -1,6 +1,6 @@
-%define dbeaver_common_commit 79d77de623dd4848b61c21d2dd30ce0d652af076
+%define dbeaver_common_commit 2e249dfff60297c6e695976c1ccecaea3600e46b
 %define equinox_commit 12022c26e62ce76e376f6f9b22001b9aa0f969a7
-%define datadam_api_commit ae0f5d40b8c54d461be3990d24ca278601cf1a3f
+%define datadam_api_commit da22e472818c0d1c81f99a704c2b8029eadd003f
 
 %ifarch x86_64
 %define jna_arch linux-x86-64
@@ -10,7 +10,7 @@
 %endif
 
 Name: dbeaver
-Version: 26.2.4
+Version: 26.2.5
 Release: alt1
 
 Summary: Universal Database Manager
@@ -142,6 +142,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Sun Nov 15 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.5-alt1
+- Version 26.2.5
+
 * Mon Nov 02 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.4-alt1
 - Version 26.2.4
 - Fix SSL private key staging in sandboxed environments without mount info
