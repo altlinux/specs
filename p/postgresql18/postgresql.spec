@@ -21,8 +21,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     18
-%define postgresql_minor     6
-%define postgresql_altrel    2
+%define postgresql_minor     7
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1168,6 +1168,22 @@ fi
 %endif
 
 %changelog
+* Sat Nov 14 2026 Alexei Takaseev <taf@altlinux.org> 18.7-alt1
+- 18.7 (Fixes CVE-2026-6460,   CVE-2026-6467,   CVE-2026-14661,  CVE-2026-16237,
+              CVE-2026-16240,  CVE-2026-18447,  CVE-2026-116303, CVE-2026-116303,
+              CVE-2026-116304, CVE-2026-116306, CVE-2026-116307, CVE-2026-116308,
+              CVE-2026-116309, CVE-2026-116310, CVE-2026-116311, CVE-2026-116312,
+              CVE-2026-116313, CVE-2026-116314, CVE-2026-116315, CVE-2026-116316,
+              CVE-2026-116317, CVE-2026-116318, CVE-2026-116319, CVE-2026-116320,
+              CVE-2026-116321, CVE-2026-116322, CVE-2026-116323, CVE-2026-116325,
+              CVE-2026-116326, CVE-2026-116326, CVE-2026-116327, CVE-2026-116328,
+              CVE-2026-116329, CVE-2026-116330, CVE-2026-116331, CVE-2026-116332,
+              CVE-2026-116333, CVE-2026-116335, CVE-2026-116336, CVE-2026-120139,
+              CVE-2026-120141, CVE-2026-120142, CVE-2026-120143, CVE-2026-120144,
+              CVE-2026-120145, CVE-2026-120146, CVE-2026-120147, CVE-2026-120148,
+              CVE-2026-120149, CVE-2026-120150, CVE-2026-120151, CVE-2026-120152,
+              CVE-2026-120153, CVE-2026-120154)
+
 * Fri Oct 23 2026 Alexei Takaseev <taf@altlinux.org> 18.6-alt2
 - Remove BR rpm-build-vm-createimage and option --rootfs
 - Tests only x86_64
