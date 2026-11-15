@@ -1,6 +1,6 @@
 Name: libfaketime
 Version: 0.9.13
-Release: alt1
+Release: alt2
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -15,7 +15,6 @@ Patch: libfaketime-symver.patch
 Patch1: libfaketime-remove-null-tests.patch
 
 #Provides: faketime
-Conflicts: faketime
 
 BuildRequires: perl-Time-HiRes
 BuildRequires: libuthash-devel >= 2.0.2
@@ -28,6 +27,15 @@ retrieve the current date and time. It can then report faked dates and
 times (as specified by you, the user) to these programs. This means you
 can modify the system time a program sees without having to change the
 time system- wide.
+
+%package utils
+Summary: Command-line utility for libfaketime
+Group: Development/C
+Requires: %name = %EVR
+Conflicts: faketime
+
+%description utils
+This package contains the faketime command and its manual page.
 
 %prep
 %setup
@@ -94,12 +102,18 @@ rm -r %buildroot/%_docdir/faketime
 %files
 %doc COPYING
 %doc README NEWS README.developers
-%_bindir/faketime
 %dir %_libdir/faketime/
 %_libdir/faketime/libfaketime*so.*
+
+%files utils
+%_bindir/faketime
 %_man1dir/*
 
 %changelog
+* Sat Nov 14 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.13-alt2
+- move the faketime command and man page to libfaketime-utils,
+  so i586-libfaketime installs together with the faketime package
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.13-alt1
 - new version 0.9.13
 - rebase symver patch
