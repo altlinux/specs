@@ -1,5 +1,5 @@
 Name: rustdesk-server
-Version: 1.1.15
+Version: 1.1.16
 Release: alt1
 
 Summary: RustDesk Server Program
@@ -62,6 +62,9 @@ install -D systemd/rustdesk-hbbs.service -t %buildroot%_unitdir/
 %_logdir/%name
 
 %changelog
+* Sun Nov 15 2026 Anton Kurachenko <srebrov@altlinux.org> 1.1.16-alt1
+- New version 1.1.16.
+
 * Sun May 10 2026 Anton Kurachenko <srebrov@altlinux.org> 1.1.15-alt1
 - New version 1.1.15.
 
