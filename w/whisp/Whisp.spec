@@ -2,10 +2,10 @@
 %define oname io.github.tanaybhomia.Whisp
 
 Name: whisp
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
-Summary: The Anti-Note for GNOME
+Summary: Spatial canvas for capturing fleeting thoughts
 License: GPL-3.0-or-later
 Group: Editors
 
@@ -26,7 +26,10 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson pkgconfig(gtk4) pkgconfig(libadwaita-1) typelib(Adw)
 
 %description
-A fluid, gesture-driven scratchpad designed for absolute speed.
+Whisp is a fast note-taking application built for the GNOME desktop environment.
+It replaces traditional file hierarchies with a spatial, swipeable canvas.
+Inspired by the "anti-note" philosophy, it acts as a quick desktop scratchpad with
+Markdown editing, built natively with GTK4 and Libadwaita.
 
 %prep
 %setup
@@ -51,6 +54,10 @@ A fluid, gesture-driven scratchpad designed for absolute speed.
 %_datadir/gnome-shell/search-providers/%oname-search-provider.ini
 
 %changelog
+* Sun Nov 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.0-alt1
+- 1.6.1 -> 1.7.0
+- changed summary and description
+
 * Wed Oct 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.1-alt1
 - 1.6.0 -> 1.6.1
 
