@@ -1,11 +1,11 @@
 # TODO: add netbird-management, netbird-signal and netbird-relay 
 %global import_path github.com/netbirdio/netbird
 %define _unpackaged_files_terminate_build 1
-%define commit      396976b8be081fbf0d3d959698352585e80618e3
+%define commit      499a86f4bc4795310ead5f06ecd5907e585acef4
 %define shortcommit %(c=%commit; echo ${c:0:8})
 
 Name: netbird
-Version: 0.81.5
+Version: 0.83.1
 Release: alt1
 
 Summary: Mesh VPN based on WireGuard
@@ -20,7 +20,7 @@ Source1: %name-vendor.tar
 Source2: netbird.service
 Source3: config.json
 
-Patch: %name-%version-%release.patch
+Patch0: 0001-ALT-disable-service-install.patch
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-macros-golang
@@ -70,6 +70,9 @@ install -dm750 %buildroot%_sharedstatedir/%name
 %preun
 %preun_systemd %name.service
 
+%check
+%buildroot%_bindir/netbird version | grep -P '^\Q%version\E'
+
 %files
 %doc README.md SECURITY.md LICENSE
 %_bindir/%name
@@ -82,6 +85,9 @@ install -dm750 %buildroot%_sharedstatedir/%name
 %dir %attr(0750,root,root) %_sharedstatedir/%name
 
 %changelog
+* Sun Nov 15 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.83.1-alt1
+- New version 0.83.1.
+
 * Tue Oct 27 2026 Maxim Slipenko <maks1ms@altlinux.org> 0.81.5-alt1
 - New version 0.81.5.
 
