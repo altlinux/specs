@@ -1,5 +1,5 @@
 Name:    utf8cpp
-Version: 4.09
+Version: 5.0.0
 Release: alt1
 
 Summary: UTF-8 with C++ in a Portable Way
@@ -46,6 +46,9 @@ cmake -Wno-dev \
 %_libdir/cmake/*
 
 %changelog
+* Sun Nov 15 2026 Andrey Cherepanov <cas@altlinux.org> 5.0.0-alt1
+- New version.
+
 * Mon Dec 29 2025 Andrey Cherepanov <cas@altlinux.org> 4.09-alt1
 - New version.
 
