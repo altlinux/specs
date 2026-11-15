@@ -2,7 +2,7 @@
 
 %define _name stevia
 %define binary_name phosh-osk-%_name
-%define ver_major 0.58
+%define ver_major 0.59
 %define beta %nil
 %define rdn_name mobi.phosh.Stevia
 
@@ -10,7 +10,12 @@
 %def_disable default_osk
 %def_disable gtk_doc
 %def_enable man
+
+%ifarch %ix86
+%def_disable check
+%else
 %def_enable check
+%endif
 
 Name: %_name
 Version: %ver_major.0
@@ -46,9 +51,11 @@ Requires: dconf
 Requires: hunspell-en_US hunspell-ru-lebedev
 Requires: fzf words
 Requires: varnam-schemes
+# https://github.com/alphacep/vosk-server
+#Requires: vosk-server
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-alternatives
-BuildRequires: meson
+BuildRequires: meson >= 1.1
 BuildRequires: /usr/bin/appstreamcli desktop-file-utils
 BuildRequires: pkgconfig(gio-2.0) >= 2.68
 BuildRequires: pkgconfig(gtk+-wayland-3.0) >= 3.22
@@ -70,6 +77,10 @@ BuildRequires: fzf
 BuildRequires: pkgconfig(govarnam)
 # Japanese, Chinese and Korean support
 #BuildRequires: pkgconfig(uim)
+# for vosk-server integration since 0.59
+BuildRequires: pkgconfig(gstreamer-1.0)
+BuildRequires: pkgconfig(gstreamer-app-1.0)
+BuildRequires: pkgconfig(libsoup-3.0)
 %{?_enable_gtk_doc:BuildRequires: gobject-introspection-devel gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_check:BuildRequires: at-spi2-core xvfb-run words varnam-schemes}
@@ -152,6 +163,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.59.0-alt1
+- 0.59.0
+
 * Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
 - 0.58.0
 

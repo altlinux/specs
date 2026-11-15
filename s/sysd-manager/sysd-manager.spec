@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name sysd-manager
-%define ver_major 2.23
+%define ver_major 2.25
 %define rdn_name io.github.plrigaux.%name
 %define bus_name io.github.plrigaux.SysDManager
 
@@ -101,6 +101,9 @@ sed -i  's/{BUS_NAME}/%bus_name/
 %doc CHANGELOG* README*
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 2.25.0-alt1
+- 2.25.0
+
 * Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 2.23.0-alt1
 - 2.23.0
 

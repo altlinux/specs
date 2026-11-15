@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name phosh-first-boot
-%define ver_major 0.2
+%define ver_major 0.3
 %define rdn_name mobi.phosh.FirstBoot
 %define gettext_domain PhoshFirstBoot
 %define greetd_user _greeter
@@ -53,6 +53,7 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %build
 export GETTEXT_SYSTEM=1
 %meson \
+    -Dbuildtype=release \
     -Dsetup-user=%greetd_user \
     -Doutput-dir-group=%greetd_user
 %nil
@@ -87,6 +88,9 @@ export GETTEXT_SYSTEM=1
 %doc README* NEWS
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt0.1
+- 0.3.0
+
 * Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.1
 - 0.2.0
 

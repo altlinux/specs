@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define old_name jellybean
 %define _name stockpile
@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Manage inventories of various things
@@ -19,7 +19,7 @@ Url: https://codeberg.org/turtle/stockpile
 Vcs: https://codeberg.org/turtle/stockpile.git
 
 %if_disabled snapshot
-Source: %url/-/archive/%version/%name-%version.tar.gz
+Source: %url/archive/%version.tar.gz
 %else
 Source: %_name-%version.tar
 %endif
@@ -39,7 +39,7 @@ functions and a handy low-stock indicator to let you know when your
 stock of an item is running low.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name%{?_enable_snapshot:-%version}
 
 %build
 %meson \
@@ -64,6 +64,9 @@ stock of an item is running low.
 
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Sat Apr 26 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - updated to 0.5.0-3-gc317359
 

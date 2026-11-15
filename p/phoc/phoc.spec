@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.58
+%define ver_major 0.59
 %define api_ver 0
 %define beta %nil
 %define rdn_name sm.puri.Phoc
@@ -154,6 +154,9 @@ WLR_RENDERER=pixman xvfb-run %__meson_test
 %_datadir/doc/%name-%api_ver/
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.59.0-alt1
+- 0.59.0
+
 * Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
 - 0.58.0
 

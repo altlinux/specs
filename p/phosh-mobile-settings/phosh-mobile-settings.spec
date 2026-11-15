@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %def_enable snapshot
 
-%define ver_major 0.58
+%define ver_major 0.59
 %define beta %nil
 %define gmobile_ver 0.4.0
 %define rdn_name mobi.phosh.MobileSettings
@@ -45,7 +45,7 @@ Source10: gvc-%gvc_ver.tar
 
 %define phoc_ver %ver_major
 %define phosh_ver %ver_major
-%define phosh_settings_ver 0.40
+%define phosh_settings_ver 0.54
 %define desktop_ver 44
 
 Requires: %libname = %EVR
@@ -241,6 +241,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.59.0-alt1
+- 0.59.0
+
 * Sun Oct 04 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
 - 0.58.0
 

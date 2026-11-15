@@ -1,8 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name pfs
 %define libname lib%_name
-# package `libpfs' version `0.0.2-alt0.5' is less than its version `2.2.0-alt2' in `p10'
 # from pfstools
 %define pkg_libname libphosh-file-selector
 %define ver_major 0.2
@@ -20,7 +19,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Phosh File Selector Library
@@ -160,6 +159,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 %endif
 
 %changelog
+* Tue Nov 10 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 

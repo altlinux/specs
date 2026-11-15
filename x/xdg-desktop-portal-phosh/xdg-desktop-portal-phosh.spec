@@ -2,9 +2,9 @@
 %def_enable snapshot
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.58
+%define ver_major 0.59
 %define beta %nil
-%define pfs_ver 0.2.0
+%define pfs_ver 0.2.1
 
 %define _name phosh
 # phrosh portal
@@ -31,7 +31,7 @@ Source: https://gitlab.gnome.org/World/Phosh/xdg-desktop-portal-phosh/-/archive/
 %else
 Source: %name-%version%beta.tar
 %endif
-Source1: pfs-%pfs_ver.tar
+Source1: https://gitlab.gnome.org/World/Phosh/pfs/-/archive/v%pfs_ver/pfs-%pfs_ver.tar.gz
 Source2: %name-%version%beta-cargo.tar
 
 %define xdg_desktop_portal_ver 1.19.1
@@ -56,7 +56,7 @@ portal.
 
 %prep
 %setup -n %name-%{?_disable_snapshot:v}%version%beta -a1 %{?_disable_bootstrap:-a2}
-cp -r pfs-%pfs_ver subprojects/pfs
+cp -r pfs-v%{pfs_ver}* subprojects/pfs
 %{?_enable_bootstrap:
 [ -d .cargo ] || mkdir .cargo
 cargo vendor --no-delete -s subprojects/pfs/Cargo.toml \
@@ -100,6 +100,9 @@ tar -cf %_sourcedir/%name-%version%beta-cargo.tar .cargo/ vendor/}
 %exclude %_datadir/locale/*/*/pfs.mo
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.59.0-alt1
+- 0.59.0
+
 * Sat Oct 03 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
 - 0.58.0
 

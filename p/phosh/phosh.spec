@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.58
+%define ver_major 0.59
 %define beta %nil
 %define libver 0.45
 %define gi_api_ver 0
@@ -136,9 +136,13 @@ BuildRequires: pkgconfig(gnome-bluetooth-3.0)
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
 # since 0.52
 BuildRequires: pkgconfig(qrcodegen)
+# since 0.59
+BuildRequires: pkgconfig(libpipewire-0.3)
+BuildRequires: pkgconfig(dconf)
+BuildRequires: pkgconfig(json-glib-1.0)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel
 BuildRequires: gir(Gcr) = 3 gir(Handy) = 1 gir(NM) = 1.0
-BuildRequires: gir(GnomeDesktop) = 3.0} gir(GnomeBluetooth) = 3.0
+BuildRequires: gir(GnomeDesktop) = 3.0 gir(GnomeBluetooth) = 3.0}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_man:BuildRequires: /usr/bin/rst2man}
@@ -219,6 +223,9 @@ sed -i 's|\(capsh\)|/sbin/\1|' data/%name.service
 %nil
 %meson_build
 
+# Is phosh-pin-tool even necessary?
+# tools/phosh-pin-tool
+
 %install
 %meson_install
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/pam.d/%name
@@ -239,6 +246,7 @@ xvfb-run %__meson_test
 %dir %_sysconfdir/systemd/system/%name.service.d
 %config(noreplace) %_sysconfdir/pam.d/%name
 %_bindir/%name-session
+#%_bindir/%name-pin-tool
 %attr(2711, root, chkpwd) %_libexecdir/%name
 %_libexecdir/%name-calendar-server
 %dir %_libdir/%name
@@ -285,6 +293,12 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/simple-custom-status-icon.plugin
 %_libdir/%name/plugins/lib%name-plugin-load-meter-status-icon.so
 %_libdir/%name/plugins/load-meter-status-icon.plugin
+%_libdir/%name/plugins/lib%name-plugin-camera-status-icon.so
+%_libdir/%name/plugins/camera-status-icon.plugin
+%_libdir/%name/plugins/lib%name-plugin-screenshot-quick-setting.so
+%_libdir/%name/plugins/screenshot-quick-setting.plugin
+%_libdir/%name/plugins/lib%name-plugin-ssh-quick-setting.so
+%_libdir/%name/plugins/ssh-quick-setting.plugin
 
 %{?_enable_searchd:
 %_libexecdir/%name-searchd
@@ -299,9 +313,10 @@ xvfb-run %__meson_test
 %_datadir/glib-2.0/schemas/mobi.phosh.shell.enums.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.plugins.caffeine-quick-setting.gschema.xml
 %_datadir/glib-2.0/schemas/mobi.phosh.plugins.pomodoro.gschema.xml
-%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.launcher-box.gschema.xml
-%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.ticket-box.gschema.xml
-%_datadir/glib-2.0/schemas/sm.puri.phosh.plugins.upcoming-events.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.plugins.launcher-box.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.plugins.ticket-box.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.plugins.upcoming-events.gschema.xml
+%_datadir/glib-2.0/schemas/mobi.phosh.plugins.screenshot-quick-setting.gschema.xml
 %_datadir/glib-2.0/schemas/00_mobi.Phosh.gschema.override
 %_datadir/dbus-1/services/%rdn_name.CalendarServer.service
 %_datadir/gnome-session/sessions/%name.session
@@ -339,6 +354,9 @@ xvfb-run %__meson_test
 }
 
 %changelog
+* Sun Nov 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.59.0-alt1
+- 0.59.0
+
 * Mon Oct 05 2026 Yuri N. Sedunov <aris@altlinux.org> 0.58.0-alt1
 - 0.58.0
 
