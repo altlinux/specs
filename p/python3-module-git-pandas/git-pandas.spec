@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: A wrapper around gitpython to produce pandas dataframes for analysis
@@ -81,6 +81,9 @@ git config --global user.name "Your Name"
 %python3_sitelibdir_noarch/git_pandas*
 
 %changelog
+* Sun Nov 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.7.1-alt1
+- 2.7.0 -> 2.7.1
+
 * Mon Oct 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.7.0-alt1
 - 2.6.1 -> 2.7.0
 
