@@ -5,7 +5,7 @@
 %define        gemname fog-xenserver
 
 Name:          gem-fog-xenserver
-Version:       1.0.0.5
+Version:       1.0.0.5.1
 Release:       alt0.1
 Summary:       Module for the 'fog' gem to support XENSERVER
 License:       MIT
@@ -16,7 +16,7 @@ Packager:      Baltix Maintaining Team <baltix@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby setup-rb rake
 %if_enabled check
 BuildRequires: gem(coveralls) >= 0
 BuildRequires: gem(fog-core) >= 0
@@ -27,6 +27,7 @@ BuildRequires: gem(rake) >= 0
 BuildRequires: gem(turn) >= 0
 BuildRequires: gem(vcr) >= 0
 BuildRequires: gem(webmock) >= 0
+BuildRequires: gem(xmlrpc) >= 0
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -34,11 +35,12 @@ BuildRequires: gem(webmock) >= 0
 Requires:      ruby >= 2.0
 Requires:      gem(fog-core) >= 0
 Requires:      gem(fog-xml) >= 0
+Requires:      gem(xmlrpc) >= 0
 Obsoletes:     ruby-fog-xenserver < %EVR
 Provides:      ruby-fog-xenserver = %EVR
-Provides:      gem(fog-xenserver) = 1.0.0.5
+Provides:      gem(fog-xenserver) = 1.0.0.5.1
 
-%ruby_use_gem_version fog-xenserver:1.0.0.5
+%ruby_use_gem_version fog-xenserver:1.0.0.5.1
 
 %description
 Module for the 'fog' gem to support XENSERVER.
@@ -46,14 +48,14 @@ Module for the 'fog' gem to support XENSERVER.
 
 %if_enabled    doc
 %package       -n gem-fog-xenserver-doc
-Version:       1.0.0.5
+Version:       1.0.0.5.1
 Release:       alt0.1
 Summary:       Module for the 'fog' gem to support XENSERVER documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-xenserver
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(fog-xenserver) = 1.0.0.5
+Requires:      gem(fog-xenserver) = 1.0.0.5.1
 
 %description   -n gem-fog-xenserver-doc
 Module for the 'fog' gem to support XENSERVER documentation files.
@@ -65,14 +67,14 @@ Module for the 'fog' gem to support XENSERVER documentation files.
 
 %if_enabled    devel
 %package       -n gem-fog-xenserver-devel
-Version:       1.0.0.5
+Version:       1.0.0.5.1
 Release:       alt0.1
 Summary:       Module for the 'fog' gem to support XENSERVER development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-xenserver
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(fog-xenserver) = 1.0.0.5
+Requires:      gem(fog-xenserver) = 1.0.0.5.1
 Requires:      gem(coveralls) >= 0
 Requires:      gem(jazz_fingers) >= 0
 Requires:      gem(minitest) >= 0
@@ -119,6 +121,11 @@ Module for the 'fog' gem to support XENSERVER development package.
 
 
 %changelog
+* Sat Nov 14 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.0.5.1-alt0.1
+- ^ 1.0.0p5 -> 1.0.0p5.1
+- ! fixed the xmlrpc runtime dependency on Ruby 3 and later,
+ + ALT #61302
+
 * Wed Oct 22 2025 Pavel Skrylev <majioa@altlinux.org> 1.0.0.5-alt0.1
 - ^ 1.0.0 -> 1.0.0p5
 
