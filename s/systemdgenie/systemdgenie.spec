@@ -2,7 +2,7 @@
 
 Name: systemdgenie
 Version: 0.100.0
-Release: alt1
+Release: alt2
 
 Summary: Systemd managment utility
 License: GPLv2+
@@ -59,6 +59,9 @@ sed -i 's|^Categories=.*|Categories=Qt;KDE;System;Monitor;Security;|' src/org.kd
 %_datadir/polkit-1/actions/org.kde.kcontrol.%name.policy
 
 %changelog
+* Sun Nov 15 2026  Nikolay Strelkov <snk@altlinux.org> 0.100.0-alt2
+- Fixed FTBFS.
+
 * Thu Jun 11 2026  Nikolay Strelkov <snk@altlinux.org> 0.100.0-alt1
 - Updated to newer commit 4c83c2d0 (closes: #53048).
 
