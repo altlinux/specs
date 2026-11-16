@@ -2,7 +2,7 @@
 %def_with wayland
 
 Name: xpra
-Version: 6.5.5
+Version: 6.5.6
 Release: alt1
 
 Summary: X Persistent Remote Applications
@@ -14,6 +14,8 @@ Url: http://xpra.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: https://xpra.org/src/xpra-%version.tar
+# https://bugzilla.altlinux.org/40606
+Patch0: xpra-6.5.6-menu-gvfs-deadlock.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -154,6 +156,7 @@ XWayland Persistent Remote Applications.
 
 %prep
 %setup
+%patch0 -p1
 # instal service file in anyway
 sed -i "s|/bin/systemctl|/bin/true|g" setup.py
 # pkg-config --cflags pam,pam_misc does not report the proper include path expected by xpra
@@ -251,6 +254,11 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.6-alt1
+- new version 6.5.6
+- fix start-desktop server hang on startup (GIO deadlock between
+  the main and menu-setup threads) (closes: #40606)
+
 * Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.5-alt1
 - update to 6.5.5.
 
