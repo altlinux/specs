@@ -3,7 +3,7 @@
 %define pypi_name radicale
 
 Name: radicale
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 
 Summary: CalDAV and CardDAV server
@@ -106,6 +106,9 @@ mkdir -p %buildroot%_localstatedir/%name/collections %buildroot%_cachedir/%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.1-alt1
+- new version 3.9.1
+
 * Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.0-alt1
 - new version 3.9.0
 
