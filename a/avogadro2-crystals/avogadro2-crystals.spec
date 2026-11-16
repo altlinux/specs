@@ -1,11 +1,11 @@
 Name: avogadro2-crystals
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Crystal structure database used by Avogadro2.
 Group: Sciences/Chemistry
 License: BSD-3-Clause
-URL: http://avogadro.openmolecules.net/
+URL: https://avogadro.cc/
 VCS: https://github.com/OpenChemistry/crystals
 
 Source: %name-%version.tar
@@ -37,6 +37,12 @@ rm -f %buildroot%_datadir/avogadro2/crystals/README*
 %doc README.md
 
 %changelog
+* Tue Nov 10 2026 Valentin Sokolov <sova@altlinux.org> 2.1.0-alt1
+- Update to version 2.1.0.
+
+* Mon Sep 21 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt2
+- Update project URL.
+
 * Fri Apr 24 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
 - Update to version 2.0.0.
 

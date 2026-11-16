@@ -1,16 +1,20 @@
 Name: avogadro2-i18n
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
 
 Summary: Translations for Avogadro app and libraries
 Group: Sciences/Chemistry
 License: BSD-3-Clause
-URL: http://avogadro.openmolecules.net/
+URL: https://avogadro.cc/
 VCS: https://github.com/OpenChemistry/avogadro-i18n
 
 Source: %name-%version.tar
 
 BuildArch: noarch
+
+Requires: fonts-ttf-google-noto-sans-bengali
+Requires: fonts-ttf-google-noto-sans-kannada
+Requires: fonts-ttf-google-noto-sans-telugu
 
 
 %description
@@ -31,6 +35,13 @@ install -pm 644 avogadrolibs/* %buildroot%_datadir/avogadro2/i18n/
 %doc README.md LICENSE
 
 %changelog
+* Tue Nov 10 2026 Valentin Sokolov <sova@altlinux.org> 2.1.0-alt1
+- Update to version 2.1.0.
+- Require Bengali, Kannada and Telugu fonts for the language selector (closes: #59559).
+
+* Mon Sep 21 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt2
+- Update project URL.
+
 * Tue Apr 14 2026 Valentin Sokolov <sova@altlinux.org> 2.0.0-alt1
 - Update to version 2.0.0
 
