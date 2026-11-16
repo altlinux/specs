@@ -1,7 +1,7 @@
 %global modname docker-squash
 
 Name: docker-squash
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 
 Summary: Docker layer squashing tool
@@ -14,8 +14,9 @@ Url: https://github.com/goldmann/docker-squash
 Source: %name-%version.tar
 
 BuildArch: noarch
+AutoProv: no
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
@@ -39,6 +40,11 @@ Tool to squash layers in Docker images.
 %python3_sitelibdir/docker_squash-*.dist-info/
 
 %changelog
+* Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
+- new version 1.3.0
+- fixed rpm-build-python3 build dependency placement
+- disabled automatic provides for internal Python modules
+
 * Mon Feb 10 2025 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
 - new version 1.2.2 (with rpmrb script)
 
