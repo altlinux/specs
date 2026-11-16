@@ -12,7 +12,7 @@
 Name: timeshift
 Version: 26.11.0
 Summary: System restore tool for Linux
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -26,6 +26,7 @@ Patch4: alt-fix-47796.patch
 Patch5: alt-fix-59353.patch
 Patch6: alt-fix-translation.patch
 Patch7: alt-fix-locale.patch
+Patch8: alt-fix-45517.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-meson
@@ -57,6 +58,7 @@ running or from Live CD/USB.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 %meson
@@ -85,6 +87,10 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md LICENSES/GPL-2.0-or-later.txt
 
 %changelog
+* Mon Nov 16 2026 Alexander Makeenkov <amakeenk@altlinux.org> 26.11.0-alt2
+- Fixed adding a file/folder to the exclude list when the file chooser
+  dialog is closed via the window close button (closes: #45517).
+
 * Mon Nov 16 2026 Alexander Makeenkov <amakeenk@altlinux.org> 26.11.0-alt1
 - Updated to version 26.11.0.
 - Fixed Russian translation.
