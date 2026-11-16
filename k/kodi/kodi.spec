@@ -1,6 +1,6 @@
 Name: kodi
 Version: 22.0
-Release: alt0.6
+Release: alt0.7
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -136,7 +136,7 @@ This package contains development part of Kodi.
         -DENABLE_DVDCSS=OFF \
         -DVERBOSE_FIND=ON \
         -DCORE_PLATFORM_NAME="x11 wayland gbm" \
-        -DAPP_RENDER_SYSTEM=gl
+        -DAPP_RENDER_SYSTEM=gles
 %cmake_build
 
 %install
@@ -169,6 +169,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_libdir/kodi/cmake
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0-alt0.7
+- 22.0rc2-Piers
+
 * Mon Sep 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.0-alt0.6
 - 22.0rc1-Piers
 
