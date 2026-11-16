@@ -9,13 +9,14 @@
 %def_enable selinux
 
 Name: nemo
-Version: 6.8.3
+Version: 6.8.4
 Release: alt1
 
 Summary: default file manager for Cinnamon
 License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 URL: https://github.com/linuxmint/nemo
+VCS: https://github.com/linuxmint/nemo
 
 Source: %name-%version.tar
 
@@ -195,6 +196,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Nov 16 2026 Anton Midyukov <antohami@altlinux.org> 6.8.4-alt1
+- New version 6.8.4.
+
 * Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.3-alt1
 - New version 6.8.3.
 

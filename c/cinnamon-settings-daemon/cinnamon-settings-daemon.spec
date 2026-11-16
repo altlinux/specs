@@ -9,7 +9,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: 6.8.1
+Version: 6.8.2
 Release: alt1
 
 Summary: A program that manages general Cinnamon settings
@@ -104,6 +104,9 @@ client is Cinnamon Control Center.
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
 
 %changelog
+* Mon Nov 16 2026 Anton Midyukov <antohami@altlinux.org> 6.8.2-alt1
+- New version 6.8.2.
+
 * Sun Nov 08 2026 Anton Midyukov <antohami@altlinux.org> 6.8.1-alt1
 - New version 6.8.1.
 
