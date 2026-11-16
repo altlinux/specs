@@ -25,7 +25,7 @@
 
 Name: cef
 Version: 156.0.15
-Release: alt1
+Release: alt2
 
 Summary: Chromium Embedded Framework
 License: BSD-3-Clause and LGPL-2.1+
@@ -38,6 +38,7 @@ Source0: chromium.tar.zst
 Source500: cef-%version.tar.gz
 Source501: cef_source_version.json
 Source502: cef-check-host-tools.py
+Source503: cef-check-host-tools-test.py
 Patch500: cef-alt-chromium156.patch
 Patch501: cef-alt-source-archive.patch
 Patch502: cef-tests-platform.patch
@@ -51,6 +52,8 @@ Patch508: cef-native-arm64.patch
 Patch509: cef-tests-cors.patch
 Patch510: cef-system-libraries.patch
 Patch511: cef-typescript-stdlib.patch
+Patch512: cef-156.0.15-alt-pipewire-compat.patch
+Patch513: cef-156.0.15-alt-osr-input-order.patch
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
 Patch002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch003: 0003-DEBIAN-manpage-fixes.patch
@@ -521,6 +524,7 @@ ln -s ../../%_lib/cef%abiversion %buildroot%cef_sdkdir/Release
 ln -s ../../%_lib/cef%abiversion %buildroot%cef_sdkdir/Resources
 
 %check
+%__python3 %SOURCE503
 %__python3 -m unittest discover -s tools/typescript -p validate_tsconfig_test.py
 # The upstream tools guidelines require two runs to detect parser-state leaks.
 pushd cef
@@ -561,5 +565,11 @@ dbus-run-session -- %__python3 testing/xvfb.py %cef_target/ceftests \
 %cef_sdkdir
 
 %changelog
+* Mon Nov 16 2026 Ajrat Makhmutov <rauty@altlinux.org> 156.0.15-alt2
+- Fix FTBFS on p11 with Ninja before 1.13 in the host tool check.
+- Fix FTBFS on p11 with PipeWire before 1.5 (openSUSE).
+- Fix FTBFS on p11 by preserving keyboard and IME input
+  ordering in off-screen rendering tests.
+
 * Sat Nov 07 2026 Ivan Khanas <xeno@altlinux.org> 156.0.15-alt1
 - Initial build for ALT.
