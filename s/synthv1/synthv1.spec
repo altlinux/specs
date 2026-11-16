@@ -1,5 +1,5 @@
 Name: synthv1
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: Polyphonic additive synthesizer
@@ -60,6 +60,9 @@ This package contains LV2 plugin.
 %_datadir/synthv1
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Fri Oct 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.5.1-alt1
 - 1.5.1 released
 
