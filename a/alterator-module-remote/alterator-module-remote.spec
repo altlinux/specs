@@ -1,5 +1,5 @@
 Name: alterator-module-remote
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Module for accessing alterator d-bus interface on a remote machine
@@ -35,6 +35,14 @@ remote machine.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Nov 16 2026 Ivan Savin <svn17@altlinux.org> 0.8.0-alt1
+- ci(secret-check): change runner (shishkovna@).
+- ci(svace): update workflow (shishkovna@).
+- Instead of a PTY, file descriptors (FDs) are now used. They are passed
+  within a special list object attached to the message. To retrieve the file
+  descriptors from this list object, indices provided as method parameters are
+  used.
+
 * Tue Sep 29 2026 Ivan Savin <svn17@altlinux.org> 0.7.0-alt1
 - Restrictions for users when using PTY. Now, if a PTY and a "password-agent
   d-bus name" are specified when establishing a connection, only the initiator
