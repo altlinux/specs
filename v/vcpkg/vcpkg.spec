@@ -1,8 +1,8 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2026.09.26
-Release: alt2
+Version: 2026.10.29
+Release: alt1
 
 Summary: C++ Library Manager
 
@@ -89,6 +89,9 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.10.29-alt1
+- new version 2026.10.29
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.09.26-alt2
 - add vcpkg wrapper: default VCPKG_ROOT, clone the registry on first use (closes: #54865)
 - add "vcpkg update-registry" command
