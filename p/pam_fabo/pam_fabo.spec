@@ -3,7 +3,7 @@
 
 Name: pam_fabo
 Version: 0.1.5
-Release: alt1
+Release: alt2
 
 Summary: PAM false bottom module
 License: GPL-2.0-or-later
@@ -12,6 +12,7 @@ URL: http://git.altlinux.org/people/ved/public/pam_fabo.git
 VCS: git://git.altlinux.org/people/ved/public/pam_fabo.git
 
 Source: %name-%version.tar
+Patch0: doc.patch
 
 BuildRequires(pre): libpam-devel
 
@@ -32,6 +33,7 @@ FAlse BOttom is a pam module for mapping passwords to actions.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make_build
@@ -46,6 +48,9 @@ FAlse BOttom is a pam module for mapping passwords to actions.
 %doc examples/
 
 %changelog
+* Mon Nov 16 2026 Egor Shestakov <ved@altlinux.org> 0.1.5-alt2
+- Update documentation.
+
 * Wed Nov 11 2026 Egor Shestakov <ved@altlinux.org> 0.1.5-alt1
 - Fix potential bugs in getting fabo execution results.
 
