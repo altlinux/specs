@@ -2,8 +2,8 @@
 %def_with check
 
 # Note: use chromium-gn-pkgver.sh to get latest version
-%define major 2384
-%define commit 1740f5c2
+%define major 2629
+%define commit bc823cc7
 
 Name: gn
 Version: 0.%major.%commit
@@ -50,7 +50,7 @@ EOF
 %build
 export CC=clang CXX=clang++
 ./build/gen.py --no-strip --no-last-commit-position --no-static-libstdc++
-%ninja_build -C out
+%ninja_build -C out gn gn_unittests
 
 %install
 install -Dpm755 out/gn %buildroot%_bindir/gn
@@ -63,6 +63,9 @@ install -Dpm755 out/gn %buildroot%_bindir/gn
 %_bindir/gn
 
 %changelog
+* Mon Nov 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.2629.bc823cc7-alt1
+- New version.
+
 * Fri May 01 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.2384.1740f5c2-alt1
 - New version.
 - Build from the upstream git history instead of a vendored snapshot.
