@@ -10,7 +10,7 @@
 %endif
 
 Name: timeshift
-Version: 26.09.0
+Version: 26.11.0
 Summary: System restore tool for Linux
 Release: alt1
 License: GPL-2.0-or-later
@@ -24,6 +24,8 @@ Patch2: alt-fix-41711.patch
 Patch3: alt-fix-41055.patch
 Patch4: alt-fix-47796.patch
 Patch5: alt-fix-59353.patch
+Patch6: alt-fix-translation.patch
+Patch7: alt-fix-locale.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): rpm-macros-meson
@@ -36,6 +38,7 @@ BuildRequires: libvte3-devel
 BuildRequires: libxapps-devel
 BuildRequires: help2man
 Requires: rsync
+Requires: xapp-symbolic-icons
 
 %description
 System restore tool for Linux. Creates filesystem snapshots using
@@ -52,6 +55,8 @@ running or from Live CD/USB.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 %meson
@@ -80,6 +85,14 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md LICENSES/GPL-2.0-or-later.txt
 
 %changelog
+* Mon Nov 16 2026 Alexander Makeenkov <amakeenk@altlinux.org> 26.11.0-alt1
+- Updated to version 26.11.0.
+- Fixed Russian translation.
+- Fixed session locale loss when opening file manager and notifications
+  (pkexec was inheriting LANG=C from the helper script).
+- Added missing dependency on xapp-symbolic-icons (toolbar icons are XSI
+  since 26.11.0).
+
 * Tue Sep 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 26.09.0-alt1
 - Updated to version 26.09.0.
 
