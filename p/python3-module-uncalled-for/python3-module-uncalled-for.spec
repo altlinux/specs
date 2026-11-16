@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Async dependency injection for Python functions
@@ -54,6 +54,9 @@ when the function runs. No ceremony, no container, no configuration.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 16 2026 Anton Zhukharev <ancieg@altlinux.org> 0.6.1-alt1
+- Updated to 0.6.1.
+
 * Mon Nov 09 2026 Anton Zhukharev <ancieg@altlinux.org> 0.6.0-alt1
 - Updated to 0.6.0.
 
