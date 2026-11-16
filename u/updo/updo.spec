@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %global import_path github.com/Owloops/updo
 
 Name: updo
-Version: 0.4.8
+Version: 0.4.10
 Release: alt1
 
 Summary: Uptime monitoring CLI tool
@@ -59,6 +60,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Nov 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.4.10-alt1
+- 0.4.8 -> 0.4.10
+
 * Tue May 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.4.8-alt1
 - 0.4.7 -> 0.4.8
 
