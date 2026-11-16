@@ -1,7 +1,7 @@
 %global oname oauthlib
 
 Name: python3-module-oauthlib
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: An implementation of the OAuth request-signing logic
@@ -9,10 +9,9 @@ Summary: An implementation of the OAuth request-signing logic
 License: BSD
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/oauthlib
-
-# Source-url: %__pypi_url %oname
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -54,6 +53,11 @@ very little effort.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Sat Nov 14 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- new version 4.0.1
+- fixes:
+  + CVE-2026-49272: fix device workflow token leak.
+
 * Thu Oct 01 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version 4.0.0 (with rpmrb script)
 - (GHSA-hj66-6f7g-4r5v, CVE-2026-49264) SECURITY: unsafe JSONP callback
