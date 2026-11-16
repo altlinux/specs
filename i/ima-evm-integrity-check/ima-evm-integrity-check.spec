@@ -3,7 +3,7 @@
 
 Name: ima-evm-integrity-check
 Epoch: 1
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: IMA/EVM integrity check
@@ -110,6 +110,10 @@ touch %buildroot%_sysconfdir/sysconfig/integrity
 %endif
 
 %changelog
+* Mon Nov 16 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.4-alt1
+- Fixed beginning of the word detection in integrity-applier and
+  integrity-sign utils (thx Michael Shigorin).
+
 * Wed May 06 2026 Paul Wolneykien <manowar@altlinux.org> 1:0.8.3-alt1
 - Set SELinux context "s0" for the signing service.
 - Fixed documentation and help for --log and --log-stderr options
