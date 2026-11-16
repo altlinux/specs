@@ -1,5 +1,5 @@
 Name: whatsie
-Version: 6.1.1
+Version: 6.2.0
 Release: alt1
 
 Summary: Feature rich WhatsApp Client for Desktop Linux
@@ -58,6 +58,9 @@ Feature rich WhatsApp Client for Desktop Linux.
 %_datadir/whatsie/qtwebengine_dictionaries/*.bdic
 
 %changelog
+* Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 6.2.0-alt1
+- new version 6.2.0
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt1
 - new version 6.1.1
 - migrate to Qt6 and CMake build
