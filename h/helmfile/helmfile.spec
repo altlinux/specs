@@ -1,5 +1,5 @@
 Name: helmfile
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: Deploy Kubernetes Helm Charts
@@ -60,6 +60,9 @@ install -m755 ${HOME}/go/bin/helmfile %buildroot/%_bindir/helmfile
 %_bindir/helmfile
 
 %changelog
+* Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt1
+- new version 1.8.4
+
 * Sun Nov 08 2026 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
 - new version 1.8.3
 
