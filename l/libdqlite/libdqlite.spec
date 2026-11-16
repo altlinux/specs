@@ -10,8 +10,8 @@
 %define soname 0
 
 Name: libdqlite
-Version: 1.18.2
-Release: alt2
+Version: 1.18.7
+Release: alt1
 Summary: Library for distributed SQLite database
 License: Apache-2.0
 Group: Development/Databases
@@ -79,6 +79,9 @@ sed -i '/ raft-uv-unit-test$(EXEEXT)/d' Makefile
 %_pkgconfigdir/dqlite.pc
 
 %changelog
+* Mon Sep 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.18.7-alt1
+- updated from 1.18.2 to 1.18.7
+
 * Fri Aug 07 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.18.2-alt2
 - Fix FTBFS: -Werror=discarded-qualifiers on const-generic
   memchr with glibc 2.43 (backported from upstream).

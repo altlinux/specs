@@ -1,17 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 %global import_path github.com/canonical/lxd
-%global _unpackaged_files_terminate_build 1
+
+# lxd dlopen()s libnvidia-ml, leaving nvml* symbols undefined
+%set_verify_elf_method unresolved=relaxed
 
 %define lxdgroup lxd
 %define lxduser lxd
 
 Name:		lxd
-Version:	5.21.1
+Version:	6.9
 Release:	alt1
 Summary:	LXD -- REST API, command line tool and OpenStack integration plugin for LXC.
 
 Group:		Development/Other
 License:	Apache-2.0
 URL:		https://%import_path
+VCS:		https://github.com/canonical/lxd.git
 
 Source0:	%name-%version.tar
 Patch:		%name-%version-%release.patch
@@ -30,7 +34,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-build-python3
 
 Requires:	shadow-submap
-Requires:	lxc-runtime >= 4.0.0
+Requires:	lxc-runtime >= 5.0.0
 Requires:	lxcfs
 Requires:	btrfs-progs
 Requires:	lvm2
@@ -41,7 +45,7 @@ Requires:	ebtables
 Requires:	dnsmasq
 Requires:	attr
 
-BuildRequires: golang >= 1.18
+BuildRequires: golang >= 1.26.4
 BuildRequires: libcap-devel
 BuildRequires: libuv-devel
 
@@ -53,7 +57,7 @@ BuildRequires: help2man
 # Needed for manpages generation. Accessing to '/proc/self/...'
 BuildRequires: /proc
 
-BuildRequires:	liblxc-devel >= 4.0.0
+BuildRequires:	liblxc-devel >= 5.0.0
 BuildRequires:	libacl-devel
 
 %description
@@ -72,14 +76,11 @@ export GOPATH="$BUILDDIR:%go_path"
 
 pushd .build/src/%import_path
 
-#export TAGS="libsqlite3"
-#go install -v -tags "libsqlite3" ./...
 export CGO_LDFLAGS_ALLOW="(-Wl,-wrap,pthread_create)|(-Wl,-z,now)"
-TAGS="libsqlite3" %golang_build lxc fuidshift lxd-benchmark lxc-to-lxd lxd/db lxd
-CGO_ENABLED=0 TAGS="netgo" %golang_build lxd-migrate
+TAGS="libsqlite3" %golang_build lxc fuidshift lxd-benchmark lxd
+CGO_ENABLED=0 TAGS="netgo" %golang_build lxd-convert
 CGO_ENABLED=0 TAGS="agent,netgo" %golang_build lxd-agent
 
-#%golang_build lxd lxc fuidshift lxd-benchmark lxd-p2c lxc-to-lxd lxd/db
 popd
 
 %install
@@ -113,7 +114,7 @@ cp -av %SOURCE13 %buildroot%_unitdir/
 
 # install bash completion
 mkdir -p %buildroot%_datadir/bash-completion/completions/
-cp -av scripts/bash/lxd-client %buildroot%_datadir/bash-completion/completions/
+%buildroot%_bindir/lxc completion bash > %buildroot%_datadir/bash-completion/completions/lxc
 
 # /var/{lib,log}/lxd
 mkdir -p %buildroot%_localstatedir/%name
@@ -122,7 +123,7 @@ mkdir -p %buildroot%_logdir/%name
 # Install the manpages
 mkdir -p %buildroot%_man1dir
 help2man %buildroot%_bindir/fuidshift -n "uid/gid shifter" --no-info --no-discard-stderr > %buildroot%_man1dir/fuidshift.1
-help2man %buildroot%_bindir/lxc-to-lxd -n "Convert LXC containers to LXD" --no-info --version-string=%version --no-discard-stderr > %buildroot%_man1dir/lxc-to-lxd.1
+help2man %buildroot%_bindir/lxd-convert -n "Physical to instance conversion tool" --no-info --version-string=%version --no-discard-stderr > %buildroot%_man1dir/lxd-convert.1
 help2man %buildroot%_bindir/lxd-benchmark -n "The container lightervisor - benchmark" --no-info --no-discard-stderr > %buildroot%_man1dir/lxd-benchmark.1
 %buildroot%_bindir/lxd manpage %buildroot%_man1dir/
 %buildroot%_bindir/lxc manpage %buildroot%_man1dir/
@@ -174,6 +175,17 @@ fi
 %_man1dir/*
 
 %changelog
+* Mon Nov 16 2026 Ajrat Makhmutov <rauty@altlinux.org> 6.9-alt1
+- New version.
+- Drop lxc-to-lxd, removed upstream with no replacement.
+- Replace lxd-migrate with lxd-convert.
+- Refresh vendored Go dependencies.
+- Require Go 1.26.4 and LXC 5.0 or later.
+- Generate Bash completion from lxc.
+- Fix nvidia-container-toolkit build on i586 and armh.
+- Resolve nvsandboxutils symbols at runtime to avoid unresolved ELF symbols.
+- Allow unresolved NVML symbols provided by the library loaded at runtime.
+
 * Tue May 07 2024 Nadezhda Fedorova <fedor@altlinux.org> 5.21.1-alt1
 - new version 5.21.1
 - change upstream
