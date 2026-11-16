@@ -1,5 +1,5 @@
 Name: jc303
-Version: 0.13.0
+Version: 0.14.0
 Release: alt1
 
 Summary: Roland TB-303 clone plugin
@@ -73,6 +73,9 @@ cp -av %_cmake__builddir/*_artefacts/*/VST3/* %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.14.0-alt1
+- 0.14.0 released
+
 * Tue Sep 22 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.13.0-alt1
 - 0.13.0 released
 
