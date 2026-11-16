@@ -51,7 +51,7 @@
 
 Name: libreoffice
 %define hversion 26.8
-%define urelease 2.2
+%define urelease 3.1
 Version: %hversion.%urelease
 Release: alt1
 %define uversion %version.%urelease
@@ -82,7 +82,7 @@ Source:	libreoffice-%version.tar.xz
 Source1: libreoffice-dictionaries-%version.tar.xz
 Source2: libreoffice-help-%version.tar.xz
 Source3: libreoffice-translations-%version.tar.xz
-#Source4: libreoffice-%version-ru.tar
+Source4: libreoffice-%version-ru.tar
 
 Source10: libreoffice-ext_sources-%version.tar
 Source200: key.gpg
@@ -129,8 +129,6 @@ Patch411: alt-011-svg-icons-2.patch
 Patch412: alt-012-svg-icons-3.patch
 
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
-Patch502: 0005-tdf-172966-Don-t-add-attach-attachment-to-mailto-URI.patch
-Patch503: alt-tdf174010-fix-underlined-after-being-added-to-the-spelling-dictionary.patch
 
 # make -j32 fails without this patch
 Patch700: alt-700-external-project-concurrency.patch
@@ -478,7 +476,7 @@ Provides additional %{langname} translations and resources for %name. \
 %prep
 echo Direct build
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
-#tar xf %%SOURCE4 --strip-components=1 -C translations/source/ru
+tar xf %SOURCE4 --strip-components=1 -C translations/source/ru
 
 ## FC apply patches
 #patch1 -p1
@@ -516,8 +514,6 @@ git apply %PATCH116
 #patch412 -p1
 
 %patch500 -p0
-%patch502 -p1
-%patch503 -p1
 
 %patch700 -p1
 
@@ -938,6 +934,9 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Nov 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.3.1-alt1
+- New version.
+
 * Thu Oct 29 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.2.2-alt1
 - New version.
 
@@ -962,13 +961,13 @@ comm -23 <(sort py.files) <(sort py_with_shebang.files) | xargs subst '1i #!%__p
 - Ignored auto requested x-terminal-emulator.
 
 * Sun Jun 07 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.4.2-alt1
-- New version.
+- New version (fixes: CVE-2026-8356, CVE-2026-8357, CVE-2026-8358).
 
 * Wed May 13 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.3.2-alt2
 - Removed python2.7(distutils) from build requirements (ALT #59084).
 
 * Thu Apr 30 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.3.2-alt1
-- New version.
+- New version (fixes: CVE-2026-6039, CVE-2026-6040, CVE-2026-6045).
 
 * Mon Apr 27 2026 Andrey Cherepanov <cas@altlinux.org> 26.2.2.2-alt5
 - libreoffice: require libreoffice-extension to avoid missing parts on update.
