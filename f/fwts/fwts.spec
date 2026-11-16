@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fwts
-Version: 26.03.00
+Version: 26.09.00
 Release: alt1
 
 Summary: Firmware Test Suite
@@ -81,6 +81,9 @@ fi
 %_man1dir/%name-frontend-text.1*
 
 %changelog
+* Mon Nov 16 2026 Vasiliy Kovalev <kovalev@altlinux.org> 26.09.00-alt1
+- 26.03.00 -> 26.09.00
+
 * Fri May 01 2026 Vasiliy Kovalev <kovalev@altlinux.org> 26.03.00-alt1
 - 23.07.00 -> 26.03.00
 
