@@ -4,7 +4,7 @@
 %def_without clang
 
 Name: deepin-shell
-Version: 2.0.61
+Version: 2.0.61.1
 Release: alt1
 
 Summary: Plugins for DDE
@@ -191,6 +191,9 @@ patchelf %buildroot%_dqt6_qmldir/org/deepin/ds/dock/libdock-plugin.so --add-need
 %_includedir/dde-shell/dock/*.h
 
 %changelog
+* Mon Nov 16 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.61.1-alt1
+- New version 2.0.61.1.
+
 * Thu Nov 05 2026 Leontiy Volodin <lvol@altlinux.org> 2.0.61-alt1
 - New version 2.0.61 (thanks archlinux for the patch).
 
