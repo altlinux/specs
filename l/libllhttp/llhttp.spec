@@ -2,7 +2,7 @@
 %define project_name llhttp
 
 Name: lib%project_name
-Version: 9.4.3
+Version: 9.4.4
 Release: alt1
 Summary: Port of http_parser to llparse
 License: MIT
@@ -10,7 +10,6 @@ Group: System/Libraries
 Url: https://github.com/nodejs/llhttp
 Vcs: https://github.com/nodejs/llhttp
 Source0: %name-%version.tar
-# updated with alt/regenerate-c-sources.sh
 Source1: llhttp_c_sources.tar
 Patch0: %name-%version-alt.patch
 
@@ -57,6 +56,9 @@ cd release
 %_cmakedir/%project_name/*.cmake
 
 %changelog
+* Mon Nov 16 2026 Stanislav Levin <slev@altlinux.org> 9.4.4-alt1
+- 9.4.3 -> 9.4.4
+
 * Wed Aug 19 2026 Stanislav Levin <slev@altlinux.org> 9.4.3-alt1
 - 9.4.2 -> 9.4.3.
 
