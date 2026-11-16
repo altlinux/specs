@@ -1,6 +1,6 @@
 Name:           apache-commons-bcel
 Epoch:          1
-Version:        6.12.0
+Version:        6.13.0
 Release:        alt1
 
 Summary:        Byte Code Engineering Library
@@ -11,8 +11,9 @@ VCS:            https://github.com/apache/commons-bcel
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 
@@ -58,9 +59,12 @@ to help out or you might want to have a look into the ASM project at objectweb.
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%doc *.md
+%doc README.md SECURITY.md
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 1:6.13.0-alt1
+- Automatically updated to 6.13.0.
+
 * Thu May 21 2026 Evgeniy Serov <scala@altlinux.org> 1:6.12.0-alt1
 - Updated to 6.12.0.
 - Renamed package to apache-commons-bcel.

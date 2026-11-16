@@ -1,5 +1,5 @@
 Name:           apache-commons-parent
-Version:        99
+Version:        106
 Release:        alt1
 
 Summary:        Apache Commons Parent
@@ -10,16 +10,19 @@ VCS:            https://github.com/apache/commons-parent
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.mockito:mockito-bom:pom:)
 
 Requires:       mvn(org.codehaus.mojo:build-helper-maven-plugin)
+Requires:       mvn(org.mockito:mockito-bom:pom:)
 
 BuildArch:      noarch
 
@@ -52,9 +55,12 @@ components.
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%doc *.md
+%doc README.md SECURITY.md
 
 %changelog
+* Wed Oct 28 2026 Evgeniy Serov <scala@altlinux.org> 106-alt1
+- Automatically updated to 106.
+
 * Fri May 15 2026 Evgeniy Serov <scala@altlinux.org> 99-alt1
 - Updated to 99.
 

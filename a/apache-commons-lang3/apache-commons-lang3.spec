@@ -1,5 +1,5 @@
 Name:           apache-commons-lang3
-Version:        3.20.0
+Version:        3.21.0
 Release:        alt1
 
 Summary:        Apache Commons Lang
@@ -10,8 +10,9 @@ VCS:            https://github.com/apache/commons-lang
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 
@@ -52,9 +53,12 @@ package.
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%doc *.md
+%doc README.md SECURITY.md
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 3.21.0-alt1
+- Automatically updated to 3.21.0.
+
 * Thu May 14 2026 Evgeniy Serov <scala@altlinux.org> 3.20.0-alt1
 - Updated to 3.20.0.
 

@@ -1,5 +1,5 @@
 Name:           apache-commons-jexl
-Version:        3.6.2
+Version:        3.7.1
 Release:        alt1
 
 Summary:        Apache Commons JEXL
@@ -12,8 +12,9 @@ Source0:        %name-%version.tar
 
 Patch0:         0001-switch-to-javacc-maven-plugin.patch
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(commons-logging:commons-logging)
@@ -53,9 +54,12 @@ their execution within controlled functional constraints.
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%doc *.md
+%doc README.md SECURITY.md
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 3.7.1-alt1
+- Automatically updated to 3.7.1.
+
 * Fri May 15 2026 Evgeniy Serov <scala@altlinux.org> 3.6.2-alt1
 - Updated to 3.6.2.
 - Returned to Sisyphus.

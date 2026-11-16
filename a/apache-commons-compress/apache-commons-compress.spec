@@ -1,6 +1,6 @@
 Name:           apache-commons-compress
-Version:        1.27.1
-Release:        alt2
+Version:        1.28.0
+Release:        alt1
 
 Summary:        Apache Commons Compress
 License:        Apache-2.0
@@ -8,14 +8,14 @@ Group:          Development/Java
 URL:            https://commons.apache.org/compress/
 VCS:            https://github.com/apache/commons-compress
 
-Source0:        commons-compress-%version-src.tar.gz
+Source0:        %name-%version.tar
 
 Patch0:         0001-Remove-Brotli-compressor.patch
 Patch1:         0002-Remove-ZSTD-compressor.patch
-Patch2:         0003-Remove-Pack200-compressor.patch
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 
@@ -27,8 +27,10 @@ ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200 and bzip2 files.
 In version 1.14 read-only support for Brotli decompression has been added,
 but it has been removed form this package.
 
+%javadoc_package
+
 %prep
-%setup -n commons-compress-%version-src
+%setup
 %autopatch -p1
 
 # Unavailable Google Brotli library (org.brotli.dec)
@@ -39,13 +41,6 @@ rm -r src/{main,test}/java/org/apache/commons/compress/compressors/brotli
 %pom_remove_dep :zstd-jni
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/zstandard
 
-# Remove support for pack200 which depends on ancient asm:asm:3.2
-rm -r src/{main,test}/java/org/apache/commons/compress/harmony
-rm -r src/main/java/org/apache/commons/compress/compressors/pack200
-rm src/main/java/org/apache/commons/compress/java/util/jar/Pack200.java
-rm -r src/test/java/org/apache/commons/compress/compressors/pack200
-rm src/test/java/org/apache/commons/compress/java/util/jar/Pack200Test.java
- 
 # remove osgi tests, we don't have deps for them
 %pom_remove_dep org.ops4j.pax.exam:::test
 %pom_remove_dep :org.apache.felix.framework::test
@@ -58,7 +53,7 @@ rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTe
 %build
 %mvn_file  : commons-compress %name
 %mvn_alias : commons:
-%mvn_build -f -j -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
+%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.compress
 
 %install
 %mvn_install
@@ -67,6 +62,9 @@ rm src/test/java/org/apache/commons/compress/archivers/tar/TarMemoryFileSystemTe
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 1.28.0-alt1
+- Updated to 1.28.0.
+
 * Thu May 21 2026 Evgeniy Serov <scala@altlinux.org> 1.27.1-alt2
 - Disabled javadoc generation.
 - Cleaned up specfile.

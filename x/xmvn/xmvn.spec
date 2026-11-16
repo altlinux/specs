@@ -2,7 +2,7 @@
 
 Name:           xmvn
 Version:        4.2.0
-Release:        alt3
+Release:        alt4
 
 Summary:        Local Extensions for Apache Maven
 License:        Apache-2.0
@@ -12,8 +12,9 @@ VCS:            https://github.com/fedora-java/xmvn
 
 Source0:        xmvn-%version.tar.xz
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(aopalliance:aopalliance)
 BuildRequires:  mvn(com.beust:jcommander)
@@ -225,7 +226,7 @@ do
 done
 
 # Temporary fix for commons-io
-subst 's/commons-compress/& commons-io/' %{buildroot}%{_bindir}/%{name}-install
+subst 's/commons-compress/& commons-io commons-lang3/' %buildroot%_bindir/%name-install
 
 # End of bootstrap guice-5.1.0
 rm -f %buildroot/usr/share/%name/lib/guice*.jar
@@ -277,6 +278,9 @@ fi
 %_bindir/%name-subst
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt4
+- Added commons-lang3 to xmvn-install classpath.
+
 * Tue Apr 28 2026 Evgeniy Serov <scala@altlinux.org> 4.2.0-alt3
 - Fixed FTBFS.
 

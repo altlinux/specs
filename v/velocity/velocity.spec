@@ -1,7 +1,7 @@
 Name:           velocity
 Epoch:          1
 Version:        2.4.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Apache Velocity Engine
 License:        Apache-2.0
@@ -11,8 +11,9 @@ VCS:            https://github.com/apache/velocity-engine
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -68,6 +69,10 @@ cp velocity-engine-core/src/main/java-templates/org/apache/velocity/runtime/Velo
 sed -i 's/$project.version/%version/' \
    velocity-engine-core/src/main/java/org/apache/velocity/runtime/VelocityEngineVersion.java
 
+# fix HTML escaping test to commons-lang3
+sed -i "s/Jimmy's &lt;/Jimmy\&#39;s \&lt;/" \
+    velocity-engine-core/src/test/java/org/apache/velocity/test/BuiltInEventHandlerTestCase.java
+
 %build
 %mvn_build
 
@@ -78,6 +83,9 @@ sed -i 's/$project.version/%version/' \
 %doc README.md LICENSE NOTICE
 
 %changelog
+* Sat Oct 31 2026 Evgeniy Serov <scala@altlinux.org> 1:2.4.1-alt2
+- Fixed build with new commons-lang3.
+
 * Sun Apr 05 2026 Evgeniy Serov <scala@altlinux.org> 1:2.4.1-alt1
 - Udated to 2.4.1.
 

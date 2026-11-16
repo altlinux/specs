@@ -1,5 +1,5 @@
 Name:           apache-commons-logging
-Version:        1.3.6
+Version:        1.4.0
 Release:        alt1
 
 Summary:        Apache Commons Logging
@@ -10,8 +10,9 @@ VCS:            https://github.com/apache/commons-logging
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(avalon-framework:avalon-framework-impl)
@@ -66,9 +67,12 @@ used.
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%doc *.md
+%doc README.md SECURITY.md
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Mon May 25 2026 Evgeniy Serov <scala@altlinux.org> 1.3.6-alt1
 - Updated to 1.3.6.
 

@@ -1,5 +1,5 @@
 Name:           apache-commons-codec
-Version:        1.22.0
+Version:        1.23.0
 Release:        alt1
 
 Summary:        Apache Commons Codec
@@ -10,8 +10,9 @@ VCS:            https://github.com/apache/commons-codec
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
+BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 
@@ -38,9 +39,12 @@ collection of phonetic encoding utilities.
 
 %files -f .mfiles
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%doc *.md
+%doc README.md SECURITY.md
 
 %changelog
+* Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 1.23.0-alt1
+- Automatically updated to 1.23.0.
+
 * Sun May 17 2026 Evgeniy Serov <scala@altlinux.org> 1.22.0-alt1
 - Updated to 1.22.0.
 
