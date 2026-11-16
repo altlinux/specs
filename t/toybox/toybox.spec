@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: toybox
-Version: 0.8.13
+Version: 0.8.15
 Release: alt1
 Summary: All-in-one Linux command line
 License: 0BSD
@@ -18,6 +18,7 @@ BuildRequires: liblzma-devel-static
 BuildRequires: libssl-devel-static
 BuildRequires: musl-devel-static >= 1.2.5-alt7
 BuildRequires: zlib-devel-static
+BuildRequires: libatomic-devel-static
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc
 }}
@@ -76,6 +77,9 @@ size toybox
 %_bindir/toybox
 
 %changelog
+* Mon Nov 16 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.8.15-alt1
+- new version 0.8.15
+
 * Sun Oct 19 2025 Vitaly Chikunov <vt@altlinux.org> 0.8.13-alt1
 - Update to 0.8.13 (2025-10-14).
 
