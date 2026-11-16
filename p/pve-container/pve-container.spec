@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %set_perl_req_method relaxed
+%filter_from_requires /^perl.PVE.VZDump.pm./d
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 6.1.11
+Version: 6.1.19
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -16,7 +17,8 @@ ExclusiveArch: x86_64 aarch64
 Requires(pre,postun): shadow-submap
 Requires: pve-lxc >= 6.0.5-alt3 pve-lxc-syscalld pve-ha-manager >= 5.0.3 pve-access-control >= 9.0.7 pve-firewall >= 6.0.1
 Requires: libpve-rs-perl >= 0.11.0 proxmox-backup-client >= 3.2.3.1 proxmox-termproxy >= 2.1.0 pve-common >= 9.1.18
-Requires: dtach xz file binutils
+Requires: pve-network >= 0.8.3
+Requires: dtach xz file binutils mount
 # For now implementation uses dhclient for setting up containers.
 # As ISC DHCP is deprecated, switch to using dhcpcd later
 # (or just wait until upstream does so)
@@ -25,7 +27,6 @@ Requires: dhcp-client
 
 BuildRequires: pve-common >= 8.1.0 pve-guest-common >= 5.1.0 pve-qemu-server pve-storage >= 8.3.5 libpve-rs-perl >= 0.11.0
 BuildRequires: pve-firewall pve-cluster >= 4.0.8 libpve-cluster-perl pve-doc-generator xmlto pve-lxc >= 4.0.9
-BuildRequires: pve-manager pve-ha-manager >= 5.0.3
 BuildRequires: perl(Crypt/Eksblowfish/Bcrypt.pm) perl(UUID.pm)
 
 %description
@@ -62,6 +63,9 @@ sed -i 's!}/lib/systemd/!}/usr/lib/systemd/!' src/Makefile
 %_man5dir/*
 
 %changelog
+* Fri Nov 13 2026 Alexey Shabalin <shaba@altlinux.org> 6.1.19-alt1
+- 6.1.19
+
 * Tue Jul 21 2026 Sergey Konev <darisishe@altlinux.org> 6.1.11-alt1
 - 6.1.11 (Closes: 59354, 58095)
 - Clear ENV before calling 'pct exec' (Closes: 58166)

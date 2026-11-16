@@ -3,8 +3,8 @@
 
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 5.2.4
-Release: alt2
+Version: 5.2.5
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -74,6 +74,9 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 5.2.5-alt1
+- 5.2.5
+
 * Sat Aug 22 2026 Sergey Konev <darisishe@altlinux.org> 5.2.4-alt2
 - Fix HA resource comments with non-ASCII characters (Closes: 60230)
 

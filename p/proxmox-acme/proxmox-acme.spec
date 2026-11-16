@@ -1,6 +1,6 @@
 Name: proxmox-acme
 Summary: Proxmox ACME integration perl library
-Version: 1.7.1
+Version: 1.7.3
 Release: alt1
 License: AGPL-3.0-or-later and GPL-3.0
 Group: Development/Perl
@@ -8,13 +8,14 @@ Url: https://git.proxmox.com/
 Vcs: git://git.proxmox.com/git/proxmox-acme.git
 
 ExclusiveArch: x86_64 aarch64 loongarch64
-BuildRequires: pve-common python3 perl(Date/Parse.pm) perl(JSON.pm) perl(HTTP/Daemon.pm)
+BuildRequires: pve-common >= 9.2.8 python3 perl(Date/Parse.pm) perl(JSON.pm) perl(HTTP/Daemon.pm)
 
 Source: %name-%version.tar
 Source2: acme.sh.tar
 #Patch: %%name-%%version.patch
 
-Requires: curl
+Requires: curl openssl
+Requires: pve-common >= 9.2.8
 Conflicts: pve-manager < 7.0.11-alt1
 Provides: pve-acme = %EVR
 Obsoletes: pve-acme < 1.7.0
@@ -42,6 +43,9 @@ chmod a+x %buildroot%_datadir/proxmox-acme/dnsapi/*.sh
 %_datadir/proxmox-acme
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Mon Jun 08 2026 Sergey Konev <darisishe@altlinux.org> 1.7.1-alt1
 - 1.7.1
 

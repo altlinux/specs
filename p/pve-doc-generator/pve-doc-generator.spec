@@ -3,7 +3,7 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 9.2.3
+Version: 9.2.13
 Release: alt1
 License: AGPL-3.0+ and GFDL-1.3+
 Group: Documentation
@@ -16,7 +16,7 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 Requires: asciidoc-a2x source-highlight xmlto
 
 BuildRequires: perl(JSON.pm)
-BuildRequires: pve-common pve-manager pve-firewall pve-ha-manager pve-container pve-qemu-server pve-guest-common proxmox-widget-toolkit-dev
+BuildRequires: pve-common pve-manager pve-firewall pve-ha-manager pve-container pve-qemu-server pve-guest-common proxmox-widget-toolkit-dev >= 5.2.10
 BuildRequires: asciidoc-a2x source-highlight
 
 %description
@@ -51,6 +51,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Thu Nov 05 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.13-alt1
+- 9.2.13
+
 * Thu Jul 23 2026 Sergey Konev <darisishe@altlinux.org> 9.2.3-alt1
 - 9.2.3
 
@@ -61,7 +64,7 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 - 9.1.2
 
 * Fri Aug 08 2025 Konstantin Kozoriz <kozorizki@altlinux.org> 9.0.8-alt1
-- 9.0.8 
+- 9.0.8
 
 * Fri Jul 11 2025 Ivan A. Melnikov <iv@altlinux.org> 8.4.0-alt2
 - NMU: build on loongarch64

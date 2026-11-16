@@ -2,8 +2,8 @@
 
 Name: pve-firewall
 Summary: Proxmox VE Firewall
-Version: 6.0.5
-Release: alt4
+Version: 6.0.7
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -16,9 +16,12 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 #Conflicts: ulogd
 
 Requires: ebtables ipset iptables iptables-ipv6 iptables-nft iproute2
+Requires: proxmox-firewall-data >= 0.1
+Requires: pve-network >= 1.6.8
 
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator pve-network
+BuildRequires: pve-access-control libpve-cluster-perl pve-common pve-cluster pve-doc-generator pve-network >= 1.6.8
+BuildRequires: proxmox-firewall-data >= 0.1
 BuildRequires: pkgconfig(libnetfilter_log) pkgconfig(libnetfilter_conntrack) pkgconfig(glib-2.0)
 BuildRequires: perl(IO/Zlib.pm)
 
@@ -73,6 +76,10 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 6.0.7-alt1
+- 6.0.7
+- Require firewall name databases.
+
 * Thu Sep 03 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt4
 - Use nftables-compatible ebtables tools (Closes: 60373)
 

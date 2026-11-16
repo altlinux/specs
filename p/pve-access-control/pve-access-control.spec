@@ -1,3 +1,5 @@
+%def_enable check
+
 %define _unpackaged_files_terminate_build 1
 %add_findreq_skiplist %perl_vendor_privlib/PVE/API2/TFA.pm
 %filter_from_requires /^perl.PVE.Cluster.pm./d
@@ -5,8 +7,8 @@
 
 Name: pve-access-control
 Summary: PVE access control library
-Version: 9.1.1
-Release: alt2
+Version: 9.2.0
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -20,8 +22,10 @@ Provides: perl-%name = %EVR
 Provides: libpve-access-control = %EVR
 
 Requires: perl(HTTP/Status.pm)
+Requires: pve-common >= 9.2.7-alt1
 
 BuildRequires: pve-doc-generator
+BuildRequires: pve-common >= 9.2.7-alt1
 BuildRequires: perl(MIME/Base32.pm) perl(MIME/Base64.pm) perl(Digest/SHA.pm)
 BuildRequires: perl(Encode.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm)
@@ -51,6 +55,17 @@ BuildRequires: perl(PVE/SafeSyslog.pm)
 BuildRequires: perl(PVE/RS/TFA.pm)
 BuildRequires: perl(PVE/RS/OpenId.pm)
 
+%if_enabled check
+BuildRequires: perl(Test/More.pm)
+BuildRequires: perl(Test/MockModule.pm)
+BuildRequires: perl(TAP/Harness.pm)
+%endif
+
+# TODO: Store first names, last names and comments as plain UTF-8 in user.cfg.
+# Keep escaping field separators, percent signs and control characters, and
+# continue accepting existing percent-encoded values. Change only the
+# access-control writer, leaving the shared encode_text helper unchanged.
+
 %description
 This package contains the role based user management and access
 control function used by Proxmox VE.
@@ -60,6 +75,11 @@ control function used by Proxmox VE.
 
 %install
 %makeinstall_std -C src
+
+%check
+%if_enabled check
+%make -C src/test check
+%endif
 
 %files
 %doc debian/copyright
@@ -71,6 +91,15 @@ control function used by Proxmox VE.
 %_datadir/zsh/vendor-completions/_pveum
 
 %changelog
+* Thu Nov 05 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.0-alt1
+- 9.2.0
+- Fixed UTF-8 user configuration, nested ACLs and API token identifiers.
+- Fixed authentication with UTF-8 and legacy browser cookies.
+- Accepted all Russian letters in group names.
+- Recorded the actual actor and logged ACL changes after saving them.
+- Correctly identified API token deletion in audit messages.
+- Enabled regression tests during package builds.
+
 * Wed Jul 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.1-alt2
 - Normalize token expire and privsep return types (Closes: 57303)
 

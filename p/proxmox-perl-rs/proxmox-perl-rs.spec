@@ -2,8 +2,8 @@
 %def_without check
 
 Name: proxmox-perl-rs
-Version: 0.4.1
-Release: alt4
+Version: 0.4.2
+Release: alt1
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -32,21 +32,25 @@ libpve-rs-perl and libpmg-rs-perl, loading whichever is available.
 
 %package -n libproxmox-rs-perl
 Summary: PVE/PMG common parts which have been ported to Rust
-Version: 0.4.1
+Version: 0.4.2
 Group: Development/Other
 Provides: proxmox-perl-rs = %EVR
 Provides: proxmox-rs-perl = %EVR
+Conflicts: pve-manager < 9.2.26
+Conflicts: libpve-notify-perl < 9.1.9
 
 %description -n libproxmox-rs-perl
 %summary
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.15.3
+Version: 0.16.0
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
 Conflicts: pve-ha-manager <= 5.0.6
+Conflicts: pve-manager < 9.2.26
+Conflicts: libpve-notify-perl < 9.1.9
 # Conflicts: pve-network < 1.4.0
 
 %description -n libpve-rs-perl
@@ -138,6 +142,9 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 0.4.2-alt1
+- Update libproxmox-rs-perl to 0.4.2 and libpve-rs-perl to 0.16.0.
+
 * Mon Jun 08 2026 Sergey Konev <darisishe@altlinux.org> 0.4.1-alt4
 - Update:
   + libpve-rs-perl 0.15.3

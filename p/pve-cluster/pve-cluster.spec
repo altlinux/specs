@@ -3,14 +3,14 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 9.1.6
+Version: 9.1.9
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
 
 ExclusiveArch: x86_64 aarch64 loongarch64
-Requires: pve-common >= 9.1.13
+Requires: pve-common >= 9.2.7
 Requires: chrony ntpdate corosync fuse rrd-cached >= 1.7.2-alt3 ksmtuned openvswitch
 Requires: sqlite3 vixie-cron faketime tzdata openssh-server openssh-clients
 
@@ -20,11 +20,12 @@ Patch: %name-%version.patch
 Source3: %name.filetrigger
 
 BuildRequires(pre): rpm-macros-systemd
-BuildRequires: pve-common >= 9.1.13 libcheck-devel xmlto
+BuildRequires: pve-common >= 9.2.7 libcheck-devel xmlto
 %if_without bootstrap
 BuildRequires: pve-doc-generator
 %endif
 BuildRequires: pve-apiclient pve-access-control
+BuildRequires: libpve-rs-perl >= 0.16.0
 BuildRequires: pkgconfig(libcpg) pkgconfig(libcpg) pkgconfig(libcmap) pkgconfig(libquorum) pkgconfig(libqb) pkgconfig(glib-2.0) pkgconfig(fuse) pkgconfig(sqlite3) pkgconfig(librrd)
 BuildRequires: perl(ExtUtils/Embed.pm) perl(Term/ReadLine.pm) perl(Digest/HMAC_SHA1.pm) perl(XML/Parser.pm) perl(RRDs.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(Crypt/OpenSSL/RSA.pm) perl(Net/SSLeay.pm)
@@ -57,6 +58,7 @@ This package contains the API2 endpoints and CLI binary 'pvecm'.
 %package -n libpve-notify-perl
 Summary: Proxmox Virtual Environment cluster PVE::Notify module
 Group: Development/Perl
+Requires: libpve-rs-perl >= 0.16.0
 
 %description -n libpve-notify-perl
 %summary.
@@ -124,10 +126,9 @@ if [ -L %_sysconfdir/cron.d/vzdump ]; then
 	rm -f %_sysconfdir/cron.d/vzdump
 fi
 
-%triggerpostun -- %name < 9.1.1
+%triggerpostun -- %name < 9.1.5
 [ -d /var/lib/pve-cluster/backup ] && chmod -v 0700 /var/lib/pve-cluster/backup
 
-%triggerpostun -- %name < 9.1.5
 DC_CFG="/etc/pve/datacenter.cfg"
 if test -r "$DC_CFG" && grep -E -q '^crs:.*\b(ha-auto-rebalance-threshold|ha-auto-rebalance-margin)=' "$DC_CFG"; then
   cat <<EOF
@@ -187,6 +188,14 @@ fi
 %perl_vendor_privlib/PVE/Notify.pm
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 9.1.9-alt1
+- 9.1.9
+- Combine duplicate triggerpostun scripts for RPM compatibility.
+
+* Tue Nov 03 2026 Alexey Shabalin <shaba@altlinux.org> 9.1.8-alt1
+- 9.1.8
+- pmxcfs: register vitastor/vitastor.conf as observed file
+
 * Tue Jun 09 2026 Sergey Konev <darisishe@altlinux.org> 9.1.6-alt1
 - 9.1.6
 

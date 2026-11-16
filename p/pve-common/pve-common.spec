@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 9.1.18
-Release: alt3
+Version: 9.2.8
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -11,6 +11,8 @@ Url: https://git.proxmox.com/
 Source: %name-%version.tar
 
 ExclusiveArch: x86_64 aarch64 loongarch64
+
+Conflicts: pve-access-control < 9.2.0-alt1
 
 BuildRequires: tzdata
 BuildRequires: perl-Encode
@@ -53,11 +55,6 @@ This package contains the base library used by other PVE components.
 %prep
 %setup -q -n %name-%version
 sed -i 's|Proxmox VE|PVE|' src/PVE/Tools.pm
-# No mknod syscall in perl for aarch64 and loongarch64:
-%ifarch aarch64 loongarch64
-sed -i 's/SYS_mknod,/SYS_mknodat,/' src/PVE/Syscall.pm
-sed -i 's/SYS_mknod,/SYS_mknodat, -100,/' src/PVE/Tools.pm
-%endif
 
 %install
 cd src
@@ -65,14 +62,28 @@ cd src
 cd ..
 
 %check
+%if_enabled check
 # upstream tests
-make -C test check
+%make -C test check
+%endif
 
 %files
 %doc debian/copyright
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Nov 09 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.8-alt1
+- 9.2.8
+
+* Thu Nov 05 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.7-alt1
+- 9.2.7
+- Preserved the caller environment when running external commands.
+- Removed the separate user.cfg cache and moved authentication cookie
+  decoding to pve-access-control.
+- Prevented upgrades with incompatible pve-access-control versions.
+- Fixed UTF-8 task ownership and active task list serialization.
+- Preserved Unicode worker statuses when archiving completed tasks.
+
 * Sat Aug 22 2026 Sergey Konev <darisishe@altlinux.org> 9.1.18-alt3
 - Fix HA rule comments with non-ASCII characters (Closes: 60231)
 

@@ -1,14 +1,16 @@
+%def_enable check
+
 %global _unpackaged_files_terminate_build 1
 %add_findreq_skiplist %perl_vendor_privlib/PVE/ExtMetric.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Jobs.pm
 
 %define ver_major 9.2
-%define ver_minor 5
+%define ver_minor 26
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt6
+Release: alt1
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -21,14 +23,18 @@ BuildRequires(pre): rpm-macros-javascript
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
-Requires: pve-common >= 9.1.13 pve-guest-common >= 5.1.4
-Requires: pve-storage >= 9.0.5 pve-cluster >= 9.0.1
-Requires: pve-vncterm pve-novnc >= 1.6.0.4 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
-Requires: pve-container >= 6.1.6 pve-firewall proxmox-firewall pve-ha-manager >= 5.2.3 pve-qemu-server >= 9.0.26 pve-i18n >= 3.2.0 pve-docs
+Requires: pve-common >= 9.2.7-alt1 pve-guest-common >= 5.1.4
+Requires: pve-storage >= 9.1.15 pve-cluster >= 9.1.6-alt2
+Requires: libpve-cluster-perl >= 9.1.6 libpve-cluster-api-perl >= 9.1.8
+Requires: pve-access-control >= 9.2.0 pve-http-server >= 6.0.3
+Requires: pve-network >= 1.6.5 libpve-notify-perl >= 8.1.0
+Requires: pve-vncterm >= 1.9.2 pve-novnc >= 1.6.0.4 pve-spiceterm pve-xtermjs >= 4.7.1 pve-yew-mobile-gui >= 0.5.1 pve-acme
+Requires: pve-container >= 6.1.6 pve-firewall proxmox-firewall pve-ha-manager >= 5.2.5 pve-qemu-server >= 9.1.13 pve-i18n >= 3.2.0
+Requires: pve-docs
 Requires: pve-apiclient >= 3.4.2 proxmox-termproxy >= 2.1.0
 Requires: proxmox-widget-toolkit >= 5.2.6 proxmox-mini-journalreader >= 1.7.0
-Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs javascript-qrcodejs
-Requires: libproxmox-rs-perl >= 0.4 libpve-rs-perl >= 0.10.4
+Requires: fonts-font-awesome fonts-otf-fontawesome fonts-font-logos javascript-extjs >= 7.0.0 javascript-qrcodejs
+Requires: libproxmox-rs-perl >= 0.4 libpve-rs-perl >= 0.15.3
 Requires: perl-Net-SSLeay perl-Term-ReadLine-Gnu
 Requires: librados2-perl >= 1.3.1
 Requires: sequoia-sqv
@@ -41,15 +47,22 @@ Source9: basealt_logo-128.png
 
 Source10: sencha-touch.tgz
 
-BuildRequires: pve-doc-generator >= 9.1.5 xmlto perl-Pod-Parser
-BuildRequires: pve-storage >= 8.3.5 pve-cluster >= 8.0.5
-BuildRequires: pve-common >= 9.1.13 pve-guest-common >= 5.1.4
-BuildRequires: libpve-cluster-perl >= 9.1.5 libpve-cluster-api-perl >= 7.0.5 pve-container >= 5.1.1 pve-qemu-server >= 9.1.13,
-BuildRequires: pve-acme pve-http-server >= 6.0.3 pve-access-control >= 9.0.4
+BuildRequires: pve-doc-generator >= 9.2.8 xmlto perl-Pod-Parser
+BuildRequires: pve-storage >= 9.1.9 pve-cluster >= 9.1.6-alt2
+BuildRequires: pve-common >= 9.2.7-alt1 pve-guest-common >= 5.1.4
+BuildRequires: libpve-cluster-perl >= 9.1.6-alt2 libpve-cluster-api-perl >= 9.1.8
+BuildRequires: pve-container >= 5.1.1 pve-qemu-server >= 9.1.13
+BuildRequires: pve-network >= 1.5.0 libpve-notify-perl
+BuildRequires: libproxmox-rs-perl >= 0.3.4 libpve-rs-perl >= 0.14.0
+BuildRequires: pve-acme pve-http-server >= 6.0.3 pve-access-control >= 9.2.0-alt1
 BuildRequires: proxmox-widget-toolkit >= 4.3.0
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
 BuildRequires: update-kernel
+
+%if_enabled check
+BuildRequires: perl(Test/More.pm) perl(Test/MockModule.pm)
+%endif
 
 %description
 This package contains the PVE management tools
@@ -138,6 +151,11 @@ fi
 %preun
 %preun_systemd pvedaemon.service pvestatd.service pveproxy.service spiceproxy.service pvescheduler.service pve-daily-update.timer
 
+%check
+%if_enabled check
+%make -C test test-pveproxy-utf8 test-tasks-utf8
+%endif
+
 %files
 %doc debian/copyright
 %_datadir/doc/%name
@@ -149,6 +167,10 @@ fi
 %_unitdir/*.timer
 %_unitdir/*.target
 %_unitdir/ceph-*.service.d/*
+%_unitdir/cephfs-mirror@.service.d
+%_unitdir/rbdmap.service.d
+%_unitdir/vitastor-*.service.d/*
+/usr/libexec/proxmox/pve-vitastor-render-config
 %_unitdir/sysinit.target.wants/*
 %_presetdir/50-pve.preset
 %_systemd_dir/network/99-default.link.d/proxmox-mac-address-policy.conf
@@ -159,9 +181,11 @@ fi
 %perl_vendor_privlib/PVE/API2/*.pm
 %perl_vendor_privlib/PVE/API2/Hardware
 %perl_vendor_privlib/PVE/API2/Ceph
+%perl_vendor_privlib/PVE/API2/Vitastor
 %perl_vendor_privlib/PVE/API2/Cluster
 %perl_vendor_privlib/PVE/CLI/*.pm
 %perl_vendor_privlib/PVE/Ceph
+%perl_vendor_privlib/PVE/Vitastor
 %perl_vendor_privlib/PVE/Jobs
 %perl_vendor_privlib/PVE/Service
 %perl_vendor_privlib/PVE/Status
@@ -174,6 +198,24 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Tue Nov 10 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.26-alt1
+- 9.2.26.
+- Kept kernel CephFS keys behind cipher compatibility checks.
+- Checked Ceph client packages through the APT API on ALT nodes.
+- Allowed RBD key migration via rbd-nbd on older kernels.
+- Checked cipher availability before adding kernel CephFS storage.
+
+* Tue Nov 03 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.25-alt1
+- 9.2.25
+- Add vitastor management support
+- Updated build and runtime dependencies, including the online help generator.
+- Packaged CephFS mirror and RBD map service ordering drop-ins.
+- Fixed CSRF tokens for Unicode users after reloading the web interface.
+- Encoded rendered HTML as UTF-8, including consent text.
+- Fixed task archive ownership checks for Unicode users and API tokens.
+- Required compatible authentication and task list handling libraries.
+
+
 * Wed Sep 30 2026 Sergey Konev <darisishe@altlinux.org> 9.2.5-alt6
 - Avoid running pveam update before pve-ha-manager is installed (Closes: 60268)
 

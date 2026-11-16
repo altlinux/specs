@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %set_perl_req_method relaxed
+%filter_from_requires /^perl.PVE.VZDump.pm./d
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 9.2.0
-Release: alt3
+Version: 9.2.14
+Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -18,12 +19,12 @@ ExclusiveArch: x86_64 aarch64
 Provides: qemu-server = %EVR
 Obsoletes: qemu-server < %EVR
 
-Requires: socat genisoimage pve-qemu-system >= 10.1 swtpm swtpm-tools proxmox-websocket-tunnel dbus
+Requires: socat genisoimage pve-qemu-system >= 11.1 swtpm swtpm-tools proxmox-websocket-tunnel dbus
 Requires: conntrack-tools python3-module-virt-firmware proxmox-termproxy >= 2.1.0
 Conflicts: pve-ha-manager < 4.0.1 pve-manager < 6.0.13
 BuildRequires: glib2-devel libjson-c-devel
-BuildRequires: pve-common >= 9.1.6 pve-guest-common >= 5.2.2 pve-firewall pve-ha-manager libpve-rs-perl >= 0.14.0
-BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.1.6 pve-qemu-system >= 10.1 pve-network
+BuildRequires: pve-common >= 9.1.6 pve-guest-common >= 5.2.2 pve-firewall libpve-rs-perl >= 0.14.0
+BuildRequires: pve-doc-generator >= 6.2.5 pve-storage >= 9.1.13 pve-qemu-system >= 11.1 pve-network >= 0.8.3
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
 BuildRequires: perl(Class/MethodMaker.pm)
@@ -90,6 +91,10 @@ touch /run/qemu-server/force-legacy-cleanup \
 %perl_vendor_privlib/PVE/QemuMigrate/Helpers.pm
 
 %changelog
+* Tue Nov 03 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.14-alt1
+- 9.2.14
+- Fixed ALT package names in firmware and VirGL diagnostics.
+
 * Fri Aug 21 2026 Sergey Konev <darisishe@altlinux.org> 9.2.0-alt3
 - Fix Microsoft KEK 2023 enrollment with ALT virt-firmware paths (Closes: 60240)
 

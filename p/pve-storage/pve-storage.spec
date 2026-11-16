@@ -2,7 +2,7 @@
 
 Name: pve-storage
 Summary: PVE storage management library
-Version: 9.1.9
+Version: 9.1.15
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -16,7 +16,7 @@ Provides: libpve-storage-perl = %EVR
 Requires: bzip2 lzop zstd
 Requires: gdisk parted hdparm
 Requires: multipath-tools lvm2 thin-provisioning-tools
-Requires: ceph-common >= 12.2.1 ceph-fuse
+Requires: ceph-common >= 12.2.1 ceph-fuse rbd-nbd
 Requires: cifs-utils samba-client
 Requires: cstream
 Requires: zfs-utils
@@ -25,13 +25,15 @@ Requires: /usr/bin/iscsi-ls open-iscsi
 Requires: proxmox-backup-client >= 2.1.10 proxmox-backup-file-restore
 Requires: smartmontools
 Requires: pve-esxi-import-tools >= 0.6.0
+Requires: pve-common >= 9.2.8
 Requires: skopeo
 
 Conflicts: pve-container < 3.1.2
 Conflicts: pve-manager < 5.2.12
+# Todo: 9.2.10
 Conflicts: pve-qemu-server < 8.3.2
 
-BuildRequires: librados2-perl pve-common >= 9.1.12 pve-cluster >= 5.0.32 libpve-cluster-perl >= 8.0.6
+BuildRequires: librados2-perl pve-common >= 9.2.8 pve-cluster >= 5.0.32 libpve-cluster-perl >= 8.0.6
 BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control >= 8.1.2 pve-apiclient xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
 BuildRequires: perl(PVE/DataCenterConfig.pm)
@@ -68,6 +70,15 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Wed Nov 11 2026 Alexey Shabalin <shaba@altlinux.org> 9.1.15-alt1
+- 9.1.15.
+- Created filesystem-scoped AES clients for managed kernel CephFS.
+- Used rbd-nbd for AES256K RBD mappings on older kernels.
+
+* Thu Nov 05 2026 Alexey Shabalin <shaba@altlinux.org> 9.1.13-alt1
+- 9.1.13
+- vitastor: detect vitastor OSD partitions in disk list (parttype e7009fac)
+
 * Wed Nov 04 2026 Sergey Konev <darisishe@altlinux.org> 9.1.9-alt1
 - 9.1.9 (Closes: 61334)
 

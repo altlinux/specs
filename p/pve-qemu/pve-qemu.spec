@@ -13,7 +13,7 @@
 %endif
 
 Name: pve-%rname
-Version: 10.2.2
+Version: 11.1.3
 Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
@@ -32,7 +32,7 @@ Source5: qemu-kvm.sh
 Source12: bridge.conf
 Source13: vitastor.c
 
-Patch: pve-qemu-10.2-vitastor.patch
+Patch: pve-qemu-11.1-vitastor.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
@@ -46,6 +46,7 @@ Provides: pve-qemu-kvm = %EVR
 
 BuildRequires: acpica bzlib-devel glib2-devel flex libacl-devel libaio-devel libalsa-devel libattr-devel libcap-devel
 BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel libgio-devel libfuse3-devel
+BuildRequires: libdrm-devel libpulseaudio-devel libsndio7-devel libxkbcommon-devel xkeyboard-config
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(virglrenderer) liburing-devel libuuid-devel
@@ -171,15 +172,19 @@ export CFLAGS="%optflags"
         --enable-numa \
         --enable-rdma \
         --enable-opengl \
+	--enable-pa \
+	--enable-png \
         --enable-rbd \
         --enable-vitastor \
         --enable-seccomp \
         --enable-slirp \
+	--enable-sndio \
         --disable-passt \
         --enable-spice \
         --enable-usb-redir \
         --enable-virglrenderer \
         --enable-virtfs \
+	--enable-xkbcommon \
         --enable-zstd \
         --enable-gio
 
@@ -202,6 +207,9 @@ rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_desktopdir/%rname.desktop
 rm -rf %buildroot%_iconsdir
 
+rm -f %buildroot%_bindir/qemu-keymap
+rm -f %buildroot%_man1dir/qemu-vnc.1*
+
 # TODO:
 # Install qemu-pr-helper service
 #install -m 0644 contrib/systemd/qemu-pr-helper.service %%buildroot%%_unitdir/qemu-pr-helper.service
@@ -219,7 +227,7 @@ install -m 0755 debian/kvm-ifup %buildroot%_sysconfdir/kvm/kvm-ifup
 
 # CPU flags are static for QEMU version, allows avoiding more costly checks
 mkdir -p %buildroot%_datadir/kvm
-%buildroot%_bindir/qemu-system-x86_64 -cpu help | ./debian/parse-cpu-flags.pl > %buildroot%_datadir/kvm/recognized-CPUID-flags-x86_64
+./debian/parse-cpu-flags.pl %buildroot%_bindir/qemu-system-x86_64 max-x86_64-cpu > %buildroot%_datadir/kvm/recognized-CPUID-flags-x86_64
 %buildroot%_bindir/qemu-system-x86_64 -machine help | ./debian/parse-machines.pl > %buildroot%_datadir/kvm/machine-versions-x86_64.json
 %buildroot%_bindir/qemu-system-aarch64 -machine help | ./debian/parse-machines.pl > %buildroot%_datadir/kvm/machine-versions-aarch64.json
 %buildroot%_bindir/qemu-system-x86_64 -cpu help | ./debian/parse-cpu-models.pl > %buildroot%_datadir/kvm/cpu-models-x86_64.json
@@ -338,6 +346,12 @@ ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.f
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Thu Nov 05 2026 Alexey Shabalin <shaba@altlinux.org> 1:11.1.3-alt1
+- 11.1.3-1 (Fixes: CVE-2026-16271, CVE-2026-77913, CVE-2026-84788, CVE-2026-84788,
+   CVE-2026-66900, CVE-2026-66899, CVE-2026-12080, CVE-2026-93834, CVE-2026-17588,
+   CVE-2026-18609, CVE-2026-18204, CVE-2026-18410, CVE-2026-66020, CVE-2026-6426,
+   CVE-2026-101291, CVE-2026-97889,  CVE-2026-7180, CVE-2026-111819)
+
 * Wed Aug 19 2026 Sergey Konev <darisishe@altlinux.org> 1:10.2.2-alt1
 - 10.2.2-1
 - Enabled FUSE block exports required for EFI key enrollment.

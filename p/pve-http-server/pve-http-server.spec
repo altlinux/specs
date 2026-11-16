@@ -2,8 +2,8 @@
 
 Name: pve-http-server
 Summary: Proxmox Asynchrounous HTTP Server Implementation
-Version: 6.0.5
-Release: alt3
+Version: 6.0.7
+Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://www.proxmox.com
@@ -47,6 +47,9 @@ This package is used as base to implement the REST API in all perl based
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 6.0.7-alt1
+- 6.0.7
+
 * Sun Aug 02 2026 Sergey Konev <darisishe@altlinux.org> 6.0.5-alt3
 - File upload: disable timeout while handling completed request (Closes: 59879)
 

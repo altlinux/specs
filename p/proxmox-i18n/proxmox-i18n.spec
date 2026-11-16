@@ -2,7 +2,7 @@
 
 Name: proxmox-i18n
 Summary: Internationalization support for Proxmox
-Version: 3.9.0
+Version: 3.11.0
 Release: alt1
 License: AGPL-3.0+
 Group: System/Internationalization
@@ -76,6 +76,9 @@ Group: System/Internationalization
 %_datadir/pve-yew-mobile-i18n
 
 %changelog
+* Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 3.11.0-alt1
+- 3.11.0
+
 * Wed Jul 22 2026 Sergey Konev <darisishe@altlinux.org> 3.9.0-alt1
 - 3.9.0
 
