@@ -1,10 +1,11 @@
-%define so_tls_version 23
+%define so_tls_version 24
 %define so_crypto_version 18
 %define so_x509_version 9
 %define so_tfpsacrypto_version 2
 
-%define mbedtls_version 4.2.0
-%define tf_psa_crypto_version 1.2.0
+%define mbedtls_version 4.3.0
+%define tf_psa_crypto_version 1.3.0
+%define framework_commit ced31491c5ec907a6be533512f19dc1779230ac1
 
 %def_disable static
 
@@ -23,8 +24,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source0: %name-%name-%version.tar
 # https://github.com/Mbed-TLS/TF-PSA-Crypto/archive/tf-psa-crypto-%tf_psa_crypto_version/TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version.tar.gz
 Source1: TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version.tar
-# https://github.com/Mbed-TLS/%name-framework/archive/%name-%version_tf-psa-crypto-%tf_psa_crypto_version/%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version.tar.gz
-Source2: %name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version.tar
+# https://github.com/Mbed-TLS/%name-framework/archive/%framework_commit/%name-framework-%framework_commit.tar.gz
+Source2: %name-framework-%framework_commit.tar
 
 BuildRequires: ctest
 BuildRequires: libssl-devel
@@ -134,8 +135,8 @@ Cryptographic utilities based on mbed TLS
 %setup -n %name-%name-%version -b 1 -b 2
 
 %__mv -Tf ../TF-PSA-Crypto-tf-psa-crypto-%tf_psa_crypto_version tf-psa-crypto
-%__cp -Tr ../%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version framework
-%__mv -Tf ../%name-framework-%name-%{version}_tf-psa-crypto-%tf_psa_crypto_version tf-psa-crypto/framework
+%__cp -Tr ../%name-framework-%framework_commit framework
+%__mv -Tf ../%name-framework-%framework_commit tf-psa-crypto/framework
 
 # Enable threading support
 sed \
@@ -222,6 +223,18 @@ sed -i 's/-Werror/-Wno-error/g' CMakeLists.txt
 %_libexecdir/%name/*
 
 %changelog
+* Mon Nov 16 2026 Nazarov Denis <nenderus@altlinux.org> 4.3.0-alt1
+- Update mbedTLS to 4.3.0
+- Security fixes:
+  + CVE-2026-90469, CVE-2026-90470, CVE-2026-90471, CVE-2026-90475,
+    CVE-2026-93776, CVE-2026-93777, CVE-2026-93831, CVE-2026-93843,
+    CVE-2026-93844, CVE-2026-115488, CVE-2026-115489, CVE-2026-115490,
+    CVE-2026-115491, CVE-2026-116375, CVE-2026-116462
+- Update TF PSA Crypto to 1.3.0
+- Security fixes (TF PSA Crypto):
+  + CVE-2026-50582, CVE-2026-93833, CVE-2026-93835, CVE-2026-93842,
+    CVE-2026-93845, CVE-2026-115493
+
 * Tue Jul 07 2026 Nazarov Denis <nenderus@altlinux.org> 4.2.0-alt1
 - Update mbedTLS to 4.2.0
 - Update TF PSA Crypto to 1.2.0
