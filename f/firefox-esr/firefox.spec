@@ -3,10 +3,10 @@
 
 %ifndef build_parallel_jobs
 
-%ifarch i586
+%ifarch armh %{ix86}
 %global build_parallel_jobs 4
 %else
-%global build_parallel_jobs 4
+%global build_parallel_jobs %__nprocs
 %endif
 %endif
 
@@ -15,11 +15,11 @@
 %define nss_version   3.98
 %define rust_version  1.65.0
 %define cargo_version 1.65.0
-%define llvm_version  17.0
+%define llvm_version  20.1
 
 Name: firefox-esr
 Version: 140.17.0
-Release: alt2
+Release: alt3
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
@@ -150,6 +150,7 @@ BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
 BuildRequires: python3(configobj)
+BuildRequires: python3(typing_extensions)
 # Rust requires
 BuildRequires: /proc
 
@@ -256,6 +257,7 @@ find toolkit/components/uniffi-js -type f |
 rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
 rm -rf -- third_party/python/click/click*
+rm -rf -- third_party/python/typing_extensions/typing_extensions*
 
 %build
 %add_findprov_lib_path %firefox_prefix
@@ -345,7 +347,6 @@ export NPROCS=16
 export NPROCS=4
 %endif
 
-export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 export VERBOSE=1
 export V=1
 python3 ./mach configure
@@ -482,6 +483,10 @@ install -D -m 644 .gear/policies.json \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Mon Nov 16 2026 Pavel Vasenkov <pav@altlinux.org> 140.17.0-alt3
+- Fix FTBFS with LLVM and python typing_extensions
+- Provide build_parallel_jobs directive for x86-64
+
 * Wed Oct 14 2026 Pavel Vasenkov <pav@altlinux.org> 140.17.0-alt2
 - Move packaging files from .rpm to .gear and pass them as SOURCE macros
 - Provide support for KDE system proxy setting (Closes: #58097)
