@@ -18,7 +18,7 @@
 %def_disable debug
 
 Name: evince
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: A document viewer
@@ -231,6 +231,9 @@ using Evince library.
 
 
 %changelog
+* Mon Nov 16 2026 Yuri N. Sedunov <aris@altlinux.org> 48.5-alt1
+- 48.5 (fixed CVE-2026-63729)
+
 * Wed May 20 2026 Yuri N. Sedunov <aris@altlinux.org> 48.4-alt1
 - 48.4
 

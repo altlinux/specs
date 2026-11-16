@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define xdg_name org.gnome.FileRoller
@@ -9,7 +10,7 @@
 %def_enable nautilus_actions
 
 Name: file-roller
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1%beta
 
 Summary: An archive manager for GNOME
@@ -20,7 +21,11 @@ Url: https://wiki.gnome.org/Apps/FileRoller
 
 Vcs: https://gitlab.gnome.org/GNOME/file-roller.git
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Source: %name-%version%beta.tar
+%endif
 Patch1: %name-3.3.90-alt-zip_command.patch
 
 %define glib_ver 2.36.0
@@ -110,11 +115,10 @@ rm -f data/%xdg_name.desktop{,.in}
 
 %install
 %meson_install
+%find_lang --with-gnome %name
 
 %check
 %__meson_test
-
-%find_lang --with-gnome %name
 
 %files -f %name.lang
 %_bindir/*
@@ -133,6 +137,9 @@ rm -f data/%xdg_name.desktop{,.in}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Mon Nov 16 2026 Yuri N. Sedunov <aris@altlinux.org> 44.8-alt1
+- 44.8
+
 * Mon Jun 22 2026 Yuri N. Sedunov <aris@altlinux.org> 44.7-alt1
 - 44.7
 
