@@ -91,7 +91,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -524,6 +524,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4:26.3.0-alt2
+- fixed r600 NIR deserialisation crash
+
 * Tue Nov 10 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.3.0-alt1
 - 26.3.0
 
