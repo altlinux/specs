@@ -11,7 +11,7 @@
 %define _cmake__builddir build
 
 Name: cmake
-Version: 4.4.5
+Version: 4.5.0
 Release: alt1
 
 Summary: Cross-platform, open-source make system
@@ -271,6 +271,7 @@ popd
 %_docdir/%name-%version/LICENSE.rst
 %_docdir/%name-%version/CONTRIBUTORS.rst
 %_docdir/%name-%version/cmlibrhash/
+%_docdir/%name-%version/cmrapidhash/
 %_docdir/%name-%version/cmsys/
 %exclude %_datadir/%name/Modules/
 %if_enabled jsoncpp_bootstrap
@@ -330,6 +331,9 @@ popd
 
 
 %changelog
+* Thu Nov 12 2026 Vitaly Lipatov <lav@altlinux.ru> 4.5.0-alt1
+- new version 4.5.0.
+
 * Sat Oct 31 2026 Vitaly Lipatov <lav@altlinux.ru> 4.4.5-alt1
 - new version 4.4.5
 - use rpm-build-cmake for build-time dependency generation
