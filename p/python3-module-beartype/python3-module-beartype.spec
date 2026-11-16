@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.22.9
+Version: 0.23.1
 Release: alt1
 
 Summary: Unbearably fast near-real-time hybrid runtime-static type-checking in pure Python
@@ -60,6 +60,9 @@ unsubstantiated jargon we just made up, and thrilling puns.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 16 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 0.23.1-alt1
+- 0.22.9 -> 0.23.1.
+
 * Tue Feb 17 2026 Martynenko Evgeniy <enimalojd@altlinux.org> 0.22.9-alt1
 - 0.22.8 -> 0.22.9.
 
