@@ -1,5 +1,5 @@
 Name: gram
-Version: 3.5.0
+Version: 3.5.2
 Release: alt1
 
 Summary: A high-performance, multiplayer code editor
@@ -61,6 +61,9 @@ install -pm0644 -D gram.desktop %buildroot%_desktopdir/gram.desktop
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.2-alt1
+- 3.5.2 released
+
 * Tue Nov 10 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.5.0-alt1
 - 3.5.0 released
 
