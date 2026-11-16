@@ -1,9 +1,9 @@
 Name: python3-module-pyotp
-Version: 2.10.0
+Version: 2.12.0
 Release: alt1
 
 Summary: Python library for generating and verifying one-time passwords.
-License: BSD
+License: MIT
 Group: Development/Python
 URL: https://pypi.org/project/pyotp
 VCS: https://github.com/pyauth/pyotp
@@ -36,7 +36,11 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %pyproject_install
 
 %check
-%pyproject_run_unittest discover -v -s test
+# these two tests exercise datetimes beyond 19 Jan 2038 and fail
+# on 32-bit platforms with 32-bit time_t
+%pyproject_run_pytest -o addopts= test.py \
+	--deselect test.py::TOTPTimezones::test_naive_fractional_seconds \
+	--deselect test.py::TOTPTimezones::test_naive_time_range
 
 %files
 %doc LICENSE* README.*
@@ -44,6 +48,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/pyotp-%version.dist-info
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.12.0-alt1
+- 2.12.0 released
+
 * Wed Jun 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.10.0-alt1
 - 2.10.0 released
 
