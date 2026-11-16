@@ -9,7 +9,7 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.30
+Version: 2.4.32
 
 Epoch: 1
 
@@ -247,6 +247,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Tue Nov 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:2.4.32-alt1
+- 2.4.30 -> 2.4.32
+
 * Sat Mar 21 2026 Aleksandr Shamaraev <shad@altlinux.org> 1:2.4.30-alt1
 - 2.4.27 -> 2.4.30
 
