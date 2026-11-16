@@ -1,7 +1,8 @@
 %define repo dlib
+%define sover 20.1.0
 
 Name: dlib
-Version: 20.0.1
+Version: 20.1
 Release: alt1
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
@@ -23,11 +24,11 @@ BuildRequires: liblapack-devel libopenblas-devel libavdevice-devel libavfilter-d
 Dlib is a general purpose cross-platform C++ library
 designed using contract programming and modern C++ techniques.
 
-%package -n lib%name%version
+%package -n lib%name%sover
 Summary: Library for %name
 Group: System/Libraries
 
-%description -n lib%name%version
+%description -n lib%name%sover
 This package provides library for %name.
 
 %package devel
@@ -86,9 +87,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %pyproject_install
 %endif
 
-%files -n lib%name%version
+%files -n lib%name%sover
 %doc LICENSE.txt README.md
-%_libdir/lib%name.so.%version
+%_libdir/lib%name.so.%sover
 
 %files devel
 %_includedir/%name/
@@ -102,6 +103,9 @@ sed -i -e '/USE_SSE4_INSTRUCTIONS/s| ON | OFF |; /USE_AVX_INSTRUCTIONS/s| ON | O
 %endif
 
 %changelog
+* Mon Nov 16 2026 Leontiy Volodin <lvol@altlinux.org> 20.1-alt1
+- New version 20.1.
+
 * Tue Mar 31 2026 Leontiy Volodin <lvol@altlinux.org> 20.0.1-alt1
 - New version 20.0.1.
 
