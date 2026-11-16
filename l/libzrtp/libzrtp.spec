@@ -1,5 +1,5 @@
 Name: libzrtp
-Version: 5.4.124
+Version: 5.4.130
 Release: alt1
 
 Summary: BZRTP is an opensource implementation of ZRTP keys exchange protocol
@@ -56,6 +56,9 @@ develop programs using the oRTP library.
 %_datadir/BZRTP
 
 %changelog
+* Mon Nov 16 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.130-alt1
+- New version 5.4.130.
+
 * Tue Aug 11 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.124-alt1
 - New version 5.4.124.
 - Switched to github mirror.
