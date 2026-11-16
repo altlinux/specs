@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
@@ -69,6 +69,8 @@ that use Cap'n Proto.
 %add_optflags %(getconf LFS_CFLAGS) -Wno-tautological-compare
 # Upstream build flags.
 %add_optflags -Wno-strict-aliasing -Wno-sign-compare -Wno-unused-parameter
+# tests
+%add_optflags --std=gnu++17
 %autoreconf
 %configure --disable-static
 %make_build
@@ -102,6 +104,9 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Wed Nov 11 2026 Daniel Zagaynov <kotopesutility@altlinux.org> 1.5.0-alt1
+- Update to v1.5.0 (2026-07-09).
+
 * Sat Mar 21 2026 Vitaly Chikunov <vt@altlinux.org> 1.4.0-alt1
 - Update to v1.4.0 (2026-03-12).
 
