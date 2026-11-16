@@ -31,7 +31,7 @@
 %define fwupd_pluginsdir %_libdir/fwupd-%version
 
 Name: fwupd
-Version: 2.1.9
+Version: 2.1.10
 Release: alt1
 
 Summary: Firmware update daemon
@@ -250,7 +250,6 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %_unitdir/fwupd.service
 %_unitdir/fwupd-refresh.timer
 %_unitdir/fwupd-refresh.service
-%_systemddir/system-shutdown/fwupd.shutdown
 %dir %_localstatedir/fwupd
 %dir %_datadir/fwupd/quirks.d
 %_datadir/fwupd/quirks.d/builtin.quirk.gz
@@ -294,6 +293,9 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 %endif
 
 %changelog
+* Mon Nov 16 2026 Egor Ignatov <egori@altlinux.org> 2.1.10-alt1
+- New version 2.1.10.
+
 * Fri Oct 23 2026 Egor Ignatov <egori@altlinux.org> 2.1.9-alt1
 - New version 2.1.9.
 
