@@ -22,7 +22,7 @@
 %global workdir %cachedir/work
 
 Name: tomcat10
-Version: 10.1.61
+Version: 10.1.62
 Release: alt1
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
@@ -440,6 +440,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Tue Nov 17 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.62-alt1
+- 10.1.61 -> 10.1.62
+
 * Tue Oct 13 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.61-alt1
 - 10.1.60 -> 10.1.61
 
