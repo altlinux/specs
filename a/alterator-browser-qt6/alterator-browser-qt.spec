@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.7.15
+Version: 3.7.16
 Release: alt1
 
 Source:%name-%version.tar
@@ -98,6 +98,14 @@ __EOF__
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Nov 17 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.16-alt1
+- announce wizardface steps
+- set accessible name for window with title
+- fix popup focus
+- set popup accessible name
+- add a11y-name widget property
+- use name as a11ly-name by default
+
 * Wed Nov 11 2026 Sergey V Turchin <zerg at altlinux dot org> 3.7.15-alt1
 - fix package translations
 
