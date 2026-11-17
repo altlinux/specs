@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde-rounded-corners-x11
-Version: 0.9.0
+Version: 0.11.0
 Release: alt1
 %K6init no_altplace
 
@@ -18,7 +18,7 @@ Requires: kde-rounded-corners
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: cmake
-BuildRequires: gcc-c++
+BuildRequires: libvulkan-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: kwin-devel
 BuildRequires: kwin-x11-devel
@@ -51,6 +51,9 @@ BuildRequires: qt6-declarative-devel
 %exclude %_K6data/kwin/shaders/shapecorners*.frag
 
 %changelog
+* Tue Nov 17 2026 Anton Kurachenko <srebrov@altlinux.org> 0.11.0-alt1
+- New version 0.11.0.
+
 * Sat Jul 04 2026 Anton Kurachenko <srebrov@altlinux.org> 0.9.0-alt1
 - New version 0.9.0.
 
