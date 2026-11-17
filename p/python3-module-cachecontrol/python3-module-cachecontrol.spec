@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.14.4
+Version: 0.15.0
 Release: alt1.1
 
 Summary: CacheControl is a port of the caching algorithms in httplib2
@@ -61,6 +61,9 @@ CacheControl is a port of the caching algorithms in "httplib2" for use with
 %doc README*
 
 %changelog
+* Tue Nov 17 2026 Yuri N. Sedunov <aris@altlinux.org> 0.15.0-alt1.1
+- 0.15.0
+
 * Sun Feb 08 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.4-alt1.1
 - fixed %%check
 
