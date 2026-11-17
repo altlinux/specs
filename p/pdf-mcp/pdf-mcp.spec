@@ -1,5 +1,5 @@
 Name: pdf-mcp
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Summary: Agentic RAG over your PDFs
@@ -63,11 +63,17 @@ BuildArch: noarch
 %pyproject_install
 install -pm0644 -D deploy/pdf-mcp.sysusers %buildroot%_sysusersdir/pdf-mcp.conf
 install -pm0644 -D deploy/pdf-mcp-http.service %buildroot%_unitdir/pdf-mcp-http.service
-install -pm0640 -D deploy/pdf-mcp-http.env %buildroot%_sysconfdir/pdf-mcp/env
-install -pm0640 deploy/config.toml.example %buildroot%_sysconfdir/pdf-mcp/config.toml
+install -pm0644    deploy/pdf-mcp-warm@.service %buildroot%_unitdir/
+install -pm0644    deploy/pdf-mcp-warm@.timer %buildroot%_unitdir/
+install -pm0640 -D deploy/config.toml.example %buildroot%_sysconfdir/pdf-mcp/config.toml
+install -pm0640 deploy/pdf-mcp.env %buildroot%_sysconfdir/pdf-mcp/env
 install -d %buildroot%_localstatedir/pdf-mcp/cache
 
 %check
+# The suite leaks a few fds per test under xdist; the chroot builder's
+# soft limit is 1024 and late workers die with EMFILE (sqlite then
+# reports "unable to open database file"). Hard limit is far higher.
+ulimit -n 65536 ||:
 # Materialize the generated content-trust corpus once, before xdist:
 # otherwise each worker's module fixture regenerates it concurrently
 # into the build tree and the builders race (FileNotFoundError on farm).
@@ -98,6 +104,8 @@ python3 -c "import importlib.util; s=importlib.util.spec_from_file_location('g',
 %config(noreplace) %attr(0640,root,pdf-mcp) %_sysconfdir/pdf-mcp/config.toml
 %_bindir/pdf-mcp-http
 %_unitdir/pdf-mcp-http.service
+%_unitdir/pdf-mcp-warm@.service
+%_unitdir/pdf-mcp-warm@.timer
 %_sysusersdir/pdf-mcp.conf
 %attr(0770,root,pdf-mcp) %_localstatedir/pdf-mcp
 %attr(0700,pdf-mcp,pdf-mcp) %_localstatedir/pdf-mcp/cache
@@ -105,9 +113,13 @@ python3 -c "import importlib.util; s=importlib.util.spec_from_file_location('g',
 %files -n python3-module-pdf-mcp
 %_bindir/pdf-mcp
 %_bindir/pdf-mcp-warm
+%_bindir/pdf-mcp-cache
 %python3_sitelibdir_noarch/pdf_mcp
 %python3_sitelibdir_noarch/pdf_mcp-%version.dist-info
 
 %changelog
+* Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.8.0-alt1
+- 3.8.0 released
+
 * Sat Nov 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.7.0-alt1
 - 3.7.0 released
