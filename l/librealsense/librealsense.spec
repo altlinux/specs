@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    librealsense
-Version: 2.59.1
+Version: 2.59.2
 Release: alt1
 
 Summary: Cross-platform camera capture for Intel RealSense
@@ -13,7 +13,6 @@ VCS:     https://github.com/realsenseai/librealsense.git
 Source0: %name-%version.tar
 Source1: realsense-viewer.desktop
 
-Patch0:  presets_path.patch
 Patch1:  disable-pedantic.patch
 Patch2:  librealsense.use-system-yaml-cpp.patch
 Patch4:  librealsense.use-system-pybind11.patch
@@ -27,6 +26,8 @@ Patch12: librealsense.fix-cxx14-all.patch
 Patch13: librealsense.fix-fastcdr-v2-api.patch
 Patch14: librealsense.use-system-libcurl.patch
 Patch15: librealsense.use-system-libdeflate.patch
+Patch16: librealsense.fix-pkgconfig.patch
+Patch17: librealsense.fix-python-cmake-export.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-python3 rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -34,7 +35,8 @@ BuildRequires: libglfw3-devel libusb-devel libudev-devel libGL-devel libGLU-deve
 BuildRequires: python3-dev python3-module-setuptools pybind11-devel libcap-devel
 BuildRequires: nlohmann-json-devel doxygen libyaml-cpp-devel libsqlite3-devel
 BuildRequires: fast-cdr-devel libcurl-devel libssl-devel libdeflate-devel
-Requires: udev
+BuildRequires: pkg-config libidn2-devel libgomp-devel
+Requires: udev at
 Provides: librealsense2 = %EVR
 
 %description
@@ -48,6 +50,7 @@ playback of streaming sessions.
 Summary: Development files for %name
 Group: Development/C++
 Requires: %name = %EVR
+Requires: nlohmann-json-devel
 Provides: librealsense2-devel = %EVR
 
 %description devel
@@ -65,7 +68,9 @@ The python3-module-%name package contains python bindings for %name.
 %package -n python3-module-%name-devel
 Summary: Python development files for %name
 Group: System/Libraries
-Requires: python3-module-%name =  %EVR
+Requires: python3-module-%name = %EVR
+Requires: %name-devel = %EVR
+Requires: python3-dev
 Provides: python3-librealsense2-devel = %EVR
 
 %description -n python3-module-%name-devel
@@ -89,6 +94,8 @@ with %name.
 %build
 %cmake \
   -DBUILD_UNIT_TESTS=OFF \
+  -DBUILD_WITH_OPENMP=ON \
+  -DBUILD_PC_STITCHING=ON \
   -DCHECK_FOR_UPDATES=ON \
   -DENABLE_AI_ASSISTANT=ON \
   -DENABLE_STATS=OFF \
@@ -164,6 +171,7 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-motion
 %_bindir/rs-multicam
 %_bindir/rs-pointcloud
+%_bindir/rs-pointcloud-stitching
 %_bindir/rs-post-processing
 %_bindir/rs-record
 %_bindir/rs-record-playback
@@ -172,8 +180,6 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %_bindir/rs-sensor-control
 %_bindir/rs-software-device
 %_bindir/rs-terminal
-%dir %_datadir/librealsense2
-%_datadir/librealsense2/presets
 %_datadir/pixmaps/realsense-viewer.png
 %_libdir/librealsense2-gl.so.*
 %_libdir/librealsense2.so.*
@@ -214,6 +220,12 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/realsense-viewer.desktop
 %doc LICENSE doc/doxygen/html/*
 
 %changelog
+* Tue Nov 17 2026 Sergey Palcheh <minergenon@altlinux.org> 2.59.2-alt1
+- new version 2.59.2
+- fix pkg-config files and exported Python CMake target
+- add missing build and runtime dependencies
+- enable OpenMP and the point cloud stitching tool
+
 * Mon Oct 12 2026 Sergey Palcheh <minergenon@altlinux.org> 2.59.1-alt1
 - new version 2.59.1
 - use system libcurl instead of bundled ExternalProject clone
