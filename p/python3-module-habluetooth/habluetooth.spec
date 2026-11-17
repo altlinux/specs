@@ -1,6 +1,6 @@
 Name: python3-module-habluetooth
-Version: 7.1.2
-Release: alt2
+Version: 7.1.3
+Release: alt1
 
 Summary: High availability Bluetooth
 License: Apache-2.0
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/habluetooth-%version.dist-info
 
 %changelog
+* Tue Nov 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.1.3-alt1
+- 7.1.3 released
+
 * Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.1.2-alt2
 - fixed build with bleak 3.1
 
