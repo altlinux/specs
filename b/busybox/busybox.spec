@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: busybox
-Version: 1.37.0
-Release: alt2
+Version: 1.38.0
+Release: alt1
 Summary: Statically linked binary providing simplified versions of system commands
 License: GPL-2.0-only
 Group: Shells
@@ -15,9 +15,11 @@ Vcs: https://git.busybox.net/busybox
 Source: %name-%version.tar
 BuildRequires: musl-devel-static >= 1.2.5-alt7
 BuildRequires: perl-podlators
+BuildRequires: libatomic-devel-static
 %{?!_without_check:%{?!_disable_check:
 BuildRequires: /proc
 BuildRequires: /usr/bin/zip
+BuildRequires: rpm-build-vm
 }}
 
 %description
@@ -66,9 +68,14 @@ fi
 # date tests fail but they do not return exit failure.
 file busybox_unstripped | grep 'pie executable,.*, static-pie linked,'
 ldd busybox_unstripped | grep 'statically linked'
-# Verify standalone mode.
-./busybox sh <<-EOF |& grep -Fw 'BusyBox v%version'
-	! ls --version
+
+# Verify standalone mode using the built binary at its installed path.
+# Since 1.38, ash's vfork requires /bin/busybox, absent in the build chroot.
+# Keep /bin/busybox so rescue shells also work without /proc mounted.
+vm-run --overlay=tmpfs:/bin --heredoc <<'EOF'
+install -m755 busybox_unstripped /bin/busybox
+set -o pipefail
+/bin/busybox sh -c '! ls --version' 2>&1 | grep -Fw 'BusyBox v%version'
 EOF
 ls -l busybox busybox_unstripped
 size busybox
@@ -80,6 +87,9 @@ size busybox
 %_man1dir/busybox.1*
 
 %changelog
+* Mon Nov 16 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.38.0-alt1
+- Update to 1_38_0
+
 * Fri Mar 20 2026 Vitaly Chikunov <vt@altlinux.org> 1.37.0-alt2
 - tc: Fix CBQ FTBFS on newer kernels/glibc-kernheaders.
 - Build static PIE executable (with ASLR).
