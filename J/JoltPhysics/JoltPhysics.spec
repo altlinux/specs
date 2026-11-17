@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define abiver 5.6
+%define abiver 5.7
 %define libname libJolt%{abiver}
 
 Name:    JoltPhysics
-Version: 5.6.0
+Version: 5.7.0
 Release: alt1
 
 Summary: A multi core friendly rigid body physics and collision detection library
@@ -74,5 +74,8 @@ install -Dm644 Jolt/Shaders/ShaderCore.h %buildroot%_includedir/Jolt/Shaders/Sha
 %_libdir/libJolt.so
 
 %changelog
+* Tue Nov 17 2026 Sergey Palcheh <minergenon@altlinux.org> 5.7.0-alt1
+- new version 5.7.0
+
 * Wed Nov 11 2026 Sergey Palcheh <minergenon@altlinux.org> 5.6.0-alt1
 - Initial build for Sisyphus

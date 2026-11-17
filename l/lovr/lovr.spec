@@ -2,7 +2,7 @@
 
 Name:    lovr
 Version: 0.19.1
-Release: alt1
+Release: alt2
 
 Summary: Lua Virtual Reality Framework
 License: MIT
@@ -16,6 +16,7 @@ Patch1: lovr-0.19.0-phonon-thirdparty.patch
 Patch2: lovr-0.19.1-joltc-jolt-5.6.patch
 Patch3: lovr-0.19.1-system-jolt-cmake.patch
 Patch4: lovr-0.19.1-system-glslang.patch
+Patch5: lovr-0.19.1-joltc-jolt-5.7.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -40,6 +41,7 @@ different platforms and devices.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %cmake -B build \
@@ -81,6 +83,12 @@ install -m644 build/plugins/lovr-http/http.so %buildroot%_libdir/lovr/plugins/ht
 %_libdir/lovr/plugins/http.so
 
 %changelog
+* Tue Nov 17 2026 Sergey Palcheh <minergenon@altlinux.org> 0.19.1-alt2
+- rebuild against JoltPhysics 5.7 (libJolt.so.5.7)
+- port joltc to Jolt 5.7 API: JobSystem::CreateJobs,
+  ContactSettings in EstimateCollisionResponse, removed
+  PhysicsSettings::mDeterministicSimulation
+
 * Wed Nov 11 2026 Sergey Palcheh <minergenon@altlinux.org> 0.19.1-alt1
 - new version 0.19.1
 - use system JoltPhysics 5.6 (libJolt-devel) instead of bundled Jolt 5.3.0;
