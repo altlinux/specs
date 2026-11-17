@@ -5,8 +5,8 @@
 %define pstoedit_ver 3.32
 
 Name: autotrace
-Version: 0.31.10
-Release: alt3
+Version: 0.31.11
+Release: alt1
 
 Summary: Bitmap to vector graphics converter
 Summary(ru_RU.UTF-8): Программа трассировки растровых изображений.
@@ -93,7 +93,7 @@ autoreconf -fisv
 %find_lang %name
 
 %files -f %name.lang
-%doc README* NEWS AUTHORS ChangeLog THANKS
+%doc README* NEWS AUTHORS THANKS
 %_bindir/%name
 %_man1dir/*
 
@@ -112,6 +112,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 0.31.11-alt1
+- 0.31.10 -> 0.31.11
+
 * Tue Jul 02 2024 Anton Farygin <rider@altlinux.ru> 0.31.10-alt3
 - added Conflicts and Obsoltes with libautotrace 0.31.1 and earlier
 
