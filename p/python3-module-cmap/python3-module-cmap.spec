@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 
 Summary: Scientific colormaps for python, with only numpy dependency
 License: BSD-3-Clause
 Group: Development/Python3
 URL: https://pypi.org/project/cmap
-VCS: https://github.com/jtauber/cmap
+VCS: https://github.com/pyapp-kit/cmap
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -51,5 +51,8 @@ BuildRequires: python3-module-numpy-testing
 %python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 17 2026 Aleksandr Dovydenkov <asd@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Tue Mar 03 2026 Aleksandr Dovydenkov <asd@altlinux.org> 0.7.2-alt1
 - Initial build for Sisyphus.
