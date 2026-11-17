@@ -1,8 +1,8 @@
 %define soversion 21
 
 Name: miniupnpc
-Version: 2.3.4
-Release: alt4
+Version: 2.3.5
+Release: alt1
 Epoch: 1
 
 Summary: UPnP client library
@@ -77,6 +77,9 @@ Development tools for %name
 %_bindir/upnpc-shared
 
 %changelog
+* Tue Nov 17 2026 Nazarov Denis <nenderus@altlinux.org> 1:2.3.5-alt1
+- New version 2.3.5.
+
 * Mon Nov 16 2026 Nazarov Denis <nenderus@altlinux.org> 1:2.3.4-alt4
 - New version 2.3.4.
 
