@@ -1,5 +1,5 @@
 Name: mt-st
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: Programs to control tape device operations
@@ -8,7 +8,6 @@ Group: Archiving/Backup
 Url: https://github.com/iustin/mt-st
 
 Source: %name-%version.tar
-Patch: mt-st-1.1-fix-for-glibc2.30.patch
 
 %description
 The mt-st package contains the mt and st tape drive management programs.
@@ -17,7 +16,6 @@ rewinding, ejecting, skipping files and blocks and more.
 
 %prep
 %setup
-%patch -p2
 
 %build
 %make_build
@@ -34,6 +32,9 @@ rewinding, ejecting, skipping files and blocks and more.
 %doc CHANGELOG.md COPYING README* stinit.def.examples
 
 %changelog
+* Tue Nov 17 2026 Alexei Takaseev <taf@altlinux.org> 1.9-alt1
+- 1.9
+
 * Fri Jun 19 2026 Alexei Takaseev <taf@altlinux.org> 1.8-alt1
 - 1.8
 - Change upstream URL
