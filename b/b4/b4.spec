@@ -3,7 +3,7 @@
 
 Summary: A tool to work with public-inbox and patch archives
 Name: b4
-Version: 0.15.2
+Version: 0.16.0
 Release: alt1
 
 Group: Development/Python
@@ -19,6 +19,8 @@ BuildRequires: python3-module-setuptools
 %if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-ezgb
+BuildRequires: python3-module-liblore
 
 BuildRequires: python3(dkim)
 BuildRequires: python3(git_filter_repo)
@@ -62,6 +64,10 @@ install -Dm644 src/b4/man/b4.1 %buildroot%_man1dir/b4.1
 %python3_sitelibdir_noarch/%{pyproject_distinfo b4}/
 
 %changelog
+* Tue Nov 17 2026 Vladislav Tatjanin <l27001@altlinux.org> 0.16.0-alt1
+- New release (0.16.0).
+- Backport liblore >= 0.9 support.
+
 * Thu Jul 23 2026 Ivan A. Melnikov <iv@altlinux.org> 0.15.2-alt1
 - New release (0.15.2).
 - Add requires for some optional dependencies (ALT#58355).
