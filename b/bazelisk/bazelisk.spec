@@ -2,7 +2,7 @@
 
 %global import_path github.com/bazelbuild/bazelisk
 Name: bazelisk
-Version: 1.29.0
+Version: 1.30.0
 Release: alt1
 
 Summary: A user-friendly launcher for Bazel
@@ -52,6 +52,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Tue Nov 17 2026 Timofei Fedotov <sovtouch@altlinux.org> 1.30.0-alt1
+- Updated to 1.30.0
+
 * Wed May 13 2026 Timofei Fedotov <sovtouch@altlinux.org> 1.29.0-alt1
 - Updated to 1.29.0
 

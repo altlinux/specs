@@ -3,7 +3,7 @@
 %def_without check
 
 Name: ibus-typing-booster
-Version: 2.31.1
+Version: 2.31.4
 Release: alt1
 
 Summary: Intelligent typing completion input method for IBus
@@ -119,5 +119,8 @@ fi
 %_datadir/applications/emoji-picker.desktop
 
 %changelog
+* Tue Nov 17 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.31.4-alt1
+- Updated to 2.31.4.
+
 * Wed Sep 30 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.31.1-alt1
 - Initial build for ALT Sisyphus. (Closes: #51876)
