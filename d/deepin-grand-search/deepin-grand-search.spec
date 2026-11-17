@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-grand-search
-Version: 6.0.51
+Version: 6.0.52
 Release: alt1
 
 Summary: Basic search tool for DDE
@@ -109,8 +109,15 @@ export READELF="llvm-readelf"
 %dir %_datadir/deepin-manual/manual-assets/application/
 %_datadir/deepin-manual/manual-assets/application/%repo/
 # ---
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde.grandsearch/
+%_datadir/dsg/configs/org.deepin.dde.grandsearch/org.deepin.dde.grandsearch.json
 
 %changelog
+* Tue Nov 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.52-alt1
+- New version 6.0.52.
+
 * Fri Sep 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.51-alt1
 - New version 6.0.51.
 
