@@ -7,7 +7,7 @@
 %define go_builddir .build
 
 Name: tuios
-Version:  0.12.1
+Version: 0.13.3
 Release: alt1
 Summary: Terminal UI Operating System, a terminal-based window manager
 License: MIT
@@ -67,8 +67,16 @@ export IMPORT_PATH="%import_path"
 export GOTOOLCHAIN=local
 export CGO_ENABLED=0
 export GOFLAGS="-buildmode=pie"
+# The shipped tuios is built with inlining off in the packages
+# scripts/noinline-packages.txt lists; the script keeps the GOFLAGS above.
+export GOFLAGS="$(scripts/goflags.sh)"
 export LDFLAGS="-X main.version=%version -X main.builtBy=altlinux"
 %golang_prepare
+# %golang_prepare copies the top level with `cp -al -- *`, which skips the
+# dotfiles. internal/lint reads .goreleaser.yml and .github/workflows to hold
+# every build of ./cmd/tuios to scripts/goflags.sh, so bring them into the
+# build tree.
+cp -al -- .goreleaser.yml .github "$BUILDDIR/src/$IMPORT_PATH/"
 %golang_build %go_builddir/src/%import_path/cmd/%name
 %golang_build %go_builddir/src/%import_path/cmd/%{name}-web
 set -C
@@ -105,6 +113,10 @@ cd %go_builddir/src/%import_path/
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Nov 17 2026 Andrey Limachko <liannnix@altlinux.org> 0.13.3-alt1
+- updated from 0.12.1 to 0.13.3
+- built with scripts/goflags.sh, as the release builds are
+
 * Tue Nov 03 2026 Andrey Limachko <liannnix@altlinux.org> 0.12.1-alt1
 - updated from 0.12.0 to 0.12.1
 
