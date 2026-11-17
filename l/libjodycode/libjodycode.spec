@@ -1,5 +1,5 @@
 Name: libjodycode
-Version: 4.1.2
+Version: 4.2
 Release: alt1
 
 Summary: General purpose utility functions
@@ -53,6 +53,9 @@ rm -f %buildroot%_libdir/libjodycode.a
 %_libdir/libjodycode.so
 
 %changelog
+* Tue Nov 17 2026 Vitaly Lipatov <lav@altlinux.ru> 4.2-alt1
+- new version 4.2
+
 * Sun Mar 08 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.2-alt1
 - new version 4.1.2
 - add man3 page to devel
