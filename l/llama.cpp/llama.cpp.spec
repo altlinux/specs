@@ -3,6 +3,8 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
+%define sover 1
+
 %ifarch x86_64
 %def_with cuda
 %else
@@ -11,7 +13,7 @@
 %def_with vulkan
 
 Name: llama.cpp
-Version: 0.9.0
+Version: 1.0.0
 Release: alt1
 Epoch: 2
 Summary: LLM inference in C/C++
@@ -97,17 +99,17 @@ NOTE:
 
 Overall this is all raw and EXPERIMENTAL, no warranty, no support.
 
-%package -n libllama
+%package -n libllama%sover
 Summary: Shared libraries for llama.cpp
 Group: System/Libraries
 
-%description -n libllama
+%description -n libllama%sover
 %summary.
 
 %package -n libllama-devel
 Summary: Development files for llama.cpp
 Group: Development/C
-Requires: libllama = %EVR
+Requires: libllama%sover = %EVR
 Conflicts: libwhisper-cpp-devel
 
 %description -n libllama-devel
@@ -116,7 +118,7 @@ Conflicts: libwhisper-cpp-devel
 %package cpu
 Summary: %name tools including backend for CPU
 Group: Sciences/Computer science
-Requires: libllama = %EVR
+Requires: libllama%sover = %EVR
 Conflicts: %name-convert < %EVR
 AutoReqProv: nopython3
 %add_findreq_skiplist %_datadir/%name/examples/*
@@ -192,7 +194,6 @@ cp -a requirements -t %buildroot%_datadir/%name
 # Additional data.
 cp -rp grammars -t %buildroot%_datadir/%name
 # Not all examples.
-install -Dp examples/*.sh -t %buildroot%_datadir/%name/examples
 install -Dp examples/*.py -t %buildroot%_datadir/%name/examples
 # We need to run the tests, not install them.
 rm %buildroot%_bindir/test-*
@@ -225,14 +226,17 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 
 %files
 
-%files -n libllama
-# SONAME follows upstream's own versioning (LLAMA_VERSION_BASE/_MAJOR in
-# CMakeLists.txt) rather than our build number — no local SOVERSION hacks.
-%_libdir/libllama.so.*
-%_libdir/libllama-common.so.*
-%_libdir/libggml.so.*
-%_libdir/libggml-base.so.*
-%_libdir/libmtmd.so.*
+%files -n libllama%sover
+%_libdir/libllama.so.%sover
+%_libdir/libllama-common.so.%sover
+%_libdir/libggml.so.%sover
+%_libdir/libggml-base.so.%sover
+%_libdir/libmtmd.so.%sover
+%_libdir/libllama.so.%sover.*
+%_libdir/libllama-common.so.%sover.*
+%_libdir/libggml.so.%sover.*
+%_libdir/libggml-base.so.%sover.*
+%_libdir/libmtmd.so.%sover.*
 
 %files -n libllama-devel
 %_libdir/libllama.so
@@ -264,7 +268,6 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %dir %_sysconfdir/llama
 %dir %_datadir/%name
 %dir %_datadir/%name/examples
-%_datadir/%name/examples/*.sh
 %_datadir/%name/examples/*.py
 %_datadir/%name/requirements*
 %_datadir/%name/grammars
@@ -287,6 +290,10 @@ llama-completion -m /usr/share/tinyllamas/stories260K.gguf -p "Once upon a time"
 %endif
 
 %changelog
+* Mon Nov 16 2026 Anton Farygin <rider@altlinux.org> 2:1.0.0-alt1
+- Update to v1.0.0.
+- Rename the runtime library package to libllama1 (Shared Libs Policy).
+
 * Sat Nov 07 2026 Anton Farygin <rider@altlinux.org> 2:0.9.0-alt1
 - Update to v0.9.0.
 

@@ -3,7 +3,7 @@
 
 Name: handy
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: A speech-to-text application that works completely offline
 License: MIT
@@ -52,7 +52,9 @@ BuildRequires: node-typescript
 # Use our libraries from the repository instead of vendored binaries and libraries
 #
 # Replace a vendored source from the transcribe-cpp-sys crate
-BuildRequires: libllama-devel
+BuildRequires: libllama-devel >= 2:1.0.0
+# ggml loads these backend modules with dlopen; ELF autorequires cannot see them.
+Requires: llama.cpp-cpu
 # Replace a binary from the ort-sys crate
 BuildRequires: libonnxruntime-devel
 
@@ -126,8 +128,6 @@ export TAURI_SKIP_DEPS_CHECK=1
 npm run build
 
 pushd src-tauri
-# Link with the system ggml instead of vendored library
-export RUSTFLAGS="-C link-arg=-lggml"
 # Link with the system onnx runtime instead of vendored binary
 export ORT_STRATEGY=system
 export ORT_LIB_LOCATION=%_libdir
@@ -176,5 +176,9 @@ help2man --no-discard-stderr \
 %_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 0.9.5-alt2
+- Fixed build with system ggml 1.x.
+- Added a runtime dependency on the system CPU backend.
+
 * Wed Sep 02 2026 Ulysses Apokin <ulysses@altlinux.org> 0.9.5-alt1
 - Initial build for Sisyphus.
