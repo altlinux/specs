@@ -1,6 +1,6 @@
 Name: ghostty
-Version: 1.3.1
-Release: alt3
+Version: 1.4.0
+Release: alt1
 
 Summary: Fast, feature-rich and cross-platform terminal emulator
 License: MIT
@@ -20,6 +20,7 @@ BuildRequires: fontconfig-devel
 BuildRequires: glslang
 BuildRequires: highway-devel
 BuildRequires: libadwaita-devel
+BuildRequires: libEGL-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libgtk4-devel
 BuildRequires: libgtk4-layer-shell-devel
@@ -128,6 +129,9 @@ tar cf %SOURCE1 --exclude '*/rules' zig-pkg
 %_datadir/terminfo/x/xterm-ghostty
 
 %changelog
+* Wed Oct 28 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.4.0-alt1
+- 1.4.0 released
+
 * Mon Oct 12 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.3.1-alt3
 - package ghostty systemd user service (closes: 60879)
 
