@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-citus
 Version: 13.5.0
-Release: alt1
+Release: alt2
 
 Summary: Citus is a PostgreSQL extension that transforms Postgres into a distributed database-so you can achieve high performance at any scale.
 License: AGPL-3.0
@@ -75,6 +75,9 @@ Header files for Citus
 %_includedir/pgsql/server/distributed/
 
 %changelog
+* Tue Nov 17 2026 Alexei Takaseev <taf@altlinux.org> 13.5.0-alt2
+- Fix build with PostgreSQL >= 15.20
+
 * Mon Oct 26 2026 Alexei Takaseev <taf@altlinux.org> 13.5.0-alt1
 - v13.5.0
 
