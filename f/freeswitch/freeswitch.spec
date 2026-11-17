@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.11.3
-Release: alt1
+Release: alt2
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -266,6 +266,8 @@ install -pm0644 src/include/switch_version.h %buildroot/%_includedir/freeswitch/
 mkdir -p \
     %buildroot%_datadir/%name/sounds \
     %buildroot%_sysconfdir/freeswitch/ssl \
+    %buildroot%_sysconfdir/freeswitch/tls \
+    %buildroot%_var/cache/freeswitch \
     %buildroot%_var/lib/freeswitch/recordings \
     %buildroot%_logdir/freeswitch/{cdr-csv,xml_cdr}
 
@@ -337,6 +339,8 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/freeswitch
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name
+%dir %attr(0770, root, _pbx) %_sysconfdir/%name/tls
+%dir %attr(0770, root, _pbx) %_var/cache/%name
 
 %dir %_datadir/freeswitch/fonts
 %_datadir/freeswitch/fonts/*.ttf
@@ -559,6 +563,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 1:1.11.3-alt2
+- hardened the systemd unit
+- added writable TLS and cache directories
+
 * Fri Nov 13 2026 Anton Farygin <rider@altlinux.org> 1:1.11.3-alt1
 - 1.11.2 -> 1.11.3 (Fixes: CVE-2026-116779)
 
