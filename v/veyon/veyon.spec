@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.11.4
-Release: alt2
+Release: alt3
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -115,6 +115,7 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 	-DWITH_LTO=OFF \
 %endif
 	-DSYSTEMD_SERVICE_INSTALL_DIR:PATH=%_unitdir \
+	-DCMAKE_CXX_FLAGS="-Wno-error=sfinae-incomplete"\
 	%nil
 %cmake_build
 
@@ -143,6 +144,10 @@ fi
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
 
 %changelog
+* Tue Nov 11 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.4-alt3
+- Fix FTBFS, turn off SFINAE incomplete error (when function is auto and is
+  found to be incomplete but then is being used as a complete function).
+
 * Tue Nov 03 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.4-alt2
 - Return desktop and polkit russian translations (Closes: 61045).
 
