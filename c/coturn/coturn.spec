@@ -9,7 +9,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:		coturn
-Version: 4.19.0
+Version: 4.19.2
 Release:	alt1
 Summary:	Coturn TURN Server
 
@@ -129,6 +129,19 @@ export DOCSDIR=%_docdir/%name-%version
 %install
 %makeinstall_std
 
+# Regression drivers and DoS load generators are source-tree tests, not usage examples.
+rm -rf \
+	%buildroot%coturn_examplesdir/scripts/dtls_half_open \
+	%buildroot%coturn_examplesdir/scripts/dtls_plaintext \
+	%buildroot%coturn_examplesdir/scripts/mobility_resume_flood.py \
+	%buildroot%coturn_examplesdir/scripts/mobility_quota_flood.py \
+	%buildroot%coturn_examplesdir/scripts/relay_ttl_probe.py \
+	%buildroot%coturn_examplesdir/scripts/stateless_binding_probe.py \
+	%buildroot%coturn_examplesdir/scripts/stateless_nonce_forged_mi.py \
+	%buildroot%coturn_examplesdir/scripts/basic/dos_attack.sh \
+	%buildroot%coturn_examplesdir/scripts/longtermsecure/secure_dos_attack.sh \
+	%buildroot%coturn_examplesdir/scripts/selfloadbalance/secure_dos_attack.sh
+
 mkdir -p %buildroot/%_sysconfdir/%name
 mv %buildroot%_sysconfdir{,/%name}/turnserver.conf.default
 #sed -i -e "s/#syslog/syslog/g" \
@@ -236,13 +249,7 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %coturn_examplesdir/scripts/oauth.sh
 %coturn_examplesdir/scripts/readme.txt
 %coturn_examplesdir/scripts/pack.sh
-%coturn_examplesdir/scripts/mobility_resume_flood.py
-%coturn_examplesdir/scripts/mobility_quota_flood.py
-%coturn_examplesdir/scripts/relay_ttl_probe.py
-%coturn_examplesdir/scripts/stateless_binding_probe.py
-%coturn_examplesdir/scripts/stateless_nonce_forged_mi.py
 %dir %coturn_examplesdir/scripts/basic
-%coturn_examplesdir/scripts/basic/dos_attack.sh
 %coturn_examplesdir/scripts/basic/relay.sh
 %coturn_examplesdir/scripts/basic/tcp_client.sh
 %coturn_examplesdir/scripts/basic/tcp_client_c2c_tcp_relay.sh
@@ -255,7 +262,6 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %coturn_examplesdir/scripts/loadbalance/tcp_c2c_tcp_relay.sh
 %coturn_examplesdir/scripts/loadbalance/udp_c2c.sh
 %dir %coturn_examplesdir/scripts/longtermsecure
-%coturn_examplesdir/scripts/longtermsecure/secure_dos_attack.sh
 %coturn_examplesdir/scripts/longtermsecure/secure_dtls_client.sh
 %coturn_examplesdir/scripts/longtermsecure/secure_dtls_client_cert.sh
 %coturn_examplesdir/scripts/longtermsecure/secure_tls_client_cert.sh
@@ -285,7 +291,6 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %coturn_examplesdir/scripts/restapi/secure_udp_client_with_secret.sh
 %coturn_examplesdir/scripts/restapi/shared_secret_maintainer.pl
 %dir %coturn_examplesdir/scripts/selfloadbalance
-%coturn_examplesdir/scripts/selfloadbalance/secure_dos_attack.sh
 %coturn_examplesdir/scripts/selfloadbalance/secure_relay.sh
 %dir %coturn_examplesdir/scripts/mobile
 %coturn_examplesdir/scripts/mobile/mobile_relay.sh
@@ -311,6 +316,9 @@ rm -f %buildroot/%coturn_examplesdir/etc/cacert.pem
 %{_includedir}/turn/client/TurnMsgLib.h
 
 %changelog
+* Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 4.19.2-alt1
+- 4.19.0 -> 4.19.2
+
 * Fri Nov 13 2026 Anton Farygin <rider@altlinux.org> 4.19.0-alt1
 - 4.18.0 -> 4.19.0
 
