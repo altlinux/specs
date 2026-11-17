@@ -3,8 +3,8 @@
 %define libdnf5_dir %_sharedstatedir/libdnf5
 
 Name: dnf5
-Version: 5.4.6.0
-Release: alt1.1
+Version: 5.4.8.0
+Release: alt1
 
 Summary: Command-line package manager
 
@@ -25,12 +25,8 @@ Patch5: %name-alt-rpmdb-autoinstalled.patch
 Patch6: %name-alt-apt-rpm-repo.patch
 Patch7: %name-alt-upgrade-keep-packages.patch
 Patch8: %name-alt-apt-plugin.patch
-Patch9: %name-alt-config-manager-plugin-repos.patch
 Patch10: %name-alt-rpm-4.13-signature-whole-package.patch
 Patch11: %name-alt-apt-pinning.patch
-Patch12: %name-alt-apt-cache-cleanup.patch
-Patch13: %name-alt-bash-completion-dnf5.patch
-Patch14: %name-alt-apt-metadata-refresh.patch
 Patch15: %name-json-c-unused-function.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -211,7 +207,6 @@ Libdnf5 plugin that allows loading Python plugins.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch15 -p1
@@ -300,10 +295,11 @@ fi
 %find_lang dnf5-plugin-changelog
 %find_lang dnf5-plugin-config-manager
 %find_lang dnf5-plugin-copr
+%find_lang dnf5-plugin-deptree
 %find_lang dnf5-plugin-needs-restarting
 %find_lang dnf5-plugin-repoclosure
 %find_lang dnf5-plugin-reposync
-cat dnf5-plugin-builddep.lang dnf5-plugin-changelog.lang dnf5-plugin-config-manager.lang dnf5-plugin-copr.lang dnf5-plugin-needs-restarting.lang dnf5-plugin-repoclosure.lang dnf5-plugin-reposync.lang | sort -u > dnf5-plugins.lang
+cat dnf5-plugin-builddep.lang dnf5-plugin-changelog.lang dnf5-plugin-config-manager.lang dnf5-plugin-copr.lang dnf5-plugin-deptree.lang dnf5-plugin-needs-restarting.lang dnf5-plugin-repoclosure.lang dnf5-plugin-reposync.lang | sort -u > dnf5-plugins.lang
 
 # Remove zh_Hans and zh_Hant locales not supported by %find_lang
 rm -rf %buildroot%_datadir/locale/zh_Hans
@@ -394,6 +390,7 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %_libdir/dnf5/plugins/changelog_cmd_plugin.so
 %_libdir/dnf5/plugins/config-manager_cmd_plugin.so
 %_libdir/dnf5/plugins/copr_cmd_plugin.so
+%_libdir/dnf5/plugins/deptree_cmd_plugin.so
 %_libdir/dnf5/plugins/needs_restarting_cmd_plugin.so
 %_libdir/dnf5/plugins/repoclosure_cmd_plugin.so
 %_libdir/dnf5/plugins/reposync_cmd_plugin.so
@@ -438,6 +435,11 @@ rm -rf %buildroot%_datadir/locale/zh_Hant
 %doc %python3_sitelibdir/libdnf_plugins/README
 
 %changelog
+* Mon Nov 16 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.8.0-alt1
+- new version 5.4.8.0
+- fixes:
+  + CVE-2026-111253: fix missing session-owner check in dnf5daemon-server.
+
 * Wed Nov 04 2026 Vitaly Lipatov <lav@altlinux.ru> 5.4.6.0-alt1.1
 - fix build with json-c headers.
 - use rpm-build-cmake instead of cmake.

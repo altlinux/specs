@@ -1,5 +1,5 @@
 Name: libpkgmanifest
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Library for working with RPM package manifests
@@ -51,7 +51,7 @@ Python 3 bindings for the libpkgmanifest library.
     -DWITH_CODE_COVERAGE=OFF \
     -DVERSION_MAJOR=0 \
     -DVERSION_MINOR=6 \
-    -DVERSION_PATCH=1
+    -DVERSION_PATCH=2
 %cmake_build
 
 %check
@@ -75,6 +75,9 @@ Python 3 bindings for the libpkgmanifest library.
 %python3_sitelibdir/%name-*.dist-info/
 
 %changelog
+* Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.2-alt1
+- new version 0.6.2
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 0.6.1-alt1
 - new version 0.6.1
 
