@@ -1,5 +1,5 @@
 Name: devscripts
-Version: 2.26.13
+Version: 2.26.15
 Release: alt1
 Source: %{name}_%version.tar.xz
 Source1: devscripts-po4a.conf
@@ -111,6 +111,9 @@ mv %buildroot/%_bindir/dget %buildroot/%_bindir/dget-debian
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Nov 16 2026 Vitaly Lipatov <lav@altlinux.ru> 2.26.15-alt1
+- New version 2.26.15
+
 * Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 2.26.13-alt1
 - Update to 2.26.13.
 - Build all packages as noarch.
