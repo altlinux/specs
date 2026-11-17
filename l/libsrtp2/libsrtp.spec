@@ -1,5 +1,5 @@
 Name: libsrtp2
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Secure RTP library
@@ -51,6 +51,9 @@ touch ar-lib
 %_pkgconfigdir/libsrtp2.pc
 
 %changelog
+* Tue Nov 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8.2-alt1
+- 2.8.2 released
+
 * Thu Sep 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8.1-alt1
 - 2.8.1 released
 
