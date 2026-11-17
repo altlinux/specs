@@ -5,10 +5,12 @@
 
 %define pre %nil
 Name: libsail
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Squirrel Abstract Image Library
+
+Conflicts: bsd-games
 
 License: MIT
 Group: System/Libraries
@@ -72,6 +74,10 @@ mv %buildroot/usr/lib/cmake %buildroot%_libdir/
 %_includedir/sail/
 
 %changelog
+* Mon Nov 16 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0
+- add an explicit conflict with bsd-games for /usr/bin/sail.
+
 * Tue Oct 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
 - new version 1.3.1
 - replace cmake build dependency with rpm-build-cmake.
