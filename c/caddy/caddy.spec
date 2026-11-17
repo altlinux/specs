@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: caddy
-Version: 2.11.4
+Version: 2.11.9
 Release: alt1
 Summary: Web server with automatic HTTPS
 License: Apache-2.0
@@ -25,7 +25,7 @@ Source4: https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-macros-golang rpm-macros-webserver-common rpm-macros-systemd >= 5
-BuildRequires: rpm-build-golang golang >= 1.25.0
+BuildRequires: rpm-build-golang golang >= 1.26.9
 
 Provides: webserver
 
@@ -125,6 +125,15 @@ useradd -r -N -g %caddy_group -G %webserver_group -c 'Caddy web server' \
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Tue Nov 17 2026 Alexey Shabalin <shaba@altlinux.org> 2.11.9-alt1
+- New version 2.11.9.
+- Build with bundled plugins (.gear/plugins.sh + .gear/plugins.list):
+  DNS-01 providers rfc2136, acmedns, desec, duckdns, powerdns;
+  layer4, webdav, replace_response, transform log encoder, realip, rate_limit.
+- Use Maks1mS forks of caddy-dns/rfc2136 + libdns/rfc2136 (go.mod replace):
+  adds "net" (tcp/udp) transport option for DNS UPDATE, upstream is TCP-only.
+- Raise golang BuildRequires to 1.26.9 (go directive bumped via caddy-l4).
+
 * Thu Jul 02 2026 Alexander Danilov <admsasha@altlinux.org> 2.11.4-alt1
 - New version 2.11.4.
 
