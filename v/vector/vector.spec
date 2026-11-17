@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vector
-Version: 0.61.0
+Version: 0.62.0
 Release: alt1
 
 Summary: A lightweight and ultra-fast tool for building observability pipelines
@@ -61,6 +61,10 @@ export CFLAGS="-O3 -DPIC -fPIC"
 export RUST_BACKTRACE=1
 #export CARGO_FEATURE_DYNAMIC_LINKING=1
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=1 -A mismatched_lifetime_syntaxes --cfg rustix_use_libc"
+
+( while true; do echo "tick $(date +%T)"; sleep 1; done ) &
+TICKER=$!
+trap 'kill $TICKER 2>/dev/null' EXIT INT TERM
 %rust_build
 
 %install
@@ -97,6 +101,11 @@ usermod -a -G adm vector >/dev/null 2>&1 || :
 %dir %attr(0770, root, vector) %_sharedstatedir/vector
 
 %changelog
+* Tue Nov 17 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.62.0-alt1
+- New version.
+- Add ticker that writes to stdout because binary vector builds more than hour
+  silently.
+
 * Tue Nov 10 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.61.0-alt1
 - New version.
 
