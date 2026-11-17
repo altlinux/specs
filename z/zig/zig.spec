@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method rpath=relaxed
 
-%define llvm_ver 21
+%define llvm_ver 22
 %define llvm_pkgver %llvm_ver.1
 
 # Disable vendor for zig-checkinstall since there is no dependencies
@@ -11,8 +11,8 @@
 %global _zig_system_integration %nil
 
 Name:    zig
-Version: 0.16.0
-Release: alt2
+Version: 0.17.1
+Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 
 # ./LICENSE - MIT
@@ -32,10 +32,16 @@ Group:   Development/C
 Url:     https://ziglang.org/
 Vcs:     https://codeberg.org/ziglang/zig.git
 
+# Ignore lldb pretty printing zig plugin's requirements
+%add_findreq_skiplist %_prefix/lib/zig/lldb/pretty_printers.py
+%add_findprov_skiplist %_prefix/lib/zig/lldb/pretty_printers.py
+
 # /proc is required or zig will output FileNotFound
 Requires: /proc
 
 ExclusiveArch: %zig_arches
+
+Patch: zig-0.17.1-alt-langref-path.patch
 
 Source: %name-%version.tar
 
@@ -49,6 +55,7 @@ BuildRequires: gcc-c++
 BuildRequires: libstdc++-devel
 BuildRequires: libtinfo-devel
 BuildRequires: libxml2-devel
+BuildRequires: libzstd-devel
 BuildRequires: lld%llvm_pkgver-devel
 BuildRequires: llvm%llvm_pkgver-devel
 BuildRequires: zlib-devel
@@ -66,6 +73,7 @@ Requires(pre): zig
 
 %prep
 %setup
+%patch -p1
 
 %build
 %define optflags_lto %nil
@@ -114,13 +122,19 @@ rm -rf -- "$t" "$HOME/.cache/zig"
 
 %files
 %define _customdocdir %_docdir/%name
-%doc LICENSE README.md test/standalone/simple/hello_world/*.zig doc/langref.html.in
+%doc LICENSE README.md test/standalone/simple/hello_world/*.zig
+%_customdocdir/langref.html
 %_bindir/zig
 %_prefix/lib/zig
 
 %files checkinstall
 
 %changelog
+* Fri Nov 13 2026 Ilya Sorochan <k0tran@altlinux.org> 0.17.1-alt1
+- Update to 0.17.1 (2026-11-02), (ALT#60236).
+- Switch to LLVM 22.
+- Package langref.html instead of langref.html.in.
+
 * Fri Sep 11 2026 Ilya Sorochan <k0tran@altlinux.org> 0.16.0-alt2
 - Disable vendor enforcement provided by rpm-macros-zig.
 

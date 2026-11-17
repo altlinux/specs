@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-macros-zig
-Version: 5
+Version: 6
 Release: alt1
 Summary: RPM macros for Zig
 License: GPL-2.0-only
@@ -40,6 +40,9 @@ done
 %_rpmmacrosdir/zig
 
 %changelog
+* Fri Nov 13 2026 Ilya Sorochan <k0tran@altlinux.org> 6-alt1
+- Drop --global-cache-dir flag (removed in zig 0.17.1).
+
 * Tue Sep 01 2026 Ilya Sorochan <k0tran@altlinux.org> 5-alt1
 - Support zig-pkg folder.
 

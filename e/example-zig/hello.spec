@@ -8,8 +8,8 @@
 
 Name: example-zig
 Summary: Example of packaging Zig program
-Version: 6
-Release: alt2
+Version: 7
+Release: alt1
 License: GPL-2.0-only
 Group: Development/Other
 Url: https://ziglearn.org/
@@ -47,6 +47,9 @@ example_zig
 %_bindir/example_zig
 
 %changelog
+* Fri Nov 13 2026 Ilya Sorochan <k0tran@altlinux.org> 7-alt1
+- Update for zig-0.17.1.
+
 * Thu Sep 03 2026 Ilya Sorochan <k0tran@altlinux.org> 6-alt2
 - Disable vendor enforcement provided by rpm-macros-zig.
 
