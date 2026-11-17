@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20260529
+Version: 20260930
 Release: alt1
 
 Summary: Linux Test Project
@@ -198,6 +198,11 @@ fi
 #%%files testsuite-checkinstall
 
 %changelog
+* Mon Nov 16 2026 Ivan A. Melnikov <iv@altlinux.org> 20260930-alt1
+- Update to 20260930.
+- Backport upstream update for LOOP_CHANGE_FD tests for
+  linux v7.4 compatibility.
+
 * Thu Sep 03 2026 Andrew A. Vasilyev <andy@altlinux.org> 20260529-alt1
 - NMU: update to 20260529 to fix FTBFS with gcc15.
 

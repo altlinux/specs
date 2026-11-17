@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 21
+Version: 22
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -12,6 +12,7 @@ Url: https://git.altlinux.org/gears/l/ltp-alt-lists.git
 BuildArch: noarch
 Source: %name-%version.tar
 BuildRequires: ltp-testsuite
+BuildRequires: /usr/bin/awk
 
 %description
 %summary.
@@ -40,6 +41,7 @@ mkdir -p %buildroot/usr/lib/ltp/runtest
 	numa \
 	pty \
 	uevent \
+  | awk '!NF || !seen[$0]++'
 ) >> kernel-alt-vm
 
 install -p -m644 kernel-alt-vm   %buildroot/usr/lib/ltp/runtest/
@@ -50,6 +52,12 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Mon Nov 16 2026 Ivan A. Melnikov <iv@altlinux.org> 22-alt1
+- Updates for ltp 20260930:
+  - update the lists;
+  - skip keyctl30, irqbalance01.
+- Avoid duplicated lines in kernel-alt-vm list.
+
 * Tue Sep 08 2026 Ivan A. Melnikov <iv@altlinux.org> 21-alt1
 - Updates for ltp 20260529-alt1
 
