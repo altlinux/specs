@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-draw
-Version: 6.5.43
+Version: 6.5.44
 Release: alt1
 Epoch: 1
 
@@ -75,8 +75,15 @@ export CXX=g++
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%name/
 %_datadir/deepin-manual/manual-assets/application/%name/draw/
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.draw/
+%_datadir/dsg/configs/org.deepin.draw/org.deepin.draw.json
 
 %changelog
+* Tue Nov 17 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.44-alt1
+- New version 6.5.44.
+
 * Mon Aug 10 2026 Leontiy Volodin <lvol@altlinux.org> 1:6.5.43-alt1
 - New version 6.5.43.
 
