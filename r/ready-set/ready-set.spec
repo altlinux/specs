@@ -8,7 +8,7 @@
 %define libname lib%name
 %define girname ReadySet
 %define soversion 0.15
-%define minor_version 4
+%define minor_version 6
 %define gis_name gnome-initial-setup
 
 Name: ready-set
@@ -417,6 +417,13 @@ install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Nov 17 2026 Vladimir Romanov <rirusha@altlinux.org> 0.15.6-alt1
+- New version: 0.15.6.
+- Fixed a lot of bugs.
+- Full release note here:
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.15.5
+  https://altlinux.space/alt-gnome/ReadySet/releases/tag/v0.15.6
+
 * Mon Nov 09 2026 Vladimir Romanov <rirusha@altlinux.org> 0.15.4-alt1
 - New version: 0.15.4.
 - Full release note here:
