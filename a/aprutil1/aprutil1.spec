@@ -5,7 +5,7 @@
 %define	libaprver 1.7.6
 
 Name: aprutil%aprver
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: Apache Portable Runtime Utility shared library
@@ -174,6 +174,7 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %files -n lib%name
 %_libdir/lib*.so.*
 %dir %_libdir/apr-util-%aprver
+%_libdir/apr-util-%aprver/apr_dbm_lmdb*
 
 %files -n lib%name-devel
 %_bindir/*-config
@@ -181,7 +182,6 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/*.exp
 %_pkgconfigdir/apr-util-%aprver.pc
 %_includedir/*
-%_libdir/apr-util-%aprver/apr_dbm_lmdb*
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -212,6 +212,10 @@ rm -rf %buildroot%_libdir/apr-util-%aprver/*.la
 %_libdir/apr-util-%aprver/apr_crypto_openssl*.so
 
 %changelog
+* Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 1.6.6-alt1
+- 1.6.5 -> 1.6.6
+- moved LMDB DBM driver from devel to runtime package (ALT#60924)
+
 * Sat Aug 15 2026 Anton Farygin <rider@altlinux.org> 1.6.5-alt1
 - 1.6.4 -> 1.6.5
 
