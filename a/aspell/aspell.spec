@@ -1,7 +1,5 @@
-%set_gcc_version      14
-
 Name: aspell
-Version: 0.60.8.1
+Version: 0.60.8.3
 Release: alt1
 
 Summary: An Open Source interactive spelling checker program
@@ -13,7 +11,7 @@ Source: http://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source101: %name-ispell.alternatives
 
 BuildRequires(pre): rpm-macros-alternatives
-BuildRequires: gcc14-c++ libncursesw-devel
+BuildRequires: gcc-c++ libncursesw-devel
 Requires: lib%name = %version-%release
 
 %def_disable static
@@ -129,6 +127,10 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_man1dir/*.1.*
 
 %changelog
+* Tue Nov 17 2026 Alexei Takaseev <taf@altlinux.org> 0.60.8.3-alt1
+- 0.60.8.3 (Fixes: CVE-2026-103658, GHSA-p35p-2mw5-fj5j)
+- Use default system GCC
+
 * Fri Apr 24 2026 Alexei Takaseev <taf@altlinux.org> 0.60.8.1-alt1
 - 0.60.8.1
 - Fix FTBS use gcc 14
