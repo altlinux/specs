@@ -3,13 +3,12 @@
 
 Name: kernel-image-mp
 Version: %kernel_base_version%kernel_sublevel
-Release: alt1
+Release: alt2
 
 %define kversion	%kernel_base_version%kernel_sublevel
 %define krelease	%release
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define kerneldir	%_libexecdir/modules/%kversion-%flavour-%krelease
-%define dtbsdir		%_libexecdir/devicetree/%kversion-%flavour-%krelease
 
 Summary: The Linux kernel (the core of the Linux operating system)
 License: GPL-2.0-only
@@ -76,7 +75,7 @@ install -pm0644 System.map %buildroot%kerneldir/System.map
 install -pm0644 arch/%base_arch/boot/%Image %buildroot%kerneldir/vmlinuz
 install -pm0644 .config %buildroot%kerneldir/config
 %ifarch armh aarch64
-make dtbs_install INSTALL_DTBS_PATH=%buildroot%dtbsdir
+make dtbs_install INSTALL_DTBS_PATH=%buildroot%kerneldir/dtb
 %endif
 
 # dangling symlink
@@ -88,9 +87,6 @@ rm -vf %buildroot%kerneldir/build
 
 %files
 %kerneldir
-%ifarch %arm aarch64
-%dtbsdir
-%endif
 %ghost %kerneldir/modules.alias.bin
 %ghost %kerneldir/modules.builtin.alias.bin
 %ghost %kerneldir/modules.builtin.bin
@@ -98,6 +94,9 @@ rm -vf %buildroot%kerneldir/build
 %ghost %kerneldir/modules.symbols.bin
 
 %changelog
+* Tue Nov 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.3.4-alt2
+- dtbs relocated to kernel-install preferred path (closes: 61494)
+
 * Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 7.3.4-alt1
 - 7.3.4
 
