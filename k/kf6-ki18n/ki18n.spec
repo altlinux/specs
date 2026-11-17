@@ -7,7 +7,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf6-%rname
-Version: 6.31.0
+Version: 6.32.0
 Release: alt1
 %K6init no_altplace
 
@@ -135,9 +135,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %_datadir/qlogging-categories6/*.*categories
 
 %files devel
-#%_K6inc/ki18n_version.h
-%_K6inc/KI18n/
-%_K6inc/KI18nLocaleData/
+%_K6inc/KI18n*/
 %_K6link/lib*.so
 %_K6lib/cmake/KF6I18n/
 
@@ -164,6 +162,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 
 %changelog
+* Mon Nov 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.32.0-alt1
+- new version
+
 * Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt1
 - new version
 

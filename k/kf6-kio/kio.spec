@@ -5,8 +5,8 @@
 %define libkuriikwsfiltereng_private libkuriikwsfiltereng_private%sover
 
 Name: kf6-%rname
-Version: 6.31.0
-Release: alt2
+Version: 6.32.0
+Release: alt1
 %K6init no_altplace
 
 Group: System/Libraries
@@ -23,8 +23,7 @@ Patch2: alt-kio-help-fallback.patch
 Patch3: alt-copy-first.patch
 Patch4: alt-soname.patch
 Patch5: alt-crash.patch
-Patch6: kdebug-492660.patch
-Patch7: alt-ftp-list-fallback.patch
+Patch6: alt-ftp-list-fallback.patch
 #
 Patch10: alt-streebog-support.patch
 
@@ -118,7 +117,6 @@ KF6 library
 %patch4 -p1
 #%patch5 -p1
 %patch6 -p1
-%patch7 -p1
 #
 %if_enabled streebog
 %patch10 -p2 -b .streebog
@@ -181,6 +179,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Mon Nov 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.32.0-alt1
+- new version
+
 * Thu Oct 29 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt2
 - add fix against KDE BUG #492660 (closes: 61243)
 - fix ftp listing (closes: 61241)

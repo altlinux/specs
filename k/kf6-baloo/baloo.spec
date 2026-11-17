@@ -7,7 +7,7 @@
 %add_findreq_skiplist %_userunitdir/*.service
 
 Name: kf6-%rname
-Version: 6.31.0
+Version: 6.32.0
 Release: alt1
 %K6init no_altplace
 
@@ -90,6 +90,7 @@ KF6 library
 %_K6plug/kf6/kio/*.so
 %_K6qml/org/kde/baloo/
 %_K6start/*baloo*.desktop
+%_K6dbus_srv/*baloo*.service
 %_userunitdir/*.service
 
 %files devel
@@ -106,6 +107,9 @@ KF6 library
 
 
 %changelog
+* Mon Nov 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.32.0-alt1
+- new version
+
 * Mon Oct 12 2026 Sergey V Turchin <zerg@altlinux.org> 6.31.0-alt1
 - new version
 
