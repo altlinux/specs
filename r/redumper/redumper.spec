@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: redumper
-Version: 770
+Version: 772
 Release: alt1
 
 Summary: Low level CD dumper utility
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: ninja-build
 BuildRequires: ctest
-BuildRequires: clang18.1 clang18.1-tools
+BuildRequires: clang clang-tools
 BuildRequires: libstdc++-devel-static
 BuildRequires: libgtest-devel
 
@@ -35,7 +35,7 @@ is now the default dumping software used for Redump optical-disc submissions.
 %build
 %cmake -G Ninja -DCMAKE_BUILD_TYPE=Release \
 	-DREDUMPER_VERSION_BUILD=%version \
-	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/linux-x64.cmake
+	-DCMAKE_CXX_COMPILER=clang++
 %cmake_build
 
 %install
@@ -49,6 +49,10 @@ is now the default dumping software used for Redump optical-disc submissions.
 %doc LICENSE README.md
 
 %changelog
+* Tue Nov 10 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 772-alt1
+- Version b772.
+- Fix FTBFS with new version libstdc++.
+
 * Tue Nov 03 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 770-alt1
 - Version b770.
 
