@@ -2,7 +2,7 @@ Name: kernel-image-7.3
 Release: alt1
 %define kernel_src_version	7.3
 %define kernel_base_version	7.3
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -626,6 +626,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Nov 17 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.5-alt1
+- v7.3.5 (2026-11-17).
+- config: Enable CONFIG_MEMCG_V1=y, CONFIG_CPUSETS_V1=y.
+
 * Wed Nov 11 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.4-alt1
 - v7.3.4 (2026-11-10).
 
