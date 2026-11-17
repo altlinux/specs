@@ -1,5 +1,5 @@
 Name:    flyline
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: A Bash plugin that provides a modern line editing interface
@@ -64,7 +64,7 @@ EOF
 
 %install
 # flyline is a Bash loadable builtin (cdylib), not an executable
-install -Dm 755 target/release/libflyline.so %buildroot%_libdir/%name/libflyline.so
+install -Dm 644 target/release/libflyline.so %buildroot%_libdir/%name/libflyline.so
 
 %files
 %doc LICENSE-GPLv3 LICENSE-MIT README.md
@@ -72,6 +72,9 @@ install -Dm 755 target/release/libflyline.so %buildroot%_libdir/%name/libflyline
 %_libdir/%name/libflyline.so
 
 %changelog
+* Tue Nov 17 2026 Sergey Palcheh <minergenon@altlinux.org> 1.11.0-alt1
+- new version 1.11.0
+
 * Mon Oct 19 2026 Sergey Palcheh <minergenon@altlinux.org> 1.10.0-alt1
 - new version 1.10.0
 
