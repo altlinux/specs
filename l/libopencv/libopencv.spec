@@ -30,12 +30,12 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 4.14
-%define sover2 414
+%define sover 5.1
+%define sover2 501
 Name: lib%bname
 Epoch: 1
-Version: 4.14.0
-Release: alt3
+Version: 5.1.0
+Release: alt1
 Summary: Open Source Computer Vision Library
 License: BSD-3-Clause AND Apache-2.0 AND ISC
 Group: System/Libraries
@@ -49,12 +49,16 @@ Source3: expected_mods_ppc64le_aarch64.list
 Patch0: %name-%version-%release.patch
 Patch1: %name-4.5.5-alt-python-paths.patch
 Patch2: %name-4.5.5-alt-build.patch
+Patch3: %name-5.1.0-alt-harfbuzz-raster.patch
+Patch4: %name-5.1.0-alt-colorization-format.patch
+Patch5: %name-5.1.0-alt-tracking-integral.patch
 
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
 BuildRequires: cmake eigen3 zlib-devel
+BuildRequires: libfreetype-devel libharfbuzz-devel
 BuildRequires: python3 python3(bs4) doxygen
 BuildRequires: libtbb-devel bzlib-devel
 BuildRequires: libGLU-devel libXdmcp-devel
@@ -241,7 +245,10 @@ This package contains %Name examples.
 %setup -b 1
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+%patch2 -p1 -d ../%bname-contrib-%version
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1 -d ../%bname-contrib-%version
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -375,6 +382,9 @@ EOF
 %_datadir/%Name/quality
 
 %changelog
+* Mon Nov 16 2026 Anton Farygin <rider@altlinux.org> 1:5.1.0-alt1
+- 4.14.0 -> 5.1.0
+
 * Sat Oct 31 2026 Anton Farygin <rider@altlinux.org> 1:4.14.0-alt3
 - fixed LAPACK detection with FlexiBLAS
 - removed obsolete build dependencies and CMake options
