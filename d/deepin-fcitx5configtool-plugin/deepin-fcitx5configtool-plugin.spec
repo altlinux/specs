@@ -4,7 +4,7 @@
 %def_disable clang
 
 Name: deepin-fcitx5configtool-plugin
-Version: 6.0.40
+Version: 6.0.41
 Release: alt1
 
 Summary: The input method management plug-in of DDE control center
@@ -34,6 +34,8 @@ BuildRequires(pre): gcc-c++
 BuildRequires: appstream deepin-qt-dbus-factory-devel dqt6-declarative-devel dqt6-svg-devel dqt6-tools-devel libpolkitqt6-dqt6-devel dtk6-common-devel deepin-extra-cmake-modules fcitx5-devel libudev-devel iso-codes dkf6-kitemviews-devel dkf6-kwidgetsaddons-devel libcups-devel libdde-control-center-devel libdtk6widget-devel libdqt6-eglfskmsgbmsupport libdqt6-labsqmlmodels libdqt6-xcbqpa libvulkan-devel libxkbfile-devel libicu-devel libdqt6-qmlcompiler
 BuildRequires: fcitx5-dqt6-devel
 BuildRequires: iso-codes-devel xkeyboard-config-devel
+
+Requires: libdqt6-qml = %_dqt6_version
 
 %description
 %summary.
@@ -77,6 +79,9 @@ patchelf %buildroot%_libdir/dde-control-center/plugins_v1.0/fcitx5configtool/lib
 %dir %_datadir/dde-control-center/translations/v1.1/
 
 %changelog
+* Tue Nov 17 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.41-alt1
+- New version 6.0.41.
+
 * Thu Oct 15 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.40-alt1
 - New version 6.0.40.
 - Fixed build on fcitx 5.1.23.
