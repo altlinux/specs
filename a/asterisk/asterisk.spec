@@ -16,7 +16,7 @@
 
 Name: asterisk
 Version: 20.22.0
-Release: alt1
+Release: alt2
 
 Summary: Open source PBX
 License: GPLv2
@@ -30,7 +30,7 @@ BuildRequires: curl gcc-c++
 BuildRequires: libedit-devel libncurses-devel libuuid-devel libjansson-devel
 BuildRequires: libsqlite3-devel libxml2-devel liburiparser-devel libxslt-devel
 BuildRequires: libpopt-devel libspandsp3-devel libfftw3-devel
-BuildRequires: libcurl-devel libsrtp2-devel libjansson-devel
+BuildRequires: libcurl-devel libsrtp2-devel
 BuildRequires: libiksemel-devel libldap-devel libradiusclient-ng-devel
 BuildRequires: libunixODBC-devel postgresql-devel zlib-devel
 BuildRequires: libnet-snmp-devel libsystemd-devel
@@ -146,13 +146,13 @@ install -pm0644 -D alt/asterisk.service %buildroot%_unitdir/asterisk.service
 install -pm0644 -D alt/asterisk.sysconfig %buildroot%_sysconfdir/sysconfig/asterisk
 install -pm0644 -D alt/asterisk.tmpfiles %buildroot%_tmpfilesdir/asterisk.conf
 cp -av alt/config/* %buildroot%_sysconfdir/asterisk
-fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,python3,'
+grep -Frl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,python3,'
 
 #{{{
 
 %pre
-%_sbindir/groupadd -r -f _asterisk &> /dev/null
-%_sbindir/useradd -r -g _asterisk -d /dev/null -s /dev/null -c 'Asterisk IP PBX' -n _asterisk &> /dev/null ||:
+%_sbindir/groupadd -r -f _asterisk &> /dev/null ||:
+%_sbindir/useradd -r -g _asterisk -d /dev/null -s /dev/null -c 'Asterisk IP PBX' -N _asterisk &> /dev/null ||:
 
 %post
 %post_service asterisk
@@ -226,8 +226,6 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 %exclude %_libdir/asterisk/modules/cdr_pgsql.so
 %exclude %_libdir/asterisk/modules/cel_pgsql.so
 %exclude %_libdir/asterisk/modules/res_config_pgsql.so
-%exclude %_libdir/asterisk/modules/cdr_radius.so
-%exclude %_libdir/asterisk/modules/cel_radius.so
 %exclude %_libdir/asterisk/modules/res_snmp.so
 
 %_libexecdir/asterisk/agi-bin
@@ -319,6 +317,13 @@ fgrep -rl '/usr/bin/env python' %buildroot%_datadir|xargs sed -i 's,env python,p
 #}}}
 
 %changelog
+* Tue Nov 17 2026 Ilya Demyanov <turbid@altlinux.org> 20.22.0-alt2
+- asterisk.spec: fix useradd/groupadd options
+- asterisk.spec: replace fgrep to grep -F
+- asterisk.spec: delete copy-paste duplicates
+- pjproject/Makefile: don't copy config.{sub,guess} from gnu-config
+- safe_asterisk: sync with upstream (restore TTY=9, drop stderr fallback)
+
 * Thu Nov 12 2026 Ilya Demyanov <turbid@altlinux.org> 20.22.0-alt1
 - 20.22.0
 
