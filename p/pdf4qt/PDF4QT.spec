@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: pdf4qt
-Version: 1.7.0.0
+Version: 1.7.1.0
 Release: alt1
 
 Summary: Open source PDF editor
@@ -111,6 +111,9 @@ sed -i 's/left < right.second/right.second > left/' Pdf4QtLibCore/sources/pdfnam
 %_libdir/libPdf4QtLibWidgets.so.%{soname}.*
 
 %changelog
+* Wed Nov 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1.0-alt1
+- 1.7.0.0 -> 1.7.1.0
+
 * Mon Nov 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.0.0-alt1
 - 1.6.0.0 -> 1.7.0.0
 
