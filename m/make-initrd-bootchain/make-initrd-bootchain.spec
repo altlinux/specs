@@ -11,7 +11,7 @@
 
 Name: %parent-%child
 Version: 0.1.7
-Release: alt1
+Release: alt2
 
 Summary: %child modules set for %parent
 License: GPL-3.0+
@@ -230,6 +230,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Tue Nov 17 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.7-alt2
+- improve disk and partition detection (ALT #61468)
+
 * Tue Nov 10 2026 Leonid Krivoshein <klark@altlinux.org> 0.1.7-alt1
 - reduce dependence on make-initrd rootdelay
 - update the documentation
