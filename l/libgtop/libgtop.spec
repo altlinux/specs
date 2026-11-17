@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define oldname libgtop2
@@ -13,8 +13,8 @@
 %def_enable check
 
 Name: libgtop
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: LibGTop library
 License: GPL-2.0-or-later
@@ -191,6 +191,9 @@ rm -rf doc/*.info
 %endif
 
 %changelog
+* Tue Nov 17 2026 Yuri N. Sedunov <aris@altlinux.org> 2.41.4-alt1
+- 2.41.4
+
 * Wed Jan 22 2025 Yuri N. Sedunov <aris@altlinux.org> 2.41.3-alt2
 - updated to 2.41.3-6-gc4472848
 - moved daemon/server to separate optional subpackage (ALT #41695)
