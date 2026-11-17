@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    satellite-dish
-Version: 2.1.11
+Version: 2.2.0
 Release: alt1
 
 Summary: Satellite wireless-gamepad server for Dish clients
@@ -36,7 +36,7 @@ paired Dish client.
 
 %build
 %cmake \
-    -DCMAKE_INSTALL_DOCDIR=%_docdir/%name \
+    -DCMAKE_INSTALL_DOCDIR=%_docdir/%name-%version \
     -DSATELLITE_RELEASE_VERSION=%version \
     -DSATELLITE_SANDBOXED=OFF
 
@@ -69,7 +69,6 @@ fi
 %files
 %doc LICENSE COPYING.GPL3 README.md
 %_bindir/satellite
-%_docdir/%name
 %dir %_datadir/satellite
 %_datadir/satellite/web
 %_desktopdir/satellite.desktop
@@ -79,6 +78,9 @@ fi
 %_modulesloaddir/satellite.conf
 
 %changelog
+* Tue Nov 17 2026 Sergey Palcheh <minergenon@altlinux.org> 2.2.0-alt1
+- new version 2.2.0
+
 * Tue Nov 03 2026 Sergey Palcheh <minergenon@altlinux.org> 2.1.11-alt1
 - new version 2.1.11
 
