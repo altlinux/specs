@@ -3,7 +3,7 @@
 %def_with check
 
 Name: waytator
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 Summary: Screenshots and video recording on wayland
 License: GPL-3.0-or-later
@@ -58,5 +58,8 @@ desktop-file-validate %buildroot%_desktopdir/%appid.desktop
 %_iconsdir/hicolor/*/apps/%appid.png
 
 %changelog
+* Tue Nov 17 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.0-alt1
+- Updated to version 1.6.0.
+
 * Sun Nov 01 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.5.1-alt1
 - Initial build for ALT.
