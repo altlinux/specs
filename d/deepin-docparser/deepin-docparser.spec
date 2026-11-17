@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: deepin-docparser
-Version: 1.0.26
+Version: 1.0.27
 Release: alt1
 
 Summary: Document parser library by deepin
@@ -10,10 +10,10 @@ Summary(ru): Библиотека синтаксического анализа 
 
 License: LGPL-3.0-or-later and GPL-3.0-or-later and MIT and BSD-2-Clause
 Group: Text tools
-Url: https://github.com/linuxdeepin/docparser
-Vcs: https://github.com/linuxdeepin/docparser
+URL: https://github.com/linuxdeepin/docparser
+VCS: https://github.com/linuxdeepin/docparser
 
-# Source-url: %url/archive/%version/%repo-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/docparser/archive/%version/%repo-%version.tar.gz
 Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -93,6 +93,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Tue Nov 17 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.27-alt1
+- New version 1.0.27.
+
 * Thu Jul 09 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.26-alt1
 - New version 1.0.26.
 - Updated license tag.
