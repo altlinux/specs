@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.14
+Version: 0.10.15
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -183,6 +183,24 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Tue Nov 17 2026 Andrey Limachko <liannnix@altlinux.org> 0.10.15-alt1
+- Update categories:
+  + add message brokers and search analytics categories
+- Update components:
+  + move kafka and rabbitmq to message brokers
+  + move opensearch to search analytics
+- Update editions:
+  + add ALT Server 11.1.1 and ALT Domain 11.1.1 release notes
+  + update license version
+  + add OpenSearch 3.6 (x86_64 only) to ALT Server 11.1.1 release notes
+  + update Samba to 4.22 in ALT Server and ALT Domain 11.1.1 release notes
+  + update systemd, Keycloak, Squid, Docker and Chromium in ALT Server 11.1.1
+    release notes
+  + update systemd, Keycloak and Chromium in ALT Domain 11.1.1 release notes
+  + move Kafka, RabbitMQ and OpenSearch to a separate category in ALT Server
+    11.1.1 release notes
+  + group kafka, rabbitmq and opensearch by new categories in edition_server
+
 * Mon Nov 09 2026 Andrey Limachko <liannnix@altlinux.org> 0.10.14-alt1
 - Update components:
   + switch zabbix-server frontend to PHP 8.5
