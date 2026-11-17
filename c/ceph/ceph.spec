@@ -64,7 +64,7 @@
 
 Name: ceph
 Version: 20.2.5
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1149,6 +1149,8 @@ rm -f %buildroot%_datadir/ceph/mgr/insights/{run-tox.sh,tox.ini}
 rm -rf %buildroot%_datadir/ceph/mgr/insights/tests
 rm -rf %buildroot%_datadir/ceph/mgr/pg_autoscaler/tests
 rm -rf %buildroot%_datadir/ceph/mgr/orchestrator/tests
+rm -rf %buildroot%python3_sitelibdir_noarch/ceph/tests
+rm -rf %buildroot%python3_sitelibdir_noarch/ceph_volume/tests
 rm -rf %buildroot%_datadir/ceph/mgr/progress/test_progress.py
 rm -rf %buildroot%_datadir/ceph/mgr/progress/__pycache__/test_progress.cpython-*
 rm -rf %buildroot%python3_sitelibdir_noarch/cephfs_shell-*.egg-info
@@ -1931,6 +1933,12 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Fri Nov 13 2026 Alexey Shabalin <shaba@altlinux.org> 20.2.5-alt2
+- Removed bundled tests from python3-module-ceph-common and
+  python3-module-ceph_volume (Closes: #53292).
+- Packaged the prebuilt dashboard frontend with the NVMe-oF pages
+  fix (Closes: #54133).
+
 * Wed Nov 11 2026 Alexey Shabalin <shaba@altlinux.org> 20.2.5-alt1
 - 20.2.5.
 - Packaged the libcephfs proxy library and daemon.
