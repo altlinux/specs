@@ -2,7 +2,7 @@
 %define soname_ixml 22
 
 Name: libupnp
-Version: 22.2.2
+Version: 22.2.3
 Release: alt1
 
 Summary: Linux SDK for UPnP Devices
@@ -73,6 +73,9 @@ applications using libupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Nov 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.2.3-alt1
+- 22.2.3
+
 * Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 22.2.2-alt1
 - 22.2.2 released
 
