@@ -3,7 +3,7 @@
 %define abiversion 2
 
 Name: lore
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Lore is a next-generation, open source version control system
@@ -118,6 +118,9 @@ cargo test --profile release-lto -j%__nprocs --no-fail-fast \
 %_libdir/liblore.so
 
 %changelog
+* Tue Nov 10 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.13.0-alt1
+- v0.13.0.
+
 * Tue Nov 03 2026 Bogdan Boguslavskij <bogdanb@altlinux.org> 0.12.0-alt1
 - v0.12.0.
 - Bump soname.
