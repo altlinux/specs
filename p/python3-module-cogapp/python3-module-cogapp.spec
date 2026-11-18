@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 
 Summary: Small bits of Python computation for static files
@@ -51,6 +51,9 @@ generators in your source files to generate whatever text you need.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 3.6.1-alt1
+- New version 3.6.1.
+
 * Thu Oct 16 2025 Nikolay Strelkov <snk@altlinux.org> 3.6.0-alt1
 - New version 3.6.0.
 
