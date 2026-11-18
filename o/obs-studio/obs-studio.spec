@@ -5,22 +5,35 @@
 %add_python3_path %_datadir/obs/obs-modules/core/frontend-tools/scripts/
 
 %define websocket_version 5.7.6
-#%%define browser_version 2.26.3
+%define browser_version 2.27.5
+
+# must match libcef<abi> package in the repository
+%define cef_abi 156
+# libcef is only built for these architectures
+%ifarch x86_64 aarch64
+%def_with browser
+%else
+%def_without browser
+%endif
 
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 33.0.1
-Release: alt1
+Release: alt2
 License: GPL-2.0-or-later
 Group: Video
 URL: https://obsproject.com/
 VCS: https://github.com/obsproject/obs-studio.git
 Source: %name-%version.tar
 Source1: obs-websocket-%websocket_version.tar
-#Source2: obs-browser-%%browser_version.tar
+Source2: obs-browser-%browser_version.tar
 
 Patch: %name-%version-%release.patch
+Patch1: obs-studio-33.0.1-alt-system-cef.patch
+Patch2: obs-browser-2.27.5-alt-system-cef.patch
+Patch3: obs-browser-2.27.5-alt-cef-api-version.patch
+Patch4: obs-browser-2.27.5-alt-no-shared-texture.patch
 
 # https://bugzilla.altlinux.org/47318
 Requires: qt6-svg
@@ -75,6 +88,7 @@ BuildRequires: libdatachannel-devel
 BuildRequires: libuthash-devel
 BuildRequires: nv-codec-headers
 BuildRequires: nlohmann-json-devel
+%{?_with_browser:BuildRequires: libcef-devel}
 BuildRequires: simde-devel
 %ifarch x86_64 aarch64
 BuildRequires: libvpl-devel
@@ -114,6 +128,18 @@ Free and open source software for video recording and live streaming.
 %description -l ru_RU.UTF-8
 Свободная программа для записи и трансляции видеопотока.
 
+%if_with browser
+%package plugin-browser
+Summary: Browser source plugin for %name (Chromium Embedded Framework)
+Group: Video
+Requires: %name = %EVR
+
+%description plugin-browser
+This package contains the plugin for integrated web-based overlays
+(browser source) and browser docks in %name using the Chromium
+Embedded Framework (CEF).
+%endif
+
 %package -n libobs
 Summary: Open Broadcaster Software Studio libraries
 Group: Video
@@ -130,20 +156,18 @@ Requires: libobs = %EVR
 Development files for %name.
 
 %prep
-%setup -a1
-%autopatch -p1
+%setup -a1 -a2
 rmdir plugins/obs-websocket
 mv obs-websocket-%websocket_version plugins/obs-websocket
-#rmdir plugins/obs-browser
-#mv obs-browser-%%browser_version plugins/obs-browser
+rmdir plugins/obs-browser
+mv obs-browser-%browser_version plugins/obs-browser
+%autopatch -p1
 
 %ifarch %e2k
 # someone added this poorly written code to upstream
 sed -i '/MATCHES "e2k"/c if(false)' cmake/Modules/CompilerConfig.cmake
 %add_optflags -DSIMDE_ARCH_AMD64=1000 -mno-sse4.2
 %endif
-touch plugins/obs-browser/CMakeLists.txt
-
 # rpmlint reports E: hardcoded-library-path
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
 #sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
@@ -168,6 +192,19 @@ sed -i '/^[[:space:]]*None$/a\    NOCONFIG' \
     cmake/common/bootstrap.cmake
 
 %build
+%if_with browser
+# Stage the CEF SDK from libcef-devel the way OBS FindCEF expects it:
+# include/, Release/libcef.so and a wrapper library built from libcef_dll/.
+cef_root=$PWD/cef-root
+rm -rf $cef_root
+cp -a %_datadir/cef $cef_root
+rm -f $cef_root/Release
+mkdir $cef_root/Release
+ln -s %_libdir/cef%cef_abi/libcef.so.%cef_abi $cef_root/Release/libcef.so
+cmake -S $cef_root -B $cef_root/build -G Ninja -DCMAKE_BUILD_TYPE=Release
+ninja -C $cef_root/build libcef_dll_wrapper
+%endif
+
 %add_optflags -I%_sourcedir/%name-%version/libobs
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -175,7 +212,14 @@ sed -i '/^[[:space:]]*None$/a\    NOCONFIG' \
 	-DCMAKE_COMPILE_WARNING_AS_ERROR=OFF \
 	-GNinja \
 	-DOBS_COMPILE_DEPRECATION_AS_WARNING=ON \
+%if_with browser
+	-DENABLE_BROWSER=ON \
+	-DCEF_ROOT_DIR=$cef_root \
+	-DOBS_SYSTEM_CEF_DIR=%_libdir/cef%cef_abi \
+	-DOBS_BROWSER_NO_SHARED_TEXTURE=ON \
+%else
 	-DENABLE_BROWSER=OFF \
+%endif
 	-DENABLE_WEBRTC=ON \
 	-DENABLE_NEW_MPEGTS_OUTPUT=OFF \
 	-DENABLE_AJA=OFF \
@@ -198,11 +242,24 @@ sed -i '/^[[:space:]]*None$/a\    NOCONFIG' \
 %_bindir/*
 %_datadir/obs/*
 %exclude %_datadir/obs/libobs/
+%if_with browser
+%exclude %_datadir/obs/obs-modules/core/obs-browser/
+%endif
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.*
 %_libdir/obs-scripting/
 %_libdir/obs-modules/
+%if_with browser
+%exclude %_libdir/obs-modules/core/obs-browser*
+%endif
 %_datadir/metainfo/*
+
+%if_with browser
+%files plugin-browser
+%_libdir/obs-modules/core/obs-browser.so
+%_libdir/obs-modules/core/obs-browser-page
+%_datadir/obs/obs-modules/core/obs-browser/
+%endif
 
 %files -n libobs
 %dir %_datadir/obs
@@ -221,6 +278,9 @@ sed -i '/^[[:space:]]*None$/a\    NOCONFIG' \
 %_libdir/pkgconfig/obs-frontend-api.pc
 
 %changelog
+* Wed Nov 18 2026 Mikhail Tergoev <fidel@altlinux.org> 33.0.1-alt2
+- Build obs-studio-plugin-browser subpackage with system CEF (Closes: 47109).
+
 * Tue Nov 03 2026 Evgeniy Serov <scala@altlinux.org> 33.0.1-alt1
 - New version 33.0.1.
 - Update websocket to 5.7.6.
