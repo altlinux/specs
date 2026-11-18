@@ -1,6 +1,6 @@
 Name: quickjs-ng
 Version: 0.18.0
-Release: alt1
+Release: alt2
 
 Summary: Embeddable JavaScript engine
 License: MIT
@@ -67,5 +67,8 @@ install -pm0644 qjsc.man %buildroot%_man1dir/qjsc.1
 %_pkgconfigdir/quickjs-ng.pc
 
 %changelog
+* Wed Nov 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.18.0-alt2
+- updated from northstar project
+
 * Fri Nov 06 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.18.0-alt1
 - initial
