@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: soapyosmo
-Version: 0.2.5
-Release: alt3
+Version: 0.2.6
+Release: alt1
 
 Summary: OsmoSDR device support for SoapySDR
 License: MIT
@@ -101,6 +101,7 @@ This package contains the RFSpace hardware support module.
        -DUSE_OSMO_BLADERF=OFF \
        -DENABLE_REDPITAYA=OFF \
        -DENABLE_FREESRP=OFF \
+       -DUSE_OSMO_RFSPACE=ON \
        -Wno-dev
 
 %cmake_build
@@ -122,6 +123,9 @@ This package contains the RFSpace hardware support module.
 %_libdir/SoapySDR/modules0.8/librfspaceSupport.so
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.6-alt1
+- new version 0.2.6 (with rpmrb script)
+
 * Thu Jul 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.2.5-alt3
 - Fix build with boost 1.91.
 
