@@ -1,5 +1,5 @@
 Name: ncdu
-Version: 2.11.1
+Version: 2.12.1
 Release: alt1
 
 Summary: Text-based disk usage viewer
@@ -48,6 +48,12 @@ install -Dpm644 ncdu.1 %buildroot%_man1dir/ncdu.1
 %_man1dir/ncdu.1.*
 
 %changelog
+* Wed Nov 18 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.1-alt1
+- new version 2.12.1
+
+* Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2.12.0-alt1
+- new version 2.12.0
+
 * Thu Sep 24 2026 Vitaly Lipatov <lav@altlinux.ru> 2.11.1-alt1
 - new version (2.11.1) via gear-uupdate
 - switch upstream to https://github.com/BratishkaErik/ncdu: the original
