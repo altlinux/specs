@@ -1,5 +1,5 @@
 Name: libmemcached
-Version: 1.1.4
+Version: 1.2.0
 Release: alt1
 
 Summary: Client library to the memcached
@@ -53,7 +53,7 @@ rm -f %buildroot%_libdir/cmake/libmemcached-awesome/p9y*
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS ChangeLog COPYING README.md BUGS.md TODO
+%doc AUTHORS BUGS.md CONTRIBUTING.md LICENSE ChangeLog-*.md README.md TODO
 
 %files utils
 %_bindir/*
@@ -71,6 +71,9 @@ rm -f %buildroot%_libdir/cmake/libmemcached-awesome/p9y*
 %_libdir/cmake/*
 
 %changelog
+* Tue Nov 17 2026 Alexei Takaseev <taf@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Mar 29 2023 Alexei Takaseev <taf@altlinux.org> 1.1.4-alt1
 - 1.1.4 (Fixes CVE-2023-27478)
 - Change URL to new upstream project
