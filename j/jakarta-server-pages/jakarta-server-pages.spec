@@ -1,6 +1,6 @@
 Name:           jakarta-server-pages
-Version:        3.0.0
-Release:        alt2
+Version:        4.0.0
+Release:        alt1
 
 Summary:        Jakarta Server Pages (JSP)
 License:        (EPL-2.0 or GPLv2 with exceptions) and Apache-2.0
@@ -10,14 +10,16 @@ VCS:            https://github.com/eclipse-ee4j/jsp-api
 
 Source0:        %name-%version.tar
 
-Patch0:         jakarta-server-pages-el6-getFeatureDescriptors.patch
+Patch0:         jakarta-server-pages-runtime-deps.patch
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  maven-local
 BuildRequires:  jpackage-17-compat
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(jakarta.el:jakarta.el-api)
+BuildRequires:  jakarta-servlet
 
 BuildArch:      noarch
 
@@ -45,7 +47,8 @@ the JSP API. This package contains the API only.
 %pom_remove_plugin -r :maven-assembly-plugin
 %pom_remove_plugin -r :maven-enforcer-plugin
 
-%pom_remove_dep :jdtcore impl
+%pom_remove_plugin org.glassfish.copyright:glassfish-copyright-maven-plugin api
+%pom_remove_plugin org.sonatype.plugins:nexus-staging-maven-plugin api
 
 %mvn_package jakarta.servlet.jsp:jsp-parent __noinstall
 %mvn_package :jakarta.servlet.jsp-api api
@@ -63,6 +66,10 @@ the JSP API. This package contains the API only.
 %doc LICENSE.md NOTICE.md
 
 %changelog
+* Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 4.0.0-alt1
+- New version.
+- Fix Servlet and EL runtime dependencies.
+
 * Fri May 29 2026 Evgeniy Serov <scala@altlinux.org> 3.0.0-alt2
 - Fixed FTBFS: fixed build with new el-api.
 

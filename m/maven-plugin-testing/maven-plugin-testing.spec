@@ -1,8 +1,5 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
+BuildRequires(pre): rpm-macros-java
 BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -15,35 +12,32 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-plugin-testing
-Version:        3.3.0
-Release:        alt2
+Version:        3.5.1
+Release:        alt1
 Summary:        Maven Plugin Testing
 License:        Apache-2.0
 URL:            http://maven.apache.org/plugin-testing/
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugin-testing/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-Patch0:         0001-Port-to-plexus-utils-3.0.21.patch
-Patch1:         0002-Port-to-current-maven-artifact.patch
-Patch2:         0003-Port-to-maven-3.8.1.patch
+Source0:        %name-%version.tar
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
-BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.maven:maven-aether-provider)
-BuildRequires:  mvn(org.apache.maven:maven-compat)
+BuildRequires:  mvn(org.apache.maven:maven-resolver-provider)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-model)
 BuildRequires:  mvn(org.apache.maven:maven-parent:pom:)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-xml)
+BuildRequires:  mvn(org.mockito:mockito-junit-jupiter)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 %endif
-Source44: import.info
 
 %description
 The Maven Plugin Testing contains the necessary modules
@@ -67,32 +61,27 @@ The Maven Plugin Testing Harness provides mechanisms to manage tests on Mojo.
 %prep
 %setup -q
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
-
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :maven-source-plugin maven-plugin-testing-harness
-
-%pom_disable_module maven-plugin-testing-tools
-%pom_disable_module maven-test-tools
-
-%mvn_alias : org.apache.maven.shared:
+%pom_add_dep org.codehaus.plexus:plexus-xml:3.0.2 maven-plugin-testing-harness
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.release=8 -Dmaven.source.skip=true
 
 %install
 %mvn_install
+rm -f %buildroot%_javadocdir/%name/args
 
 %files -f .mfiles-%{name}
-%doc LICENSE NOTICE
+%doc maven-plugin-testing-harness/target/classes/META-INF/LICENSE
+%doc maven-plugin-testing-harness/target/classes/META-INF/NOTICE
 %files harness -f .mfiles-%{name}-harness
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE NOTICE
+%doc maven-plugin-testing-harness/target/classes/META-INF/LICENSE
+%doc maven-plugin-testing-harness/target/classes/META-INF/NOTICE
 
 %changelog
+* Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 3.5.1-alt1
+- New version.
+
 * Tue Apr 22 2025 Anton Meleshnikov <alton@altlinux.org> 3.3.0-alt2
 - fixed FTBFS (with update to maven 3.8.1)
 

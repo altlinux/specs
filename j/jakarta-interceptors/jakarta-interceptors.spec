@@ -1,104 +1,87 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: jakarta-interceptors
+Version: 2.2.0
+Release: alt1
+
+Summary: Jakarta Interceptors
+License: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%global srcname interceptor-api
+URL: https://github.com/jakartaee/interceptors
+VCS: https://github.com/jakartaee/interceptors.git
+BuildArch: noarch
 
-Name:           jakarta-interceptors
-Version:        2.0.0
-Release:        alt1_3jpp11
-Summary:        Jakarta Interceptors
-License:        EPL-2.0 or GPLv2 with exceptions
+Source: %name-%version.tar
 
-%global upstream_version %{version}-RELEASE
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
+BuildRequires: mvn(org.eclipse.ee4j:project:pom:)
+BuildRequires: mvn(jakarta.annotation:jakarta.annotation-api)
+BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.glassfish.build:spec-version-maven-plugin)
+BuildRequires: asciidoctor
 
-URL:            https://github.com/eclipse-ee4j/interceptor-api
-Source0:        %{url}/archive/%{upstream_version}/%{srcname}-%{version}.tar.gz
-
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.glassfish.build:spec-version-maven-plugin)
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       geronimo-interceptor = %{version}-%{release}
-Obsoletes:      geronimo-interceptor < 1.0.1-25
-Source44: import.info
+Provides: geronimo-interceptor = %version-%release
+Obsoletes: geronimo-interceptor < 1.0.1-25
 Conflicts: geronimo-interceptor < 1.0.1-alt3
 
 %description
-Jakarta Interceptors defines a means of interposing on business method
-invocations and specific eventsa..such as lifecycle events and timeout
-eventsa..that occur on instances of Jakarta EE components and other
-managed classes.
-
+Jakarta Interceptors defines interposition on business method invocations
+and lifecycle events in Jakarta EE components and other managed classes.
 
 %package javadoc
+Summary: API documentation for Jakarta Interceptors
 Group: Development/Java
-Summary:        Javadoc for %{name}
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       geronimo-interceptor-javadoc = %{version}-%{release}
-Obsoletes:      geronimo-interceptor-javadoc < 1.0.1-25
-BuildArch: noarch
+Provides: geronimo-interceptor-javadoc = %version-%release
+Obsoletes: geronimo-interceptor-javadoc < 1.0.1-25
 
 %description javadoc
-API documentation for %{name}.
+API documentation for Jakarta Interceptors.
 
+%package manual
+License: Eclipse Foundation Specification License v1.0
+Summary: Jakarta Interceptors specification
+Group: Documentation
+
+%description manual
+The complete upstream Jakarta Interceptors specification in HTML format.
 
 %prep
-%setup -q -n %{srcname}-%{upstream_version}
-
-
-# remove unnecessary dependencies on parent POM
-%pom_remove_parent . api
-
-# do not install useless parent POM
-%mvn_package :interceptor-api-parent __noinstall
-
-# do not build specification documentation
+%setup
+# Build the specification with the available native Asciidoctor provider.
 %pom_disable_module spec
-
-# remove unnecessary maven plugins
-%pom_remove_plugin :maven-enforcer-plugin api .
-%pom_remove_plugin :maven-javadoc-plugin api
+# XMvn installs the genuine POM without OSSRH publication flattening.
+%pom_remove_plugin :flatten-maven-plugin api
 %pom_remove_plugin :maven-source-plugin api
-
-# disable spec verification (fails because spec-version-maven-plugin is too old)
-%pom_xpath_remove 'pom:goal[text()="check-module"]' api
-
-# provide javax.interceptor packages in addition to jakarta.interceptor
-cp -pr api/src/main/java/jakarta api/src/main/java/javax
-sed -i -e 's/jakarta\./javax./g' $(find api/src/main/java/javax -name *.java)
-
-# add compatibility alias for old maven artifact coordinates
-%mvn_alias :jakarta.interceptor-api \
-    org.apache.geronimo.specs:geronimo-interceptor_1.1_spec \
-    org.apache.geronimo.specs:geronimo-interceptor_3.0_spec
-
-# add compatibility symlink for old classpath
-%mvn_file : %{name}/jakarta.interceptor-api geronimo-interceptor
-
+%pom_xpath_remove "pom:build/pom:plugins/pom:plugin[pom:artifactId='maven-javadoc-plugin']/pom:executions" api
+%mvn_file :jakarta.interceptor-api %name/jakarta.interceptor-api
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+java -version
+%mvn_build
+asciidoctor -b html5 -d book -a data-uri -a toc=left -a sectanchors \
+    -a revnumber=2.2 -a status=DRAFT -a revremark=DRAFT \
+    -a idprefix= -a idseparator=- \
+    -D target/manual spec/src/main/asciidoc/interceptors-spec.adoc
 
 %install
 %mvn_install
 
-
 %files -f .mfiles
-%doc --no-dereference LICENSE.md NOTICE.md
-%doc README.md
+%doc LICENSE.md NOTICE.md
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.md NOTICE.md
 
+%files manual
+%doc target/manual/interceptors-spec.html
 
 %changelog
+* Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 2.2.0-alt1
+- New version.
+- Package the HTML specification.
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt1_3jpp11
 - added conflict with jakarta-interceptors (closes: #40740)
 

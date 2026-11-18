@@ -1,9 +1,6 @@
-BuildRequires: javapackages-local
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc
-BuildRequires: jpackage-default
+%define _unpackaged_files_terminate_build 1
+%define _without_javadoc 1
+
 # Copyright (c) 2000-2011, JPackage Project
 # All rights reserved.
 #
@@ -36,19 +33,28 @@ BuildRequires: jpackage-default
 
 
 Name:		json
+Version:	20260814
+Release:	alt1
 Summary:	JavaScript Object Notation
-Url:		http://www.json.org/java/index.html
-Version:	20080425
-Release:	alt8
-Epoch:		0
-License:	Open Source
+License:		ALT-Public-Domain
 Group:		Development/Java
-BuildArch:	noarch
-Source0:	http://www.json.org/java/json.zip
-Source1:	json-20080425.pom
-BuildRequires:  jpackage-utils
-Source44: import.info
+URL: https://github.com/stleary/JSON-java
+VCS: https://github.com/stleary/JSON-java
 
+Source0: json-%version.tar
+Patch0: json-test-cycle.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-17-openjdk-devel
+BuildRequires: maven-local
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-jar-plugin)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.moditect:moditect-maven-plugin)
+BuildRequires: mvn(org.mockito:mockito-core)
+
+BuildArch:	noarch
 
 %description
 JSON (JavaScript Object Notation) is a lightweight data-
@@ -62,47 +68,28 @@ including C, C++, C#, Java, JavaScript, Perl, Python, and
 many others. These properties make JSON an ideal
 data-interchange language.
 
-%package javadoc
-Summary:	Javadoc for %{name}
-Group:		Development/Documentation
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
 %prep
-%setup -q -c -n %{name}-%{version}
-chmod -R go=u-w *
-mkdir src
-mv org src
-
-# install in _javadir
-%mvn_file org.%{name}:%{name} %{name}
+%setup -q -n json-%version
+%patch0 -p1
+%pom_remove_plugin org.apache.maven.plugins:maven-source-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-gpg-plugin
+%pom_remove_plugin org.sonatype.central:central-publishing-maven-plugin
+%mvn_file org.json:json json
 
 %build
-mkdir -p target/classes
-%{_jvmdir}/java/bin/javac  -target 1.8 -source 1.8 -d target/classes $(find src -name "*.java")
-%{_jvmdir}/java/bin/jar cf target/%{name}.jar -C target/classes org
-#mkdir -p target/site/apidocs
-#%{_jvmdir}/java/bin/javadoc -d target/site/apidocs $(find src -name "*.java")
-
-%mvn_artifact %{SOURCE1} target/%{name}.jar
+%mvn_build
 
 %install
 %mvn_install
 
-# javadoc
-#install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-#cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-#ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-
 %files -f .mfiles
-
-#%files javadoc
-#%doc %{_javadocdir}/%{name}-%{version}
-#%doc %{_javadocdir}/%{name}
+%doc LICENSE
 
 %changelog
+* Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 20260814-alt1
+- New version.
+
 * Thu Oct 01 2026 Anton Meleshnikov <alton@altlinux.org> 0:20080425-alt8
 - fixed FTBFS
 
@@ -129,4 +116,3 @@ mkdir -p target/classes
 
 * Fri Feb 13 2009 Igor Vlasenko <viy@altlinux.ru> 0:20080425-alt1_1jpp5
 - new version
-

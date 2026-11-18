@@ -1,6 +1,6 @@
 Name:           shrinkwrap-descriptors
 Version:        2.0.0
-Release:        alt4
+Release:        alt5
 
 Summary:        ShrinkWrap subproject for creating Archive Descriptors
 License:        Apache-2.0
@@ -18,7 +18,7 @@ BuildRequires:  jpackage-default
 BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 buildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(net.sf.saxon:saxon)
+BuildRequires:  mvn(net.sf.saxon:Saxon-HE)
 BuildRequires:  mvn(org.glassfish.jaxb:codemodel)
 BuildRequires:  mvn(com.sun.xml.dtd-parser:dtd-parser)
 BuildRequires:  mvn(xmlunit:xmlunit)
@@ -182,6 +182,7 @@ Commonly used custom assertions.
 %pom_remove_plugin :maven-javadoc-plugin
 
 %pom_remove_dep :saxon-dom metadata-parser
+%pom_change_dep net.sf.saxon:saxon net.sf.saxon:Saxon-HE metadata-parser
 %pom_remove_dep -r :fest-assert
 
 %pom_change_dep com.sun.codemodel:codemodel org.glassfish.jaxb:codemodel metadata-parser
@@ -237,6 +238,9 @@ export JAVA5_HOME=%_jvmdir/java
 %doc LICENSE
 
 %changelog
+* Wed Nov 18 2026 Ivan Khanas <xeno@altlinux.org> 2.0.0-alt5
+- Fixed compatibility with Saxon-HE.
+
 * Sat Apr 18 2026 Evgeniy Serov <scala@altlinux.org> 2.0.0-alt4
 - Updated to 2.0.0 stable version.
 - Returned to Sisyphus.

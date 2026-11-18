@@ -1,25 +1,36 @@
+%define _unpackaged_files_terminate_build 1
+
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: rpm-build-java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-21-openjdk-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          reflections
-Version:       0.9.12
-Release:       alt1_10jpp11
+Version:       0.10.2
+Release:       alt1
 Summary:       Java run-time meta-data analysis
-License:       WTFPL
+License:       WTFPL AND Apache-2.0
 URL:           https://github.com/ronmamo/reflections
+VCS:           https://github.com/ronmamo/reflections.git
 BuildArch:     noarch
 
-Source0:       https://github.com/ronmamo/reflections/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:       %name-%version.tar
+Patch0:        %name-system.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.gson:gson)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
-BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires:  mvn(org.hamcrest:hamcrest)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(org.jboss:jboss-vfs)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.dom4j:dom4j)
 BuildRequires:  mvn(org.javassist:javassist)
-Source44: import.info
 
 %description
 A Java run-time meta-data analysis, in the spirit of Scannotations
@@ -38,23 +49,29 @@ Using Reflections you can query your meta-data such as:
 
 %prep
 %setup -q
+%autopatch -p1
 
 
 find -type f '(' -name '*.jar' -o -name '*.class' ')' -not -path './src/test/*' -print -delete
 
-%pom_xpath_inject 'pom:plugin[pom:artifactId = "maven-compiler-plugin"]' '<version>3.8.1</version>'
+# The upstream release tag retains the next-development POM version.
+%pom_xpath_set pom:version %version
+%pom_change_dep javax.servlet:servlet-api javax.servlet:javax.servlet-api
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -f .mfiles-reflections
 %doc README.md
-%doc --no-dereference COPYING.txt
+%doc --no-dereference COPYING.txt LICENSE-2.0.txt
 
 %changelog
+* Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 0.10.2-alt1
+- New version.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_10jpp11
 - update
 

@@ -1,6 +1,6 @@
 Name:           maven-filtering
-Version:        3.4.0
-Release:        alt1.1
+Version:        3.5.1
+Release:        alt1
 
 Summary:        Apache Maven Filtering
 License:        Apache-2.0
@@ -10,13 +10,15 @@ VCS:            https://github.com/apache/maven-filtering
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  maven-local
 BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-testing)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-build-api)
 
 BuildArch:      noarch
 
@@ -31,7 +33,7 @@ plugins that needs to filter resources.
 %setup
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.source.skip=true
 
 %install
 %mvn_install
@@ -40,6 +42,9 @@ plugins that needs to filter resources.
 %doc README.md
 
 %changelog
+* Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 3.5.1-alt1
+- New version.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.4.0-alt1.1
 - Cosmetic fixes.
 

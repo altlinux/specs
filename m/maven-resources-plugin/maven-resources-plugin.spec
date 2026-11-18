@@ -1,9 +1,6 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: rpm-build-java
+BuildRequires: java-21-openjdk-devel
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,15 +12,16 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-resources-plugin
-Version:        3.3.1
+Version:        3.5.0
 Release:        alt1
 Summary:        Maven Resources Plugin
 License:        Apache-2.0
 URL:            https://maven.apache.org/plugins/maven-resources-plugin
-Source0:        https://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        %name-%version.tar
 
 BuildArch:      noarch
 
+BuildRequires(pre): rpm-macros-java
 BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
@@ -45,8 +43,28 @@ BuildRequires:  mvn(org.apache.maven:maven-settings)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-interpolation)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
 BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.plexus)
+BuildRequires:  maven-plugin-testing
+BuildRequires:  maven-plugin-testing-harness
+BuildRequires:  maven-surefire
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-surefire-provider-junit3
+BuildRequires:  maven-surefire-provider-junit5
+BuildRequires:  maven-surefire-provider-testng
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(javax.inject:javax.inject)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-clean-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-jar-plugin)
+BuildRequires:  mvn(org.apache.groovy:groovy)
+BuildRequires:  mvn(org.beanshell:bsh)
 %endif
-Source44: import.info
 
 %description
 The Resources Plugin handles the copying of project resources
@@ -60,22 +78,36 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
+%package tests
+Group: Development/Java
+Summary:        Upstream test classes for %{name}
+
+%description tests
+Upstream test classes and resource-filter fixture used by integration tests.
+
 %prep
 %setup
+rm -f .mvn/maven.config
+%mvn_package :maven-resources-plugin:jar:tests: tests
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.source.skip=true -Prun-its \
+    -Dinvoker.mavenExecutable=/usr/bin/xmvn -Dinvoker.offline=true
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE NOTICE
+%doc --no-dereference .gear/LICENSE .gear/NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
+
+%files tests -f .mfiles-tests
 
 %changelog
+* Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 3.5.0-alt1
+- New version.
+
 * Mon Aug 31 2026 Anton Meleshnikov <alton@altlinux.org> 3.3.1-alt1
 - new version
 

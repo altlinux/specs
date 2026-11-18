@@ -1,15 +1,5 @@
-Epoch: 0
-Group: Text tools
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
-# END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 9.4.0.9
+%define _unpackaged_files_terminate_build 1
+
 # Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
@@ -39,217 +29,174 @@ BuildRequires: jpackage-default
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-%global version_str %(sed -e 's/\\./-/g' <<<"%{version}")
-%global version_major_minor %(sed -e 's/\\([0-9]*\\.[0-9]*\\)\\..*/\\1/g' <<<"%{version}")
-%global version_major_minor_str %(sed -e 's/\\./-/g' <<<"%{version_major_minor}")
-%global version_maven %(sed -e 's/\\(.*\\)\\.\\([0-9]*\\)/\\1-\\2/g' <<<"%{version}")
-%global artifact_id Saxon-HE
-Summary:        Java XPath, XSLT 2.0 and XQuery implementation
-Name:           saxon
-Version:        9.4.0.9
-Release:        alt2_10jpp11
-# net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
-# net/sf/saxon/option/jdom/ is MPLv1.1
-# net/sf/saxon/serialize/codenorm/ is UCD
-# net/sf/saxon/expr/sort/GenericSorter.java is MIT
-# net/sf/saxon/expr/Tokenizer.java and few other bits are BSD
-License:        MPLv1.0 and MPLv1.1 and ASL 1.1 and UCD and MIT
-URL:            http://saxon.sourceforge.net/
-Source0:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/%{version_major_minor}/saxon%{version_str}source.zip
-Source1:        %{name}.saxon.script
-Source2:        %{name}.saxonq.script
-Source3:        %{name}.build.script
-Source4:        %{name}.1
-Source5:        %{name}q.1
-Source6:        https://downloads.sourceforge.net/project/saxon/Saxon-HE/%{version_major_minor}/saxon-resources%{version_major_minor_str}.zip
-Source8:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.0.txt
-Source9:        http://www.mozilla.org/MPL/1.0/index.txt#/mpl-1.1.txt
-BuildRequires:  unzip
-BuildRequires:  ant
-BuildRequires:  javapackages-local
-BuildRequires:  bea-stax-api
-BuildRequires:  xml-commons-apis
-BuildRequires:  xml-commons-resolver
-BuildRequires:  xom
-BuildRequires:  java-javadoc
-BuildRequires:  jdom >= 0:1.0
-BuildRequires:  jdom-javadoc >= 0:1.0
-BuildRequires:  jdom2
-BuildRequires:  dom4j
-Requires:       bea-stax-api
-Requires:       bea-stax
 
-# Older versions were split into multile packages
-Obsoletes:  %{name}-xpath < %{version}-%{release}
-Provides:   %{name}-xpath = %{version}-%{release}
-Obsoletes:  %{name}-xom < %{version}-%{release}
-Provides:   %{name}-xom = %{version}-%{release}
-Obsoletes:  %{name}-sql < %{version}-%{release}
-Provides:   %{name}-sql = %{version}-%{release}
-Obsoletes:  %{name}-jdom < %{version}-%{release}
-Provides:   %{name}-jdom = %{version}-%{release}
-Obsoletes:  %{name}-dom < %{version}-%{release}
-Provides:   %{name}-dom = %{version}-%{release}
+%define source_version %(echo %version | tr . -)
+%define major_version %(echo %version | cut -d. -f1)
+%define minor_version %(echo %version | cut -d. -f2)
 
-BuildArch:      noarch
-Source44: import.info
+Name: saxon
+Version: 13.1
+Release: alt1
+
+Summary: Java XPath, XSLT and XQuery implementation
+License: MPL-2.0
+Group: Text tools
+URL: https://www.saxonica.com/
+VCS: https://github.com/Saxonica/Saxon-HE.git
+
+BuildArch: noarch
+
+Source0: %name-%source_version.tar
+Source1: saxon.pom
+Source3: %name.saxon.script
+Source4: %name.saxonq.script
+Source5: %name.1
+Source6: %{name}q.1
+Source8: saxon-NOTICE-jamesclark.txt
+Source9: qt3tests-201a6e466940cdfc727f4babfedcde5332b9f578.tar.gz
+Source10: saxon-qt3-exceptions.xml
+Patch0: saxon-axiom2.patch
+Patch1: saxon-errors.patch
+Patch2: saxon-offline-qt3.patch
+Patch3: saxon-qt3-repairs.patch
+
+BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
+BuildRequires: java-21-openjdk-devel
+BuildRequires: javapackages-local
+BuildRequires: unzip
+BuildRequires: jline2
+BuildRequires: xmlresolver
+BuildRequires: xom
+BuildRequires: dom4j
+BuildRequires: jdom2
+BuildRequires: mvn(org.apache.ws.commons.axiom:axiom-api)
+BuildRequires: mvn(org.apache.ws.commons.axiom:axiom-impl)
+
+Provides: saxon-scripts = %EVR
+Obsoletes: saxon-scripts < %EVR
 
 %description
-Saxon HE is Saxonica's non-schema-aware implementation of the XPath 2.0,
-XSLT 2.0, and XQuery 1.0 specifications aligned with the W3C Candidate
-Recommendation published on 3 November 2005. It is a complete and
-conformant implementation, providing all the mandatory features of
-those specifications and nearly all the optional features.
+Saxon-HE is Saxonica's open-source implementation of XPath, XSLT and XQuery.
+It provides the Saxon Java processor and its command-line interfaces.
 
-%package        manual
-Group: Text tools
-Summary:        Manual for %{name}
-BuildArch: noarch
-
-%description    manual
-Manual for %{name}.
-
-%package        javadoc
+%package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
+Summary: API documentation for %name
 
-%description    javadoc
-Javadoc for %{name}.
+%description javadoc
+API documentation for Saxon-HE.
 
-%package        demo
+%package manual
 Group: Text tools
-Summary:        Demos for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Summary: Reference manual for %name
 
-%description    demo
-Demonstrations and samples for %{name}.
-
-%package        scripts
-Group: Text tools
-Summary:        Utility scripts for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    scripts
-Utility scripts for %{name}.
-
+%description manual
+Upstream reference documentation for Saxon-HE.
 
 %prep
-%setup -q -c
-
-unzip -q %{SOURCE6}
-cp -p %{SOURCE3} ./build.xml
-
-# deadNET
-rm -rf net/sf/saxon/dotnet samples/cs
-
-# Depends on XQJ (javax.xml.xquery)
-rm -rf net/sf/saxon/xqj
-
-# This requires a EE edition feature (com.saxonica.xsltextn)
-rm -rf net/sf/saxon/option/sql/SQLElementFactory.java
-
-# cleanup unnecessary stuff we'll build ourselves
-rm -rf docs/api
-find . \( -name "*.jar" -name "*.pyc" \) -delete
-
-cp %{SOURCE8} %{SOURCE9} .
-
-cat >%{artifact_id}-%{version_maven}.pom <<POM_XML
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>net.sf.saxon</groupId>
-  <artifactId>%{artifact_id}</artifactId>
-  <version>%{version_maven}</version>
-  <packaging>jar</packaging>
-  <name>%{artifact_id}</name>
-  <url>http://saxon.sf.net/</url>
-  <description>The XSLT and XQuery Processor</description>
-  <licenses>
-    <license>
-      <name>Mozilla Public License Version 2.0</name>
-      <url>http://www.mozilla.org/MPL/2.0/</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
-
-  <scm>
-    <connection>scm:svn:https://dev.saxonica.com/repos/archive/opensource/latest%{version_major_minor}/</connection>
-    <developerConnection>scm:svn:https://dev.saxonica.com/repos/archive/opensource/latest%{version_major_minor}/</developerConnection>
-    <url>https://saxon.svn.sourceforge.net/svnroot/saxon/latest%{version_major_minor}/</url>
-  </scm>
-</project> 
-POM_XML
+%setup -q -n %name-%source_version
+unzip -q source/saxon%{source_version}source.zip
+mkdir qt3tests
+tar -xf %SOURCE9 --strip-components=1 -C qt3tests
+unzip -q resources/saxon-resources-%major_version.zip -d manual
+unzip -q manual/source-userdoc.zip -d manual/userdoc
+%autopatch -p1
+grep -q "MAJOR_VERSION = %major_version;" net/sf/saxon/Version.java
+grep -q "MINOR_VERSION = %minor_version;" net/sf/saxon/Version.java
+cp -p %SOURCE1 Saxon-HE.pom
+cp -p manual/notices/LICENSE.txt LICENSE.txt
+cp -p manual/notices/JLINE2.txt NOTICE-jline2.txt
+cp -p %SOURCE8 NOTICE-jamesclark.txt
 
 %build
-mkdir -p build/classes
-cat >build/classes/edition.properties <<EOF
+mkdir -p build/classes build/lib build/api
+cat > build/classes/edition.properties <<EOF
 config=net.sf.saxon.Configuration
 platform=net.sf.saxon.java.JavaPlatform
 EOF
-
-export CLASSPATH=$(build-classpath axiom xml-commons-apis xml-commons-resolver jdom jdom2 xom bea-stax-api dom4j)
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
-  -Dj2se.javadoc=%{_javadocdir}/java \
-  -Djdom.javadoc=%{_javadocdir}/jdom
-
-%mvn_artifact %{artifact_id}-%{version_maven}.pom build/lib/saxon.jar
-%mvn_alias : :saxon
-%mvn_alias : net.sf.saxon:saxon::dom:
+find net -name '*.java' -print > build/sources.list
+classpath=$(build-classpath jline2 xmlresolver xom dom4j jdom2 \
+  ws-axiom/axiom-api ws-axiom/axiom-impl)
+javac --release 17 -encoding UTF-8 -classpath "$classpath" \
+  -d build/classes @build/sources.list
+cp -a net/sf/saxon/data build/classes/net/sf/saxon/
+mkdir -p build/classes/META-INF/services
+printf '%%s\n' net.sf.saxon.TransformerFactoryImpl \
+  > build/classes/META-INF/services/javax.xml.transform.TransformerFactory
+printf '%%s\n' net.sf.saxon.xpath.XPathFactoryImpl \
+  > build/classes/META-INF/services/javax.xml.xpath.XPathFactory
+cat > build/manifest.mf <<EOF
+Manifest-Version: 1.0
+Main-Class: net.sf.saxon.Transform
+Automatic-Module-Name: net.sf.saxon
+EOF
+jar --create --file build/lib/Saxon-HE.jar --manifest build/manifest.mf \
+  -C build/classes .
+# The upstream test classifier is a reusable QT3/XSLT test-driver tool.
+mkdir -p build/test-classes
+find manual/drivers/java/net -name '*.java' -print > build/test-sources.list
+javac --release 17 -encoding UTF-8 \
+  -classpath "build/lib/Saxon-HE.jar:$classpath" \
+  -d build/test-classes @build/test-sources.list
+jar --create --file build/lib/Saxon-HE-test.jar -C build/test-classes .
+cat build/sources.list build/test-sources.list > build/api-sources.list
+javadoc -quiet -Xdoclint:none -encoding UTF-8 -classpath "$classpath" \
+  -d build/api @build/api-sources.list
+%mvn_artifact %SOURCE1 build/lib/Saxon-HE.jar
+%mvn_artifact net.sf.saxon:Saxon-HE:jar:test:%version \
+  build/lib/Saxon-HE-test.jar
 
 %install
+# Override XMvn's default exclusion of auxiliary classifiers.
+%mvn_package net.sf.saxon:Saxon-HE:jar:test:
 %mvn_install
+ln -s saxon/Saxon-HE.jar %buildroot%_javadir/saxon.jar
+mkdir -p %buildroot%_javadocdir/%name
+cp -a build/api/. %buildroot%_javadocdir/%name/
+install -d %buildroot%_bindir %buildroot%_mandir/man1
+install -p -m755 %SOURCE3 %buildroot%_bindir/saxon
+install -p -m755 %SOURCE4 %buildroot%_bindir/saxonq
+install -p -m644 %SOURCE5 %buildroot%_mandir/man1/saxon.1
+install -p -m644 %SOURCE6 %buildroot%_mandir/man1/saxonq.1
 
-# For compactability
-ln -s %{artifact_id}.jar $RPM_BUILD_ROOT/%{_javadir}/saxon/saxon.jar
+mkdir -p %buildroot%_docdir/%name-manual
+cp -a manual/userdoc/viewer_appJS/. %buildroot%_docdir/%name-manual/
 
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# demo
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr samples/* $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-# scripts
-mkdir -p $RPM_BUILD_ROOT%{_bindir}
-install -p -m755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}
-install -p -m755 %{SOURCE2} $RPM_BUILD_ROOT%{_bindir}/%{name}q
-mkdir -p $RPM_BUILD_ROOT%{_mandir}/man1
-install -p -m644 %{SOURCE4} $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
-install -p -m644 %{SOURCE5} $RPM_BUILD_ROOT%{_mandir}/man1/%{name}q.1
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
-
-%post
-mv %{_javadir}/jaxp_transform_impl.jar{,.tmp} || :
-# alternatives removed in f26
-:
-# restore the symlink
-mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
+%check
+# Use the source-built upstream driver classifier, also installed in the RPM.
+mkdir -p build/qt3
+cp -p %SOURCE10 build/qt3/saxon-qt3-exceptions.xml
+classpath="build/lib/Saxon-HE.jar:$(build-classpath xmlresolver)"
+java -Dsaxon.test.offline=true \
+  -classpath "build/lib/Saxon-HE-test.jar:$classpath" \
+  net.sf.saxon.testdriver.QT3TestDriverHE qt3tests catalog.xml \
+  -o:build/qt3 -reportfilename:qt3-results.xml -lang:XQ31 \
+  -exceptions:saxon-qt3-exceptions.xml -quiet \
+  > build/qt3.log 2>&1
+# The upstream driver exits zero even for assertion failures.
+grep -Eq '^Result: [1-9][0-9]* successes, 0 failures, 0 incorrect ErrorCode,' \
+  build/qt3.log
+! grep -Eq 'result="(fail|wrongError)"' build/qt3/qt3-results.xml
 
 %files -f .mfiles
-%doc --no-dereference mpl-1.0.txt mpl-1.1.txt
-%{_javadir}/%{name}/saxon.jar
-
-%files manual
-%doc doc/*
+%doc LICENSE.txt NOTICE-jline2.txt NOTICE-jamesclark.txt
+%_javadir/saxon.jar
+%_bindir/saxon
+%_bindir/saxonq
+%_mandir/man1/saxon.1*
+%_mandir/man1/saxonq.1*
 
 %files javadoc
-%doc mpl-1.0.txt mpl-1.1.txt
-%{_javadocdir}/%{name}
+%_javadocdir/%name
 
-%files demo
-%{_datadir}/%{name}
-
-%files scripts
-%{_bindir}/%{name}
-%{_bindir}/%{name}q
-%{_mandir}/man1/%{name}.1*
-%{_mandir}/man1/%{name}q.1*
+%files manual
+%_docdir/%name-manual
 
 %changelog
+* Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 13.1-alt1
+- New version.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:9.4.0.9-alt2_10jpp11
 - java11 build
 
