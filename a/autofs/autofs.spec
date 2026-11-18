@@ -3,7 +3,7 @@
 
 Name: autofs
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -144,6 +144,9 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Tue Nov 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.2.0-alt2
+- fixed crash in lib/mounts.c when legacy ioctl mode used
+
 * Wed Nov 11 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 5.2.0-alt1
 - 5.2.0 released
 
