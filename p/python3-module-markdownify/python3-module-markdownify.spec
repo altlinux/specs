@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: Convert HTML to Markdown
@@ -54,6 +54,9 @@ Source: %pypi_name-%version.tar
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.4-alt1
+- New version 1.2.4.
+
 * Wed Jul 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.3-alt1
 - New version 1.2.3.
 
