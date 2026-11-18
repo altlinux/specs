@@ -1,7 +1,7 @@
 %define xdg_name io.github.Foldex.AdwSteamGtk
 
 Name: adwaita-steam-gtk
-Version: 0.8.0
+Version: 0.9.1
 Release: alt1
 License: GPL-3.0
 
@@ -23,6 +23,7 @@ BuildRequires: meson rpm-build-python3
 
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: blueprint-compiler
+BuildRequires: /usr/bin/desktop-file-edit
 
 %add_python3_path %_datadir/%name
 
@@ -39,6 +40,8 @@ subst "s|python install.py|python3 install.py|" src/install.py
 
 %install
 %meson_install
+desktop-file-edit --add-category=Settings --add-category=DesktopSettings \
+    %buildroot%_desktopdir/%xdg_name.desktop
 %find_lang %name
 rm -rf %buildroot%_datadir/locale/zh_Hans
 
@@ -51,6 +54,10 @@ rm -rf %buildroot%_datadir/locale/zh_Hans
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Nov 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.9.1-alt1
+- new version (0.9.1)
+- Fix desktop file categories.
+
 * Sun Mar 02 2025 Kirill Unitsaev <fiersik@altlinux.org> 0.8.0-alt1
 - new version 0.8.0 (with rpmrb script)
 - spec: add vcs
