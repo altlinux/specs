@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: thingy
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: Document Manager
@@ -55,6 +55,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/thingy/*
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.8-alt1
+- New version 1.2.8.
+
 * Tue Sep 08 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.7-alt1
 - New version 1.2.7.
 

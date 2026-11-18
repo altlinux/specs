@@ -3,8 +3,8 @@
 %def_with check
 
 Name: superlight
-Version: 1.0.2
-Release: alt2
+Version: 1.0.3
+Release: alt1
 
 Summary: System Monitor for Linux Desktops
 License: GPL-3.0-or-later
@@ -38,10 +38,12 @@ Requires: xapp-symbolic-icons
 %install
 %meson_install
 
+%find_lang %name
+
 %check
 %meson_test
 
-%files
+%files -f %{name}.lang
 %doc README.md
 %_bindir/superlight
 %_desktopdir/org.x.superlight.desktop
@@ -50,6 +52,9 @@ Requires: xapp-symbolic-icons
 %_iconsdir/hicolor/scalable/apps/superlight.svg
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.3-alt1
+- New version 1.0.3.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt2
 - Spec refined.
 

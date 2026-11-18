@@ -3,7 +3,7 @@
 %def_with check
 
 Name: velocitty
-Version: 1.0.8
+Version: 1.1.0
 Release: alt1
 
 Summary: Terminal for Linux desktops
@@ -38,10 +38,12 @@ An easy-to-use terminal emulator.
 %install
 %meson_install
 
+%find_lang %name
+
 %check
 %meson_test
 
-%files
+%files -f %{name}.lang
 %doc README.md
 %_bindir/velocitty
 %_desktopdir/org.x.velocitty.desktop
@@ -53,6 +55,9 @@ An easy-to-use terminal emulator.
 %_datadir/velocitty/palettes/*
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Sun Nov 15 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.8-alt1
 - New version 1.0.8.
 
