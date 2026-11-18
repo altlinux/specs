@@ -9,7 +9,7 @@
 %define flavour %brand-%theme
 
 Name: branding-%flavour
-Version: 2026.09
+Version: 2026.11
 Release: alt1
 
 URL: https://altmobile.org
@@ -273,6 +273,9 @@ subst "s/Theme=.*/Theme=spinner-alt/" /etc/plymouth/plymouthd.conf
 %__ready_set_datadir/config
 
 %changelog
+* Mon Nov 16 2026 David Sultaniiazov <x1z53@altlinux.org> 2026.11-alt1
+- Update schemas for Phosh 0.59.
+
 * Wed Sep 23 2026 David Sultaniiazov <x1z53@altlinux.org> 2026.09-alt1
 - General changes:
   + use `%summary` in `%description` where possible;

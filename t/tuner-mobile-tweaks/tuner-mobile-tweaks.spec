@@ -4,7 +4,7 @@
 %define plugin_name mobile-tweaks
 
 Name: tuner-%plugin_name
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Extra Mobile settings
@@ -49,6 +49,9 @@ Unified Settings Center as a Tuner plugin.
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Mon Nov 16 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.4-alt1
+- New GSettings Phosh paths.
+
 * Sat Aug 08 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.3-alt1
 - Fix translation domain
 - Update translations
