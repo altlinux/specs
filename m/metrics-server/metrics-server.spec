@@ -1,5 +1,5 @@
 Name: metrics-server
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary:  Scalable and efficient source of container resource metrics for Kubernetes built-in autoscaling pipelines
@@ -54,6 +54,9 @@ make test-unit ARCH=$(go env GOARCH)
 
 
 %changelog
+* Tue Nov 03 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 0.9.1-alt1
+- Updated to 0.9.1.
+
 * Tue Jul 21 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 0.9.0-alt1
 - Updated from 0.8.1 to 0.9.0.
 
