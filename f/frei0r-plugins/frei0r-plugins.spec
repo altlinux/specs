@@ -11,7 +11,7 @@
 
 Name: frei0r-plugins
 Version: 3.7.1
-Release: alt1
+Release: alt2
 
 Summary: A free software collection of video effect plugins
 License: GPL-2.0-or-later
@@ -98,6 +98,10 @@ sed -i 's/defined(__SSE4_1__)/0/' src/filter/tint0r/tint0r.c
 %endif
 
 %changelog
+* Wed Nov 18 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.7.1-alt2
+- Fix FTBFS with libopencv 5.1: explicitly include the xobjdetect header
+  in facebl0r and facedetect, retaining compatibility with OpenCV 4.
+
 * Sat Nov 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.7.1-alt1
 - updated from 3.6.0 to 3.7.1
 
