@@ -1,7 +1,7 @@
 %define xdg_name io.github.zingytomato.netpeek
 
 Name: netpeek
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 License: GPL-3.0
 
@@ -22,7 +22,7 @@ BuildRequires: meson rpm-build-python3
 
 BuildRequires: pkgconfig(gio-2.0)
 
-BuildRequires: gtk4-update-icon-cache
+BuildRequires: gtk4-update-icon-cache desktop-file-utils
 
 Requires: nmap
 
@@ -41,6 +41,7 @@ that helps you discover devices on your local network.
 
 %install
 %meson_install
+desktop-file-edit --add-category=Monitor %buildroot%_desktopdir/%xdg_name.desktop
 %find_lang %name
 
 %files -f %name.lang
@@ -53,6 +54,10 @@ that helps you discover devices on your local network.
 %_datadir/metainfo/%xdg_name.metainfo.xml
 
 %changelog
+* Tue Nov 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.5-alt1
+- new version 0.3.5.
+- Add the Monitor desktop category.
+
 * Tue Oct 06 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.3.4-alt1
 - new version 0.3.4
 
