@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: scorecard
-Version: 5.5.0
+Version: 5.6.0
 Release: alt1
 
 Summary: OpenSSF Scorecard - Security health metrics for Open Source
@@ -75,6 +75,9 @@ tests_list=`go list ./... \
 %_bindir/scorecard
 
 %changelog
+* Tue Nov 17 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.6.0-alt1
+- New version 5.6.0.
+
 * Tue Jun 30 2026 Aleksandr Dovydenkov <asd@altlinux.org> 5.5.0-alt1
 - New version 5.5.0.
 
