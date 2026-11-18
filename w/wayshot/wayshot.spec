@@ -1,7 +1,7 @@
 Name: wayshot
-Version: 1.5.0
+Version: 1.7.1
 Release: alt1
-License: BSD-2-Clause
+License: GPL-3.0-or-later AND BSD-2-Clause
 
 Summary: Screenshot tool for wlroots based compositors
 
@@ -49,6 +49,9 @@ install -vD %SOURCE2 .cargo/config.toml
 %_bindir/%name
 
 %changelog
+* Tue Nov 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.7.1-alt1
+- new version (1.7.1)
+
 * Fri Jul 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.5.0-alt1
 - new version 1.5.0
 
