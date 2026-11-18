@@ -1,5 +1,5 @@
 Name: nwg-displays
-Version: 0.4.4
+Version: 0.5.0
 Release: alt1
 License: MIT
 
@@ -32,7 +32,7 @@ The program is expected to:
 %install
 %python3_install
 
-install -Dpm0644 %name.svg -t %buildroot%_pixmapsdir/
+install -Dpm0644 %name.svg -t %buildroot%_iconsdir/hicolor/scalable/apps/
 install -Dpm0755 %name.desktop -t %buildroot%_desktopdir/
 
 %files
@@ -40,10 +40,14 @@ install -Dpm0755 %name.desktop -t %buildroot%_desktopdir/
 %_bindir/%name-*
 %python3_sitelibdir/nwg_displays
 %python3_sitelibdir/nwg_displays-*.egg-info
-%_pixmapsdir/%name.svg
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Nov 17 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.5.0-alt1
+- new version 0.5.0
+- install the SVG icon in the hicolor theme.
+
 * Mon Aug 31 2026 Kirill Unitsaev <fiersik@altlinux.org> 0.4.4-alt1
 - new version 0.4.4
 
