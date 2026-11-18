@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -48,6 +48,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Nov 18 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt2
+- add new group policy
+- fix typos (closes #61526, #61527, #61517)
+- fix punctuation errors (closes #61528)
+
 * Tue Nov 03 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt1
 - update to ALT Domain 11.1.1
 - fix typos (closes #58633)
