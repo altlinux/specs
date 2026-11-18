@@ -9,7 +9,7 @@
 
 Name: gnome-session
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 Group: Graphical desktop/GNOME
@@ -35,7 +35,7 @@ Requires: dbus-tools-gui
 Requires: gnome-filesystem
 Requires: upower gcr4
 Requires: xdg-user-dirs
-Requires: %name-wayland = %EVR
+#Requires: %name-wayland = %EVR
 #Requires: oo7-daemon
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
@@ -143,6 +143,9 @@ export PATH=$PATH:/sbin
 %_datadir/wayland-sessions/gnome.desktop
 
 %changelog
+* Wed Nov 18 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1.1
+- removed gnome-session-wayland from runtime dependencies (ALT #61535)
+
 * Tue Sep 15 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 
