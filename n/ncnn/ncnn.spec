@@ -2,6 +2,11 @@
 
 %def_disable clang
 %def_without python
+%if "%(rpmquery --qf '%%{VERSION}' libopencv-devel)" < "5"
+%def_enable examples
+%else
+%def_disable examples
+%endif
 # not compatable with glslang 14.2.0
 %if "%(rpmquery --qf '%%{VERSION}' glslang-devel)" < "14.2.0"
 %def_with glslang
@@ -14,7 +19,7 @@
 
 Name: ncnn
 Version: 20261020
-Release: alt1
+Release: alt2
 
 Summary: Mobile neural network inference framework
 
@@ -123,9 +128,13 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
   -DNCNN_PYTHON=ON \
   -Dpybind11_INCLUDE_DIR=%_includedir/pybind11 \
   %endif
+  %if_enabled examples
+  -DNCNN_BUILD_EXAMPLES=ON \
+  %else
+  -DNCNN_BUILD_EXAMPLES=OFF \
+  %endif
   %if_with glslang
   -DNCNN_SYSTEM_GLSLANG=ON \
-  -DNCNN_BUILD_EXAMPLES=OFF \
   -DGLSLANG_TARGET_DIR=%_libdir/cmake \
   %endif
 %nil
@@ -155,6 +164,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Wed Nov 18 2026 Leontiy Volodin <lvol@altlinux.org> 20261020-alt2
+- Fixed build on libopencv5.
+
 * Wed Oct 21 2026 Leontiy Volodin <lvol@altlinux.org> 20261020-alt1
 - New version 20261020.
 
