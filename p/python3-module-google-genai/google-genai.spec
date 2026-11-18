@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-google-genai
-Version: 3.2.0
+Version: 3.3.0
 Release: alt1
 
 Summary: GenAI Python SDK
@@ -73,6 +73,9 @@ services.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 3.3.0-alt1
+- Updated to 3.3.0.
+
 * Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 3.2.0-alt1
 - Updated to 3.2.0.
 

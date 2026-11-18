@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.2
+Version: 1.8.0
 Release: alt1
 
 Summary: QUIC and HTTP/3 implementation in Python
@@ -14,16 +14,16 @@ Url: https://pypi.org/project/aioquic
 Vcs: https://github.com/aiortc/aioquic
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
+Patch: %name-%version-alt.patch
 
-%pyproject_runtimedeps_metadata
-BuildRequires(pre): rpm-build-pyproject
+# Upstream builds the extension against the Python 3.11 Limited API.
+%pyproject_configure_with_limited_api 3.11
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
+BuildRequires: rpm-build-pyproject
 BuildRequires: libssl-devel
-%pyproject_builddeps_build
-
-%if_with check
-%pyproject_builddeps_metadata
-%endif
+# The tests use only unittest; requirements/test.txt lists only coverage.
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_pypi_package
 
 %description
 Aioquic is a library for the QUIC network protocol in Python. It features
@@ -33,8 +33,8 @@ regularly tested for interoperability against other QUIC implementations.
 
 %prep
 %setup
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%autopatch -p1
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -46,11 +46,14 @@ regularly tested for interoperability against other QUIC implementations.
 %pyproject_run_unittest
 
 %files
-%doc README.*
+%doc README.* LICENSE
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.8.0-alt1
+- Updated to 1.8.0.
+
 * Fri Nov 06 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.7.2-alt1
 - Updated to 1.7.2.
 
