@@ -1,8 +1,8 @@
 Name: libfontenc
-Version: 1.1.8
+Version: 1.1.10
 Release: alt1
 Summary: The fontenc Library
-License: MIT/X11
+License: MIT X11
 Group: System/Libraries
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 18 2026 Valery Inozemtsev <shrek@altlinux.ru> 1.1.10-alt1
+- 1.1.10
+
 * Tue Mar 26 2024 Valery Inozemtsev <shrek@altlinux.ru> 1.1.8-alt1
 - 1.1.8
 
