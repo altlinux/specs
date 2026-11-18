@@ -24,7 +24,7 @@
 %def_without check
 
 Name: beszel
-Version: 0.21.1
+Version: 0.21.2
 Release: alt1
 Summary: Lightweight server monitoring hub
 License: MIT
@@ -82,6 +82,8 @@ metrics and status information to the Beszel hub.
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
+# Package updates go through apt; compile out the built-in self-updater.
+export TAGS="no_self_update"
 
 %golang_prepare
 %golang_build $BUILDDIR/src/%import_path/internal/cmd/agent
@@ -152,6 +154,9 @@ go test -tags=testing ./...
 %doc LICENSE readme.md
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.2-alt1
+- Updated to 0.21.2.
+
 * Tue Oct 27 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.21.1-alt1
 - Updated to 0.21.1.
 
