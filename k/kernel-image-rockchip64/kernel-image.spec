@@ -2,7 +2,7 @@ Name: kernel-image-rockchip64
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.63
+%define kernel_sublevel	.64
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -108,7 +108,6 @@ Patch0067: general-add-panel-simple-dsi.patch
 Patch0068: general-add-xtx-spi-nor-chips.patch
 Patch0069: general-ASoC-codecs-es8328-allow-sharing-LRCK-for-microphone.patch
 Patch0070: general-can-1-skb-make-echo-skb-freeing-safe-in-any-IRQ-contex.patch
-Patch0071: general-can-3-dev-can_put_echo_skb-free-skb-on-invalid-echo-in.patch
 Patch0072: general-can-4-rockchip_canfd-prevent-TX-stall-on-echo-skb-fail.patch
 Patch0073: general-can-5-rockchip_canfd-retry-the-outstanding-TX-buffer.patch
 Patch0074: general-can-6-rockchip_canfd-serialize-TX-state-and-command-wr.patch
@@ -588,6 +587,10 @@ truncate -s0 %buildroot%modules_dir/modules.*.bin
 %modules_dir/build
 
 %changelog
+* Wed Nov 18 2026 Alexei Takaseev <taf@altlinux.org> 6.18.64-alt1
+- v6.18.64 (2026-11-17).
+- config: Enable CONFIG_MEMCG_V1=y, CONFIG_CPUSETS_V1=y.
+
 * Wed Nov 11 2026 Alexei Takaseev <taf@altlinux.org> 6.18.63-alt1
 - v6.18.63 (2026-11-10).
 
