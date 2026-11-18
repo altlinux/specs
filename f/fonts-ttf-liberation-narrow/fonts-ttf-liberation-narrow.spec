@@ -1,64 +1,71 @@
-%define oldname liberation-fonts
 %global priority 60
 %global fontname liberation-narrow
-%global fontconf %{priority}-%{fontname}
+%global fontconf %priority-%fontname.conf
 
-Name:             fonts-ttf-%fontname
-Summary:          Sans-serif Narrow fonts to replace commonly used Microsoft Arial Narrow
+Name: fonts-ttf-%fontname
+Version: 1.07.6
+Release: alt1
 
-Version:          1.07.4
-Release:          alt2
 # The license of the Liberation Fonts is a EULA that contains GPLv2 and two
 # exceptions:
 # The first exception is the standard FSF font exception.
 # The second exception is an anti-lockdown clause somewhat like the one in
 # GPLv3. This license is Free, but GPLv2 and GPLv3 incompatible.
-License:          Liberation
-Group:            System/Fonts/True type
-URL:              http://fedorahosted.org/liberation-fonts/
-Source0:          https://fedorahosted.org/releases/l/i/liberation-fonts/%{oldname}-%{version}.tar.gz
-Source5:          %{oldname}-narrow.conf
-BuildArch:        noarch
-BuildRequires:    fontpackages-devel >= 1.13 xorg-x11-font-utils
-BuildRequires:    fontforge
+License: Liberation
+Summary: Sans-serif Narrow fonts to replace commonly used Microsoft Arial Narrow
+Group: System/Fonts/True type
+URL: http://github.com/liberationfonts/liberation-sans-narrow
+VCS: http://github.com/liberationfonts/liberation-sans-narrow
+
+Source0: %name-%version.tar
+Source1: liberation-fonts-narrow.conf
+Source2: import.info
+
+BuildArch: noarch
+
+BuildRequires(pre): rpm-macros-fonts
 BuildRequires: rpm-build-fonts
-Source44: import.info
+BuildRequires: fontpackages-devel >= 1.13
+BuildRequires: xorg-x11-font-utils
+BuildRequires: fontforge
 
 Conflicts: fonts-ttf-liberation < 1.07
 
 %description
-The Liberation Fonts are intended to be replacements for the three most \
-commonly used fonts on Microsoft systems: Times New Roman, Arial, and Courier \
-New.
+The Liberation Fonts are intended to be replacements
+for the three most commonly used fonts on Microsoft systems:
+Times New Roman, Arial, and Courier New.
 
-This is Sans-Serif Narrow TrueType fonts that replaced commonly used Microsoft \
-Arial Narrow.
+This is Sans-Serif Narrow TrueType fonts
+that replaced commonly used Microsoft Arial Narrow.
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup
 
 %build
-make %{?_smp_mflags} 
-mv liberation-fonts-ttf-%{version}/* .
+%make_build
 
 %install
+pushd %fontname-fonts-ttf-%version
 %ttf_fonts_install %fontname
+popd
 
-install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                   %{buildroot}%{_fontconfig_confdir}
+install -pD -m644 %SOURCE1 %buildroot%_fontconfig_templatedir/%fontconf
 
-install -m 0644 -p %{SOURCE5} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
+install -d %buildroot%_fontconfig_confdir
+ln -s {%_fontconfig_templatedir,%buildroot%_fontconfig_confdir}/%fontconf
 
-  ln -s %{_fontconfig_templatedir}/%{fontconf}.conf \
-        %{buildroot}%{_fontconfig_confdir}/%{fontconf}.conf
-
-%files -f %fontname.files
-%doc License.txt README AUTHORS ChangeLog
-%{_fontconfig_templatedir}/*-%{fontname}.conf
-%config(noreplace) %{_fontconfig_confdir}/*-%{fontname}.conf
+%files -f %fontname-fonts-ttf-%version/%fontname.files
+%doc License.txt COPYING README.rst AUTHORS ChangeLog
+%_fontconfig_templatedir/*-%fontname.conf
+%config(noreplace) %_fontconfig_confdir/*-%fontname.conf
 
 %changelog
+* Wed Nov 18 2026 Valery Zabrovsky <brow@altlinux.org> 1.07.6-alt1
+- New version 1.07.6 (closes: 37508).
+- Switch to build from Gear tags.
+- Remove font files duplicated by fonts-ttf-liberation.
+
 * Mon Nov 09 2015 Igor Vlasenko <viy@altlinux.ru> 1.07.4-alt2
 - lowered priority to 60 (closes: #30669)
 
