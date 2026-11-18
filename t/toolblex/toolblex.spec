@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: toolblex
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: A multiplatform Bluetooth Low Energy (and Classic) device scanner and analyzer
@@ -52,7 +52,7 @@ Features:
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=Network;Monitor;Qt;/" assets/linux/toolBLEx.desktop
+sed -i "s/Categories=.*/Categories=Network;Monitor;Qt;/" platforms/linux/toolBLEx.desktop
 sed -i "s|assets/gfx/||" README.md
 sed -i "s|assets/COPYING|COPYING|g" README.md
 
@@ -74,6 +74,9 @@ sed -i "s|assets/COPYING|COPYING|g" README.md
 %_pixmapsdir/toolBLEx.svg
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 0.18-alt1
+- New version 0.18.
+
 * Tue Jun 30 2026 Nikolay Strelkov <snk@altlinux.org> 0.17-alt1
 - New version 0.17.
 
