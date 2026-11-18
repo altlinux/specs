@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: serial-studio
-Version: 4.2.1
-Release: alt2
+Version: 4.2.2
+Release: alt1
 
 Summary: Cross-platform telemetry visualization application for real-time data monitoring and analysis from multiple sources
 License: GPL-3.0-only
@@ -85,6 +85,9 @@ sensors and debug hardware without writing code.
 %_iconsdir/hicolor/scalable/apps/serial-studio-gpl3.svg
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.2-alt1
+- New version 4.2.2.
+
 * Sun Nov 01 2026 Nikolay Strelkov <snk@altlinux.org> 4.2.1-alt2
 - Spec refined.
 
