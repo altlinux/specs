@@ -11,7 +11,7 @@
 
 Name: sssd
 Version: 2.13.2
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -983,6 +983,9 @@ chown -f -R %sssd_user:%sssd_user %gpocachepath/ || true
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Wed Nov 11 2026 Andrey Cherepanov <cas@altlinux.org> 2.13.2-alt2
+- Add kde to default_sc_services (ALT #58948).
+
 * Fri Nov 06 2026 Evgeny Sinelnikov <sin@altlinux.org> 2.13.2-alt1
 - Update to latest 2.13.2 release.
 - Security fixes:
