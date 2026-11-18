@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qspeakers
-Version: 1.8.6
+Version: 1.8.7
 Release: alt1
 
 Summary: Loudspeaker design software
@@ -54,6 +54,9 @@ qmake-qt6 \
 %_datadir/mime/packages/*%{name}.xml
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.7-alt1
+- New version 1.8.7.
+
 * Sat Jul 11 2026 Nikolay Strelkov <snk@altlinux.org> 1.8.6-alt1
 - New version 1.8.6.
 
