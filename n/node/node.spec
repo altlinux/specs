@@ -32,7 +32,7 @@
 %define c_ares_version 1.34.9
 
 # check deps/llhttp/include/llhttp.h
-%define llhttp_version 9.4.3
+%define llhttp_version 9.4.4
 # to use internal llhttp
 %def_without systemhttpparser
 
@@ -84,7 +84,7 @@
 %def_with nodejs_abi
 
 Name: node
-Version: %major.4
+Version: %major.5
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -453,6 +453,14 @@ globalconfig=/etc/npmrc
 update-notifier=false
 EOF
 
+# the list follows npm: the pages are compressed later, hence the trailing *
+for section in 1 5 7; do
+    for page in %buildroot%nodejs_sitelib/npm/man/man$section/*.$section; do
+        install -Dpm0644 "$page" "%buildroot%_mandir/man$section/${page##*/}"
+        echo "%_mandir/man$section/${page##*/}*" >> npm-man.files
+    done
+done
+
 %endif
 
 %if_with nodejs_abi
@@ -509,7 +517,7 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 #%_datadir/node/sources
 
 %if_with npm
-%files -n npm
+%files -n npm -f npm-man.files
 %_bindir/npm
 %_bindir/npx
 %nodejs_sitelib/npm/
@@ -522,6 +530,26 @@ rm -rv %buildroot/usr/share/doc/node/lldb_commands.py
 %endif
 
 %changelog
+* Tue Nov 17 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.5-alt1
+- new version 22.23.5 (with llhttp 9.4.4, sqlite 3.54.1)
+- install npm man pages (closes: #57731)
+- fixes:
+  + CVE-2026-123863: http2: release headers when a stream is removed
+  + CVE-2026-123864: tls,http: nested parser execution from empty writes
+  + CVE-2026-123865: http2: detect streams abandoned by nghttp2
+  + CVE-2026-123866: http2: retain buffers until socket writes finish
+  + CVE-2026-123872: tls: resumption, renegotiation or HRR could change SNI
+  + CVE-2026-123874: http2: retain streams during pending writes
+  + CVE-2026-123828: http2: avoid overflowing ALTSVC buffers
+  + CVE-2026-123867: tls: apply the CA of SNI contexts without a certificate
+  + CVE-2026-123868: http2: count retained DATA in maxSessionMemory
+  + CVE-2026-123871: http: redact proxy credentials in URL errors
+  + CVE-2026-123875: http2: null write request on cancelled stream
+  + CVE-2026-123877: https: isolate Agent TLS policy keys
+  + CVE-2026-123829: permission: recursive fs.watch leaked denied paths
+  + CVE-2026-123862: zlib: handle params callback after destroy
+  + CVE-2026-123873: permission: check heap snapshot destination
+
 * Thu Oct 22 2026 Vitaly Lipatov <lav@altlinux.ru> 22.23.4-alt1
 - new version 22.23.4
 - require c-ares 1.34.9 (was 1.34.6) and libbrotli-devel 1.2.1.
