@@ -4,8 +4,8 @@ Group: Development/Java
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-golang rpm-macros-java rpm-macros-nodejs
 BuildRequires: python3-module-setuptools
 # END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: rpm-build-java
+BuildRequires: java-17-openjdk-devel
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -31,34 +31,24 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           antlr4-project
-Version:        4.9.2
-Release:        alt3
+Version:        4.13.2
+Release:        alt1
 
 Summary:        Parser generator (ANother Tool for Language Recognition)
 License:        BSD-3-Clause
 URL:            https://www.antlr.org/
 VCS:		https://github.com/antlr/antlr4
 Source0:        https://github.com/antlr/antlr4/archive/%{version}/antlr4-%{version}.tar.gz
-# Work around a "code too large" error while compiling a generated file
-# https://github.com/antlr/antlr4/pull/2739
-Patch0:         antlr4-unicode-properties.patch
-# Fix some javadoc problems
-# https://github.com/antlr/antlr4/pull/2960
-Patch1:         antlr4-javadoc.patch
-# Unbundle utf8cpp
-Patch2:         antlr4-utf8cpp.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc-c++
 BuildRequires:  help2man
+BuildRequires:  graphviz
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.ibm.icu:icu4j)
 BuildRequires:  mvn(com.webguys:string-template-maven-plugin)
 BuildRequires:  mvn(org.abego.treelayout:org.abego.treelayout.core)
 BuildRequires:  mvn(org.antlr:antlr3-maven-plugin)
-%if %{without bootstrap}
-BuildRequires:  mvn(org.antlr:antlr4-maven-plugin)
-%endif
 BuildRequires:  mvn(org.antlr:antlr-runtime)
 BuildRequires:  mvn(org.antlr:ST4)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -91,33 +81,12 @@ and walk parse trees.
 %description 
 
 %_desc
-%package     -n antlr4-runtime-test-annotations
-Group: Development/Java
-Summary:        ANTLR runtime test annotations
-BuildArch:      noarch
-
-%description -n antlr4-runtime-test-annotations 
-
-This package provides runtime library test annotations used by Java
-ANTLR parsers.
-
-%_desc
-%package     -n antlr4-runtime-test-annotation-processors
-Group: Development/Java
-Summary:        ANTLR runtime test annotation processors
-BuildArch:      noarch
-Requires:       antlr4-runtime-test-annotations = %{version}-%{release}
-
-%description -n antlr4-runtime-test-annotation-processors 
-
-This package provides runtime library test annotation processors used by
-Java ANTLR parsers.
-
-%_desc
 %package     -n antlr4-runtime
 Group: Development/Java
 Summary:        ANTLR runtime
 BuildArch:      noarch
+Obsoletes:      antlr4-runtime-test-annotations < %EVR
+Obsoletes:      antlr4-runtime-test-annotation-processors < %EVR
 
 %description -n antlr4-runtime 
 
@@ -129,7 +98,6 @@ Group: Development/Java
 Summary:        Parser generator (ANother Tool for Language Recognition)
 BuildArch:      noarch
 Requires:       antlr4-runtime = %{version}-%{release}
-Requires:       mvn(com.sun:tools)
 
 %description -n antlr4 
 
@@ -245,9 +213,6 @@ This package provides the runtime library used by swift ANTLR parsers.
 %_desc
 %prep
 %setup -q -n antlr4-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 find -name \*.jar -delete
 
@@ -275,25 +240,16 @@ sed -i 's,\\>,>,g' tool/resources/org/antlr/v4/tool/templates/unicodedata.st
 # Don't bundle dependencies
 %pom_remove_plugin :maven-shade-plugin tool
 
+# This plugin changes generated comments only.
+%pom_remove_plugin com.google.code.maven-replacer-plugin:replacer tool
+
+# Use system Graphviz for the API diagrams.
+%pom_remove_plugin us.bryon:graphviz-maven-plugin runtime/Java
+
 # Need some javax.json classes
 %pom_add_dep javax.json:javax.json-api tool
 
-# Replace dep on deprecated maven-project with maven-core
-%pom_change_dep org.apache.maven:maven-project:2.2.1 org.apache.maven:maven-core:3.6.1 antlr4-maven-plugin
-
-# Replace dep on maven-jdk-tools-wrapper with dep on tools.jar
-%pom_change_dep :maven-jdk-tools-wrapper com.sun:tools runtime-testsuite/processors
-
 %mvn_package :antlr4-master antlr4-runtime
-
-%if %{with bootstrap}
-# Avoid the need to build with an older version of antlr4
-%pom_remove_plugin org.antlr:antlr4-maven-plugin runtime/Java
-cp -p runtime/Cpp/runtime/src/tree/xpath/XPathLexer.tokens runtime/Java/src
-%endif
-
-# Build for JDK 1.8
-sed -i 's/1\.7/1.8/g' pom.xml
 
 # Use utf8cpp instead of the deprecated wstring_convert
 sed -i 's/# \(.*DUSE_UTF8_INSTEAD_OF_CODECVT.*\)/\1/' runtime/Cpp/CMakeLists.txt
@@ -303,14 +259,23 @@ if [ "%{_lib}" != "lib" ]; then
   sed -i 's/DESTINATION lib/&64/' runtime/Cpp/runtime/CMakeLists.txt
 fi
 
-%pom_remove_dep :tools runtime-testsuite/processors/
-
 %build
 #export JAVA_HOME=%{_jvmdir}/java
 
+# Render the checked-in diagrams used by the runtime API documentation.
+cd runtime/Java
+dotdir=src/main/dot/org/antlr/v4/runtime/atn/images
+outdir=target/apidocs/org/antlr/v4/runtime/atn/images
+install -d "$outdir"
+for dotfile in "$dotdir"/*.dot; do
+  name=${dotfile##*/}
+  dot -Tsvg "$dotfile" -o "$outdir/${name%%.dot}.svg"
+done
+cd -
+
 # Build for Java
 # Due to the missing takari packages, we cannot run the tests
-%mvn_build -s -f -- -Dsource=1.8
+%mvn_build -s -f
 
 %if 0
 # Build the C++ runtime
@@ -344,6 +309,9 @@ mkdir -p %{buildroot}%{_licensedir}
 if [ -d "${jdir}" ]; then
    install -dm755 %{buildroot}%{_javadocdir}/antlr4
    cp -pr "${jdir}"/* %{buildroot}%{_javadocdir}/antlr4
+   install -d %{buildroot}%{_javadocdir}/antlr4/org/antlr/v4/runtime/atn/images
+   install -m644 runtime/Java/target/apidocs/org/antlr/v4/runtime/atn/images/*.svg \
+     %{buildroot}%{_javadocdir}/antlr4/org/antlr/v4/runtime/atn/images/
    echo '%{_javadocdir}/antlr4' >>.mfiles-javadoc
 fi
 
@@ -393,37 +361,25 @@ cd -
 # Create man pages
 export PYTHONPATH=%{buildroot}%{python3_sitelibdir_noarch}
 mkdir -p %{buildroot}%{_mandir}/man1
-%if %{with bootstrap}
+# Use the staged tool and runtime; they are not installed in the build host.
 cat > antlr4 << EOF
 java -cp %{buildroot}%{_javadir}/antlr4/antlr4.jar:%{buildroot}%{_javadir}/antlr4/antlr4-runtime.jar:$(build-classpath antlr3-runtime stringtemplate4 treelayout) org.antlr.v4.Tool
 EOF
 chmod a+x antlr4
 help2man -N --version-string=%{version} -h '' ./antlr4 > \
   %{buildroot}%{_mandir}/man1/antlr4.1
-cd %{buildroot}%{_bindir}
-%else
-cd %{buildroot}%{_bindir}
-help2man -N --version-string=%{version} -h '' ./antlr4 > \
-  %{buildroot}%{_mandir}/man1/antlr4.1
-%endif
 #help2man -N --version-string=%{version} ./pygrun > \
 #  %{buildroot}%{_mandir}/man1/pygrun.1
-cd -
 
 # Clean up bits we do not want
 rm -fr %{buildroot}%{_docdir}/libantlr4
-
-%files -n antlr4-runtime-test-annotations -f .mfiles-antlr4-runtime-test-annotations
-%doc --no-dereference LICENSE.txt
-
-%files -n antlr4-runtime-test-annotation-processors -f .mfiles-antlr4-runtime-test-annotation-processors
 
 %files -n antlr4-runtime -f .mfiles-antlr4-runtime
 %doc README.md
 %doc --no-dereference LICENSE.txt
 
 %files -n antlr4 -f .mfiles-antlr4
-%doc CHANGES.txt contributors.txt
+%doc CHANGES.txt
 %{_bindir}/antlr4
 %{_mandir}/man1/antlr4.1*
 
@@ -478,6 +434,9 @@ rm -fr %{buildroot}%{_docdir}/libantlr4
 %endif
 
 %changelog
+* Wed Nov 18 2026 Ivan Khanas <xeno@altlinux.org> 4.13.2-alt1
+- New version.
+
 * Fri Aug 28 2026 Evgeniy Serov <scala@altlinux.org> 4.9.2-alt3
 - Build with jpackage-default.
 

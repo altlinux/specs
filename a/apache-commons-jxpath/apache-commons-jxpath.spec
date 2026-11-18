@@ -1,39 +1,35 @@
-Epoch: 0
+%define _unpackaged_files_terminate_build 1
+
+Name: apache-commons-jxpath
+Version: 1.4.0
+Release: alt1
+
+Summary: Simple XPath interpreter
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
+URL: https://commons.apache.org/proper/commons-jxpath/
+VCS: https://github.com/apache/commons-jxpath.git
 
-Name:           apache-commons-jxpath
-Version:        1.3
-Release:        alt3_43jpp11
-Summary:        Simple XPath interpreter
-License:        ASL 2.0
-URL:            http://commons.apache.org/jxpath/
-BuildArch:      noarch
+Source: %name-%version.tar
 
-Source0:        http://www.apache.org/dist/commons/jxpath/source/commons-jxpath-%{version}-src.tar.gz
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.mockito:mockito-bom:pom:)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(commons-beanutils:commons-beanutils)
+BuildRequires: mvn(org.jdom:jdom)
+BuildRequires: jakarta-servlet-javax
+BuildRequires: jakarta-servlet
+BuildRequires: mvn(org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(commons-io:commons-io)
 
-Patch0:         commons-jxpath-mockrunner.patch
-
-BuildRequires:  maven-local
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  mvn(commons-beanutils:commons-beanutils)
-BuildRequires:  mvn(jdom:jdom)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-%endif
-Source44: import.info
+BuildArch: noarch
 
 %description
 Defines a simple interpreter of an expression language called XPath.
@@ -41,47 +37,45 @@ JXPath applies XPath expressions to graphs of objects of all kinds:
 JavaBeans, Maps, Servlet contexts, DOM etc, including mixtures thereof.
 
 %package javadoc
+Summary: API documentation for %name
 Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %name.
 
 %prep
-%setup -q -n commons-jxpath-%{version}-src
-%patch0 -p1
+%setup
 
-%pom_remove_dep xerces:
-%pom_remove_dep xml-apis:
+%pom_change_dep javax.servlet:servlet-api javax.servlet:javax.servlet-api:4.0.1
+%pom_change_dep javax.servlet:jsp-api \
+    org.jboss.spec.javax.servlet.jsp:jboss-jsp-api_2.2_spec:1.0.1.Final
+%pom_remove_dep com.mockrunner:mockrunner-jdk1.3-j2ee1.3
+%pom_add_plugin org.apache.maven.plugins:maven-compiler-plugin . \
+    '<configuration><testExcludes><testExclude>**/JXPathServletContextTest.java</testExclude></testExcludes></configuration>'
 
-# Remove dependency on glassfish
-%pom_remove_dep :servlet-api
-%pom_remove_dep :jsp-api
-rm src/java/org/apache/commons/jxpath/servlet/*Context*.java
-rm src/java/org/apache/commons/jxpath/servlet/*Handler.java
-rm src/test/org/apache/commons/jxpath/servlet/JXPathServletContextTest.java
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :spotbugs-maven-plugin
 
-%mvn_file ":{*}" %{name} @1
-%mvn_alias : org.apache.commons:
-
-%pom_xpath_inject 'pom:properties' \
-  '<commons.osgi.import>org.apache.commons.beanutils;resolution:="optional",org.jdom*;resolution:="optional",org.w3c.dom;resolution:="optional",javax.servlet*;resolution:="optional",*</commons.osgi.import>'
+%mvn_file : %name commons-jxpath
 
 %build
-# we are skipping tests because we don't have com.mockrunner in repos yet
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.jxpath
+%mvn_build
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 1.4.0-alt1
+- New version.
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_43jpp11
 - update
 

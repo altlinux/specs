@@ -1,6 +1,6 @@
 Name:           apache-parent
-Version:        37
-Release:        alt1.1
+Version:        40
+Release:        alt1
 
 Summary:        Apache Software Foundation Parent POM
 License:        Apache-2.0
@@ -10,8 +10,9 @@ VCS:            https://github.com/apache/maven-apache-parent
 
 Source0:        %name-%version.tar
 
-BuildRequires(pre):  maven-local
-BuildRequires:  jpackage-default
+BuildRequires(pre):  rpm-macros-java
+BuildRequires:  maven-local
+BuildRequires:  java-21-openjdk-devel
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache:apache-jar-resource-bundle)
@@ -40,9 +41,12 @@ sed -i 's/org\.apache\.apache\.resources:/org.apache:/g' pom.xml
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE *.md
+%doc LICENSE
 
 %changelog
+* Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 40-alt1
+- New version.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 37-alt1.1
 - Cosmetic fixes.
 

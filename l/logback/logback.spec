@@ -1,5 +1,5 @@
 Name:           logback
-Version:        1.2.13
+Version:        1.6.7
 Release:        alt1
 
 Summary:        The reliable, generic, fast and flexible logging framework for Java
@@ -10,17 +10,25 @@ VCS:            https://github.com/qos-ch/logback
 
 Source0:        %name-%version.tar
 
-Patch0:         0001-replace-javax-with-jakarta-mail.patch
-Patch1:         0002-logback-avoid-sun-reflect-reflection.patch
+Patch0:         jline-module-name.patch
 
 BuildRequires(pre):  maven-local
-BuildRequires:  jpackage-default
+BuildRequires:  java-21-openjdk-devel
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.janino:janino)
 BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.ant:ant-junit)
+BuildRequires:  mvn(org.apache.ant:ant-junitlauncher)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-javadoc-plugin)
+BuildRequires:  slf4j2
+BuildRequires:  mvn(org.fusesource.jansi:jansi)
+BuildRequires:  mvn(org.jline:jansi-core)
+BuildRequires:  mvn(org.tukaani:xz)
+BuildRequires:  mvn(com.esotericsoftware.kryo:kryo5)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires:  jakarta-servlet
 
 BuildArch:      noarch
 
@@ -48,28 +56,50 @@ Summary:       Logback Classic Module
 %description classic
 Logback-classic module.
 
+%package core-kryo
+Group:         Development/Java
+Summary:       Kryo serialization support for Logback Core
+
+%description core-kryo
+Kryo serialization support for the Logback Core module.
+
+%package classic-kryo
+Group:         Development/Java
+Summary:       Kryo serialization support for Logback Classic
+
+%description classic-kryo
+Kryo serialization support for the Logback Classic module.
+
 %prep
 %setup
 %autopatch -p1
 
 %pom_remove_plugin :maven-source-plugin
 
-%pom_change_dep -r javax.mail:mail jakarta.mail:jakarta.mail-api
+%pom_remove_plugin :central-publishing-maven-plugin
+%pom_xpath_remove pom:build/pom:extensions
 
-# disabled, cause package use old tomcat
+# Use the system SLF4J 2 provider.
+%pom_xpath_set pom:properties/pom:slf4j.version 2
+
+# logback-access is released independently.
 %pom_disable_module logback-access
 %pom_disable_module logback-examples
 
-%pom_disable_module logback-site
+# These modules contain only test fixtures.
+%pom_disable_module logback-core-blackbox
+%pom_disable_module logback-classic-misc
+%pom_disable_module logback-classic-blackbox
 
+%mvn_package ":%name-parent:pom:"
+%mvn_package ":%name-core"
+%mvn_package ":%name-core-kryo" core-kryo
 %mvn_package ":%name-classic" classic
+%mvn_package ":%name-classic-kryo" classic-kryo
 
 %build
 
-%mvn_build -f -- \
-  -Dorg.slf4j:slf4j-api:jar=$(build-classpath slf4j/api) \
-  -Dorg.apache.felix:org.apache.felix.main:jar=$(build-classpath felix/org.apache.felix.main) \
-  -Dmaven.compiler.release=8 \
+%mvn_build -f -s
 
 %install
 %mvn_install
@@ -77,10 +107,17 @@ Logback-classic module.
 %files -f .mfiles
 %doc LICENSE.txt *.md
 
+%files core-kryo -f .mfiles-core-kryo
+
 %files classic -f .mfiles-classic
 %doc LICENSE.txt *.md
 
+%files classic-kryo -f .mfiles-classic-kryo
+
 %changelog
+* Sat Nov 14 2026 Ivan Khanas <xeno@altlinux.org> 1.6.7-alt1
+- New version.
+
 * Thu Mar 12 2026 Evgeniy Serov <scala@altlinux.org> 1.2.13-alt1
 - Updated to 1.2.13.
 - Returned to Sisyphus.
