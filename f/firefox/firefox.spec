@@ -13,14 +13,14 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 160.0
-Release: alt2
+Version: 160.0.1
+Release: alt1
 
 Summary: Fast, private and secure web browser
 Summary(ru_RU.UTF-8): Быстрый, приватный и безопасный браузер
 License: MPL-2.0
 Group: Networking/WWW
-URL: https://www.mozilla.org/firefox/
+URL: https://www.firefox.com
 VCS: https://github.com/mozilla-firefox/firefox
 # Hang up on build browser/components/about
 # i586: hasher-privd: parent: handle_io:
@@ -388,6 +388,11 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Wed Nov 18 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0.1-alt1
+- New version.
+- Update the project URL to https://www.firefox.com.
+- Block camera and microphone access in the privacy config (Closes: 45003).
+
 * Fri Nov 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt2
 - Fix FTBFS with system Pydantic by using system typing_extensions.
 
