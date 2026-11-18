@@ -6,8 +6,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.16.0
-Release: alt2
+Version: 2.16.2
+Release: alt1
 
 Summary: A next generation HTTP client for Python
 License: BSD-3-Clause
@@ -94,6 +94,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.2-alt1
+- Updated to 2.16.2.
+
 * Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.0-alt2
 - Fixed FTBFS (anyio 4.16.0).
 
