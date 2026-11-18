@@ -14,7 +14,7 @@
 %define oldname whisper-cpp
 
 Name: whisper.cpp
-Version: 1.9.3
+Version: 1.9.4
 Release: alt1
 
 Summary: Port of OpenAI's Whisper model in C/C++
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 Patch0: %name-%version.patch
 Patch1: whisper-cpp-1.9.3-alt-fix-ggml-lib-names-to-resolve-conflict.patch
 Patch2: whisper-cpp-1.8.4-alt-change-default-ggml-model.patch
-Patch3: whisper-cpp-1.9.1-alt-fix-test-segfaults.patch
+Patch3: whisper-cpp-1.9.4-alt-fix-test-segfaults.patch
 Patch4: whisper-cpp-1.9.1-alt-find-backends-without-proc.patch
 
 Requires: libwhisper%soversion = %EVR
@@ -61,7 +61,8 @@ BuildRequires: libSDL2-devel
 BuildRequires: libswresample-devel
 BuildRequires: libswscale-devel
 %if_with cuda
-BuildRequires: gcc-c++
+# nvcc 13.2 cannot parse libstdc++ from GCC 16.
+BuildRequires: gcc15-c++
 BuildRequires: nvidia-cuda-toolkit nvidia-cuda-devel-static
 %endif
 %if_with vulkan
@@ -197,6 +198,7 @@ sed -i '/add_subdirectory(lsp)/d' examples/CMakeLists.txt
 %endif
 %if_with cuda
     -DGGML_CUDA=ON \
+    -DCMAKE_CUDA_HOST_COMPILER=/usr/bin/g++-15 \
 %endif
 %ifarch x86_64 riscv64
     -DGGML_CPU_ALL_VARIANTS=ON \
@@ -279,6 +281,9 @@ whisper-bench -m models/ggml-base.bin
 %_bindir/whisper-command
 
 %changelog
+* Tue Nov 10 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.9.4-alt1
+- Update to 1.9.4.
+
 * Tue Sep 15 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.9.3-alt1
 - Update to 1.9.3.
 
