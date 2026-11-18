@@ -1,6 +1,6 @@
 Name: fnm
 Version: 1.39.0
-Release: alt1
+Release: alt2
 
 Summary: Fast and simple Node.js version manager, built in Rust
 Group: Development/Tools
@@ -40,8 +40,7 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 
 %check
 # Tests requiring network access are skipped.
-%rust_test --offline -- \
-    --skip test_list \
+%rust_test -- --skip test_list \
     --skip test_install_latest \
     --skip test_set_default_on_new_installation \
     --skip test_installing_node_12 \
@@ -56,5 +55,8 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/fnm.fish
 
 %changelog
+* Tue Nov 10 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.39.0-alt2
+- Fixed FTBFS with multiple '--offline' option.
+
 * Wed Sep 16 2026 Evgeniy Gorbanyov <esgor@altlinux.org> 1.39.0-alt1
 - Initial build for Sisyphus.
