@@ -10,7 +10,7 @@
 %def_without check
 
 Name: polo
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Wayland compositor and session for the MATE desktop
@@ -132,6 +132,7 @@ rm -rfv %buildroot%_libdir/polo/include \
 %files
 %doc LICENSE README.md docs
 %config(noreplace) %_sysconfdir/dconf/profile/polo
+%config(noreplace) %_sysconfdir/dconf/db/polo
 %dir %_sysconfdir/dconf/db/polo.d
 %dir %_sysconfdir/dconf/db/polo.d/locks
 %config(noreplace) %_sysconfdir/dconf/db/polo.d/00-polo
@@ -153,6 +154,9 @@ rm -rfv %buildroot%_libdir/polo/include \
 %_datadir/wayland-sessions/polo.desktop
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.2-alt1
+- new version 1.0.2
+
 * Sat Nov 14 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.1-alt1
 - new version 1.0.1 (with rpmrb script)
 
