@@ -12,7 +12,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: OpenShot Video Library
 Group: System/Libraries
@@ -29,6 +29,8 @@ Source: %name-%version.tar
 %endif
 #https://github.com/OpenShot/libopenshot/pull/1088.patch
 Patch10: libopenshot-1.0.0-ffmpeg7-codec-capabilities.patch
+# https://github.com/opencv/opencv/pull/29948
+Patch11: libopenshot-1.1.1-alt-opencv5.patch
 Patch2000: libopenshot-0.3.0-entityfx-e2k.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
@@ -78,6 +80,7 @@ This package provides Python3 bindings for OpenShot Video Library.
 %prep
 %setup
 #%%patch10 -p1
+%patch11 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -117,6 +120,9 @@ This package provides Python3 bindings for OpenShot Video Library.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Nov 18 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1.1
+- fixed build with opencv-5.1 (rauty@)
+
 * Tue Nov 03 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
