@@ -29,7 +29,7 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 2.3.0
+Version: 2.3.2
 Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
@@ -370,6 +370,9 @@ fi
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Wed Nov 18 2026 Nazarov Denis <nenderus@altlinux.org> 2.3.2-alt1
+- Update to 2.3.2
+
 * Fri Nov 13 2026 Nazarov Denis <nenderus@altlinux.org> 2.3.0-alt1
 - Update to 2.3.0
 - Stop staging a copy of the CLI binary into the user data directory: the
