@@ -1,5 +1,5 @@
 Name: kernel-image-7.3
-Release: alt1
+Release: alt2
 %define kernel_src_version	7.3
 %define kernel_base_version	7.3
 %define kernel_sublevel	.5
@@ -626,6 +626,21 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Nov 17 2026 Ivan A. Melnikov <iv@altlinux.org> 7.3.5-alt2
+- config*: Updates for 7.3:
+  + major cleanup;
+  + enable LRU_GEN (multi-gen LRU) by default (see ALT#58459);
+  + enable drivers for more RTW89 variants (ALT#58380);
+  + enable more audio drivers (ALT#61423);
+  + enable most of the CODEC drivers;
+  + enable HW_RANDOM_TPM (see ALT#36373);
+  + enable BRIDGE_NF_EBTABLES_LEGACY (see ALT#36373);
+  + disalbe CONFIG_NET_SCH_QFQ (see ALT#57934);
+  + enable MCTP and its transports;
+  + enable TOUCHSCREEN_WACOM_W9000, CONFIG_CAN_VIRTIO_CAN,
+    CONFIG_DM_INLINECRYPT, more MII PHY device drivers and
+    recent network drivers form Alibaba and ZTE.
+
 * Tue Nov 17 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.5-alt1
 - v7.3.5 (2026-11-17).
 - config: Enable CONFIG_MEMCG_V1=y, CONFIG_CPUSETS_V1=y.
