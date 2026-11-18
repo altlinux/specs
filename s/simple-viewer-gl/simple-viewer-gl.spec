@@ -3,7 +3,7 @@
 
 Name: simple-viewer-gl
 Epoch: 1
-Version: 3.3.7
+Version: 3.3.8
 # WARNING: do not forget to run
 #          sed -i '/^If you like/d' third-party/fmtlib/README.rst
 #          sed -i '/^help/d' third-party/fmtlib/README.rst
@@ -71,6 +71,9 @@ XPM, WebP, OpenEXR, and many more.
 %_iconsdir/hicolor/*/apps/sviewgl.png
 
 %changelog
+* Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1:3.3.8-alt1
+- New version 3.3.8.
+
 * Wed Sep 16 2026 Nikolay Strelkov <snk@altlinux.org> 1:3.3.7-alt1
 - New version 3.3.7.
 
