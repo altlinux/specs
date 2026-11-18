@@ -5,20 +5,9 @@
 %define tests_dir ../../tests/%pypi_name
 %def_with check
 
-%define _add_python_extra() \
-%{expand:%%package -n %%name+%1 \
-Summary: %%summary \
-Group: Development/Python3 \
-Requires: %%name \
-%%pyproject_runtimedeps_metadata_extra %1 \
-%%description -n %%name+%1 \
-Extra "%1" for %%pypi_name. \
-%%files -n %%name+%1 \
-}
-
 Name: python3-module-%pypi_name
 Version: 2.16.0
-Release: alt1
+Release: alt2
 
 Summary: A next generation HTTP client for Python
 License: BSD-3-Clause
@@ -28,52 +17,58 @@ Vcs: https://github.com/pydantic/httpx2
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
 
-AutoReq: yes, nopython3
-%pyproject_runtimedeps_metadata
 Requires: python3-module-httpcore2 = %version
 
-BuildRequires(pre): rpm-macros-pyproject
+BuildRequires(pre): rpm-macros-pyproject >= 0.3.0
 BuildRequires: rpm-build-pyproject
-%pyproject_builddeps_build
 %if_with check
+# The test deps are the dev group of the root pyproject.toml, which the
+# deps setup run in the project subdirectory cannot read: the extras come
+# from the project metadata, the rest of the group is listed here.
+%pyproject_configure_without_autodiscovery
+%pyproject_configure_with_check_deps metadata_extra brotli
+%pyproject_configure_with_check_deps metadata_extra cli
+%pyproject_configure_with_check_deps metadata_extra http2
+%pyproject_configure_with_check_deps metadata_extra socks
+%pyproject_configure_with_check_deps metadata_extra ws
+%pyproject_configure_with_check_deps metadata_extra zstd
 BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-brotli
-%add_pyproject_deps_check_filter 'trio-typing$'
-%pyproject_builddeps_metadata
-%pyproject_builddeps_metadata_extra cli
-%pyproject_builddeps_metadata_extra http2
-%pyproject_builddeps_metadata_extra socks
-%pyproject_builddeps_metadata_extra ws
-%pyproject_builddeps_metadata_extra zstd
-%pyproject_builddeps_check
+BuildRequires: python3-module-chardet
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-flaky
+BuildRequires: python3-module-pytest-codspeed
+BuildRequires: python3-module-pytest-httpbin
+BuildRequires: python3-module-pytest-trio
+BuildRequires: python3-module-starlette
+BuildRequires: python3-module-trio
+BuildRequires: python3-module-trustme
+BuildRequires: python3-module-uvicorn
+BuildRequires: python3-module-websockets
+BuildRequires: python3-module-werkzeug
 %endif
-
-%_add_python_extra brotli
-%_add_python_extra cli
-%_add_python_extra http2
-%_add_python_extra socks
-%_add_python_extra ws
-%_add_python_extra zstd
+%pyproject_configure_pypi_package
 
 %description
 HTTPX2 is a fully featured HTTP client library for Python. It
 includes an integrated command line client, has support for both
 HTTP/1.1 and HTTP/2, and provides both sync and async APIs.
 
+%pyproject_configure_pypi_subpackage brotli
+%pyproject_configure_pypi_subpackage cli
+%pyproject_configure_pypi_subpackage http2
+%pyproject_configure_pypi_subpackage socks
+%pyproject_configure_pypi_subpackage ws
+%pyproject_configure_pypi_subpackage zstd
+
 %prep
 %setup
 %autopatch -p1
 cd %src_dir
 sed -i '/^fallback-version/s/= ".*"/= "%version"/' pyproject.toml
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
+%pyproject_setup_deps
 cd -
-%if_with check
-%pyproject_deps_resync_check_depgroup dev
-%endif
 
 %build
 cd %src_dir
@@ -99,6 +94,9 @@ cd -
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.0-alt2
+- Fixed FTBFS (anyio 4.16.0).
+
 * Wed Oct 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.16.0-alt1
 - Updated to 2.16.0.
 
