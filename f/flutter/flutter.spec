@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %define flutter_channel stable
-%define dart_version 3.11.6
+%define dart_version 3.12.2
 %define llvm_version 22.1
 
 Name: flutter
-Version: 3.41.9
+Version: 3.44.9
 Release: alt1
 
 Summary: Flutter framework
@@ -31,35 +31,33 @@ Source4: fonts.zip
 # https://storage.googleapis.com/flutter_infra_release/gradle-wrapper/%gradle_wrapper_version/gradle-wrapper.tgz
 Source5: gradle-wrapper.tgz
 
-Patch0: alpine-target.patch
 Patch1: content-unaware-hash.patch
 Patch2: doctor.patch
 Patch3: git-revision.patch
-# Patch4: libstdc++13.patch
-Patch5: musl-no-execinfo.patch
-Patch6: musl-no-mallinfo.patch
-Patch7: no-cache.patch
-Patch8: no-vpython.patch
-Patch9: not-in-git.patch
-Patch10: opt-in-analytics.patch
-Patch11: pmos-if-touch-is-a-mouse-then-mouse-is-touch.patch
-Patch12: shared-libcxx.patch
-Patch13: system-dart.patch
-Patch14: system-icu.patch
-Patch15: target-musl.patch
-Patch16: unbundle-engine.patch
-Patch17: unbundle-icu.patch
-Patch18: unbundle.patch
-Patch19: version.patch
+Patch4: no-cache.patch
+Patch5: no-vpython.patch
+Patch6: not-in-git.patch
+Patch7: opt-in-analytics.patch
+Patch8: pmos-if-touch-is-a-mouse-then-mouse-is-touch.patch
+Patch9: shared-libcxx.patch
+Patch10: system-dart.patch
+Patch11: system-icu.patch
+Patch12: target-musl.patch
+Patch13: unbundle-engine.patch
+Patch14: unbundle-icu.patch
+Patch15: unbundle.patch
+Patch16: version.patch
 
-Patch20: unbundle-icu.patch.dart
+Patch17: unbundle-icu.patch.dart
+Patch18: no-gn-check.patch
+Patch19: impeller-public-generated-deps.patch
+Patch20: no-werror.patch
+Patch21: fml-climits.patch
 
-BuildRequires(pre): rpm-macros-musl
 BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires: rpm-build-python3
 BuildRequires: dart-lang-sdk = %dart_version
 BuildRequires: gn
-BuildRequires: musl-devel
 BuildRequires: /proc
 
 # From Alpine
@@ -73,6 +71,7 @@ BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(SPIRV-Tools)
 BuildRequires: libicu-devel
+BuildRequires: libpci-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
 BuildRequires: libsqlite3-devel
@@ -282,7 +281,6 @@ for mode in %modes; do
     --linux-cpu=%flutter_arch \
     --lto \
     --clang \
-    --no-backtrace \
     --no-stripped \
     --no-prebuilt-dart-sdk \
     --build-glfw-shell \
@@ -291,9 +289,13 @@ for mode in %modes; do
     --enable-fontconfig \
     --runtime-mode="$mode" \
     --gn-args="
+      angle_build_tests=false
+      angle_enable_libdrm=false
+      angle_use_wayland=false
       dart_embed_icu_data=false
-      host_libc=\"musl\"
-      target_libc=\"musl\"
+      host_libc=\"gnu\"
+      target_libc=\"gnu\"
+      treat_warnings_as_errors=false
       use_ccache=false
       use_custom_libcxx=false
       use_default_linux_sysroot=false
@@ -320,6 +322,7 @@ mkdir -p %buildroot%_bindir
 ln -s ../lib/%name/bin/flutter %buildroot%_bindir/%name
 
 install -Dm644 %_builddir/%name-%version/bin/cache/flutter.version.json -t %buildroot%_libexecdir/%name/bin/cache/
+ln -s ../../../dart %buildroot%_libexecdir/%name/bin/cache/dart-sdk
 
 install -Dm755 %_builddir/%name-%version/bin/cache/flutter_tools.snapshot %buildroot%_libexecdir/%name/bin/cache/flutter_tools.snapshot
 
@@ -371,6 +374,7 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 %files common
 %_libexecdir/%name/bin/cache/artifacts/engine/common
 %_libexecdir/%name/bin/cache/artifacts/material_fonts
+%_libexecdir/%name/bin/cache/dart-sdk
 %_libexecdir/%name/bin/cache/pkg
 %_libexecdir/%name/bin/internal
 %_libexecdir/%name/packages
@@ -404,6 +408,13 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 %_libexecdir/%name/examples
 
 %changelog
+* Tue Nov 17 2026 David Sultaniiazov <x1z53@altlinux.org> 3.44.9-alt1
+- 3.44.9 (via rebase).
+- Update submodules and Dart vendor scripts.
+- Adapt patches.
+- Remove musl depending.
+- Add internal symlink to system Dart.
+
 * Fri Aug 28 2026 David Sultaniiazov <x1z53@altlinux.org> 3.41.9-alt1
 - 3.41.9.
 - Rebuild with Git history.

@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dart-lang
-Version: 3.11.6
+Version: 3.12.2
 Release: alt1
 
 Summary: Dart language
@@ -16,7 +16,7 @@ Source1: submodules-%version.tar.zst
 Source2: dart-wrapper.sh
 
 Patch0: build-config.patch
-Patch1: gcc13.patch
+Patch1: bootstrap-package-config.patch
 Patch2: no-werror.patch
 Patch3: unbundle.patch
 Patch4: unbundle-icu.patch
@@ -25,11 +25,10 @@ Patch6: zlib-not-found.patch
 Patch7: ninja-multithreading.patch
 Patch8: unbundle-double-conversion.patch
 Patch9: use-system-binaryen.patch
-Patch10: binaryen-stripped-path.patch
-Patch11: drop-fortify-source.patch
-Patch12: drop-clang-flags.patch
-Patch13: skip-sanitizer-copies-on-gcc.patch
-Patch14: guard-libprotozero.patch
+Patch10: drop-fortify-source.patch
+Patch11: profiler-shutdown.patch
+Patch12: skip-sanitizer-copies-on-gcc.patch
+Patch13: guard-libprotozero.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gn
@@ -100,6 +99,16 @@ EOF
 python3 tools/generate_package_config.py
 python3 tools/generate_sdk_version_file.py
 
+_target_language=$(echo '%version' | cut -d. -f1,2)
+_bootstrap_language=$(%_libexecdir/dart/bin/dart --version 2>&1 \
+  | sed -n 's/^Dart SDK version: \([0-9][0-9]*\.[0-9][0-9]*\).*/\1/p')
+test -n "$_bootstrap_language"
+
+cp .dart_tool/package_config.json .dart_tool/package_config_bootstrap.json
+sed -i \
+  "s/\"languageVersion\": \"$_target_language\"/\"languageVersion\": \"$_bootstrap_language\"/g" \
+  .dart_tool/package_config_bootstrap.json
+
 # google analytics, doubleclick
 echo '' > tools/bots/dartdoc_footer.html
 rm third_party/devtools/web/devtools_analytics.js
@@ -111,8 +120,8 @@ rg --no-ignore -l 'google-analytics\.com' . \
 rg --no-ignore -l 'UA-[0-9]+-[0-9]+' . \
   | xargs -t -n 1 -P ${JOBS:-2} sed -i -E 's|UA-[0-9]+-[0-9]+|UA-2137-0|g'
 
-# Strip bundled sources for libraries we replace with system packages,
-# leaving only build files (replace_gn_files.py needs BUILD.gn to exist).
+# Replace bundled sources with system libraries, leaving build files needed by
+# replace_gn_files.py.
 for _path in third_party/icu third_party/zlib third_party/double-conversion/src; do
   if [ -d "$_path" ]; then
     find "$_path" -type f \
@@ -125,7 +134,8 @@ for _path in third_party/icu third_party/zlib third_party/double-conversion/src;
   [ -f "$_path/BUILD.gn" ] || : > "$_path/BUILD.gn"
 done
 
-python3 build/linux/unbundle/replace_gn_files.py --system-libraries icu zlib double-conversion binaryen
+python3 build/linux/unbundle/replace_gn_files.py \
+  --system-libraries icu zlib double-conversion binaryen
 
 %build
 python3 ./tools/build.py \
@@ -136,6 +146,20 @@ python3 ./tools/build.py \
   --gn-args='dart_embed_icu_data=false dart_snapshot_kind="app-jit" dart_sysroot="" dart_support_perfetto=false' \
   -j%__nprocs \
   create_sdk runtime
+
+%check
+_dart="$PWD/out/%dart_out/dart-sdk/bin/dart"
+"$_dart" --version
+
+_check_dir=$(mktemp -d)
+trap 'rm -rf "$_check_dir"' EXIT
+cat > "$_check_dir/hello.dart" <<'EOF'
+void main() {
+  print('Hello from Dart!');
+}
+EOF
+
+test "$("$_dart" "$_check_dir/hello.dart")" = 'Hello from Dart!'
 
 %install
 mkdir -p %buildroot%_bindir %buildroot%_libexecdir %buildroot%_includedir
@@ -182,6 +206,12 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 %_libexecdir/dart/lib
 
 %changelog
+* Sun Nov 15 2026 David Sultaniiazov <x1z53@altlinux.org> 3.12.2-alt1
+- 3.12.2.
+- Add Dart SDK smoke tests.
+- Drop obsolete patches and merge Binaryen fixes.
+- Update submodule updating script.
+
 * Wed Aug 19 2026 David Sultaniiazov <x1z53@altlinux.org> 3.11.6-alt1
 - 3.11.6.
 - Update spec:
