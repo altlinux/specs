@@ -1,5 +1,5 @@
 Name: installer-feature-swapfile
-Version: 0.2.3
+Version: 0.2.4
 Release: alt1
 
 Summary: Create swap-file
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Nov 18 2026 Sergey V Turchin <zerg@altlinux.org> 0.2.4-alt1
+- increase max swap for VM
+
 * Thu Mar 27 2025 Sergey V Turchin <zerg@altlinux.org> 0.2.3-alt1
 - increase maximum swap size
 
