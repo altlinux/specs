@@ -1,5 +1,5 @@
 Name: ngscopeclient
-Version: 0.2.2
+Version: 0.3
 Release: alt1
 
 Summary: Advanced T&M remote control and analysis suite
@@ -59,6 +59,9 @@ Streamline hardware test
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Wed Nov 18 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3-alt1
+- 0.3 released
+
 * Mon Sep 14 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.2.2-alt1
 - 0.2.2 released
 
