@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-services
-Version: 1.0.41
+Version: 1.0.50
 Release: alt1
 
 Summary: Manage DBus service on DDE
@@ -20,7 +20,7 @@ Source: %repo-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: cmake rpm-build-python3 dqt6-base-devel dqt6-tools-devel dtk6-common-devel libdtk6gui-devel libX11-devel libwayland-client-devel libwayland-server-devel libwayland-egl-devel wayland-protocols wlr-protocols treeland-protocols libxcbutil-keysyms-devel libXtst-devel libdqt6-test vulkan-headers
+BuildRequires: cmake rpm-build-python3 dqt6-base-devel dqt6-tools-devel dtk6-common-devel libdtk6gui-devel libX11-devel libwayland-client-devel libwayland-server-devel libwayland-egl-devel wayland-protocols wlr-protocols treeland-protocols libxcbutil-keysyms-devel libXtst-devel libdqt6-test vulkan-headers libXScrnSaver-devel libudev-devel libpolkitqt6-dqt6-devel
 %if_with ipwatchd
 BuildRequires: libsystemd-devel glib2-devel libpcap-devel libnet2-devel
 %endif
@@ -37,6 +37,14 @@ BuildRequires: gcc-c++
 %prep
 %setup -n %repo-%version
 %autopatch -p1
+# find special polkitqt6
+sed \
+  -e '/POLKIT_QT_LIBRARIES/i \
+  %_dqt6_libdir/libpolkit-qt6-agent-1.so.1 \
+  %_dqt6_libdir/libpolkit-qt6-core-1.so.1 \
+  %_dqt6_libdir/libpolkit-qt6-gui-1.so.1' \
+  -e '/POLKIT_QT_LIBRARIES/d' \
+  -i src/plugin-qt/power/system/CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -64,8 +72,8 @@ export AR="llvm-ar"
 %_bindir/extract_shortcuts_i18n
 %dir %_libexecdir/dde-services/
 %dir %_libexecdir/dde-services/keybinding/
-%_libexecdir/dde-services/keybinding/camera-switch
 %_libexecdir/dde-services/keybinding/toggle-grand-search
+%_datadir/polkit-1/actions/org.deepin.dde.power.policy
 %dir %_libdir/deepin-service-manager/
 %_libdir/deepin-service-manager/libplugin-qt-thememanager.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpaperslideshow.so
@@ -74,9 +82,11 @@ export AR="llvm-ar"
 %_libdir/deepin-service-manager/libplugin-power-session.so
 %_libdir/deepin-service-manager/libplugin-qt-wallpapercache.so
 %_libdir/deepin-service-manager/libplugin-ambient-brightness.so
+%_libdir/deepin-service-manager/libplugin-power-system.so
 %dir %_datadir/deepin-service-manager/
 %dir %_datadir/deepin-service-manager/system/
 %_datadir/deepin-service-manager/system/plugin-qt-wallpapercache.json
+%_datadir/deepin-service-manager/system/plugin-power-system.json
 
 %if_with ipwatchd
 %_bindir/ipwatchd
@@ -101,9 +111,11 @@ export AR="llvm-ar"
 %_datadir/dbus-1/system-services/org.deepin.dde.ImageBlur1.service
 %_datadir/dbus-1/system-services/org.deepin.dde.ImageEffect1.service
 %_datadir/dbus-1/system-services/org.deepin.dde.WallpaperCache.service
+%_datadir/dbus-1/system-services/org.deepin.dde.Power1.service
 %_datadir/dbus-1/system.d/org.deepin.dde.ImageBlur1.conf
 %_datadir/dbus-1/system.d/org.deepin.dde.ImageEffect1.conf
 %_datadir/dbus-1/system.d/org.deepin.dde.WallpaperCache.conf
+%_datadir/dbus-1/system.d/org.deepin.dde.Power1.conf
 %dir %_unitdir/deepin-service-plugin@org.deepin.dde.WallpaperCache.service.d/
 %_unitdir/deepin-service-plugin@org.deepin.dde.WallpaperCache.service.d/override.conf
 %dir %_userunitdir/dde-session-pre.target.wants/
@@ -122,6 +134,7 @@ export AR="llvm-ar"
 %dir %_datadir/dsg/configs/org.deepin.dde.daemon/
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.XSettings.json
 %_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.dde.daemon.ambient-brightness.json
+%_datadir/dsg/configs/org.deepin.dde.daemon/org.deepin.dde.daemon.power.json
 %dir %_datadir/dsg/configs/org.deepin.dde.keybinding/
 %_datadir/dsg/configs/org.deepin.dde.keybinding/org.deepin.shortcut.json
 %_datadir/dsg/configs/org.deepin.dde.keybinding/org.deepin.dde.keybinding*/
@@ -129,6 +142,9 @@ export AR="llvm-ar"
 %_libdir/cmake/DdeShortcutI18n/DdeShortcutI18nConfig.cmake
 
 %changelog
+* Wed Nov 18 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.50-alt1
+- New version 1.0.50.
+
 * Tue Aug 25 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.41-alt1
 - New version 1.0.41.
 
