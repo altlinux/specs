@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: A robust email syntax and deliverability validation library for Python
@@ -85,6 +85,9 @@ use pyIsEmail.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Thu Sep 04 2025 Alexandr Shashkin <dutyrok@altlinux.org> 2.3.0-alt1
 - Updated to 2.3.0.
 

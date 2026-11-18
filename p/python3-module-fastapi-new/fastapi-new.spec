@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.9
+Version: 0.0.10
 Release: alt1
 
 Summary: Create a new FastAPI project in one command
@@ -61,6 +61,9 @@ export UV_OFFLINE=true
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.10-alt1
+- Updated to 0.0.10.
+
 * Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.9-alt1
 - Updated to 0.0.9.
 

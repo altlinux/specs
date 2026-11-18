@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.0.33
+Version: 0.0.34
 Release: alt1
 
 Summary: Run and manage FastAPI apps from the command line with FastAPI CLI
@@ -64,6 +64,9 @@ your FastAPI app, manage your FastAPI project, and more.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 18 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.34-alt1
+- Updated to 0.0.34.
+
 * Thu Nov 12 2026 Alexandr Shashkin <dutyrok@altlinux.org> 0.0.33-alt1
 - Updated to 0.0.33.
 
