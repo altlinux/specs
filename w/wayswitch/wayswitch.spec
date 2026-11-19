@@ -1,5 +1,5 @@
 Name: wayswitch
-Version: 1.0.0
+Version: 1.2.2
 Release: alt1
 
 Summary: Automatic Russian and English keyboard layout correction for Wayland
@@ -10,8 +10,7 @@ URL: https://github.com/Wetoshkin/WaySwitch
 # Source-url: https://github.com/Wetoshkin/WaySwitch/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: README.ALT
-Patch0: %name-input-privacy.patch
-Patch1: %name-alt-package-actions.patch
+Patch0: %name-alt-package-actions.patch
 
 BuildArch: noarch
 AutoProv: nopython3
@@ -36,7 +35,6 @@ See README.ALT for device permissions, privacy and desktop integration.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 cp %SOURCE1 .
 
 %build
@@ -46,11 +44,14 @@ cp %SOURCE1 .
 # Use the same desktop/device integration as the upstream Arch/RPM recipes.
 bash tools/stage.sh %buildroot %python3_sitelibdir
 %pyproject_install
+touch %buildroot%python3_sitelibdir/%name/.packaged
 rm -r %buildroot%_datadir/licenses %buildroot%_docdir/%name
 
 %check
 python3 -c 'import evdev, gi'
-PYTHONPATH=. python3 -m pytest -q
+# The source tarball has no VCS metadata, and ALT RPM's Lua API lacks vercmp.
+PYTHONPATH=. python3 -m pytest -q --ignore=tests/test_dev_workflow.py \
+    -k 'not test_rpm_repository_verification_uses_real_evr_order'
 
 %files
 %doc README.md README.en.md README.ALT LICENSE
@@ -61,18 +62,27 @@ PYTHONPATH=. python3 -m pytest -q
 %_udevrulesdir/60-wayswitch.rules
 %_modulesloaddir/wayswitch.conf
 %_userunitdir/wayswitch.service
+%dir %_datadir/wayswitch
+%_datadir/wayswitch/migrate.py
 %dir %_datadir/gnome-shell
 %dir %_datadir/gnome-shell/extensions
-%_datadir/gnome-shell/extensions/wayswitch@siberia.ru/
+%_datadir/gnome-shell/extensions/wayswitch@wetoshkin.github.io/
 %dir %_datadir/plasma
 %dir %_datadir/plasma/plasmoids
-%_datadir/plasma/plasmoids/ru.siberia.wayswitch/
+%_datadir/plasma/plasmoids/io.github.Wetoshkin.wayswitch/
 %config(noreplace) %_sysconfdir/xdg/autostart/wayswitch-session.desktop
-%_desktopdir/ru.siberia.WaySwitch.Settings.desktop
-%_iconsdir/hicolor/scalable/apps/ru.siberia.WaySwitch.svg
-%_iconsdir/hicolor/symbolic/apps/ru.siberia.WaySwitch*symbolic.svg
+%_desktopdir/io.github.Wetoshkin.WaySwitch.Settings.desktop
+%_iconsdir/hicolor/scalable/apps/io.github.Wetoshkin.WaySwitch.svg
+%_iconsdir/hicolor/symbolic/apps/io.github.Wetoshkin.WaySwitch*symbolic.svg
+%_datadir/locale/ru/LC_MESSAGES/wayswitch.mo
 
 %changelog
+* Thu Nov 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- new version 1.2.2
+
+* Thu Nov 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt2
+- use the package manager for updates and disable GitHub release checks.
+
 * Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Linux.
 
