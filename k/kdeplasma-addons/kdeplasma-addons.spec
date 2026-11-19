@@ -16,7 +16,7 @@
 
 Name: %rname
 Version: 6.7.6
-Release: alt2
+Release: alt3
 #Epoch: 1
 %K6init
 
@@ -232,6 +232,9 @@ touch touch-%_arch
 
 
 %changelog
+* Thu Nov 19 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt3
+- update dict word filter
+
 * Thu Nov 19 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt2
 - update dict word filter
 
