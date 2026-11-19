@@ -1,54 +1,49 @@
-%global import_path github.com/element-hq/lk-jwt-service
 %global _unpackaged_files_terminate_build 1
 
 Name:           lk-jwt-service
-Version: 0.6.0
+Version:        0.10.0
 Release:        alt1
 Summary:        Minimal service to issue LiveKit JWTs for MatrixRTC
 License:        AGPL-3.0
 Group:          System/Servers
 Url:            https://github.com/element-hq/lk-jwt-service
+ExcludeArch:    %ix86
 Vcs:            https://github.com/element-hq/lk-jwt-service.git
+
 Source:         %name-%version.tar
-Source1:        %name.service
-Source2:        %name.env
-Source3:        %name.sysusers
+Source1:        %name-development-%version.tar
+Source2:        %name.service
+Source3:        %name.env
+Source4:        %name.sysusers
 Patch:          %name-%version-%release.patch
 
-BuildRequires(pre): rpm-macros-golang
-BuildRequires: rpm-build-golang golang >= 1.25.3
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
+BuildRequires: cmake gcc-c++
+
+Requires: ca-certificates
 
 %description
 This service is part of the MatrixRTC stack and is primarily used
 when the LiveKit RTC backend (MSC4195) is in use.
 
 %prep
-%setup
+%setup -a1
 %patch -p1
+%rust_prep
 
 %build
-export BUILDDIR="$PWD/.gopath"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-
-%golang_prepare
-pushd $BUILDDIR/src/%import_path
-%gobuild -o %name
-popd
+%rust_build
 
 %install
-export BUILDDIR="$PWD/.gopath"
-pushd $BUILDDIR/src/%import_path
-install -p -Dm 755 %name %buildroot%_bindir/%name
-popd
-
-install -p -Dm 644 %SOURCE1 %buildroot%_unitdir/%name.service
-install -p -Dm 644 %SOURCE2 %buildroot%_sysconfdir/%name/%name.env
-install -p -Dm 644 %SOURCE3 %buildroot%_sysusersdir/%name.conf
+%rust_install
+install -p -Dm 644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -p -Dm 644 %SOURCE3 %buildroot%_sysconfdir/%name/%name.env
+install -p -Dm 644 %SOURCE4 %buildroot%_sysusersdir/%name.conf
 mkdir -p %buildroot%_localstatedir/%name
 
 %pre
-%sysusers_create_package %name %SOURCE3
+%sysusers_create_package %name %SOURCE4
 
 %post
 %post_systemd %name.service
@@ -66,6 +61,10 @@ mkdir -p %buildroot%_localstatedir/%name
 %dir %attr(0750,_%name,_%name) %_localstatedir/%name
 
 %changelog
+* Thu Nov 19 2026 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
+- updated from 0.6.0 to 0.10.0
+- upstream rewrote the service in Rust; switch to rpm-build-rust
+
 * Wed Aug 19 2026 Alexey Shabalin <shaba@altlinux.org> 0.6.0-alt1
 - updated from 0.4.4 to 0.6.0
 
