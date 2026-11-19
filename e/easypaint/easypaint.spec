@@ -1,7 +1,7 @@
 Name: easypaint
 Epoch: 1
 Version: 0.1.1
-Release: alt5
+Release: alt6
 Summary: Easy graphic editing program
 License: MIT
 Group: Graphics
@@ -12,7 +12,7 @@ Source1: %name.desktop
 Patch: easypaint-0.1.1-fix-link-to-tracker.patch
 Patch1: 0001-Added-system-translation-preload-for-qt5.patch
 Patch2: easypaint-0.1.1-fix-build-with-qt-5.15.patch
-Patch3: Port-to-QT6.patch
+Patch3: easypaint-0.1.1-Port-to-QT6.patch
 
 BuildRequires: clang
 BuildRequires: cmake
@@ -56,6 +56,9 @@ done
 %_miconsdir/*
 
 %changelog
+* Thu Nov 19 2026 Anton Midyukov <antohami@altlinux.org> 1:0.1.1-alt6
+- Fixed spray instrument with Qt 6 (Closes: 61077).
+
 * Wed Dec 24 2025 Arseniy Romenskiy <romenskiy@altlinux.org> 1:0.1.1-alt5
 - Switching to qt6.
 
