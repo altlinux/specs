@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
+Version: 1.3.4
 Release: alt1
 Summary: Programmatic API to create and use a devpi server process
 License: MIT
@@ -14,17 +14,9 @@ Url: https://pypi.org/project/devpi-process
 Vcs: https://github.com/tox-dev/devpi-process
 BuildArch: noarch
 Source: %name-%version.tar
-Source1: %pyproject_deps_config_name
 Patch: %name-%version-alt.patch
-%pyproject_runtimedeps_metadata
-# manually manage runtime dependencies with metadata
-AutoReq: yes, nopython3
-BuildRequires(pre): rpm-build-pyproject
-%pyproject_builddeps_build
-%if_with check
-%pyproject_builddeps_metadata
-%pyproject_builddeps_check
-%endif
+%pyproject_configure_pypi_package
+BuildRequires(pre): rpm-build-pyproject >= 0.3.0
 
 %description
 Allows you to create devpi server process with indexes, and upload artifacts to
@@ -34,11 +26,7 @@ that programmatically.
 %setup
 %autopatch -p1
 %pyproject_scm_init
-%pyproject_deps_resync_build
-%pyproject_deps_resync_metadata
-%if_with check
-%pyproject_deps_resync_check_depgroup test
-%endif
+%pyproject_setup_deps
 
 %build
 %pyproject_build
@@ -54,6 +42,9 @@ that programmatically.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 18 2026 Stanislav Levin <slev@altlinux.org> 1.3.4-alt1
+- 1.3.2 -> 1.3.4
+
 * Tue Oct 27 2026 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
 - 1.3.1 -> 1.3.2
 
