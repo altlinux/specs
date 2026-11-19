@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: chess-tui
-Version: 2.7.1
+Version: 2.8.1
 Release: alt1
 
 Summary: A rusty chess game in your terminal
@@ -47,5 +47,8 @@ Features:
 %_bindir/%name
 
 %changelog
+* Thu Nov 19 2026 Aleksandr A. Voyt <sobue@altlinux.org> 2.8.1-alt1
+- 2.7.1 -> 2.8.1
+
 * Wed Jul 29 2026 Aleksandr A. Voyt <sobue@altlinux.org> 2.7.1-alt1
 - Initial build.
