@@ -8,7 +8,7 @@
 %endif
 
 Name: glances
-Version: 4.5.8
+Version: 4.5.9
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -131,6 +131,9 @@ install -D -p -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/glances.env
 %endif
 
 %changelog
+* Thu Nov 19 2026 Egor Ignatov <egori@altlinux.org> 4.5.9-alt1
+- New version 4.5.9.
+
 * Mon Nov 02 2026 Egor Ignatov <egori@altlinux.org> 4.5.8-alt1
 - New version 4.5.8.
 
