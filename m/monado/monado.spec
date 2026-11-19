@@ -1,18 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 %define soname 25 
 
 Name:    monado
 Version: 25.1.0
-Release: alt5
+Release: alt6
 
 Summary: Monado - XR Runtime (XRT)
 License: BSL-1.0
 Group:   Games/Other
-URL:     https://monado.dev/
-VCS:     https://gitlab.freedesktop.org/monado/monado
+URL:     https://monado.dev
+VCS:     https://gitlab.freedesktop.org/monado/monado.git
 
 Source:  %name-%version.tar
 Patch:   monado-25.1.0-steamvr-libdir.patch
 Patch1:  monado-25.1.0-openxr-libdir.patch
+Patch2:  monado-25.1.0-opencv5-components.patch
+Patch3:  monado-25.1.0-opencv5-mat-init.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -52,6 +55,8 @@ Summary: %name library
 %setup
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 %cmake \
@@ -87,6 +92,10 @@ Summary: %name library
 %_libdir/libmonado.so.%{soname}.*
 
 %changelog
+* Thu Nov 19 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt6
+- fix build with OpenCV 5: use renamed calib/features modules
+- fix build with OpenCV 5: replace comma-separated matrix initializer
+
 * Tue Sep 01 2026 Sergey Palcheh <minergenon@altlinux.org> 25.1.0-alt5
 - enabled hand tracking driver (XRT_BUILD_DRIVER_HANDTRACKING)
 
