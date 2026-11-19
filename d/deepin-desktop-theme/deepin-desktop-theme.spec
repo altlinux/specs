@@ -3,17 +3,17 @@
 %def_disable clang
 
 Name: deepin-desktop-theme
-Version: 1.1.31
+Version: 1.1.32
 Release: alt1
 
 Summary: Deepin desktop themes
 
 License: CC-BY-4.0 and CC0-1.0 and GPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/deepin-desktop-theme
+URL: https://github.com/linuxdeepin/deepin-desktop-theme
 VCS: https://github.com/linuxdeepin/deepin-desktop-theme
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-desktop-theme/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -130,6 +130,9 @@ find %buildroot%_datadir/dsg/icons/{bloom-classic,bloom-classic-dark} -name "*sy
 %dir %_datadir/deepin-xdgicon-convert/translations/
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.32-alt1
+- New version 1.1.32.
+
 * Thu Jun 25 2026 Leontiy Volodin <lvol@altlinux.org> 1.1.31-alt1
 - New version 1.1.31.
 
