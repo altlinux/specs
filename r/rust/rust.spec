@@ -4,14 +4,23 @@
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%define llvm_version 22.1
+%define llvm_version 23.1
 %define r_ver 1.76.0
+
+# Order matters. When installing docs last target replaces previous target docs
+# removing compiler docs.
+# TODO: Make github issue.
+%ifarch %ix86
+%define supported_targets "%rust_host_triple"
+%else
+%define supported_targets "wasm32-unknown-unknown", "bpfeb-unknown-none", "bpfel-unknown-none", "%rust_host_triple"
+%endif
 
 # Since we don't plan to package separate patch versions,
 # it's better to use major.minor for versioned files.
 %define v_major 1
-%define v_minor 99
-%define v_patch 1
+%define v_minor 100
+%define v_patch 0
 %define v_majmin %v_major.%v_minor
 %define v_full %v_majmin.%v_patch
 
@@ -91,6 +100,10 @@ BuildRequires: ninja-build
 %endif
 %ifarch aarch64
 BuildRequires: patchelf
+%endif
+
+%ifarch x86_64
+BuildRequires: intel-sde
 %endif
 
 %if_without bootstrap
@@ -247,6 +260,7 @@ Requires: rustc
 %description %rust_host_triple-target
 %summary.
 
+%ifnarch %ix86
 %package wasm32-unknown-unknown-target
 Summary: Static libraries for wasm32-unknown-unknown target support
 Url: https://doc.rust-lang.org/rustc/platform-support/wasm32-unknown-unknown.html
@@ -264,7 +278,9 @@ used when compiling to the web or JavaScript environments as there is
 no standard for what functions can be imported on the web. This target
 can also be useful for creating minimal or bare-bones WebAssembly
 binaries.
+%endif
 
+%ifnarch %ix86
 %package bpfeb-unknown-none-target
 Summary: Static libraries for bpfeb-unknown-none target support
 Url: https://doc.rust-lang.org/nightly/rustc/platform-support/bpf-unknown-none.html
@@ -284,6 +300,7 @@ Requires: rustc
 
 %description bpfel-unknown-none-target
 Little endian target for the 64-bit BPF virtual machine.
+%endif
 
 %prep
 %setup -a1
@@ -342,16 +359,13 @@ test -r "$CLANG_RUNTIME_DIR/libclang_rt.profile.a"
 # Build configuration.
 # TODO: ADD PGO.
 cat > bootstrap.toml <<EOF
-change-id = 160100
+change-id = 162423
 include = [
         "bootstrap.toml.d/llvm-fork-build.toml"
     ]
 
 [build]
-# Order matters. When installing docs last target replaces previous target docs
-# removing compiler docs.
-# TODO: Make github issue.
-target = ["wasm32-unknown-unknown", "bpfeb-unknown-none", "bpfel-unknown-none", "%rust_host_triple"]
+target = [%supported_targets]
 cargo = "%cargo"
 rustc = "%rustc"
 python = "python3"
@@ -363,7 +377,7 @@ vendor = true
 extended = true
 # Not every target has builtins support.
 optimized-compiler-builtins = false
-tools = ["cargo", "rustdoc", "rust-analyzer", "clippy", "rustfmt", "src"]
+tools = ["cargo", "rustdoc", "rust-analyzer", "clippy", "rustfmt", "rust-src"]
 build-stage = 3
 test-stage = 3
 doc-stage = 3
@@ -617,16 +631,26 @@ rm -rf %rustdir
 %files %rust_host_triple-target
 %rust_rustlib/%rust_host_triple/
 
+%ifnarch %ix86
 %files wasm32-unknown-unknown-target
 %rust_rustlib/wasm32-unknown-unknown/
+%endif
 
+%ifnarch %ix86
 %files bpfeb-unknown-none-target
 %rust_rustlib/bpfeb-unknown-none/
 
 %files bpfel-unknown-none-target
 %rust_rustlib/bpfel-unknown-none/
+%endif
 
 %changelog
+* Sat Nov 14 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.100.0-alt1
+- New version (1.100.0).
+- Raise the llvm version to 23.1:
+  + Drop wasm32-unknown-unknown target on i586 (Not supported in llvm-23.1).
+  + Drop bpf*-unknown-none targets on i586 (Not supported in llvm-23.1).
+
 * Fri Oct 16 2026 Sergey Zhidkih <rx1513@altlinux.org> 1:1.99.1-alt1
 - New version (1.99.1).
 - Add bpf*-unknown-none targets support (Closes: 60762).
