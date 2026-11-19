@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: videomass
-Release: alt1
+Release: alt2
 Version: 6.1.22
 
 Summary: Videomass is a free, open source and cross-platform GUI for FFmpeg
@@ -59,6 +59,9 @@ sed -i 's,\(Categories=.*\),\1AudioVideoEditing;,' %buildroot%_desktopdir/%name.
 %python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 
 %changelog
+* Thu Nov 19 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.1.22-alt2
+- update Russian translation
+
 * Thu Nov 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.1.22-alt1
 - new version
 
