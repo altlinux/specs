@@ -1,7 +1,7 @@
 %define pypi_name tyro
 
 Name: python3-module-%pypi_name
-Version: 1.0.16
+Version: 1.0.17
 Release: alt1
 
 Summary: CLI interfaces and config objects from Python types
@@ -60,5 +60,8 @@ attrs, pydantic and msgspec structures.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.17-alt1
+- new version 1.0.17
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.16-alt1
 - initial build for Sisyphus
