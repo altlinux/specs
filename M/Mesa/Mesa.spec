@@ -87,11 +87,11 @@
 %vulkan_drivers_add swrast
 
 %define ver_major 26.3
-%define ver_minor 0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -105,12 +105,13 @@ Patch: %name-%version.patch
 
 BuildPreReq: /proc
 BuildRequires(pre): meson
-BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
+BuildRequires: gcc-c++ libgomp16-devel
+BuildRequires: indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel libdisplay-info-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel xorg-proto-devel libxshmfence-devel libxcbutil-keysyms-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
-BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel
-BuildRequires: libglvnd-devel rpm-build-python3 glslang python3-module-docutils python3-module-ply python3-module-yaml
+BuildRequires: libwayland-egl-devel python3-module-mako-tests wayland-protocols libsensors-devel libzstd-devel libglvnd-devel glslang
+BuildRequires: rpm-build-python3 python3-module-docutils python3-module-ply python3-module-yaml python3-module-lxml python3-module-rnc2rng
 BuildRequires: llvm%llvmver-devel clang%llvmver-devel libomp%llvmver-devel
 %ifarch %gallium_opencl_arches %vulkan_nouveau_arches
 BuildRequires: libclc-devel libLLVMSPIRVLib-devel libspirv-tools-devel
@@ -440,13 +441,15 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %endif
 %endif
 
-%ifarch %intel_arches
+%ifarch %intel_arches %vulkan_intel_arches
 %files -n xorg-dri-intel
+%ifarch %intel_arches
 %_libdir/X11/modules/dri/i9?5_dri.so
 %_libdir/X11/modules/dri/crocus_dri.so
 %_libdir/X11/modules/dri/iris_dri.so
 %_datadir/drirc.d/00-crocus-defaults.conf
 %_datadir/drirc.d/00-iris-defaults.conf
+%endif
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
 %_libdir/libvulkan_intel_hasvk.so
@@ -457,10 +460,12 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %endif
 %endif
 
-%ifarch %nouveau_arches
+%ifarch %nouveau_arches %vulkan_nouveau_arches
 %files -n xorg-dri-nouveau
+%ifarch %nouveau_arches
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
+%endif
 %ifarch %vulkan_nouveau_arches
 %_libdir/libvulkan_nouveau.so
 %_datadir/drirc.d/00-nvk-defaults.conf
@@ -468,14 +473,16 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %endif
 %endif
 
-%ifarch %radeon_arches
+%ifarch %radeon_arches %vulkan_radeon_arches
 %files -n xorg-dri-radeon
+%ifarch %radeon_arches
 %_libdir/X11/modules/dri/radeon*_dri.so
 %_libdir/X11/modules/dri/r?00_dri.so
 %_libdir/dri/r*_drv_video.so
 %_datadir/drirc.d/00-r?00-defaults.conf
 %_datadir/drirc.d/00-radeonsi-defaults.conf
 %_datadir/drirc.d/01-radv-performance.conf
+%endif
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
 %_datadir/vulkan/icd.d/radeon_icd*.json
@@ -524,6 +531,9 @@ ln -s libGLX_mesa.so.0.0.0 %buildroot%_libdir/libGLX_indirect.so.0
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Nov 19 2026 Valery Inozemtsev <shrek@altlinux.ru> 4:26.3.1-alt1
+- 26.3.1
+
 * Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4:26.3.0-alt2
 - fixed r600 NIR deserialisation crash
 
