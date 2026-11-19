@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.24.1
+Version: 0.26.0
 Release: alt1
 
 Summary: The Python client for Prometheus
@@ -58,6 +58,9 @@ The Python client for Prometheus.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Nov 19 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.26.0-alt1
+- 0.24.1 -> 0.26.0
+
 * Thu Feb 12 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.24.1-alt1
 - New version.
 - rpm-build-pyproject is used for dependency management.
