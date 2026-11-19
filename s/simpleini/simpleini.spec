@@ -1,5 +1,5 @@
 Name: simpleini
-Version: 4.27
+Version: 4.28
 Release: alt1
 
 Summary: Cross-platform C++ library to read and write INI-style configuration files
@@ -7,6 +7,7 @@ License: MIT
 Group: System/Libraries
 
 Url: https://github.com/brofield/%name
+Vcs: https://github.com/brofield/%name
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://github.com/brofield/%name/archive/v%version/%name-%version.tar.gz
@@ -53,6 +54,9 @@ MIT licence.
 %_cmakedir/SimpleIni
 
 %changelog
+* Thu Nov 19 2026 Nazarov Denis <nenderus@altlinux.org> 4.28-alt1
+- New version 4.28.
+
 * Wed Sep 02 2026 Nazarov Denis <nenderus@altlinux.org> 4.27-alt1
 - New version 4.27.
 
