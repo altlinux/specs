@@ -297,7 +297,7 @@
 %define featurever 27
 %define interimver 0
 %define updatever 1
-%define patchver 2
+%define patchver 3
 %define buildver 1
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -363,7 +363,7 @@
 
 Name: java-27-openjdk
 Version: %featurever.%interimver.%updatever.%patchver.%buildver
-Release: alt3
+Release: alt1
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -1977,6 +1977,12 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Thu Nov 19 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.3.1-alt1
+- New version (fixes: CVE-2026-114938, CVE-2026-114939, CVE-2026-114940,
+  CVE-2026-114941, CVE-2026-114942, CVE-2026-114943,
+  CVE-2026-114944, CVE-2026-114945, CVE-2026-114946,
+  CVE-2026-114947).
+
 * Fri Oct 30 2026 Artem Semenov <savoptik@altlinux.org> 27.0.1.2.1-alt3
 - Added req to fonts-type1-xorg (Closes: 61195)
 
