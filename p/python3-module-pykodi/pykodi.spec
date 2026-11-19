@@ -1,5 +1,5 @@
 Name: python3-module-pykodi
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Python interface for Kodi
@@ -18,6 +18,7 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-pyproject
 %pyproject_builddeps_build
 %pyproject_builddeps_metadata
+%pyproject_builddeps_check
 
 %description
 %summary
@@ -26,6 +27,7 @@ BuildRequires(pre): rpm-build-pyproject
 %setup
 %pyproject_deps_resync_build
 %pyproject_deps_resync_metadata
+%pyproject_deps_resync_check_pipreqfile requirements_test.txt
 
 %build
 %pyproject_build
@@ -33,11 +35,17 @@ BuildRequires(pre): rpm-build-pyproject
 %install
 %pyproject_install
 
+%check
+%pyproject_run_pytest
+
 %files
 %python3_sitelibdir/pykodi
 %python3_sitelibdir/pykodi-%version.dist-info
 
 %changelog
+* Thu Nov 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.4.0-alt1
+- 0.4.0 released
+
 * Mon Nov 09 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.3.0-alt1
 - 0.3.0 released
 
