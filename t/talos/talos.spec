@@ -16,7 +16,7 @@
 
 Name: talos
 Version: 1.13.12
-Release: alt1
+Release: alt2
 
 Summary: A modern OS for Kubernetes
 License: MPL-2.0
@@ -214,6 +214,11 @@ install -Dpm 0644 talosctl.fish %buildroot%_datadir/fish/vendor_completions.d/ta
 %go_path/src/%import_path
 
 %changelog
+* Wed Nov 18 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.12-alt2
+- Display node OS and version in dashboard header instead of client data.
+- Backport from upstream:
+  + fix: provide non-sensitive KubeletStatus resource (fada0d9)
+
 * Thu Oct 29 2026 Maxim Slipenko <maks1ms@altlinux.org> 1.13.12-alt1
 - New version 1.13.2.
 - Display Talos version on the dashboard.
