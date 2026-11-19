@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.2
+Version: 5.1.3
 Release: alt1
 Summary: Diagramming widget library for GTK and Cairo
 License: Apache-2.0
@@ -61,11 +61,14 @@ creating diagram-based UI components.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 19 2026 Aleksandr A. Voyt <sobue@altlinux.org> 5.1.3-alt1
+- 5.1.2 -> 5.1.3
+
 * Fri Jun 26 2026 Aleksandr A. Voyt <sobue@altlinux.org> 5.1.2-alt1
 - 5.1.1 -> 5.1.2
 
 * Thu Nov 06 2025 Aleksandr A. Voyt <sobue@altlinux.org> 5.1.1-alt1
 - 5.0.3 -> 5.1.1
 
-* Wed Apr 16 2024 Aleksandr A. Voyt <sobue@altlinux.org> 5.0.3-alt1
+* Wed Apr 16 2025 Aleksandr A. Voyt <sobue@altlinux.org> 5.0.3-alt1
 - Initial build
