@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name glm
 %define pypi_name py%_name
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 2.8.3
+Version: 2.8.4
 Release: alt1
 
 Summary: OpenGL Mathematics (GLM) library for Python
@@ -37,8 +37,9 @@ BuildRequires: gcc-c++
 
 %prep
 %setup -n %{?_disable_snapshot:%pypi_name}%{?_enable_snapshot:%modname}-%version
-mkdir test
-cp %SOURCE1 test/
+
+%{?_disable_snapshot:[ ! -d test ] && mkdir test
+cp %SOURCE1 test/}
 
 %build
 %pyproject_build
@@ -58,6 +59,9 @@ py.test-3 test/PyGLM_test.py -v
 
 
 %changelog
+* Thu Nov 19 2026 Yuri N. Sedunov <aris@altlinux.org> 2.8.4-alt1
+- 2.8.4 (with glm-1.0.2)
+
 * Wed Nov 26 2025 Yuri N. Sedunov <aris@altlinux.org> 2.8.3-alt1
 - 2.8.3
 
