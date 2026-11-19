@@ -4,7 +4,7 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
@@ -172,6 +172,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 19 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.4-alt1
+- New version.
+
 * Sun Oct 18 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.3-alt1
 - New version.
 
