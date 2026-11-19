@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define flutter_channel stable
-%define dart_version 3.12.2
+%define dart_version 3.13.7
 %define llvm_version 22.1
 
 Name: flutter
-Version: 3.44.9
+Version: 3.47.9
 Release: alt1
 
 Summary: Flutter framework
@@ -17,18 +16,13 @@ VCS: https://flutter.dev
 
 # Original spec and patches — https://gitlab.alpinelinux.org/alpine/aports/-/tree/master/testing/flutter
 
-# From Alpine
-%define engine_version c29809135135e262a912cf583b2c90deb9ded610
-%define material_fonts_version 3012db47f3130e62f7cc0beabff968a33cbec8d8
-%define gradle_wrapper_version fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa
-
 Source0: %name-%version.tar.zst
 Source1: submodules-%version.tar.zst
 Source2: dart-vendor-%version.tar.zst
 Source3: flutter-wrapper.sh
-# https://storage.googleapis.com/flutter_infra_release/flutter/fonts/%material_fonts_version/fonts.zip
+# https://storage.googleapis.com/flutter_infra_release/flutter/fonts/3012db47f3130e62f7cc0beabff968a33cbec8d8/fonts.zip
 Source4: fonts.zip
-# https://storage.googleapis.com/flutter_infra_release/gradle-wrapper/%gradle_wrapper_version/gradle-wrapper.tgz
+# https://storage.googleapis.com/flutter_infra_release/gradle-wrapper/fd5c1f2c013565a3bea56ada6df9d2b8e96d56aa/gradle-wrapper.tgz
 Source5: gradle-wrapper.tgz
 
 Patch1: content-unaware-hash.patch
@@ -37,66 +31,56 @@ Patch3: git-revision.patch
 Patch4: no-cache.patch
 Patch5: no-vpython.patch
 Patch6: not-in-git.patch
-Patch7: opt-in-analytics.patch
-Patch8: pmos-if-touch-is-a-mouse-then-mouse-is-touch.patch
-Patch9: shared-libcxx.patch
-Patch10: system-dart.patch
-Patch11: system-icu.patch
-Patch12: target-musl.patch
-Patch13: unbundle-engine.patch
-Patch14: unbundle-icu.patch
-Patch15: unbundle.patch
-Patch16: version.patch
+Patch7: pmos-if-touch-is-a-mouse-then-mouse-is-touch.patch
+Patch8: shared-libcxx.patch
+Patch9: system-dart.patch
+Patch10: system-icu.patch
+Patch11: target-musl.patch
+Patch12: unbundle-engine.patch
+Patch13: unbundle-icu.patch
+Patch14: unbundle.patch
+Patch15: version.patch
 
-Patch17: unbundle-icu.patch.dart
-Patch18: no-gn-check.patch
-Patch19: impeller-public-generated-deps.patch
-Patch20: no-werror.patch
-Patch21: fml-climits.patch
+Patch16: unbundle-icu.patch.dart
+Patch17: no-gn-check.patch
+Patch18: impeller-public-generated-deps.patch
+Patch19: no-werror.patch
+Patch20: fml-climits.patch
 
 BuildRequires(pre): rpm-macros-llvm-common
 BuildRequires: rpm-build-python3
 BuildRequires: dart-lang-sdk = %dart_version
-BuildRequires: gn
 BuildRequires: /proc
-
-# From Alpine
+BuildRequires: gn
+BuildRequires: git
+BuildRequires: unzip
+BuildRequires: ninja-build
 BuildRequires: clang%llvm_version
 BuildRequires: llvm%llvm_version
-BuildRequires: gcc-c++
-BuildRequires: cmake
-BuildRequires: samurai
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(freetype2)
-BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: libstdc++-devel
 BuildRequires: pkgconfig(SPIRV-Tools)
-BuildRequires: libicu-devel
-BuildRequires: libpci-devel
-BuildRequires: libjpeg-devel
-BuildRequires: libpng-devel
-BuildRequires: libsqlite3-devel
-BuildRequires: zlib-devel
-BuildRequires: ninja-build
-
-# Maybe not needed
-BuildRequires: bash
-BuildRequires: pkgconf
-BuildRequires: git
-BuildRequires: zstd
-
-# Failed when build
-BuildRequires: pkgconfig(libwebp)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(epoxy)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libpci)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(libwebp)
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: pkgconfig(xcursor)
-BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xinerama)
+BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xxf86vm)
-BuildRequires: unzip
+BuildRequires: pkgconfig(zlib)
 
-#ExclusiveArch: x86_64 aarch64
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
+
+%global flutter_root %_libexecdir/%name
+%global engine_cache %flutter_root/bin/cache/artifacts/engine
 
 %ifarch x86_64
 %define flutter_arch x64
@@ -110,8 +94,8 @@ ExclusiveArch: x86_64
 %define release_out %out/linux_release_%flutter_arch
 %define debug_out %out/linux_debug_%flutter_arch
 
-%add_findprov_skiplist %_libexecdir/%name/packages/flutter_tools/.pub_cache/* %_libexecdir/%name/pub_cache/*
-%add_findreq_skiplist  %_libexecdir/%name/packages/flutter_tools/.pub_cache/* %_libexecdir/%name/pub_cache/*
+%add_findprov_skiplist %flutter_root/packages/flutter_tools/.pub_cache/* %flutter_root/pub_cache/*
+%add_findreq_skiplist  %flutter_root/packages/flutter_tools/.pub_cache/* %flutter_root/pub_cache/*
 
 %description
 %summary.
@@ -120,14 +104,12 @@ ExclusiveArch: x86_64
 Summary: Flutter common parts
 Group: Development/Other
 
-Requires: bash
 Requires: clang%llvm_version
 Requires: cmake
 Requires: dart-lang-sdk = %dart_version
 Requires: git
-Requires: pkgconfig(gtk+-3.0)
 Requires: pkgconf
-Requires: samurai
+Requires: pkgconfig(gtk+-3.0)
 
 %description common
 %summary.
@@ -201,14 +183,25 @@ echo -n "%version" > version
 mkdir bin/cache
 
 export devtools_version="$(grep 'devtools_rev' engine/src/flutter/third_party/dart/DEPS | head -n1 | awk -F\" '{ print $4 }')"
+engine_version="$(cat bin/internal/engine.version)"
+echo -n "$engine_version" > bin/cache/engine.stamp
+echo -n "$engine_version" > bin/cache/engine_stamp.stamp
+cat > bin/cache/engine_stamp.json <<EOF
+{
+	"build_time_ms": 0,
+	"git_revision": "$engine_version",
+	"git_revision_date": "2038-01-19T03:14:08.000Z",
+	"content_hash": "0000000000000000000000000000000000000000"
+}
+EOF
 cat > bin/cache/flutter.version.json <<EOF
 {
 	"frameworkVersion": "%version",
-	"channel": "%flutter_channel",
+	"channel": "stable",
 	"repositoryUrl": "https://github.com/flutter/flutter.git",
 	"frameworkRevision": "sisyphus00000000000000000000000000000000",
 	"frameworkCommitDate": "2038-01-19 03:14:08",
-	"engineRevision": "%engine_version",
+	"engineRevision": "$engine_version",
 	"dartSdkVersion": "%dart_version",
 	"devToolsVersion": "$devtools_version",
 	"flutterVersion": "%version"
@@ -254,6 +247,9 @@ dart pub get --offline
 cd -
 
 %build
+# Try to avoid aarch64 build "Too many open files" error
+ulimit -Sn $(ulimit -Hn)
+
 cd engine/src
 
 export CFLAGS="${CFLAGS/-g/} -O2 -Wno-error -Wno-absolute-value -Wno-implicit-float-conversion"
@@ -314,80 +310,80 @@ dart --verbosity=error \
      --packages="packages/flutter_tools/.dart_tool/package_config.json" \
      --no-enable-mirrors "packages/flutter_tools/bin/flutter_tools.dart"
 
-sed -i 's|\(%_builddir/%name-%version/%_libexecdir/%name/pub_cache\)/packages/flutter_tools/.pub_cache|\1|' packages/flutter_tools/.dart_tool/package_config.json
+sed -i 's|\(%_builddir/%name-%version/%flutter_root/pub_cache\)/packages/flutter_tools/.pub_cache|\1|' packages/flutter_tools/.dart_tool/package_config.json
 
 %install
-install -Dm755 %SOURCE3 %buildroot%_libexecdir/%name/bin/flutter
+install -Dm755 %SOURCE3 %buildroot%flutter_root/bin/flutter
 mkdir -p %buildroot%_bindir
 ln -s ../lib/%name/bin/flutter %buildroot%_bindir/%name
 
-install -Dm644 %_builddir/%name-%version/bin/cache/flutter.version.json -t %buildroot%_libexecdir/%name/bin/cache/
-ln -s ../../../dart %buildroot%_libexecdir/%name/bin/cache/dart-sdk
+install -Dm644 bin/cache/flutter.version.json bin/cache/engine.stamp bin/cache/engine_stamp.stamp bin/cache/engine_stamp.json -t %buildroot%flutter_root/bin/cache/
+ln -s ../../../dart %buildroot%flutter_root/bin/cache/dart-sdk
 
-install -Dm755 %_builddir/%name-%version/bin/cache/flutter_tools.snapshot %buildroot%_libexecdir/%name/bin/cache/flutter_tools.snapshot
+install -Dm755 bin/cache/flutter_tools.snapshot %buildroot%flutter_root/bin/cache/flutter_tools.snapshot
 
-mkdir -p %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/common
-cp -r %release_out/flutter_patched_sdk/ %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/common/flutter_patched_sdk_product
-cp -r %debug_out/flutter_patched_sdk/   %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/common/flutter_patched_sdk
+mkdir -p %buildroot%engine_cache/common
+cp -r %release_out/flutter_patched_sdk/ %buildroot%engine_cache/common/flutter_patched_sdk_product
+cp -r %debug_out/flutter_patched_sdk/   %buildroot%engine_cache/common/flutter_patched_sdk
 
-mkdir -p %buildroot%_libexecdir/%name/bin/cache/pkg
-cp -rL %release_out/gen/dart-pkg/sky_engine %buildroot%_libexecdir/%name/bin/cache/pkg/sky_engine
+mkdir -p %buildroot%flutter_root/bin/cache/pkg
+cp -rL %release_out/gen/dart-pkg/sky_engine %buildroot%flutter_root/bin/cache/pkg/sky_engine
 
-cp -r %_builddir/%name-%version/packages %buildroot%_libexecdir/%name/packages
-mkdir -p %buildroot%_libexecdir/%name/dev %buildroot%_libexecdir/%name/examples
-touch %buildroot%_libexecdir/%name/dev/.intentionally-empty %buildroot%_libexecdir/%name/examples/.intentionally-empty
+cp -r packages %buildroot%flutter_root/packages
+mkdir -p %buildroot%flutter_root/dev %buildroot%flutter_root/examples
+touch %buildroot%flutter_root/dev/.intentionally-empty %buildroot%flutter_root/examples/.intentionally-empty
 
-mkdir -p %buildroot%_libexecdir/%name/pub_cache
-cp -r %_builddir/%name-%version/packages/flutter_tools/.pub_cache/* %buildroot%_libexecdir/%name/pub_cache
+mkdir -p %buildroot%flutter_root/pub_cache
+cp -r packages/flutter_tools/.pub_cache/* %buildroot%flutter_root/pub_cache
 
-echo -n %version > %buildroot%_libexecdir/%name/version
-mkdir -p %buildroot%_libexecdir/%name/bin/internal/
-echo -n %engine_version > %buildroot%_libexecdir/%name/bin/internal/engine.version
+echo -n %version > %buildroot%flutter_root/version
+mkdir -p %buildroot%flutter_root/bin/internal/
+cp bin/internal/engine.version %buildroot%flutter_root/bin/internal/engine.version
 
-mkdir -p %buildroot%_libexecdir/%name/bin/cache/artifacts/material_fonts
-unzip %SOURCE4 -d %buildroot%_libexecdir/%name/bin/cache/artifacts/material_fonts
+mkdir -p %buildroot%flutter_root/bin/cache/artifacts/material_fonts
+unzip %SOURCE4 -d %buildroot%flutter_root/bin/cache/artifacts/material_fonts
 
-mkdir -p %buildroot%_libexecdir/%name/bin/cache/artifacts/gradle_wrapper
-tar xf %SOURCE5 -C %buildroot%_libexecdir/%name/bin/cache/artifacts/gradle_wrapper
+mkdir -p %buildroot%flutter_root/bin/cache/artifacts/gradle_wrapper
+tar xf %SOURCE5 -C %buildroot%flutter_root/bin/cache/artifacts/gradle_wrapper
 
 for mode in %modes; do
   case $mode in
     debug) mode_art_name=linux-%flutter_arch ;;
     *) mode_art_name=linux-%flutter_arch-$mode ;;
   esac
-  mkdir -p %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/$mode_art_name/
-  unzip %out/linux_${mode}_%flutter_arch/zip_archives/$mode_art_name/artifacts.zip -d %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/$mode_art_name/
+  mkdir -p %buildroot%engine_cache/$mode_art_name/
+  unzip %out/linux_${mode}_%flutter_arch/zip_archives/$mode_art_name/artifacts.zip -d %buildroot%engine_cache/$mode_art_name/
 done
 
-cp -r %release_out/flutter_linux/ %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/linux-%flutter_arch/flutter_linux
-ln -s ../linux-%flutter_arch/flutter_linux %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/linux-%flutter_arch-profile/flutter_linux
-ln -s ../linux-%flutter_arch/flutter_linux %buildroot%_libexecdir/%name/bin/cache/artifacts/engine/linux-%flutter_arch-release/flutter_linux
+cp -r %release_out/flutter_linux/ %buildroot%engine_cache/linux-%flutter_arch/flutter_linux
+ln -s ../linux-%flutter_arch/flutter_linux %buildroot%engine_cache/linux-%flutter_arch-profile/flutter_linux
+ln -s ../linux-%flutter_arch/flutter_linux %buildroot%engine_cache/linux-%flutter_arch-release/flutter_linux
 mkdir -p %buildroot/usr/include/
 ln -s ../lib/flutter/bin/cache/artifacts/engine/linux-%flutter_arch/flutter_linux %buildroot/usr/include/flutter_linux
 
 install -Dm755 %release_out/libflutter_linux_gtk.so %buildroot%_libexecdir/libflutter_linux_gtk.so
 
-cp %_builddir/%name-%version/engine/src/flutter/third_party/icu/flutter/icudtl.dat %buildroot%_libexecdir/%name/icudtl.dat
+cp engine/src/flutter/third_party/icu/flutter/icudtl.dat %buildroot%flutter_root/icudtl.dat
 
 install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libflutter_linux_glfw.so
 
 %files common
-%_libexecdir/%name/bin/cache/artifacts/engine/common
-%_libexecdir/%name/bin/cache/artifacts/material_fonts
-%_libexecdir/%name/bin/cache/dart-sdk
-%_libexecdir/%name/bin/cache/pkg
-%_libexecdir/%name/bin/internal
-%_libexecdir/%name/packages
-%_libexecdir/%name/pub_cache
+%engine_cache/common
+%flutter_root/bin/cache/artifacts/material_fonts
+%flutter_root/bin/cache/dart-sdk
+%flutter_root/bin/cache/pkg
+%flutter_root/bin/internal
+%flutter_root/packages
+%flutter_root/pub_cache
 
 %files desktop
 %_includedir/flutter_linux
-%_libexecdir/%name/bin/cache/artifacts/engine/linux-%flutter_arch
-%_libexecdir/%name/bin/cache/artifacts/engine/linux-%flutter_arch-release
+%engine_cache/linux-%flutter_arch
+%engine_cache/linux-%flutter_arch-release
 
 %files developer
-%_libexecdir/%name/bin/cache/artifacts/engine/linux-%flutter_arch-profile
-%_libexecdir/%name/bin/cache/artifacts/gradle_wrapper
+%engine_cache/linux-%flutter_arch-profile
+%flutter_root/bin/cache/artifacts/gradle_wrapper
 
 %files gtk
 %_libexecdir/libflutter_linux_gtk.so
@@ -398,16 +394,29 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 
 %files tool
 %_bindir/%name
-%_libexecdir/%name/bin/cache/flutter_tools.snapshot
-%_libexecdir/%name/bin/cache/flutter.version.json
-%_libexecdir/%name/bin/flutter
-%_libexecdir/%name/version
+%flutter_root/bin/cache/flutter_tools.snapshot
+%flutter_root/bin/cache/flutter.version.json
+%flutter_root/bin/cache/engine.stamp
+%flutter_root/bin/cache/engine_stamp.stamp
+%flutter_root/bin/cache/engine_stamp.json
+%flutter_root/bin/flutter
+%flutter_root/version
 
 %files tool-developer
-%_libexecdir/%name/dev
-%_libexecdir/%name/examples
+%flutter_root/dev
+%flutter_root/examples
 
 %changelog
+* Thu Nov 19 2026 David Sultaniiazov <x1z53@altlinux.org> 3.47.9-alt1
+- 3.47.9 (via rebase).
+- Drop unnecessary patches and adopt other patches.
+- Fix GN dependency checks and build with GCC 16.
+- Read engine revision from the upstream file.
+- Build with system libpci.
+- Add the engine stamps.
+- Enable aarch64 build.
+- Simplify the spec.
+
 * Tue Nov 17 2026 David Sultaniiazov <x1z53@altlinux.org> 3.44.9-alt1
 - 3.44.9 (via rebase).
 - Update submodules and Dart vendor scripts.

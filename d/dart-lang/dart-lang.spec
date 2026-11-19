@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dart-lang
-Version: 3.12.2
+Version: 3.13.7
 Release: alt1
 
 Summary: Dart language
@@ -111,7 +111,7 @@ sed -i \
 
 # google analytics, doubleclick
 echo '' > tools/bots/dartdoc_footer.html
-rm third_party/devtools/web/devtools_analytics.js
+rm -f third_party/devtools/web/devtools_analytics.js
 
 # disarm analytics for sure
 rg --no-ignore -l 'google-analytics\.com' . \
@@ -206,6 +206,11 @@ find %buildroot%_libexecdir/dart/bin/resources/devtools -type f -exec chmod 644 
 %_libexecdir/dart/lib
 
 %changelog
+* Mon Nov 16 2026 David Sultaniiazov <x1z53@altlinux.org> 3.13.7-alt1
+- 3.13.7.
+- Simplify unbundle patch.
+- Rework submodules script.
+
 * Sun Nov 15 2026 David Sultaniiazov <x1z53@altlinux.org> 3.12.2-alt1
 - 3.12.2.
 - Add Dart SDK smoke tests.
