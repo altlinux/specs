@@ -1,4 +1,4 @@
-%define githash e1e02e77e6d068f626cef7c3998ed08b0fde7669
+%define githash e25b7d4d17e53811c6fd57f3ae7add0b9028cced
 %define gitdiff c6e62702d5e4fb2cf6b3fa27e67cb0d4b399a30b
 %define _localstatedir %_var
 %global optflags_lto %optflags_lto -ffat-lto-objects
@@ -6,7 +6,7 @@
 %filter_from_requires /^.usr.lib.lsb.init-functions/d
 
 Name: drbd-utils
-Version: 9.35.0
+Version: 9.36.0
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -172,6 +172,9 @@ make test
 %_man7dir/ocf_linbit_drbd-attr.*
 
 %changelog
+* Thu Nov 19 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.36.0-alt1
+- 9.36.0
+
 * Wed Sep 30 2026 Andrew A. Vasilyev <andy@altlinux.org> 9.35.0-alt1
 - 9.35.0
 
