@@ -5,8 +5,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.1
-Release: alt1.1
+Version: 0.3.0
+Release: alt1
 Summary: Simple proxy server (SOCKS4, SOCKS5, HTTP tunnel)
 License: Apache-2.0
 Group: Development/Python3
@@ -56,6 +56,9 @@ It is used for testing python-socks, aiohttp-socks and httpx-socks packages.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 19 2026 Aleksandr A. Voyt <sobue@altlinux.org> 0.3.0-alt1
+- 0.2.1 -> 0.3.0
+
 * Wed Mar 25 2026 Grigory Ustinov <grenka@altlinux.org> 0.2.1-alt1.1
 - Demodernized packaging.
 
