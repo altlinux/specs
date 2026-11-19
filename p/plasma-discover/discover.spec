@@ -23,7 +23,7 @@
 
 Name: plasma-%rname
 Version: 6.7.6
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Configuration/Packaging
@@ -66,6 +66,7 @@ Patch21: alt-add-maintainer-detail.patch
 Patch22: alt-xdg-current-desktop.patch
 Patch23: alt-add-stplr-dbus.patch
 Patch24: alt-add-launch-app-on-btn-click.patch
+Patch25: alt-add-packagekit-error-details-translation.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: libvulkan-devel
@@ -250,6 +251,7 @@ tar xvf %SOURCE12 \
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
 
 if [ -d %_libdir/cmake/AppStreamQt6 -a ! -d %_libdir/cmake/AppStreamQt ] ; then
     mkdir -p cmake/AppStreamQt/
@@ -389,6 +391,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K6start \
 %_K6lib/libDiscoverNotifiers.so.*
 
 %changelog
+* Thu Nov 19 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.7.6-alt2
+- translate update failure pop-up notification string
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
 - new version
 
