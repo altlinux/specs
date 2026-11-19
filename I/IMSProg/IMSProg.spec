@@ -1,8 +1,8 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+%define githubname io.github.bigbigmdm.imsprog
 
 Name: IMSProg
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: I2C, SPI and MicroWire EEPROM/Flash chip programmer for CH341a devices
@@ -68,8 +68,8 @@ lrelease-qt6 IMSProg_database_update/language/*.ts
 %cmake_install
 
 # remove extra appdata
-rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_database_update.metainfo.xml
-rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_editor.metainfo.xml
+rm %buildroot%_datadir/metainfo/%githubname.database_update.metainfo.xml
+rm %buildroot%_datadir/metainfo/%githubname.editor.metainfo.xml
 
 %files
 %doc README.md ChangeLog
@@ -78,17 +78,16 @@ rm %buildroot%_datadir/metainfo/io.github.bigbigmdm.imsprog_editor.metainfo.xml
 %_bindir/IMSProg_editor
 %_bindir/IMSProg_database_update
 %_datadir/imsprog
-%_desktopdir/IMSProg.desktop
-%_desktopdir/IMSProg_editor.desktop
-%_desktopdir/IMSProg_database_update.desktop
-%_datadir/metainfo/io.github.bigbigmdm.imsprog.metainfo.xml
+%_desktopdir/%{githubname}*.desktop
+%_datadir/metainfo/%{githubname}*.metainfo.xml
 %_udevrulesdir/71-CH341.rules
-%_pixmapsdir/chipEdit64.png
-%_pixmapsdir/IMSProg64.png
-%_pixmapsdir/IMSProg_database_update.png
+%_iconsdir/hicolor/*/apps/%{githubname}*
 %_man1dir/*.1.*
 
 %changelog
+* Wed Nov 18 2026 Valery Zabrovsky <brow@altlinux.org> 1.9.2-alt1
+- New version 1.9.2.
+
 * Mon Sep 07 2026 Valery Zabrovsky <brow@altlinux.org> 1.9.1-alt1
 - New version 1.9.1.
 
