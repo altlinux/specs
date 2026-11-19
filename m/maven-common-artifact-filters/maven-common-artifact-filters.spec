@@ -1,6 +1,6 @@
 Name:           maven-common-artifact-filters
 Version:        3.4.0
-Release:        alt1.1
+Release:        alt2
 
 Summary:        Apache Maven Common Artifact Filters
 License:        Apache-2.0
@@ -16,6 +16,7 @@ BuildRequires:  jpackage-default
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-archiver)
 BuildRequires:  mvn(org.openjdk.jmh:jmh-core)
 BuildRequires:  mvn(org.openjdk.jmh:jmh-generator-annprocess)
 
@@ -29,6 +30,7 @@ during dependency resolution.
 
 %prep
 %setup
+%pom_add_dep org.codehaus.plexus:plexus-archiver:4.12.0:test
 
 %build
 %mvn_build
@@ -40,6 +42,9 @@ during dependency resolution.
 %doc README.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 3.4.0-alt2
+- Declare the Plexus Archiver dependency used by the tests.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 3.4.0-alt1.1
 - Cosmetic fixes.
 

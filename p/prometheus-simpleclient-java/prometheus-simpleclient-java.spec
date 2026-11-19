@@ -1,6 +1,6 @@
 Name:           prometheus-simpleclient-java
 Version:        0.16.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Prometheus instrumentation library for JVM applications
 License:        Apache-2.0
@@ -21,6 +21,7 @@ BuildRequires:  mvn(commons-math3:commons-math3)
 BuildRequires:  mvn(io.dropwizard.metrics:metrics-core)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires:  tomcat10-servlet-6.0-api
 BuildRequires:  mvn(org.apache.logging.log4j:log4j-core)
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
 
@@ -58,6 +59,7 @@ It supports Java, Clojure, Scala, JRuby, and anything else that runs on the JVM.
 
 %pom_change_dep -r org.eclipse.jetty:jetty-servlet org.eclipse.jetty:jetty-servlet:9.4
 %pom_change_dep -r org.eclipse.jetty:jetty-server org.eclipse.jetty:jetty-server:9.4
+%pom_change_dep jakarta.servlet:jakarta.servlet-api org.apache.tomcat:tomcat-servlet-api:10.1.62 simpleclient_servlet_jakarta
 
 rm -f simpleclient_servlet/src/test/java/io/prometheus/client/exporter/ExampleBenchmark.java
 rm -f simpleclient_servlet_jakarta/src/test/java/io/prometheus/client/exporter/Example{Benchmark,Exporter}.java
@@ -72,6 +74,9 @@ rm -f simpleclient_servlet_jakarta/src/test/java/io/prometheus/client/exporter/E
 %doc LICENSE NOTICE *.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 0.16.0-alt2
+- Fix the Jakarta servlet exporter build with the packaged Servlet 6.0 API.
+
 * Tue Jul 07 2026 Evgeniy Serov <scala@altlinux.org> 0.16.0-alt1
 - Updated to 0.16.0.
 

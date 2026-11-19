@@ -1,6 +1,6 @@
 Name:           angus-mail
 Version:        2.0.5
-Release:        alt1.1
+Release:        alt3
 
 Summary:        Angus Mail
 License:        EPL-2.0
@@ -11,6 +11,7 @@ VCS:            https://github.com/eclipse-ee4j/angus-mail
 Source0:        %name-%version.tar
 
 Patch0:         0001-Remove-GraalVM-native-image-dependency.patch
+Patch1:         0002-Use-current-JSP-tag-body-constants.patch
 
 BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
@@ -23,6 +24,7 @@ BuildRequires:  mvn(org.eclipse.angus:angus-activation)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(jakarta.mail:jakarta.mail-api)
+BuildRequires:  jakarta-servlet-api5
 BuildRequires:  mvn(jakarta.servlet.jsp:jakarta.servlet.jsp-api)
 
 BuildArch:      noarch
@@ -65,6 +67,9 @@ rm demos/taglib/src/test/java/demo/ModulesTest.java
 %doc *.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.0.5-alt3
+- Fix the servlet and tag library demos for the current Jakarta APIs.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 2.0.5-alt1.1
 - Cosmetic fixes.
 

@@ -5,7 +5,7 @@
 Name:           maven
 Epoch:          1
 Version:        3.9.16
-Release:        alt1
+Release:        alt3
 
 Summary:        Apache Maven core
 License:        Apache-2.0 and MIT
@@ -21,6 +21,7 @@ Patch1:         0001-Adapt-mvn-script.patch
 Patch3:         0003-Remove-dependency-on-powermock.patch
 Patch6:         0006-Load-maven-resolver-named-locks.patch
 Patch7:         0007-Use-Java-JUnit-assertions.patch
+Patch8:         0008-Load-optional-Logback-binding-at-runtime.patch
 
 BuildRequires(pre):  rpm-macros-java
 BuildRequires:  jpackage-default
@@ -36,7 +37,6 @@ BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(commons-jxpath:commons-jxpath)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(ch.qos.logback:logback-classic)
 BuildRequires:  mvn(org.slf4j:slf4j-simple::sources:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
@@ -74,6 +74,7 @@ sed -i 's/\r$//' apache-maven/src/bin/m2.conf
 %pom_remove_plugin :buildnumber-maven-plugin maven-core
 
 %pom_remove_dep :powermock-reflect maven-model-builder
+%pom_remove_dep ch.qos.logback:logback-classic maven-embedder
 %pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
 
 find . -name pom.xml -type f -exec sed -i '/classes<\/classifier>/d' {} +
@@ -157,6 +158,9 @@ touch %buildroot%_sysconfdir/mavenrc
 %config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1:3.9.16-alt3
+- Fix the build with newer system Logback while retaining support for legacy Logback bindings.
+
 * Mon Aug 24 2026 Evgeniy Serov <scala@altlinux.org> 1:3.9.16-alt1
 - Automatically updated to 3.9.16.
 - Added patch to use Java JUnit assertions instead of Kotlin helpers.

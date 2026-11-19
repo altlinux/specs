@@ -1,7 +1,7 @@
 Name:           sisu
 Epoch:          2
 Version:        0.9.0.M3
-Release:        alt2
+Release:        alt3
 
 Summary:        Eclipse dependency injection framework
 # sisu is EPL-1.0, the bundled asm is BSD
@@ -25,6 +25,7 @@ BuildRequires:  mvn(cglib:cglib)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(javax.enterprise:cdi-api)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 
 BuildArch:      noarch
 
@@ -48,6 +49,7 @@ META-INF/sisu/javax.inject.Named index files for the Sisu container.
 
 %pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin -r :maven-clean-plugin
+%pom_change_dep -r javax.servlet:servlet-api javax.servlet:javax.servlet-api:4.0.1
 
 find . -name pom.xml -type f -exec sed -i '/<classifier>classes<\/classifier>/d' {} +
 
@@ -72,6 +74,9 @@ echo %_javadir/org.eclipse.sisu.plexus.jar >> .mfiles
 %files maven-plugin -f .mfiles-maven-plugin
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2:0.9.0.M3-alt3
+- Use the maintained javax Servlet API coordinates.
+
 * Sun May 17 2026 Evgeniy Serov <scala@altlinux.org> 2:0.9.0.M3-alt2
 - Fixed FTBFS: added missing dependency.
 

@@ -1,6 +1,6 @@
 Name:           maven-surefire
 Version:        3.5.6
-Release:        alt2
+Release:        alt3
 
 Summary:        Apache Maven Surefire
 License:        Apache-2.0 and CPL-1.0
@@ -40,6 +40,8 @@ Surefire is a test framework project.
 Group:          Development/Java
 Summary:        Surefire plugin for maven
 Requires:       %name-provider-junit  = %version-%release
+Requires:       %name-provider-junit3 = %EVR
+Requires:       %name-provider-junit47 = %EVR
 Requires:       %name-provider-junit5 = %version-%release
 Requires:       %name-provider-testng = %version-%release
 
@@ -271,6 +273,9 @@ sed -i 's|<groupId>org\.javacc\.plugin</groupId>|<groupId>org.codehaus.mojo</gro
 %files its -f .mfiles-surefire-its
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 3.5.6-alt3
+- Restore automatic installation of the JUnit 3 and JUnit 4.7 providers.
+
 * Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 3.5.6-alt2
 - Fix logging conflicts in tested applications.
 - Honor excluded environment variables in forked tests.

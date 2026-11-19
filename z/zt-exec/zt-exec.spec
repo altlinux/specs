@@ -1,6 +1,6 @@
 Name:           zt-exec
 Version:        1.12
-Release:        alt2
+Release:        alt3
 
 Summary:        ZeroTurnaround Process Executor
 License:        Apache-2.0
@@ -14,6 +14,7 @@ BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(ch.qos.logback:logback-classic)
+BuildRequires:  mvn(org.slf4j:slf4j-api:2)
 
 BuildArch:      noarch
 
@@ -30,6 +31,7 @@ functionality from both java.lang.ProcessBuilder and Apache Commons Exec.
 
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
+%pom_change_dep org.slf4j:slf4j-api org.slf4j:slf4j-api:2
 
 # java-version-specific tests
 rm src/test/java/org/zeroturnaround/exec/test/ProcessListenerThrowTest.java
@@ -44,6 +46,9 @@ rm src/test/java/org/zeroturnaround/exec/test/ProcessListenerThrowTest.java
 %doc LICENSE NOTICE.txt README.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.12-alt3
+- Use SLF4J 2 with the current Logback test backend.
+
 * Mon Jun 29 2026 Evgeniy Serov <scala@altlinux.org> 1.12-alt2
 - Fixed FTBFS: switch build to Java 17.
 

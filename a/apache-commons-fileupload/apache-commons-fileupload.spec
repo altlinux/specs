@@ -1,7 +1,7 @@
 Name:           apache-commons-fileupload
 Epoch:          1
 Version:        1.6.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Apache Commons FileUpload is a robust, high-performance, file upload capability to your servlets and web applications
 License:        Apache-2.0
@@ -15,6 +15,7 @@ BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires:  mvn(org.jboss.spec.javax.servlet:jboss-servlet-api_2.5_spec)
 
 BuildArch:      noarch
 
@@ -36,6 +37,8 @@ Starting with version 1.3, FileUpload handles RFC 2047 encoded header values.
 
 %pom_remove_plugin :maven-checkstyle-plugin
 
+%pom_change_dep javax.servlet:servlet-api org.jboss.spec.javax.servlet:jboss-servlet-api_2.5_spec:1.0.1.Final
+
 %pom_remove_dep portlet-api:portlet-api
 rm -r src/main/java/org/apache/commons/fileupload/portlet
 
@@ -51,6 +54,9 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 %doc *.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1:1.6.0-alt2
+- Fix build with the packaged Servlet 2.5 API.
+
 * Sat May 16 2026 Evgeniy Serov <scala@altlinux.org> 1:1.6.0-alt1
 - Updated to 1.6.0.
 

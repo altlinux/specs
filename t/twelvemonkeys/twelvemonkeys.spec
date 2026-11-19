@@ -1,6 +1,6 @@
 Name:           twelvemonkeys
 Version:        3.13.1
-Release:        alt1
+Release:        alt2
 
 Summary:        TwelveMonkeys ImageIO: Additional plug-ins and extensions for Java's ImageIO
 License:        BSD-3-Clause
@@ -23,6 +23,7 @@ BuildRequires:  mvn(org.apache.xmlgraphics:batik-anim)
 BuildRequires:  mvn(org.apache.xmlgraphics:batik-svggen)
 BuildRequires:  mvn(org.apache.xmlgraphics:batik-transcoder)
 BuildRequires:  mvn(com.github.jai-imageio:jai-imageio-core)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 
 BuildArch:      noarch
 
@@ -237,6 +238,7 @@ Group:          Development/Java
 %pom_remove_plugin :central-publishing-maven-plugin
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-help-plugin
+%pom_change_dep javax.servlet:servlet-api javax.servlet:javax.servlet-api:4.0.1 servlet
 
 # for clean tests
 %pom_add_dep org.apiguardian:apiguardian-api:1.1.2:test
@@ -345,5 +347,8 @@ rm imageio/imageio-batik/src/test/java/com/twelvemonkeys/imageio/plugins/wmf/WMF
 %files parent -f .mfiles-twelvemonkeys
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 3.13.1-alt2
+- Use the maintained javax Servlet API coordinates.
+
 * Sun Mar 22 2026 Evgeniy Serov <scala@altlinux.org> 3.13.1-alt1
 - Initial build for Sisyphus.

@@ -1,6 +1,6 @@
 Name:           apache-commons-logging
 Version:        1.4.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Apache Commons Logging
 License:        Apache-2.0
@@ -16,6 +16,8 @@ BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(avalon-framework:avalon-framework-impl)
+BuildRequires:  mvn(jakarta.servlet:jakarta.servlet-api:5.0.0)
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
 BuildRequires:  mvn(org.apache.logging.log4j:log4j-api)
 
@@ -70,6 +72,9 @@ used.
 %doc README.md SECURITY.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.4.0-alt2
+- Declare the Servlet APIs needed to build the cleanup listeners.
+
 * Fri Oct 30 2026 Evgeniy Serov <scala@altlinux.org> 1.4.0-alt1
 - Automatically updated to 1.4.0.
 

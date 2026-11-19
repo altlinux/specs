@@ -1,6 +1,6 @@
 Name:           apache-commons-parent
 Version:        107
-Release:        alt1
+Release:        alt2
 
 Summary:        Apache Commons Parent
 License:        Apache-2.0
@@ -21,6 +21,8 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.mockito:mockito-bom:pom:)
 
+Requires:       mvn(org.codehaus.mojo:build-helper-maven-plugin)
+Requires:       mvn(org.mockito:mockito-bom:pom:)
 
 BuildArch:      noarch
 
@@ -55,6 +57,9 @@ components.
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 107-alt2
+- Restore build-helper and Mockito BOM dependencies for consumers.
+
 * Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 107-alt1
 - New version.
 
