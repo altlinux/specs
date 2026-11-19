@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 157
 %define nv_minor %nil
-%define pkg_rel alt303
+%define pkg_rel alt304
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -281,6 +281,9 @@ install -m 0644 libnvidia-fbc.so.%version %buildroot/%nv_lib_dir/libnvidia-fbc.s
 %ifarch x86_64
 install -m 0644 libnvidia-glsi.so.%version %buildroot/%nv_lib_dir/libnvidia-glsi.so
 %endif
+for l in %buildroot/%_libdir/lib*.so.%tbver ; do
+    ln -sr $l %buildroot/%nv_lib_dir/
+done
 for l in %buildroot/%nv_lib_dir/lib*.so ; do
     f=`basename $l`
     echo "$f" | grep -q "^libglx\." && continue ||:
@@ -347,6 +350,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 19 2026 Sergey V Turchin <zerg@altlinux.org> 390.157-alt304
+- fix find nvidia libraries by steam pressure-vessel
+
 * Mon Jun 01 2026 Anton Golubev <golubevan@altlinux.org> 390.157-alt303
 - fix so that the drm node could be at least opened
 
