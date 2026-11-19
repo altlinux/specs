@@ -1,6 +1,6 @@
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.30.6
+Version: 1.30.7
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -50,6 +50,7 @@ Source20: nginx-brotli-module.tar
 Source100: %name.watch
 
 Patch2: push-stream-fix-ngx-strchr-const.patch
+Patch3: nginx-1.30.7-alt-zip-fix-unused-pieces-sent.patch
 
 Requires(pre): shadow-utils
 Requires(post): sed
@@ -198,6 +199,10 @@ cp -f %SOURCE11 conf/mime.types
 
 pushd nginx-push-stream-module
 %patch2 -p1
+popd
+
+pushd nginx-zip-module
+%patch3 -p1
 popd
 
 # use system libbrotli instead of the deps/brotli git submodule
@@ -471,6 +476,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Thu Nov 19 2026 Anton Farygin <rider@altlinux.org> 1.30.7-alt1
+- 1.30.6 -> 1.30.7 (Fixes: CVE-2026-125283, CVE-2026-123007,
+  CVE-2026-123633, CVE-2026-121810, CVE-2026-123634, CVE-2026-113425,
+  CVE-2026-120967, CVE-2026-123640, CVE-2026-118899)
+- updated brotli and spnego modules
+
 * Wed Oct 21 2026 Anton Farygin <rider@altlinux.org> 1.30.6-alt1
 - 1.30.5 -> 1.30.6 (Fixes: CVE-2026-15176, CVE-2026-93479, CVE-2026-95101,
   CVE-2026-97629, CVE-2026-97205)
