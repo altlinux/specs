@@ -5,7 +5,7 @@
 %define stdxx 17
 
 Name: libphonenumber
-Version: 9.0.43
+Version: 9.0.44
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -20,6 +20,7 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 Patch1: %name-8.13.4-alt-link.patch
 Patch2: %name-9.0.16-alt-fix-nostatic-build.patch
 # https://github.com/google/libphonenumber/pull/3903
+# upstreamed in 9.0.44
 Patch10: %name-9.0.35-up-boost-1.89.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -52,7 +53,7 @@ developing applications that use %name.
 %setup -n %name-%version/cpp
 %patch1 -b .link
 %patch2 -b .static
-%{?_enable_boost:%patch10 -p2 -b .boost-1.89}
+#%%{?_enable_boost:%patch10 -p2 -b .boost-1.89}
 
 %ifarch %e2k
 # the problematic warning actually sits in protobuf (-Winvalid-offsetof)
@@ -89,6 +90,9 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Nov 18 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.44-alt1
+- 9.0.44
+
 * Wed Nov 04 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.43-alt1
 - 9.0.43
 
