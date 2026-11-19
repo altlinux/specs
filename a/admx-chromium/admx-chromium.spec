@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-chromium
-Version: 153.0
+Version: 157.0
 Release: alt1
 
 Summary: Chromium-specific ADMX policy templates
@@ -16,6 +16,8 @@ BuildRequires: iconv
 
 Source0: policy_templates-%version.tar
 
+Patch0: admx-chromium-157.0-alt-ru-try-on-you-description.patch
+
 %description
 Chromium-specific ADMX files, which are registry-based policy settings provide
 an XML-based structure for defining the display of the Administrative Template
@@ -23,6 +25,7 @@ policy settings in the Group Policy Object Editor.
 
 %prep
 %setup -q -n policy_templates-%version
+%patch0 -p1
 
 %install
 mkdir -p %buildroot%_datadir
@@ -57,6 +60,10 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Tue Nov 17 2026 Valentin Sokolov <sova@altlinux.org> 157.0-alt1
+- Update to latest release 157.0-8103.39
+- Improver ru-lang policies description (TryOnYouSettings)
+
 * Mon Sep 14 2026 Valentin Sokolov <sova@altlinux.org> 153.0-alt1
 - Update to latest release 153.0-8010.37
 - Use versioned source tarball name
