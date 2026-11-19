@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.20.1
+Version: 3.21.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -78,6 +78,11 @@ by 2ndQuadrant.
 # Change shebang in all relevant executable files in this directory and all subdirectories
 find -type f -executable -exec sed -i '1s=^#!%_bindir/\(python\|env python\)[23]\?=#!%__python3=' {} +
 
+# Create a sysusers.d config file
+cat >barman.sysusers.conf <<EOF
+u barman - 'Backup and Recovery Manager for PostgreSQL' /var/lib/barman /bin/bash
+EOF
+
 %build
 %pyproject_build
 
@@ -97,6 +102,7 @@ install -pm 644 %SOURCE2 %buildroot%_logrotatedir/barman
 install -Dpm 644 scripts/barman.bash_completion %buildroot%_datadir/bash-completion/completions/barman
 install -Dpm 644 docs/_build/man/*.1 %buildroot%_man1dir
 install -Dpm 644 docs/_build/man/%name.5 %buildroot%_man5dir
+install -Dpm 644 barman.sysusers.conf %buildroot%_sysusersdir/barman.conf
 touch %buildroot/var/log/barman/barman.log
 
 %__subst 's|/etc/barman.d|/etc/barman/conf.d|g' %buildroot%_sysconfdir/barman/barman.conf
@@ -114,6 +120,7 @@ exit 0
 %_bindir/%name
 %_man1dir/%name.1.xz
 %_man5dir/%name.5.xz
+%_sysusersdir/barman.conf
 %dir %_sysconfdir/barman/
 %config(noreplace) %_sysconfdir/barman/%name.conf
 %config(noreplace) %_sysconfdir/cron.d/%name
@@ -145,6 +152,10 @@ exit 0
 %python3_sitelibdir/%name/
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 3.21.0-alt1
+- New version 3.21.0 (ALT #61065).
+- Added sysusers.d config file.
+
 * Fri Oct 02 2026 Leontiy Volodin <lvol@altlinux.org> 3.20.1-alt1
 - New version 3.20.1 (Fixes: CVE-2026-93853).
 
