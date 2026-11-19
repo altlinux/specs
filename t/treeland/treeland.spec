@@ -5,17 +5,17 @@
 %def_disable clang
 
 Name: treeland
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: Wayland compositor for DDE
 
 License: GPL-2.0-or-later and CC-BY-3.0
 Group: System/Configuration/Other
-Url: https://github.com/linuxdeepin/treeland
-Vcs: https://github.com/linuxdeepin/treeland
+URL: https://github.com/linuxdeepin/treeland
+VCS: https://github.com/linuxdeepin/treeland
 
-# Source-url: %url/archive/%version/%name-%version.tar.xz
+# Source-url: https://github.com/linuxdeepin/treeland/archive/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -151,6 +151,7 @@ export LDFLAGS="-fuse-ld=lld $LDFLAGS"
   -DBUILD_TESTS=OFF \
   -DBUILD_EXAMPLES=OFF \
   -DTREELAND_INSTALL_DEV=ON \
+  -DUSE_BUILD_TREE_WALLPAPER_FACTORY=ON \
   -DDCMAKE_INSTALL_LIBDIR=%_dqt6_libdir \
   -DDCMAKE_INSTALL_INCLUDEDIR=%_dqt6_headerdir
 
@@ -233,6 +234,10 @@ patchelf %buildroot%_libdir/libtreeland-protocol-capture-v1.so.%sover --add-need
 %_dqt6_libdir/pkgconfig/waylib-wlroots.pc
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 0.12.0-alt1
+- New version 0.12.0.
+- Used the wallpaper factory executable from the build tree.
+
 * Tue Nov 10 2026 Leontiy Volodin <lvol@altlinux.org> 0.11.0-alt1
 - New version 0.11.0.
 

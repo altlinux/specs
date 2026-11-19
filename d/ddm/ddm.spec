@@ -4,7 +4,7 @@
 %define soverda 0
 
 Name: ddm
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: DDM is a fork of SDDM for DDE
@@ -17,10 +17,10 @@ Vcs: https://github.com/linuxdeepin/ddm
 # Source-url: https://github.com/linuxdeepin/ddm/archive/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
-Patch1: ddm-0.3.0-alt-pam.patch
+Patch1: ddm-0.5.0-alt-pam.patch
 
 BuildRequires(pre): rpm-macros-dqt6 rpm-build-ninja
-BuildRequires: gcc-c++ deepin-extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel libpam0-devel libXau-devel libsystemd-devel treeland-protocols libwayland-client-devel libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
+BuildRequires: gcc-c++ deepin-extra-cmake-modules dqt6-base-devel dqt6-declarative-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libpam0-devel libXau-devel libsystemd-devel treeland-protocols libwayland-client-devel libdqt6-quicktemplates2 libdqt6-quickcontrols2 libdqt6-quicktest
 
 %description
 %summary.
@@ -91,11 +91,16 @@ exit 0
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.deepin.DisplayManager.conf
 %config(noreplace) %_sysconfdir/dbus-1/system.d/ddm_org.freedesktop.DisplayManager.conf
 %_bindir/ddm
+%_libexecdir/ddm-helper
 %_unitdir/ddm.service
 %_sysusersdir/dde.conf
 %_tmpfilesdir/ddm.conf
 %attr(750,dde,dde) %dir %_localstatedir/ddm/
 %attr(600,dde,dde) %ghost %_logdir/ddm.log
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.dde.ddm/
+%_datadir/dsg/configs/org.deepin.dde.ddm/org.deepin.dde.ddm.json
 
 %files common
 %dir %_datadir/ddm/
@@ -119,6 +124,9 @@ exit 0
 %_libdir/cmake/DDM/Common*.cmake
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 0.5.0-alt1
+- New version 0.5.0.
+
 * Wed Oct 21 2026 Leontiy Volodin <lvol@altlinux.org> 0.4.0-alt1
 - New version 0.4.0.
 
