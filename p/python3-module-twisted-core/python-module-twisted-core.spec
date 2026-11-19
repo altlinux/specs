@@ -1,10 +1,10 @@
 %define pypi_name twisted
-%define major 26.4
+%define major 26.10
 %define prefx3 python3-module-twisted
 
 Name: python3-module-twisted-core
 Version: %major.0
-Release: alt2
+Release: alt1
 
 Summary: An asynchronous networking framework written in Python
 
@@ -12,11 +12,8 @@ Group: Development/Python3
 License: MIT
 URL: https://pypi.org/project/Twisted
 
-# Source-url: %__pypi_url %pypi_name
 Source: %name-%version.tar
 Source1: README.ALT-ru_RU.UTF-8
-# https://github.com/twisted/twisted/pull/12788 (GHSA-8pqf-f4m5-798g)
-Patch1: twisted-imap-wildcard-redos.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-zope.interface
@@ -286,7 +283,6 @@ Unit tests for Twisted Core.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -519,6 +515,18 @@ ln -s twistd %buildroot%_bindir/twistd-3
 %python3_sitelibdir/twisted/logger/test
 
 %changelog
+* Wed Nov 18 2026 Vitaly Lipatov <lav@altlinux.ru> 26.10.0-alt1
+- new version 26.10.0
+- fixes:
+  + CVE-2026-106454, GHSA-8pqf-f4m5-798g: fix IMAP wildcard ReDoS.
+  + CVE-2026-115774: reject negative IMAP SEARCH literal sizes.
+  + CVE-2026-115775: bound domish XML element streams.
+  + CVE-2026-115776: bound IRC line buffer.
+  + CVE-2026-115778: bound Telnet subnegotiation.
+  + CVE-2026-115877: reject bare CR/LF in HTTP headers.
+  + CVE-2026-83813: validate DNS response source addresses.
+  + GHSA-vpp8-g58w-m8mp: limit rapid HTTP/2 stream resets.
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 26.4.0-alt2
 - add twistd-3 symlink for twistd (closes: #60925)
 
