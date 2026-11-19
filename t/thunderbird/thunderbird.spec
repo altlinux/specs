@@ -20,7 +20,7 @@
 
 Name: thunderbird
 Version: 160.0
-Release: alt2
+Release: alt3
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -51,6 +51,7 @@ Patch010: 0010-Adjust-address-autofill-regions-for-ALT.patch
 Patch011: 0011-Stop-transitioning-the-text-color-of-calendar-list-i.patch
 Patch012: 0012-Default-the-spellchecker-dictionary-to-the-UI-langua.patch
 Patch013: 0013-Use-system-typing_extensions-in-mach.patch
+Patch014: 0014-Export-EWS-attachments-as-files-on-GTK.patch
 ### End Patches
 
 Provides: mailclient
@@ -200,6 +201,7 @@ The package contains Lightning - an integrated calendar for Thunderbird.
 %patch11 -p2
 %patch12 -p2
 %patch13 -p2
+%patch14 -p2
 
 python3 %SOURCE2 %patched_rust_crates
 
@@ -404,6 +406,9 @@ xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Nov 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt3
+- Restore drag-and-drop of EWS attachments to Dolphin (Mozilla Bug 2095181).
+
 * Fri Nov 13 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt2
 - Fix FTBFS with system Pydantic by using system typing_extensions.
 
