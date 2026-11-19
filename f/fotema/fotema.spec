@@ -11,7 +11,7 @@
 
 Name: fotema
 Version: 2.5.2
-Release: alt1
+Release: alt2
 
 Summary: A photo gallery for GNOME
 License: GPL-3.0-or-later
@@ -31,6 +31,7 @@ Source1: vendor.tar
 Source2: cargo.tar
 
 #Patch: fotema-1.19.0-alt-loongarch64-size_t-ort-crate.patch
+Patch1: 907740e86d98a786836cf9da694887a46212a33f.patch
 
 %define gtk_ver 4.0
 %define adwaita_ver 1.5
@@ -77,6 +78,7 @@ Why enjoy your photo library with Fotema?
 %prep
 %setup -a1 -a2
 #%%patch -p2
+%patch1 -p1
 #sed -i -e 's/"files":{[^}]*}/"files":{}/' \
 #	./vendor/ort/.cargo-checksum.json
 
@@ -102,6 +104,9 @@ export CFLAGS="-O0 -g"
 %doc README* THUMBNAILS*
 
 %changelog
+* Thu Nov 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.2-alt2
+- fixed FTBFS (libopencv 5.1.0)
+
 * Mon Oct 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 2.5.2-alt1
 - 2.5.1 -> 2.5.2
 
