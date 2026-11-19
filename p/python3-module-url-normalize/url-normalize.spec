@@ -1,5 +1,5 @@
 Name: python3-module-url-normalize
-Version: 3.1.0
+Version: 4.0.0
 Release: alt1
 
 Summary: URI Normalization function
@@ -43,6 +43,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/url_normalize-%version.dist-info
 
 %changelog
+* Thu Nov 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 4.0.0-alt1
+- 4.0.0 released
+
 * Fri Oct 30 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.1.0-alt1
 - 3.1.0 released
 
