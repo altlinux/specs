@@ -1,5 +1,5 @@
 Name: wavetable
-Version: 1.0.34
+Version: 1.0.37
 Release: alt1
 
 Summary: Wavetable synth
@@ -20,6 +20,7 @@ BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(jack)
 BuildRequires: pkgconfig(samplerate)
 BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xi)
 BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xrender)
@@ -64,6 +65,9 @@ cp -av %_cmake__builddir/*/VST3/*.vst3 %buildroot%_libdir/vst3
 %_libdir/vst3/*
 
 %changelog
+* Thu Nov 19 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.37-alt1
+- 1.0.37 released
+
 * Mon Jul 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.0.34-alt1
 - 1.0.34 released
 
