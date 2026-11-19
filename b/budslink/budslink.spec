@@ -2,7 +2,7 @@
 %define app_id io.github.maniacx.BudsLink
 
 Name: budslink
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Monitor and control Bluetooth earbuds
@@ -49,6 +49,9 @@ Audio wearables, Samsung Galaxy Buds and Nothing/CMF buds.
 %_datadir/metainfo/%app_id.metainfo.xml
 
 %changelog
+* Tue Nov 17 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.2-alt1
+- 0.2.2.
+
 * Mon Sep 07 2026 David Sultaniiazov <x1z53@altlinux.org> 0.2.1-alt1
 - 0.2.1.
 
