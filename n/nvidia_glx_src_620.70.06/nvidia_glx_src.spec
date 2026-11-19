@@ -25,7 +25,7 @@
 %define nv_version 620
 %define nv_release 70
 %define nv_minor   06
-%define pkg_rel alt312
+%define pkg_rel alt313
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -303,6 +303,9 @@ install -m0644 nvidia_icd_vksc.json %buildroot/%nv_lib_dir/nvidia_icd_vksc.json
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
 %endif
+for l in %buildroot/%_libdir/lib*.so.%tbver ; do
+    ln -sr $l %buildroot/%nv_lib_dir/
+done
 for l in %buildroot/%nv_lib_dir/lib*.so ; do
     f=`basename $l`
     echo "$f" | grep -q "^libglxserver_nvidia\." && continue ||:
@@ -391,6 +394,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 19 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt313
+- fix find nvidia libraries by steam pressure-vessel
+
 * Wed Nov 11 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt312
 - fix package firmware
 
