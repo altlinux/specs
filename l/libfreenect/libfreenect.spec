@@ -1,13 +1,14 @@
+%define _unpackaged_files_terminate_build 1
 %define sover 0
 
 Name:    libfreenect
 Version: 0.7.5
-Release: alt3
+Release: alt4
 
 Summary: Drivers and libraries for the Xbox Kinect device
 License: Apache-2.0
 Group:   System/Libraries
-Url:     https://github.com/OpenKinect/libfreenect
+URL:     https://github.com/OpenKinect/libfreenect
 VCS:     https://github.com/OpenKinect/libfreenect.git
 
 Source: %name-%version.tar
@@ -20,7 +21,7 @@ Patch4: libfreenect-python3-sitelib.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
 BuildRequires: cmake gcc-c++
-BuildRequires: libglvnd-devel libfreeglut-devel libopencv-devel libusb-devel
+BuildRequires: libglvnd-devel libfreeglut-devel libusb-devel
 BuildRequires: python3-dev python3-module-distutils-extra python3-module-numpy
 BuildRequires: python3-module-setuptools python3-module-Cython libnumpy-py3-devel
 BuildRequires: rpm-build-python3
@@ -59,14 +60,6 @@ Group:   Video
 
 %description utils
 This package contains example utilities and demos for libfreenect.
-
-%package opencv
-Summary: OpenCV bindings for %name
-Group:   System/Libraries
-
-%description opencv
-The %name-opencv package contains the libfreenect binding
-library for OpenCV development
 
 %package fakenect
 Summary: Library to play back recorded data for %name
@@ -113,7 +106,7 @@ find -type f -exec grep -l '#!/usr/bin/env python' {} \; | \
     -DPROJECT_INCLUDE_INSTALL_DIR=%_includedir \
     -DBUILD_AUDIO=ON \
     -DBUILD_C_SYNC=ON \
-    -DBUILD_CV=ON \
+    -DBUILD_CV=OFF \
     -DBUILD_REDIST_PACKAGE=ON \
     -DBUILD_EXAMPLES=ON \
     -DBUILD_FAKENECT=ON \
@@ -167,7 +160,6 @@ mv %buildroot%_datadir/%name/libfreenectConfig.cmake \
 %_includedir/libfreenect
 %_libdir/libfreenect.so
 %_libdir/libfreenect_sync.so
-%_libdir/libfreenect_cv.so
 %_libdir/pkgconfig/*
 %_libdir/fakenect/*.so
 %_datadir/cmake/Modules/libfreenectConfig.cmake
@@ -187,10 +179,6 @@ mv %buildroot%_datadir/%name/libfreenectConfig.cmake \
 %_bindir/freenect-wavrecord
 %_bindir/freenect-fwfetcher
 
-%files opencv
-%_bindir/freenect-cvdemo
-%_libdir/libfreenect_cv.so.*
-
 %files fakenect
 %_bindir/fakenect-record
 %_bindir/fakenect
@@ -207,6 +195,9 @@ mv %buildroot%_datadir/%name/libfreenectConfig.cmake \
 %_libdir/openni2/Drivers/libFreenectDriver.so
 
 %changelog
+* Thu Nov 19 2026 Sergey Palcheh <minergenon@altlinux.org> 0.7.5-alt4
+- disabled OpenCV wrapper build (incompatible with OpenCV 5)
+
 * Wed May 20 2026 Sergey Palcheh <minergenon@altlinux.org> 0.7.5-alt3
 - split out libfreenect0 shared library package
 
