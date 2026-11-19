@@ -1,5 +1,5 @@
 Name:    mbpfan
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: A simple daemon to control fan speed on all MacBook/MacBook Pros
@@ -56,6 +56,9 @@ install -Dpm 0644 %name.8 %buildroot%_man8dir/%name.8
 %_man8dir/%name.8*
 
 %changelog
+* Thu Nov 19 2026 Andrey Cherepanov <cas@altlinux.org> 2.5.0-alt1
+- New version.
+
 * Mon Apr 03 2023 Andrey Cherepanov <cas@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 
