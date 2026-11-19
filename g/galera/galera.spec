@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: galera
-Version: 26.4.28
+Version: 26.4.29
 Release: alt1
 Summary: Synchronous multi-master wsrep provider (replication engine)
 Group: System/Servers
@@ -115,6 +115,9 @@ useradd -r -g _garbd -c "Galera Arbitrator Daemon" -d %_localstatedir/garbd -s /
 %doc %_docdir/galera/README-MySQL
 
 %changelog
+* Thu Nov 19 2026 Alexei Takaseev <taf@altlinux.org> 26.4.29-alt1
+- 26.4.29
+
 * Wed Aug 26 2026 Alexei Takaseev <taf@altlinux.org> 26.4.28-alt1
 - 26.4.28
 - Delete Fix-gcache_tests.patch fix in upstream

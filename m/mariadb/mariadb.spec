@@ -54,8 +54,8 @@
 %endif
 
 Name: mariadb
-Version: 12.3.3
-Release: alt4
+Version: 12.3.4
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -100,10 +100,10 @@ Source73: mariadbcheck@.service
 Source74: mariadbcheck.xinetd
 
 # git submodules
-Source101: libmariadb_v3.4.10.tar
+Source101: libmariadb_v3.4.12.tar
 Source102: rocksdb_v6.29.5.tar
 Source103: wsrep-lib_20260820.tar
-Source104: columnstore_25.10.6-1.tar
+Source104: columnstore_25.10.8-1.tar
 Source105: libmarias3_3.2.0.tar
 Source106: fmt_12.2.0.tar
 Source107: duckdb.tar
@@ -122,7 +122,7 @@ Patch30: mariadb-errno.patch
 Patch32: mariadb-basedir.patch
 
 Patch101: rocksdb-6.29.5-alt-add-libatomic-if-needed.patch
-Patch102: mariadb-12.3.3-issue-257749.patch
+Patch102: mariadb-12.3.4-issue-257749.patch
 Patch103: rocksdb-alt-upstream-gcc13.patch
 Patch104: mariadb-12.3.3-disable-download-fmt.patch
 Patch105: mariadb-12.3.3-use-local-duckdb.patch
@@ -523,6 +523,7 @@ export CFLAGS CXXFLAGS
     -DPLUGIN_ROCKSDB=%{?_with_rocksdb:DYNAMIC}%{?_without_rocksdb:NO} \
     -DPLUGIN_SPHINX=%{?_with_sphinx:DYNAMIC}%{?_without_sphinx:NO} \
     -DPLUGIN_CONNECT=%{?_with_connect:DYNAMIC}%{?_without_connect:NO} \
+    -DPLUGIN_DUCKDB=%{?_with_duckdb:DYNAMIC}%{?_without_duckdb:NO} \
     -DWITH_CASSANDRA=%{?_with_cassandra:TRUE}%{?_without_cassandra:FALSE} \
     -DDPLUGIN_S3=%{?_with_s3:DYNAMIC}%{?_without_s3:NO} \
     -DPLUGIN_COLUMNSTORE=NO \
@@ -1142,11 +1143,21 @@ fi
 %_man1dir/mariadb-client-test-embedded.1*
 %_man1dir/mysqltest_embedded.1*
 %_man1dir/mariadb-test-embedded.1*
+%_datadir/cmake/*
 %endif
 %endif
 %endif
 
 %changelog
+* Thu Nov 19 2026 Alexei Takaseev <taf@altlinux.org> 12.3.4-alt1
+- 12.3.4 (Fixes CVE-2026-101608, CVE-2026-101614, CVE-2026-101615,
+                CVE-2026-101617, CVE-2026-101618, CVE-2026-101619,
+                CVE-2026-101679, CVE-2026-101725, CVE-2026-101747,
+                CVE-2026-101775, CVE-2026-101794, CVE-2026-101796,
+                CVE-2026-101802)
+- Update columnstore to 25.10.8-1
+- Update libmariadb to v3.4.12
+
 * Tue Nov 03 2026 Alexei Takaseev <taf@altlinux.org> 12.3.3-alt4
 - Remove garbage dependencies from mariadb-common (ALT #61325)
 
