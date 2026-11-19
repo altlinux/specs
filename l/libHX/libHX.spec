@@ -1,5 +1,5 @@
 Name: libHX
-Version: 5.5
+Version: 5.6
 Release: alt1
 Summary: General-purpose library for typical low-level operations
 
@@ -55,6 +55,9 @@ developing applications that use %name
 %_pkgconfigdir/libHX.pc
 
 %changelog
+* Thu Nov 19 2026 Andrey Cherepanov <cas@altlinux.org> 5.6-alt1
+- New version.
+
 * Thu Oct 29 2026 Andrey Cherepanov <cas@altlinux.org> 5.5-alt1
 - New version.
 
