@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: tinycbor
-Version: 7.0
+Version: 7.1
 Release: alt1
 
 Summary: A tiny CBOR encoder and decoder library
@@ -14,10 +14,9 @@ URL: https://github.com/intel/tinycbor
 VCS: https://github.com/intel/tinycbor.git
 
 Source: %name-%version.tar
-# upstream c2c569fbef704685ce62d45fb7b20a804f45e9f3
-Patch1: %name-%version-json2cbor-install.patch
 # ALT
-Patch2: %name-%version-pkgconfig-abs-paths.patch
+Patch1: %name-7.1-project-version.patch
+Patch2: %name-alt-pkgconfig-abs-paths.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
@@ -97,5 +96,10 @@ form, json2cbor converts JSON documents to CBOR.
 %_bindir/json2cbor
 
 %changelog
+* Thu Nov 19 2026 Aleksandr A. Voyt <sobue@altlinux.org> 7.1-alt1
+- 7.0 -> 7.1.
+- Drop the json2cbor install backport applied upstream.
+- Correct the CMake project version in the v7.1 sources.
+
 * Fri Jul 31 2026 Aleksandr Voyt <sobue@altlinux.org> 7.0-alt1
 - Initial build.
