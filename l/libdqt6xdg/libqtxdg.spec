@@ -4,23 +4,29 @@
 %define sover 4
 
 Name: libdqt6xdg
-Version: 4.4.0
+Version: 4.5.0
 Release: alt0.dde.1
 
 Summary: Qt implementation of freedesktop.org xdg specs
 License: LGPL-2.1
 Group: System/Libraries
 
-Url: https://github.com/lxqt/libqtxdg
+URL: https://lxqt-project.org/
+VCS: https://github.com/lxqt/libqtxdg
+
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-dqt6
-BuildRequires: gcc-c++ cmake rpm-macros-cmake
-BuildRequires: dqt6-base-devel dqt6-svg-devel libmagic-devel
-BuildRequires: libdqt6-xml
+BuildRequires(pre): rpm-macros-cmake
 BuildRequires: dqt6-lxqt2-build-tools
+BuildRequires: gcc-c++
+BuildRequires: rpm-build-cmake 
+BuildRequires: dqt6-base-devel
+BuildRequires: dqt6-svg-devel
+BuildRequires: libmagic-devel
 BuildRequires: libgio-devel
+BuildRequires: libdqt6-xml
 Requires: libdqt6-core = %_dqt6_version
 
 # find libraries
@@ -73,6 +79,12 @@ export CMAKE_PREFIX_PATH=%_dqt6_libdir/cmake:%_dqt6_datadir/cmake:$CMAKE_PREFIX_
 %_dqt6_datadir/cmake/qt6xdg*/
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 4.5.0-alt0.dde.1
+- Merged with new version.
+
+* Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 4.5.0-alt1
+- New version 4.5.0.
+
 * Thu Sep 17 2026 Leontiy Volodin <lvol@altlinux.org> 4.4.0-alt0.dde.1
 - Forked for independent deepin buildings (for deepin-qt6integration).
 

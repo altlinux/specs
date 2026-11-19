@@ -1,19 +1,19 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 6.7.53
+Version: 6.7.54
 Release: alt1
 
 Summary: Deepin desktop schemas
 
 License: BSD-3-Clause and CC0-1.0
 Group: System/Configuration/Other
-Url: https://github.com/linuxdeepin/dtkcommon
-Vcs: https://github.com/linuxdeepin/dtkcommon
+URL: https://github.com/linuxdeepin/dtkcommon
+VCS: https://github.com/linuxdeepin/dtkcommon
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dtkcommon/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -80,6 +80,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DtkBuildHelper/DtkBuildHelperConfigVersion.cmake
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.54-alt1
+- New version 6.7.54.
+
 * Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.53-alt1
 - New version 6.7.53.
 

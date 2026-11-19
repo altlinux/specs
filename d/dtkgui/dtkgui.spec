@@ -3,26 +3,26 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 6.7.53
+Version: 6.7.54
 Release: alt1
 
 Summary: Deepin Toolkit, gui module for DDE look and feel
 
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/dtkgui
+URL: https://github.com/linuxdeepin/dtkgui
 VCS: https://github.com/linuxdeepin/dtkgui
 
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/dtkgui/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: dtkgui-alt-git.patch
 
 # Common BuildRequires.
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake dtk6-common-devel dtk6-common-configs librsvg-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libfreeimage-devel libraw-devel
+BuildRequires: cmake dtk6-common-devel dtk6-common-configs librsvg-devel treeland-protocols libwayland-egl-devel libwayland-server-devel libfreeimage-devel libraw-devel wayland-protocols
 
 %if_enabled clang
 BuildRequires: clang-devel
@@ -38,8 +38,7 @@ BuildRequires: extra-cmake-modules dqt5-base-devel-static dqt5-svg-devel dqt5-wa
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
 BuildRequires: dqt6-base-devel dqt6-wayland-devel libdtk6core-devel libdqt6-waylandclient libdqt6-widgets libdqt6-concurrent vulkan-headers
-# waiting Qt6XdgIconLoaderConfig.cmake
-# BuildRequires: libdqt6xdg-devel
+BuildRequires: libdqt6xdg-devel dqt6-svg-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -101,6 +100,7 @@ Header files and libraries for dtk6gui.
 %patch1 -p1
 
 %build
+export CMAKE_PREFIX_PATH=%_dqt6_datadir/cmake/qt6xdgiconloader:$CMAKE_PREFIX_PATH
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %else
@@ -183,6 +183,10 @@ DESTDIR=%buildroot cmake --install build5 --verbose
 %_libdir/libdtk6gui.so
 
 %changelog
+* Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.54-alt1
+- New version 6.7.54.
+- Enabled qt6xdg support.
+
 * Thu Nov 12 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.53-alt1
 - New version 6.7.53.
 
