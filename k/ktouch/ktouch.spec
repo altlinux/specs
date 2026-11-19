@@ -2,7 +2,7 @@
 
 Name: %rname
 Version: 26.08.2
-Release: alt1
+Release: alt2
 %K6init
 
 Group: Education
@@ -18,6 +18,8 @@ Provides:  kde5-ktouch = %EVR
 Obsoletes: kde5-ktouch < %EVR
 
 Source: %rname-%version.tar
+Source10: potentially-offensive-words-us.txt
+Source11: potentially-offensive-words-ru.txt
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules
@@ -40,6 +42,14 @@ to write. KTouch can also help you to remember what fingers to use.
 
 %prep
 %setup -n %rname-%version
+for f in %SOURCE10 %SOURCE11 ; do
+    LNG=`echo "$f" | sed -e 's|.*-||' -e 's|\..*||'`
+    for c in data/courses/${LNG}*.xml ; do
+	while read w ; do
+	    sed -i "/\b${w}\b/s/${w}//g" $c
+	done < $f
+    done
+done
 
 %build
 %K6build \
@@ -61,6 +71,9 @@ to write. KTouch can also help you to remember what fingers to use.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Nov 19 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt2
+- clean courses from potentially offensive words
+
 * Fri Oct 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.2-alt1
 - new version
 
