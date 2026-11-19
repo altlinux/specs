@@ -24,7 +24,7 @@
 %define nv_version 470
 %define nv_release 256
 %define nv_minor   02
-%define pkg_rel alt302
+%define pkg_rel alt303
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -307,6 +307,9 @@ install -m 0644 %subd/libnvidia-nvvm.so.4.0.0 %buildroot/%nv_lib_dir/libnvidia-n
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/libnvidia-cfg.so.%tbver %buildroot/%nv_lib_dir/libnvidia-cfg.so
 %endif
+for l in %buildroot/%_libdir/lib*.so.%tbver ; do
+    ln -sr $l %buildroot/%nv_lib_dir/
+done
 for l in %buildroot/%nv_lib_dir/lib*.so ; do
     f=`basename $l`
     echo "$f" | grep -q "^libglxserver_nvidia\." && continue ||:
@@ -387,6 +390,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 19 2026 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt303
+- fix find nvidia libraries by steam pressure-vessel
+
 * Wed May 20 2026 Sergey V Turchin <zerg@altlinux.org> 470.256.02-alt302
 - package libs with version in filenames
 
