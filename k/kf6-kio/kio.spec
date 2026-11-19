@@ -6,7 +6,7 @@
 
 Name: kf6-%rname
 Version: 6.32.0
-Release: alt1
+Release: alt2
 %K6init no_altplace
 
 Group: System/Libraries
@@ -26,6 +26,7 @@ Patch5: alt-crash.patch
 Patch6: alt-ftp-list-fallback.patch
 #
 Patch10: alt-streebog-support.patch
+Patch11: alt-kreslimit-integration.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: qt6-tools-devel qt6-declarative-devel qt6-5compat-devel
@@ -121,6 +122,7 @@ KF6 library
 %if_enabled streebog
 %patch10 -p2 -b .streebog
 %endif
+%patch11 -p1
 
 msgcat --use-first %SOURCE10 po/ru/kio6.po > po/ru/kio6.po.tmp
 cat po/ru/kio6.po.tmp >po/ru/kio6.po
@@ -179,6 +181,9 @@ mkdir -p %buildroot/%_K6data/kio/servicemenus/
 
 
 %changelog
+* Wed Nov 18 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 6.32.0-alt2
+- update
+
 * Mon Nov 16 2026 Sergey V Turchin <zerg@altlinux.org> 6.32.0-alt1
 - new version
 
