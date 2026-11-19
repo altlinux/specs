@@ -5,7 +5,7 @@
 
 Name:          foreman
 Version:       3.19.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -181,7 +181,7 @@ Autoprov:      yes,nopython3,nopython,noshell
 Autoreq:       yes,nopython3,nopython,noshell
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency amazing_print >= 2.0.0,amazing_print < 3
+%ruby_use_gem_dependency amazing_print >= 2.0.0
 %ruby_use_gem_dependency statsd-instrument >= 3.0.0,statsd-instrument < 4
 %ruby_use_gem_dependency rack-cors >= 3.0.0,rack-cors < 4
 %ruby_use_gem_dependency will_paginate >= 4.0.0,will_paginate < 5
@@ -409,12 +409,12 @@ foundation.
 %if_enabled    doc
 %package       -n foreman-doc
 Version:       3.19.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      foreman = 3.19.1-alt1.2
+Requires:      foreman = 3.19.1-alt1.3
 
 %description   -n foreman-doc
 An application that automates the lifecycle of servers documentation
@@ -437,12 +437,12 @@ foundation.
 %if_enabled    devel
 %package       -n foreman-devel
 Version:       3.19.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       An application that automates the lifecycle of servers
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      foreman = 3.19.1-alt1.2
+Requires:      foreman = 3.19.1-alt1.3
 
 %description   -n foreman-devel
 Foreman is a free open source project that gives you the power to easily
@@ -645,6 +645,11 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Nov 19 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1.3
+- ! fixed dep to amazing_print gem, closing:
+ + ALT#61483
+ + ALT#61304
+
 * Tue Sep 01 2026 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1.2
 - ! fixed dep to minitest gem
 
