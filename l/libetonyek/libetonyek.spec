@@ -1,6 +1,8 @@
+%set_autoconf_version 2.71
+
 Name: libetonyek
 Version: 0.1.13
-Release: alt1
+Release: alt2
 
 Summary: A library for import of Apple Keynote presentations
 License: MPL-2.0
@@ -17,6 +19,7 @@ Patch2: libetonyek-alt-mdds-3.0.patch
 BuildRequires: doxygen gcc-c++ libglm-devel librevenge-devel libxml2-devel mdds-devel zlib-devel
 BuildRequires: liblangtag-devel mdds-devel
 BuildRequires: cppunit-devel
+BuildRequires: autoconf_2.71
 
 %description
 libetonyek is library providing ability to interpret and import Apple
@@ -93,6 +96,9 @@ make check
 %_bindir/*
 
 %changelog
+* Thu Nov 19 2026 Andrey Cherepanov <cas@altlinux.org> 0.1.13-alt2
+- Required autoconf_2.71.
+
 * Fri Nov 21 2025 Andrey Cherepanov <cas@altlinux.org> 0.1.13-alt1
 - FTBFS: build new version with mdds-3.1.0
 
