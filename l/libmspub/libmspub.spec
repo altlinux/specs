@@ -1,9 +1,11 @@
+%def_enable check
+
 Name: libmspub
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: A library providing ability to interpret and import Microsoft Publisher files
-License: GPLv2+ or LGPLv2+ or MPLv1.1
+License: GPLv2+ or LGPLv2+ or MPL-1.1
 Group: System/Libraries
 Url: https://wiki.documentfoundation.org/DLP/Libraries/libmspub
 Source: %name-%version.tar
@@ -14,10 +16,10 @@ BuildRequires: gcc-c++
 BuildRequires: pkgconfig(librevenge-0.0) >= 0.0.1 pkgconfig(librevenge-stream-0.0) pkgconfig(librevenge-generators-0.0)
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(zlib)
-BuildRequires: pkgconfig(icu-i18n)
-
+BuildRequires: pkgconfig(icu-i18n) pkgconfig(icu-uc)
 BuildRequires: boost-devel
 BuildRequires: doxygen
+%{?_enable_check:BuildRequires: cppunit-devel}
 
 %description
 Libmspub is library providing ability to interpret and import Microsoft
@@ -56,7 +58,11 @@ Currently supported: XHTML, raw.
 %build
 mkdir -p m4
 %autoreconf
-%configure --disable-static --disable-werror
+%configure \
+    --disable-static \
+    --disable-werror \
+    %{?_enable_check:--enable-tests}
+%nil
 %make_build
 
 %install
@@ -66,7 +72,7 @@ mkdir -p m4
 %make -k check VERBOSE=1
 
 %files
-%doc AUTHORS COPYING.*
+%doc AUTHORS COPYING.* NEWS
 %_libdir/*.so.*
 
 %files devel
@@ -83,6 +89,9 @@ mkdir -p m4
 %_bindir/*
 
 %changelog
+* Thu Nov 19 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.6-alt1
+- 0.1.6
+
 * Mon Jul 06 2026 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt1
 - 0.1.5
 
