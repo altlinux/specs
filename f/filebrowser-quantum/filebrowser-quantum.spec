@@ -1,15 +1,15 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/gtsteffaniak/filebrowser
-%global commit_hash 79552f8ad
+%global commit_hash 2c071d1
 %global short_name filebrowser
 
 Name: filebrowser-quantum
-Version: 1.5.0
+Version: 2.0.2
 Release: alt1
 Summary: The best free self-hosted web-based file manager
 License: Apache-2.0
 Group: System/Servers
-Url: https://filebrowserquantum.com
+URL: https://filebrowserquantum.com
 VCS: https://github.com/gtsteffaniak/filebrowser
 
 Source: %name-%version.tar
@@ -23,7 +23,6 @@ ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: esbuild
 BuildRequires: rollup-native
 BuildRequires: npm
 
@@ -41,10 +40,8 @@ alternative options, FileBrowser Quantum is simple to install and
 easy to configure.
 
 %prep
-%setup -a 1 -a 2
-ln -sv %_bindir/esbuild frontend
+%setup -a1 -a2
 ln -svf %_bindir/rollup frontend/node_modules/.bin/rollup
-sed -i "s/0.25.12/$(rpm -q --qf '%{VERSION}' esbuild)/g" frontend/node_modules/esbuild/lib/main.js
 sed -i '/port/s/80/8080/' backend/config.yaml
 
 %build
@@ -52,7 +49,6 @@ export BUILDDIR=$PWD/.gopath
 export IMPORT_PATH=%import_path
 export GOPATH=$BUILDDIR:%go_path
 export GOFLAGS=-mod=vendor
-export ESBUILD_BINARY_PATH=./esbuild
 
 npm --prefix frontend run build
 
@@ -72,6 +68,18 @@ install -Dm 0600 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%short_name
 mkdir -p %buildroot%_sharedstatedir/%short_name
 
 %pre
+if [ "$1" -gt 1 ]; then
+    case "%version" in
+        2.*)
+            if rpm -q --qf '%%{VERSION}\n' %name 2>/dev/null | grep -q '^1\.'; then
+                printf '%s\n' \
+                    'FileBrowser Quantum: upgrading from v1 to v2 requires a database and configuration migration.' \
+                    'Follow the migration guide before starting the v2 service:' \
+                    'https://filebrowserquantum.com/en/docs/getting-started/v2/migration/' >&2
+            fi
+            ;;
+    esac
+fi
 %sysusers_create_package %short_name %SOURCE4
 
 %post
@@ -90,6 +98,9 @@ mkdir -p %buildroot%_sharedstatedir/%short_name
 %dir %attr(0750, _%short_name, _%short_name) %_sharedstatedir/%short_name
 
 %changelog
+* Wed Nov 18 2026 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.2-alt1
+- Updated to version 2.0.2.
+
 * Thu Jul 30 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.5.0-alt1
 - Updated to version 1.5.0.
 
