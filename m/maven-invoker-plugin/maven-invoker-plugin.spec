@@ -1,6 +1,6 @@
 Name:           maven-invoker-plugin
-Version:        3.9.0
-Release:        alt2
+Version:        3.10.1
+Release:        alt1
 
 Summary:        Apache Maven Invoker Plugin
 License:        Apache-2.0
@@ -8,22 +8,20 @@ Group:          Development/Java
 URL:            https://maven.apache.org/plugins/maven-invoker-plugin/
 VCS:            https://github.com/apache/maven-invoker-plugin
 
-Source0:        %name-%version-source-release.zip
+Source0:        %name-%version.tar
 
 BuildRequires(pre):  maven-local
 BuildRequires:  jpackage-default
-BuildRequires:  unzip
 
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugins:pom:)
-BuildREquires:  mvn(org.codehaus.modello:modello-maven-plugin)
-BuildREquires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
-BuildREquires:  mvn(org.apache.maven.shared:maven-invoker)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.shared:maven-invoker)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildREquires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildREquires:  mvn(org.apache.maven.shared:maven-script-interpreter)
-buildRequires:  mvn(org.mockito:mockito-core)
-# TODO: switch to mvn() prov, after fixing mockito bug
-BuildRequires:  osgi(org.mockito.junit-jupiter)
+BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
+BuildRequires:  mvn(org.apache.maven.shared:maven-script-interpreter)
+BuildRequires:  mvn(org.mockito:mockito-core)
+BuildRequires:  mvn(org.mockito:mockito-junit-jupiter)
 
 BuildARch:      noarch
 
@@ -53,6 +51,9 @@ have been designed to assert certain features of the plugin under test.
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Nov 18 2026 Anton Meleshnikov <alton@altlinux.org> 3.10.1-alt1
+- New version.
+
 * Sun May 10 2026 Evgeniy Serov <scala@altlinux.org> 3.9.0-alt2
 - Cleanup spec and rebuild with new maven-parent.
 
