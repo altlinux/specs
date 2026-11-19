@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed
 
 Name: bin-github
-Version: 0.29.4
+Version: 0.30.0
 Release: alt1
 Summary: Binaries manager for GitHub (and Docker) releases
 License: MIT
@@ -57,6 +57,9 @@ go test -v ./...
 %_datadir/zsh/site-functions/_bin
 
 %changelog
+* Thu Nov 19 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.30.0-alt1
+- new version 0.30.0
+
 * Thu Oct 29 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.29.4-alt1
 - new version 0.29.4
 
