@@ -1,10 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define major 0
-%define minor 23
+%define minor 24
 %define api_ver %major.%minor
 
 Name:    rtabmap
-Version: 0.23.8
-Release: alt2
+Version: 0.24.2
+Release: alt1
 
 Summary: RTAB-Map library and standalone application
 License: BSD-3-Clause
@@ -15,7 +16,7 @@ VCS:     https://github.com/introlab/rtabmap
 Source: %name-%version.tar
 Patch: rtabmap-cmake-cxx-standard.patch
 Patch1: rtabmap-orbbec-sdk-no-version.patch
-Patch2: rtabmap-gtsam-4.3.patch
+Patch2: rtabmap-opencv5-mat-comma.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -47,6 +48,7 @@ mapping, or on a robot equipped with a laser rangefinder for 3DoF mapping.
 %package -n lib%name
 Summary: RTAB-Map shared libraries
 Group:   System/Libraries
+Requires: python3-module-numpy
 
 %description -n lib%name
 This package contains the RTAB-Map runtime shared libraries.
@@ -55,6 +57,9 @@ This package contains the RTAB-Map runtime shared libraries.
 Summary: Development files for RTAB-Map
 Group:   Development/C++
 Requires: lib%name = %EVR
+Requires: libopencv-devel pcl-devel eigen3-compat-devel boost-devel-headers
+Requires: libvtk-devel qt5-base-devel octomap-devel librealsense-devel
+Requires: python3-dev libnumpy-py3-devel
 
 %description devel
 This package contains headers and CMake config files for building
@@ -81,6 +86,7 @@ This package contains additional RTAB-Map command-line tools and examples.
     -DCMAKE_INSTALL_RPATH:STRING='' \
     -DCMAKE_CXX_STANDARD=17 \
     -DCMAKE_CXX_FLAGS:STRING='%optflags -DGLOG_USE_GLOG_EXPORT' \
+    -DBUILD_TESTING=OFF \
     -DOrbbecSDK_DIR=%_libdir \
     -DWITH_CERES=ON \
     -DWITH_GTSAM=ON \
@@ -155,6 +161,12 @@ This package contains additional RTAB-Map command-line tools and examples.
 %_bindir/rtabmap-rgbd_dataset
 
 %changelog
+* Thu Nov 19 2026 Sergey Palcheh <minergenon@altlinux.org> 0.24.2-alt1
+- new version 0.24.2
+- dropped the obsolete GTSAM 4.3 backport patch, the fix is upstream now
+- backported the upstream fix for building with OpenCV 5.1: removed Mat_
+  comma initializers are replaced by the (sizes, values) constructor
+
 * Sat Oct 10 2026 Sergey Palcheh <minergenon@altlinux.org> 0.23.8-alt2
 - fixed cmake configure failure with empty CMAKE_CXX_STANDARD
   (quote the variable in the c++14 condition guard)
