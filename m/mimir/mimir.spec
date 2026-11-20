@@ -2,22 +2,22 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: mimir
-Version: 3.2.4
+Version: 3.2.6
 Release: alt1
 
-Summary: Grafana Mimir is an open source software project that provides a scalable long-term storage for Prometheus
+Summary: Grafana Mimir provides a scalable long-term storage for Prometheus
 License: AGPL-3.0-only
 Group: Development/Other
-Url: https://grafana.com/oss/mimir/
-Vcs: https://github.com/grafana/mimir.git
+URL: https://grafana.com/oss/mimir/
+VCS: https://github.com/grafana/mimir
 
-Source: https://grafana.com/oss/mimir/archive/%name-%version/%name-%version.tar.gz
-Patch: mimir-2.15.0-alt-systemd.patch
+Source: https://grafana.com/oss/mimir/archive/%name-%version/%name-%version.tar
+Patch: %name-%version-%release.patch
 
 ExcludeArch: i586 armh
 BuildRequires(pre): rpm-macros-golang
 BuildRequires: rpm-build-golang
-BuildRequires: golang >= 1.26.10
+BuildRequires: golang >= 1.26.11
 BuildRequires: /proc
 
 %description
@@ -25,18 +25,22 @@ Grafana Mimir provides horizontally scalable, highly available,
 multi-tenant, long-term storage for Prometheus.
 
 %package query-tee
-Summary: Tool that you can use for testing purposes when comparing the query results and performance of two Grafana Mimir clusters
+Summary: Tool that you can use for testing purposes
 Group: Other
 
 %description query-tee
-The query-tee is a standalone tool that you can use for testing purposes when comparing the query results and performance of two Grafana Mimir clusters. The two Mimir clusters compared by the query-tee must ingest the same series and samples.
+The query-tee is a standalone tool that you can use for testing purposes
+when comparing the query results and performance of two Grafana Mimir clusters.
+The two Mimir clusters compared by the query-tee must ingest the same series
+and samples.
 
 %package  -n mimirtool
-Summary: Command-line tool that operators and tenants can use to execute a number of common tasks that involve Grafana Mimir or Grafana Cloud Metrics
+Summary: Command-line tool
 Group: Other
 
 %description -n mimirtool
-Mimirtool is a command-line tool that operators and tenants can use to execute a number of common tasks that involve Grafana Mimir or Grafana Cloud Metrics.
+Mimirtool is a command-line tool that operators and tenants can use to execute
+a number of common tasks that involve Grafana Mimir or Grafana Cloud Metrics.
 
 %package metaconvert
 Summary: metaconvert
@@ -47,7 +51,7 @@ metaconvert.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 sed -i '/^ExecStart/ s|/usr/local/bin/|/usr/bin/|' packaging/nfpm/mimir/%name.service
 sed -i '/^EnvironmentFile/ s|$OS_ENV_DIR|/etc/sysconfig|' packaging/nfpm/mimir/%name.service
@@ -115,6 +119,10 @@ usermod -a -G proc %name ||:
 %_bindir/metaconvert
 
 %changelog
+* Fri Nov 20 2026 Anton Meleshnikov <alton@altlinux.org> 3.2.6-alt1
+- New version 3.2.6 (Fixes: CVE-2026-97054, CVE-2026-116591,
+  CVE-2026-81871, CVE-2026-81872, CVE-2026-128085).
+
 * Mon Nov 09 2026 Anton Meleshnikov <alton@altlinux.org> 3.2.4-alt1
 - New version 3.2.4 (Fixes: CVE-2026-116587, CVE-2026-116585,
   CVE-2026-116586, CVE-2026-78661, CVE-2026-97045).
