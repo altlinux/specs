@@ -7,7 +7,7 @@
 
 Name: gn
 Version: 0.%major.%commit
-Release: alt1
+Release: alt2
 
 Summary: Meta-build system that generates build files for Ninja
 License: BSD-3-Clause
@@ -63,6 +63,9 @@ install -Dpm755 out/gn %buildroot%_bindir/gn
 %_bindir/gn
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 0.2629.bc823cc7-alt2
+- Resolve the executable path without procfs.
+
 * Mon Nov 16 2026 Ilya Muhamadeev <nicourced@altlinux.org> 0.2629.bc823cc7-alt1
 - New version.
 

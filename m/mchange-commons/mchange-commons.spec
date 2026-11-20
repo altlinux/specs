@@ -2,7 +2,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 Name:          mchange-commons
 Version:       0.7.1
-Release:       alt1
+Release:       alt2
 Summary:       A collection of general purpose utilities for c3p0
 License:       LGPL-2.1-or-later or EPL-1.0
 URL:           https://github.com/swaldman/mchange-commons-java
@@ -17,7 +17,7 @@ BuildRequires: mvn(org.apache.logging.log4j:log4j-api)
 BuildRequires: mvn(org.apache.logging.log4j:log4j-core)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(ch.qos.logback:logback-classic)
+BuildRequires: mvn(org.slf4j:slf4j-reload4j)
 BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 
 BuildArch:     noarch
@@ -37,6 +37,9 @@ This package contains javadoc for %name.
 %prep
 %setup -q
 
+%pom_remove_dep ch.qos.logback:logback-classic
+%pom_add_dep org.slf4j:slf4j-reload4j:1.7.36:test
+
 %mvn_file : %name
 
 %build
@@ -53,6 +56,9 @@ export JAVA_HOME=%_jvmdir/java-17-openjdk
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 0.7.1-alt2
+- Fix FTBFS: Use the SLF4J 1.7 test binding.
+
 * Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 0.7.1-alt1
 - New version.
 

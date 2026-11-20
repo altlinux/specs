@@ -3,7 +3,7 @@
 
 Name:		tini
 Version:	0.19.0
-Release:	alt3
+Release:	alt4
 Summary:	A tiny but valid init for containers
 
 Group:		Development/Other
@@ -16,6 +16,7 @@ ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-licenses rpm-build-golang
 BuildRequires: cmake
 BuildRequires: glibc-devel-static
+BuildRequires: libatomic-devel-static
 
 Provides: docker-init = %version-%release
 Obsoletes: docker-init <= 0.13.0
@@ -44,6 +45,9 @@ cp -a -- tini-static    %buildroot%_bindir/tini
 %_bindir/tini
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 0.19.0-alt4
+- Fix FTBFS: add static libatomic.
+
 * Mon Apr 7 2025 Vladimir Didenko <cow@altlinux.org> 0.19.0-alt3
 - Fix build with cmake 4.0
 

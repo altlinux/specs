@@ -2,7 +2,7 @@
 
 Name: safe-html-types
 Version: 1.0.8
-Release: alt1
+Release: alt2
 
 Summary: Safe HTML and related web content types for Java
 License: Apache-2.0
@@ -27,6 +27,7 @@ BuildRequires: mvn(com.google.jsinterop:jsinterop-annotations)
 BuildRequires: mvn(com.google.code.findbugs:jsr305)
 BuildRequires: mvn(com.google.errorprone:error_prone_annotations)
 BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.maven.surefire:surefire-junit3)
 BuildRequires: mvn(org.codehaus.mojo:exec-maven-plugin)
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
@@ -77,5 +78,8 @@ Generated Java API documentation for Safe HTML Types.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.0.8-alt2
+- Fix FTBFS: Add the Surefire JUnit 3 provider.
+
 * Wed Nov 04 2026 Ivan Khanas <xeno@altlinux.org> 1.0.8-alt1
 - Initial build for ALT.

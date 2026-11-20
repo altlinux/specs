@@ -2,7 +2,7 @@
 
 Name: h2
 Version: 2.5.252
-Release: alt1
+Release: alt2
 
 Summary: Java SQL database engine
 License: (MPL-2.0 or EPL-1.0) and Apache-2.0
@@ -20,7 +20,7 @@ BuildRequires: java-21-openjdk-devel
 BuildRequires: maven-local
 BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires: mvn(javax.servlet:javax.servlet-api)
-BuildRequires: mvn(jakarta.servlet:jakarta.servlet-api)
+BuildRequires: mvn(jakarta.servlet:jakarta.servlet-api:5.0.0)
 BuildRequires: mvn(org.apache.lucene:lucene-core)
 BuildRequires: mvn(org.apache.lucene:lucene-analysis-common)
 BuildRequires: mvn(org.apache.lucene:lucene-queryparser)
@@ -73,6 +73,9 @@ cd h2
 %files javadoc -f h2/.mfiles-javadoc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.5.252-alt2
+- Fix FTBFS: Require the Servlet 5 compatibility API.
+
 * Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 2.5.252-alt1
 - New version.
 

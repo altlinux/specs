@@ -2,7 +2,7 @@
 
 Name: cryptohash
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Cryptographic hashing functions for Kotlin and Java
 License: Apache-2.0 AND MIT AND BSD-2-Clause
@@ -12,7 +12,6 @@ VCS: https://github.com/appmattus/crypto.git
 BuildArch: noarch
 
 Source0: %name-%version.tar
-Source1: gradle-coroutines.xml
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: xgradle
@@ -22,6 +21,7 @@ BuildRequires: java-21-openjdk-devel
 BuildRequires: kotlin-gradle-plugin
 BuildRequires: kotlin-stdlib
 BuildRequires: kotlin-test
+BuildRequires: kotlinx-coroutines
 BuildRequires: junit
 BuildRequires: bouncycastle
 
@@ -33,16 +33,11 @@ metadata and JVM implementation for Gradle and Java consumers.
 %prep
 %setup -q
 find . -type f \( -name '*.jar' -o -name '*.class' \) -delete
-test -s %_datadir/gradle/lib/kotlinx-coroutines-core-jvm-1.10.2.jar
-mkdir -p .xmvn/gradle-metadata
-cp %SOURCE1 .xmvn/gradle-metadata/coroutines.xml
-subst 's|@DATADIR@|%_datadir|g' .xmvn/gradle-metadata/coroutines.xml
 
 %build
 system_data=%_datadir
 %mvn_config resolverSettings/metadataRepositories \
-    "<repository>$PWD/.xmvn/gradle-metadata</repository>\
-<repository>$system_data/maven-metadata</repository>\
+    "<repository>$system_data/maven-metadata</repository>\
 <repository>$system_data/javapackages-bootstrap/maven-metadata</repository>"
 %gradle_publish -PpackageVersion=%version
 
@@ -57,5 +52,8 @@ system_data=%_datadir
 %doc LICENSE cryptohash/NOTICE.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.0.2-alt2
+- Fix FTBFS: use system Coroutines.
+
 * Tue Oct 27 2026 Ivan Khanas <xeno@altlinux.org> 1.0.2-alt1
 - Initial build for ALT.

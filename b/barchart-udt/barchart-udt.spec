@@ -2,7 +2,7 @@
 
 Name: barchart-udt
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: Java UDT sockets, NIO channels and native transport
 License: BSD-3-Clause
@@ -17,7 +17,7 @@ BuildRequires: maven-local
 BuildRequires: java-21-openjdk-devel
 BuildRequires: gcc-c++
 BuildRequires: maven-plugin-bundle
-BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-api:2)
 BuildRequires: mvn(ch.qos.logback:logback-classic)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(commons-io:commons-io)
@@ -117,5 +117,8 @@ install -m755 barchart-udt-core/target/native-tools/barchart-udt-* \
 %_bindir/barchart-udt-*
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.3.0-alt2
+- Fix FTBFS: Resolve the SLF4J 2 API.
+
 * Mon Nov 16 2026 Ivan Khanas <xeno@altlinux.org> 2.3.0-alt1
 - Initial build for ALT.

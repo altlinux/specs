@@ -2,7 +2,7 @@
 
 Name: jasperreports
 Version: 7.0.6
-Release: alt1
+Release: alt2
 
 Summary: Java reporting library (core module)
 License: LGPL-3.0-or-later
@@ -146,6 +146,9 @@ find . -type f -name 'pom*.xml' -print0 | \
     -e 's/\${revision}/%version/g' \
     -e 's/\$revision/%version/g'
 
+find core tools -type f -name MANIFEST.MF -exec \
+  sed -i 's/^Bundle-Version: \$[{]project\.version[}]/Bundle-Version: %version/' {} +
+
 # Parent POM is outside reactor modules; register it explicitly.
 %mvn_artifact --skip-dependencies pom-parent.xml
 
@@ -183,5 +186,8 @@ sed -i \
 %files annotation-processors -f .mfiles-annotation-processors
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 7.0.6-alt2
+- Fix FTBFS: Expand the OSGi bundle version.
+
 * Mon Apr 13 2026 Ivan Khanas <xeno@altlinux.org> 7.0.6-alt1
 - Initial core-focused package for ALT Linux.

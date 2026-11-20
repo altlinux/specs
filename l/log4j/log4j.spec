@@ -1,6 +1,6 @@
 Name:           log4j
 Version:        2.25.4
-Release:        alt2
+Release:        alt3
 
 Summary:        Java logging package
 License:        Apache-2.0
@@ -101,6 +101,11 @@ rm -rf docs/api
 %pom_change_dep -r org.osgi:org.osgi.annotation.bundle org.osgi:osgi.annotation
 %pom_remove_dep -r org.osgi:org.osgi.annotation.versioning
 
+# Bnd sees the filename of the multi-release JSpecify JAR before its JPMS descriptor.
+sed -i 's/org\.jspecify;transitive=false/org.jspecify;substitute="jspecify";transitive=false/' \
+    log4j-api/pom.xml log4j-core/pom.xml
+
+
 # with patch0
 %pom_remove_dep com.google.errorprone:error_prone_annotations log4j-parent
 
@@ -200,6 +205,9 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadCo
 %files bom -f .mfiles-bom
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.25.4-alt3
+- Use the correct JSpecify module name.
+
 * Wed Sep 30 2026 Evgeniy Serov <scala@altlinux.org> 2.25.4-alt2
 - Swithed to jpackage-17-compat.
 

@@ -4,7 +4,7 @@
 
 Name: greenmail
 Version: 2.1.8
-Release: alt2
+Release: alt3
 
 Summary: Email test server for integration tests
 License: Apache-2.0
@@ -30,6 +30,7 @@ BuildRequires: jakarta-mail
 BuildRequires: angus-mail
 BuildRequires: angus-activation
 BuildRequires: jakarta-servlet
+BuildRequires: tomcat10-el-5.0-api >= 1:10.1.62-alt2
 BuildRequires: jakarta-ws-rs
 BuildRequires: slf4j log4j-slf4j
 BuildRequires: jul-to-slf4j
@@ -102,9 +103,8 @@ GreenMail integration helpers for JUnit 5 tests.
 %pom_remove_plugin org.apache.maven.plugins:maven-shade-plugin greenmail-standalone/pom.xml
 %pom_remove_plugin -r -f org.codehaus.mojo:keytool-maven-plugin
 %pom_remove_plugin -r -f :maven-enforcer-plugin
+%pom_change_dep jakarta.servlet:jakarta.servlet-api jakarta.servlet:jakarta.servlet-api:6.1.0
 
-sed -i 's|<groupId>jakarta.servlet</groupId>|<groupId>javax.servlet</groupId>|' greenmail-webapp/pom.xml
-sed -i 's|<artifactId>jakarta.servlet-api</artifactId>|<artifactId>javax.servlet-api</artifactId>|' greenmail-webapp/pom.xml
 sed -i 's|<artifactId>jakarta.mail</artifactId>|<artifactId>angus-mail</artifactId>|g' pom.xml greenmail-core/pom.xml
 
 # Parent POM is only a build aggregator.
@@ -149,6 +149,9 @@ chmod 0755 %buildroot%_bindir/greenmail-webapp
 %files junit4 -f .mfiles-greenmail-junit4
 %files junit5 -f .mfiles-greenmail-junit5
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.1.8-alt3
+- Fix FTBFS: Use Jakarta Servlet in the webapp.
+
 * Thu May 21 2026 Ivan Khanas <xeno@altlinux.org> 2.1.8-alt2
 - Unbandle dependencies from greenmail-standalone.
 

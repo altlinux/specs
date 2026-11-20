@@ -3,7 +3,7 @@
 
 Name: plumelib-hashmap-util
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: Plume-lib utility libraries for Java HashMaps
 License: GPL-2.0 WITH Classpath-exception-2.0
@@ -23,6 +23,7 @@ BuildRequires: xgradle
 BuildRequires: checker-qual
 %if_with check
 BuildRequires: junit5
+BuildRequires: apiguardian
 %endif
 
 %{?javadoc_package}
@@ -60,5 +61,8 @@ programming utilities.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.0.0-alt2
+- Fix FTBFS: add API Guardian to tests.
+
 * Tue Nov 18 2025 Ivan Khanas <xeno@altlinux.org> 1.0.0-alt1
 - First build for ALT.

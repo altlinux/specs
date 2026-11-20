@@ -2,7 +2,7 @@
 
 Name: antlr4-tunnelvisionlabs
 Version: 4.9.0
-Release: alt1
+Release: alt2
 
 Summary: Optimized ANTLR 4 parser generator and runtime
 License: BSD-3-Clause
@@ -29,7 +29,6 @@ BuildRequires: mvn(org.openjdk.jol:jol-core)
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(io.takari.maven.plugins:takari-plugin-testing)
 BuildRequires: mvn(org.apache.maven:maven-compat)
-BuildRequires: mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-jar-plugin)
@@ -108,6 +107,7 @@ project.
 # its Takari lifecycle testProperties extension is absent offline. The package
 # is validated later with an installed Maven consumer.
 %patch0 -p1
+%pom_remove_dep org.apache.maven.shared:maven-plugin-testing-harness antlr4-testgen-maven-plugin
 %pom_remove_parent
 # Generate XPathLexer with our own tool after the in-SRPM bootstrap pass.
 %pom_remove_plugin com.tunnelvisionlabs:antlr4-maven-plugin runtime/Java
@@ -187,5 +187,8 @@ rm -rf runtime/JavaAnnotations/target runtime/Java/target \
 %files perf-testsuite -f .mfiles-perf-testsuite
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 4.9.0-alt2
+- Fix FTBFS: drop unused test harness.
+
 * Mon Oct 26 2026 Ivan Khanas <xeno@altlinux.org> 4.9.0-alt1
 - Initial build for ALT.

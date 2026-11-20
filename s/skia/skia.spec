@@ -3,7 +3,7 @@
 
 Name: skia
 Version: 157
-Release: alt1
+Release: alt2
 
 Summary: Skia graphics and text shaping C++ development kit
 License: BSD-3-Clause AND Apache-2.0
@@ -20,7 +20,7 @@ Patch1: fp-contract.patch
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: binutils
-BuildRequires: gn
+BuildRequires: gn >= 0.2629.bc823cc7-alt2
 BuildRequires: ninja-build
 BuildRequires: pkg-config
 BuildRequires: python3-base
@@ -99,5 +99,8 @@ python3 %SOURCE1 check --jobs %__nprocs
 %_libdir/pkgconfig/skia.pc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 157-alt2
+- Fix FTBFS: Use GN with procfs-independent path detection.
+
 * Thu Nov 05 2026 Ivan Khanas <xeno@altlinux.org> 157-alt1
 - Initial build for ALT.

@@ -2,7 +2,7 @@
 
 Name: javacc-gradle-plugin
 Version: 4.0.3
-Release: alt2
+Release: alt3
 
 Summary: JavaCC Compiler Plugin for Gradle
 Group: Development/Java
@@ -58,6 +58,9 @@ find ~/.m2 -iname *javacc.gradle.plugin-%version.pom -exec \
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 4.0.3-alt3
+- Fix FTBFS: Use the current Shadow relocation option.
+
 * Fri Sep 11 2026 Anton Meleshnikov <alton@altlinux.org> 4.0.3-alt2
 - FTBFS fix.
 

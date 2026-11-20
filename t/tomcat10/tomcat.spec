@@ -23,7 +23,7 @@
 
 Name: tomcat10
 Version: 10.1.62
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 License: Apache-2.0
@@ -155,7 +155,6 @@ rm -r java/org/apache/naming/factory/webservices
 
 # Configure maven files
 %mvn_package ":tomcat-el-api" tomcat-el-api
-%mvn_alias "org.apache.tomcat:tomcat-el-api" "jakarta.servlet:jakarta.servlet-api"
 %mvn_package ":tomcat-jsp-api" tomcat-jsp-api
 %mvn_alias "org.apache.tomcat:tomcat-jsp-api" "jakarta.servlet:jakarta.servlet.jsp"
 %mvn_package ":tomcat-servlet-api" tomcat-servlet-api
@@ -440,6 +439,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1:10.1.62-alt2
+- Remove the incorrect Servlet API alias from Tomcat EL.
+
 * Tue Nov 17 2026 Stanislav Levin <slev@altlinux.org> 1:10.1.62-alt1
 - 10.1.61 -> 10.1.62
 

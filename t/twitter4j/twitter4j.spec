@@ -2,7 +2,7 @@
 
 Name: twitter4j
 Version: 4.1.2
-Release: alt1
+Release: alt2
 
 Summary: A 100%% pure Java library for the Twitter API with no extra dependency
 License: Apache-2.0
@@ -22,7 +22,9 @@ BuildRequires: xgradle
 BuildRequires: rpm-build-java-osgi
 BuildRequires: jetbrains-annotations
 BuildRequires: slf4j
-BuildRequires: log4j
+BuildRequires: log4j >= 2.25.4-alt3
+BuildRequires: mvn(org.osgi:osgi.core)
+BuildRequires: mvn(org.jspecify:jspecify)
 BuildRequires: jansi
 
 %description
@@ -46,6 +48,18 @@ This package contains the %summary.
 %autopatch -p1
 
 sed -i 's/classifier =/archiveClassifier =/g' twitter4j-core/build.gradle
+# Gradle does not infer the module path for osgi.core's filename-based module name.
+cat >>twitter4j-core/module-info/build.gradle <<'EOF'
+
+java.modularity.inferModulePath = false
+tasks.named('compileJava') {
+    def dependencies = configurations.compileClasspath
+    options.encoding = 'UTF-8'
+    options.compilerArgumentProviders.add({ ['--module-path', dependencies.asPath] }
+        as org.gradle.process.CommandLineArgumentProvider)
+}
+EOF
+sed -i '/^dependencies {/a\    compileOnly "org.osgi:osgi.core:8.0.0"\n    compileOnly "org.jspecify:jspecify:1.0.0"' twitter4j-core/module-info/build.gradle
 
 %build
 %gradle_publish
@@ -62,5 +76,8 @@ sed -i 's/classifier =/archiveClassifier =/g' twitter4j-core/build.gradle
 %doc LICENSE.txt
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 4.1.2-alt2
+- Fix FTBFS: Set UTF-8 and add JPMS compile dependencies.
+
 * Sun Nov 02 2025 Ivan Khanas <xeno@altlinux.org> 4.1.2-alt1
 - First build for ALT.

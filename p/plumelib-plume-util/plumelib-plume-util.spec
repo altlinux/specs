@@ -3,7 +3,7 @@
 
 Name: plumelib-plume-util
 Version: 1.12.2
-Release: alt1
+Release: alt2
 
 Summary: Utility libraries for Java 
 License: MIT
@@ -25,6 +25,7 @@ BuildRequires: plumelib-hashmap-util
 BuildRequires: plumelib-reflection-util
 %if_with check
 BuildRequires: junit5
+BuildRequires: apiguardian
 %endif
 
 %{?javadoc_package}
@@ -57,5 +58,8 @@ utility libraries.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.12.2-alt2
+- Fix FTBFS: add API Guardian to tests.
+
 * Tue Nov 18 2025 Ivan Khanas <xeno@altlinux.org> 1.12.2-alt1
 - First build for ALT.

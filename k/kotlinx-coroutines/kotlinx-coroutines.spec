@@ -2,7 +2,7 @@
 
 Name: kotlinx-coroutines
 Version: 1.11.0
-Release: alt2
+Release: alt3
 
 Summary: Kotlin coroutines JVM runtime and integrations
 License: Apache-2.0
@@ -14,6 +14,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Source1: kotlinx-coroutines-intellij-%version.tar
 Patch: offline-jvm.patch
+Patch1: intellij-jvm-tests.patch
 
 BuildRequires(pre): rpm-macros-gradle
 BuildRequires: animal-sniffer
@@ -28,6 +29,7 @@ BuildRequires: mvn(org.ow2.asm:asm-commons)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-reflect)
 BuildRequires: mvn(org.jetbrains.kotlin:kotlin-stdlib)
 BuildRequires: mvn(org.jetbrains.kotlinx:atomicfu-jvm)
+BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(org.jetbrains:annotations)
 BuildRequires: mvn(org.slf4j:slf4j-api)
 BuildRequires: mvn(net.bytebuddy:byte-buddy)
@@ -42,6 +44,7 @@ BuildRequires: mvn(org.jetbrains.kotlin:kotlin-test-junit)
 BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
 BuildRequires: mvn(org.junit.platform:junit-platform-testkit)
 BuildRequires: mvn(com.google.code.gson:gson)
+BuildRequires: mvn(org.slf4j:slf4j-api:2)
 BuildRequires: mvn(ch.qos.logback:logback-classic)
 
 # Supersede bootstrap metadata to avoid duplicate XMvn SYSTEM providers.
@@ -50,7 +53,7 @@ Obsoletes: gradle-kotlinx-coroutines
 
 %description
 Kotlin coroutines JVM runtime, virtual-time test scheduler, Swing
-main dispatcher, SLF4J context integration and debug instrumentation.
+main dispatcher, Guava and SLF4J integrations and debug instrumentation.
 Built from upstream sources using system Kotlin and AtomicFU.
 The IntelliJ fork is available in a separate subpackage.
 
@@ -59,16 +62,24 @@ Summary: JetBrains patched coroutines for IntelliJ threading integration
 Group: Development/Java
 
 %description intellij
-JetBrains' complete patched JVM coroutines core, test scheduler and Swing
-integration. Provides the genuine IntelliJ context introspection and
-parallelism compensation API. Its distinct Maven group is
+JetBrains' complete patched JVM coroutines core, test scheduler, Swing,
+Guava and SLF4J integrations, and debug instrumentation. Provides the genuine
+IntelliJ context introspection and parallelism compensation API. Its distinct Maven group is
 org.jetbrains.intellij.deps.kotlinx; use one coroutines implementation
 per application class loader.
 
 %prep
 %setup -a1
 %patch -p1
+pushd kotlinx-coroutines-intellij-%version
+%patch1 -p1
+popd
 cp -a alt-jvm kotlinx-coroutines-intellij-%version/
+# ConsoleAppender requires an encoder with the system Logback.
+for tree in . kotlinx-coroutines-intellij-%version; do
+    sed -i -e 's/<layout>/<encoder>/' -e 's@</layout>@</encoder>@' \
+        "$tree/integration/kotlinx-coroutines-slf4j/test-resources/logback-test.xml"
+done
 # Android lint annotations are unnecessary for the desktop JVM build.
 agent_dir=kotlinx-coroutines-intellij-%version
 sed -i '/import android.annotation[.]/d; /@SuppressLint/d' \
@@ -87,6 +98,18 @@ sed -i '/import android.annotation[.]/d; /@SuppressLint/d' \
     org.jetbrains.kotlinx:kotlinx-coroutines-core
 %mvn_alias org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm \
     org.jetbrains.kotlinx:kotlinx-coroutines-test
+%mvn_alias org.jetbrains.kotlinx:kotlinx-coroutines-debug-jvm \
+    org.jetbrains.kotlinx:kotlinx-coroutines-debug
+%mvn_alias org.jetbrains.kotlinx:kotlinx-coroutines-guava-jvm \
+    org.jetbrains.kotlinx:kotlinx-coroutines-guava
+%mvn_alias org.jetbrains.kotlinx:kotlinx-coroutines-slf4j-jvm \
+    org.jetbrains.kotlinx:kotlinx-coroutines-slf4j
+%mvn_file org.jetbrains.kotlinx:kotlinx-coroutines-debug-jvm \
+    %name/kotlinx-coroutines-debug
+%mvn_file org.jetbrains.kotlinx:kotlinx-coroutines-guava-jvm \
+    %name/kotlinx-coroutines-guava
+%mvn_file org.jetbrains.kotlinx:kotlinx-coroutines-slf4j-jvm \
+    %name/kotlinx-coroutines-slf4j
 %mvn_package org.jetbrains.intellij.deps.kotlinx:* intellij
 %mvn_file org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-core-jvm \
     %name/intellij/kotlinx-coroutines-core-jvm
@@ -94,14 +117,26 @@ sed -i '/import android.annotation[.]/d; /@SuppressLint/d' \
     %name/intellij/kotlinx-coroutines-test-jvm
 %mvn_file org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-swing \
     %name/intellij/kotlinx-coroutines-swing
+%mvn_file org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-debug-jvm \
+    %name/intellij/kotlinx-coroutines-debug-jvm
+%mvn_file org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-guava-jvm \
+    %name/intellij/kotlinx-coroutines-guava-jvm
+%mvn_file org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-slf4j-jvm \
+    %name/intellij/kotlinx-coroutines-slf4j-jvm
 %mvn_alias org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-core-jvm \
     org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-core
 %mvn_alias org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-test-jvm \
     org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-test
+%mvn_alias org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-debug-jvm \
+    org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-debug
+%mvn_alias org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-guava-jvm \
+    org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-guava
+%mvn_alias org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-slf4j-jvm \
+    org.jetbrains.intellij.deps.kotlinx:kotlinx-coroutines-slf4j
 artifacts=kotlinx-coroutines-core-jvm-
 artifacts="$artifacts,kotlinx-coroutines-test-jvm-"
 artifacts="$artifacts,kotlinx-coroutines-swing-"
-artifacts="$artifacts,kotlinx-coroutines-slf4j-,kotlinx-coroutines-debug-"
+artifacts="$artifacts,kotlinx-coroutines-slf4j-,kotlinx-coroutines-debug-,kotlinx-coroutines-guava-"
 %gradle_register --artifacts="$artifacts"
 %gradle_install
 
@@ -120,6 +155,9 @@ artifacts="$artifacts,kotlinx-coroutines-slf4j-,kotlinx-coroutines-debug-"
 %doc kotlinx-coroutines-intellij-%version/IntelliJ-patches.md
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.11.0-alt3
+- Fix FTBFS: Use a compatible SLF4J binding for the MDC tests.
+
 * Wed Nov 04 2026 Ivan Khanas <xeno@altlinux.org> 1.11.0-alt2
 - Build SLF4J context integration and debug instrumentation.
 

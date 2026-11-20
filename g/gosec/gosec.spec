@@ -2,7 +2,7 @@
 
 Name: gosec
 Version: 2.22.4
-Release: alt1
+Release: alt2
 
 Summary: Inspects source code for security problems by scanning the Go AST and SSA code representation
 License: Apache-2.0
@@ -15,6 +15,7 @@ ExcludeArch: i586
 
 Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Patch: go-tools-update.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -35,6 +36,7 @@ It detects issues like:
 
 %prep
 %setup -a1
+%patch -p1
 
 %build
 %make BIN=bin/gosec \
@@ -60,5 +62,8 @@ export BUILDDIR="$PWD"
 %_bindir/gosec
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.22.4-alt2
+- Fix FTBFS: Update x/tools for Go 1.27.
+
 * Wed May 21 2025 Ivan Khanas <xeno@altlinux.org> 2.22.4-alt1
 - First Build for Alt Linux Sisyphus.

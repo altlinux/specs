@@ -2,7 +2,7 @@
 
 Name: test-parameter-injector
 Version: 1.25
-Release: alt1
+Release: alt2
 
 Summary: Parameterized test runner for JUnit
 License: Apache-2.0
@@ -23,7 +23,7 @@ BuildRequires: kotlin-stdlib
 BuildRequires: kotlin-compiler
 BuildRequires: kotlin-gradle-plugin
 BuildRequires: maven-plugin-annotations
-BuildRequires: gradle
+BuildRequires: kotlinx-coroutines
 BuildRequires: auto-value
 BuildRequires: auto-value-annotations
 BuildRequires: guava
@@ -67,25 +67,6 @@ plugin_xpath='pom:project/pom:build/pom:plugins/pom:plugin'
 plugin_xpath="$plugin_xpath[pom:artifactId=\"maven-compiler-plugin\"]"
 %pom_xpath_inject "$plugin_xpath" \
     '<groupId>org.apache.maven.plugins</groupId>'
-# Gradle ships the genuine coroutine runtime used by the system Kotlin plugin.
-# Keep its real version in build-local XMvn metadata; no binary vendoring.
-mkdir -p rpm-metadata
-cat > rpm-metadata/gradle-coroutines.xml <<'EOF'
-<metadata xmlns="http://fedorahosted.org/xmvn/METADATA/3.2.0">
-  <artifacts>
-    <artifact>
-      <groupId>org.jetbrains.kotlinx</groupId>
-      <artifactId>kotlinx-coroutines-core-jvm</artifactId>
-      <version>1.10.2</version>
-      <path>%_datadir/gradle/lib/kotlinx-coroutines-core-jvm-1.10.2.jar</path>
-    </artifact>
-  </artifacts>
-</metadata>
-EOF
-test -r %_datadir/gradle/lib/kotlinx-coroutines-core-jvm-1.10.2.jar
-tpi_repos="<repository>%_datadir/maven-metadata</repository>"
-tpi_repos="$tpi_repos<repository>$PWD/rpm-metadata</repository>"
-%mvn_config resolverSettings/metadataRepositories "$tpi_repos"
 
 %build
 %mvn_build -s -j
@@ -114,5 +95,8 @@ PY
 %files junit5 -f .mfiles-test-parameter-injector-junit5
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.25-alt2
+- Fix FTBFS: use system Coroutines.
+
 * Tue Oct 27 2026 Ivan Khanas <xeno@altlinux.org> 1.25-alt1
 - Initial build for ALT.

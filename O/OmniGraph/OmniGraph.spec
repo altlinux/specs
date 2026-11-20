@@ -2,7 +2,7 @@
 
 Name: OmniGraph
 Version: 0.1.1
-Release: alt1
+Release: alt2
 
 Summary: A multiplatform desktop application that lets you build graphs
 License: MIT
@@ -29,6 +29,8 @@ Build in JavaFX.
 
 %prep
 %setup -a1
+%pom_xpath_inject pom:build/pom:plugins \
+    '<plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId><version>2.6</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-jar-plugin</artifactId><version>2.4</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-install-plugin</artifactId><version>2.4</version></plugin>'
 
 %build
 export MAVEN_REPO_LOCAL=".m2/repository"
@@ -75,5 +77,8 @@ install -Dm 644 %SOURCE2 \
 %_javadir/OmniGraph/OmniGraph.jar
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 0.1.1-alt2
+- Fix FTBFS: Pin the bundled offline lifecycle plugins.
+
 * Sun May 11 2025 Ivan Hanas <xeno@altlinux.org> 0.1.1-alt1
 - Initial Build For Alt Linux Sisyphus.

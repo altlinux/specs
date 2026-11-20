@@ -2,7 +2,7 @@
 
 Name: apache-commons-csv
 Version: 1.14.1
-Release: alt1
+Release: alt2
 
 Summary: Utilities to assist with handling of CSV files
 License: Apache-2.0
@@ -21,6 +21,7 @@ BuildRequires: mvn(commons-io:commons-io)
 BuildRequires: mvn(commons-codec:commons-codec)
 BuildRequires: mvn(org.apache.commons:commons-lang3)
 BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
 BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
 BuildRequires: mvn(org.mockito:mockito-core)
@@ -68,6 +69,9 @@ API documentation for Apache Commons CSV.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 1.14.1-alt2
+- Fix FTBFS: Add the Build Helper plugin.
+
 * Fri Oct 30 2026 Ivan Khanas <xeno@altlinux.org> 1.14.1-alt1
 - New version.
 

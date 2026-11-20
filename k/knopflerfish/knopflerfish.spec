@@ -3,7 +3,7 @@
 
 Name: knopflerfish
 Version: 6.1.5
-Release: alt1
+Release: alt2
 
 Summary: Knopflerfish OSGi Service Platform
 License: BSD-3-Clause
@@ -20,7 +20,7 @@ BuildRequires: /proc
 BuildRequires: ant
 BuildRequires: jpackage-default
 BuildRequires: javapackages-local
-BuildRequires: objectweb-asm3
+BuildRequires: mvn(org.ow2.asm:asm)
 BuildRequires: osgi-annotation
 
 # This is a multi-module legacy project that requires a lot of time to
@@ -51,7 +51,7 @@ This package contains Knopflerfish OSGi framework system bundle.
 %autopatch -p1
 find -type f '(' -name '*.jar' -o -iname '*.class' ')' -print -delete
 
-ln -s "$(xmvn-resolve asm:asm)" osgi/framework/libs/asm-3.2.jar
+ln -s "$(xmvn-resolve org.ow2.asm:asm)" osgi/framework/libs/asm-3.2.jar
 ln -s "$(xmvn-resolve org.osgi:osgi.annotation)" osgi/annotations/osgi.annotation-6.0.1.jar
 
 cat > framework.pom <<'EOF'
@@ -77,5 +77,8 @@ ANT_OPTS='-Dfile.encoding=UTF-8' ant -f osgi/framework/build.xml clean jar
 %doc NOTICE.txt LICENSE.txt
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 6.1.5-alt2
+- Fix FTBFS: Build against system ASM.
+
 * Wed Apr 22 2026 Arseniy Kostevich <faux@altlinux.org> 6.1.5-alt1
 - Initial build for ALT.

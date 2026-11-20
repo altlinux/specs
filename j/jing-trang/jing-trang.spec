@@ -2,7 +2,7 @@
 
 Name: jing-trang
 Version: 20241231
-Release: alt1
+Release: alt2
 
 Summary: Schema validation and conversion based on RELAX NG
 License: BSD-3-Clause
@@ -191,6 +191,9 @@ export CLASSPATH=$classpath:%_javadir/serializer.jar
 %_javadir/dtdinst.jar
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 20241231-alt2
+- Fix FTBFS: Handle Saxon stylesheet compilation errors.
+
 * Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 20241231-alt1
 - New version.
 

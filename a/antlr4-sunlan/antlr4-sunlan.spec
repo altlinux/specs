@@ -2,7 +2,7 @@
 
 Name: antlr4-sunlan
 Version: 4.13.2.18
-Release: alt1
+Release: alt2
 
 Summary: Optimized ANTLR 4 parser generator and runtime
 License: BSD-3-Clause
@@ -37,7 +37,6 @@ BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
-BuildRequires: mvn(org.apache.maven.shared:maven-plugin-testing-harness)
 BuildRequires: mvn(org.apache.maven:maven-compat)
 BuildRequires: mvn(org.apache.maven:maven-plugin-api)
 BuildRequires: mvn(org.apache.maven:maven-project)
@@ -106,6 +105,7 @@ project.
 # its Takari lifecycle testProperties extension is absent offline. The package
 # is validated later with an installed Maven consumer.
 %patch0 -p1
+%pom_remove_dep org.apache.maven.shared:maven-plugin-testing-harness antlr4-testgen-maven-plugin
 %pom_remove_parent
 # Set startup options only for Surefire; parser subprocess stderr must stay clean.
 %pom_xpath_inject 'pom:project/pom:build/pom:plugins/pom:plugin[pom:artifactId="maven-surefire-plugin"]/pom:configuration' \
@@ -161,5 +161,8 @@ sh %SOURCE1
 %files perf-testsuite -f .mfiles-perf-testsuite
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 4.13.2.18-alt2
+- Fix FTBFS: drop unused test harness.
+
 * Thu Oct 29 2026 Ivan Khanas <xeno@altlinux.org> 4.13.2.18-alt1
 - Initial build for ALT.

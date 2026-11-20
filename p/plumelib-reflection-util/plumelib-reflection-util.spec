@@ -3,7 +3,7 @@
 
 Name: plumelib-reflection-util
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: Utilities for Java reflection 
 License: MIT
@@ -23,6 +23,7 @@ BuildRequires: xgradle
 BuildRequires: checker-qual
 %if_with check
 BuildRequires: junit5
+BuildRequires: apiguardian
 %endif
 
 %description
@@ -55,5 +56,8 @@ Reflection API directly.
 %doc --no-dereference LICENSE
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1.1.5-alt2
+- Fix FTBFS: add API Guardian to tests.
+
 * Tue Nov 18 2025 Ivan Khanas <xeno@altlinux.org> 1.1.5-alt1
 - First build for ALT.

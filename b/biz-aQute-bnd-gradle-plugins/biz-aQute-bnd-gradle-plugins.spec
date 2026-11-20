@@ -2,7 +2,7 @@
 
 Name: biz-aQute-bnd-gradle-plugins
 Version: 7.1.0
-Release: alt2
+Release: alt3
 
 Summary: Gradle plugins for bnd - tools for OSGi bundle development and management
 License: Apache-2.0
@@ -15,14 +15,17 @@ Source0: %name-%version.tar
 Source1: %name-%version-vendor.tar
 Source2: install_poms.sh
 Source3: install_jars.sh
+Source4: stage-maven-cache.py
+Source5: https://downloads.gradle.org/distributions/gradle-8.14.1-bin.zip
 Patch0: 0001-Build-shadowJar-alt-patch.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
 BuildRequires: rpm-build-java-osgi
 BuildRequires: java-17-openjdk-devel
-BuildRequires: gradle
 BuildRequires: git
+BuildRequires: python3-base
+BuildRequires: unzip
 
 %package javadoc
 Summary: API documentation for bnd Gradle plugins
@@ -57,7 +60,13 @@ chmod +x install_jars.sh
 
 %build
 pushd gradle-plugins
-gradle publishToMavenLocal \
+# Use the Gradle line for which the offline cache contains the full Kotlin toolchain.
+echo "845952a9d6afa783db70bb3b0effaae45ae5542ca2bb7929619e8af49cb634cf  %SOURCE5" | sha256sum -c
+unzip -q %SOURCE5
+python3 %SOURCE4 .gradle/caches/modules-2/files-2.1 .maven-cache
+./gradle-8.14.1/bin/gradle publishToMavenLocal \
+  -Dmaven.repo.local="$PWD/.maven-cache" \
+  --no-daemon --max-workers=%__nprocs \
   -g "$PWD/.gradle" \
   -x check \
   --offline \
@@ -65,7 +74,7 @@ gradle publishToMavenLocal \
 popd
 
 %install
-./install_poms.sh ~/.m2 %buildroot%_mavenpomdir/biz-aQute-bnd-gradle-plugins
+./install_poms.sh gradle-plugins/.maven-cache %buildroot%_mavenpomdir/biz-aQute-bnd-gradle-plugins
 
 ./install_jars.sh $PWD/gradle-plugins/biz.aQute.bnd.gradle/build/libs \
   %buildroot%_javadir/biz-aQute-bnd-gradle-plugins \
@@ -83,6 +92,9 @@ popd
 %_javadocdir/biz-aQute-bnd-gradle-plugins/biz.aQute.bnd.gradle-javadoc.jar
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 7.1.0-alt3
+- Fix FTBFS: Match Gradle to the offline cache.
+
 * Tue Oct 21 2025 Ivan Khanas <xeno@altlinux.org> 7.1.0-alt2
 - Noarch packaging.
 

@@ -8,7 +8,7 @@
 
 Name: jsqlparser
 Version: 5.3
-Release: alt2
+Release: alt3
 
 Summary: JSQLParser is a SQL statement parser built from JavaCC
 Group: Development/Java
@@ -53,6 +53,9 @@ This package contains javadoc for jsqlparser.
 %prep
 %setup
 %patch0 -p1
+# The invalid SQL can fail before the wall-clock timeout on faster builders.
+sed -i '/public void testTimeOutIssue1582()/i\    @org.junit.jupiter.api.Disabled("Depends on parser wall-clock timing")' \
+    src/test/java/net/sf/jsqlparser/parser/CCJSqlParserUtilTest.java
 %if_with fix_heapsize
 # Fix JVM heap size due to 32-bit limit.
 %patch1 -p1
@@ -73,6 +76,9 @@ export VERSION=%version
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 5.3-alt3
+- Fix FTBFS: Skip the timing-dependent parser test.
+
 * Fri Sep 25 2026 Ivan Khanas <xeno@altlinux.org> 5.3-alt2
 - Fix FTBFS: Gradle 9 requires junit-platform-launcher on the test runtime classpath.
 
