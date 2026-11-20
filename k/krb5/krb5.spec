@@ -12,8 +12,8 @@
 %define _runstatedir /run
 
 Name: krb5
-Version: 1.22.2
-Release: alt3
+Version: 1.22.3
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -44,7 +44,7 @@ Patch129: krb5-1.11-fedora-run_user_0.patch
 
 # alt patches:
 Patch200: krb5-1.18-alt-default_keytab_group.patch
-Patch201: krb5-1.22-upstream-fix-strchr-conformance-to-c23.patch
+Patch201: krb5-1.22-upstream-add-paChecksum2-to-PKINIT-ASN.1-tests.patch
 Patch202: krb5-1.22-upstream-configure.ac-work-with-autoconf-2.73.patch
 
 BuildRequires: /dev/pts /proc
@@ -209,7 +209,7 @@ MIT Kerberos.
 %patch129 -p1 -b .run_user_0
 
 %patch200 -p2 -b .default_keytab_group
-%patch201 -p1 -b .c23
+%patch201 -p1 -b .tests-ub
 %patch202 -p1 -b .autoconf
 
 # Generate an FDS-compatible LDIF file.
@@ -523,6 +523,20 @@ fi
 # {{{ changelog
 
 %changelog
+* Fri Nov 20 2026 Ivan A. Melnikov <iv@altlinux.org> 1.22.3-alt1
+- 1.22.3
+- Fixes:
+  + CVE-2026-71199  An authenticated user can bypass authentication indicator policies
+  + CVE-2026-107884 A client with kadmin administrative privileges can bypass the lockdown_keys attribute
+  + CVE-2026-111423 Server applications erroneously treat the PAC within a ticket as verified
+  + CVE-2026-118380 GSS-RPC use of unverified service type
+- Fixes multiple DoS attacks (fixes CVE-2026-40355, CVE-2026-40356,
+    CVE-2026-71200, CVE-2026-107364, CVE-2026-107708, CVE-2026-107778,
+    CVE-2026-112314, CVE-2026-112315, CVE-2026-112316, CVE-2026-112317,
+    CVE-2026-112318, CVE-2026-112319, CVE-2026-112320, CVE-2026-112321,
+    CVE-2026-112322, CVE-2026-112323, CVE-2026-119079)
+- Backport upstream fix for UB in tests
+
 * Fri Nov 06 2026 Ivan A. Melnikov <iv@altlinux.org> 1.22.2-alt3
 - Backport upstream fix for autoconf 2.73 compatibility (fixes FTBFS)
 
