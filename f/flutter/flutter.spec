@@ -5,7 +5,7 @@
 
 Name: flutter
 Version: 3.47.9
-Release: alt1
+Release: alt2
 
 Summary: Flutter framework
 License: BSD-3-Clause
@@ -383,7 +383,6 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 
 %files developer
 %engine_cache/linux-%flutter_arch-profile
-%flutter_root/bin/cache/artifacts/gradle_wrapper
 
 %files gtk
 %_libexecdir/libflutter_linux_gtk.so
@@ -399,6 +398,7 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 %flutter_root/bin/cache/engine.stamp
 %flutter_root/bin/cache/engine_stamp.stamp
 %flutter_root/bin/cache/engine_stamp.json
+%flutter_root/bin/cache/artifacts/gradle_wrapper
 %flutter_root/bin/flutter
 %flutter_root/version
 
@@ -407,6 +407,9 @@ install -Dm755 %release_out/libflutter_linux_glfw.so %buildroot%_libexecdir/libf
 %flutter_root/examples
 
 %changelog
+* Fri Nov 20 2026 David Sultaniiazov <x1z53@altlinux.org> 3.47.9-alt2
+- Use user-wide SDK cache.
+
 * Thu Nov 19 2026 David Sultaniiazov <x1z53@altlinux.org> 3.47.9-alt1
 - 3.47.9 (via rebase).
 - Drop unnecessary patches and adopt other patches.
