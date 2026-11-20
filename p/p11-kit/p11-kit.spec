@@ -10,7 +10,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: p11-kit
-Version: 0.26.5
+Version: 0.26.6
 Release: alt1
 Epoch: 1
 
@@ -192,7 +192,7 @@ rm -r -- "$TEST_DIR"
 
 %files -n lib%name
 %doc %name/pkcs11.conf.example
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS COPYING NEWS README SECURITY.md
 %_libdir/lib%name.so.*
 %_libdir/%name-proxy.so
 %dir %_libdir/pkcs11/
@@ -238,6 +238,14 @@ rm -r -- "$TEST_DIR"
 
 %files checkinstall
 %changelog
+* Wed Nov 18 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.6-alt1
+- Fixed tests with debug disabled.
+- Updated pkcs11-json/generated/pkcs11.json.
+- Packaged SECURITY.md.
+- Patch from upstream:
+  + x509: zero the key usage buffer before reading the bit string.
+- 0.26.6.
+
 * Wed Aug 12 2026 Mikhail Efremov <sem@altlinux.org> 1:0.26.5-alt1
 - 0.26.5 (fixes: CVE-2026-18938).
 
