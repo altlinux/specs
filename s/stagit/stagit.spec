@@ -1,5 +1,5 @@
 Name: stagit
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: stagit is a static page generator for git
@@ -62,5 +62,8 @@ xz -k %name.1 %name-index.1
 %_man1dir/%name-index.1.xz
 
 %changelog
+* Fri Nov 20 2026 Ulysses Apokin <ulysses@altlinux.org> 1.3-alt1
+- New version.
+
 * Fri Feb 21 2025 Ulysses Apokin <ulysses@altlinux.org> 1.2-alt1
 - Initial build for Sisyphus.
