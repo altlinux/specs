@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: deepin-daemon
-Version: 6.1.111
+Version: 6.2.1
 Release: alt1
 Epoch: 2
 
@@ -111,7 +111,6 @@ sed -i 's|/usr/bin/X11/xauth|/usr/bin/xauth|' \
 
 # /lib
 sed -i 's|${DESTDIR}/lib/systemd/|${DESTDIR}%_systemddir|g' Makefile
-sed -i 's|/lib/udev/rules.d|%_udev_rulesdir|g' Makefile
 
 # /usr/share
 # '/usr/share/wallpapers/deepin/desktop.bmp' appearance/background/custom_wallpapers.go
@@ -200,6 +199,9 @@ touch %buildroot%_sysconfdir/deepin/daemon/resource-control.json
 %_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 
 %changelog
+* Fri Nov 20 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.2.1-alt1
+- New version 6.2.1.
+
 * Tue Oct 27 2026 Leontiy Volodin <lvol@altlinux.org> 2:6.1.111-alt1
 - New version 6.1.111.
 
