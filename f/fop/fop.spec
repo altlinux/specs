@@ -7,59 +7,60 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           fop
-Summary:        XSL-driven print formatter
-Version:        2.11
-Release:        alt1
+
+Name: fop
+Summary: XSL-driven print formatter
+Version: 2.11
+Release: alt2
 # Apache-1.1:
-# several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
+# several files in \
+# fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
 # rest is Apache-2.0
-License:        Apache-2.0 and Apache-1.1
-URL:            https://xmlgraphics.apache.org/fop
-Source0:        https://downloads.apache.org/xmlgraphics/%{name}/source/%{name}-%{version}-src.tar.gz
-Source1:        %{name}.script
-Source2:        batik-pdf-MANIFEST.MF
-Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
-Patch1:         0001-Main.patch
-Patch2:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
-Patch4:         0004-Port-to-QDox-2.0.patch
-Patch5:         fop-2.11-alt-fix-compilation.patch
+License: Apache-2.0 and Apache-1.1
+URL: https://xmlgraphics.apache.org/fop
+VCS: https://github.com/apache/xmlgraphics-fop
 
-BuildArch:      noarch
+Source0: https://downloads.apache.org/xmlgraphics/%name/source/%name-%version-src.tar
+Source1: %name.script
+Source2: batik-pdf-MANIFEST.MF
+Source4: https://www.apache.org/licenses/LICENSE-1.1.txt
+Patch1: 0001-Main.patch
+Patch2: 0002-Use-sRGB.icc-color-profile-from-colord-package.patch
+Patch4: 0004-Port-to-QDox-2.0.patch
+Patch5: fop-2.11-alt-fix-compilation.patch
 
-Requires:       java
-Requires:       xalan-j2 >= 2.7.0
-Requires:       xml-commons-apis >= 1.3.04
+BuildArch: noarch
+
+Requires: java
+Requires: xalan-j2 >= 2.7.0
+Requires: xml-commons-apis >= 1.3.04
 # Explicit requires for javapackages-tools since fop script
 # uses /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
+Requires: javapackages-tools
 
-BuildRequires:  apache-commons-io
-BuildRequires:  apache-commons-logging
-BuildRequires:  batik
-BuildRequires:  mvn(org.bouncycastle:bcpkix-jdk18on)
-BuildRequires:  mvn(org.bouncycastle:bcprov-jdk18on)
-BuildRequires:  fontbox
-BuildRequires:  javapackages-local
-BuildRequires:  junit
-BuildRequires:  maven-antrun-plugin
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-clean-plugin
-BuildRequires:  maven-local
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires: apache-commons-io
+BuildRequires: apache-commons-logging
+BuildRequires: batik
+BuildRequires: mvn(org.bouncycastle:bcpkix-jdk18on)
+BuildRequires: mvn(org.bouncycastle:bcprov-jdk18on)
+BuildRequires: fontbox
+BuildRequires: javapackages-local
+BuildRequires: junit
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-assembly-plugin
+BuildRequires: maven-clean-plugin
+BuildRequires: maven-local
+BuildRequires: maven-plugin-build-helper
+BuildRequires: mvn(jakarta.servlet:jakarta.servlet-api:5.0.0)
 # For servlet, not packaged
 #BuildRequires:  maven-war-plugin
-BuildRequires:  pdfbox
-BuildRequires:  qdox
-BuildRequires:  xml-maven-plugin
-BuildRequires:  xmlgraphics-commons >= 2.8
-BuildRequires:  xmlunit
-BuildRequires:  xmlunit-assertj
-BuildRequires:  xmlunit-core
-Source44: import.info
+BuildRequires: pdfbox
+BuildRequires: qdox
+BuildRequires: xml-maven-plugin
+BuildRequires: xmlgraphics-commons >= 2.8
+BuildRequires: xmlunit
+BuildRequires: xmlunit-assertj
+BuildRequires: xmlunit-core
 
 %description
 FOP is the world's first print formatter driven by XSL formatting
@@ -71,21 +72,20 @@ XT) SAX events.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
-%description    javadoc
-Javadoc for %{name}.
+%description javadoc
+Javadoc for %name.
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch4 -p2
 %patch5 -p2
 
-
-cp %{SOURCE4} LICENSE-1.1
+cp %SOURCE4 LICENSE-1.1
 
 rm -f fop/lib/*.jar fop/lib/build/*.jar
 
@@ -96,9 +96,9 @@ rm -f fop/lib/*.jar fop/lib/build/*.jar
 %pom_remove_dep net.sf.offo:fop-hyph fop-core
 %pom_remove_dep net.sf.saxon:saxon fop-core
 
+#change dependency to the current version bouncycastle
 %pom_change_dep org.bouncycastle:bcpkix-jdk15to18:1.78.1 \
 org.bouncycastle:bcpkix-jdk18on:1.80 fop-core
-
 %pom_change_dep org.bouncycastle:bcprov-jdk15to18:1.78.1 \
 org.bouncycastle:bcprov-jdk18on:1.80 fop-core
 
@@ -110,46 +110,45 @@ org.bouncycastle:bcprov-jdk18on:1.80 fop-core
 # Requires JAI, not packaged
 rm fop-core/src/main/java/org/apache/fop/util/bitmap/JAIMonochromeBitmapConverter.java
 
-
 %build
 # Skip tests for now, make dirs needed by build but created by tests
 mkdir -p fop-events/target/test-classes
 %mvn_build -f
 
-
 %install
 %mvn_install
 # inject OSGi manifest
-jar ufm %{buildroot}%{_javadir}/%{name}/%{name}.jar %{SOURCE2}
+jar ufm %buildroot%_javadir/%name/%name.jar %SOURCE2
 
 # script
-install -d -m 755 %{buildroot}%{_bindir}
-install -p -m 755 %{SOURCE1} %{buildroot}%{_bindir}/fop
+install -d -m 755 %buildroot%_bindir
+install -p -m 755 %SOURCE1 %buildroot%_bindir/fop
 
 # data
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf
-cp -rp fop/conf/* %{buildroot}%{_datadir}/%{name}/conf
+install -d -m 755 %buildroot%_datadir/%name/conf
+cp -rp fop/conf/* %buildroot%_datadir/%name/conf
 
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp target/xmvn-apidocs/* %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %buildroot%_javadocdir/%name
+cp -rp target/xmvn-apidocs/* %buildroot%_javadocdir/%name
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/fop.conf`
 touch $RPM_BUILD_ROOT/etc/fop.conf
 
-
 %files -f .mfiles
 %doc LICENSE LICENSE-1.1 README NOTICE
-%{_datadir}/%{name}
-%{_bindir}/fop
+%_datadir/%name
+%_bindir/fop
 %config(noreplace,missingok) /etc/fop.conf
 
 %files javadoc
-%doc %{_javadocdir}/%{name}
+%doc %_javadocdir/%name
 %doc LICENSE LICENSE-1.1
 
-
 %changelog
+* Fri Nov 20 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.11-alt2
+- FTBFS fix.
+
 * Thu Feb 12 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.11-alt1
 - new version
 
