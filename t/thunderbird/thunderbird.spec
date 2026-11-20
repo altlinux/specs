@@ -20,7 +20,7 @@
 
 Name: thunderbird
 Version: 160.0
-Release: alt3
+Release: alt4
 
 Summary: Thunderbird is Mozilla's e-mail client
 License: MPL-2.0
@@ -164,6 +164,7 @@ BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
+BuildRequires: python3(typing_extensions)
 # A copy of the imp module that was removed in python3.12
 # It shouldn't be used, should use `importlib.metadata` instead
 BuildRequires: python3(imp)
@@ -406,6 +407,9 @@ xvfb-run -a -s '-screen 0 1920x1080x24' ./mach mochitest comm/
 %_iconsdir/hicolor/symbolic/apps/thunderbird-symbolic.svg
 
 %changelog
+* Thu Nov 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt4
+- Declare system typing_extensions as a build dependency for mach.
+
 * Thu Nov 19 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0-alt3
 - Restore drag-and-drop of EWS attachments to Dolphin (Mozilla Bug 2095181).
 
