@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.35.2
+Version: 6.1.0
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -37,15 +37,20 @@ BuildRequires: /usr/bin/pod2man
 %define _pemdir %_ssldir/certs
 
 Summary(ru_RU.UTF-8): Утилита для мониторинга запущенных процессов
-Summary(uk_UA.UTF-8): Утиліта для моніторингу процесів у системі
 
 %package base
 Summary: Directory for monit configuration files
 Summary(ru_RU.UTF-8): Каталог для конфигурационных файлов monit
-Summary(uk_UA.UTF-8): Тека для конфігураційних файлів monit
 Group: System/Servers
 Provides: /etc/monitrc.d
 BuildArch: noarch
+
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
 
 %description
 monit is an utility for monitoring services or similar programs running on
@@ -66,23 +71,17 @@ Monit предназначен для слежения за выполнение
   - использование процессом памяти и вычислительных ресурсов
   - зависимости между процессами
 
-%description -l uk_UA.UTF-8
-Monit застосовується для стеження за виконанням процесів (зазвичай сервісів),
-що запущені у системі UNIX. Monit може слідкувати за декількома параметрами:
-  - існування процесу
-  - можливість встановлення з'єднання
-  - роботоздатність протоколу (SMTP,POP3,IMAP,NNTP,HTTP,SSH,FTP,SIP)
-  - використання процесом пам'яті та обчислювальних ресурсів
-  - залежності між процесами
-
 %description base
 Directory for monit configuration files
 
 %description -l ru_RU.UTF-8 base
 Каталог для конфигурационных файлов monit
 
-%description -l uk_UA.UTF-8 base
-Тека для конфігураційних файлів monit
+%description -n bash-completion-%name
+Bash completion for %name.
+
+%description -l ru_RU.UTF-8 -n bash-completion-%name
+Дополнение оболочки bash для %name.
 
 %prep
 %setup -n %name-%version%beta
@@ -177,12 +176,23 @@ fi
 %dir %_sysconfdir/monitrc.d
 #dir %_sysconfdir/monitrc.d/available
 
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/%name.bash
+
 # TODO:
 # - move to cert-sh-functions for certificate generation?
 # - add rsync, oracle tns config snippets (proto checks present)
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Fri Nov 20 2026 Michael Shigorin <mike@altlinux.org> 6.1.0-alt1
+- new version (watch file uupdate)
+- added bash completion subpackage
+- dropped obsolete translations
+
+* Wed Oct 28 2026 Michael Shigorin <mike@altlinux.org> 6.0.0-alt1
+- new version (watch file uupdate)
+
 * Fri May 09 2025 Michael Shigorin <mike@altlinux.org> 5.35.2-alt1
 - new version (watch file uupdate)
 
