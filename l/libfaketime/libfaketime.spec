@@ -1,6 +1,6 @@
 Name: libfaketime
-Version: 0.9.13
-Release: alt2
+Version: 0.9.14
+Release: alt1
 
 Summary: Manipulate system time per process for testing purposes
 License: GPLv2+
@@ -9,10 +9,8 @@ Group: Development/C
 Url: https://github.com/wolfcw/libfaketime
 # Source-url: https://github.com/wolfcw/libfaketime/archive/refs/tags/v%version.tar.gz
 Source: libfaketime-%version.tar
-Patch: libfaketime-symver.patch
 # https://github.com/wolfcw/libfaketime/issues/554
 # https://github.com/wolfcw/libfaketime/commit/79aaa421ff8a6beb339ddc4e8c0e1dec65c27f9a
-Patch1: libfaketime-remove-null-tests.patch
 
 #Provides: faketime
 
@@ -39,8 +37,6 @@ This package contains the faketime command and its manual page.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
 # use external uthash.h from libuthash-devel
 rm -v src/uthash.h
 
@@ -110,6 +106,9 @@ rm -r %buildroot/%_docdir/faketime
 %_man1dir/*
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.14-alt1
+- new version 0.9.14
+
 * Sat Nov 14 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.13-alt2
 - move the faketime command and man page to libfaketime-utils,
   so i586-libfaketime installs together with the faketime package
