@@ -4,7 +4,7 @@
 
 Name:    mdbook
 Version: 0.5.4
-Release: alt1
+Release: alt2
 
 Summary: Create modern online books from Markdown files
 License: MPL-2.0
@@ -74,6 +74,9 @@ target/release/mdbook completions bash \
 %doc guide/book
 
 %changelog
+* Fri Nov 20 2026 Ivan A. Melnikov <iv@altlinux.org> 0.5.4-alt2
+- backport upstream fix new cargo/clippy lints (fixes FTBFS)
+
 * Tue Jul 07 2026 Ivan A. Melnikov <iv@altlinux.org> 0.5.4-alt1
 - 0.5.4
 
