@@ -2,23 +2,23 @@
 
 Name: sblg
 Version: 0.6.1
-Release: alt1
+Release: alt2
 
 Summary: sblg is a utility for creating static blogs
 License: ISC
 Group: Networking/Other
-Url: https://kristaps.bsd.lv/sblg/
-Vcs: https://github.com/kristapsdz/sblg.git
+URl: https://kristaps.bsd.lv/sblg/
+VCS: https://github.com/kristapsdz/sblg.git
 
-Source0: %name-%version.tar
-Source1: Makefile.configure
-Source2: config.h
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 %if_with check
 BuildRequires: jq
 %endif
 
 BuildRequires: libexpat-devel
+BuildRequires: libbsd-devel
 
 %description
 sblg is a utility for creating static blogs. It merges articles into templates
@@ -32,24 +32,28 @@ it converts into XHTML.
 
 %prep
 %setup
-cp %SOURCE1 .
-cp %SOURCE2 .
-# Fix time indication for ALT
-# Required for make regress
-%if_with check
-sed -i -e 's/06\/29\/13/06\/29\/2013/g' \
-        -e 's/06\/28\/13/06\/28\/2013/g' ./regress/blog/*
-%endif
+%autopatch -p1
 
 %build
+cat <<EOF > configure.local
+CC="cc -std=c99"
+CFLAGS="%optflags -Wall -Wextra -Wno-error=incompatible-pointer-types"
+INSTALL="%__install"
+PREFIX="%prefix"
+BINDIR="%_bindir"
+SHAREDIR="%_datadir"
+SBINDIR="%_sbindir"
+INCLUDEDIR="%_includedir"
+LIBDIR="%_libdir"
+MANDIR="%_mandir"
+EOF
+
+unset MAKEFLAGS
+./configure
 %make_build
 
 %install
-%makeinstall_std \
-        PREFIX=%_prefix \
-        BINDIR=%_bindir \
-        SHAREDIR=%_datadir \
-        MANDIR=%_mandir
+%makeinstall_std
 
 %check
 %make regress
@@ -61,5 +65,8 @@ sed -i -e 's/06\/29\/13/06\/29\/2013/g' \
 %_datadir/%name/*
 
 %changelog
+* Fri Nov 20 2026 Ulysses Apokin <ulysses@altlinux.org> 0.6.1-alt2
+- Fix time indication for ALT.
+
 * Fri Feb 21 2025 Ulysses Apokin <ulysses@altlinux.org> 0.6.1-alt1
 - Initial build for Sisyphus.
