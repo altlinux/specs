@@ -2,7 +2,7 @@
 
 Name: falcond
 Version: 2.0.14
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Gaming Performance Daemon
 
@@ -14,6 +14,8 @@ Url: https://git.pika-os.com/general-packages/falcond
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
+Patch: falcond-2.0.14-alt-zig-0.17-port.patch
+Patch1: falcond-2.0.14-alt-disable-vendored-pipewire.patch
 
 ExclusiveArch: %zig_arches
 
@@ -27,16 +29,17 @@ falcond is a powerful system daemon designed to automatically optimize your Linu
 
 %prep
 %setup -a1
-
-%build
 cd %name
 mkdir -p zig-pkg
 for archive in ../zig-cache/*.tar.gz; do
     tar -xzf "$archive" -C zig-pkg
 done
-# Although falcond sets enable_pipewire = false, Zig 0.16 --system still
-# processes the local PipeWire dependency and hangs before compilation.
-sed -i '/^[[:space:]]*\.pipewire = \.{/,/^[[:space:]]*},/d' zig-pkg/otter_desktop-*/build.zig.zon
+%patch -p1
+# Keep the disabled PipeWire dependency out of --system builds.
+%patch1 -p1
+
+%build
+cd %name
 %zig_build
 
 %install
@@ -53,6 +56,9 @@ install -Dm644 debian/falcond.service %buildroot%_unitdir
 
 
 %changelog
+* Thu Nov 19 2026 Boris Yumankulov <boria138@altlinux.org> 2.0.14-alt2
+- fix FTBFS on zig 0.17.0
+
 * Wed Oct 07 2026 Boris Yumankulov <boria138@altlinux.org> 2.0.14-alt1
 - new version 2.0.14
 
