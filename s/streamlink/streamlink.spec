@@ -1,8 +1,8 @@
 %define srcname streamlink
 
 Name: streamlink
-Version: 8.6.2
-Release: alt2
+Version: 8.6.3
+Release: alt1
 
 Summary: Python library for extracting streams from various websites
 
@@ -16,7 +16,6 @@ Url: https://streamlink.github.io/
 Source: %name-%version.tar
 
 # Use pycryptodomex library instead of pycryptodome
-Patch1: %name-6.2.1-pycryptodomex.patch
 # Fix documentation build
 Patch2: %name-6.6.2-documentation.patch
 
@@ -157,6 +156,9 @@ rm -rv %buildroot%_datadir/fish
 #%license LICENSE
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.3-alt1
+- new version 8.6.3
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 8.6.2-alt2
 - enable %%check (upstream tests)
 - added BuildRequires for %%check:
