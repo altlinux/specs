@@ -1,5 +1,5 @@
 Name: cloudcli
-Version: 1.37.8
+Version: 1.37.9
 Release: alt1
 
 Summary: Web UI for coding agent command-line sessions
@@ -131,6 +131,9 @@ install -m 644 public/logo-512.png %buildroot%_datadir/icons/hicolor/512x512/app
 %_libdir/node_modules/%name/electron/
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.37.9-alt1
+- new version 1.37.9
+
 * Thu Nov 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.37.8-alt1
 - add the cloudcli-desktop Electron subpackage using system Electron.
 - initial build for Sisyphus.
