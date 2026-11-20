@@ -12,7 +12,7 @@
 
 Name: conscrypt
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Summary: OpenJDK security provider backed by BoringSSL
 License: Apache-2.0 and ISC
@@ -28,7 +28,8 @@ Patch0: conscrypt-system-build.patch
 ExclusiveArch: %ix86 x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-gradle
-BuildRequires: boringssl-devel
+BuildRequires: pkg-config
+BuildRequires: pkgconfig(boringssl)
 BuildRequires: gcc-c++
 BuildRequires: java-21-openjdk-devel
 BuildRequires: xgradle
@@ -58,8 +59,7 @@ cp %SOURCE1 LICENSE.boringssl
 CXXFLAGS="%optflags" \
 %gradle_publish --no-daemon --no-configuration-cache \
     -PnativeClassifier=%native_classifier \
-    -PboringsslLibDir=%_libdir/boringssl \
-    -PboringsslVersion="$(rpm -q --qf '%%{VERSION}' boringssl-devel)"
+    -PboringsslVersion="$(pkg-config --modversion boringssl)"
 
 %install
 %gradle_register --artifacts=conscrypt-openjdk-
@@ -78,8 +78,7 @@ install -Dm755 build/native/libconscrypt_openjdk_jni-%native_classifier.so \
 %check
 %gradle_check --no-daemon --no-configuration-cache \
     -PnativeClassifier=%native_classifier \
-    -PboringsslLibDir=%_libdir/boringssl \
-    -PboringsslVersion="$(rpm -q --qf '%%{VERSION}' boringssl-devel)"
+    -PboringsslVersion="$(pkg-config --modversion boringssl)"
 
 %files -f .mfiles
 %doc LICENSE NOTICE licenses LICENSE.boringssl
@@ -87,6 +86,9 @@ install -Dm755 build/native/libconscrypt_openjdk_jni-%native_classifier.so \
 %_javadocdir/%name
 
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 2.9.0-alt2
+- Link JNI dynamically with system BoringSSL.
+
 * Thu Nov 05 2026 Ivan Khanas <xeno@altlinux.org> 2.9.0-alt1
 - New version.
 
