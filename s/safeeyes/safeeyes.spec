@@ -1,5 +1,5 @@
 Name: safeeyes
-Version: 3.5.1
+Version: 3.6.0
 Release: alt1
 
 Summary: Tool for reminding the user to take breaks
@@ -18,6 +18,7 @@ BuildRequires: python3-module-setuptools python3-module-wheel
 
 Requires: typelib(Notify)
 Requires: typelib(AyatanaAppIndicator3)
+Requires: libgtk4-gir
 
 BuildArch: noarch
 
@@ -49,6 +50,9 @@ cp -a %name/platform/icons/* %buildroot%_iconsdir/
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 3.6.0-alt1
+- new version 3.6.0
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.5.1-alt1
 - new version 3.5.1
 
