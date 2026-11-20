@@ -1,51 +1,28 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+
 %def_with check
 
-%add_python3_compile_include %_libexecdir/cura
+%add_python3_path %_libexecdir/cura
+%add_findprov_skiplist %_libexecdir/cura/*
 
 Name: cura
 Epoch: 1
-Version: 5.13.0
-Release: alt6
-Summary: 3D printer control software
-License: LGPL-3.0-or-later
+Version: 5.14.0
+Release: alt1
 
+Summary: 3D printer / slicing GUI
+License: LGPL-3.0-or-later
 Group: Engineering
 URL: https://github.com/Ultimaker/Cura
 VCS: https://github.com/Ultimaker/Cura
 
-# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+# Additional firmware files, changelogs, new release images etc.
+# It's AGPL-3.0-or-later.
+Source1: %name-binary-data-%version.tar
+Source2: CuraVersion.py.in
 
-# Source1-url: https://github.com/Ultimaker/cura-binary-data/archive/refs/tags/%version.tar.gz
-Source1: %name-resources-%version.tar
-
-# Cmake bits taken from 4.13.1, before upstream went nuts with conan
-Source2: mod_bundled_packages_json.py
-Source3: CuraPluginInstall.cmake
-Source4: CuraTests.cmake
-Source5: com.ultimaker.cura.desktop.in
-Source6: CMakeLists.txt
-Source7: CuraVersion.py.in
-Source8: com.ultimaker.cura.appdata.xml
-
-Patch4: gtk-qt-theme.patch
-Patch5: about-dialog-credits.patch
-Patch6: ru-translation-newlines.patch
-
-# https://github.com/Ultimaker/Cura/pull/21419
-Patch8: numpy-2.3.0-frombuffer.patch
-
-# Fedora patch
-# Skip forced loading SentryLogger to avoid an error on startup
-Patch10: 028e7f7.patch
-
-# Fixes for Qt 6.9+
-# https://github.com/Ultimaker/Cura/pull/21158
-Patch20: 21158.patch
-Patch21: qt-6.9-qpa-env.patch
-Patch22: cura-5.13.0-welcome-wizard.patch
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -53,123 +30,97 @@ BuildRequires(pre): rpm-macros-python3
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-python3
 BuildRequires: cmake
-BuildRequires: gcc-c++
-BuildRequires: desktop-file-utils
-BuildRequires: python3-devel
 BuildRequires: Uranium >= %version
-BuildRequires: python3-module-pynest2d
 %if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pySavitar >= 5.11.0
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-keyring >= 21
-BuildRequires: python3-module-dbus
-BuildRequires: python3(importlib_metadata)
+BuildRequires: python3-module-keyring
 BuildRequires: python3-module-numpy
 BuildRequires: python3-module-numpy-tests
-BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-pynest2d
+BuildRequires: python3-module-pySavitar
+BuildRequires: python3-module-requests
 %endif
 
-%py3_requires serial
-%py3_requires zeroconf
-%py3_requires stl
-Requires: python3-module-pySavitar
-Requires: python3-module-pyDulcificum
-Requires: Uranium = %version
 Requires: CuraEngine = %epoch:%version
 Requires: cura-fdm-materials
 Requires: 3dprinter-udev-rules
-Requires: python3-module-keyring >= 21
 Requires: qt6-declarative
 Requires: qt6-svg
-# need for plugins
-Requires: python3-module-Charon
-Requires: python3-module-trimesh
-Requires: python3-module-certifi
+Requires: fonts-ttf-google-noto-sans
+Requires: fonts-ttf-google-noto-sans-display
 
 %description
-Cura is a project which aims to be an single software solution for 3D printing.
-While it is developed to be used with the Ultimaker 3D printer, it can be used
-with other RepRap based designs.
-
-Cura prepares your model for 3D printing. For novices, it makes it easy to get
-great results. For experts, there are over 200 settings to adjust to your
-needs. As it's open source, our community helps enrich it even more.
-
-# see: https://github.com/Ultimaker/Cura/issues/5142
-%define cura_cloud_api_root https://api.ultimaker.com
-%define cura_cloud_api_version 1
-%define cura_cloud_account_api_root https://account.ultimaker.com
+Cura is a state-of-the-art slicer app
+to prepare your 3D models for your 3D printer.
+With hundreds of settings & community-managed print profiles,
+Ultimaker Cura is sure to lead your next project to a success.
 
 %prep
-%setup
-%autopatch1 -p1
-
-tar xf %SOURCE1
-cp -a cura-resources-%version/cura/resources .
-
-mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE4 cmake
-rm -rf CMakeLists.txt
-cp -a %SOURCE5 %SOURCE6 %SOURCE8 .
-cp -a %SOURCE7 cura
+%setup -a1
+sed 's/@CURA_VERSION@/%version/g' %SOURCE2 > cura/CuraVersion.py
+%autopatch -p1
 
 %python3_fix_shebang cura_app.py
-
-# Remove failing plugins
-BAD_PLUGINS=(3DConnexion SentryLogger UFPReader UFPWriter)
-printf 'plugins/%%s\0' "${BAD_PLUGINS[@]}" | xargs -r0 rm -r
-%__python3 %SOURCE2 -d resources/bundled_packages "${BAD_PLUGINS[@]}"
-
-# create empty keyrings
-mkdir -p $HOME/.local/share/keyrings
-echo 'default' > $HOME/.local/share/keyrings/default
-
-cat > $HOME/.local/share/keyrings/default.keyring << EOF
-[keyring]
-display-name=default
-ctime=1559811805
-mtime=0
-lock-on-idle=false
-lock-after=false
-EOF
+rm resources/conan*
+rm -r resources/themes/*/fonts
 
 %build
-%cmake -DCURA_VERSION:STRING=%version \
-       -DCURA_CLOUD_API_ROOT:STRING=%cura_cloud_api_root \
-       -DCURA_CLOUD_API_VERSION:STRING=%cura_cloud_api_version \
-       -DCURA_CLOUD_ACCOUNT_API_ROOT:STRING=%cura_cloud_account_api_root \
-       -DLIB_SUFFIX:STR=
+%cmake \
+    -DLIB_SUFFIX= \
+    -DCURA_NO_INSTALL_PLUGINS=3DConnexion,SentryLogger
 %cmake_build
 
 %install
 %cmake_install
 
-mkdir -p %buildroot%_datadir/%name/resources/images/whats_new
-mkdir -p %buildroot%_datadir/%name/resources/texts/whats_new
-mkdir -p %buildroot%_datadir/%name/resources/scripts
+install -d %buildroot%_desktopdir
+sed packaging/AppImage/%name.desktop.jinja \
+    -e 's|Exec=UltiMaker-Cura|Exec=%_bindir/%name|' \
+    -e 's|{{ cura_version }}|%version|' \
+    > %buildroot%_desktopdir/%name.desktop
+
+install -pD -m644 -t %buildroot%_datadir/metainfo \
+    packaging/AppImage/%name.appdata.xml
+
+install -pD -m644 %name.sharedmimeinfo \
+    %buildroot%_datadir/mime/packages/%name.xml
+
+install -pD -m644 resources/images/%name-icon.png \
+    %buildroot%_iconsdir/hicolor/128x128/apps/%name-icon.png
+install -pD -m644 resources/images/%name-icon-32.png \
+    %buildroot%_iconsdir/hicolor/32x32/apps/%name-icon.png
 
 %find_lang cura fdmextruder.def.json fdmprinter.def.json --output=%name.lang
 
 %check
-# Temporary copy of the generated version file
-cp %_cmake__builddir/CuraVersion.py cura
 %__python3 -m pytest -v
 
-desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.desktop
-
 %files -f %name.lang
-%doc LICENSE README.md
+%doc LICENSE README.md CONTRIBUTING.md
+%_bindir/%name
 %python3_sitelibdir/%name
 %_datadir/%name
-%_desktopdir/com.ultimaker.cura.desktop
-%_datadir/metainfo/com.ultimaker.cura.appdata.xml
-%_iconsdir/hicolor/*/apps/%name-icon.png
-%_datadir/mime/packages/%name.xml
-%_bindir/%name
 %_libexecdir/%name
+%_desktopdir/%name.desktop
+%_datadir/metainfo/%name.appdata.xml
+%_datadir/mime/packages/%name.xml
+%_iconsdir/hicolor/*/apps/%name-icon.png
 
 %changelog
+* Thu Nov 19 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.14.0-alt1
+- New version 5.14.0.
+- Update summary and description.
+- Switch to build from Gear tags.
+- Clean up old BRs and automate Requires.
+- Bring back UFPReader and UFPWriter plugins.
+- Unbundle the fonts to use system ones.
+- Install plugins without test files along with them.
+- Don't force QT_QPA_PLATFORM and use XDG Desktop Portal (ALT #61381).
+- Drop Cura updates checkbox from preferences page.
+- Fixes:
+  + Export to 3mf files (ALT #60492).
+  + Simulation view crash for numpy 2.0+.
+
 * Wed Sep 02 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt6
 - Drop unnecessary python3-module-pip build dep.
 - Fix cleaning up plugin metadata files.

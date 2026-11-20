@@ -1,140 +1,66 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %ix86
-%def_without check
-%else
 %def_with check
-%endif
 
-%add_python3_compile_include %_libexecdir/uranium
+%add_python3_path %_libexecdir/uranium
+%add_findprov_skiplist %_libexecdir/uranium/*
 
-Name:    Uranium
-Version: 5.13.0
-Release: alt5
+Name: Uranium
+Version: 5.14.0
+Release: alt1
 
-Summary: A Python framework for building Desktop applications.
+Summary: A Python framework for building 3D printing desktop applications
 License: LGPL-3.0-or-later
-Group:   Development/Python3
-URL:     https://github.com/Ultimaker/Uranium
-VCS:     https://github.com/Ultimaker/Uranium
+Group: Development/Python3
+URL: https://github.com/Ultimaker/Uranium
+VCS: https://github.com/Ultimaker/Uranium
+
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-python3
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-python3
-BuildRequires: python3-devel cmake
-BuildRequires:  %_bindir/doxygen
-BuildRequires:  %_bindir/msgmerge
-
-# Tests
+BuildRequires: cmake
+BuildRequires: %_bindir/msgmerge
 %if_with check
-BuildRequires:  python3-module-pyArcus
-BuildRequires:  python3-module-numpy
-BuildRequires:  python3-module-numpy-testing
-BuildRequires:  python3-module-scipy
-BuildRequires:  python3-module-PyQt6
-BuildRequires:  python3-module-pytest
-BuildRequires:  python3-module-shapely
-BuildRequires:  python3-module-twisted-web
-BuildRequires:  python3-modules-sqlite3
-BuildRequires:  python3-module-pyclipper
-BuildRequires:  python3-module-pyUvula
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pyArcus
+BuildRequires: python3-module-pyclipper
+BuildRequires: python3-module-PyQt6
+BuildRequires: python3-module-pyUvula
+BuildRequires: python3-module-scipy
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-twisted-web
 %endif
 
 BuildArch: noarch
 
-# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
-Source: %name-%version.tar
-
-# Cmake bits taken from 4.13.1, before upstream went nuts with conan
-Source2: mod_bundled_packages_json.py
-Source3: UraniumPluginInstall.cmake
-Source4: UraniumTests.cmake
-Source5: UraniumTranslationTools.cmake
-Source6: CMakeLists.txt
-Source7: CPackConfig.cmake
-Source8: Doxyfile
-
-Patch: Uranium-4.7.1-set-default-languages.patch
-
-# from Fedora
-Patch2: Uranium-5.3.0-qt-try-ints-then-bytes-for-gl-mask-functions.patch
-Patch3: 997.patch
-
-# https://github.com/Ultimaker/Uranium/pull/1031
-Patch5: Uranium-5.4.0-tests-replace-deprecated-path-parameter-for-pytest_i.patch
-
-# https://github.com/Ultimaker/Uranium/pull/885.patch#/Uranium-5.3.0-python3.12.patch
-Patch6: Uranium-5.12.1-python3.12.patch
-
-# https://github.com/Ultimaker/Uranium/pull/985
-Patch7: numpy-2.0-lib-pad.patch
-# https://github.com/Ultimaker/Uranium/pull/1028
-Patch8: numpy-2.3.0-tostring.patch
-
-# Fixes for Qt 6.9+
-# https://github.com/Ultimaker/Uranium/pull/1018
-Patch10: 1018.patch
-# https://github.com/Ultimaker/Uranium/commit/483f60ecb359c18870a4ae5428476fcdfca47111
-Patch11: Uranium-5.13.0-Force-dialogs-to-appear-centered.patch
-
 %description
-%summary
-
-%package doc
-Summary: Documentation for %name package
-Group: Documentation
-
-%description doc
-Documentation for Uranium, a Python framework for building 3D printing
-related applications.
+%summary.
 
 %prep
 %setup
 %autopatch -p1
 
-mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 cmake/
-rm CMakeLists.txt
-cp -a %SOURCE6 %SOURCE7 %SOURCE8 .
- 
 # fix compile-shaders
 sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
 
-# Remove unnecessary plugins
-BAD_PLUGINS=(UpdateChecker)
-printf 'plugins/%%s\0' "${BAD_PLUGINS[@]}" | xargs -r0 rm -r
-%__python3 %SOURCE2 -d resources/bundled_packages "${BAD_PLUGINS[@]}"
-
 %build
-# there is no arch specific content, so we set LIB_SUFFIX to nothing
-# see https://github.com/Ultimaker/Uranium/commit/862a246bdfd7e25541b04a35406957612c6f4bb7
-%cmake -DLIB_SUFFIX:STR=
+%cmake \
+    -DLIB_SUFFIX= \
+    -DUM_NO_INSTALL_PLUGINS=UpdateChecker
 %cmake_build
-%cmake_build -- doc
 
 %install
 %cmake_install
-mv %buildroot/%_datadir/cmake* %buildroot/%_datadir/cmake
-
-# Sanitize the location of locale files
-pushd %buildroot%_datadir
-mv uranium/resources/i18n locale
-ln -s ../../locale uranium/resources/i18n
-rm locale/uranium.pot
-rm locale/*/uranium.po
-popd
 
 %find_lang uranium
 
 %check
-# skipping failing tests, see:
-# * https://github.com/Ultimaker/Uranium/issues/594
-# * https://github.com/Ultimaker/Uranium/issues/603
-%__python3 -m pytest -v -k "not (TestSettingFunction and test_init_bad) \
-	and not TestHttpRequestManager and not test_isValid \
-	and not test_properties and not test_triggerAction \
-	and not test_triggerActionWithData and not test_activeToolPanel"
+%__python3 -m pytest -v
 
 %files -f uranium.lang
 %doc LICENSE README.md
@@ -143,10 +69,16 @@ popd
 %_datadir/uranium
 %_datadir/cmake/Modules/*
 
-%files doc
-%doc html LICENSE
-
 %changelog
+* Wed Nov 18 2026 Valery Zabrovsky <brow@altlinux.org> 5.14.0-alt1
+- New version 5.14.0.
+- Switch to build from Gear tags.
+- Drop doc package (unmaintained upstream).
+- Move locale files back to Uranium dir.
+- Install plugins without test files along with them.
+- Don't use parentheses in STL mime types (ALT #43363).
+- Enable checks on i586.
+
 * Wed Sep 02 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt5
 - Drop unnecessary python3-module-pip build dep.
 - Fix cleaning up plugin metadata files.

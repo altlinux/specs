@@ -1,116 +1,90 @@
-# Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
+
+%def_with check
 
 Name: CuraEngine
 Epoch: 1
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
 
-Summary: Engine for processing 3D models into G-code instructions for 3D printers
+Summary: Powerful, fast and robust engine for converting 3D models into g-code
 License: AGPL-3.0-or-later
 Group: Engineering
-Url: https://github.com/Ultimaker/CuraEngine
+URL: https://github.com/Ultimaker/CuraEngine
+VCS: https://github.com/Ultimaker/CuraEngine
 
-# Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-
-# Cmake bits taken from 4.13.1, before upstream went nuts with conan
-Source2: FindGMock.cmake
-Source3: FindPolyclipping.cmake
-Source4: FindStb.cmake
-Source5: CMakeLists.txt
-Source6: CPackConfig.cmake
-
+# Header-only libraries for basic geometric operations:
+# unions, intersections, differences, and XORs.
+# Distributed under BSL-1.0.
+Source1: mapbox-geometry.tar
+Source2: mapbox-wagyu.tar
 # This is some kind of "public" layer of a private logging thing
 # It's header-only and not usable as a system library,
 # so I (churchyard) decided to bundle it for now. Shame on me.
 # It's AGPL-3.0-or-later.
-%global scripta_version c378c837eeb505146ab67abe0904bfed2099128f
-# Source7-url: https://github.com/Ultimaker/Scripta_public/archive/%{scripta_version}/Scripta_public-%{scripta_version}.tar.gz
-Source7: Scripta_public.tar
+Source3: scripta.tar
 
-# Header-only libraries for basic geometric operations:
-# unions, intersections, differences, and XORs.
-# Distributed under BSL-1.0.
-# Source8-url: https://github.com/mapbox/geometry.hpp/archive/refs/tags/v2.0.3.tar.gz
-Source8: mapbox-geometry.tar
-# Source9-url: https://github.com/mapbox/wagyu/archive/refs/tags/0.5.0.tar.gz
-Source9: mapbox-wagyu.tar
-
-Patch2: %name-static-libstdcpp.patch
-Patch3: CuraEngine-5.12.1-i586-min.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: gcc-c++
 BuildRequires: cmake
-BuildRequires: protobuf-compiler
-BuildRequires: pkgconfig(protobuf)
-BuildRequires: libpolyclipping-devel
-BuildRequires: pkgconfig(RapidJSON)
-BuildRequires: libArcus-devel
-BuildRequires: libstb-devel
-BuildRequires: libfmt-devel
-BuildRequires: libspdlog-devel
 BuildRequires: boost-devel-headers
-BuildRequires: librange-v3-devel
-BuildRequires: boost-polygon-devel
 BuildRequires: boost-geometry-devel
-BuildRequires: tbb-devel
+BuildRequires: boost-polygon-devel
+BuildRequires: cura-formulae-engine-devel
+BuildRequires: libArcus-devel
+BuildRequires: libfmt-devel
 BuildRequires: libpng-devel
+BuildRequires: libpolyclipping-devel
+BuildRequires: libprotobuf-devel
+BuildRequires: librange-v3-devel
+BuildRequires: libspdlog-devel
+BuildRequires: libstb-devel
+BuildRequires: rapidjson-devel
+BuildRequires: tbb-devel
+BuildRequires: zlib-devel
+%if_with check
+BuildRequires: ctest
+BuildRequires: libgtest-devel
+%endif
 
 %description
-CuraEngine is a powerful, fast and robust engine for processing 3D
-models into 3D printing instruction for Ultimaker and other GCode
-based 3D printers. It is part of the larger open source project
-called "Cura".
-
-The CuraEngine is a C++ console application for 3D printing GCode
-generation. It has been made as a better and faster alternative
-to the old Skeinforge engine.
+CuraEngine is a powerful, fast and robust engine for converting 3D models
+into g-code instructions for 3D printers. Designed as a better and faster
+alternative to the old Skeinforge Engine and is an integral part of Cura.
+You can use CuraEngine separately, in other applications and integrate it
+into your own app.
 
 %prep
-%setup
-
-mkdir cmake
-cp -a %SOURCE2 %SOURCE3 %SOURCE4 cmake
-rm -rf CMakeLists.txt
-cp -a %SOURCE5 %SOURCE6 .
-
-tar xf %SOURCE7
-mv Scripta_public/include/scripta/ include
-
-tar xf %SOURCE8
-mv mapbox-geometry/include/mapbox/ include
-tar xf %SOURCE9
-mv mapbox-wagyu/include/mapbox/geometry/wagyu/ include/mapbox/geometry
-
+%setup -a1 -a2 -a3
 %autopatch -p1
 
-# bundled libraries
-rm -rf libs
-
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=OFF \
-       -DSET_RPATH:BOOL=OFF \
-       -DCURA_ENGINE_VERSION:STRING=%version \
-       -DUSE_SYSTEM_LIBS:BOOL=ON \
-       -DCMAKE_CXX_FLAGS_RELEASE_INIT:STRING="%optflags -fPIC" \
-       -DStb_INCLUDE_DIRS:PATH=%_includedir/stb
-
+%cmake \
+    -DCURA_ENGINE_VERSION=%version \
+    -DENABLE_TESTING=%{?_with_check:ON}%{!?_with_check:OFF} \
+    -DENABLE_PLUGINS=OFF
 %cmake_build
 
 %install
 %cmake_install
 
 %check
-# Smoke test
-%buildroot%_bindir/%name help
+%ctest
 
 %files
+%doc LICENSE README.md
 %_bindir/%name
-%doc README.md
 
 %changelog
+* Wed Nov 11 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.14.0-alt1
+- New version 5.14.0.
+- Switch to build from Gear tags.
+- Update summary and description.
+- Use builtin tests in check section.
+
 * Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 1:5.13.0-alt1
 - New version 5.13.0.
 

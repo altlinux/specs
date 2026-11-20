@@ -2,8 +2,8 @@
 %define modulename pyUvula
 
 Name: python3-module-%modulename
-Version: 1.0.2
-Release: alt1.g7559e5c3.1
+Version: 1.1.0
+Release: alt1.gd15219eb.1
 
 Summary: UV-unwrapper for potentially big meshes
 License: LGPL-3.0-only
@@ -53,10 +53,14 @@ on a texture.
 %cmake_install
 
 %files
-%doc README.md
+%doc LICENSE README.md
 %python3_sitelibdir/%modulename.*.so
 
 %changelog
+* Wed Nov 04 2026 Valery Zabrovsky <brow@altlinux.org> 1.1.0-alt1.gd15219eb.1
+- Update to latest snapshot (Cura 5.14.0 release).
+- Use pkgconfig's IMPORTED_TARGET for polyclipping.
+
 * Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 1.0.2-alt1.g7559e5c3.1
 - Build the Python package only.
 - Update to latest snapshot.

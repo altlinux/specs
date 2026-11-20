@@ -1,17 +1,17 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: cura-fdm-materials
-Version: 5.13.0
+Version: 5.14.0
 Release: alt1
+
 Summary: Cura FDM Material database
 License: CC0-1.0
 Group: Engineering
-Url: https://github.com/Ultimaker/fdm_materials
+URL: https://github.com/Ultimaker/fdm_materials
+VCS: https://github.com/Ultimaker/fdm_materials
 
-# Source-url: https://github.com/Ultimaker/fdm_materials/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
-
-# Cmake bits taken from 4.13.1, before upstream went nuts with conan
-Source2:        CMakeLists.txt
-Source3:        CPackConfig.cmake
+Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
@@ -19,21 +19,19 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 
 %description
-Cura material files.
-
-These files are needed to work with printers like Ultimaker 2+ and Ultimaker 3.
+Cura material files, used for working with printers
+like Ultimaker 2+ and Ultimaker 3.
 
 %prep
 %setup
-rm CMakeLists.txt
-cp %SOURCE2 %SOURCE3 .
+%autopatch -p1
 
 %build
 %cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %files
 %dir %_datadir/cura
@@ -41,6 +39,10 @@ cp %SOURCE2 %SOURCE3 .
 %_datadir/cura/resources/materials
 
 %changelog
+* Wed Nov 04 2026 Valery Zabrovsky <brow@altlinux.org> 5.14.0-alt1
+- New version 5.14.0.
+- Switch to build from Gear tags.
+
 * Wed May 27 2026 Valery Zabrovsky <brow@altlinux.org> 5.13.0-alt1
 - New version 5.13.0.
 - Fix license.

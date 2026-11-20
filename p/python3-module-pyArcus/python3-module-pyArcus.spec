@@ -2,8 +2,8 @@
 %define modulename pyArcus
 
 Name: python3-module-%modulename
-Version: 5.11.2
-Release: alt1.g7087dff9.1
+Version: 5.12.0
+Release: alt1.g72d052a2.1
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPL-3.0-or-later AND BSD-3-Clause
@@ -58,5 +58,8 @@ __EOF__
 %python3_sitelibdir/%modulename.pyi
 
 %changelog
+* Wed Nov 04 2026 Valery Zabrovsky <brow@altlinux.org> 5.12.0-alt1.g72d052a2.1
+- Update to latest snapshot (Cura 5.14.0 release).
+
 * Mon Aug 31 2026 Valery Zabrovsky <brow@altlinux.org> 5.11.2-alt1.g7087dff9.1
 - Initial build for ALT Sisyphus (as a separate package).
