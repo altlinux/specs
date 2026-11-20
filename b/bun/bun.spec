@@ -1,8 +1,8 @@
 # 1.4.0 is the first release written in Rust (1.3.14 was the last in Zig).
-# git_commit is the bun-v1.4.4 tag peel, used as GIT_SHA for `bun --revision`;
+# git_commit is the bun-v1.4.5 tag peel, used as GIT_SHA for `bun --revision`;
 # it is not part of the RPM version.
-%define git_commit 38afee6c84fcf48c0edb2466aa4b27d287a59c30
-%define git_short 38afee6c
+%define git_commit a7733435cf40429e3b35c36072769df2052b80f1
+%define git_short a7733435
 # The WebKit revision Source1 was made from. Checked against
 # scripts/build/deps/webkit.ts in %%prep, so a version bump cannot leave the
 # engine behind.
@@ -10,11 +10,13 @@
 # The SQLite amalgamation in Bun's tree. Used for both the bundled() Provides
 # and the %%check that asserts it against sqlite_version(), so the two cannot
 # drift apart on a version bump.
-%define bundled_sqlite 3.53.4
+%define bundled_sqlite 3.54.1
 # The LLVM release selected through ALT's llvm-alt-tool-wrapper via
-# ALTWRAP_LLVM_VERSION in %%build. Patch5 raises bun's pinned LLVM to this
-# major.
-%define llvm_version 22.1
+# ALTWRAP_LLVM_VERSION in %%build. Upstream pins 23.1 and scripts/build/tools.ts
+# version-checks the clang C driver and ld.lld against it; ALT's llvm23.1 is
+# that same major, and rustc here is built against it too, as the clang/rustc
+# major check in scripts/build/config.ts requires.
+%define llvm_version 23.1
 # Building Bun requires an existing Bun: 24 of the build's code-generation
 # steps use Bun.build and Bun.Transpiler, for which Node.js has no equivalent,
 # and Bun's own bundler is what emits the JavaScript builtins with
@@ -30,7 +32,7 @@
 %def_without rust_nightly
 
 Name: bun
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Fast all-in-one JavaScript runtime and toolkit
@@ -95,17 +97,22 @@ Patch3: bun-webkit-no-type-units.patch
 # tracked like any other shared library. See the patch header for the details
 # that are specific to each of them.
 Patch4: bun-system-libs.patch
-# Lower the LLVM version bun pins (23 upstream) to the one the distribution
-# ships; rustc here is built against the same major.
-Patch5: bun-llvm-22.patch
+# rustc 1.100.0 partially stabilized the allocator_api feature: the unstable
+# remainder is the new allocator_ext feature, and the old name is fatal under
+# this workspace's -D warnings. Four crates still use the unstable remainder
+# (bun_alloc, bun_collections, bun_sema, bun_react_compiler) and rename the
+# gate to allocator_ext; eight only touched what got stabilized, where an
+# unused gate is an error too, and lose it. Same transition, spelled for the
+# distribution compiler.
+Patch5: bun-allocator-ext.patch
 # One struct derives Default over std::sync::Once, whose Default impl is newer
 # than the released compiler; spell the impl out with Once::new() instead.
 Patch6: bun-once-default.patch
 
 BuildRequires: rust-cargo
 # The C/C++ toolchain and the linker the ALT wrapper selects (ALTWRAP_LLVM_VERSION
-# in %%build). Patch5 raises bun's pinned LLVM to this major; scripts/build/
-# tools.ts enforces the version for the C compiler and the linker.
+# in %%build). scripts/build/tools.ts enforces the version for the C compiler
+# and the linker.
 BuildRequires: clang%llvm_version
 BuildRequires: cmake >= 3.24
 BuildRequires: gcc-c++
@@ -326,16 +333,21 @@ EOF
 : >$shadow/lib/rustlib/src/rust/library/coretests/src/lib.rs
 # core gained the top-level `type_info::of` - a const TypeId constructor
 # without the 'static bound - after rustc 1.99.0 branched, and bun's
-# collections call it. Add the same wrapper the nightly carries to the shadow
-# copy of core: the const type_id::<T> it wraps is right there in the module.
-# The library workspace compiles entirely from this shadow (build-std), so
-# the addition is consistent for every unit; the compiler binary does not
-# care - no lang item changes.
+# collections call it. When the installed rustc predates it, add the same
+# wrapper the nightly carries to the shadow copy of core: the const
+# type_id::<T> it wraps is right there in the module. The library workspace
+# compiles entirely from this shadow (build-std), so the addition is
+# consistent for every unit; the compiler binary does not care - no lang
+# item changes. rustc 1.100 has `of` natively, so the backport is appended
+# only when the module lacks it - unconditionally it would be a redefinition.
 ti=$shadow/lib/rustlib/src/rust/library/core/src/mem/type_info.rs
 rm "$ti"
 {
     cat "$real/lib/rustlib/src/rust/library/core/src/mem/type_info.rs"
-    cat <<'EOF'
+    if ! grep -q 'pub const fn of<T: ?Sized>() -> TypeId' \
+        "$real/lib/rustlib/src/rust/library/core/src/mem/type_info.rs"
+    then
+        cat <<'EOF'
 
 // ALT: backport of rust-lang/rust additions after 1.99.0; see the spec.
 #[unstable(feature = "type_info", issue = "146922")]
@@ -344,6 +356,7 @@ pub const fn of<T: ?Sized>() -> TypeId {
     const { type_id::<T>() }
 }
 EOF
+    fi
 } > "$ti"
 cat >$shadow/bin/rustc <<EOF
 #!/bin/bash
@@ -506,6 +519,17 @@ EOF
 %_bindir/%{name}x
 
 %changelog
+* Fri Nov 20 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.5-alt1
+- Update to 1.4.5 (bundled sqlite 3.54.1, new boringssl/c-ares/lsquic pins,
+  Node.js 26.3.0 headers; prefetch cache regenerated)
+- Drop bun-llvm-22.patch: sisyphus rustc (1.100) is built against LLVM 23.1,
+  the major upstream pins; build with the distribution toolchain directly
+- Carry the rustc 1.100 std workspace crates in cargo-vendor, needed by the
+  offline -Zbuild-std
+- Make the type_info::of backport conditional: rustc 1.100 has it natively
+- Switch the allocator_api feature gates to allocator_ext (partially
+  stabilized in rustc 1.100); see bun-allocator-ext.patch
+
 * Thu Oct 22 2026 Nazarov Denis <nenderus@altlinux.org> 1.4.4-alt1
 - Update to 1.4.4
 
