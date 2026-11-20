@@ -1,5 +1,5 @@
 Name: tree-sitter-php
-Version: 0.25.1
+Version: 0.25.2
 Release: alt1
 
 Summary: PHP grammar for tree-sitter
@@ -31,6 +31,9 @@ cp -a queries %buildroot%_libdir/tree-sitter-php
 %_libdir/tree-sitter-php
 
 %changelog
+* Fri Nov 20 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.2-alt1
+- 0.25.2 released
+
 * Wed Oct 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.25.1-alt1
 - 0.25.1 released
 
