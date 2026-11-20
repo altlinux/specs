@@ -1,5 +1,5 @@
-%define git_commit_hash ac175c8a
-%define git_commit_date 1793636632
+%define git_commit_hash c71e65d9c
+%define git_commit_date 1795060582
 
 %define sort_filter_proxy_model_commit f2881493e42bd7b7d5b7abe804dad084dd610b71
 %define qtkeychain_commit 7460df6a978669290de5b56c2d98b199b61c3f88
@@ -8,8 +8,8 @@
 %define libagw_version 1.0.8
 
 Name: amnezia-vpn
-Version: 5.1.0.6
-Release: alt2
+Version: 5.1.1.10
+Release: alt1
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -39,6 +39,8 @@ Patch0: %name-tun2-sudo.patch
 Patch1: %name-dns-fallback.patch
 Patch2: %name-killswitch-dns.patch
 Patch3: %name-openvpn-modules.patch
+Patch4: %name-xray-core-version.patch
+Patch5: %name-xray-fingerprint.patch
 
 BuildRequires: golang
 BuildRequires: libsecret-devel
@@ -86,6 +88,8 @@ This package contains systemd service files.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %__mv -Tf ../SortFilterProxyModel-%sort_filter_proxy_model_commit client/3rd/SortFilterProxyModel
 %__mv -Tf ../qtkeychain-%qtkeychain_commit client/3rd/qtkeychain
@@ -217,6 +221,14 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Fri Nov 20 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.1.10-alt1
+- Version 5.1.1.10
+- Fix XRay DNS: the new upstream default REALITY fingerprint (firefox) is
+  also applied to configs saved by previous releases (ALT #52679)
+- Deploy server xray-core v26.7.28 expected by the client instead of the
+  Dockerfile default v26.10.31, so the server binary matches the version
+  the client probes for and its own core (ALT #52679)
+
 * Sun Nov 15 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.0.6-alt2
 - Fix DNS resolve on Linux with killswitch enabled (ALT #52679)
 - Fix OpenVPN container NAT setup on recreate (ALT #52679)
