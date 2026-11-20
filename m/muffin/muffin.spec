@@ -7,7 +7,7 @@
 %define sover 0
 
 Name: muffin
-Version: 6.8.3
+Version: 6.8.5
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -197,6 +197,9 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Fri Nov 20 2026 Anton Midyukov <antohami@altlinux.org> 6.8.5-alt1
+- New version 6.8.5.
+
 * Tue Nov 17 2026 Anton Midyukov <antohami@altlinux.org> 6.8.3-alt1
 - New version 6.8.3.
 
