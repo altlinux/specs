@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %global import_path github.com/go-task/task
+
 Name:     go-task
-Version:  3.53.1
+Version:  3.54.0
 Release:  alt1
 
 Summary:  A task runner / simpler Make alternative written in Go
@@ -9,7 +11,7 @@ Group:    Other
 Url:      https://github.com/go-task/task
 
 Source0:   %name-%version.tar
-Source1:   vendor.tar
+Source1:   %name-%version-vendor.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -39,14 +41,23 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
-install -Dm 644 completion/zsh/_task %buildroot/%_datadir/zsh/site-functions/_task
+install -m644 -D completion/bash/task.bash  %buildroot%_datadir/bash-completion/completions/task
+install -m644 -D completion/zsh/_task       %buildroot%_datadir/zsh/site-functions/_task
+install -m644 -D completion/fish/task.fish  %buildroot%_datadir/fish/completions/task.fish
 
 %files
 %_bindir/task
 %doc *.md
+%_datadir/bash-completion/completions/task
 %_datadir/zsh/site-functions/_task
+%_datadir/fish/completions/task.fish
 
 %changelog
+* Fri Nov 20 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.54.0-alt1
+- New version 3.54.0.
+- Install completion scripts for bash and fish in addition to zsh.
+- Spec cleanup.
+
 * Tue Aug 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.53.1-alt1
 - New version 3.53.1.
 - Add Conflicts: task-core (closes: #60262).
