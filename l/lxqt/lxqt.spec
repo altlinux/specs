@@ -1,6 +1,6 @@
 Name: lxqt
 Version: 2.5.0
-Release: alt1
+Release: alt2
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
 License: GPL-2.0-or-later
@@ -63,7 +63,7 @@ Requires: lxqt-archiver >= 1.1.0
 # task-manager
 Requires: qps >= 2.9.0
 # clipboard history applet
-Requires: qlipper
+Requires: lxqt-clip
 # fonts
 Requires: fonts-ttf-core
 # pdf-viewer
@@ -84,6 +84,9 @@ Requires: lxqt-wallet >= 4.0.0
 %files regular
 
 %changelog
+* Fri Nov 20 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt2
+- Replace dependency on qlipper with lxqt-clip.
+
 * Fri Nov 06 2026 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
 - New version 2.5.0.
 
