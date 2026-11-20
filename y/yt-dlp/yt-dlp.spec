@@ -2,7 +2,7 @@
 
 Name: yt-dlp
 Version: 2026.10.26
-Release: alt1
+Release: alt2
 
 Summary: A tool for downloading from video services for offline watching
 License: Unlicense
@@ -10,6 +10,7 @@ Group: Networking/File transfer
 Url: https://github.com/yt-dlp/yt-dlp
 
 Source0: %name-%version.tar
+Source1: remove-adult-extractors.py
 
 BuildArch: noarch
 
@@ -49,6 +50,8 @@ This package contains Python 3 module.
 
 %prep
 %setup
+python3 %SOURCE1
+python3 devscripts/make_lazy_extractors.py
 
 %build
 %pyproject_build
@@ -75,6 +78,9 @@ rm -r %buildroot%python3_sitelibdir/%py_name/__pyinstaller
 %python3_sitelibdir/%py_name-*.dist-info
 
 %changelog
+* Fri Nov 20 2026 Ajrat Makhmutov <rauty@altlinux.org> 2026.10.26-alt2
+- Removed adult-site extractors.
+
 * Wed Nov 11 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 2026.10.26-alt1
 - Updated to 2026.10.26.
 
