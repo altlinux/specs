@@ -2,7 +2,7 @@
 %define abiversion 4
 
 Name: libada
-Version: 4.0.0
+Version: 4.1.1
 Release: alt1
 
 Summary: WHATWG-compliant and fast URL parser written in modern C++
@@ -17,7 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: gcc-c++
 
 %description
@@ -76,6 +76,10 @@ developing applications that use %oname.
 %_includedir/ada_c.h
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 4.1.1-alt1
+- new version 4.1.1
+- use rpm-build-cmake for CMake macros
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version 4.0.0
 - library package renamed to libada4 per soname
