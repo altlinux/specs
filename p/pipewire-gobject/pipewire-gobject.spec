@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: %_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: Experimental GObject/GObject-Introspection binding layer for PipeWire
@@ -138,6 +138,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Fri Nov 20 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.11-alt1
+- 0.3.11
+
 * Mon Sep 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
 - 0.3.10
 
