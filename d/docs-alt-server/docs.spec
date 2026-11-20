@@ -6,7 +6,7 @@
 
 Name: docs-%variant
 Version: 11.1.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -50,6 +50,12 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Nov 21 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt3
+- fix Kea (closes #61583, #61582, #61581, #61577, #61575, #61574)
+- small improvements (closes #61580, #61578, #61579, #61572, #61567, #61406)
+- fix some typos (closes #61573, #61571, #61570, #61569, #61568, #61421, #61417)
+- fix punctuation (closes #61420, #61416, #61413, #61405)
+
 * Fri Nov 06 2026 Elena Mishina <lepata@altlinux.org> 11.1.1-alt2
 - add Kea DHCP (thx Stephen Malchevskii)
 
