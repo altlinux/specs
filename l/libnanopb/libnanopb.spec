@@ -1,6 +1,6 @@
 %define oname nanopb
 Name: libnanopb
-Version: 0.4.9.2
+Version: 0.4.9.3
 Release: alt1
 
 Summary: Nanopb - Protocol Buffers for Embedded Systems
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
-BuildRequires: cmake python3
+BuildRequires: rpm-build-cmake python3
 
 BuildRequires: protobuf-compiler
 
@@ -63,6 +63,13 @@ subst "s|PythonInterp 2.7|PythonInterp 3|" CMakeLists.txt
 %_libdir/cmake/nanopb/
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.9.3-alt1
+- new version 0.4.9.3
+- replace cmake build dependency with rpm-build-cmake
+- fixes:
+  + GHSA-5v96-h584-4px4: fix invalid frees after failed decode
+  + GHSA-fmpg-qc28-5x4x: reject unsafe callbacks inside oneof
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.4.9.2-alt1
 - new version 0.4.9.2
 
