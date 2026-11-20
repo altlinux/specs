@@ -2,7 +2,7 @@
 %global voskmodeldir %voskdir/models
 
 Name: vosk-model-small
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Collection of small language models for vosk-api
@@ -353,6 +353,9 @@ cp -rv vosk-model-small-ka-0.42 %buildroot%voskmodeldir/vosk-model-small-ka
 %voskmodeldir/vosk-model-small-ka
 
 %changelog
+* Fri Nov 20 2026 Ulysses Apokin <ulysses@altlinux.org> 1.0.1-alt1
+- Remove non-packaged model from sources.
+
 * Mon May 25 2026 Ulysses Apokin <ulysses@altlinux.org> 1.0.0-alt1
 - Initial build for Sisyphus:
   + vosk-model-small-en-us 0.15
