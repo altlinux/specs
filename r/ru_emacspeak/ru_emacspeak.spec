@@ -2,8 +2,8 @@
 %define _emacspeakdir %_datadir/emacs/site-lisp/emacspeak
 
 Name: ru_emacspeak
-Version: 50.0.22
-Release: alt7
+Version: 53.0
+Release: alt1
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -17,10 +17,7 @@ Source2: 80site-defaults.el
 Source3: emacspeak.conf
 Source4: enable-emacspeak
 
-# alt patches
-Patch0: python-base-dep-remove.patch
-Patch1: ru_emacspeak-fix-voice-setup-defvar.patch
-Patch2: ru_emacspeak-fix-proced-cl-case-otherwise.patch
+Patch0: tips-xsl-docbook-path.patch
 
 Requires: multispeech
 Requires: tclx
@@ -42,6 +39,12 @@ BuildRequires: libsox-devel
 BuildRequires: libespeak-devel
 BuildRequires: csound
 BuildRequires: xsltproc
+BuildRequires: docbook-xsl
+BuildRequires: texinfo
+BuildRequires: texlive-fonts-recommended
+BuildRequires: texlive-latex-base
+BuildRequires: texlive-dist
+BuildRequires: texlive-lang-german
 
 %description
 Emacspeak is a speech output system that will allow someone who
@@ -161,22 +164,15 @@ done
 popd
 
 make -C lisp config
-make -C lisp/g-client config
 
-# Remove global-voice-lock-mode from cus-load before it causes issues
-sed -i '/global-voice-lock-mode/d' lisp/emacspeak-cus-load.el
-
-cd lisp && mkdir -p /tmp/emacspeak-sounds && \
+pushd lisp && mkdir -p /tmp/emacspeak-sounds && \
 emacs -batch -q -no-site-file \
     --eval '(setq file-name-handler-alist nil gc-cons-threshold 64000000 load-source-file-function nil)' \
     --eval '(defvar emacspeak-sounds-directory "/tmp/emacspeak-sounds/")' \
     --eval '(defvar emacspeak-etc-directory (expand-file-name "etc/" (expand-file-name "../" default-directory)))' \
     -l ./emacspeak-load-path.el \
     -f batch-byte-compile voice-setup.el
-cd ..
-
-# Regenerate cus-load after voice-setup is compiled
-make -C lisp emacspeak-cus-load.el
+popd
 
 make -C lisp
 
@@ -340,13 +336,12 @@ install -m 755 %SOURCE4 %buildroot%_bindir/enable-emacspeak
 # Clean up the installation tree
 pushd %buildroot%_emacspeakdir
     pushd lisp
-        rm -v external-code-readme.org README
-        pushd g-client
-            rm -rv *.html *.org COPYING rfc-imap-search
-        popd
-    popd
+        rm -v external-code-readme.org
+            popd
     pushd etc
         rm -f Makefile NEWS-* COPYRIGHT applications.dtd applications.mp applications.rnc applications.xml applications.xsl bootstrap.sh fetchmailrc iheart-player tips.xml tips.xsl youtube-dl-readme .youtube-dl.repos
+        # prebuilt upstream binary, not referenced by any code; verify-elf rejects it outside bin/lib dirs
+        rm -rf pickup-c
     popd
 popd
 
@@ -391,7 +386,6 @@ chmod -R go+rX %_emacspeakdir/media
   %_emacspeakdir/media/.nosearch
 %dir %_emacspeakdir/js
 %_emacspeakdir/js/*
-%_emacspeakdir/js/.indium.json
 %_emacspeakdir/Makefile
 %_emacspeakdir/README
 %dir %_emacspeakdir/sounds
@@ -452,6 +446,9 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Tue Nov 17 2026 Artem Semenov <savoptik@altlinux.org> 53.0-alt1
+- New version 53.0.
+
 * Mon Nov 02 2026 Artem Semenov <savoptik@altlinux.org> 50.0.22-alt7
 - Define emacspeak-etc-directory before byte-compiling voice-setup.el standalone to fix void variable error.
 
