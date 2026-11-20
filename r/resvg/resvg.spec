@@ -1,9 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-# Upstream doesn't support C library versioning.
-%define abiversion 1
+
+%define abiversion 0.50
+
+%define rust_opt_level 3
+%define rust_codegen_units 1
+%define rust_lto "fat"
 
 Name: resvg
-Version: 0.48.1
+Version: %abiversion.0
 Release: alt1
 
 Summary: An SVG rendering library writen in rust
@@ -13,9 +17,15 @@ Url: https://crates.io/crates/resvg
 Vcs: https://github.com/linebender/resvg.git
 
 Source: %name-%version.tar
+%{!?_enable_rust_vendoring:
 Source1: vendor.tar
+}
 
 BuildRequires(pre): rpm-build-rust
+BuildRequires: rust-cargo-c
+%{?_enable_rust_vendoring:
+BuildRequires: cargo-vendor-filterer
+}
 
 %description
 It can be used as a Rust library, as a C library, and as a CLI
@@ -41,8 +51,16 @@ Group: Development/C
 %package -n libresvg-devel
 Summary: Header files and libraries required to use resvg C library
 Group: Development/C
+Requires: libresvg-devel = %EVR
 
 %description -n libresvg-devel
+%summary.
+
+%package -n libresvg-devel-static
+Summary: Resvg C static library
+Group: Development/C
+
+%description -n libresvg-devel-static
 %summary.
 
 %package -n qt-resvg-devel
@@ -56,44 +74,16 @@ Requires: libresvg-devel
 %summary.
 
 %prep
-%setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[profile.release]
-strip = false
-opt-level = 3
-debug = 2
-lto = true
-codegen-units = 1
-EOF
+%setup %{!?_enable_rust_vendoring:-a1}
+%rust_prep
 
 %build
 %rust_build --all-features -p usvg -p resvg
-
-# Cargo doesn’t yet provide a good way to pass specific rustflags to a package.
-# Passing -soname is required to generate SONAME header in output library as rust doesn't generate it by default.
-export RUSTFLAGS="-Clink-arg=-Wl,-soname,libresvg.so.%abiversion"
-%rust_build --all-features -p resvg-capi
+%rust_cbuild --all-features -p resvg-capi
 
 %install
 %rust_install resvg usvg
-
-# Install C library.
-install -Dm 755 target/release/libresvg.so "%buildroot%_libdir/libresvg.so.%abiversion"
-ln -sr %buildroot%_libdir/libresvg.so.%abiversion %buildroot%_libdir/libresvg.so
-# Install API.
-install -Dm 755 crates/c-api/resvg.h %buildroot%_includedir/resvg.h
-install -Dm 755 crates/c-api/ResvgQt.h %buildroot%_includedir/ResvgQt.h
+%rust_cinstall -p resvg-capi
 
 %check
 %rust_test --all --all-features
@@ -111,20 +101,33 @@ install -Dm 755 crates/c-api/ResvgQt.h %buildroot%_includedir/ResvgQt.h
 
 %files -n libresvg%abiversion
 %doc crates/c-api/LICENSE-MIT
-%_libdir/libresvg.so.%abiversion
+%_libdir/libresvg.so.%{abiversion}*
 
 %files -n libresvg-devel
 %doc crates/c-api/LICENSE-MIT
 %doc crates/c-api/README.md
 %_libdir/libresvg.so
-%_includedir/resvg.h
+%_includedir/resvg/resvg.h
+%_pkgconfigdir/resvg.pc
+
+%files -n libresvg-devel-static
+%doc crates/c-api/LICENSE-MIT
+%doc crates/c-api/README.md
+%_libdir/libresvg.a
 
 %files -n qt-resvg-devel
 %doc crates/c-api/LICENSE-MIT
 %doc crates/c-api/README.md
-%_includedir/ResvgQt.h
+%_includedir/resvg/ResvgQt.h
 
 %changelog
+* Thu Nov 19 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.50.0-alt1
+- New version (0.50.0).
+- Downgrade major version.
+- Change qt-resvg header path.
+- Include pkgbuild into libresvg-devel.
+- Package libresvg-devel-static.
+
 * Tue Aug 04 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.48.1-alt1
 - New version (0.48.1).
 
