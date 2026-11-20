@@ -1,6 +1,6 @@
 %define php_extension	ssh2
 Name: php%_php_suffix-%php_extension
-Version: 1.5.0
+Version: 1.6.1
 Epoch: 1
 Release: alt1.%_php_release_version
 Summary: PHP bindings for the libssh2 library
@@ -59,6 +59,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Fri Nov 20 2026 Anton Farygin <rider@altlinux.org> 1:1.6.1-alt1
+- 1.5.0 -> 1.6.1
 
 * Wed Apr 29 2026 Anton Farygin <rider@altlinux.org> 1:1.5.0-alt1
 - 1.4.1 -> 1.5.0
