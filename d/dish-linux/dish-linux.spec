@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    dish-linux
-Version: 2.7.0
+Version: 2.7.1
 Release: alt1
 
 Summary: Native Linux client for the Satellite wireless-gamepad server
 License: LGPL-3.0-or-later
 Group:   System/Configuration/Hardware
 URL:     https://tinkernorth.github.io/dish-linux/
-VCS:     https://github.com/TinkerNorth/dish-linux
+VCS:     https://github.com/TinkerNorth/dish-linux.git
 
 Source: %name-%version.tar
 
@@ -77,6 +77,9 @@ fi
 %_man1dir/dish.1*
 
 %changelog
+* Fri Nov 20 2026 Sergey Palcheh <minergenon@altlinux.org> 2.7.1-alt1
+- new version 2.7.1
+
 * Mon Nov 16 2026 Sergey Palcheh <minergenon@altlinux.org> 2.7.0-alt1
 - new version 2.7.0
 
