@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 140.1
+Version: 140.3
 Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
@@ -14,7 +14,7 @@ Group: System/Libraries
 # is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
 # The console module (modules/console.c)
 # Stack printer (cjs/stack.c)
-License: MIT and (MPL-1.1 or GPLv2+ or LGPLv2+)
+License: MIT AND (MPL-1.1 OR GPL-2.0-or-later OR LGPL-2.0-or-later)
 URL: https://github.com/linuxmint/cjs
 VCS: https://github.com/linuxmint/cjs
 
@@ -102,6 +102,10 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Fri Nov 20 2026 Anton Midyukov <antohami@altlinux.org> 140.3-alt1
+- New version 140.3.
+- Use GSK_RENDERER=cairo for tests.
+
 * Thu Aug 20 2026 Anton Midyukov <antohami@altlinux.org> 140.1-alt1
 - New version 140.1.
 
