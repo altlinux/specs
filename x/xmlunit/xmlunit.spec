@@ -1,116 +1,108 @@
 Epoch: 0
-Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-%bcond_with bootstrap
 
-Name:           xmlunit
-Version:        2.10.0
-Release:        alt1
-Summary:        Provides classes to do asserts on xml
+Name: xmlunit
+Version: 2.11.0
+Release: alt1
+
+Summary: Provides classes to do asserts on xml
 # The whole package is ASL 2.0 except for xmlunit-legacy which is BSD
-License:        Apache-2.0
-URL:            https://www.xmlunit.org/
-BuildArch:      noarch
+License: Apache-2.0
+Group: Development/Java
+URL: https://www.xmlunit.org/
+VCS: https://github.com/xmlunit/xmlunit
 
 # ./generate-tarball.sh
-Source0:        %{name}-%{version}.tar.gz
+Source0: %name-%version.tar
 # Remove bundled binaries which cannot be easily verified for licensing
-Source1:        generate-tarball.sh
+Source1: generate-tarball.sh
 
-Patch1:          0001-Disable-tests-requiring-network-access.patch
+Patch1: 0001-Disable-tests-requiring-network-access.patch
 # This also solves the problem of tests requiring network. The files that would
 # be fetched are identical to the local file
-Patch2:          0002-Use-local-schema.patch
-Patch3:          0003-Drop-support-for-JAXB.patch
-Patch4:          0004-Port-to-assertj-core-3.patch
+Patch2: 0002-Use-local-schema.patch
+Patch3: 0003-Drop-support-for-JAXB.patch
+Patch4: 0004-Port-to-assertj-core-3.patch
 
-BuildRequires:  jurand
-%if %{with bootstrap}
-BuildRequires:  javapackages-bootstrap
-%else
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.assertj:assertj-core)
-BuildRequires:  mvn(org.hamcrest:hamcrest-core)
-BuildRequires:  mvn(org.hamcrest:hamcrest-library)
-BuildRequires:  mvn(org.mockito:mockito-core)
-%endif
-Source44: import.info
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+BuildRequires: maven-local
+
+BuildRequires: jurand
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.assertj:assertj-core)
+BuildRequires: mvn(org.hamcrest:hamcrest-core)
+BuildRequires: mvn(org.hamcrest:hamcrest-library)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.apache.maven.surefire:surefire-junit3)
+
+BuildArch: noarch
 
 %description
 XMLUnit provides you with the tools to verify the XML you emit is the one you
 want to create. It provides helpers to validate against an XML Schema, assert
 the values of XPath queries or compare XML documents against expected outcomes.
 
-%package        javadoc
+%package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary: Javadoc for %name
 BuildArch: noarch
 
-%description    javadoc
-Javadoc for %{name}
+%description javadoc
+Javadoc for %name.
 
-%package        assertj
+%package assertj
 Group: Development/Java
-Summary:        Assertj for %{name}
+Summary: Assertj for %name
 
-%description    assertj
-This package provides %{summary}.
+%description assertj
+This package provides %summary.
 
-%package        core
+%package core
 Group: Development/Java
-Summary:        Core package for %{name}
+Summary: Core package for %name
 
-%description    core
-This package provides %{summary}.
+%description core
+This package provides %summary.
 
-%package        legacy
+%package legacy
 Group: Development/Java
-Summary:        Legacy package for %{name}
-License:        BSD-3-Clause
+Summary: Legacy package for %name
+License: BSD-3-Clause
 
-%description    legacy
-This package provides %{summary}.
+%description legacy
+This package provides %summary.
 
-%package        matchers
+%package matchers
 Group: Development/Java
-Summary:        Matchers for %{name}
+Summary: Matchers for %name
 
-%description    matchers
-This package provides %{summary}.
+%description matchers
+This package provides %summary.
 
-%package        placeholders
+%package placeholders
 Group: Development/Java
-Summary:        Placeholders for %{name}
+Summary: Placeholders for %name
 
-%description    placeholders
-This package provides %{summary}.
+%description placeholders
+This package provides %summary.
 
 %prep
-%setup -q -n %{name}-%{version}-src
+%setup -q -n %name-%version-src
 
 %autopatch -p1
 
-rm -r xmlunit-core/src/main/java/org/xmlunit/builder/javax_jaxb\
- xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilderFactory.java\
- xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilderFactoryLocator.java\
- xmlunit-core/src/test/java/org/xmlunit/builder/javax_jaxb\
-;
+rm -r \
+ xmlunit-core/src/main/java/org/xmlunit/builder/javax_jaxb \
+ xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilderFactory.java \
+ xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilderFactoryLocator.java \
+ xmlunit-core/src/test/java/org/xmlunit/builder/javax_jaxb
 
 # Port to hamcrest 2.1
 %java_remove_annotations xmlunit-matchers -p org[.]hamcrest[.]Factory
 
 %pom_disable_module xmlunit-assertj
+%pom_disable_module xmlunit-bom
 %pom_disable_module xmlunit-jakarta-jaxb-impl
 
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
@@ -124,10 +116,15 @@ rm -r xmlunit-core/src/main/java/org/xmlunit/builder/javax_jaxb\
 # JAXB and JAF are not available in JDK11
 %pom_remove_dep org.glassfish.jaxb: xmlunit-core
 %pom_remove_dep jakarta.xml.bind: xmlunit-core
-rm -rf xmlunit-core/src/{main,test}/java/org/xmlunit/builder/{jaxb/,JaxbBuilder.java,JaxbBuilderTest.java}
+rm -r xmlunit-core/src/main/java/org/xmlunit/builder/JaxbBuilder.java
+rm -r xmlunit-core/src/test/java/org/xmlunit/builder/jaxb
+
+#fix failed test ValueAssertTest.java
+%pom_add_dep org.opentest4j:opentest4j:1.3.0:test xmlunit-assertj3/pom.xml
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 \
+-Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -144,6 +141,11 @@ rm -rf xmlunit-core/src/{main,test}/java/org/xmlunit/builder/{jaxb/,JaxbBuilder.
 %files placeholders -f .mfiles-xmlunit-placeholders
 
 %changelog
+* Thu Nov 19 2026 Anton Meleshnikov <alton@altlinux.org> 0:2.11.0-alt1
+- new version
+- added VCS tag
+- added BuildRequires: opentest4j
+
 * Mon Dec 22 2025 Anton Meleshnikov <alton@altlinux.org> 0:2.10.0-alt1
 - new version (thanks fedora for the spec and patches)
 
