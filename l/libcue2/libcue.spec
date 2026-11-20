@@ -1,5 +1,5 @@
 Name: libcue2
-Version: 2.3.0
+Version: 2.4.3
 Release: alt1
 
 Summary: Cue sheet parser library
@@ -14,7 +14,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/lipnitsk/libcue/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires: flex gcc-c++ cmake
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: bison flex gcc-c++ rpm-build-cmake /usr/bin/ctest
 
 %description
 Libcue is intended for parsing a so-called cue sheet from a char string or
@@ -30,14 +31,18 @@ Development files for %name.
 
 %prep
 %setup
-subst "s|\(ADD_LIBRARY(cue \)|\1 SHARED |" CMakeLists.txt
 
 %build
-%cmake_insource
-%make_build
+# Keep assertions in upstream tests; optimization flags come from rpm.
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_C_FLAGS_RELWITHDEBINFO=
+%cmake_build
+
+%check
+ctest --test-dir %_cmake__builddir --output-on-failure
 
 %install
-%makeinstall_std
+%cmake_install
 
 %files
 %_libdir/libcue.so.*
@@ -50,6 +55,12 @@ subst "s|\(ADD_LIBRARY(cue \)|\1 SHARED |" CMakeLists.txt
 %_pkgconfigdir/libcue.pc
 
 %changelog
+* Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 2.4.3-alt1
+- new version 2.4.3
+- use rpm-build-cmake and enable shared libraries and upstream tests.
+- add BuildRequires: bison, rpm-macros-cmake for the parser and macros.
+- add BuildRequires: /usr/bin/ctest to run upstream tests.
+
 * Wed Oct 11 2023 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 - CVE-2023-43641
