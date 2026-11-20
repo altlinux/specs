@@ -1,15 +1,15 @@
 Name: portainer
-Version: 2.45.3
+Version: 2.45.4
 Release: alt1
 
 Summary: A lightweight docker management UI
 
 License: Zlib
 Group: System/Configuration/Other
-Url: https://www.portainer.io
-Vcs: https://github.com/portainer/portainer
+URL: https://www.portainer.io
+VCS: https://github.com/portainer/portainer
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/portainer/portainer/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 # go mod vendor -o ../vendor
 Source1: vendor.tar
@@ -98,6 +98,9 @@ exit 0
 %attr(700,portainer,portainer) %dir %_localstatedir/portainer/
 
 %changelog
+* Fri Nov 20 2026 Leontiy Volodin <lvol@altlinux.org> 2.45.4-alt1
+- New LTS version 2.45.4.
+
 * Fri Oct 23 2026 Leontiy Volodin <lvol@altlinux.org> 2.45.3-alt1
 - New LTS version 2.45.3 (Fixes: CVE-2026-78663, CVE-2026-111943,
   CVE-2026-97032, CVE-2026-97031, CVE-2026-94440, CVE-2026-94439,
