@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ansible-freeipa
-Version: 1.16.0
+Version: 1.17.0
 Release: alt1
 
 Summary: Ansible roles and modules for FreeIPA
@@ -58,6 +58,9 @@ cp -r plugins/* %buildroot%_datadir/ansible/plugins/
 %doc playbooks
 
 %changelog
+* Thu Nov 19 2026 Aleksandr A. Voyt <sobue@altlinux.org> 1.17.0-alt1
+- Update to 1.17.0.
+
 * Fri Feb 27 2026 Aleksandr A. Voyt <sobue@altlinux.org> 1.16.0-alt1
 - Update to 1.16.0 (Closes: #49416, #56048)
 
