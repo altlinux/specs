@@ -5,7 +5,7 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-pikepdf
-Version: 10.17.0
+Version: 10.18.2
 Release: alt1
 License: MPL-2.0
 Summary: A Python library for reading and writing PDF files
@@ -92,6 +92,9 @@ PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
 %python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Thu Nov 19 2026 Grigory Ustinov <grenka@altlinux.org> 10.18.2-alt1
+- Automatically updated to 10.18.2.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 10.17.0-alt1
 - NMU: new version 10.17.0.
 - Build with scikit-build-core and nanobind (upstream build system change).
