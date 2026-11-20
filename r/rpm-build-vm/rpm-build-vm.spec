@@ -10,7 +10,7 @@
 
 Name: rpm-build-vm
 Version: 1.79
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -25,6 +25,7 @@ Source: %name-%version.tar
 %ifarch %supported_arches
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: glibc-devel-static
+BuildRequires: libatomic-devel-static
 BuildRequires: libblkid-devel-static
 # For %%check. This does not verify the package but verifies
 # that girar on supported_arches have writable /dev/kvm
@@ -224,6 +225,9 @@ vm-run --stub-exit=7 && exit 1 || test $? -eq 7
 %endif
 
 %changelog
+* Thu Nov 19 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.79-alt2
+- Fix FTBFS with gcc16.
+
 * Fri Jan 02 2026 Vitaly Chikunov <vt@altlinux.org> 1.79-alt1
 - Fix console handling.
 
