@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: watchflower
-Version: 5.4
+Version: 6.0
 Release: alt1
 
 Summary: plant monitoring application that reads and plots data from compatible Bluetooth sensors
@@ -12,16 +12,20 @@ Url: https://github.com/emericg/WatchFlower
 
 Source: %name-%version.tar
 
-BuildRequires: pkgconfig(Qt6)
-BuildRequires: pkgconfig(Qt6Bluetooth)
-BuildRequires: pkgconfig(Qt6Qml)
-BuildRequires: pkgconfig(Qt6Sql)
-BuildRequires: pkgconfig(Qt6Svg)
-BuildRequires: pkgconfig(Qt6Charts)
-BuildRequires: qt6-tools
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-qml6
 
-Requires: libqt6-chartsqml
-Requires: libqt6-core5compat
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: pkgconfig(Qt6)
+BuildRequires: pkgconfig(Qt6Svg)
+BuildRequires: pkgconfig(Qt6Qml)
+BuildRequires: pkgconfig(Qt6Graphs)
+BuildRequires: pkgconfig(Qt6Bluetooth)
+BuildRequires: pkgconfig(Qt6Positioning)
+BuildRequires: qt6-tools-devel
+
+Requires: libqt6-positioning
 
 %description
 A plant monitoring application for Bluetooth Low Energy sensors and
@@ -40,42 +44,46 @@ Features:
 
 - Support many different plant sensors and thermometers
 - Support a couple of environmental and air quality sensors
-- Name your plants and set your own limits for optimal care
 - Plant database with over 3400 plants
+- Name your plants and set your own limits for optimal care
 - Background updates and notifications (excluding iOS)
-- Synchronize sensors history (FlowerCare, RoPot and ThermoBeacon
-  ONLY for now)
+- Synchronize sensors history (FlowerCare, RoPot and ThermoBeacon ONLY for now)
 - Configurable update intervals
-- Clickable two-week graphs
+- Clickable 4/2/1 week graphs
 - Monthly/weekly/daily data histograms
-- 90 days CSV data export
-- Scalable UI: 4.6" to 34" screens, landscape or portrait
+- 180 days CSV data export
+- Scalable UI: 5" to 34" screens, landscape or portrait
 
 %prep
 %setup
-sed -i "s/Categories=.*/Categories=Network;Monitor;Qt;/" assets/linux/watchflower.desktop
-sed -i "s|assets/android/res/drawable-xxxhdpi/||" README.md
-sed -i "s|\`assets/android/gradle.properties\`|[gradle.properties](gradle.properties)|" README.md
+sed -i "s/Categories=.*/Categories=Network;Monitor;Qt;/" platforms/linux/WatchFlower.desktop
+sed -i "s|platforms/android/res/drawable-xxxhdpi/||" README.md
+
 sed -i "s|assets/COPYING|COPYING|g" README.md
 
+mv -v thirdparty/IconLibrary/COPYING thirdparty/IconLibrary-COPYING
+sed -i "s|thirdparty/IconLibrary/COPYING|IconLibrary-COPYING|" README.md
+
 %build
-lrelease-qt6 WatchFlower.pro
-qmake-qt6 \
-          -config release \
-          PREFIX=%_prefix
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
-%doc LICENSE README.md docs
-%doc assets/android/res/drawable-xxxhdpi/splashicon.png assets/android/gradle.properties assets/COPYING
-%_bindir/watchflower
-%_datadir/appdata/watchflower.appdata.xml
-%_desktopdir/watchflower.desktop
-%_iconsdir/hicolor/scalable/apps/watchflower.svg
-%_pixmapsdir/watchflower.svg
+%doc LICENSE.md README.md docs
+%doc platforms/android/res/drawable-xxxhdpi/splashicon.png assets/COPYING thirdparty/IconLibrary-COPYING
+%_bindir/WatchFlower
+%_datadir/appdata/WatchFlower.appdata.xml
+%_desktopdir/WatchFlower.desktop
+%_iconsdir/hicolor/scalable/apps/WatchFlower.svg
+%exclude %_datadir/licenses/WatchFlower/LICENSE.md
+%_pixmapsdir/WatchFlower.svg
 
 %changelog
+* Sat Nov 21 2026 Nikolay Strelkov <snk@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Fri Dec 19 2025 Nikolay Strelkov <snk@altlinux.org> 5.4-alt1
 - Initial build for Sisyphus
