@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: secrets
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A password manager for GNOME
@@ -25,9 +25,11 @@ Source: %name-%version.tar
 
 %define glib_ver 2.80
 %define gtk_ver 4.20
-%define adwaita_ver 1.8
+%define adwaita_ver 1.10
 %define pygobject_ver 3.52
 %define gtksource_api_ver 5
+%define pykeepass_ver 4.2.0
+%define pyotp_ver 2.4.0
 
 Requires: python3-module-pygobject3 >= %pygobject_ver
 Requires: typelib(Adw) = 1
@@ -45,7 +47,9 @@ BuildRequires: pkgconfig(gtksourceview-%gtksource_api_ver)
 BuildRequires: pkgconfig(pygobject-3.0) >= %pygobject_ver
 BuildRequires: pkgconfig(gobject-introspection-1.0)
 BuildRequires: pkgconfig(dbus-1)
-BuildRequires: python3(pykeepass) python3(pyotp) python3(validators)
+BuildRequires: python3-module-pykeepass >= %pykeepass_ver
+BuildRequires: python3-module-pyotp >= %pyotp_ver
+BuildRequires: python3(validators)
 BuildRequires: python3(zxcvbn_rs_py) python3(PyKCS11) python3(yubico)
 %{?_enable_check:
 BuildRequires: desktop-file-utils /usr/bin/appstreamcli
@@ -83,6 +87,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGELOG*
 
 %changelog
+* Sat Nov 21 2026 Yuri N. Sedunov <aris@altlinux.org> 14.1-alt1
+- 14.1
+
 * Thu Sep 24 2026 Yuri N. Sedunov <aris@altlinux.org> 14.0-alt1
 - 14.0
 

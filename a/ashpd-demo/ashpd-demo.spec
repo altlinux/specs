@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name ashpd
-%define ver_major 0.13
+%define ver_major 0.14
 %define rdn_name com.belmoussaoui.%_name.demo
 
 %def_enable check
@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: %_name-demo
-Version: %ver_major.13
+Version: %ver_major.2
 Release: alt1
 
 Summary: ASHPD Demo
@@ -67,12 +67,13 @@ cd client
 %install
 cd client
 %meson_install
+%find_lang %name
 
 %check
 cd client
 %meson_test
 
-%files
+%files -f client/%name.lang
 %_bindir/%name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
@@ -82,6 +83,9 @@ cd client
 %doc ../README*
 
 %changelog
+* Sat Nov 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
+- 0.14.2
+
 * Sat Jul 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.13.13-alt1
 - 0.13.13
 
