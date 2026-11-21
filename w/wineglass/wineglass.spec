@@ -4,7 +4,7 @@
 
 Name: wineglass
 Version: 1.2.1
-Release: alt2
+Release: alt3
 
 Summary: GUI for Wine
 License: GPL-3.0-or-later
@@ -18,8 +18,6 @@ ExcludeArch: loongarch64 riscv64
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): rpm-build-vala
 
 BuildRequires: meson
 BuildRequires: cmake
@@ -52,6 +50,7 @@ hassle.
 %setup
 %patch -p1
 sed -i "s|https://github.com/aggalex/Wineglass/blob/master/data/icons/64/|%_iconsdir/hicolor/64x64/apps/|" README.md
+sed -i 's|Constants.INSTALL_PREFIX|"%prefix"|g' src/widgets/DndOverlay.vala src/css/Css.vala
 
 %build
 %meson
@@ -76,6 +75,9 @@ sed -i "s|https://github.com/aggalex/Wineglass/blob/master/data/icons/64/|%_icon
 %_datadir/wineglass/style.css
 
 %changelog
+* Sat Nov 21 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt3
+- Fixed FTBFS.
+
 * Fri Jan 30 2026 Nikolay Strelkov <snk@altlinux.org> 1.2.1-alt2
 - Exclude loongarch64 and riscv64 arches as not runnable.
 
