@@ -9,7 +9,7 @@
 
 Name: altcenter
 Version: 1.0
-Release: alt0.51
+Release: alt0.52
 Epoch: 1
 Summary: Application for show information and configure system
 
@@ -61,6 +61,14 @@ Available plugins:
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Sat Nov 21 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.52
+- Report: added SSH status and autostart.
+- SSH settings: added SSH enable/disable control.
+- Minor UI improvements.
+- SSH settings: added reset and restored settings.
+- Settings: updated AltHa instructions.
+- Journal: added live search.
+
 * Mon Nov 16 2026 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt0.51
 - Password policy: validated max length against N0-N4 thresholds (ALT #61402).
 - Password policy: prevented invalid N0-N4 configurations (ALT #61400).
