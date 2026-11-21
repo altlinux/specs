@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: chunkah
-Version: 0.6.0
+Version: 0.7.1
 Release: alt1
 
 Summary: An OCI building tool for content-based layers
@@ -43,5 +43,8 @@ with content-based layers.
 %doc README.md
 
 %changelog
+* Sat Nov 21 2026 Vladimir Romanov <rirusha@altlinux.org> 0.7.1-alt1
+- New version: 0.7.1.
+
 * Wed Jun 10 2026 Vladimir Romanov <rirusha@altlinux.org> 0.6.0-alt1
 - Initial build.
