@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bootc
-Version: 1.17.4
+Version: 1.17.5
 Release: alt1
 
 Summary: Boot and upgrade via container images
@@ -95,6 +95,9 @@ fi
 %_man8dir/system-reinstall-%{name}*
 
 %changelog
+* Sat Nov 21 2026 Vladimir Romanov <rirusha@altlinux.org> 1.17.5-alt1
+- New version 1.17.5.
+
 * Sat Nov 14 2026 Vladimir Romanov <rirusha@altlinux.org> 1.17.4-alt1
 - New version 1.17.4.
 
