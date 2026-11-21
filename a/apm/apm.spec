@@ -8,7 +8,7 @@
 %define service_id org.altlinux.APM
 %define service_id2 org.altlinux.APM2
 
-%define sover 0.8
+%define sover 0.9
 %define minor 0
 
 Name: apm
@@ -117,6 +117,14 @@ done
 %_girdir/%gir_name-%sover.gir
 
 %changelog
+* Sun Nov 22 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.0-alt1
+- New version: 0.9.0.
+- Fixed metainfo expr via `${{  }}`.
+- Added release type to `latest-release`.
+- Added `conditions` to `variants` in `metainfo`.
+- Full release note here:
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.9.0
+
 * Sun Nov 15 2026 Vladimir Romanov <rirusha@altlinux.org> 0.8.0-alt1
 - New version: 0.8.0.
 - Improved DBus API (`APM2`).
