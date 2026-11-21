@@ -1,6 +1,6 @@
 Name:    xsv
 Version: 0.13.0
-Release: alt2
+Release: alt3
 
 Summary: A fast CSV command line toolkit written in Rust
 License: MIT
@@ -24,7 +24,7 @@ joining CSV files. Commands should be simple, fast and composable:
 %prep
 %setup
 mkdir -p .cargo
-cat >> .cargo/config <<EOF
+cat >> .cargo/config.toml <<EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
@@ -39,6 +39,7 @@ EOF
 %rust_install
 
 %check
+export __CARGO_TEMPORARY_BUILD_DIR_NEW_LAYOUT_OPT_OUT=1
 %rust_test
 
 %files
@@ -46,6 +47,9 @@ EOF
 %doc *.md
 
 %changelog
+* Sat Nov 21 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.13.0-alt3
+- Fix FTBFS with cargo 1.100.0
+
 * Tue Jan 16 2024 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.13.0-alt2
 - NMU: fixed FTBFS on LoongArch (updated libc crate).
 
