@@ -2,7 +2,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: azpainter
-Version: 3.0.12.3
+Version: 3.0.13
 Release: alt1
 
 Summary: Paint software for editing illustrations and images
@@ -67,6 +67,9 @@ sed -i "s/Categories=.*/Categories=Graphics;2DGraphics;RasterGraphics;/" desktop
 %_datadir/mime/packages/azpainter.xml
 
 %changelog
+* Sat Nov 21 2026 Nikolay Strelkov <snk@altlinux.org> 3.0.13-alt1
+- new version 3.0.13 (with rpmrb script)
+
 * Sun Apr 26 2026 Nikolay Strelkov <snk@altlinux.org> 3.0.12.3-alt1
 - new version 3.0.12.3 (with rpmrb script)
 
