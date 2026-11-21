@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libm17n-db
-Version: 1.8.17
+Version: 1.8.18
 Release: alt1
 
 Summary: Multilingualization datafiles for m17n-lib
@@ -51,6 +51,9 @@ This package contains development files for m17n-db.
 %_datadir/pkgconfig/*
 
 %changelog
+* Sun Nov 22 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.18-alt1
+- 1.8.17 -> 1.8.18
+
 * Sat Nov 14 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.8.17-alt1
 - 1.8.15 -> 1.8.17
 
