@@ -1,9 +1,11 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define app_id clipboard-indicator@tudmotu.com
+
 Name: gnome-shell-extension-clipboard-indicator
-Version: 71
-Release: alt2
+Version: 73
+Release: alt1
 Summary: Clipboard manager for GNOME Shell
 License: MIT
 Group:  Graphical desktop/GNOME
@@ -29,29 +31,41 @@ over 1M downloads.
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std INSTALLPATH=%buildroot%_datadir/gnome-shell/extensions/%app_id
 
 # fix install gsettings schemas
 mkdir -p %buildroot%_datadir/glib-2.0/schemas
-mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/*.xml \
+mv %buildroot%_datadir/gnome-shell/extensions/%app_id/schemas/*.xml \
 	%buildroot%_datadir/glib-2.0/schemas
-rm -vr %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas
+rm -vr %buildroot%_datadir/gnome-shell/extensions/%app_id/schemas
 
-# fix install translations
-mv %buildroot%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com/locale \
-	%buildroot%_datadir/
-# cleanup translation sources
-find %buildroot%_datadir/locale \
-	-name *.po -exec rm {} \;
+rm -v %buildroot%_datadir/gnome-shell/extensions/%app_id/README.md
+rm -v %buildroot%_datadir/gnome-shell/extensions/%app_id/LICENSE.rst
 
-%find_lang clipboard-indicator
+%find_lang --with-gnome clipboard-indicator
 
 %files -f clipboard-indicator.lang
-%_datadir/gnome-shell/extensions/clipboard-indicator@tudmotu.com
+%dir %_datadir/gnome-shell/extensions/%app_id
+%_datadir/gnome-shell/extensions/%app_id/metadata.json
+%_datadir/gnome-shell/extensions/%app_id/prefs.js
+%_datadir/gnome-shell/extensions/%app_id/registry.js
+%_datadir/gnome-shell/extensions/%app_id/stylesheet.css
+%_datadir/gnome-shell/extensions/%app_id/compat.js
+%_datadir/gnome-shell/extensions/%app_id/confirmDialog.js
+%_datadir/gnome-shell/extensions/%app_id/constants.js
+%_datadir/gnome-shell/extensions/%app_id/extension.js
+%_datadir/gnome-shell/extensions/%app_id/keyboard.js
+%dir %_datadir/gnome-shell/extensions/%app_id/locale
+%dir %_datadir/gnome-shell/extensions/%app_id/locale/*
+%dir %_datadir/gnome-shell/extensions/%app_id/locale/*/*
 %_datadir/glib-2.0/schemas/*.xml
 %doc README.md LICENSE.rst
 
 %changelog
+* Fri Nov 20 2026 Anton Midyukov <antohami@altlinux.org> 73-alt1
+- New version 73.
+- Update russian translation.
+
 * Sat Sep 26 2026 Anton Midyukov <antohami@altlinux.org> 71-alt2
 - add gnome-shell 51 support.
 
