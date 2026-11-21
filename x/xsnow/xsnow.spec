@@ -1,33 +1,34 @@
 Name: xsnow
-Version: 3.9.1
+Version: 3.9.10
 Release: alt1
 
-Summary: An X Window System based dose of Christmas cheer
+Summary: An dose of Christmas cheer for your desktop
 License: GPLv3+
 Group: Toys
 
 Url: https://www.ratrabbit.nl/ratrabbit/xsnow/index.html
 Source: xsnow-%version.tar.gz
-Source1: empty.xpm
+##Source1: empty.xpm
 Packager: Alexei Mezin <alexvm@altlinux.org>
 
 Summary(ru_RU.UTF8):  Немножко новогоднего настроения на рабочий стол
 
 Patch0: rus_descr.patch
-Patch1: fix_politics_statements.patch
+##Patch1: fix_politics_statements.patch
 
 BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel 
 BuildRequires: libdbus-devel gcc-c++ ImageMagick-tools 
 BuildRequires: desktop-file-utils libgsl-devel libgsl-devel 
 BuildRequires: libXinerama-devel libxkbcommon-devel libXtst-devel
-BuildRequires: libopencv-devel
+## Need for --enable-screenshot but this is experimentsl feature 
+## BuildRequires: libopencv-devel
 
 ###BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
 
 %description
 The Xsnow toy provides a continual gentle snowfall, trees, and Santa
-Claus flying his sleigh around the screen.  Xsnow is only for the X
-Window System, though; consoles just get coal.
+Claus flying his sleigh around the screen. Xsnow is only for the X
+Window System and Wayland, though; consoles just get coal.
 
 %description -l ru_RU.UTF8
 Xsnow добавляет анимированные снежинки и Санту на оленях на рабочий стол.
@@ -35,8 +36,9 @@ Xsnow добавляет анимированные снежинки и Сант
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
-cp -rf %{SOURCE1} src/Pixmaps/extratree.xpm
+## Looks like minds are going normal again :)
+##%patch1 -p1
+##cp -rf %{SOURCE1} src/Pixmaps/extratree.xpm
 
 %build
 %autoreconf
@@ -77,6 +79,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 
 
 %changelog
+* Sat Nov 21 2026 Alexei Mezin <alexvm@altlinux.org> 3.9.10-alt1
+- New version
+
 * Sun May 17 2026 Alexei Mezin <alexvm@altlinux.org> 3.9.1-alt1
 - New version
 - Add lost localization files and remove redundant svg image (closes #57377)
