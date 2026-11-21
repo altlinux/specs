@@ -5,7 +5,7 @@
 
 %define brand alt
 %define theme atomic
-%define Variant Phosphohpyllite
+%define Variant Phosphophyllite
 %define variant phosphophyllite
 %define altbranch sisyphus
 %define flavour %brand-%theme
@@ -15,7 +15,7 @@
 %define docpage https://alt-atomic.org/
 
 Name: branding-alt-atomic-phosphophyllite
-Version: 20261025
+Version: 20261122
 Release: alt1
 
 Group: Graphics
@@ -156,6 +156,11 @@ plymouth-set-default-theme %theme
 %_datadir/glib-2.0/schemas/*.override
 
 %changelog
+* Sun Nov 22 2026 David Sultaniiazov <x1z53@altlinux.org> 20261122-alt1
+- Fix os-release.
+- Fix GSettings for Phosh profile and new Phosh paths.
+- Fix ReadySet Software plugin config and translations.
+
 * Sun Oct 25 2026 David Sultaniiazov <x1z53@altlinux.org> 20261025-alt1
 - Update ready-set version.
 
