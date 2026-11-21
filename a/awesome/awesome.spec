@@ -1,77 +1,116 @@
-%define  nomen awesome
-Name: %nomen
-Version: 4.3
-Release: alt6.1
-Group: Graphical desktop/Other
-License: %gpl2plus
 
-Url: https://awesomewm.org/
-Source: %name-%version.tar
-Source1: %name.wmsession
-Source2: %name.menu-method
-Patch0:%name-%version-alt.patch
-Patch1:cmakefile.patch
-Summary: A window manager initialy based on a dwm code rewriting
+Name:          awesome
+Version:       4.3.1753
+Release:       alt0.1
+Group:         Graphical desktop/Other
+License:       GPLv2
 
-BuildRequires: ImageMagick-tools asciidoctor cmake gcc-c++ gperf
-BuildRequires: lgi5.4
-BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5.4-devel
-BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
-BuildRequires: libxdg-basedir-devel libstartup-notification-devel
-BuildRequires: libXdmcp-devel libgdk-pixbuf-devel
-BuildRequires: lua5.4 libpango-gir libgdk-pixbuf-gir libcairo-gobject
-BuildRequires: libpcre-devel libxkbcommon-devel libxkbcommon-x11-devel libxcbutil-xrm-devel
+Url:           https://awesomewm.org/
+Vcs:           https://github.com/awesomeWM/awesome.git
+Source:        %name-%version.tar
+Source1:       %name.wmsession
+Source2:       %name.menu-method
+Source3:       awesome.rockspec.in
+Patch:         rpm-install.patch
+Summary:       A window manager initialy based on a dwm code rewriting
 
-BuildRequires: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
-BuildRequires: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
-BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-cmake
+BuildRequires(pre): rpm-build-rocks
 BuildRequires(pre): rpm-build-xdg
-BuildRequires(pre): rpm-build-lua
-BuildRequires: libsystemd-devel
-BuildRequires: libpcre2-devel
+BuildRequires: cmake
+BuildRequires: ctest
+BuildRequires: asciidoctor
+BuildRequires: gcc-c++
+BuildRequires: gperf
+BuildRequires: ImageMagick-tools
+BuildRequires: lua >= 5.5
+BuildRequires: xmlto
+BuildRequires: libcairo-gobject
+BuildRequires: libgdk-pixbuf-gir
+BuildRequires: libpango-gir
+BuildRequires: cmake(lua) >= 5.5
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(glib-2.0) >= 2.79.2
+BuildRequires: pkgconfig(imlib2)
+BuildRequires: pkgconfig(libev)
+BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: pkgconfig(libstartup-notification-1.0) >= 0.10
+BuildRequires: pkgconfig(libsystemd)
+BuildRequires: pkgconfig(libxdg-basedir) >= 1.0.0
+BuildRequires: pkgconfig(ncurses)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(readline)
+BuildRequires: pkgconfig(xcb-cursor)
+BuildRequires: pkgconfig(xcb-icccm) >= 0.3.8
+BuildRequires: pkgconfig(xcb-keysyms) >= 0.3.4
+BuildRequires: pkgconfig(xcb-util) >= 0.3.8
+BuildRequires: pkgconfig(xcb-xrm)
+BuildRequires: pkgconfig(xdmcp)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xkbcommon-x11)
+BuildRequires: rocks(lgi) >= 0.8.0
+BuildRequires: rocks(luarocks)
 
-Requires: libstartup-notification >= 0.10-alt1
-Requires: lgi5.4 >= 0.9.1
-Requires: libpango-gir
-Requires: libcairo-gobject
-Requires: libgdk-pixbuf-gir
-
-%filter_from_requires /lua.*\(awful.*\|beautiful\|gears\|menubar\|naughty\|wibox\|menu\|lgi\)/d
+Requires:      libstartup-notification >= 0.10-alt1
+Requires:      rocks(awesome) = 4.3.1753
 
 %description
 awesome is a window manager initialy based on a dwm code rewriting. It's
 extremely fast, small, dynamic and awesome.
 
+
+%package       -n rock-awesome
+Summary:       Lua library for the Awesome window manager
+Group:         System/Libraries
+BuildArch:     noarch
+Requires:      libcairo-gobject
+Requires:      libgdk-pixbuf-gir
+Requires:      libpango-gir
+Requires:      typelib(GioUnix) = 2.0
+
+%description   -n rock-awesome
+Lua modules that run inside the Awesome window manager.
+
+
 %prep
-%setup -n %name-%version
-%patch0 -p1
-%patch1
+%setup
+%autopatch -p1
 
 %build
 %cmake \
    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+   -DLUA_EXECUTABLE=%_bindir/lua5.5 \
+   -DLUA_INCLUDE_DIR=%_includedir/lua5.5 \
+   -DLUA_LIBRARY=%_libdir/liblua-5.5.so \
    -DCOMPRESS_MANPAGES=OFF \
+   -DSYSCONFDIR=%_sysconfdir \
    -DXDG_CONFIG_DIR=%_xdgconfigdir \
-   %nil
-AWESOME_IGNORE_LGI=1 %cmake_build
+   -DROCK_VERSION=%version-%rock_revision \
+   -DROCK_LIBEXECDIR=%rock_libexecdir \
+   -DROCK_SPECDIR=%rock_specdir \
+   -DROCK_SPEC_TEMPLATE=%SOURCE3 \
+   -DROCK_LUAROCKS=%_bindir/luarocks-%rock_lua_version \
+   -DALT_DESKTOP_DIR=%_desktopdir \
+   -DALT_WMSESSION=%SOURCE1 \
+   -DALT_MENU_METHOD=%SOURCE2
+%cmake_build
 
 %install
 %cmake_install
-
-mkdir -p %buildroot%_sysconfdir/xdg/%name/
-install -D -m 644 %name.desktop %buildroot/%_desktopdir/%name.desktop
-touch %buildroot%_sysconfdir/xdg/%name/menu.lua
-install -D -m 644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/05%name
-install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
-
 %find_lang %name
 
-%files -f %name.lang
+%check
+%ctest
+
+
+%files         -f %name.lang
 %_bindir/*
 %_sysconfdir/menu-methods/%name
-%_sysconfdir/xdg/%name
-%config(noreplace) %_xdgconfigdir/%nomen/rc.lua
-%config(noreplace) %_xdgconfigdir/%nomen/menu.lua
+%dir %_xdgconfigdir/%name
+%config(noreplace) %_xdgconfigdir/%name/rc.lua
+%config(noreplace) %_xdgconfigdir/%name/menu.lua
 %_sysconfdir/X11/wmsession.d/*
 %_man1dir/aw*
 %_man5dir/aw*
@@ -80,10 +119,25 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
 %_datadir/xsessions/%name.desktop
-%_defaultdocdir/%nomen
+%_defaultdocdir/%name
 %doc LICENSE README.md
 
+%files         -n rock-awesome
+%doc LICENSE
+%rock_libexecdir/*
+%exclude %dir %rock_specdir
+
+
 %changelog
+* Wed Nov 18 2026 Pavel Skrylev <majioa@altlinux.org> 4.3.1753-alt0.1
+- ^ 4.3 -> 4.3p1753
+- + added the rock-awesome Lua library package, including ruled.
+- * built with Lua 5.5 and enabled LGI.
+- * configured the rockspec and installed ALT integration files with CMake.
+- * checked the staged files and rock metadata with CTest.
+- * generated the LGI requirement from the rockspec.
+- ! fixed startup with the default configuration and current GLib (ALT#56677).
+
 * Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 4.3-alt6.1
 - * moved build to lua5.4
 - - disabled LGI to fix FTBFS
