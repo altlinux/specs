@@ -3,7 +3,7 @@
 
 Name: mauikit-imagetools
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: MauiKit Image Tools Components
 License: LGPL-3.0-only
@@ -26,7 +26,7 @@ BuildRequires: kf6-ki18n-devel
 BuildRequires: kf6-kcoreaddons-devel
 BuildRequires: kde6-libkexiv2-devel
 BuildRequires: libmauikit-devel
-BuildRequires: pkgconfig(opencv4)
+BuildRequires: pkgconfig(opencv5)
 BuildRequires: pkgconfig(tesseract)
 
 # no libmauikit-calendar
@@ -126,5 +126,8 @@ Requires: %{name} = %{version}-%{release}
 %_libdir/libMauiKitImageTools4.so
 
 %changelog
+* Sat Nov 21 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt2
+- Fixed FTBFS.
+
 * Fri Jan 09 2026 Nikolay Strelkov <snk@altlinux.org> 4.0.2-alt1
 - Initial build for Sisyphus
