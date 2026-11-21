@@ -1,5 +1,5 @@
 Name: gotify-tray++
-Version: 0.1.4
+Version: 0.1.5
 Release: alt1
 
 Summary: A tray notification application for receiving messages from a Gotify server.
@@ -29,7 +29,7 @@ BuildRequires:  pkgconfig(Qt6WebSockets)
 BuildRequires:  pkgconfig(Qt6Core)
 BuildRequires:  pkgconfig(Qt6DBus)
 BuildRequires:  pkgconfig(Qt6Gui)
-#BuildRequires:  pkgconfig(Qt6Linguist)
+BuildRequires:  pkgconfig(Qt6Linguist)
 #BuildRequires:  pkgconfig(Qt6Multimedia)
 BuildRequires:  pkgconfig(Qt6Network)
 BuildRequires:  pkgconfig(Qt6Qml)
@@ -72,6 +72,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Nov 21 2026 Alexei Mezin <alexvm@altlinux.org> 0.1.5-alt1
+- New version
+
 * Sun Oct 04 2026 Alexei Mezin <alexvm@altlinux.org> 0.1.4-alt1
 - New version
 
