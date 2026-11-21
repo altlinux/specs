@@ -2,7 +2,7 @@
 
 Name: wl-kbptr
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: Control the mouse pointer with the keyboard on Wayland.
 License: GPL-3.0
@@ -14,9 +14,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
+
 BuildRequires: meson
+BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: pkgconfig(opencv4)
+BuildRequires: pkgconfig(opencv5)
 BuildRequires: pkgconfig(pixman-1)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-protocols)
@@ -45,6 +47,9 @@ install -Dm755 helpers/wl-kbptr-sway-active-win -t %buildroot%_bindir
 %_desktopdir/*
 
 %changelog
+* Sat Nov 21 2026 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt2
+- Fixed FTBFS.
+
 * Thu Dec 04 2025 Nikolay Strelkov <snk@altlinux.org> 0.4.1-alt1
 - New version 0.4.1.
 
