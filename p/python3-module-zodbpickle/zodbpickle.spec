@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.5
+Version: 4.6
 Release: alt1
 Summary: Fork of Python 3 pickle module
 
@@ -67,6 +67,9 @@ popd
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Nov 21 2026 Anton Vyatkin <toni@altlinux.org> 4.6-alt1
+- New version 4.6.
+
 * Tue Aug 25 2026 Anton Vyatkin <toni@altlinux.org> 4.5-alt1
 - New version 4.5.
 
