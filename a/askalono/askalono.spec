@@ -4,7 +4,7 @@
 
 Name:    askalono
 Version: 0.5.0
-Release: alt2
+Release: alt3
 
 Summary: A tool to detect open source licenses from texts
 License: Apache-2.0
@@ -50,6 +50,7 @@ EOF
 %rust_install
 
 %check
+export __CARGO_TEMPORARY_BUILD_DIR_NEW_LAYOUT_OPT_OUT=1
 %rust_test
 
 %files
@@ -57,6 +58,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Sat Nov 21 2026 Mikhail Gordeev <obirvalger@altlinux.org> 0.5.0-alt3
+- Fix FTBFS with cargo 1.100.0
+
 * Sun Jan 12 2025 Vitaly Chikunov <vt@altlinux.org> 0.5.0-alt2
 - Improve stans super humeros gigantum.
 
