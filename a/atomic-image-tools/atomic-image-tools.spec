@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: atomic-image-tools
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Some tools for ALT Atomic builder image
@@ -41,8 +41,12 @@ BuildRequires: pkgconfig(libxml-2.0)
 
 %files
 %_libexecdir/get-os-metainfo
+%_datadir/gettext/its/atomic-variants.its
 
 %changelog
+* Sat Nov 21 2026 Vladimir Romanov <rirusha@altlinux.org> 0.2.0-alt1
+- Added `atomic-variants.its` for atomic metainfo translations.
+
 * Sat Nov 21 2026 Vladimir Romanov <rirusha@altlinux.org> 0.1.1-alt1
 - Replaced `&#10;` with ` `.
 
