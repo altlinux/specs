@@ -9,7 +9,7 @@
 
 Name: amnezia-vpn
 Version: 5.1.1.10
-Release: alt1
+Release: alt2
 
 Summary: The best client for self-hosted VPN
 License: GPL-3.0
@@ -102,12 +102,14 @@ This package contains systemd service files.
 export SOURCE_DATE_EPOCH="%git_commit_date"
 
 # Export AGW public keys and endpoints for work VPN from Amnezia
-export DEV_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAwMJbYlGxn3l+0XiGA9I/\nBHK8HX/aet7A9GVL817apDUeL6sdISRBdopv5Y0FdrBHSJWSUdWtVxVazJB46J8x\n327/5H5pi0nkfRbcgxBGSGxhKOvwRe+WPVb2f81jlkenZK46c9C7dNmX/310rlHY\nBwOnZcdw2oKu6hTNDwk3nyUo2v2/leNIMLsv84RlHAX6Tyx5slq8ysewhcmdfv17\nWQjF7albq12ZafTSjtXqDcsrk2oF8mfyzxLjSXbxQHKIDHkfz3SUXCs/H9tt1ydK\n2Yj6nIxv98HESZ8Ng40OZPhHDex8Ru1NjcWlo2EWNM1xT8IqmBT21PLuyzGjNSwG\nOjnm1V2EcjerVmRNhFTJG70RkURD/i2MDbG+ZKpqPtW1uL8wEt2IkSqNfKcf+TF+\nUJZZfm1lDUMpWJ2eWJGrgOUX8/f8v/GB+x4PxUo1m7V/pDLqCUPm3l2dkaM9P0sM\n6lO0+jKqfIFnG1zjc3if7r1YbDsZlyl389q9Hrh7t+Lwj/JXkDxFaTnudM8egaXk\nGX5YxZiEDmCCLRskRwBBUaYffXIpFbI8sO2Xj0J5/im5xtu7TtfJktcPzDL9uyG1\nEbt8oSA4FTzTid6Zwj55YgDfz0FMnNmXh80T1xMzlbi6y+BCuna+I+7McMRo8yz3\nVzzYJ0/J7PpHpXoZv7K1qDsCAwEAAQ==\n-----END PUBLIC KEY-----"
-export DEV_AGW_ENDPOINT="http://gw.dev.amzsvc.com:80/"
-export DEV_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia-dev/"
-export PROD_AGW_PUBLIC_KEY="-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAj5mxl/4DL3Sk89ntxs5G\nX3JawGQWIoq6rvNkOzNGuNgedNS2+pi6hZl3Izl1Io9om4KiUlMT6mgLO1hTr9q+\ns7CYhlvroFA7ErucF+9L+7FCt0Igi0kIK/R2/vxd/2HaUrorn/aSvvutkYwbfxqW\nSwtzE+RuBeDWGvEt937OW0oqYONPYv9E4T56Dz/EZ6v2t8ejAnKLbGD/GocMmipK\n7etFSiSMAB2RmaztqTq4NleBepfO80XpYlW9pCSXuHcE8wxHczkzxsbyMAMsG/K3\nvUQY6qPtohqqzSSBwa/8u2ptNHBeor7l7DdYXeR/Nqcc4z92VUkZ5lOVR4evkS5V\n/wQqp5tnOJEj3NjUhEhXFoNEapbZd1bh6iQoUk7jC1TdvKJ/nPKGZAsHRpr0rNKz\nfx/N/Oo6lr2yh/+ps6VxTkbPmB6E85WOO3UvjImZUY0XQdBjWle/4iJLdEC77Nr0\njXhdgeypucy6jkB6iBHMeVMlrNMEV7UxoBR/cCNx55zu/8sml5ByiDvCDT7sRomN\nNgVt5S/FaVjYuzFUifJ12ToChXFgESKFmuso7WluEaWvMIGREdrMrKQKHfYLOzWF\n2B5ZJDqw4o03fU4J/6rw61M1b+rjVpXMjPnzc2A+RgcjTvXv955gfZkwe4lt5wk/\n3j8zMVo3+zLrMTAaEeIUM0UCAwEAAQ==\n-----END PUBLIC KEY-----"
+# Since 5.1.1.10 the client expects the public keys base64-encoded
+# (single line, upstream commit a9e6a2222 "chore: pass AGW public keys as base64")
+export PROD_AGW_PUBLIC_KEY_B64="LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUFqNW14bC80REwzU2s4OW50eHM1RwpYM0phd0dRV0lvcTZydk5rT3pOR3VOZ2VkTlMyK3BpNmhabDNJemwxSW85b200S2lVbE1UNm1nTE8xaFRyOXErCnM3Q1lobHZyb0ZBN0VydWNGKzlMKzdGQ3QwSWdpMGtJSy9SMi92eGQvMkhhVXJvcm4vYVN2dnV0a1l3YmZ4cVcKU3d0ekUrUnVCZURXR3ZFdDkzN09XMG9xWU9OUFl2OUU0VDU2RHovRVo2djJ0OGVqQW5LTGJHRC9Hb2NNbWlwSwo3ZXRGU2lTTUFCMlJtYXp0cVRxNE5sZUJlcGZPODBYcFlsVzlwQ1NYdUhjRTh3eEhjemt6eHNieU1BTXNHL0szCnZVUVk2cVB0b2hxcXpTU0J3YS84dTJwdE5IQmVvcjdsN0RkWVhlUi9OcWNjNHo5MlZVa1o1bE9WUjRldmtTNVYKL3dRcXA1dG5PSkVqM05qVWhFaFhGb05FYXBiWmQxYmg2aVFvVWs3akMxVGR2S0ovblBLR1pBc0hScHIwck5LegpmeC9OL09vNmxyMnloLytwczZWeFRrYlBtQjZFODVXT08zVXZqSW1aVVkwWFFkQmpXbGUvNGlKTGRFQzc3TnIwCmpYaGRnZXlwdWN5NmprQjZpQkhNZVZNbHJOTUVWN1V4b0JSL2NDTng1NXp1LzhzbWw1QnlpRHZDRFQ3c1JvbU4KTmdWdDVTL0ZhVmpZdXpGVWlmSjEyVG9DaFhGZ0VTS0ZtdXNvN1dsdUVhV3ZNSUdSRWRyTXJLUUtIZllMT3pXRgoyQjVaSkRxdzRvMDNmVTRKLzZydzYxTTFiK3JqVnBYTWpQbnpjMkErUmdjalR2WHY5NTVnZlprd2U0bHQ1d2svCjNqOHpNVm8zK3pMck1UQWFFZUlVTTBVQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ=="
 export PROD_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia/, https://storage.googleapis.com/lambda-list/, https://amnzstrg01.blob.core.windows.net/lambda-list/, https://objectstorage.eu-zurich-1.oraclecloud.com/n/zrhfyaq6qxvh/b/lambda-list/o/"
-export FALLBACK_S3_ENDPOINT="https://storage.mwsapis.ru/lambda-list/, https://46.8.209.252/lambda-list/"
+export FALLBACK_S3_ENDPOINT="https://storage.mwsapis.ru/lambda-list/, https://s3.cloudruserapi.net/lambda-list/, https://188.225.57.22/lambda-list/"
+export SANDBOX_AGW_PUBLIC_KEY_B64="LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUF3TUpiWWxHeG4zbCswWGlHQTlJLwpCSEs4SFgvYWV0N0E5R1ZMODE3YXBEVWVMNnNkSVNSQmRvcHY1WTBGZHJCSFNKV1NVZFd0VnhWYXpKQjQ2Sjh4CjMyNy81SDVwaTBua2ZSYmNneEJHU0d4aEtPdndSZStXUFZiMmY4MWpsa2VuWks0NmM5QzdkTm1YLzMxMHJsSFkKQndPblpjZHcyb0t1NmhUTkR3azNueVVvMnYyL2xlTklNTHN2ODRSbEhBWDZUeXg1c2xxOHlzZXdoY21kZnYxNwpXUWpGN2FsYnExMlphZlRTanRYcURjc3JrMm9GOG1meXp4TGpTWGJ4UUhLSURIa2Z6M1NVWENzL0g5dHQxeWRLCjJZajZuSXh2OThIRVNaOE5nNDBPWlBoSERleDhSdTFOamNXbG8yRVdOTTF4VDhJcW1CVDIxUEx1eXpHak5Td0cKT2pubTFWMkVjamVyVm1STmhGVEpHNzBSa1VSRC9pMk1EYkcrWktwcVB0VzF1TDh3RXQySWtTcU5mS2NmK1RGKwpVSlpaZm0xbERVTXBXSjJlV0pHcmdPVVg4L2Y4di9HQit4NFB4VW8xbTdWL3BETHFDVVBtM2wyZGthTTlQMHNNCjZsTzAraktxZklGbkcxempjM2lmN3IxWWJEc1pseWwzODlxOUhyaDd0K0x3ai9KWGtEeEZhVG51ZE04ZWdhWGsKR1g1WXhaaUVEbUNDTFJza1J3QkJVYVlmZlhJcEZiSThzTzJYajBKNS9pbTV4dHU3VHRmSmt0Y1B6REw5dXlHMQpFYnQ4b1NBNEZUelRpZDZad2o1NVlnRGZ6MEZNbk5tWGg4MFQxeE16bGJpNnkrQkN1bmErSSs3TWNNUm84eXozClZ6ellKMC9KN1BwSHBYb1p2N0sxcURzQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQ=="
+export SANDBOX_AGW_ENDPOINT="http://gw.dev.amzsvc.com:80/"
+export SANDBOX_S3_ENDPOINT="https://s3.eu-north-1.amazonaws.com/amnezia-dev/"
 export FREE_V2_ENDPOINT="13.248.139.44"
 export PREM_V1_ENDPOINT="52.223.54.40"
 
@@ -221,6 +223,11 @@ sed -i '/Environment=/d' %buildroot%_unitdir/AmneziaVPN.service
 %_unitdir/AmneziaVPN.service
 
 %changelog
+* Sat Nov 21 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.1.10-alt2
+- Fix "Error Code: 1105. AGW public key is missing" when connecting via Amnezia Gateway:
+  upstream 5.1.1.10 expects the AGW public keys as base64 (PROD_AGW_PUBLIC_KEY_B64,
+  SANDBOX_AGW_PUBLIC_KEY_B64) instead of raw PEM (closes: #61588)
+- Update fallback S3 endpoints to the values embedded in the official 5.1.1.10 build
 * Fri Nov 20 2026 Nazarov Denis <nenderus@altlinux.org> 5.1.1.10-alt1
 - Version 5.1.1.10
 - Fix XRay DNS: the new upstream default REALITY fingerprint (firefox) is
