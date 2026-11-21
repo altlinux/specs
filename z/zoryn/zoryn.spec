@@ -2,7 +2,7 @@
 %def_with check
 ExcludeArch: %ix86
 Name: zoryn
-Version: 0.54.0
+Version: 0.55.0
 Release: alt1
 Summary: Maintainer assistant for ALT Linux package maintenance
 Group: System/Configuration/Packaging
@@ -110,6 +110,29 @@ developing applications that use %name.
 %files -n ocaml-%name-devel -f ocaml-files.devel
 
 %changelog
+* Sat Nov 21 2026 Anton Farygin <rider@altlinux.org> 0.55.0-alt1
+- build:
+  + added experimental SSH mesh build status with zoryn network status
+  + shared one gear tarball across parallel builds
+  + fixed dependency detection with rpm-build-pyproject 0.3 and later
+- flow:
+  + added --from to start a flow at a selected step
+- task management:
+  + added --start-from to local rebuilds of all subtasks
+  + fixed local rebuilds of tasks in NEW and handling of excluded architectures
+  + changed test-rebuild exit codes to distinguish failed and incomplete checks
+  + recorded confirmed Beehive FTBFS entries by package and architecture
+- devenv:
+  + added an experimental rootless Docker feature
+  + fixed bwrap startup when the bundled skill's mountpoint was missing
+    (ALT #61500)
+- agent mcp:
+  + added support for pi's built-in MCP configuration
+- version selection:
+  + used RPM comparison for tags, including letter suffixes and leading dots
+- RPM changelog:
+  + preserved indentation on wrapped CVE lists
+
 * Sat Oct 31 2026 Anton Farygin <rider@altlinux.org> 0.54.0-alt1
 - up:
   + added checks for unexpected patch changes during package updates
