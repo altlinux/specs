@@ -3,7 +3,7 @@
 
 Name: %node_module
 Version: 2.5.1
-Release: alt1
+Release: alt2
 
 Summary: Generate GitHub action docs based on action.yml
 License: MIT
@@ -44,10 +44,10 @@ cp -r lib src tsconfig.json node_modules README.md %buildroot%nodejs_sitelib/%no
 
 rm -rf %buildroot%nodejs_sitelib/action-docs/node_modules/flatted
 
-echo "
+echo '
 #!/bin/bash
-node %nodejs_sitelib/%node_module/lib/cli.js
-" > %buildroot%_bindir/%node_module
+node %nodejs_sitelib/%node_module/lib/cli.js "$@"
+' > %buildroot%_bindir/%node_module
 chmod +x %buildroot%_bindir/%node_module
 
 %files
@@ -56,5 +56,8 @@ chmod +x %buildroot%_bindir/%node_module
 %doc README.md
 
 %changelog
+* Sat Nov 21 2026 David Sultaniiazov <x1z53@altlinux.org> 2.5.1-alt2
+- Fix arguments providing.
+
 * Fri Jun 13 2025 David Sultaniiazov <x1z53@altlinux.org> 2.5.1-alt1
 - Initial build
