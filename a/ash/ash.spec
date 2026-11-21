@@ -1,7 +1,7 @@
 Summary: A smaller version of the Bourne shell
 Name: ash
 Version: 0.5.13.5
-Release: alt1
+Release: alt2
 
 License: BSD-3-Clause
 Group: Shells
@@ -18,8 +18,7 @@ Patch05: 0005-parser-make-p-a-const-pointer-for-the-strchr-result-.patch
 Conflicts: mkinitrd <= 1:1.7
 Provides: dash
 
-# Automatically added by buildreq on Mon Jun 19 2006
-BuildRequires: glibc-devel-static
+BuildRequires: glibc-devel-static libatomic-devel-static
 
 %description
 The %name shell is a clone of Berkeley's Bourne shell.  Ash
@@ -100,6 +99,9 @@ ln -s %name.1 %buildroot/%_man1dir/dash.1
 /bin/%name.static
 
 %changelog
+* Wed Nov 11 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.13.5-alt2
+- Added BR: libatomic-devel-static to fix build with gcc 16.
+
 * Mon Nov 09 2026 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.5.13.5-alt1
 - v0.5.11-18-g6f6d1f2 -> v0.5.13.5.
 
