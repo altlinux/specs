@@ -1,7 +1,7 @@
 %define rname vvdec
 
 Name: lib%rname
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 Summary: The Fraunhofer Versatile Video Decoder
 Group: System/Libraries
@@ -35,7 +35,10 @@ tar -xf %SOURCE1 -C ext/bitstreams
 %cmake \
 	-DBUILD_SHARED_LIBS=ON \
 	-DVVDEC_ENABLE_WERROR=OFF \
-	-DVVDEC_INSTALL_VVDECAPP=OFF
+	-DVVDEC_INSTALL_VVDECAPP=OFF \
+%ifarch %ix86
+	-DVVDEC_ENABLE_X86_SIMD=OFF
+%endif
 
 %cmake_build
 
@@ -56,6 +59,9 @@ tar -xf %SOURCE1 -C ext/bitstreams
 %_libdir/*.so
 
 %changelog
+* Sat Nov 21 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.3.0-alt1
+- 3.3.0
+
 * Sat Oct 10 2026 Valery Inozemtsev <shrek@altlinux.ru> 3.2.1-alt1
 - 3.2.1
 
