@@ -2,7 +2,7 @@
 
 Name: %pypi_name
 Version: 0.9.3.11.31
-Release: alt2
+Release: alt3
 
 Summary: Command line internet radio player
 
@@ -61,6 +61,9 @@ install -Dm644 %SOURCE1 %buildroot%_desktopdir/%pypi_name.desktop
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Nov 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.31-alt3
+- fixed Categories in .desktop file for Plasma
+
 * Sat May 09 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.3.11.31-alt2
 - added dependencies for TTS funtion (ALT #59027)
 
