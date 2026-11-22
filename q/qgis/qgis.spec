@@ -14,15 +14,13 @@
 %endif
 
 Name:    qgis
-Version: 4.2.3
+Version: 4.4.0
 Release: alt1
 
 Summary: A user friendly Open Source Geographic Information System
 License: GPL-3.0+ with exceptions
 Group:   Sciences/Geosciences
 Url:     http://qgis.org/
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
 Source3: qgis-server-httpd.conf
@@ -123,6 +121,9 @@ BuildRequires: libopenjpeg2.0-devel
 BuildRequires: openjpeg-tools2.0
 BuildRequires: blend2d-devel
 BuildRequires: libcups-devel
+BuildRequires: libidn2-devel
+BuildRequires: libwayland-egl-devel
+BuildRequires: wayland-protocols
 
 Requires: qca-qt6-ossl
 Requires: gpsbabel
@@ -244,7 +245,8 @@ ogrinfo resources/data/world_map.gpkg -sql "UPDATE states_provinces SET name='Lu
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
 CXXFLAGS="${CXXFLAGS:-%optflags}"; export CXXFLAGS;
 export LD_LIBRARY_PATH=`pwd`/output/%_lib
-%cmake_insource -GNinja \
+#cmake_insource -GNinja \
+%cmake_insource \
     -DBUILD_SHARED_LIBS:BOOL=ON \
     -DCMAKE_SKIP_RPATH:BOOL=ON \
     -DQGIS_LIB_SUBDIR:PATH=%_lib \
@@ -280,10 +282,12 @@ export LD_LIBRARY_PATH=`pwd`/output/%_lib
 %ifarch %ix86
 export NPROCS=8
 %endif
-%ninja_build
+#ninja_build
+%make_build
 
 %install
-%ninja_install
+#ninja_install
+%makeinstall_std
 
 # Install MIME type definitions
 install -pd %buildroot%_datadir/mime/packages
@@ -430,6 +434,9 @@ rm -f %buildroot%python3_sitelibdir/pyproject.toml
 %endif
 
 %changelog
+* Fri Nov 20 2026 Andrey Cherepanov <cas@altlinux.org> 4.4.0-alt1
+- New version.
+
 * Sat Sep 26 2026 Andrey Cherepanov <cas@altlinux.org> 4.2.3-alt1
 - New version.
 
