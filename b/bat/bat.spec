@@ -1,15 +1,16 @@
 Name: bat
 Version: 0.26.1
-Release: alt2
+Release: alt3
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
-Url: https://crates.io/crates/bat
+URL: https://crates.io/crates/bat
 VCS: https://github.com/sharkdp/bat
 
 Source: %name-%version.tar
 Source1: vendor.tar
 Source2: RPM-Spec.sublime-syntax
+Patch: bat-0.26.1-fix-tests.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -29,6 +30,7 @@ programming and markup languages. It has git integration and automatic paging.
 
 %prep
 %setup -a 1
+%autopatch -p1
 %rust_prep
 # Keep RPM Spec syntax in a separate asset source directory. Passing
 # assets/syntaxes as --source would re-add bundled syntaxes and create duplicates.
@@ -67,6 +69,9 @@ install -Dm 0644 "$assets_out"/completions/bat.fish %buildroot%_datadir/fish/ven
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Sun Nov 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.1-alt3
+- Fixed FTBFS with rust 1.100.
+
 * Tue Jul 07 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.26.1-alt2
 - Added RPM Spec syntax highlighting (closes: #59756).
 
