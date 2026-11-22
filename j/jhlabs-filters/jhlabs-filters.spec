@@ -1,6 +1,4 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: /proc
-BuildRequires: jpackage-default
+%define _unpackaged_files_terminate_build 1
 # Copyright (c) 2000-2010, JPackage Project
 # All rights reserved.
 #
@@ -31,64 +29,69 @@ BuildRequires: jpackage-default
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-Name:           jhlabs-filters
-Version:        2.0
-Release:        alt2_1jpp6
-Summary:        Java Image Filters
+Name: jhlabs-filters
+Version: 2.0
+Release: alt3_1jpp6
 
-Group:          Development/Java
-License:        Apache License 2.0
-URL:            http://www.jhlabs.com/ip/index.html
-Source0:        http://www.jhlabs.com/ip/filters/Filters.zip
-Patch0:         jhlabs-filters-build.patch
-BuildArch:      noarch
+Summary: Java Image Filters
+License: Apache-2.0
+Group: Development/Java
+URL: http://www.jhlabs.com/ip/index.html
 
+Source0: http://www.jhlabs.com/ip/filters/Filters.zip
+Source1: https://repo.maven.apache.org/maven2/com/jhlabs/filters/2.0.235/filters-2.0.235.pom
+Patch0: jhlabs-filters-build.patch
+
+BuildRequires: jpackage-default
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
 BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: unzip
 
-%description
-A large collection of Java2D image filters, including blur,
-emboss, lighting effects and texturing. 
-
-%package javadoc
-Summary: Javadoc for %{name}
-Group: Development/Java
 BuildArch: noarch
 
+%description
+A large collection of Java2D image filters, including blur,
+emboss, lighting effects and texturing.
+
+%package javadoc
+Summary: Javadoc for %name
+Group: Development/Java
+
 %description javadoc
-%{summary}.
+%summary.
 
 %prep
-%setup -q -c %{name}-%{version}
+%setup -q -c %name-%version
 %patch0 -b .orig
 
 %build
-%{ant} jar javadoc
+%ant jar javadoc
+%mvn_file com.jhlabs:filters %name-%version %name
+%mvn_artifact %SOURCE1 dist/Filters.jar
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir} \
-        $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+%mvn_install
+install -d -m 755 $RPM_BUILD_ROOT%_javadocdir/%name-%version
 
-install -m 644 dist/Filters.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+cp -pr api/* $RPM_BUILD_ROOT%_javadocdir/%name-%version
+ln -s %name-%version $RPM_BUILD_ROOT%_javadocdir/%name
 
-cp -pr api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
-%{_javadir}/*.jar
+%files -f .mfiles
 
 %files javadoc
 %defattr(644,root,root,755)
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%_javadocdir/%name-%version
+%_javadocdir/%name
 
 %changelog
+* Sun Nov 22 2026 Ivan Khanas <xeno@altlinux.org> 2.0-alt3_1jpp6
+- Register the original Maven artifact metadata.
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 2.0-alt2_1jpp6
 - java11 build
 - added BR: unzip
 
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_1jpp6
 - new version
-
