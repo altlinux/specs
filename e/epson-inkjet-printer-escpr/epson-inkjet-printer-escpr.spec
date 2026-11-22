@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA.
 
 %define pkg epson-inkjet-printer-escpr
-%define ver 1.8.6
+%define ver 1.8.10
 
 %define drivername      epson-inkjet-printer-escpr
 %define driverstr       epson-inkjet-printer-escpr
@@ -81,6 +81,16 @@ gzip -n9 %buildroot%_datadir/cups/model/%name/*.ppd
 %_datadir/cups/model/%name
 
 %changelog
+* Sun Nov 22 2026 Andrey Cherepanov <cas@altlinux.org> 1.8.10-alt1
+- New version.
+- Supported new model:
+  + Epson EP-719A Series
+  + Epson EP-819A Series
+  + Epson L4350 Series
+  + Epson WF-2940 Series
+  + Epson WF-2970 Series
+  + Epson XP-4250 Series
+
 * Tue Dec 10 2024 Andrey Cherepanov <cas@altlinux.org> 1.8.6-alt1
 - New version.
 - Supported new model:
