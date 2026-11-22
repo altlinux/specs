@@ -4,7 +4,7 @@
 
 Name: jbr-runtime
 Version: 25.0.4.1b635.79
-Release: alt1
+Release: alt2
 
 Summary: JetBrains Runtime and build JDK for IntelliJ Platform
 License: GPL-2.0-only with Classpath-exception-2.0
@@ -13,7 +13,10 @@ URL: https://github.com/JetBrains/JetBrainsRuntime
 VCS: https://github.com/JetBrains/JetBrainsRuntime.git
 
 Source: %name-%version.tar.gz
-Patch: jbr-alt-archive.patch
+Patch1: 0001-Use-supplied-metadata-in-Gear-source-archives.patch
+Patch2: 0002-Give-the-enhanced-JVMTI-JNI-helper-a-unique-name.patch
+Patch3: 0003-Use-the-default-PKCS11-IV-for-AES-KWP.patch
+Patch4: 0004-Account-for-JBR-module-rows-in-Javadoc-tests.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -61,8 +64,6 @@ jlink and JDK modules without changing the system Java alternatives.
 %autopatch -p1
 
 %build
-# Whole-libjvm LTO exceeded 48 GiB of RAM.
-%remove_optflags -flto=auto
 export JDK_BUILD_NUMBER=1
 bash -eu <<'BUILD'
 source jb/project/tools/common/scripts/common.sh %jbbuild nomod
@@ -78,7 +79,7 @@ bash configure \
     --with-debug-level=release \
     --with-vendor-name="$VENDOR_NAME" \
     --with-vendor-version-string="$VENDOR_VERSION_STRING" \
-    --with-jvm-features=shenandoahgc \
+    --with-jvm-features=shenandoahgc,link-time-opt \
     --with-version-pre= \
     --with-version-build="$JDK_BUILD_NUMBER" \
     --with-version-opt=b"$build_number" \
@@ -92,7 +93,7 @@ bash configure \
     --with-freetype=system \
     --with-extra-cflags="%optflags" \
     --with-extra-cxxflags="%optflags" \
-    --with-extra-ldflags="%{?__global_ldflags}" \
+    --with-extra-ldflags="%{?__global_ldflags} -flto=auto" \
     --with-native-debug-symbols=zipped \
     $STATIC_CONF_ARGS $REPRODUCIBLE_BUILD_OPTS
 make JOBS=%_smp_build_ncpus images CONF=%jbr_conf
@@ -124,5 +125,8 @@ done
 %_jvmdir/jbr-build-%version
 
 %changelog
+* Sun Nov 22 2026 Ivan Khanas <xeno@altlinux.org> 25.0.4.1b635.79-alt2
+- Enable link-time optimization.
+
 * Mon Nov 09 2026 Ivan Khanas <xeno@altlinux.org> 25.0.4.1b635.79-alt1
 - Initial build for ALT.
