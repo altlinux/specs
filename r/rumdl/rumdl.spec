@@ -2,7 +2,7 @@
 %def_with check
 
 Name: rumdl
-Version: 0.3.2
+Version: 0.3.5
 Release: alt1
 Summary: A high-performance Markdown linter
 License: MIT
@@ -50,6 +50,9 @@ speed and developer experience improvements to the Markdown ecosystem.
 %_bindir/%name
 
 %changelog
+* Sun Nov 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.5-alt1
+- Updated to version 0.3.5.
+
 * Wed Oct 28 2026 Alexander Makeenkov <amakeenk@altlinux.org> 0.3.2-alt1
 - Updated to version 0.3.2.
 
