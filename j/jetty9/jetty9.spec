@@ -4,7 +4,7 @@
 
 Name:           jetty9
 Version:        9.4.58
-Release:        alt2
+Release:        alt3
 
 Summary:        Java Webserver and Servlet Container (compat 9.x libraries)
 License:        Apache-2.0 or EPL-1.0
@@ -13,18 +13,41 @@ URL:            https://jetty.org/
 VCS:            https://github.com/jetty/jetty.project
 
 Source0:        %srcname-%version%addver.tar.gz
-Source6:        LICENSE-MIT
+Source1:        LICENSE-MIT
 
-Patch1:         0001-Distro-jetty.home.patch
-Patch2:         0002-Port-to-servlet-api-4-5.patch
+Patch1:         0001-Port-to-servlet-api-4-5.patch
+Patch2:         0002-Disable-Jetty-util-tests-that-require-removed-binari.patch
+Patch3:         0003-Use-an-attribute-only-ServletContext-in-the-SameSite.patch
+Patch4:         0004-Disable-XML-parser-test-that-requires-external-DTD-r.patch
+Patch5:         0005-Exclude-unavailable-ZIP-filesystem-range-inputs-in-o.patch
+Patch6:         0006-Disable-servlet-suites-blocked-by-unavailable-test-f.patch
+Patch7:         0007-Exclude-webapp-tests-with-unavailable-package-fixtur.patch
+Patch8:         0008-Disable-timing-sensitive-TLS-variant-of-the-HTTP-met.patch
+Patch9:         0009-Exclude-the-gzip-test-input-stripped-by-RPM-preparat.patch
+Patch10:        0010-Skip-the-two-gigabyte-response-stress-test-on-32-bit.patch
+Patch11:        0011-Remove-the-script-tag-from-the-Resource-Javadoc-exam.patch
+Patch12:        0012-Scale-the-HTTP-2-stream-stress-test-on-32-bit-JVMs.patch
 
 BuildRequires(pre):  rpm-macros-java
-BuildRequires:  jpackage-default
+BuildRequires:  java-21-openjdk-devel
 BuildRequires:  maven-local
 
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+
+BuildRequires:  mvn(javax.servlet:javax.servlet-api)
+BuildRequires:  mvn(org.eclipse.jetty.alpn:alpn-api)
+BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-test-helper)
+BuildRequires:  mvn(org.eclipse.jetty.toolchain:jetty-perf-helper)
+BuildRequires:  mvn(org.junit:junit-bom:pom:)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires:  mvn(org.junit.vintage:junit-vintage-engine)
+BuildRequires:  mvn(org.awaitility:awaitility)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(org.slf4j:slf4j-jdk14)
+BuildRequires:  mvn(net.minidev:json-smart)
 
 BuildArch:      noarch
 
@@ -115,6 +138,78 @@ Summary:        Jetty 9.x xml module (compat)
 %description    xml
 Jetty 9.x compatibility library: XML module.
 
+%package        alpn-client
+Group:          Networking/WWW
+Summary:        Jetty 9.x ALPN client module (compat)
+%description    alpn-client
+Jetty 9.x compatibility library: ALPN client module.
+
+%package        alpn-server
+Group:          Networking/WWW
+Summary:        Jetty 9.x ALPN server module (compat)
+%description    alpn-server
+Jetty 9.x compatibility library: ALPN server module.
+
+%package        alpn-java-client
+Group:          Networking/WWW
+Summary:        Jetty 9.x Java ALPN client module (compat)
+%description    alpn-java-client
+Jetty 9.x compatibility library: Java ALPN client module.
+
+%package        alpn-java-server
+Group:          Networking/WWW
+Summary:        Jetty 9.x Java ALPN server module (compat)
+%description    alpn-java-server
+Jetty 9.x compatibility library: Java ALPN server module.
+
+%package        alpn-openjdk8-client
+Group:          Networking/WWW
+Summary:        Jetty 9.x OpenJDK 8 ALPN client module (compat)
+%description    alpn-openjdk8-client
+Jetty 9.x compatibility library: OpenJDK 8 ALPN client module.
+
+%package        alpn-openjdk8-server
+Group:          Networking/WWW
+Summary:        Jetty 9.x OpenJDK 8 ALPN server module (compat)
+%description    alpn-openjdk8-server
+Jetty 9.x compatibility library: OpenJDK 8 ALPN server module.
+
+%package        http2-client
+Group:          Networking/WWW
+Summary:        Jetty 9.x HTTP/2 client module (compat)
+%description    http2-client
+Jetty 9.x compatibility library: HTTP/2 client module.
+
+%package        http2-common
+Group:          Networking/WWW
+Summary:        Jetty 9.x HTTP/2 common module (compat)
+%description    http2-common
+Jetty 9.x compatibility library: HTTP/2 common module.
+
+%package        http2-hpack
+Group:          Networking/WWW
+Summary:        Jetty 9.x HTTP/2 HPACK module (compat)
+%description    http2-hpack
+Jetty 9.x compatibility library: HTTP/2 HPACK module.
+
+%package        http2-http-client-transport
+Group:          Networking/WWW
+Summary:        Jetty 9.x HTTP/2 HTTP client transport module (compat)
+%description    http2-http-client-transport
+Jetty 9.x compatibility library: HTTP/2 HTTP client transport module.
+
+%package        http2-server
+Group:          Networking/WWW
+Summary:        Jetty 9.x HTTP/2 server module (compat)
+%description    http2-server
+Jetty 9.x compatibility library: HTTP/2 server module.
+
+%package        servlets
+Group:          Networking/WWW
+Summary:        Jetty 9.x Servlet utilities module (compat)
+%description    servlets
+Jetty 9.x compatibility library: Servlet utilities module.
+
 %javadoc_package
 
 %prep
@@ -134,8 +229,47 @@ find . -name "*.class" -exec rm {} \;
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-deploy-plugin
 %pom_remove_plugin -r :jacoco-maven-plugin
+
+# JaCoCo is disabled, so Surefire must not expand its late @{argLine}.
+surefire="pom:plugin[pom:artifactId='maven-surefire-plugin']"
+managed="pom:build/pom:pluginManagement/pom:plugins/$surefire"
+webapp="pom:profiles/pom:profile[pom:id='jdk9']"
+webapp="$webapp/pom:build/pom:plugins/$surefire"
+test_heap='-Xmx6g -Xms2g'
+java=%_jvmdir/java-21-openjdk/bin/java
+if "$java" -XshowSettings:properties -version 2>&1 | \
+    grep -Fq 'sun.arch.data.model = 32'; then
+    test_heap='-Xmx1g -Xms128m'
+fi
+test_args='-Dfile.encoding=UTF-8 -Duser.language=en -Duser.region=US'
+test_args="$test_args -showversion"
+%pom_xpath_replace "$managed/pom:configuration/pom:argLine" \
+    "<argLine>$test_args $test_heap -XX:+PrintGCDetails</argLine>"
+%pom_xpath_replace "$webapp/pom:configuration/pom:argLine" \
+    '<argLine>--module-path src/test/resources/mods</argLine>' jetty-webapp
+
+# Skip only compile-time fixtures whose test dependencies are unavailable.
+compiler=':maven-compiler-plugin:${maven.compiler.plugin.version}'
+exclude='<configuration><testExcludes><testExclude>'
+end='</testExclude></testExcludes></configuration>'
+%pom_add_plugin "$compiler" jetty-client \
+    "$exclude**/SPNEGOAuthenticationTest.java$end"
+%pom_add_plugin "$compiler" jetty-http2/http2-client \
+    "$exclude**/ProxyTest.java$end"
+%pom_add_plugin "$compiler" jetty-jaas \
+    "$exclude**/JAASLdapLoginServiceTest.java$end"
+%pom_add_plugin "$compiler" jetty-jmx "$exclude**/PojoTest.java$end"
+
+%pom_remove_dep org.apache.kerby:kerb-simplekdc jetty-client
+%pom_remove_dep org.eclipse.jetty:jetty-proxy jetty-http2/http2-client
+%pom_remove_dep com.openpojo:openpojo jetty-jmx
+%pom_remove_dep org.apache.directory.server:apacheds-test-framework jetty-jaas
+%pom_remove_dep org.apache.directory.server:apacheds-server-integ jetty-jaas
+%pom_remove_dep org.apache.directory.server:apacheds-core-integ jetty-jaas
+
 %pom_remove_plugin -r :maven-release-plugin
 %pom_remove_plugin -r :buildnumber-maven-plugin
+
 %pom_remove_plugin -r :h2spec-maven-plugin
 %pom_xpath_remove pom:build/pom:extensions
 
@@ -144,31 +278,20 @@ find . -name "*.class" -exec rm {} \;
 
 %pom_disable_module aggregates/jetty-all
 
-# Reflective use of classes that might not be present in the JDK should be optional OSGi-wise
-%pom_xpath_inject "pom:configuration/pom:instructions" \
-"<Import-Package>sun.misc;resolution:=optional,com.sun.nio.file;resolution:=optional,*</Import-Package>"
-
-%pom_remove_dep "com.sun.net.httpserver:http" jetty-http-spi
+# Jetty accesses these JDK packages reflectively, so their imports are optional.
+jdk_imports='sun.misc;resolution:=optional'
+jdk_imports="$jdk_imports,com.sun.nio.file;resolution:=optional"
+%pom_xpath_inject pom:configuration/pom:instructions \
+    "<Import-Package>$jdk_imports,*</Import-Package>"
 
 %pom_change_dep -r org.mortbay.jasper:apache-jsp org.apache.tomcat:tomcat-jasper
 
-%pom_add_dep 'org.junit.jupiter:junit-jupiter-engine:${junit.version}' tests/test-sessions/test-sessions-common
-
 # provided by glassfish-jsp-api that has newer version
-%pom_change_dep -r javax.servlet.jsp:jsp-api javax.servlet.jsp:javax.servlet.jsp-api
+%pom_change_dep -r javax.servlet.jsp:jsp-api \
+    javax.servlet.jsp:javax.servlet.jsp-api
 
 # txt artifact - not installable
 %pom_remove_plugin ":jetty-version-maven-plugin"
-%pom_xpath_remove "pom:artifactItem[pom:classifier='version']" jetty-home
-
-# Disable building source release
-%pom_xpath_remove 'pom:execution[pom:id="sources"]' jetty-home
-
-# Unwanted JS in javadoc
-sed -i '/^\s*\*.*<script>/d' jetty-util/src/main/java/org/eclipse/jetty/util/resource/Resource.java
-
-# only used for integration tests
-%pom_remove_plugin :maven-invoker-plugin jetty-jspc-maven-plugin
 
 # These bundles have a dep on Eclipse that is not available on every arch
 %pom_disable_module jetty-osgi
@@ -176,36 +299,18 @@ sed -i '/^\s*\*.*<script>/d' jetty-util/src/main/java/org/eclipse/jetty/util/res
 # We don't have asciidoctor-maven-plugin
 %pom_disable_module jetty-documentation
 %pom_remove_dep -r :jetty-documentation
-%pom_xpath_remove 'pom:execution[pom:id="unpack-documentation"]' jetty-distribution
-
-%pom_xpath_remove 'pom:artifactItem[pom:artifactId="libsetuid-osx"]' jetty-home/pom.xml
-
-# TODO remove when jetty-setuid is packaged
-%pom_xpath_remove "pom:execution[pom:id[text()='copy-setuid-deps']]" jetty-home/pom.xml
 
 # We don't have gcloud-java-datastore
 %pom_disable_module jetty-gcloud
-%pom_disable_module test-gcloud-sessions tests/test-sessions
-%pom_remove_dep :jetty-gcloud-session-manager jetty-home
 
 # we don't have com.googlecode.xmemcached:xmemcached yet
 %pom_disable_module jetty-memcached
-%pom_disable_module test-memcached-sessions tests/test-sessions
-%pom_remove_dep :jetty-memcached-sessions jetty-home
 
 # Hazelcast is too old to build against
 %pom_disable_module jetty-hazelcast
-%pom_disable_module test-hazelcast-sessions tests/test-sessions
-%pom_remove_dep :jetty-hazelcast jetty-home
 
 # Infinispan is too old to build against
 %pom_disable_module jetty-infinispan
-%pom_disable_module test-infinispan-sessions tests/test-sessions
-%pom_remove_dep :infinispan-embedded jetty-home
-%pom_remove_dep :infinispan-embedded-query jetty-home
-%pom_remove_dep :infinispan-remote jetty-home
-%pom_remove_dep :infinispan-remote-query jetty-home
-%pom_xpath_remove "pom:execution[pom:id='unpack-infinispan-config']" jetty-home
 
 # Springframework not available
 %pom_disable_module jetty-spring
@@ -221,13 +326,8 @@ sed -i '/^\s*\*.*<script>/d' jetty-util/src/main/java/org/eclipse/jetty/util/res
 %pom_disable_module jetty-alpn-conscrypt-client jetty-alpn
 %pom_remove_dep -r :jetty-alpn-conscrypt-server
 %pom_remove_dep -r :jetty-alpn-conscrypt-client
-rm -fr examples/embedded/src/main/java/org/eclipse/jetty/embedded/ManyConnectors.java
 
-cp %SOURCE6 .
-
-# the default location is not allowed by SELinux
-sed -i '/<SystemProperty name="jetty.state"/d' \
-    jetty-home/src/main/resources/etc/jetty-started.xml
+cp %SOURCE1 .
 
 # Remove org.apache.directory.api support
 %pom_remove_dep :api-ldap-schema-data jetty-jaas
@@ -246,10 +346,8 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 
 # Drop everything that is not part of the minimal libraries set.
 %pom_disable_module jetty-ant
-%pom_disable_module jetty-http2
 %pom_disable_module jetty-fcgi
 %pom_disable_module jetty-websocket
-%pom_disable_module jetty-servlets
 %pom_disable_module apache-jsp
 %pom_disable_module apache-jstl
 %pom_disable_module jetty-maven-plugin
@@ -271,12 +369,9 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %pom_disable_module jetty-distribution
 %pom_disable_module jetty-runner
 %pom_disable_module jetty-http-spi
-%pom_disable_module jetty-alpn
 %pom_disable_module jetty-home
 %pom_disable_module jetty-openid
 
-%mvn_package :jetty-home __noinstall
-%mvn_package :jetty-distribution __noinstall
 %mvn_package :build-resources __noinstall
 
 # Do not install aggregate POMs separately.
@@ -290,12 +385,13 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %mvn_package ':example-*' __noinstall
 %mvn_package org.eclipse.jetty.tests: __noinstall
 %mvn_package ::war: __noinstall
-%mvn_package :jetty-runner __noinstall
 
 %mvn_compat_version : %compatver %version%addver
 
 %build
-%mvn_build -f -s
+export JAVA_HOME=%_jvmdir/java-21-openjdk
+export PATH="$JAVA_HOME/bin:$PATH"
+%mvn_build -s
 
 %install
 %mvn_install
@@ -315,7 +411,24 @@ sed -i '/<SystemProperty name="jetty.state"/d' \
 %files webapp -f .mfiles-jetty-webapp
 %files xml -f .mfiles-jetty-xml
 
+%files alpn-client -f .mfiles-jetty-alpn-client
+%files alpn-server -f .mfiles-jetty-alpn-server
+%files alpn-java-client -f .mfiles-jetty-alpn-java-client
+%files alpn-java-server -f .mfiles-jetty-alpn-java-server
+%files alpn-openjdk8-client -f .mfiles-jetty-alpn-openjdk8-client
+%files alpn-openjdk8-server -f .mfiles-jetty-alpn-openjdk8-server
+%files http2-client -f .mfiles-http2-client
+%files http2-common -f .mfiles-http2-common
+%files http2-hpack -f .mfiles-http2-hpack
+%files http2-http-client-transport -f .mfiles-http2-http-client-transport
+%files http2-server -f .mfiles-http2-server
+%files servlets -f .mfiles-jetty-servlets
+
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 9.4.58-alt3
+- Package the Jetty 9 HTTP/2, Servlets and ALPN modules.
+- Enable tests and adjust them for the 32-bit JVM.
+
 * Thu Jul 02 2026 Evgeniy Serov <scala@altlinux.org> 9.4.58-alt2
 - Split jetty9 compat package off jetty 9.4.58.
 - Marked all Maven artifacts as compat (9.4) to coexist with jetty 12.

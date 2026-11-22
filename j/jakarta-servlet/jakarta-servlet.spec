@@ -2,7 +2,7 @@
 
 Name:           jakarta-servlet
 Version:        6.1.0
-Release:        alt1
+Release:        alt2
 Summary:        Server-side API for handling HTTP requests and responses
 License:        (EPL-2.0 OR GPL-2.0-only WITH Classpath-exception-2.0) AND (CDDL-1.1 OR GPL-2.0-only WITH Classpath-exception-2.0) AND Apache-2.0 AND LicenseRef-EFSL-1.0
 Group:          Development/Java
@@ -45,6 +45,13 @@ Group:          Development/Java
 
 %description api5
 Genuine versioned Jakarta Servlet 5.0 API for EE9 applications.
+
+%package api6
+Summary:        Genuine Jakarta Servlet 6.0 API
+Group:          Development/Java
+
+%description api6
+Versioned Servlet 6.0 API for Jakarta EE 10 applications.
 
 %package javax4
 Summary:        Genuine Servlet 4.0 API in the javax namespace
@@ -89,7 +96,7 @@ for version in 4 5; do
 done
 
 for module in api compat/servlet4/api compat/servlet5/api \
-    compat/javax-servlet; do
+    compat/servlet6/api compat/javax-servlet; do
     pushd "$module"
     %pom_remove_parent
     %pom_remove_plugin -f :formatter-maven-plugin
@@ -126,6 +133,13 @@ pushd compat/servlet5/api
 %mvn_file : %name-api5/jakarta.servlet-api
 popd
 
+pushd compat/servlet6/api
+%pom_remove_plugin -f :maven-javadoc-plugin
+%mvn_package : api6
+%mvn_compat_version : 6.0.0
+%mvn_file : %name-api6/jakarta.servlet-api
+popd
+
 %build
 pushd api
 %mvn_build
@@ -135,6 +149,10 @@ for module in servlet4 servlet5; do
     %mvn_build -- -Dmaven.compiler.release=8
     popd
 done
+
+pushd compat/servlet6/api
+%mvn_build -j -- -Dmaven.compiler.release=11
+popd
 
 pushd compat/javax-servlet
 %mvn_build -- -Dmaven.compiler.release=8
@@ -165,6 +183,10 @@ for version in 4 5; do
     cp -a "$javadoc_dir"/. %buildroot%_javadocdir/%name-api$version/
     popd
 done
+pushd compat/servlet6/api
+%mvn_install
+popd
+
 pushd compat/javax-servlet
 xmvn-install -R .xmvn-reactor -n %name -d %buildroot
 javadoc_dir=target/site/apidocs
@@ -183,6 +205,10 @@ cp manual/*.html %buildroot%_docdir/%name-manual/
 
 %files api5 -f compat/servlet5/api/.mfiles-api5
 
+%files api6 -f compat/servlet6/api/.mfiles-api6
+%doc compat/servlet6/LICENSE.md compat/servlet6/NOTICE.md
+%doc compat/servlet6/spec/src/main/asciidoc/license-efsl.adoc
+
 %files javax4 -f compat/servlet4/api/.mfiles-javax4
 
 %files javadoc -f api/.mfiles-javadoc
@@ -194,6 +220,9 @@ cp manual/*.html %buildroot%_docdir/%name-manual/
 %_docdir/%name-manual
 
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 6.1.0-alt2
+- Package the genuine Servlet 6.0 API for EE 10 applications.
+
 * Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 6.1.0-alt1
 - New version.
 - Add Servlet 4.0 and 5.0 compatibility APIs.

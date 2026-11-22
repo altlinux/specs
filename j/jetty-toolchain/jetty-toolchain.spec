@@ -2,7 +2,7 @@
 
 Name: jetty-toolchain
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: Jetty Toolchain parent Maven POM
 License: Apache-2.0 or EPL-1.0
@@ -16,7 +16,7 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 BuildRequires: maven-local
-BuildRequires: jpackage-17-compat
+BuildRequires: java-21-openjdk-devel
 BuildRequires: HdrHistogram
 BuildRequires: javaparser
 BuildRequires: maven-dependency-plugin
@@ -25,6 +25,8 @@ BuildRequires: maven-plugin-bundle
 BuildRequires: maven-remote-resources-plugin
 BuildRequires: maven-source-plugin
 BuildRequires: maven-shade-plugin
+BuildRequires: mvn(org.hamcrest:hamcrest)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
 
 %description
 Jetty Toolchain parent Maven POM.
@@ -111,19 +113,15 @@ Build reactor POM metadata for Jetty Toolchain.
 %pom_xpath_set "/*[local-name()='project']/*[local-name()='parent']/*[local-name()='version']" 1.7 jetty-test-policy/pom.xml
 %pom_xpath_set "/*[local-name()='project']/*[local-name()='parent']/*[local-name()='version']" 1.7 jetty-xslt-tools/pom.xml
 
+%pom_remove_plugin :maven-source-plugin jetty-schemas/pom.xml
 %pom_remove_plugin -r :maven-release-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin -r :maven-jarsigner-plugin
-%pom_remove_plugin -r :maven-pmd-plugin
 %pom_remove_plugin -r :maven-remote-resources-plugin
 %pom_remove_plugin -r com.mycila:license-maven-plugin
 %pom_remove_plugin -r :maven-deploy-plugin
 
-# hamcrest 2.x no longer provides org.hamcrest.Factory annotation
-sed -i '/import org.hamcrest.Factory;/d' \
-  jetty-test-helper/src/main/java/org/eclipse/jetty/toolchain/test/matchers/RegexMatcher.java
-sed -i '/^[[:space:]]*@Factory[[:space:]]*$/d' \
-  jetty-test-helper/src/main/java/org/eclipse/jetty/toolchain/test/matchers/RegexMatcher.java
+%pom_remove_plugin :maven-enforcer-plugin jetty-test-helper/pom.xml
 
 %build
 %mvn_build -s -j -- -f pom.xml
@@ -144,5 +142,9 @@ sed -i '/^[[:space:]]*@Factory[[:space:]]*$/d' \
 %files build-crutch -f .mfiles-jetty-toolchain-build-crutch
 
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 1.7-alt2
+- Update Jetty Schemas to 5.2.
+- Update Jetty Test Helper to 6.2.
+
 * Wed Apr 01 2026 Ivan Khanas <xeno@altlinux.org> 1.7-alt1
 - Initial build for ALT.

@@ -2,7 +2,7 @@
 %define abiversion 0
 
 Name: quiche
-Version: 0.30.0
+Version: 0.30.1
 Release: alt1
 
 Summary: QUIC and HTTP/3 protocol implementation and tools
@@ -70,6 +70,7 @@ The static library for applications that require static linking to Quiche.
 %setup
 
 %build
+export ZSTD_SYS_USE_PKG_CONFIG=1
 export CFLAGS="%optflags -ffat-lto-objects"
 export CXXFLAGS="%optflags -ffat-lto-objects"
 %rust_build --locked --workspace --features async,ffi,qlog,rpk
@@ -118,5 +119,11 @@ find vendor -type f \( -iname 'license*' -o -iname 'copying*' \
 %_libdir/libquiche.a
 
 %changelog
+* Sat Nov 21 2026 Ivan Khanas <xeno@altlinux.org> 0.30.1-alt1
+- New version.
+- Fix the C layout of peer transport parameters.
+- Fix log isolation in the 0-RTT timeout test.
+- Use ephemeral ports in migration tests.
+
 * Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 0.30.0-alt1
 - Initial build for ALT.

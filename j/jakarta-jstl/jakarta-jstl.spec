@@ -2,7 +2,7 @@
 
 Name: jakarta-jstl
 Version: 3.0.2
-Release: alt1
+Release: alt2
 
 Summary: Jakarta Standard Tag Library
 License: (EPL-2.0 or GPL-2.0 with Classpath-exception-2.0) and BSD-3-Clause
@@ -18,11 +18,14 @@ BuildRequires: maven-local
 BuildRequires: java-21-openjdk-devel
 BuildRequires: mvn(org.eclipse.ee4j:project:pom:)
 BuildRequires: jakarta-servlet
-BuildRequires: jakarta-servlet-javax
-BuildRequires: jakarta-server-pages-api
+BuildRequires: mvn(javax.servlet:javax.servlet-api)
+BuildRequires: mvn(jakarta.servlet.jsp:jakarta.servlet.jsp-api)
+BuildRequires: tomcat-jsp-2.3-api
+BuildRequires: tomcat-el-3.0-api
+BuildRequires: mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires: mvn(jakarta.el:jakarta.el-api)
 BuildRequires: mvn(xalan:xalan)
-BuildRequires: junit5
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
 BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires: mvn(org.glassfish.build:spec-version-maven-plugin)
@@ -41,6 +44,20 @@ Group: Development/Java
 %description impl
 The full Jakarta Standard Tag Library implementation, including core,
 formatting, SQL and XML tags, using system Xalan.
+
+%package ee8-api
+Summary: Java EE Standard Tag Library API for Servlet 4
+Group: Development/Java
+
+%description ee8-api
+The original JSTL 1.2 API with the javax.servlet.jsp.jstl namespace.
+
+%package ee8-impl
+Summary: GlassFish Standard Tag Library implementation for Servlet 4
+Group: Development/Java
+
+%description ee8-impl
+The Java EE implementation of the core, formatting, SQL and XML tag libraries.
 
 %package tagsdoc
 Summary: Jakarta tag library documentation generator
@@ -77,19 +94,30 @@ Jakarta Standard Tag Library tag libraries.
 %pom_remove_plugin org.asciidoctor:asciidoctor-maven-plugin spec
 %pom_remove_plugin :maven-assembly-plugin spec
 
-%mvn_file :jakarta.servlet.jsp.jstl-api %name/jakarta.servlet.jsp.jstl-api
-%mvn_file org.glassfish.web:jakarta.servlet.jsp.jstl \
+%mvn_file :jakarta.servlet.jsp.jstl-api:3.0.2 %name/jakarta.servlet.jsp.jstl-api
+%mvn_file org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1 \
     %name/jakarta.servlet.jsp.jstl
 %mvn_file org.glassfish.web:tagsdoc %name/tagsdoc
 %mvn_file org.glassfish.web:jstl %name/jstl
 %mvn_file jakarta.stl:jakarta-stl-spec %name/jakarta-stl-spec
-%mvn_package org.glassfish.web:jakarta.servlet.jsp.jstl impl
+%mvn_package :jakarta.servlet.jsp.jstl-api:3.0.2
+%mvn_package org.glassfish.web:jstl
+%mvn_package jakarta.stl:jakarta-stl-spec
+%mvn_package org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1 impl
+%mvn_package :jakarta.servlet.jsp.jstl-api:1.2.7 ee8-api
+%mvn_package org.glassfish.web:jakarta.servlet.jsp.jstl:1.2.6 ee8-impl
+%mvn_compat_version :jakarta.servlet.jsp.jstl-api:1.2.7 1.2.7
+%mvn_compat_version org.glassfish.web:jakarta.servlet.jsp.jstl:1.2.6 1.2.6
+%mvn_file :jakarta.servlet.jsp.jstl-api:1.2.7 \
+    %name-ee8-api/jakarta.servlet.jsp.jstl-api
+%mvn_file org.glassfish.web:jakarta.servlet.jsp.jstl:1.2.6 \
+    %name-ee8-impl/jakarta.servlet.jsp.jstl
 %mvn_package org.glassfish.web:tagsdoc tagsdoc
 
 %build
 # XMvn aggregate Javadoc mixes source-path and module-source-path for this
 # modular API and the two classpath modules. Generate all three separately.
-%mvn_build -j -- -Ptlddocs
+%mvn_build -s -j -- -Ptlddocs
 mkdir -p target/javadoc
 jstl_javadoc_cp=$(build-classpath jakarta-servlet/jakarta.servlet-api \
     jakarta-server-pages/jakarta.servlet.jsp-api jakarta-el/jakarta.el-api)
@@ -118,6 +146,11 @@ cp -a target/javadoc/* %buildroot%_javadocdir/%name/
 
 %files impl -f .mfiles-impl
 
+%files ee8-api -f .mfiles-ee8-api
+
+%files ee8-impl -f .mfiles-ee8-impl
+%doc compat/ee8-impl/NOTICE.md
+
 %files tagsdoc -f .mfiles-tagsdoc
 %_bindir/%name-tagsdoc
 
@@ -129,5 +162,8 @@ cp -a target/javadoc/* %buildroot%_javadocdir/%name/
 %doc impl/target/tlddoc
 
 %changelog
+* Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 3.0.2-alt2
+- Package the Java EE 8 JSTL API and implementation.
+
 * Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 3.0.2-alt1
 - Initial build for ALT.

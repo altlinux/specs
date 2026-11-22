@@ -75,7 +75,7 @@ BuildRequires: java-17-devel
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1
+Release:       alt2
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -105,11 +105,11 @@ Patch6:        %{name}-%{major_version}.%{minor_version}-bnd-annotation.patch
 BuildArch:     noarch
 
 BuildRequires: ant
-BuildRequires: ecj >= 1:4.10
+BuildRequires: mvn(org.eclipse.jdt:ecj)
 BuildRequires: findutils
 BuildRequires: javapackages-local
-BuildRequires: aqute-bnd
-BuildRequires: aqute-bndlib
+BuildRequires: mvn(biz.aQute:bnd)
+BuildRequires: mvn(biz.aQute.bnd:biz.aQute.bnd.annotation)
 BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
 
 #Requires:      java
@@ -140,6 +140,20 @@ Sun under the Java Community Process.
 Tomcat is developed in an open and participatory environment and
 released under the Apache Software License version 2.0. Tomcat is intended
 to be a collaboration of the best-of-breed developers from around the world.
+
+%package embed
+Summary:       Apache Tomcat 9 embedded servlet container
+Group:         System/Servers
+
+%description embed
+Core Tomcat 9 library for embedding the javax.servlet container.
+
+%package annotations-api
+Summary:       Apache Tomcat 9 annotations API
+Group:         Development/Other
+
+%description annotations-api
+Annotations API used by the Tomcat 9 container and embedded core.
 
 %package admin-webapps
 Group: System/Base
@@ -252,18 +266,18 @@ touch HACK
   -Dbuild.compiler="modern" \
   -Dcommons-daemon.jar="HACK" \
   -Dcommons-daemon.native.src.tgz="HACK" \
-  -Djdt.jar="$(build-classpath ecj/ecj)" \
+  -Djdt.jar="$(build-classpath org.eclipse.jdt:ecj)" \
   -Dtomcat-native.tar.gz="HACK" \
   -Dtomcat-native.home="." \
   -Dcommons-daemon.native.win.mgr.exe="HACK" \
   -Dnsis.exe="HACK" \
   -Djaxrpc-lib.jar="HACK" \
   -Dwsdl4j-lib.jar="HACK" \
-  -Dbnd.jar="$(build-classpath aqute-bnd/biz.aQute.bnd)" \
-  -Dbnd-annotation.jar="$(build-classpath aqute-bnd/biz.aQute.bnd.annotation)" \
+  -Dbnd.jar="$(build-classpath biz.aQute:bnd)" \
+  -Dbnd-annotation.jar="$(build-classpath biz.aQute.bnd:biz.aQute.bnd.annotation)" \
   -Dversion="%{version}" \
   -Dversion.build="%{micro_version}" \
-  deploy
+  deploy embed-jars
 
 # remove some jars that we'll replace with symlinks later
 rm output/build/bin/commons-daemon.jar output/build/lib/ecj.jar
@@ -392,7 +406,9 @@ popd
 %mvn_artifact res/maven/tomcat-jsp-api.pom output/build/lib/jsp-api.jar
 %mvn_artifact res/maven/tomcat-servlet-api.pom output/build/lib/servlet-api.jar
 
-%mvn_file org.apache.tomcat:tomcat-annotations-api tomcat/annotations-api
+%mvn_package org.apache.tomcat:tomcat-annotations-api annotations-api
+%mvn_compat_version org.apache.tomcat:tomcat-annotations-api 9.0 %version
+%mvn_file org.apache.tomcat:tomcat-annotations-api %name/annotations-api
 %mvn_artifact res/maven/tomcat-annotations-api.pom ${RPM_BUILD_ROOT}%{libdir}/annotations-api.jar
 %mvn_artifact res/maven/tomcat-api.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-api.jar
 %mvn_file org.apache.tomcat:tomcat-catalina-ant tomcat/catalina-ant
@@ -433,6 +449,11 @@ popd
 %mvn_artifact res/maven/tomcat-websocket-api.pom ${RPM_BUILD_ROOT}%{libdir}/websocket-api.jar
 %mvn_artifact res/maven/tomcat-websocket.pom ${RPM_BUILD_ROOT}%{libdir}/tomcat-websocket.jar
 %mvn_artifact res/maven/tomcat.pom
+
+%mvn_package org.apache.tomcat.embed:tomcat-embed-core embed
+%mvn_compat_version org.apache.tomcat.embed:tomcat-embed-core 9.0 %version
+%mvn_file org.apache.tomcat.embed:tomcat-embed-core %name/tomcat-embed-core
+%mvn_artifact res/maven/tomcat-embed-core.pom output/embed/tomcat-embed-core.jar
 
 %mvn_install
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jsp_tomcat-jsp-2.3-api<<EOF
@@ -508,6 +529,10 @@ exit 0
 %config(noreplace) %{confdir}/web.xml
 %attr(0755,root,root) %dir %{apphomedir}
 %{bindir}/bootstrap.jar
+%attr(0644,root,root) %{bindir}/tomcat-juli.jar
+%{_javadir}/%{name}-jsp-api.jar
+%{_javadir}/%{name}-servlet-api.jar
+%{_javadir}/%{name}-el-api.jar
 %{bindir}/catalina-tasks.xml
 %{apphomedir}/lib
 %{apphomedir}/temp
@@ -518,6 +543,12 @@ exit 0
 %attr(0755,root,root) %_initdir/%name
 %attr(0755,root,root) %_sbindir/%{name}-sysv
 %attr(0755,root,root) %dir %{bindir}
+
+%files embed -f .mfiles-embed
+
+%files annotations-api -f .mfiles-annotations-api
+%dir %{libdir}
+%{libdir}/annotations-api.jar
 
 %files admin-webapps
 %defattr(0664,root,tomcat,0755)
@@ -530,8 +561,9 @@ exit 0
 %files lib -f .mfiles
 %dir %{libdir}
 %{libdir}/*.jar
+%exclude %{libdir}/annotations-api.jar
+%exclude %{libdir}/annotations-api-9.0.jar
 %{_javadir}/*.jar
-%{bindir}/tomcat-juli.jar
 %exclude %{libdir}/%{name}-el-%{elspec}-api.jar
 %exclude %{libdir}/%{name}-servlet-%{servletspec}*.jar
 %exclude %{libdir}/%{name}-jsp-%{jspspec}*.jar
@@ -550,27 +582,29 @@ exit 0
 %_altdir/jsp_tomcat-jsp-2.3-api
 %{_javadir}/%{name}-jsp-%{jspspec}*.jar
 %{libdir}/%{name}-jsp-%{jspspec}*.jar
-%{_javadir}/%{name}-jsp-api.jar
 
 %files servlet-%{servletspec}-api -f .mfiles-tomcat-servlet-api
 %_altdir/servlet_tomcat-servlet-4.0-api
 %doc LICENSE
 %{_javadir}/%{name}-servlet-%{servletspec}*.jar
 %{libdir}/%{name}-servlet-%{servletspec}*.jar
-%{_javadir}/%{name}-servlet-api.jar
 
 %files el-%{elspec}-api -f .mfiles-tomcat-el-api
 %_altdir/elspec_tomcat-el-3.0-api
 %doc LICENSE
 %{_javadir}/%{name}-el-%{elspec}-api.jar
 %{libdir}/%{name}-el-%{elspec}-api.jar
-%{_javadir}/%{name}-el-api.jar
 
 %files webapps
 %defattr(0644,tomcat,tomcat,0755)
 %{appdir}/ROOT
 
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 1:9.0.121-alt2
+- Package the upstream Tomcat 9 embedded core.
+- Keep standalone compatibility paths in the server RPM so the Java libraries
+  can coexist with Tomcat 10.
+
 * Wed Sep 09 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 1:9.0.121-alt1
 - new version
 - security fixes:

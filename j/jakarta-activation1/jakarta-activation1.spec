@@ -1,14 +1,16 @@
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jakarta-activation1
 Version:        1.2.2
-Release:        alt2
+Release:        alt3
 Summary:        Jakarta Activation Specification and Implementation
 License:        BSD
 URL:            https://eclipse-ee4j.github.io/jaf/
+VCS:            https://github.com/eclipse-ee4j/jaf.git
 BuildArch:      noarch
 
 Source0:        https://github.com/eclipse-ee4j/jaf/archive/%{version}/jaf-%{version}.tar.gz
@@ -54,6 +56,7 @@ sed -i 's/${main.basedir}/${basedir}/' pom.xml
 sed -i "s/\${activation.osgiversion}/%{version}/g" activation/pom.xml
 
 %mvn_compat_version jakarta*: 1 %{version} 1.2.1 1.2.0 1.1.1
+%mvn_compat_version com.sun.activation: %{version}
 
 %build
 # javadoc temporairly disabled due to https://github.com/fedora-java/xmvn/issues/58
@@ -72,6 +75,9 @@ sed -i "s/\${activation.osgiversion}/%{version}/g" activation/pom.xml
 %doc --no-dereference LICENSE.md NOTICE.md
 
 %changelog
+* Sun Nov 15 2026 Ivan Khanas <xeno@altlinux.org> 1.2.2-alt3
+- Register the legacy Maven version for coexistence.
+
 * Thu Jan 29 2026 Anton Meleshnikov <alton@altlinux.org> 1.2.2-alt2
 - renamed package
 

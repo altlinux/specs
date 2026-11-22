@@ -23,7 +23,7 @@
 
 Name: tomcat10
 Version: 10.1.62
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Apache Servlet/JSP Engine, RI for Servlet %servletspec/JSP %jspspec API
 License: Apache-2.0
@@ -61,7 +61,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-17-compat
 BuildRequires: ant
-BuildRequires: ecj >= 1:4.10
+BuildRequires: mvn(org.eclipse.jdt:ecj)
 BuildRequires: findutils
 BuildRequires: javapackages-local
 BuildRequires: mvn(biz.aQute:bnd)
@@ -168,13 +168,13 @@ rm -r java/org/apache/naming/factory/webservices
   -Dbase.path="." \
   -Dbuild.compiler="modern" \
   -Dcommons-daemon.jar="$(build-classpath commons-daemon)" \
-  -Djdt.jar="$(build-classpath ecj/ecj)" \
+  -Djdt.jar="$(build-classpath org.eclipse.jdt:ecj)" \
   -Dtomcat-native.home="." \
   -Dmigration-lib.jar="$(build-classpath org.apache.tomcat:jakartaee-migration)" \
   -Dbnd.jar="$(build-classpath biz.aQute:bnd)" \
   -Dexamples.sources.skip=true \
   echoproperties \
-  deploy
+  deploy embed-jars
 
 # remove some jars that we'll replace with symlinks later
 rm output/build/bin/commons-daemon.jar output/build/lib/ecj.jar
@@ -336,6 +336,9 @@ popd
 %mvn_artifact res/maven/tomcat-websocket-client-api.pom %buildroot%libdir/websocket-client-api.jar
 %mvn_artifact res/maven/tomcat.pom
 
+%mvn_file org.apache.tomcat.embed:tomcat-embed-core %name/tomcat-embed-core
+%mvn_artifact res/maven/tomcat-embed-core.pom output/embed/tomcat-embed-core.jar
+
 %mvn_install
 
 %pre
@@ -439,6 +442,9 @@ exit 0
 %appdir/ROOT
 
 %changelog
+* Fri Nov 20 2026 Ivan Khanas <xeno@altlinux.org> 1:10.1.62-alt3
+- Package the upstream embedded core JAR and Maven POM.
+
 * Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 1:10.1.62-alt2
 - Remove the incorrect Servlet API alias from Tomcat EL.
 
