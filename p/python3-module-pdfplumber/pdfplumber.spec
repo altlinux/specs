@@ -1,5 +1,5 @@
 Name: python3-module-pdfplumber
-Version: 0.11.10
+Version: 0.11.11
 Release: alt1
 
 Summary: Plumb a PDF for detailed information about each char, rectangle, and line
@@ -63,5 +63,8 @@ BuildRequires: ghostscript
 %python3_sitelibdir/pdfplumber-%version.dist-info
 
 %changelog
+* Mon Nov 23 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.11.11-alt1
+- 0.11.11
+
 * Sat Nov 07 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.11.10-alt1
 - initial
