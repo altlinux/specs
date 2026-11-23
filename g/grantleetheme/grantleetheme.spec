@@ -5,7 +5,7 @@
 
 Name: %rname
 Version: 26.08.3
-Release: alt1
+Release: alt2
 %K6init
 
 Group: System/Libraries
@@ -35,7 +35,6 @@ Requires: kf6-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: grantlee5-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -73,6 +72,9 @@ Requires: %name-common
 %_K6plug/kf6/ktexttemplate/kde_grantlee_plugin.so
 
 %changelog
+* Mon Nov 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt2
+- fix requires
+
 * Fri Nov 06 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
 - new version
 
