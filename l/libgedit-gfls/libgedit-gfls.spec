@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: libgedit-gfls
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Gedit Technology - File loading and saving library
@@ -145,6 +145,9 @@ xvfb-run %__meson_test
 %endif
 
 %changelog
+* Mon Nov 23 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
+- 0.5.1
+
 * Thu Oct 15 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
