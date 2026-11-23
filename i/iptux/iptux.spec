@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: iptux
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: A software for sharing in LAN
@@ -77,5 +77,8 @@ install -pDm 644 %name.1 %buildroot%_man1dir/%name.1
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 23 2026 Nikolay Strelkov <snk@altlinux.org> 0.9.5-alt1
+- New version 0.9.5.
+
 * Sat Mar 15 2025 Nikolay Strelkov <snk@altlinux.org> 0.9.4-alt1
 - Initial build for Sisyphus
