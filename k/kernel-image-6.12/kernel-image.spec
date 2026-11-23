@@ -2,7 +2,7 @@ Name: kernel-image-6.12
 Release: alt1
 %define kernel_src_version	6.12
 %define kernel_base_version	6.12
-%define kernel_sublevel	.118
+%define kernel_sublevel	.119
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 23 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.119-alt1
+- v6.12.119 (2026-11-23).
+
 * Tue Nov 17 2026 Kernel Bot <kernelbot@altlinux.org> 6.12.118-alt1
 - v6.12.118 (2026-11-17).
 - config: Enable CONFIG_MEMCG_V1=y, CONFIG_CPUSETS_V1=y.
