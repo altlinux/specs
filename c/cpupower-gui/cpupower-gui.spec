@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name cpupower_gui
@@ -10,8 +10,8 @@
 %def_disable check
 
 Name: cpupower-gui
-Version: %ver_major.0
-Release: alt1.1
+Version: %ver_major.2
+Release: alt1
 
 Summary: A graphical program that is used to change the scaling frequency limits of the cpu, similar to cpupower.
 Group: Graphical desktop/GNOME
@@ -32,6 +32,7 @@ BuildArch: noarch
 %define handy_ver 1.5.0
 
 Requires: dconf polkit
+Requires: python3-module-pygobject3
 Requires: typelib(Gtk) = 3.0 typelib(Handy) = 1 typelib(AyatanaAppIndicator3) = 0.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
@@ -46,6 +47,7 @@ to `cpupower`.
 
 %prep
 %setup -n %name-%version
+sed -i 's|\/bin\/logger|/usr/bin/logger|' data/services/*.service.in
 
 %build
 %meson \
@@ -98,6 +100,9 @@ fi
 %doc README*
 
 %changelog
+* Mon Nov 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sat Jun 22 2024 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1.1
 - rebuilt with new systemd macros
 
