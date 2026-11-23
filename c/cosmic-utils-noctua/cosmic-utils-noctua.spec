@@ -3,7 +3,7 @@
 %define oname2 org.codeberg.wfx.Noctua
 
 Name: cosmic-utils-noctua
-Version: 20261101
+Version: 20261123
 Release: alt1
 
 Summary: An image viewer application for the COSMIC desktop
@@ -16,6 +16,8 @@ VCS: https://github.com/cosmic-utils/noctua
 Source0: %name-%version.tar
 Source1: vendor.tar
 Source2: Cargo.lock
+
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -107,6 +109,9 @@ install -Dm 0644 ui/cosmic/resources/%oname2.desktop %buildroot%_desktopdir/%ona
 %_iconsdir/hicolor/scalable/apps/%oname2.svg
 
 %changelog
+* Tue Nov 24 2026 Aleksandr Shamaraev <shad@altlinux.org> 20261123-alt1
+- updated to git.7b69090bab
+
 * Mon Nov 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 20261101-alt1
 - updated to git.71c9885346
 
