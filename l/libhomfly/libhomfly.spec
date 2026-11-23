@@ -1,7 +1,7 @@
 %define lname libhomfly0
 
 Name: libhomfly
-Version: 1.04
+Version: 1.05
 Release: alt1
 Summary: Library to compute the homfly polynomial of a link
 License: Unlicense
@@ -70,6 +70,9 @@ rm -f %buildroot%_libdir/*.la
 %_pkgconfigdir/libhomfly.pc
 
 %changelog
+* Mon Nov 23 2026 Leontiy Volodin <lvol@altlinux.org> 1.05-alt1
+- New version 1.05.
+
 * Fri Mar 27 2026 Leontiy Volodin <lvol@altlinux.org> 1.04-alt1
 - New version 1.04.
 
