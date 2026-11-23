@@ -3,7 +3,7 @@
 
 Name: openbabel
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 %define tag_ver %(echo %version|tr . -)
 
@@ -19,6 +19,8 @@ Source: %name-%version.tar
 #Source: https://github.com/openbabel/openbabel/releases/download/openbabel-%tag_ver/openbabel-%version-source.tar.bz2
 Source1: %name.watch
 Patch: %name-%version-%release.patch
+Patch1: openbabel-fix-plugin-dir.patch
+Patch2: openbabel-add-default-datadir-for-help.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-build-python3
@@ -27,6 +29,7 @@ BuildRequires: boost-devel boost-filesystem-devel
 BuildRequires: libcairo-devel libwxGTK3.2-devel
 BuildRequires: zlib-devel libxml2-devel xml-utils
 BuildRequires: python3-devel python3-module-setuptools swig
+BuildRequires: bzlib-devel
 
 Summary(ru_RU.UTF-8): Конвертор биохимических форматов данных
 Summary(uk_UA.UTF-8): Конвертор біохімічних форматів даних
@@ -87,7 +90,7 @@ Python bindings for Open Babel.
 
 %prep
 %setup -n %name-%version
-%patch -p1
+%autopatch -p1
 # fix python install path
 sed -i 's/dist\(-packages\)/site\1/' scripts/CMakeLists.txt
 %ifarch %e2k
@@ -102,12 +105,15 @@ sed -i 's/-Wl,--fatal-warnings //' CMakeLists.txt
     -DBUILD_GUI:BOOL=ON \
     -DRUN_SWIG=ON \
     -DPYTHON_BINDINGS:BOOL=ON \
-    -DPYTHON_EXECUTABLE=%__python3
+    -DPYTHON_EXECUTABLE=%__python3 \
+    -Wno-author \
 %nil
 %cmake_build
 
 %install
 %cmake_install
+mkdir -p %buildroot%_datadir/%name/doc
+cp -a doc/*.html %buildroot%_datadir/%name/doc
 
 %files
 %doc AUTHORS README* THANKS 
@@ -137,6 +143,10 @@ sed -i 's/-Wl,--fatal-warnings //' CMakeLists.txt
 %endif
 
 %changelog
+* Mon Nov 23 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.2.1-alt2
+- NMU: add HTML documentation (ALT #61609)
+- NMU: fix "Unable to find OpenBabel plugins" error
+
 * Mon Jul 13 2026 Andrew A. Vasilyev <andy@altlinux.org> 3.2.1-alt1
 - NMU: 3.2.1 from upstream
 
