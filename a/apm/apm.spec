@@ -9,7 +9,7 @@
 %define service_id2 org.altlinux.APM2
 
 %define sover 0.9
-%define minor 0
+%define minor 1
 
 Name: apm
 Version: %sover.%minor
@@ -117,6 +117,11 @@ done
 %_girdir/%gir_name-%sover.gir
 
 %changelog
+* Mon Nov 23 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.1-alt1
+- New version: 0.9.1.
+- Full release note here:
+  https://altlinux.space/alt-atomic/apm/releases/tag/v0.9.1
+
 * Sun Nov 22 2026 Vladimir Romanov <rirusha@altlinux.org> 0.9.0-alt1
 - New version: 0.9.0.
 - Fixed metainfo expr via `${{  }}`.
