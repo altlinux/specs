@@ -2,7 +2,7 @@
 
 Name: cucumber-parent
 Version: 5.8.0
-Release: alt1
+Release: alt2
 
 Summary: Common Maven configuration for Cucumber projects
 License: MIT
@@ -12,6 +12,7 @@ VCS: https://github.com/cucumber/cucumber-parent.git
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: 0001-Remove-NullAway-from-the-parent-POM.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: maven-local
@@ -33,7 +34,8 @@ BuildRequires: mvn(org.jacoco:jacoco-maven-plugin)
 Parent POM with common build configuration for Cucumber Java projects.
 
 %prep
-%setup
+%setup -q
+%autopatch -p1
 # Distribution builds do not publish, generate sites or reformat sources.
 %pom_remove_plugin org.sonatype.central:central-publishing-maven-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-deploy-plugin
@@ -45,12 +47,16 @@ Parent POM with common build configuration for Cucumber Java projects.
 %pom_remove_plugin com.diffplug.spotless:spotless-maven-plugin
 
 %install
-%mvn_artifact pom.xml
+%mvn_artifact -Dtype=pom pom.xml
 %mvn_install
 
 %files -f .mfiles
 %doc LICENSE
 
 %changelog
+* Mon Nov 23 2026 Ivan Khanas <xeno@altlinux.org> 5.8.0-alt2
+- Register the parent with its Maven POM type.
+- Disable the NullAway build-time check.
+
 * Thu Nov 12 2026 Ivan Khanas <xeno@altlinux.org> 5.8.0-alt1
 - Initial build for ALT.

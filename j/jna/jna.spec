@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 %bcond_without reflections
 
 Name:           jna
-Version:        5.18.1
+Version:        5.19.1
 Release:        alt1
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
@@ -63,9 +63,12 @@ BuildRequires:  libX11-devel
 BuildRequires:  libXt-devel
 BuildRequires:  objectweb-asm
 BuildRequires:  hamcrest
+BuildRequires:  javassist
 %if %{with reflections}
 BuildRequires:  reflections
+BuildRequires:  mvn(org.slf4j:slf4j-api)
 %endif
+
 Source44: import.info
 
 %description
@@ -130,6 +133,22 @@ rm test/com/sun/jna/StructureFieldOrderInspector.java
 rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
 %endif
 
+# The clean source archive excludes bundled Ant, ASM, and optional test jars.
+mkdir -p lib/test
+ln -s %{_javadir}/ant/ant.jar lib/ant.jar
+ln -s %{_javadir}/objectweb-asm/asm.jar lib/asm-8.0.1.jar
+ln -s %{_javadir}/hamcrest/hamcrest.jar lib/hamcrest-core-1.3.jar
+ln -s %{_javadir}/reflections/reflections.jar lib/reflections.jar
+ln -s %{_javadir}/reflections/reflections.jar lib/test/reflections-0.9.11.jar
+ln -s %{_javadir}/javassist.jar lib/test/javassist-3.12.1.GA.jar
+%if %{with reflections}
+ln -s %{_javadir}/slf4j/slf4j-api.jar lib/test/slf4j-api.jar
+%endif
+# Upstream distribution assembly copies this optional code-coverage jar even when disabled.
+mkdir .empty-clover
+jar cf lib/clover.jar -C .empty-clover .
+rmdir .empty-clover
+
 %build
 # We pass -Ddynlink.native which comes from our patch because
 # upstream doesn't want to default to dynamic linking.
@@ -154,13 +173,21 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 %mvn_alias :jna-platform :platform
 
 %mvn_artifact pom-jna.xml build/jna-min.jar
+%mvn_artifact pom-jna-jpms.xml dist/jna-jpms.jar
 %mvn_artifact pom-jna-platform.xml contrib/platform/dist/jna-platform.jar
+%mvn_artifact pom-jna-platform-jpms.xml dist/jna-platform-jpms.jar
 
 %mvn_install -J doc/javadoc
 
 
+%check
+# Keep the complete upstream core suite; test-platform probes host services and mount metadata unavailable in Hasher.
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 -Drelease -Dcompatibility=1.8 -Dplatform.compatibility=1.8 \
+ -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -DCC=gcc test
+
+
 %files -f .mfiles
-%doc OTHERS README.md CHANGES.md TODO
+%doc OTHERS README.md CHANGES.md
 %doc --no-dereference LICENSE LGPL2.1 AL2.0
 %{_libdir}/%{name}
 
@@ -171,6 +198,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Mon Nov 23 2026 Ivan Khanas <xeno@altlinux.org> 5.19.1-alt1
+- New version.
+
 * Wed Mar 04 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 5.18.1-alt1
 - fixed FTBFS:
   + new version

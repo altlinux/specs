@@ -1,63 +1,78 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: apache-commons-collections4
+Version: 4.6.0
+Release: alt1
+
+Summary: Extensions to the Java Collections Framework
+License: Apache-2.0
 Group: Development/Java
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           apache-commons-collections4
-Summary:        Extension of the Java Collections Framework
-Version:        4.4
-Release:        alt1_6jpp11
-License:        ASL 2.0
+URL: https://commons.apache.org/proper/commons-collections/
+VCS: https://github.com/apache/commons-collections.git
 
-URL:            http://commons.apache.org/proper/commons-collections/
-Source0:        http://archive.apache.org/dist/commons/collections/source/commons-collections4-%{version}-src.tar.gz
+Source: %name-%version.tar
 
-BuildArch:      noarch
-
-BuildRequires:  maven-local
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
-Source44: import.info
+BuildArch: noarch
+BuildRequires(pre): rpm-macros-java
+BuildRequires: maven-local
+BuildRequires: java-21-openjdk-devel
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-compiler-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-surefire-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-jar-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-resources-plugin)
+BuildRequires: mvn(org.apache.commons:commons-parent:pom:)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-engine)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter-params)
+BuildRequires: mvn(org.junit-pioneer:junit-pioneer)
+BuildRequires: mvn(org.mockito:mockito-junit-jupiter)
+BuildRequires: mvn(org.easymock:easymock)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(com.google.guava:guava-testlib)
+BuildRequires: mvn(org.openjdk.jmh:jmh-core)
 
 %description
-Commons-Collections seek to build upon the JDK classes by providing
-new interfaces, implementations and utilities.
+Apache Commons Collections provides new interfaces, implementations and
+utilities that extend and augment the Java Collections Framework.
 
-
-%package        javadoc
+%package javadoc
+Summary: API documentation for %{name}
 Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
 
-%description    javadoc
-This package provides %{summary}.
-
+%description javadoc
+API documentation for Apache Commons Collections.
 
 %prep
-%setup -q -n commons-collections4-%{version}-src
-%mvn_file : commons-collections4 %{name}
-
+%setup -q
+%pom_xpath_set pom:parent/pom:version 107
+%pom_add_plugin org.codehaus.mojo:build-helper-maven-plugin:3.6.1
+%mvn_file org.apache.commons:commons-collections4 commons-collections4
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :maven-pmd-plugin
+%pom_remove_plugin :maven-scm-publish-plugin
+%pom_remove_plugin :spotbugs-maven-plugin
+%pom_remove_plugin :japicmp-maven-plugin
+%pom_remove_plugin :exec-maven-plugin
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.collections4
-
+%mvn_build -s
 
 %install
 %mvn_install
 
-
-%files -f .mfiles
-%doc RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt NOTICE.txt
+%files -f .mfiles-commons-collections4
+%doc LICENSE.txt NOTICE.txt
 
 %files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
 
 %changelog
+* Mon Nov 23 2026 Ivan Khanas <xeno@altlinux.org> 4.6.0-alt1
+- New version.
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 4.4-alt1_6jpp11
 - java11 build
 
