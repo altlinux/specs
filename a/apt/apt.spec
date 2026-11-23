@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt104
+Release: alt105
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -152,10 +152,10 @@ Requires: /usr/bin/genbasedir
 Requires: gpg-keygen
 
 # Optional:
-%global complete_reqs_of_tests %name-https /usr/sbin/nginx tinyproxy /usr/bin/openssl
+%global complete_reqs_of_tests %name-https tinyproxy /usr/bin/openssl
 # We are using extended regexes to avoid ugly escaping, at the cost of
 # a funny hack to pass -E (below, internally '%%*' becomes '' "-Ee" '...').
-%global reqs_of_tests_to_filter_out (%name-https|(/usr/sbin/|)nginx|(/usr/bin/|)(openssl|tinyproxy))
+%global reqs_of_tests_to_filter_out (%name-https|(/usr/bin/|)(openssl|tinyproxy))
 %filter_from_requires ' "-Ee" '\,^%reqs_of_tests_to_filter_out($|[[:blank:]]),d
 
 # {{{ descriptions
@@ -496,6 +496,16 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Thu Nov 19 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt105
+- Ensured that the http method creates a fresh file. Made it copy partially
+  downloaded content (on a resume). (thx Debian) The old behavior may lead
+  to a TOCTOU vulnerability; it is not exploitable:
+  * unless you changed the default to a bigger number in Acquire::Retries=0;
+  * also not exploitable if you use HTTPS (not plain HTTP vulnerable to MiM).
+- Fixes:
+  + CVE-2026-109518 write to other archives after a malicious redirect HTTP response
+- tests: test http download resume (on the example of a "pkglist" index).
+
 * Tue Nov 17 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt104
 - Cleaned up the source code a bit (unused vars) to fix the build with recent
   strict compiler warnings.
