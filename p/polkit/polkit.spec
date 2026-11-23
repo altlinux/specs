@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: polkit
-Version: 127
+Version: 128
 Release: alt1
 
 Summary: PolicyKit Authorization Framework
@@ -151,6 +151,12 @@ useradd -r -n -g polkitd -d / \
 %_girdir/*.gir
 
 %changelog
+* Mon Nov 23 2026 Egor Ignatov <egori@altlinux.org> 128-alt1
+- New version 128.
+- Fixes:
+  + CVE-2026-4897: fix a buffer overflow in polkit-agent-helper-1.
+  + CVE-2026-85498: fix an underflow when processing the authentication cookie.
+
 * Wed Oct 14 2026 Egor Ignatov <egori@altlinux.org> 127-alt1
 - New version 127.
 
