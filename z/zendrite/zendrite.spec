@@ -4,7 +4,7 @@
 %define targets zendrite %helpers
 
 Name: zendrite
-Version: 3.8.0
+Version: 3.10.0
 Release: alt1
 
 Summary: Matrix homeserver, fork of element-hq/dendrite
@@ -94,6 +94,9 @@ fi
 %doc README.md README.ALT
 
 %changelog
+* Mon Nov 23 2026 Vladislav Tatjanin <l27001@altlinux.org> 3.10.0-alt1
+- v3.10.0.
+
 * Mon Nov 09 2026 Vladislav Tatjanin <l27001@altlinux.org> 3.8.0-alt1
 - Initial build.
 
