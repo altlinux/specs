@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    epsonscan2
-Version: 6.7.82.0
-Release: alt5
+Version: 6.7.94.0
+Release: alt1
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
 License: GPL-3.0+
@@ -41,11 +41,13 @@ driver to interface with software built around the SANE standard.
 %autopatch -p2
 subst 's|${EPSON_INSTALL_ROOT}/lib/udev|%_udevdir|' CMakeLists.txt
 sed -i -e '/BOOST_NO_CXX11_RVALUE_REFERENCES/d' `grep -rl BOOST_NO_CXX11_RVALUE_REFERENCES .`
+subst 's|lib64|%_lib|' ./desktop/rpm/x86_64/epsonscan2.desktop
 
 %build
-%add_optflags -Wno-unused-function -Wno-unused-variable -Wno-template-body
+%add_optflags -Wno-unused-function -Wno-unused-variable -Wno-template-body -Wno-sign-compare
 %cmake -GNinja \
        -Wno-author \
+       -DEPSON_OCR_INSTALL_PATH=/usr/libexec/epsonscan2-ocr \
        -DCMAKE_SKIP_RPATH=OFF \
        -DCMAKE_SKIP_INSTALL_RPATH=OFF
 
@@ -55,6 +57,7 @@ sed -i -e '/BOOST_NO_CXX11_RVALUE_REFERENCES/d' `grep -rl BOOST_NO_CXX11_RVALUE_
 %ninja_install -C "%_cmake__builddir"
 # Remove copy of documentation
 rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
+install -Dpm0644 ./desktop/rpm/x86_64/epsonscan2.desktop %buildroot%_desktopdir/epsonscan2.desktop
 
 %files
 %doc AUTHORS NEWS README
@@ -62,8 +65,13 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_libdir/epsonscan2
 %config(noreplace) %_sysconfdir/sane.d/dll.d/epsonscan2
 %_udevrulesdir/60-epsonscan2.rules
+%_desktopdir/epsonscan2.desktop
 
 %changelog
+* Sun Nov 22 2026 Andrey Cherepanov <cas@altlinux.org> 6.7.94.0-alt1
+- New version.
+- Added to menu (ALT #43011).
+
 * Fri Oct 09 2026 Andrew A. Vasilyev <andy@altlinux.org> 6.7.82.0-alt5
 - NMU: fix FTBFS with new cmake.
 
