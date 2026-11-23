@@ -7,7 +7,7 @@
 
 Name: dtkmultimedia
 Version: 6.0.5
-Release: alt1
+Release: alt2
 
 Summary: Deepin tool kit multimedia modules
 
@@ -27,11 +27,11 @@ Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: %name-6.0.5-alt-ffmpeg9.patch
 
-BuildRequires(pre): rpm-macros-dqt6
+BuildRequires(pre): rpm-macros-dqt6 patchelf
 %if_enabled clang
 BuildRequires(pre): rpm-macros-llvm-common
 %endif
-BuildRequires: cmake dqt6-base-devel dqt6-multimedia-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libdtk6widget-devel libcups-devel glib2-devel libncnn-devel libopencv-devel libudev-devel libavcodec-devel libavformat-devel libswresample-devel libswscale-devel libffmpegthumbnailer-devel libavdevice-devel libusb-devel libportaudio2-devel libv4l-devel libmpv-devel gstreamer1.0-devel gst-plugins1.0-devel libXtst-devel libonnxruntime-devel
+BuildRequires: cmake dqt6-base-devel dqt6-multimedia-devel dqt6-tools-devel dtk6-common-devel libdtk6core-devel libdtk6widget-devel libcups-devel glib2-devel libncnn-devel deepin-libopencv_world-devel libudev-devel libavcodec-devel libavformat-devel libswresample-devel libswscale-devel libffmpegthumbnailer-devel libavdevice-devel libusb-devel libportaudio2-devel libv4l-devel libmpv-devel gstreamer1.0-devel gst-plugins1.0-devel libXtst-devel libonnxruntime-devel
 BuildRequires: libdqt6-openglwidgets libdqt6-concurrent
 %if_with docs
 BuildRequires: dqt6-base-doc doxygen
@@ -139,12 +139,21 @@ This package provides %name documantation.
 %if "%(rpmquery --qf '%%{VERSION}' libavcodec-devel)" >= "9"
 %patch1 -p2
 %endif
+# deepin's opencv_mobile does not have .pc file
+sed \
+  -e 's| opencv4||' \
+  -i src/ocr/CMakeLists.txt \
+  -i src/tablerecognizer/CMakeLists.txt \
+  -i tests/CMakeLists.txt
+sed \
+  -e '/PkgConfig::OPENCV/d' \
+  -i src/tablerecognizer/CMakeLists.txt
 
 %build
 %if_enabled clang
 export CC=clang CXX=clang++ LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=%_includedir/deepin/opencv4:$CPLUS_INCLUDE_PATH
 %DQ6build \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DDTK_VERSION=%version \
@@ -157,6 +166,8 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 
 %install
 %DQ6install
+patchelf %buildroot%_libdir/libdtk6ocr.so.%version --add-needed %_libdir/deepin/libopencv_world.so.4.5
+patchelf %buildroot%_libdir/libdtk6tablerecognizer.so.%version --add-needed %_libdir/deepin/libopencv_world.so.4.5
 
 %files -n libdtk6multimedia%sover
 %doc README.md LICENSES/*
@@ -217,6 +228,9 @@ export CPLUS_INCLUDE_PATH=%_includedir/opencv4:$CPLUS_INCLUDE_PATH
 %endif
 
 %changelog
+* Mon Nov 23 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt2
+- Built on libopencv_mobile for DDE.
+
 * Thu Oct 22 2026 Leontiy Volodin <lvol@altlinux.org> 6.0.5-alt1
 - New version 6.0.5.
 - Fixed build with ffmpeg 9.
