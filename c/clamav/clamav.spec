@@ -13,7 +13,7 @@
 %endif
 
 Name: clamav
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 %define abiversion 12
 
@@ -294,7 +294,7 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 
 %files
 %doc virusstat*
-%doc COPYING COPYING.* README.md
+%doc COPYING COPYING.* README.md README.Docker.md NEWS.md SECURITY.md
 
 %_bindir/clamdscan
 %_bindir/clamscan
@@ -392,8 +392,13 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Mon Nov 23 2026 Alexei Takaseev <taf@altlinux.org> 1.5.5-alt1
+- 1.5.5 (Fixes CVE-2026-76411, CVE-2026-76414, CVE-2026-76415, CVE-2026-76416,
+               CVE-2026-76417, CVE-2026-76421, CVE-2026-76422, CVE-2026-76430,
+               CVE-2026-76515, CVE-2026-76516)
+
 * Sat Aug 08 2026 Alexei Takaseev <taf@altlinux.org> 1.5.4-alt1
-- 1.5.3 (Fixes CVE-2025-8088,  CVE-2026-20031, CVE-2026-20213, CVE-2026-20214,
+- 1.5.4 (Fixes CVE-2025-8088,  CVE-2026-20031, CVE-2026-20213, CVE-2026-20214,
                CVE-2026-20216, CVE-2026-20217, CVE-2026-20243, CVE-2026-20244,
                CVE-2026-20337, CVE-2026-20338, CVE-2026-20339, CVE-2026-20345,
                CVE-2026-20346, CVE-2026-20347, CVE-2026-20348)
