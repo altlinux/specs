@@ -7,7 +7,7 @@
 Name: libselinux
 Epoch: 1
 Version: 3.9
-Release: alt1
+Release: alt2
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
@@ -25,6 +25,9 @@ BuildRequires: python3-devel
 BuildRequires: swig >= 3.0.12-alt4
 BuildRequires: libsepol-devel >= %version
 BuildRequires: libsepol-devel-static >= %version
+
+# Keep the filename used by the legacy _selinux symlink.
+%none_python3_modules_rename
 
 %description
 libselinux provides an API for SELinux applications to get and set
@@ -126,6 +129,10 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Mon Nov 23 2026 Anton Farygin <rider@altlinux.org> 1:3.9-alt2
+- Fixed the Python bindings build with SWIG 4.5.
+- Fixed the broken _selinux compatibility symlink.
+
 * Thu Jul 17 2025 Anton Zhukharev <ancieg@altlinux.org> 1:3.9-alt1
 - NMU: Updated to 3.9.
 
