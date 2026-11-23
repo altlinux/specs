@@ -2,12 +2,12 @@
 %global import_path github.com/AdguardTeam/AdGuardHome
 
 Name: adguardhome
-Version: 0.108.0.b.90
-Release: alt2
+Version: 1.0.0
+Release: alt1
 Summary: Network-wide ads & trackers blocking DNS server
 License: GPL-3.0
 Group: System/Servers
-Url: https://adguard.com/ru/adguard-home/overview.html
+URL: https://adguard.com/ru/adguard-home/overview.html
 VCS: https://github.com/AdguardTeam/AdGuardHome
 
 Source: %name-%version.tar
@@ -31,12 +31,7 @@ BuildRequires: node-cross-spawn
 Free and open source, powerful network-wide ads & trackers blocking DNS server.
 
 %prep
-# go mod vendor
-# git add vendor -f && git commit -m "Updated go vendor modules."
-# npm --prefix client ci
-# git add client/node_modules -f && git commit -m "Updated node modules."
-%setup -a 1 -a 2
-# %patch -p1
+%setup -a1 -a2
 
 %build
 export GO111MODULE=on
@@ -49,7 +44,7 @@ export NODE_OPTIONS=--openssl-legacy-provider
 
 # build web
 cp %SOURCE3 $PWD
-npm --prefix client run build-prod
+npm --prefix client_v2 run build-prod
 
 # build bin
 %golang_prepare
@@ -111,6 +106,9 @@ fi
 %ghost %attr(0600,_%name,_%name) %_localstatedir/%name/AdGuardHome.yaml
 
 %changelog
+* Mon Nov 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 1.0.0-alt1
+- Updated to version 1.0.0.
+
 * Wed Sep 30 2026 Egor Ignatov <egori@altlinux.org> 0.108.0.b.90-alt2
 - Run the service as the unprivileged _adguardhome user.
 - Moved the config to /var/lib/adguardhome/AdGuardHome.yaml:
