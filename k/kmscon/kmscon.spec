@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kmscon
-Version: 10.1.1
+Version: 10.1.2
 Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
 
-License: MIT and LGPL-2.0-or-later
+License: MIT AND LGPL-2.0-or-later
 URL: http://www.freedesktop.org/wiki/Software/kmscon/
 VCS: https://github.com/kmscon/kmscon.git
 Source: %name-%version.tar
@@ -77,6 +77,9 @@ mv %buildroot/%_sysconfdir/%name/kmscon.conf.example \
 %_man5dir/%name.conf.5.*
 
 %changelog
+* Fri Nov 20 2026 Anton Midyukov <antohami@altlinux.org> 10.1.2-alt1
+- New version 10.1.2.
+
 * Mon Nov 09 2026 Anton Midyukov <antohami@altlinux.org> 10.1.1-alt1
 - New version 10.1.1.
 
