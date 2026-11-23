@@ -28,14 +28,14 @@
 %endif
 
 %define rname poppler
-%define somajor 156
+%define somajor 163
 %define somajor_cpp 3
 %define somajor_qt 3
 %define somajor_qt5 1
 %define somajor_qt6 3
 %define somajor_glib 8
 %define major 26
-%define minor 01
+%define minor 08
 %define bugfix 0
 
 %if_disabled compat
@@ -79,6 +79,10 @@ Source: %rname-%version.tar
 # FC
 Patch1: poppler-0.90.0-position-independent-code.patch
 Patch2: poppler-21.01.0-glib-introspection.patch
+Patch3: poppler-26.08.0-clipToPath-integer-overflow.patch
+Patch4: poppler-26.08.0-cvtSfnts-integer-overflow.patch
+Patch5: poppler-26.08.0-decrypt-password-length.patch
+Patch6: poppler-26.08.0-splash-infinite-loop.patch
 # ALT
 Patch10: alt-e2k.patch
 Patch11: alt-openjpeg-version.patch
@@ -286,6 +290,10 @@ GObject introspection devel data for the Poppler library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 #
 %patch11 -p1
 %if_enabled cryptopro
@@ -412,6 +420,9 @@ make install DESTDIR=%buildroot -C BUILD
 %endif
 
 %changelog
+* Mon Nov 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.0-alt1
+- new version
+
 * Thu Mar 19 2026 Sergey V Turchin <zerg@altlinux.org> 26.01.0-alt1
 - new version
 
