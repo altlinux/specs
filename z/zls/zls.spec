@@ -1,6 +1,6 @@
 Name:     zls
-Version:  0.16.0
-Release:  alt2
+Version:  0.17.0
+Release:  alt1
 Summary:  A Zig language server supporting Zig developers with features like autocomplete and goto definition
 
 License:  MIT
@@ -9,8 +9,6 @@ URL:      https://github.com/zigtools/zls
 
 Source0:  %name-%version.tar
 Source1:  zig-pkg-%version.tar
-
-Patch0: zls-0.16.0-alt-translate-c-increase-timeout.patch
 
 ExclusiveArch: %zig_arches
 
@@ -24,7 +22,6 @@ you with completions, go-to definition, etc. when you write Zig code!
 
 %prep
 %setup -a1
-%patch0 -p1
 
 %build
 %zig_build
@@ -40,6 +37,9 @@ you with completions, go-to definition, etc. when you write Zig code!
 %_bindir/zls
 
 %changelog
+* Tue Nov 24 2026 Ilya Sorochan <k0tran@altlinux.org> 0.17.0-alt1
+- 0.16.0 -> 0.17.0
+
 * Fri Sep 18 2026 Ilya Sorochan <k0tran@altlinux.org> 0.16.0-alt2
 - Fix riscv64 FTBFS.
 
