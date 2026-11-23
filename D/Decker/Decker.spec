@@ -1,5 +1,5 @@
 Name:    Decker
-Version: 1.72
+Version: 1.73
 Release: alt1
 
 Summary: A multimedia sketchpad
@@ -10,6 +10,7 @@ Url:     https://github.com/JohnEarnest/Decker
 Source: %name-%version.tar
 
 BuildRequires: libSDL2-devel xxd libSDL2_image-devel
+Requires: xdg-utils
 
 %description
 Decker is a multimedia platform for creating and sharing interactive documents,
@@ -19,34 +20,34 @@ with sound, images, hypertext, and scripted behavior.
 %setup
 
 %build
-%make_build lilt
-%make_build decker
+%make_build lilt decker EXTRA_FLAGS="%optflags"
 %make_build docs
 
 %install
-install -Dm755 c/build/decker %buildroot/usr/bin/decker
-install -Dm755 c/build/lilt %buildroot/usr/bin/lilt
+install -Dm755 c/build/decker %buildroot%_bindir/decker
+install -Dm755 c/build/lilt %buildroot%_bindir/lilt
 
-install -Dm644 Decker.desktop %buildroot/usr/share/applications/Decker.desktop
+install -Dm644 Decker.desktop %buildroot%_desktopdir/Decker.desktop
 for DIM in 32 64 128 192 256 512; do
-    install -Dm644 icon_${DIM}x${DIM}.png %buildroot/usr/share/icons/hicolor/${DIM}x${DIM}/apps/decker.png
+    install -Dm644 icon_${DIM}x${DIM}.png %buildroot%_iconsdir/hicolor/${DIM}x${DIM}/apps/decker.png
+    install -Dm644 icon_${DIM}x${DIM}.png %buildroot%_iconsdir/hicolor/${DIM}x${DIM}/mimetypes/x-decker.png
 done
 
-install -Dm644 x-decker.xml %buildroot/usr/share/mime/packages/application-x-decker.xml
-
-install -Dm644 -t %buildroot/usr/share/doc/decker docs/*.html
-install -Dm644 -t %buildroot/usr/share/doc/decker/images docs/images/*
+install -Dm644 x-decker.xml %buildroot%_datadir/mime/packages/application-x-decker.xml
 
 %files
-%doc LICENSE.txt Readme.md VERSION
+%doc LICENSE.txt Readme.md VERSION docs/*.html docs/images
 %_bindir/decker
 %_bindir/lilt
-%_datadir/doc/decker
 %_datadir/mime/packages/application-x-decker.xml
 %_desktopdir/Decker.desktop
 %_iconsdir/hicolor/*/apps/decker.png
+%_iconsdir/hicolor/*/mimetypes/x-decker.png
 
 %changelog
+* Mon Nov 23 2026 Sergey Palcheh <minergenon@altlinux.org> 1.73-alt1
+- new version 1.73
+
 * Sat Oct 31 2026 Sergey Palcheh <minergenon@altlinux.org> 1.72-alt1
 - new version 1.72
 
