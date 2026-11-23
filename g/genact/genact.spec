@@ -1,5 +1,5 @@
 Name: genact
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: A nonsense activity generator
@@ -35,6 +35,9 @@ cargo install %_smp_mflags --offline --no-track --path .
 %doc README.md
 
 %changelog
+* Fri Nov 20 2026 Vladislav Tatjanin <l27001@altlinux.org> 1.6.0-alt1
+- v1.6.0.
+
 * Thu May 28 2026 Vladislav Tatjanin <l27001@altlinux.org> 1.5.1-alt1
 - Initial build.
 
