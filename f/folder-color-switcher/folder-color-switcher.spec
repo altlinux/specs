@@ -1,6 +1,6 @@
 Name: folder-color-switcher
-Version: 1.7.1
-Release: alt3
+Version: 1.7.2
+Release: alt1
 
 Summary: Folder Color Switcher extensions
 
@@ -69,6 +69,9 @@ cp -a usr/* %buildroot%prefix
 %_datadir/nemo-python/extensions/nemo-%name.py
 
 %changelog
+* Mon Nov 23 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.2-alt1
+- New version 1.7.2.
+
 * Sun May 24 2026 Alexander Kovalev <alexvk@altlinux.org> 1.7.1-alt3
 - Fixed spec.
 

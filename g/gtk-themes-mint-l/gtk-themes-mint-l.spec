@@ -1,5 +1,5 @@
 Name: gtk-themes-mint-l
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: Mint-L Theme
@@ -25,21 +25,22 @@ BuildRequires: python3-module-libsass
 Summary: Mint-L style for Cinnamon
 Group: Graphical desktop/Other
 Requires: %name = %EVR
+
 %description -n cinnamon-style-mint-l
 This package contains the style for Cinnamon.
 
 %prep
 %setup
 
-%build
-# Patch cursor theme
-subst 's/CursorTheme=DMZ-Black/CursorTheme=Bibata-Modern-Classic/g' src/Mint-L/index.theme*
+# Fix cursor theme
+%__subst 's/CursorTheme=DMZ-Black/CursorTheme=Bibata-Modern-Classic/g' src/Mint-L/index.theme*
 
+%build
 ./generate-themes.py
 
 %install
-mkdir -p %buildroot
-cp -a usr %buildroot/
+mkdir -p %buildroot%prefix
+cp -a usr/* %buildroot%prefix
 
 %files
 %doc debian/copyright
@@ -49,6 +50,10 @@ cp -a usr %buildroot/
 %_datadir/cinnamon/styles.d/00_mint-l.styles
 
 %changelog
+* Mon Nov 23 2026 Alexander Kovalev <alexvk@altlinux.org> 2.0.11-alt1
+- New version 2.0.11.
+- Fixed spec.
+
 * Wed Oct 28 2026 Alexander Kovalev <alexvk@altlinux.org> 2.0.10-alt1
 - New version 2.0.10.
 

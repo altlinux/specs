@@ -1,6 +1,6 @@
 Name: icon-themes-mint-l
 Version: 1.8.6
-Release: alt1
+Release: alt2
 
 Summary: Mint-L Icon Theme
 
@@ -24,19 +24,21 @@ Mint-L icon theme contains the folder icons originate from the Arc icon theme.
 Summary: Mint-L style for Folder Color Switcher
 Group: Graphical desktop/Other
 Requires: %name = %EVR
+
 %description -n folder-color-switcher-mint-l
 This package contains the style for Folder Color Switcher.
 
 %prep
 %setup
 
-%build
 # Remove broken links
 find usr/share/icons -xtype l -delete
 
+%build
+
 %install
-mkdir -p %buildroot
-cp -a usr %buildroot/
+mkdir -p %buildroot%prefix
+cp -a usr/* %buildroot%prefix
 
 %files
 %doc debian/copyright README.md
@@ -46,6 +48,9 @@ cp -a usr %buildroot/
 %_datadir/folder-color-switcher/colors.d/Mint-L.json
 
 %changelog
+* Mon Nov 23 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.6-alt2
+- Fixed spec.
+
 * Wed Oct 28 2026 Alexander Kovalev <alexvk@altlinux.org> 1.8.6-alt1
 - New version 1.8.6.
 - Mint-L only provide place icons.
