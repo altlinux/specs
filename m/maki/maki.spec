@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: maki
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 Summary: AI coding agent with native Rust TUI
 License: MIT
@@ -50,6 +50,9 @@ cat vendor-config.toml >> .cargo/config.toml
 %_bindir/maki
 
 %changelog
+* Mon Nov 23 2026 Alexey Shabalin <shaba@altlinux.org> 0.7.3-alt1
+- updated from 0.7.2 to 0.7.3
+
 * Tue Nov 17 2026 Alexey Shabalin <shaba@altlinux.org> 0.7.2-alt1
 - 0.7.2
 
