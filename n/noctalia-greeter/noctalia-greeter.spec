@@ -4,7 +4,7 @@
 %def_with check
 
 Name: noctalia-greeter
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Minimal login greeter for greetd matching the look and feel of Noctalia Shell
@@ -83,6 +83,7 @@ echo "%_sysconfdir/greetd/config.toml %_sysconfdir/greetd/greeters/noctalia-gree
 chmod 644 %buildroot%_datadir/noctalia-greeter/greetd_setup_lib.sh
 
 %check
+export MESON_NUM_PROCESSES=1
 %meson_test
 
 %files
@@ -100,6 +101,9 @@ chmod 644 %buildroot%_datadir/noctalia-greeter/greetd_setup_lib.sh
 %config(noreplace) %_sysconfdir/greetd/greeters/noctalia-greeter.toml
 
 %changelog
+* Mon Nov 23 2026 Egor Ignatov <egori@altlinux.org> 1.7.1-alt1
+- New version 1.7.1.
+
 * Tue Oct 20 2026 Egor Ignatov <egori@altlinux.org> 1.7.0-alt1
 - New version 1.7.0.
 
