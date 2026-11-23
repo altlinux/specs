@@ -2,8 +2,8 @@
 %def_with check
 
 Name: ripgrep
-Version: 15.2.0
-Release: alt2
+Version: 16.0.0
+Release: alt1
 Summary: Recursively searches directories for a regex pattern
 License: MIT and Unlicense
 Group: File tools
@@ -13,7 +13,6 @@ VCS: https://github.com/BurntSushi/ripgrep
 Source: %name-%version.tar
 Source1: vendor.tar
 Patch1: 0001-pcre2-sys-disable-JIT-on-LoongArch-not-supported.patch
-Patch2: 0002-tests-find-rg-via-CARGO_BIN_EXE.patch
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
@@ -67,6 +66,9 @@ install -m 0644 _%bin_name %buildroot/%_datadir/zsh/site-functions
 %doc COPYING LICENSE-MIT UNLICENSE
 
 %changelog
+* Mon Nov 23 2026 Alexander Makeenkov <amakeenk@altlinux.org> 16.0.0-alt1
+- Updated to version 16.0.0.
+
 * Sun Nov 22 2026 Alexander Makeenkov <amakeenk@altlinux.org> 15.2.0-alt2
 - Fixed FTBFS with rust 1.100.
 
