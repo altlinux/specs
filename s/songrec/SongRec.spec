@@ -3,7 +3,7 @@
 
 Name: songrec
 Version: 0.8.2
-Release: alt1
+Release: alt2
 
 Summary: An open-source Shazam client for Linux.
 License: GPL-3.0-only
@@ -14,6 +14,10 @@ VCS: https://github.com/marin-m/SongRec
 Source0: %name-%version.tar
 Source1: vendor.tar
 
+Requires: ffmpeg
+Requires: gnome-icon-theme
+Requires: gnome-icon-theme-symbolic
+
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: libalsa-devel libssl-devel pkgconfig(dbus-1)
@@ -23,8 +27,6 @@ BuildRequires: pkgconfig(cairo-gobject) pkgconfig(atk) clang-devel
 BuildRequires: pkgconfig(gtk4) libpulseaudio-devel
 BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(graphene-gobject-1.0) pkgconfig(libadwaita-1)
-
-Requires: ffmpeg
 
 %description
 SongRec is an open-source Shazam client for Linux, written in Rust.
@@ -69,6 +71,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Mon Nov 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.2-alt2
+- added missing dependencies (ALT #61602)
+
 * Sun Nov 15 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.2-alt1
 - 0.8.1 -> 0.8.2
 
