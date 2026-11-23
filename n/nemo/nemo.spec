@@ -2,14 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 %define api_ver 3.0
-%define ver_major 6.4
 
 %def_enable exempi
 %def_enable introspection
 %def_enable selinux
 
 Name: nemo
-Version: 6.8.4
+Version: 6.8.5
 Release: alt1
 
 Summary: default file manager for Cinnamon
@@ -194,8 +193,10 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_datadir/gir-1.0/*
 %endif
 
-
 %changelog
+* Mon Nov 23 2026 Anton Midyukov <antohami@altlinux.org> 6.8.5-alt1
+- New version 6.8.5.
+
 * Mon Nov 16 2026 Anton Midyukov <antohami@altlinux.org> 6.8.4-alt1
 - New version 6.8.4.
 

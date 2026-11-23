@@ -6,14 +6,14 @@
 %define api_ver 3.0
 
 Name: xed
-Version: 3.9.0
+Version: 3.9.2
 Release: alt1
 
 Summary: xed is a small and lightweight text editor.
 License: GPL-2.0-or-later
 Group: Editors
-Url: https://github.com/linuxmint/xed
-Vcs: https://github.com/linuxmint/xed.git
+URL: https://github.com/linuxmint/xed
+VCS: https://github.com/linuxmint/xed.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -149,6 +149,9 @@ rm -r %buildroot%_pkgconfigdir/*
 %doc README.md AUTHORS
 
 %changelog
+* Mon Nov 23 2026 Anton Midyukov <antohami@altlinux.org> 3.9.2-alt1
+- New version 3.9.2.
+
 * Sun Sep 27 2026 Anton Midyukov <antohami@altlinux.org> 3.9.0-alt1
 - New version 3.9.0.
 
