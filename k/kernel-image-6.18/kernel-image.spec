@@ -2,7 +2,7 @@ Name: kernel-image-6.18
 Release: alt1
 %define kernel_src_version	6.18
 %define kernel_base_version	6.18
-%define kernel_sublevel	.64
+%define kernel_sublevel	.65
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -617,6 +617,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 23 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.65-alt1
+- v6.18.65 (2026-11-23).
+- libceph: add support for AES256KRB5 (aes256k) cephx keys (ALT#61355).
+
 * Tue Nov 17 2026 Kernel Bot <kernelbot@altlinux.org> 6.18.64-alt1
 - v6.18.64 (2026-11-17).
 - config: Enable CONFIG_MEMCG_V1=y, CONFIG_CPUSETS_V1=y.
