@@ -3,7 +3,7 @@
 %global import_path github.com/seaweedfs/seaweedfs
 
 Name: seaweedfs
-Version: 4.54
+Version: 4.55
 Release: alt1
 
 Summary: Enterprise-Grade Distributed Storage with Self-Healing
@@ -125,6 +125,9 @@ install -d %buildroot%_logdir/%name
 %config(noreplace) %attr(640,root,_%name) %_sysconfdir/sysconfig/%rust_volume_name
 
 %changelog
+* Mon Nov 23 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.55-alt1
+- New version (4.55).
+
 * Mon Nov 16 2026 Evgeniy Martynenko <enimalojd@altlinux.org> 4.54-alt1
 - New version (4.54).
 
