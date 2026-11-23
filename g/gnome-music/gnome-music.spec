@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 50
+%define ver_major 51
 %define beta %nil
 %define xdg_name org.gnome.Music
 %define gst_api_ver 1.0
@@ -34,6 +34,8 @@ BuildArch: noarch
 %define mediaart_ver 1.9.1
 %define pygobject_ver 3.54.0
 %define pycairo_ver 1.14.0
+%define glycin_api_ver 2
+%define glycin_ver 2
 
 Requires: python3-module-pygobject3 >= %pygobject_ver
 Requires: tinysparql localsearch
@@ -41,9 +43,10 @@ Requires: grilo-tools >= %grilo_ver grilo-plugins
 Requires: gst-plugins-base%gst_api_ver
 Requires: typelib(Adw) = 1 typelib(Soup) = %soup_api_ver
 Requires: typelib(MediaArt) = 2.0 typelib(GstTag) = %gst_api_ver
+Requires: typelib(GlyGtk4) = 2 glycin-%glycin_api_ver-loaders
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson %_bindir/git yelp-tools
+BuildRequires: meson blueprint-compiler %_bindir/git yelp-tools
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libsoup%soup_api_ver-devel
@@ -52,6 +55,8 @@ BuildRequires: pkgconfig(libmediaart-2.0) >= %mediaart_ver
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: python3-module-pygobject3-devel >= %pygobject_ver python3-module-pycairo-devel >= %pycairo_ver
+BuildRequires: pkgconfig(glycin-%glycin_api_ver) >= %glycin_ver
+BuildRequires: pkgconfig(glycin-gtk4-%glycin_api_ver) >= %glycin_ver
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
 
 %description
@@ -61,7 +66,7 @@ Music playing application for GNOME3.
 %setup -n %name-%version%beta
 
 %build
-%meson
+%meson -Dbuildtype=release
 %meson_build
 
 %install
@@ -84,6 +89,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
+- 51.0
+
 * Mon Jul 20 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0-6-g9095682e
 

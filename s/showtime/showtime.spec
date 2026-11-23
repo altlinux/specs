@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: showtime
-Version: %ver_major.0
+Version: %ver_major.1.1
 Release: alt1%beta
 
 Summary: Movie player for GNOME
@@ -61,7 +61,7 @@ straightforward viewing experience.
 %setup -n %name-%version
 
 %build
-%meson
+%meson -Dprofile=release
 %meson_build
 
 %install
@@ -83,6 +83,9 @@ straightforward viewing experience.
 %doc README*
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 50.1.1-alt1
+- 50.1.1
+
 * Sat Mar 14 2026 Yuri N. Sedunov <aris@altlinux.org> 50.0-alt1
 - 50.0
 

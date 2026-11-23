@@ -20,7 +20,7 @@
 %add_findreq_skiplist %python3_sitelibdir/gi/overrides/%namespace.py
 
 Name: %_name-core
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -192,6 +192,7 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 
 %build
 %meson \
+    -Dbuildtype=release \
     -Ddefault_bus="%default_bus" \
     -Ddbus_daemon=/bin/dbus-daemon \
     %{subst_enable_meson_feature x11 x11} \
@@ -270,6 +271,9 @@ sed -i 's/\(sphinx-build\)/\1-3/' devel-docs/meson.build
 %endif
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.62.2-alt1
+- 2.62.2
+
 * Sun Oct 11 2026 Yuri N. Sedunov <aris@altlinux.org> 2.62.1-alt1
 - 2.62.1
 

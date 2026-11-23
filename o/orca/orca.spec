@@ -11,7 +11,7 @@
 %def_disable bootstrap
 
 Name: orca
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: A screen reader that provides access to the GNOME desktop by people with visual impairments
@@ -40,10 +40,10 @@ Requires: typelib(Gtk) = 3.0 typelib(Gtk) = 4.0 typelib(Atspi) = 2.0
 Requires: dconf yelp
 Requires: at-spi2-core
 # don't speak russian
-#Requires: speech-dispatcher-module-flite flite
+#Requires: %spdmoduleprefix-flite flite
 # speak russian
-Requires: espeak-ng
-#Requires: spd-module-espeak-ng
+#Requires: espeak-ng
+Requires: %spdmoduleprefix-espeak-ng
 #Requires: RHVoice-Russian
 #Requires: RHVoice-English
 Requires: python3-module-pygobject3
@@ -51,7 +51,7 @@ Requires: python3-module-speechd
 
 %{?_disable_mathcat:BuildArch: noarch}
 
-BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir rpm-macros-spd
 BuildRequires: /proc meson yelp-tools %{?_enable_mathcat: rust-cargo}
 BuildRequires: libgtk+3-devel >= 3.24
 BuildRequires: libgtk+3-gir
@@ -110,7 +110,6 @@ sed -i 's/get_install_dir()/get_install_dir(pure: false)/' subprojects/mathcat-p
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README* TODO
 %_bindir/%name
 %_desktopdir/%name.desktop
 %python3_sitelibdir/%name/
@@ -122,8 +121,12 @@ sed -i 's/get_install_dir()/get_install_dir(pure: false)/' subprojects/mathcat-p
 %_man1dir/*
 %_sysconfdir/xdg/autostart/%name-autostart.desktop
 %{?_enable_mathcat:%_datadir/mathcat/Rules/*}
+%doc AUTHORS NEWS README*
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 51.2-alt1
+- 51.2
+
 * Wed Sep 16 2026 Yuri N. Sedunov <aris@altlinux.org> 51.0-alt1
 - 51.0
 

@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -217,7 +217,7 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %_libdir/cmake/%name/FluidSynth-shared-targets.cmake
 %_libdir/cmake/%name/FluidSynth-shared-targets-release.cmake
 %{?_enable_docs:%doc html}
-%doc TODO
+%doc TODO doc/wiki/ChangeLog.md
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -225,6 +225,9 @@ sed -i 's/ALIGNMENT (64U)/ALIGNMENT 64U/' src/utils/fluid_sys.h
 %endif
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
+- 2.6.3 (fixed CVE-2026-111123)
+
 * Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
 

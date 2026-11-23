@@ -2,7 +2,7 @@
 
 Name: libomemo-c
 Version: 0.5.1
-Release: alt1
+Release: alt1.1
 
 Summary: OMEMO C Library
 License: GPL-3.0
@@ -17,7 +17,8 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++
 BuildRequires: pkgconfig(libprotobuf-c) protobuf-c-compiler
 BuildRequires: libgcrypt-devel libssl-devel
-%{?_enable_check:BuildRequires: ctest libcheck-devel}
+BuildRequires: libcheck-devel glib2-devel
+%{?_enable_check:BuildRequires: ctest}
 
 %description
 This is a fork of libsignal-protocol-c, an implementation of Signal's
@@ -57,6 +58,9 @@ applications with %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1.1
+- fixed BR if disabled %%check
+
 * Sun Mar 30 2025 Yuri N. Sedunov <aris@altlinux.org> 0.5.1-alt1
 - 0.5.1
 

@@ -5,7 +5,7 @@
 %define xdg_name com.github.wwmm.%_name
 
 Name: %_name-qt
-Version: 8.3.2
+Version: 8.3.3
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -30,7 +30,7 @@ Conflicts: %_name < 8.0.0
 %define lv2_ver 1.18.2
 %define lilv_ver 0.22
 %define calf_ver 0.90.1
-%define lsp_ver 1.2.10
+%define lsp_ver 1.2.37
 
 Requires: qt6-wayland
 Requires: pipewire >= %pw_ver dconf
@@ -122,6 +122,9 @@ KDE/Kirigami frameworks.
 %doc README* src/contents/docs/community/CHANGELOG.md
 
 %changelog
+* Sun Nov 22 2026 Yuri N. Sedunov <aris@altlinux.org> 8.3.3-alt1
+- 8.3.3
+
 * Sun Nov 01 2026 Yuri N. Sedunov <aris@altlinux.org> 8.3.2-alt1
 - 8.3.2
 
