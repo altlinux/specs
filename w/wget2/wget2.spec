@@ -6,7 +6,7 @@
 Name: wget2
 Summary: The successor of GNU Wget, a file and recursive website downloader
 Version: 2.3.0
-Release: alt3
+Release: alt4
 License: %gpl3plus
 Group: Networking/WWW
 Url: https://gitlab.com/gnuwget/wget2
@@ -24,7 +24,9 @@ BuildRequires: libnghttp2-devel
 BuildRequires: libpcre2-devel
 BuildRequires: libpsl-devel
 BuildRequires: gnulib flex lzip texinfo gettext-tools
+%ifnarch %e2k
 BuildRequires: pandoc
+%endif
 BuildRequires: libmicrohttpd-devel
 
 %description
@@ -83,7 +85,9 @@ rm -rf %buildroot%_bindir/wget2_noinstall
 %files -f %name.lang
 %doc README* NEWS COPYING
 %_bindir/wget2
+%ifnarch %e2k
 %_mandir/man1/wget2.1*
+%endif
 
 %files -n %libname
 %doc COPYING.LESSER
@@ -96,6 +100,9 @@ rm -rf %buildroot%_bindir/wget2_noinstall
 %_mandir/man3/libwget-*.3*
 
 %changelog
+* Mon Nov 23 2026 Michael Shigorin <mike@altlinux.org> 2.3.0-alt4
+- E2K: drop wget2(1) manpage due to the lack of ghc/pandoc.
+
 * Tue Oct 06 2026 Anton Farygin <rider@altlinux.org> 2.3.0-alt3
 - Fix absolute paths in --directory-prefix/-P (ALT#60783).
 - Enable HTTP integration tests with libmicrohttpd.
