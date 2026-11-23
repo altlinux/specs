@@ -5,7 +5,7 @@
 
 Summary:   Package management service
 Name:      packagekit
-Version:   1.4.0
+Version:   1.4.1
 Release:   alt1
 License:   LGPL-2.1+
 Group:     Other
@@ -327,6 +327,9 @@ Immediately test PackageKit when installing this package.
 
 
 %changelog
+* Mon Nov 23 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.1-alt1
+- new version
+
 * Tue Nov 10 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.4.0-alt1
 - new version
 
