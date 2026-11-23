@@ -1,11 +1,10 @@
 %define pypi_name django-graphiql-debug-toolbar
 
-# tests broke with django-debug-toolbar 6.0
-%def_without check
+%def_with check
 
 Name:    python3-module-%pypi_name
 Version: 0.2.0
-Release: alt5
+Release: alt6
 
 Summary: Django Debug Toolbar for GraphiQL IDE and Graphene
 License: MIT
@@ -20,20 +19,23 @@ BuildRequires: python3-module-poetry
 BuildRequires: python3-module-django
 BuildRequires: python3-module-graphene-django
 BuildRequires: python3-module-pytest-django
-BuildRequires: python3-module-django-debug-toolbar
+BuildRequires: python3-module-django-debug-toolbar >= 6.0
 BuildRequires: python3-module-django-dbbackend-sqlite3
 %endif
+
+Requires: python3-module-django-debug-toolbar >= 6.0
 
 BuildArch: noarch
 
 Source: %pypi_name-%version.tar
+Patch: %name-%version-alt.patch
 
 %description
 %summary.
 
 %prep
 %setup -n %pypi_name-%version
-sed -i 's/from debug_toolbar.middleware import _HTML_TYPES/from debug_toolbar.utils import _HTML_TYPES/' graphiql_debug_toolbar/middleware.py
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -44,8 +46,6 @@ rm -f %buildroot%python3_sitelibdir/LICENSE
 rm -f %buildroot%python3_sitelibdir/README.md
 
 %check
-echo 'STATIC_URL = "/static/"' >> tests/settings.py
-sed -i 's/get_show_toolbar_mock.assert_called_once_with()/get_show_toolbar_mock.assert_called_once_with(async_mode=False)/' tests/test_middleware.py
 %pyproject_run_pytest
 
 %files
@@ -54,6 +54,10 @@ sed -i 's/get_show_toolbar_mock.assert_called_once_with()/get_show_toolbar_mock.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 23 2026 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt6
+- Fixed incompatibility with django-debug-toolbar >= 6.0 (ALT #61488).
+- Enabled tests back.
+
 * Thu Oct 30 2025 Alexander Burmatov <thatman@altlinux.org> 0.2.0-alt5
 - Disable tests.
 
