@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.116.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -12,6 +12,8 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-return-statement.patch
+# Gentoo
+Patch10: kwayland-5.116.0-no-server.patch
 
 # Automatically added by buildreq on Thu Mar 05 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-gui libqt5-test libqt5-widgets libstdc++-devel libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs wayland-devel
@@ -62,9 +64,13 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+#
+%patch10 -p1
 
 %build
-%K5build
+%K5build \
+    -DEXCLUDE_DEPRECATED_BEFORE_AND_AT=5.74.0 \
+    #
 
 %install
 %K5install
@@ -74,11 +80,10 @@ KF5 library
 %doc LICENSES/* README.md
 %_datadir/qlogging-categories5/*.*categories
 
-%files tools
-%_K5libexecdir/org-kde-kf5-kwayland-testserver
+#%files tools
+#%_K5libexecdir/org-kde-kf5-kwayland-testserver
 
 %files devel
-#%_K5inc/kwayland_version.h
 %_K5inc/KWayland/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Wayland
@@ -87,10 +92,13 @@ KF5 library
 
 %files -n libkf5waylandclient
 %_K5lib/libKF5WaylandClient.so.*
-%files -n libkf5waylandserver
-%_K5lib/libKF5WaylandServer.so.*
+#%files -n libkf5waylandserver
+#%_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Mon Nov 23 2026 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt2
+- don't build server part
+
 * Thu May 23 2024 Sergey V Turchin <zerg@altlinux.org> 5.116.0-alt1
 - new version
 
