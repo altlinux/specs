@@ -14,7 +14,7 @@
 
 Name:          lib%nomen
 Version:       1.30.0
-Release:       alt1
+Release:       alt2
 Group:         Development/C++
 Summary:       The OpenTelemetry C++ Client
 License:       Apache-2.0
@@ -22,6 +22,7 @@ Url:           https://opentelemetry-cpp.readthedocs.io/
 Vcs:           https://github.com/open-telemetry/opentelemetry-cpp.git
 
 Source:        %name-%version.tar
+Patch0:        %name-%version-upstream-prometheus-test-lock.patch
 
 BuildRequires(pre): rpm-build-cmake
 %{?!_disable_check:BuildRequires: ctest}
@@ -111,6 +112,7 @@ The OpenTelemetry C++ Client.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %cmake \
@@ -150,6 +152,10 @@ The OpenTelemetry C++ Client.
 
 
 %changelog
+* Mon Nov 23 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.30.0-alt2
+- Serialize Prometheus exporter tests that share port 9464
+  to prevent intermittent build failures (Closes: 61611).
+
 * Mon Oct 26 2026 Pavel Skrylev <majioa@altlinux.org> 1.30.0-alt1
 - ^ 1.28.0 -> 1.30.0
 - - disabled unstable feature(s)
