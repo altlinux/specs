@@ -3,8 +3,8 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.9.13
-Release: alt2
+Version: 0.9.14
+Release: alt1
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -174,6 +174,9 @@ exit 0
 %endif
 
 %changelog
+* Mon Nov 23 2026 Andrey Cherepanov <cas@altlinux.org> 0.9.14-alt1
+- New version.
+
 * Wed Jun 03 2026 Andrey Cherepanov <cas@altlinux.org> 0.9.13-alt2
 - FTBFS: built with -std=gnu17.
 
