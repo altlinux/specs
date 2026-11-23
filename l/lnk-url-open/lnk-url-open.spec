@@ -1,5 +1,5 @@
 Name: lnk-url-open
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Group: Text tools
@@ -31,5 +31,8 @@ install -m 0644 lnk-url-open.desktop %buildroot/%_desktopdir/
 %_desktopdir/lnk-url-open.desktop
 
 %changelog
+* Mon Nov 23 2026 Sergey V Turchin <zerg at altlinux dot org> 0.1.1-alt1
+- remove extra slashes from URL (closes: 61585)
+
 * Tue Mar 28 2023 Sergey V Turchin <zerg at altlinux dot org> 0.1.0-alt1
 - initial build
