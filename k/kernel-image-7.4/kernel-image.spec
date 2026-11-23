@@ -1,5 +1,5 @@
 Name: kernel-image-7.4
-Release: alt0.rc3
+Release: alt0.rc4
 %define kernel_src_version	7.3
 %define kernel_base_version	7.4
 %define kernel_sublevel	.0
@@ -628,6 +628,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 23 2026 Ivan A. Melnikov <iv@altlinux.org> 7.4.0-alt0.rc4
+- v7.4-rc4 (2026-11-22).
+
 * Tue Nov 17 2026 Ivan A. Melnikov <iv@altlinux.org> 7.4.0-alt0.rc3
 - v7.4-rc3 (2026-11-15).
 - config: Enable CONFIG_MEMCG_V1=y, CONFIG_CPUSETS_V1=y.
