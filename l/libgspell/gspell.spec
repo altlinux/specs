@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: A spell-checking library for GTK+3 applications
@@ -138,6 +138,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Mon Nov 23 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.6-alt1
+- 1.14.6
+
 * Sun Sep 27 2026 Yuri N. Sedunov <aris@altlinux.org> 1.14.5-alt1
 - 1.14.5
 
