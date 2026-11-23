@@ -4,7 +4,7 @@
 
 Name: deepin-ocr-plugin-manager
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Deepin OCR plugin manager
 
@@ -21,7 +21,7 @@ Patch2: deepin-ocr-plugin-manager-1.0.1-alt-ncnn-20250916.patch
 
 ExcludeArch: ppc64le
 
-BuildRequires(pre): rpm-build-ninja
+BuildRequires(pre): rpm-build-ninja patchelf
 BuildRequires: cmake libncnn-devel deepin-libopencv_world-devel
 %if_enabled clang
 BuildRequires: clang-devel lld-devel
@@ -72,7 +72,7 @@ export CC=clang
 export CXX=clang++
 export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %endif
-export CPLUS_INCLUDE_PATH=%_includedir/deepin/opencv4:%_includedir/opencv4:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=%_includedir/deepin/opencv4:$CPLUS_INCLUDE_PATH
 export LIBS=" -L%_libdir/deepin -lopencv_world":$LIBS
 %cmake \
   -GNinja \
@@ -85,6 +85,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+patchelf %buildroot%_libdir/lib%name.so.%dopm_ver --add-needed %_libdir/deepin/libopencv_world.so.4.5
 
 %files -n lib%name%dopm_ver
 %_libdir/lib%name.so.%{dopm_ver}*
@@ -100,6 +101,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/%name/model/
 
 %changelog
+* Mon Nov 23 2026 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt2
+- Built on libopencv_mobile for DDE only.
+
 * Mon Dec 22 2025 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
 - New version 1.0.1.
 

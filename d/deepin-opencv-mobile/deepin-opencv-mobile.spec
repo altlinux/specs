@@ -4,15 +4,17 @@
 
 Name: deepin-opencv-mobile
 Version: 0.0.2.7ca8
-Release: alt1
+Release: alt2
 
 Summary: Deepin fork of opencv-mobile
 
 License: Apache-2.0
 Group: Engineering
-Url: https://github.com/linuxdeepin/opencv-mobile
+URL: https://github.com/linuxdeepin/opencv-mobile
+VCS: https://github.com/linuxdeepin/opencv-mobile
 
-Source: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/opencv-mobile/archive/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
 ExcludeArch: ppc64le
 
@@ -153,8 +155,6 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %cmake_install
 
 # remove dublicated opencv files
-#rm -rf %%buildroot%%_includedir/deepin/opencv4/
-rm -rf %buildroot%_includedir/deepin/opencv4/opencv2/{core*,cvconfig.h,features2d*,highgui*,imgproc*,photo*,video*,opencv*}
 rm -rf %buildroot%_datadir/opencv4/
 rm -rf %buildroot%_libdir/deepin/cmake/opencv4/
 rm -rf %buildroot%_bindir/*
@@ -175,10 +175,13 @@ mv -f %buildroot%_datadir/licenses/opencv4/SoftFloat-COPYING.txt %buildroot%_doc
 %_libdir/deepin/libopencv_world.so
 %dir %_includedir/deepin/
 %dir %_includedir/deepin/opencv4/
-%dir %_includedir/deepin/opencv4/opencv2/
-%_includedir/deepin/opencv4/opencv2/world.hpp
+%_includedir/deepin/opencv4/opencv2/
 
 %changelog
+* Mon Nov 23 2026 Leontiy Volodin <lvol@altlinux.org> 0.0.2.7ca8-alt2
+- Packaged core headers for external deepin packages.
+- Added VCS tag.
+
 * Fri Dec 22 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.2.7ca8-alt1
 - Fixed version.
 - Cleanup spec.
