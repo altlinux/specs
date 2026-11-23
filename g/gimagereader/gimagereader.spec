@@ -2,8 +2,8 @@
 %def_with qt6
 
 Name: gimagereader
-Version: 3.4.3
-Release: alt3
+Version: 3.4.5
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -17,9 +17,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Patch1: gimagereader-fix-adf-scanning-altbug-43745.patch
-Patch2: gimagereader-gtk-translatable-add-remove-altbug-60980.patch
-Patch3: gimagereader-fail-on-missing-adf-source-altbug-59861.patch
-Patch4: gimagereader-gtk-insert-at-cursor-altbug-52462.patch
 
 Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
@@ -27,7 +24,7 @@ Source2: manual-ru.html.in
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
 BuildRequires: rpm-build-cmake intltool gcc-c++
-BuildRequires: libgomp-devel libjson-glib-devel libxml++3-devel libpcre-devel libexpat-devel libzip-devel libuuid-devel
+BuildRequires: libgomp-devel libjson-glib-devel libxml++5-devel libpcre-devel libexpat-devel libzip-devel libuuid-devel
 BuildRequires: libleptonica-devel libpodofo-devel libdjvu-devel tesseract-devel libsane-devel libdrm-devel 
 
 BuildRequires: python3 python3-module-pygobject3 libgtk+3-gir gobject-introspection-devel
@@ -129,9 +126,6 @@ Common files for %name.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 # remove with new version
 # https://redmine.basealt.space/issues/2497
@@ -220,6 +214,10 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Nov 05 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.5-alt1
+- new version 3.4.5
+- use BuildRequires: libxml++5-devel instead of libxml++3-devel
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 3.4.3-alt3
 - translate Add and Remove buttons in the settings dialog
 - fail the scan if the ADF source is missing, no endless rescan (closes: #59861)
