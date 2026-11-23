@@ -2,7 +2,7 @@
 
 Name: skrooge
 Version: 26.8.0
-Release: alt1
+Release: alt2
 Summary: A personal finances manager, powered by KDE
 License: %gpl2plus
 Group: Office
@@ -19,7 +19,6 @@ BuildRequires(pre): rpm-build-kf6
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: grantlee5-devel
 BuildRequires: kf6-karchive-devel
 BuildRequires: kf6-kauth-devel
 BuildRequires: kf6-kbookmarks-devel
@@ -69,7 +68,6 @@ BuildRequires: qt6-tools-devel
 BuildRequires: qt6-webengine-devel
 %endif
 
-Requires: libgrantlee_templates5
 Requires: kf6-kio
 Requires: libqt6-core = %_qt6_version
 
@@ -116,6 +114,9 @@ A personal finances manager, powered by KDE.
 %_datadir/skrooge_source/*.json
 
 %changelog
+* Mon Nov 23 2026 Sergey V Turchin <zerg@altlinux.org> 26.8.0-alt2
+- NMU: remove Qt5 requires
+
 * Sat Aug 15 2026 Andrey Cherepanov <cas@altlinux.org> 26.8.0-alt1
 - New version 26.8.0.
 
