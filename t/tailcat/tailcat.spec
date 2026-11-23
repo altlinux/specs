@@ -2,7 +2,7 @@
 %def_with check
 
 Name: tailcat
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: Netcat-like tool over Tailscale's data plane, without its control plane
@@ -52,12 +52,20 @@ install -vDm 755 ./bin/tailcat \
 [ "$(./bin/tailcat version)" = "%version-%release" ]
 # The test harness must stay untagged (see cmd/tailcat/e2e_test.go),
 # TestForwardToExitNodeTarget is flaky in sandboxes (see forward_test.go)
-%gotest -count=1 -timeout 30m -skip TestForwardToExitNodeTarget ./...
+skip_tests=TestForwardToExitNodeTarget
+%ifarch i586
+# TestDeps inherits GOARCH=386 for its Darwin check, which Go does not support.
+skip_tests="$skip_tests|^TestDeps$"
+%endif
+%gotest -count=1 -timeout 30m -skip "$skip_tests" ./...
 
 %files
 %doc LICENSE README.md INSTALL.md
 %_bindir/tailcat
 
 %changelog
+* Mon Nov 23 2026 Egor Ignatov <egori@altlinux.org> 0.8.0-alt1
+- New version 0.8.0.
+
 * Thu Oct 08 2026 Egor Ignatov <egori@altlinux.org> 0.7.0-alt1
 - First build for ALT.
