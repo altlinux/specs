@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: python3-module-transformers
-Version: 5.22.2
+Version: 5.24.0
 Release: alt1
 
 Summary: State-of-the-art machine learning for text, vision and audio
@@ -60,5 +60,8 @@ export HF_HOME="$PWD/.hf-cache"
 %python3_sitelibdir/%pyproject_distinfo transformers
 
 %changelog
+* Mon Nov 23 2026 Anton Farygin <rider@altlinux.org> 5.24.0-alt1
+- 5.22.2 -> 5.24.0
+
 * Sun Nov 08 2026 Anton Farygin <rider@altlinux.org> 5.22.2-alt1
 - Initial build for Sisyphus.
