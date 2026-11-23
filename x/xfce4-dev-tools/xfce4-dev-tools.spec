@@ -1,5 +1,5 @@
 Name: xfce4-dev-tools
-Version: 4.21.2
+Version: 4.21.3
 Release: alt1
 
 Summary: Development tools for Xfce
@@ -12,6 +12,7 @@ Vcs: https://gitlab.xfce.org/xfce/xfce4-dev-tools.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
 BuildRequires: glib2-devel
 BuildRequires: xsltproc docbook-style-xsl
 BuildRequires: rpm-build-python3
@@ -32,22 +33,20 @@ This package is used to build Xfce packages to Sisyphus.
 %prep
 %setup
 %patch -p1
-mkdir -p m4/
 
 %build
-%autoreconf
-%configure \
-	--with-cppcheck-cfg-prefix=%_datadir \
-	--enable-maintainer-mode
-%make_build
+%meson \
+	-Dcppcheck-cfg-prefix=%_datadir
+
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
 %check
-make check
+%meson_test
 
 %files -f %name.lang
 %doc AUTHORS HACKING README.md NEWS
@@ -57,6 +56,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Mon Nov 23 2026 Mikhail Efremov <sem@altlinux.org> 4.21.3-alt1
+- Switched to meson build.
+- Updated to 4.21.3.
+
 * Mon Jun 15 2026 Mikhail Efremov <sem@altlinux.org> 4.21.2-alt1
 - Don't pull rust-cargo.
 - Don't pull git (patch updated).
