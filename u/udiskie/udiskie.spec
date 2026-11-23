@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    %pypi_name
-Version: 2.7.0
+Version: 2.8.2
 Release: alt1
 
 Summary: Automounter for removable media
@@ -64,6 +64,9 @@ Group: Development/Python3
 %_datadir/zsh/site-functions/_udiskie-umount
 
 %changelog
+* Mon Nov 23 2026 Artem Semenov <savoptik@altlinux.org> 2.8.2-alt1
+- New version 2.8.2.
+
 * Thu Jul 30 2026 Artem Semenov <savoptik@altlinux.org> 2.7.0-alt1
 - Updated to 2.7.0
 
