@@ -1,8 +1,8 @@
 Name: kernel-image-7.3
-Release: alt2
+Release: alt1
 %define kernel_src_version	7.3
 %define kernel_base_version	7.3
-%define kernel_sublevel	.5
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_latest	latest
@@ -626,6 +626,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Nov 23 2026 Kernel Bot <kernelbot@altlinux.org> 7.3.6-alt1
+- v7.3.6 (2026-11-23).
+
 * Tue Nov 17 2026 Ivan A. Melnikov <iv@altlinux.org> 7.3.5-alt2
 - config*: Updates for 7.3:
   + major cleanup;
