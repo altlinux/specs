@@ -8,7 +8,7 @@
 
 Name: qt5-webkit
 Version: 5.212.0
-Release: alt28
+Release: alt29
 
 Group: System/Libraries
 Summary: Qt5 - QtWebKit components
@@ -23,6 +23,7 @@ Patch3: qtwebkit-5.212.0-add-riscv64.patch
 Patch4: qtwebkit-fix-build-gcc14.patch
 Patch5: qtwebkit-icu68.patch
 Patch6: qtwebkit-icu76.patch
+Patch7: qtwebkit-ftbfs-gcc16.patch
 # ALT
 Patch10: alt-flags.patch
 # Elbrus
@@ -108,6 +109,7 @@ Requires: libqt5-core = %_qt5_version
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 #
 %patch10 -p1
 %ifarch %e2k
@@ -232,6 +234,9 @@ done
 %_pkgconfigdir/Qt*.pc
 
 %changelog
+* Mon Nov 23 2026 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt29
+- fix to build with new gcc
+
 * Wed Apr 30 2025 Sergey V Turchin <zerg@altlinux.org> 5.212.0-alt28
 - fix to build with new cmake
 - fix to build with new icu
