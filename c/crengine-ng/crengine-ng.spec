@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: crengine-ng
-Version: 0.9.13
+Version: 0.9.15
 Release: alt1
 
 Summary: Library designed to implement text viewers and e-book readers
@@ -56,7 +56,7 @@ Files for development with crengine-ng.
 %cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_CXX_STANDARD=17 \
-  -DCRE_BUILD_STATIC=OFF \
+  -DBUILD_SHARED_LIBS=ON \
   %nil
 %cmake_build
 
@@ -76,6 +76,9 @@ Files for development with crengine-ng.
 %_pkgconfigdir/crengine-ng.pc
 
 %changelog
+* Mon Nov 23 2026 Anton Farygin <rider@altlinux.org> 0.9.15-alt1
+- 0.9.13 -> 0.9.15
+
 * Sun Nov 09 2025 Constantin Sunzow <protvin@altlinux.org> 0.9.13-alt1
 - New version.
 
