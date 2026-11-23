@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: edb-debugger
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: Cross platform x86/x86-64 debugger
@@ -59,6 +59,9 @@ install -Dm 644 edb.appdata.xml %buildroot%_datadir/metainfo/edb.appdata.xml
 %_datadir/metainfo/edb.appdata.xml
 
 %changelog
+* Mon Nov 23 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.2-alt1
+- New version 1.6.2.
+
 * Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.6.1-alt1
 - New version 1.6.1.
 
