@@ -1,7 +1,7 @@
 %define repo qpa
 
 Name: gap-qpa
-Version: 1.38
+Version: 1.39
 Release: alt1
 Summary: GAP: Quivers and Path Algebras
 License: GPL-2.0-or-later
@@ -42,6 +42,9 @@ find "%buildroot" -type f "(" -name "*.g?" -o -name "*.xml" ")" \
 %gap_sitelib/%repo/
 
 %changelog
+* Mon Nov 23 2026 Leontiy Volodin <lvol@altlinux.org> 1.39-alt1
+- New version 1.39.
+
 * Mon Oct 26 2026 Leontiy Volodin <lvol@altlinux.org> 1.38-alt1
 - New version 1.38.
 
