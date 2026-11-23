@@ -29,7 +29,7 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 2.3.2
+Version: 2.4.1
 Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
@@ -79,10 +79,6 @@ Patch4: %name-desktop-local-resources.patch
 # Desktop client: ship a symlink to the packaged CLI instead of embedding a
 # second copy of the ~200 MB binary into the app directory.
 Patch5: %name-desktop-symlinked-cli.patch
-# Desktop client: the update UI built on electron-updater cannot work without
-# the feed file electron-builder would install, and must not install upstream
-# releases over a packaged build anyway; gate it like the CLI guard.
-Patch6: %name-desktop-no-updater.patch
 # Desktop client: bundle the production dependencies the main entry reaches
 # at run time into the main chunk - the app directory is assembled without a
 # node_modules tree.
@@ -152,7 +148,6 @@ The client does not update itself: updates arrive with the package.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 
@@ -370,6 +365,12 @@ fi
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Mon Nov 23 2026 Nazarov Denis <nenderus@altlinux.org> 2.4.1-alt1
+- Update to 2.4.1
+- Drop the desktop updater gate: upstream now disables the updater itself
+  when the feed file (app-update.yml) is absent, which is always the case in
+  the app directory assembled without electron-builder
+
 * Wed Nov 18 2026 Nazarov Denis <nenderus@altlinux.org> 2.3.2-alt1
 - Update to 2.3.2
 
