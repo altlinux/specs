@@ -5,7 +5,7 @@
 %define pstoedit_ver 3.32
 
 Name: autotrace
-Version: 0.31.11
+Version: 0.31.12
 Release: alt1
 
 Summary: Bitmap to vector graphics converter
@@ -112,6 +112,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Mon Nov 23 2026 Anton Farygin <rider@altlinux.org> 0.31.12-alt1
+- 0.31.11 -> 0.31.12
+
 * Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 0.31.11-alt1
 - 0.31.10 -> 0.31.11
 
