@@ -1,5 +1,5 @@
 Name: hass
-Version: 2026.11.2
+Version: 2026.11.3
 Release: alt1
 
 Summary: Home automation platform
@@ -88,6 +88,9 @@ sed -re 's,^,%%exclude ,' < rest.files > core.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Tue Nov 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.11.3-alt1
+- 2026.11.3 released
+
 * Tue Nov 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2026.11.2-alt1
 - 2026.11.2 released
 
