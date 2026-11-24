@@ -13,7 +13,7 @@
 %define llvm_version  21.1
 
 Name: firefox
-Version: 160.0.1
+Version: 161.0
 Release: alt1
 
 Summary: Fast, private and secure web browser
@@ -388,6 +388,120 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/defaults/pref/all-privacy.js
 
 %changelog
+* Tue Nov 24 2026 Ajrat Makhmutov <rauty@altlinux.org> 161.0-alt1
+- New version.
+- Fixes:
+  + CVE-2026-135500: Privilege escalation due to integer overflow in the Graphics: WebGPU component
+  + CVE-2026-135501: Sandbox escape due to use-after-free in the Audio/Video: cubeb component
+  + CVE-2026-135502: Site isolation issue in the Graphics: WebRender component
+  + CVE-2026-135503: Invalid pointer in the DOM: Networking component
+  + CVE-2026-135504: Privilege escalation due to use-after-free in the Graphics component
+  + CVE-2026-135505: Privilege escalation due to incorrect boundary conditions in the Audio/Video: Playback component
+  + CVE-2026-135506: Sandbox escape in the Graphics: Text component
+  + CVE-2026-135507: Use-after-free in the Disability Access APIs component
+  + CVE-2026-135508: Sandbox escape due to use-after-free in the Graphics component
+  + CVE-2026-135509: Sandbox escape due to use-after-free in the Graphics: WebRender component
+  + CVE-2026-135510: Sandbox escape in the Networking: HTTP component
+  + CVE-2026-135511: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-135512: Use-after-free in the Cycle Collector component
+  + CVE-2026-135513: Sandbox escape due to use-after-free in the Networking: HTTP component
+  + CVE-2026-135514: Use-after-free in the Cycle Collector component
+  + CVE-2026-135515: Incorrect boundary conditions in the Networking: Cache component
+  + CVE-2026-135516: Invalid pointer in the Graphics: WebGPU component
+  + CVE-2026-135517: Use-after-free in the Networking: Cache component
+  + CVE-2026-135518: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-135519: Sandbox escape due to use-after-free in the Networking component
+  + CVE-2026-135520: Sandbox escape in the Graphics: CanvasWebGL component
+  + CVE-2026-135521: Sandbox escape in the DOM: Navigation component
+  + CVE-2026-135522: Incorrect boundary conditions in the Audio/Video: Web Codecs component
+  + CVE-2026-135523: Invalid pointer in the Layout: Generated Content, Lists, and Counters component
+  + CVE-2026-135524: Use-after-free in the JavaScript Engine component
+  + CVE-2026-135525: Sandbox escape due to use-after-free in the Graphics: WebRender component
+  + CVE-2026-135526: Use-after-free in the DOM: Networking component
+  + CVE-2026-135527: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-135528: Race condition in the Networking: HTTP component
+  + CVE-2026-135529: Sandbox escape in the Graphics: Text component
+  + CVE-2026-135530: Sandbox escape due to incorrect boundary conditions in the Networking: HTTP component
+  + CVE-2026-135531: Privilege escalation due to use-after-free in the Networking: Cache component
+  + CVE-2026-135532: Use-after-free in the Networking component
+  + CVE-2026-135533: Incorrect boundary conditions in the Layout: Tables component
+  + CVE-2026-135534: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-135535: Incorrect boundary conditions in the Graphics: Skia component
+  + CVE-2026-135536: Uninitialized memory in the DOM: Editor component
+  + CVE-2026-135537: Incorrect boundary conditions in the Layout: Text and Fonts component
+  + CVE-2026-135538: Use-after-free in the Graphics: ImageLib component
+  + CVE-2026-135539: Use-after-free in the DOM: CSS Object Model component
+  + CVE-2026-135540: Incorrect boundary conditions in the JavaScript Engine: JIT component
+  + CVE-2026-135541: Use-after-free in the XSLT component
+  + CVE-2026-135542: Incorrect boundary conditions in the Layout: Text and Fonts component
+  + CVE-2026-135543: Invalid pointer in the Networking component
+  + CVE-2026-135544: Invalid pointer in the DOM: Navigation component
+  + CVE-2026-135545: Invalid pointer in the DOM: Editor component
+  + CVE-2026-135546: Privilege escalation due to incorrect boundary conditions in the Layout: Text and Fonts component
+  + CVE-2026-135547: Sandbox escape due to incorrect boundary conditions in the DOM: Networking component
+  + CVE-2026-135548: Use-after-free in the Layout component
+  + CVE-2026-135549: Use-after-free in the XSLT component
+  + CVE-2026-135550: Invalid pointer in the Audio/Video: Web Codecs component
+  + CVE-2026-135551: Use-after-free in the Layout component
+  + CVE-2026-135552: Use-after-free in the Graphics: Canvas2D component
+  + CVE-2026-135553: Use-after-free in the DOM: Core & HTML component
+  + CVE-2026-135554: Use-after-free in the DOM: Navigation component
+  + CVE-2026-135555: Use-after-free in the XML component
+  + CVE-2026-135556: Invalid pointer in the JavaScript Engine: JIT component
+  + CVE-2026-135557: Use-after-free in the JavaScript Engine component
+  + CVE-2026-135558: Uninitialized memory in the Graphics: Text component
+  + CVE-2026-135559: Spoofing issue in the Address Bar component
+  + CVE-2026-135560: Use-after-free in the Gecko Profiler component
+  + CVE-2026-135561: Spoofing issue in the Downloads component in Firefox for Android
+  + CVE-2026-135562: Site isolation issue in the Networking: Cookies component
+  + CVE-2026-135563: Site isolation issue in the Audio/Video component
+  + CVE-2026-135564: Mitigation bypass in the Machine Learning: Frontend component
+  + CVE-2026-135565: Use-after-free in the Graphics component
+  + CVE-2026-135566: Use-after-free in the JavaScript Engine: JIT component
+  + CVE-2026-135567: Incorrect boundary conditions in the Networking: HTTP component
+  + CVE-2026-135568: Use-after-free in the Graphics: CanvasWebGL component
+  + CVE-2026-135569: Site isolation issue in the PDF Viewer component
+  + CVE-2026-135570: Use-after-free in the DOM: Workers component
+  + CVE-2026-135571: Sandbox escape due to use-after-free in the Panning and Zooming component
+  + CVE-2026-135572: Information disclosure in the DOM: File component
+  + CVE-2026-135573: Mitigation bypass in the DOM: Security component
+  + CVE-2026-135574: Incorrect boundary conditions in the JavaScript Engine component
+  + CVE-2026-135575: Use-after-free in the Cycle Collector component
+  + CVE-2026-135576: Sandbox escape in the Marionette component
+  + CVE-2026-135577: Site isolation issue in the PDF Viewer component
+  + CVE-2026-135578: Sandbox escape due to use-after-free in the Machine Learning: On Device component
+  + CVE-2026-135579: Privilege escalation due to incorrect boundary conditions in the Graphics component
+  + CVE-2026-135580: Use-after-free in the JavaScript: WebAssembly component
+  + CVE-2026-135581: Use-after-free in the Audio/Video: Playback component
+  + CVE-2026-135582: Sandbox escape due to use-after-free in the Networking: HTTP component
+  + CVE-2026-135583: Use-after-free in the Networking: DNS component
+  + CVE-2026-135584: Race condition in the Graphics component
+  + CVE-2026-135585: Use-after-free in the Layout: Scrolling and Overflow component
+  + CVE-2026-135586: Side-channel in the Networking: HTTP component
+  + CVE-2026-135587: Information disclosure in the DOM: Security component
+  + CVE-2026-135588: Use-after-free in the DOM: UI Events & Focus Handling component
+  + CVE-2026-135589: Race condition in the WebExtensions component in Firefox for Android
+  + CVE-2026-135590: Use-after-free in the Storage: Cache API component
+  + CVE-2026-135591: Incorrect boundary conditions in the Widget: Gtk component
+  + CVE-2026-135592: Spoofing issue in the Site Permissions component
+  + CVE-2026-135593: Incorrect boundary conditions in the Widget component
+  + CVE-2026-135594: Spoofing issue in the WebExtensions component in Firefox for Android
+  + CVE-2026-135595: Uninitialized memory in the Graphics: CanvasWebGL component
+  + CVE-2026-135596: Sandbox escape due to incorrect boundary conditions in the Graphics: WebRender component
+  + CVE-2026-135597: Sandbox escape due to use-after-free in the DOM: Navigation component
+  + CVE-2026-135598: Mitigation bypass in the Networking: HTTP component
+  + CVE-2026-135599: Sandbox escape due to use-after-free in the Widget: Gtk component
+  + CVE-2026-135600: Use-after-free in the JavaScript Engine component
+  + CVE-2026-135601: Other issue in the Enterprise Policies component
+  + CVE-2026-135602: Other issue in the Audio/Video: GMP component
+  + CVE-2026-135603: Other issue in the Internationalization component
+  + CVE-2026-135604: Spoofing issue in the Site Identity component
+  + CVE-2026-135605: Mitigation bypass in the Enterprise Policies component
+  + CVE-2026-135606: Cryptographic issue in the Security: PSM component
+  + CVE-2026-135607: Other issue in the Graphics: WebGPU component
+  + CVE-2026-135608: Frame poisoning in the Layout component
+  + CVE-2026-135609: Frame poisoning in the DOM: Core & HTML component
+
 * Wed Nov 18 2026 Ajrat Makhmutov <rauty@altlinux.org> 160.0.1-alt1
 - New version.
 - Update the project URL to https://www.firefox.com.
