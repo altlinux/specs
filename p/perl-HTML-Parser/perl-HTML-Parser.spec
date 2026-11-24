@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist HTML-Parser
 Name: perl-%dist
-Version: 3.86
+Version: 3.87
 Release: alt1
 
 Summary: Parsing and extracting information from HTML documents
@@ -41,6 +41,9 @@ mv t/headparser-http.t t/headparser-http.t.orig
 %perl_vendor_autolib/HTML
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 3.87-alt1
+- new version 3.87
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.86-alt1
 - new version 3.86
 - security fixes:
