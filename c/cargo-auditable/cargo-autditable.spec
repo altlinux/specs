@@ -1,7 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 
+%define rust_codegen_units 1
+%define opt_level 3
+
+%define rust_vendor_options \\\
+    -s cargo-auditable/tests/fixtures/wasm_crate/Cargo.toml \\\
+    -s cargo-auditable/tests/fixtures/proc-macro-dependency/Cargo.toml \\\
+    -s cargo-auditable/Cargo.toml \\\
+    -s rust-audit-info/Cargo.toml
+
 Name: cargo-auditable
-Version: 0.7.5
+Version: 0.7.7
 Release: alt1
 
 Summary: Make production Rust binaries auditable
@@ -14,7 +23,9 @@ Source: %name-%version.tar
 Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-rust
+%ifnarch %ix86
 BuildRequires: rust-wasm32-unknown-unknown-target
+%endif
 
 %description
 Know the exact crate versions used to build your Rust executable. Audit
@@ -52,27 +63,7 @@ vulnerability scanner.
 %prep
 %setup -a 1
 %rust_prep
-# Not a member of workspace.
-cd rust-audit-info
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-# TODO: add macro option to specify vendor directory.
-[source.vendored-sources]
-directory = "../vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[build]
-rustflags = ["-Copt-level=3", "-Cdebuginfo=2"]
-
-[profile.release]
-strip = false
-EOF
+%rust_prep -p rust-audit-info -v "../vendor"
 
 %build
 %rust_build --all-features -p cargo-auditable
@@ -87,7 +78,12 @@ cd rust-audit-info
 %rust_install rust-audit-info
 
 %check
-%rust_test --all-features -p cargo-auditable
+%rust_test --all-features -p cargo-auditable -- \
+%ifarch %ix86
+    --skip test_wasm \
+    --skip target_json::tests::query_linker_flavor stdout \
+%endif
+    %nil
 
 %files -n cargo-auditable
 %doc LICENSE-MIT
@@ -100,6 +96,9 @@ cd rust-audit-info
 %_bindir/rust-audit-info
 
 %changelog
+* Tue Nov 24 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.7.7-alt1
+- New version (0.7.7).
+
 * Mon Jun 22 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.7.5-alt1
 - New version (0.7.5).
 - Package only MIT license since Apache-2.0 is standard.
