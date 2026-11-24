@@ -3,7 +3,7 @@
 
 Name: libigloo
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Common C framework by the Icecast project
 License: LGPL-2.0-or-later
@@ -12,6 +12,7 @@ Url: https://icecast.org/
 
 # Source-url: https://downloads.xiph.org/releases/igloo/%name-%version.tar.gz
 Source: %name-%version.tar
+Patch1: fix-time-test.patch
 
 BuildRequires: librhash-devel
 
@@ -43,6 +44,7 @@ to build programs with libigloo.
 
 %prep
 %setup
+%patch1 -p2
 
 %build
 %autoreconf
@@ -66,6 +68,9 @@ to build programs with libigloo.
 %_pkgconfigdir/igloo.pc
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt2
+- fix a flaky timestamp test.
+
 * Fri Oct 16 2026 Vitaly Lipatov <lav@altlinux.ru> 0.9.5-alt1
 - initial build for Sisyphus
 
