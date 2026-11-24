@@ -4,7 +4,7 @@
 
 Name: usque
 Version: 4.2.1
-Release: alt1
+Release: alt1.1
 Summary: Open-source reimplementation of the Cloudflare WARP client's MASQUE protocol
 License: MIT
 Group: Networking/Remote access
@@ -22,6 +22,9 @@ Source1: %name-vendor.tar
 Source2: %name.service
 Source3: %name.sysconfig
 
+# https://github.com/Diniboy1123/usque/pull/107
+Patch: 107.patch
+
 %description
 Usque is an open-source reimplementation of the Cloudflare WARP client's MASQUE
 mode. It leverages the Connect-IP (RFC 9484) protocol and comes with many
@@ -30,6 +33,7 @@ TCP-only L4 proxy variants.
 
 %prep
 %setup -a1
+%autopatch -p1
 
 export CGO_CFLAGS=$CFLAGS
 export BUILDDIR="$PWD/.gopath"
@@ -66,5 +70,8 @@ install -pm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %_sbindir/%name
 
 %changelog
+* Tue Nov 24 2026 L.A. Kostis <lakostis@altlinux.ru> 4.2.1-alt1.1
+- socks5: fix udp support (upstream PR #107).
+
 * Fri Oct 30 2026 L.A. Kostis <lakostis@altlinux.ru> 4.2.1-alt1
 - Initial build for ALTLinux.
