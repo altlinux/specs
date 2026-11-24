@@ -1,6 +1,6 @@
 Name:           log4j
 Version:        2.25.4
-Release:        alt3
+Release:        alt4
 
 Summary:        Java logging package
 License:        Apache-2.0
@@ -19,6 +19,9 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.logging:logging-parent:pom:)
 BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bnd.annotation)
 BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires:  mvn(com.fasterxml.jackson.dataformat:jackson-dataformat-yaml)
 BuildRequires:  mvn(com.lmax:disruptor)
 BuildRequires:  mvn(commons-logging:commons-logging)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
@@ -147,16 +150,22 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/async/DisruptorBlockin
 %pom_disable_module %name-docker
 %pom_disable_module %name-layout-template-json
 
-%pom_remove_dep -r :jackson-core
-%pom_remove_dep -r :jackson-databind
-%pom_remove_dep -r :jackson-dataformat-yaml
+%pom_xpath_inject \
+    'pom:dependency[pom:artifactId="jackson-core"]' \
+    '<version>2.22.1</version>' log4j-core
+%pom_xpath_inject \
+    'pom:dependency[pom:artifactId="jackson-databind"]' \
+    '<version>2.22.1</version>' log4j-core
+%pom_xpath_inject \
+    'pom:dependency[pom:artifactId="jackson-dataformat-yaml"]' \
+    '<version>2.22.4</version>' log4j-core
 %pom_remove_dep -r :jackson-dataformat-xml
 %pom_remove_dep :jackson-annotations log4j-core-java9
 %pom_remove_dep org.codehaus.woodstox:stax2-api log4j-core
 %pom_remove_dep -r :jeromq
 %pom_remove_dep -r :commons-csv
 
-rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,config/yaml,config/json,parser}
+rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/{jackson,parser}
 rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/{db,mom,nosql}
 rm log4j-core/src/main/java/org/apache/logging/log4j/core/layout/*{Csv,Jackson,Xml,Yaml,Json,Gelf}*.java
 rm -r log4j-core-java9/src/main/java/org/apache/logging/log4j/core/jackson
@@ -205,6 +214,9 @@ rm log4j-core/src/main/java/org/apache/logging/log4j/core/filter/MutableThreadCo
 %files bom -f .mfiles-bom
 
 %changelog
+* Mon Nov 23 2026 Ivan Khanas <xeno@altlinux.org> 2.25.4-alt4
+- Restore JSON and YAML configuration support.
+
 * Thu Nov 19 2026 Ivan Khanas <xeno@altlinux.org> 2.25.4-alt3
 - Use the correct JSpecify module name.
 

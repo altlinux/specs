@@ -11,7 +11,7 @@
 
 Name: jetbrains-jcef
 Version: 150.0.14
-Release: alt1
+Release: alt2
 
 Summary: JetBrains Java bindings for Chromium Embedded Framework
 License: BSD-3-Clause AND Apache-2.0
@@ -37,7 +37,7 @@ BuildRequires: libcef-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libX11-devel
 BuildRequires: thrift
-BuildRequires: thrift-devel
+BuildRequires: libthrift-devel
 BuildRequires: boost-filesystem-devel
 BuildRequires: boost-interprocess-devel
 BuildRequires: python3
@@ -133,5 +133,8 @@ xvfb-run -a -s '-screen 0 1280x1024x24 -nolisten tcp +extension GLX' \
 %jcef_libdir/version.info
 
 %changelog
+* Tue Nov 24 2026 Ivan Khanas <xeno@altlinux.org> 150.0.14-alt2
+- Rebuild with Thrift 0.25.
+
 * Sat Nov 07 2026 Ivan Khanas <xeno@altlinux.org> 150.0.14-alt1
 - Initial build for ALT.

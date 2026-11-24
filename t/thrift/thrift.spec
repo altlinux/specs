@@ -1,121 +1,189 @@
 %define _unpackaged_files_terminate_build 1
+%define abiversion %version
 
 Name: thrift
-Version: 0.22.0
+Version: 0.25.0
 Release: alt1
+
 Summary: Software framework for cross-language services development
 Group: Development/Other
 License: Apache-2.0
 URL: https://thrift.apache.org/
-# Source-url: https://dlcdn.apache.org/thrift/%version/thrift-%version.tar.gz
+VCS: https://github.com/apache/thrift.git
 Source: %name-%version.tar
-Patch0001: 0001-fix-install-thrift_c_glibpc.patch
+Source1: %pyproject_deps_config_name
+Patch0: thrift-installed-sdk-metadata.patch
+Patch1: thrift-java-system-gradle.patch
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
-BuildRequires: boost-devel boost-filesystem-devel boost-program_options-devel boost-locale-devel
-BuildRequires: cmake ninja-build flex
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires(pre): rpm-build-pyproject
+BuildRequires: boost-locale-devel
+BuildRequires: cmake
+BuildRequires: ninja-build
+BuildRequires: flex
+BuildRequires: bison
 BuildRequires: gcc-c++
-BuildRequires: glib2-devel libgio-devel
+BuildRequires: glib2-devel
 BuildRequires: libevent-devel
 BuildRequires: libssl-devel
+BuildRequires: python3-devel
+%pyproject_builddeps_build
 BuildRequires: qt5-base-devel
 BuildRequires: zlib-devel
-
-Provides: lib%name = %EVR
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apiguardian:apiguardian-api)
+BuildRequires: mvn(org.apache.httpcomponents.client5:httpclient5)
+BuildRequires: mvn(org.apache.httpcomponents.core5:httpcore5)
+BuildRequires: java-17-openjdk-devel
+BuildRequires: mvn(jakarta.annotation:jakarta.annotation-api)
+BuildRequires: mvn(jakarta.servlet:jakarta.servlet-api:5.0.0)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires: mvn(org.junit.platform:junit-platform-launcher)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.slf4j:slf4j-api)
+BuildRequires: mvn(org.slf4j:slf4j-simple)
+BuildRequires: xgradle
 
 %description
-The Apache Thrift software framework for cross-language services
-development combines a software stack with a code generation engine to
-build services that work efficiently and seamlessly between C++, Java,
-Python, %{?php_langname}and other languages.
+Apache Thrift combines a software stack with a code generation engine for
+efficient cross-language services. This package contains the Thrift compiler.
 
-%package devel
+%package -n libthrift%abiversion
+Summary: Apache Thrift C++ runtime libraries
+Group: System/Libraries
+
+%description -n libthrift%abiversion
+C++ protocol, transport and server libraries for Apache Thrift, including
+nonblocking and zlib support.
+
+%package -n libthrift_c_glib%abiversion
+Summary: Apache Thrift GLib runtime libraries
+Group: System/Libraries
+
+%description -n libthrift_c_glib%abiversion
+GLib protocol, transport and server libraries for Apache Thrift.
+
+%package -n libthriftqt5_%abiversion
+Summary: Apache Thrift Qt5 runtime library
+Group: System/Libraries
+
+%description -n libthriftqt5_%abiversion
+Qt5 transport support for Apache Thrift.
+
+%package -n libthrift-devel
+Summary: Development files for Apache Thrift
 Group: Development/C++
-Summary: Development files for %name
-Provides: lib%name-devel = %EVR
+Requires: libthrift%abiversion = %EVR
 Requires: %name = %EVR
-#Requires: boost-complete
+Requires: qt5-base-devel
+Provides: thrift-devel = %EVR
+Obsoletes: thrift-devel < %EVR
 
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
-%package qt5
-Group: Development/Other
-Summary: Qt5 support for %name
-Requires: %name = %EVR
-
-%description qt5
-The %name-qt package contains Qt bindings for %name.
-
-%package glib
-Group: Development/Other
-Summary: GLib support for %name
-Requires: %name = %EVR
-
-%description glib
-The %name-qt package contains GLib bindings for %name.
+%description -n libthrift-devel
+Headers, linker files and build metadata for Apache Thrift C++, GLib and
+Qt5 applications.
 
 %package -n python3-module-%name
 Group: Development/Python3
 Summary: Python 3 support for %name
-BuildRequires: python3-devel
-BuildRequires: python3-module-pkg_resources python3-module-setuptools
-Requires: %name = %EVR
 
 %description -n python3-module-thrift
 The python3-%name package contains Python bindings for %name.
 
+%package -n thrift-java
+Summary: Apache Thrift Java runtime library
+Group: Development/Java
+BuildArch: noarch
+
+%description -n thrift-java
+Java protocols, transports and server APIs for Apache Thrift.
+
 %prep
 %setup
-%patch0001 -p1
+%autopatch -p1
+
+pushd lib/py
+%pyproject_deps_resync_build
+popd
 
 %build
-export PYTHON=%__python3
 %cmake \
   -DBUILD_COMPILER=ON \
   -DBUILD_SHARED_LIBS=ON \
+  -DBUILD_TESTING=OFF \
+  -DWITH_JAVA=OFF \
   -DWITH_NODEJS=OFF \
   -DWITH_JAVASCRIPT=OFF \
-  -DBUILD_PYTHON=ON \
+  -DWITH_PYTHON=OFF \
   -DCMAKE_INSTALL_DIR=%_libdir/cmake \
   -DPKGCONFIG_INSTALL_DIR=%_pkgconfigdir \
   -GNinja
 %cmake_build
 
+pushd lib/py
+%pyproject_build
+popd
+
+pushd lib/java
+%gradle_publish -Prelease=true
+popd
+
 %install
 %cmake_install
-#fix cmake
-sed -i 's|/usr//usr|%_prefix|g' %buildroot%_libdir/cmake/thrift/ThriftConfig.cmake
 pushd lib/py
-%python3_install
+%pyproject_install
+popd
+
+pushd lib/java
+%gradle_register --artifacts=libthrift
+%gradle_install
+popd
+
+%check
+PYTHONPATH=%buildroot%python3_sitelibdir %__python3 -c \
+    'import thrift.protocol.fastbinary as m; assert m.__file__.endswith(".so")'
+
+thrift_compiler=$(realpath %_cmake__builddir/compiler/cpp/bin/thrift)
+test -x "$thrift_compiler"
+pushd lib/java
+%gradle_check -Prelease=true -Pthrift.compiler="$thrift_compiler"
 popd
 
 %files
 %doc LICENSE NOTICE
 %_bindir/%name
-%_libdir/libthrift.so.*
-%_libdir/libthriftnb.so.*
-%_libdir/libthriftz.so.*
 
-%files glib
-%_libdir/libthrift_c_glib*.so.*
+%files -n libthrift%abiversion
+%_libdir/libthrift.so.%abiversion
+%_libdir/libthriftnb.so.%abiversion
+%_libdir/libthriftz.so.%abiversion
 
-%files qt5
-%_libdir/libthriftqt5.so.*
+%files -n libthrift_c_glib%abiversion
+%_libdir/libthrift_c_glib.so.%abiversion
+%_libdir/libthrift_c_glib_zlib.so.%abiversion
 
-%files devel
+%files -n libthriftqt5_%abiversion
+%_libdir/libthriftqt5.so.%abiversion
+
+%files -n libthrift-devel
 %_includedir/%name
-%_libdir/*.so
-%_pkgconfigdir/*
+%_libdir/libthrift*.so
+%_pkgconfigdir/thrift*.pc
 %_libdir/cmake/%name
-%doc NOTICE
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name
-%python3_sitelibdir/%name-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo thrift}
+
+%files -n thrift-java -f lib/java/.mfiles
 
 %changelog
+* Mon Nov 23 2026 Ivan Khanas <xeno@altlinux.org> 0.25.0-alt1
+- New version.
+- Split the shared libraries by ABI.
+- Package the Java runtime with upstream tests.
+
 * Sun Jun 14 2026 Anton Midyukov <antohami@altlinux.org> 0.22.0-alt1
 - 0.22.0.
 

@@ -16,7 +16,7 @@
 
 Name: arrow
 Version: 23.0.1
-Release: alt1.1
+Release: alt2
 Summary: Apache Arrow is a data processing library for analysis
 Group: Development/C++
 
@@ -55,7 +55,7 @@ BuildRequires: xsimd-devel
 BuildRequires: libabseil-cpp-devel
 %{?_enable_rapidjson:BuildRequires: rapidjson-devel}
 %{?_enable_re2:BuildRequires: libre2-devel}
-BuildRequires: thrift-devel
+BuildRequires: libthrift-devel
 %{?_enable_orc:BuildRequires: apache-orc-devel}
 %{?_enable_utf8proc:BuildRequires: libutf8proc-devel}
 
@@ -785,6 +785,9 @@ rm -f %buildroot%_datadir/arrow-glib/README.md
 %python3_sitelibdir/pyarrow/src
 
 %changelog
+* Tue Nov 24 2026 Ivan Khanas <xeno@altlinux.org> 23.0.1-alt2
+- Rebuild with Thrift 0.25.
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 23.0.1-alt1.1
 - NMU: fixed FTBFS with Cython 3.3 (pyarrow KmsConnectionConfig.wrap)
 - fixed BuildRequires: rpm-build-cmake instead of cmake, added rpm-build-python3

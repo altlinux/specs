@@ -1,36 +1,119 @@
-%def_without bootstrap
-%global reldate 20250401
+%define _unpackaged_files_terminate_build 1
+%global reldate 20261019
 
 Name: apache-poi
-Version: 5.4.1
-Release: alt3
+Version: 6.0.0
+Release: alt1
+
 Summary: The Java API for Microsoft Documents
 License: Apache-2.0 and MIT
 Group: Development/Java
-URL: http://poi.apache.org/
+URL: https://poi.apache.org/
+VCS: https://github.com/apache/poi.git
 
-ExclusiveArch: x86_64 aarch64 loongarch64
-
-Source0: https://dlcdn.apache.org/poi/release/src/%{name}-src-%{version}-%{?reldate}.tar.gz
-Source1: gradle-cache.tar
-
-# Supported Java version 
-Patch0: apache-poi-alt-java-version.patch
-# Remove version from pom filenames
-Patch1: apache-poi-alt-remove-version-from-pom-filename.patch
-# Build with Gradle 9.7.1
-Patch2: apache-poi-gradle-9.7.1.patch
-
+Source0: %name-src-%version-%reldate.tar.gz
 BuildArch: noarch
 
-BuildRequires: gcc-c++ rpm-build-java swig unzip
+BuildRequires(pre): rpm-macros-gradle
+BuildRequires: rpm-build-java
 BuildRequires: java-21-openjdk-devel
-BuildRequires: gradle
+BuildRequires: java-17-openjdk-devel
+BuildRequires: xgradle
 BuildRequires: maven-local
-BuildRequires: pom2metadata
+BuildRequires: mvn(org.apache.commons:commons-compress)
+BuildRequires: mvn(org.apache.commons:commons-collections4)
+BuildRequires: mvn(org.apache.commons:commons-math3)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(com.zaxxer:SparseBitSet)
+BuildRequires: mvn(com.github.virtuald:curvesapi)
+BuildRequires: mvn(org.apache.xmlbeans:xmlbeans)
+BuildRequires: mvn(org.apache.xmlbeans:xmlbeans:pom:)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-bom:pom:)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-api)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-core)
+BuildRequires: mvn(org.apache.pdfbox:pdfbox)
+BuildRequires: mvn(de.rototor.pdfbox:graphics2d)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-svggen)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-svgrasterizer)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-codec)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-bridge)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-script)
+BuildRequires: mvn(org.apache.santuario:xmlsec)
+BuildRequires: mvn(jakarta.xml.bind:jakarta.xml.bind-api)
+BuildRequires: mvn(jakarta.activation:jakarta.activation-api)
+BuildRequires: mvn(org.bouncycastle:bcpkix-jdk18on)
+BuildRequires: mvn(org.bouncycastle:bcutil-jdk18on)
+BuildRequires: mvn(org.slf4j:slf4j-api:2)
+BuildRequires: mvn(org.apache.ant:ant)
+BuildRequires: mvn(org.apache.ant:ant-junitlauncher)
+BuildRequires: mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires: mvn(org.junit.platform:junit-platform-launcher)
+BuildRequires: mvn(org.mockito:mockito-core)
+BuildRequires: mvn(org.hamcrest:hamcrest)
+BuildRequires: mvn(org.apiguardian:apiguardian-api)
+BuildRequires: mvn(org.jspecify:jspecify)
+BuildRequires: mvn(org.xmlunit:xmlunit-core)
+BuildRequires: mvn(org.reflections:reflections)
+BuildRequires: mvn(org.osgi:org.osgi.core)
+BuildRequires: mvn(org.openjdk.jmh:jmh-core)
+BuildRequires: mvn(com.google.guava:guava)
+BuildRequires: mvn(org.apache.commons:commons-csv)
+BuildRequires: mvn(net.bytebuddy:byte-buddy)
+BuildRequires: mvn(net.bytebuddy:byte-buddy-agent)
 
 #Fonts for testing
-BuildRequires: fontconfig fonts-ttf-liberation fonts-ttf-liberation
+BuildRequires: fontconfig
+BuildRequires: fonts-ttf-liberation
+
+%package ooxml
+Summary: Apache POI OOXML module
+Group: Development/Java
+
+%description ooxml
+Apache POI module for Office Open XML documents.
+
+%package ooxml-full
+Summary: Apache POI full OOXML schemas module
+Group: Development/Java
+
+%description ooxml-full
+Full XML schema definitions for Apache POI Office Open XML support.
+
+%package ooxml-lite
+Summary: Apache POI compact OOXML schemas module
+Group: Development/Java
+
+%description ooxml-lite
+Compact XML schema definitions for Apache POI Office Open XML support.
+
+%package ooxml-lite-agent
+Summary: Apache POI OOXML lite instrumentation agent
+Group: Development/Java
+
+%description ooxml-lite-agent
+Instrumentation agent used by the Apache POI compact OOXML schemas module.
+
+%package scratchpad
+Summary: Apache POI additional document format support module
+Group: Development/Java
+
+%description scratchpad
+Additional document format support from Apache POI.
+
+%package excelant
+Summary: Apache POI Excel Ant tasks module
+Group: Development/Java
+
+%description excelant
+Apache POI Ant tasks for processing Excel documents.
+
+%package examples
+Summary: Apache POI examples module
+Group: Development/Java
+
+%description examples
+Examples for the Apache POI APIs.
 
 %description
 The Apache POI Project's mission is to create and maintain Java APIs for
@@ -63,49 +146,61 @@ contributions.
 There are also projects for Visio (HDGF) and Publisher (HPBF).
 
 %prep
-%setup -n %{name}-src-%{version}-%{?reldate}
-test -d ~/.gradle && rm -rf ~/.gradle
-%if_without bootstrap
-tar xf %SOURCE1 -C ~
-%endif
-%patch0 -p1
-%patch1 -p2
-%patch2 -p2
-subst 's|project.archivesBaseName|project.name|g' build.gradle */build.gradle
+%setup -q -n %name-src-%version-%reldate
+# Leave address space for JDK native memory in 32-bit Hasher.
+if [ "$(getconf LONG_BIT)" = 32 ]; then
+    sed -i 's/-Xmx3G/-Xmx1g/' gradle.properties
+    printf '%%s\n' 'org.gradle.workers.max=2' >> gradle.properties
+    sed -i 's/maxHeapSize = "2g"/maxHeapSize = "1g"/' build.gradle
+    sed -i "s/maxHeapSize = '3g'/maxHeapSize = '1280m'/" \
+        poi-integration/build.gradle
+    sed -i 's/-Xmx2G/-Xmx1g/' \
+        poi-ooxml-full/build.gradle poi-ooxml-lite/build.gradle
+fi
 
 %build
-%global gradle_target srcDistTar generatePomFileForPOIPublication
-%if_without bootstrap
-gradle --no-daemon --offline %gradle_target
-gradle --no-daemon --offline poi-ooxml:generatePomFileForPOIPublication
-%else
-gradle --no-daemon %gradle_target
-gradle --no-daemon poi-ooxml:generatePomFileForPOIPublication
-%endif
-find build/dist -name \*sources.\* -delete
-# Generate metadata for maven-metadata
-mkdir maven-metadata
-for i in build/dist/maven/*/*.pom;do 
-	d="$(dirname $i)"
-	n="$(basename $d)"
-	pom2metadata $i maven-metadata/$n.xml poi
-done
+%gradle_publish
 
 %install
-mkdir -p %buildroot%_javadir/poi
-find build/dist -name \*.jar | grep -Ev 'tests\.jar' | while read i; do n="$(basename $i)";cp "$i" "%buildroot%_javadir/poi/${n/-%version/}";done
-mkdir -p %buildroot%_mavenpomdir
-find build/dist -name \*.pom -exec cp '{}' %buildroot%_mavenpomdir ';'
-mkdir -p %buildroot%_datadir/maven-metadata
-cp maven-metadata/*.xml %buildroot%_datadir/maven-metadata
+%mvn_package org.apache.poi:poi
+%mvn_package org.apache.poi:poi-ooxml ooxml
+%mvn_package org.apache.poi:poi-ooxml-full ooxml-full
+%mvn_package org.apache.poi:poi-ooxml-lite ooxml-lite
+%mvn_package org.apache.poi:poi-ooxml-lite-agent ooxml-lite-agent
+%mvn_package org.apache.poi:poi-scratchpad scratchpad
+%mvn_package org.apache.poi:poi-excelant excelant
+%mvn_package org.apache.poi:poi-examples examples
+%gradle_register --artifacts=poi-
+%gradle_install
 
-%files
-%doc README.rst KEYS
-%_javadir/poi/*
-%_mavenpomdir/*
-%_datadir/maven-metadata/*.xml
+%check
+%gradle_check -Dmaven.repo.local="$PWD/.m2/repository"
+
+%files -f .mfiles
+%doc legal/LICENSE legal/NOTICE
+
+%files ooxml -f .mfiles-ooxml
+
+%files ooxml-full -f .mfiles-ooxml-full
+
+%files ooxml-lite -f .mfiles-ooxml-lite
+
+%files ooxml-lite-agent -f .mfiles-ooxml-lite-agent
+
+%files scratchpad -f .mfiles-scratchpad
+
+%files excelant -f .mfiles-excelant
+
+%files examples -f .mfiles-examples
 
 %changelog
+* Mon Nov 23 2026 Ivan Khanas <xeno@altlinux.org> 6.0.0-alt1
+- New version.
+- Build with xgradle and system dependencies.
+- Split published modules into RPM subpackages.
+- Build on i586.
+- Fix FTBFS: Run integration tests serially.
+
 * Wed Sep 09 2026 Andrey Cherepanov <cas@altlinux.org> 5.4.1-alt3
 - FTBFS: built with Gradle 9.7.1.
 

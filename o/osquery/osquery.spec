@@ -2,8 +2,8 @@
 %global gcc_version 13
 
 Name:    osquery
-Version: 5.23.0
-Release: alt2.1
+Version: 5.24.1
+Release: alt1
 Epoch: 1
 
 Summary: SQL powered operating system instrumentation, monitoring, and analytics
@@ -20,7 +20,6 @@ Patch1: osquery-disable-expiremental.patch
 Patch2: osquery-fix-utils-linux.patch
 Patch3: osquery-use-cstdint.patch
 Patch4: osquery-fix-std-types.patch
-Patch5: osquery-fix-std-functions.patch
 Patch7: osquery-sysctl.h.patch
 Patch8: osquery-header-in-block_device.patch
 Patch9: osquery-enable_yara_string.patch
@@ -73,9 +72,10 @@ BuildRequires: libglog-devel
 BuildRequires: boost-asio-devel
 BuildRequires: librocksdb-devel
 BuildRequires: libssl-devel
-BuildRequires: thrift-devel
+BuildRequires: libthrift-devel
 BuildRequires: boost-beast-devel
 BuildRequires: libtsk-devel
+BuildRequires: libyaml-cpp-devel
 BuildRequires: liblinenoise-devel
 BuildRequires: librdkafka-devel
 BuildRequires: libarchive-devel
@@ -154,6 +154,9 @@ mkdir -p %buildroot%_logdir/osquery
 %dir %_logdir/osquery
 
 %changelog
+* Tue Nov 24 2026 Ivan Khanas <xeno@altlinux.org> 1:5.24.1-alt1
+- New version.
+
 * Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1:5.23.0-alt2.1
 - NMU: rebuild with rocksdb 11 (add patch for DB::Open with std::unique_ptr<DB>)
 
