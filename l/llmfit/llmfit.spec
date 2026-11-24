@@ -3,7 +3,7 @@
 %def_with check
 
 Name: llmfit
-Version: 1.1.20
+Version: 1.1.21
 Release: alt1
 
 Summary: Hundreds of models & providers
@@ -30,6 +30,9 @@ well on your machine.
 
 %prep
 %setup -a1
+%ifarch %ix86
+%define rust_lto "thin"
+%endif
 %rust_prep
 cargo-vendor-checksum --vendor vendor --all
 
@@ -51,6 +54,9 @@ cargo-vendor-checksum --vendor vendor --all
 %_bindir/%name
 
 %changelog
+* Mon Nov 23 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.21-alt1
+- new version
+
 * Thu Nov 05 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 1.1.20-alt1
 - new version
 
