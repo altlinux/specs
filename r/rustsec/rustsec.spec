@@ -2,11 +2,13 @@
 
 %ifarch %ix86
 %define _smp_mflags -j32
+%define rust_lto "thin"
+%define rust_codegen_units 16
 %endif
 
 Name: rustsec
-Version: 0.32.0
-Release: alt2
+Version: 0.34.1
+Release: alt1
 
 Summary: RustSec API & Tooling
 License: Apache-2.0 or MIT
@@ -27,7 +29,7 @@ Vulnerability database itself can be found at:
 https://rustsec.org/
 
 %package -n cargo-audit
-Version: 0.22.1
+Version: 0.23.0
 Summary: Audit your dependencies for crates with security vulnerabilities
 Group: Development/Tools
 Url: https://crates.io/crates/cargo-audit
@@ -40,7 +42,7 @@ The advisory database itself can be found at:
 https://github.com/RustSec/advisory-db
 
 %package -n cargo-lock
-Version: 11.0.1
+Version: 11.1.0
 Summary: Self-contained serde-powered Cargo.lock parser/serializer
 Group: Development/Tools
 Url: https://crates.io/crates/cargo-lock
@@ -53,12 +55,6 @@ analysis features. Used by RustSec.
 %prep
 %setup -a 1
 %rust_prep
-%ifarch %ix86
-cat >> .cargo/config.toml <<EOF
-lto = "thin"
-codegen-units = 16
-EOF
-%endif
 
 %build
 %rust_build --all-features -p cargo-audit -p cargo-lock
@@ -71,14 +67,20 @@ EOF
 %rust_test --all-features -p cargo-lock
 
 %files -n cargo-audit
-%doc cargo-audit/LICENSE-*
+%doc cargo-audit/LICENSE-MIT
 %_bindir/cargo-audit
 
 %files -n cargo-lock
-%doc cargo-lock/LICENSE-*
+%doc cargo-lock/LICENSE-MIT
 %_bindir/cargo-lock
 
 %changelog
+* Tue Nov 24 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.34.1-alt1
+- New rustsec version (0.34.1).
+- New cargo-audit version (0.23.0).
+- New cargo-lock version (11.1.0).
+- Package only MIT license.
+
 * Tue Apr 07 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.32.0-alt2
 - Fix FTBFS on i586.
 
