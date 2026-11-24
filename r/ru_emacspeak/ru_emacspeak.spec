@@ -3,7 +3,7 @@
 
 Name: ru_emacspeak
 Version: 53.0
-Release: alt1
+Release: alt2
 
 Summary: speech output interface to Emacs
 License: GPLv2+ and BSD
@@ -446,6 +446,9 @@ chmod -R go+rX %_emacspeakdir/media
 %_docdir/emacspeak/pan-chimes/apply-pan.sh
 
 %changelog
+* Tue Nov 24 2026 Artem Semenov <savoptik@altlinux.org> 53.0-alt2
+- Updated keymap.
+
 * Tue Nov 17 2026 Artem Semenov <savoptik@altlinux.org> 53.0-alt1
 - New version 53.0.
 
