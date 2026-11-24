@@ -6,7 +6,7 @@
 
 Name: %rname
 Version: 6.7.6
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init
 
@@ -21,6 +21,7 @@ Obsoletes: kde5-spectacle < %EVR
 Requires: qml6(org.kde.kquickimageeditor)
 
 Source: %rname-%version.tar
+Patch1: alt-opencv.patch
 
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-svg-devel qt6-multimedia-devel
@@ -45,6 +46,7 @@ can also be used in non-KDE X11 desktop environments.
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K6build \
@@ -73,6 +75,9 @@ can also be used in non-KDE X11 desktop environments.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.6-alt2
+- fix to build with opencv-5
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 1:6.7.6-alt1
 - new version
 
