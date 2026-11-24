@@ -1,5 +1,5 @@
 Name: safeeyes
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 
 Summary: Tool for reminding the user to take breaks
@@ -50,6 +50,9 @@ cp -a %name/platform/icons/* %buildroot%_iconsdir/
 %python3_sitelibdir/%{pyproject_distinfo %name}/
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
+- new version 3.6.1
+
 * Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 3.6.0-alt1
 - new version 3.6.0
 
