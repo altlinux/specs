@@ -10,7 +10,7 @@
 %endif
 
 Name: dbeaver
-Version: 26.2.5
+Version: 26.2.5.2
 Release: alt1
 
 Summary: Universal Database Manager
@@ -142,6 +142,10 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Tue Nov 24 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.5.2-alt1
+- Version 26.2.5.2
+- Disable JVM Base64 intrinsics (Java4Shell, CVE-2026-114938)
+
 * Sun Nov 15 2026 Nazarov Denis <nenderus@altlinux.org> 26.2.5-alt1
 - Version 26.2.5
 
