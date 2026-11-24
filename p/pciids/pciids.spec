@@ -1,14 +1,13 @@
 Name: pciids
-Version: 20251115
+Version: 20261124
 Release: alt1
 
 Summary: Repository of PCI IDs (pci.ids database)
 License: GPLv2+ or BSD
 Group: System/Libraries
+URL: https://pci-ids.ucw.cz
 
-#Url: http://pciids.sourceforge.net
-Url: https://pci-ids.ucw.cz
-Source: %url/pci.ids
+Source: https://pci-ids.ucw.cz/pci.ids
 Patch: hwdatabase.ti24.patch
 
 BuildArch: noarch
@@ -23,9 +22,6 @@ programs to display full human-readable names instead of cryptic numeric codes.
 cp %SOURCE0 .
 %patch -p1
 
-%build
-
-
 %install
 install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 
@@ -33,6 +29,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Tue Nov 24 2026 Andrey Cherepanov <cas@altlinux.org> 20261124-alt1
+- New snapshot (ALT #60668).
+
 * Sat Nov 15 2025 Cronbuild Service <cronbuild@altlinux.org> 20251115-alt1
 - repocop cronbuild 20251115. At your service.
 
