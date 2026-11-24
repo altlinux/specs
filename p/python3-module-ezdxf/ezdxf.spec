@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.3
+Version: 1.4.5
 Release: alt1
 
 Summary: Python 3 package for manipulating DXF drawings
@@ -55,6 +55,10 @@ DXF version.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt1
+- NMU: update to 1.4.5 to fix FTBFS.
+- New version 1.4.5.
+
 * Tue Oct 21 2025 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
 - Automatically updated to 1.4.3.
 
