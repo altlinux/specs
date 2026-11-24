@@ -1,11 +1,7 @@
-%define cargo_prep %nil
-%define cargo_build %rust_build
-%define cargo_install %rust_install
-
 %define appid io.github.lgse.Strata
 
 Name: strata
-Version: 1.0.0
+Version: 1.2.1
 Release: alt1
 
 Summary: A fast, keyboard-first GTK4 file manager
@@ -57,7 +53,6 @@ template as an active system service.
 
 %prep
 %setup -a1
-%cargo_prep
 install -vD %SOURCE2 .cargo/config.toml
 
 %build
@@ -65,10 +60,10 @@ install -vD %SOURCE2 .cargo/config.toml
 export CARGO_PROFILE_RELEASE_LTO=off
 export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16
 # the default "rar" feature embeds RARLAB's non-free UnRAR code
-%cargo_build --no-default-features
+%rust_build --no-default-features
 
 %install
-%cargo_install
+%rust_install
 install -Dm0644 data/%appid.desktop %buildroot%_desktopdir/%appid.desktop
 install -Dm0644 data/icons/scalable/apps/%appid.svg \
     %buildroot%_iconsdir/hicolor/scalable/apps/%appid.svg
@@ -84,15 +79,20 @@ update_command = "apt-get update && apt-get install strata"
 MARKER
 
 %check
+# RPM build stages do not share exported environment variables.
+export CARGO_PROFILE_RELEASE_LTO=off
+export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=16
 desktop-file-validate %buildroot%_desktopdir/%appid.desktop
 # skipped: tests of the user-owned executable path/portal setup, trash and
-# file operations that need a real home/trash; one media test that panics
+# file operations that need a real home/trash; integration registration
+# requires root-owned helpers (hasher uses rooter); one media test panics
 # without a GTK display (no skip guard upstream)
 env -u DISPLAY -u WAYLAND_DISPLAY GDK_BACKEND=x11 \
 %rust_test --no-default-features -- \
     --skip portal_setup:: --skip services::file_providers:: \
     --skip adapters::local_operations:: --skip adapters::local_jobs:: \
     --skip adapters::trash_restore:: --skip adapters::local_files:: \
+    --skip services::integration_catalog::tests::install_registers_a_resolved_command_and_tracks_updates_and_edits \
     --skip ui::media::tests::reopening_resumes_where_the_preview_closed
 
 %files
@@ -103,5 +103,10 @@ env -u DISPLAY -u WAYLAND_DISPLAY GDK_BACKEND=x11 \
 %_datadir/%name/
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1
+- disable full LTO for the test build
+- skip integration registration test requiring root-owned system helpers
+
 * Thu Oct 15 2026 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for Sisyphus
