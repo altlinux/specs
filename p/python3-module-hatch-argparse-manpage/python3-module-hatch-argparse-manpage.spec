@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%_name
-Version: 1.0.2
+Version: 1.0.4
 Release: alt1
 
 Summary: Hatch Argparse Manpage plugin
@@ -49,6 +49,9 @@ argparse-manpage package.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
+- 1.0.4
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 

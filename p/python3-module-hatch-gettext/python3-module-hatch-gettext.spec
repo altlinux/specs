@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%_name
-Version: 1.1.2
+Version: 1.1.4
 Release: alt1
 
 Summary: Hatch Gettext plugin
@@ -51,6 +51,9 @@ multi-lingual messages with GNU gettext's tools msgfmt. It can also
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 24 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.4-alt1
+- 1.1.4
+
 * Sat Sep 26 2026 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
 - 1.1.2
 
