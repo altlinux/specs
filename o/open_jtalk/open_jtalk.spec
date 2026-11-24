@@ -3,7 +3,7 @@
 
 Name: open_jtalk
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: Japanese text-to-speech system
 Summary(ru_RU.UTF-8): Система синтеза японской речи
@@ -14,6 +14,9 @@ Url: https://open-jtalk.sourceforge.net/
 
 BuildRequires: gcc-c++
 BuildRequires: libHTSEngine-devel
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 Requires: %name-dic = %EVR
 
@@ -56,6 +59,12 @@ UTF-8, для использования с Open JTalk.
 
 %build
 %autoreconf
+%ifarch %e2k
+export CC=clang
+export CXX=clang++
+# error: ISO C++17 does not allow 'register' storage class specifier
+%add_optflags -Wno-register
+%endif
 %configure \
     --with-charset=UTF-8 \
     --with-hts-engine-header-path=%_includedir \
@@ -81,5 +90,8 @@ bin/open_jtalk 2>&1 | grep -q 'Open JTalk'
 %dicdir
 
 %changelog
+* Tue Nov 24 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.11-alt2
+- e2k build fix
+
 * Tue Oct 13 2026 Dina Tagantseva <dinchik@altlinux.org> 1.11-alt1
 - Initial build for Sisyphus.
