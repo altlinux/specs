@@ -1,6 +1,6 @@
 Name: pdf2djvu
 Version: 0.9.19
-Release: alt4
+Release: alt5
 
 Summary: PDF to DjVu converter
 License: GPL-2.0
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 # FC
 Patch1: pdf2djvu-poppler-26.01.0.patch
 Patch2: pdf2djvu-poppler-version.patch 
+Patch3: pdf2djvu-poppler-26.08.0.patch
 
 # Automatically added by buildreq on Fri Nov 19 2010
 BuildRequires: djvu-utils fontconfig-devel gcc-c++ libGraphicsMagick-c++-devel libdjvu-devel
@@ -53,6 +54,9 @@ popd
 %_mandir/*/man1/*
 
 %changelog
+* Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 0.9.19-alt5
+- fix to build with poppler-26.08.0
+
 * Fri Mar 20 2026 Sergey V Turchin <zerg@altlinux.org> 0.9.19-alt4
 - fix compile with new poppler
 
