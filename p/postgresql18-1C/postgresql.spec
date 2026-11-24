@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     7
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -69,6 +69,7 @@ Conflicts: %{prog_name}16
 Conflicts: %{prog_name}17
 Conflicts: %{prog_name}17-1C
 Conflicts: %{prog_name}18
+Conflicts: %{prog_name}19
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel liblz4-devel libzstd-devel libuuid-devel libnuma-devel liburing-devel
@@ -145,6 +146,7 @@ Conflicts: %libpq_name-16
 Conflicts: %libpq_name-17
 Conflicts: %libpq_name-17-1C
 Conflicts: %libpq_name-18
+Conflicts: %libpq_name-19
 
 %description -n %libpq_name-%postgresql_major-1C
 C and C++ libraries to enable user programs to communicate with the
@@ -209,6 +211,7 @@ Conflicts: %libpq_name-16-devel
 Conflicts: %libpq_name-17-devel
 Conflicts: %libpq_name-17-1C-devel
 Conflicts: %libpq_name-18-devel
+Conflicts: %libpq_name-19-devel
 
 %description -n %libpq_name-%postgresql_major-1C-devel
 The libpq package provides the essential shared library for any PostgreSQL
@@ -237,6 +240,7 @@ Conflicts: %{prog_name}16-devel
 Conflicts: %{prog_name}17-devel
 Conflicts: %{prog_name}17-1C-devel
 Conflicts: %{prog_name}18-devel
+Conflicts: %{prog_name}19-devel
 
 %description devel
 The postgresql-devel package contains the header files needed to compile applications
@@ -269,6 +273,7 @@ Conflicts: rpm-macros-%prog_name-16
 Conflicts: rpm-macros-%prog_name-17
 Conflicts: rpm-macros-%prog_name-17-1C
 Conflicts: rpm-macros-%prog_name-18
+Conflicts: rpm-macros-%prog_name-19
 
 %description -n rpm-macros-%prog_name-%postgresql_major-1C
 RPM macros to PostgreSQL for build server extentions
@@ -290,6 +295,7 @@ Conflicts: %libecpg_name-16
 Conflicts: %libecpg_name-17
 Conflicts: %libecpg_name-17-1C
 Conflicts: %libecpg_name-18
+Conflicts: %libecpg_name-19
 
 %description -n %libecpg_name-%postgresql_major-1C
 An embedded SQL program consists of code written in an ordinary programming
@@ -312,6 +318,7 @@ Conflicts: %libecpg_name-16-devel
 Conflicts: %libecpg_name-17-devel
 Conflicts: %libecpg_name-17-1C-devel
 Conflicts: %libecpg_name-18-devel
+Conflicts: %libecpg_name-19-devel
 
 %description -n %libecpg_name-%postgresql_major-1C-devel
 ECPG development files.  You will need to install this package to build any
@@ -329,6 +336,7 @@ Conflicts: %libecpg_name-16-devel-static
 Conflicts: %libecpg_name-17-devel-static
 Conflicts: %libecpg_name-17-1C-devel-static
 Conflicts: %libecpg_name-18-devel-static
+Conflicts: %libecpg_name-19-devel-static
 
 %description -n %libecpg_name-%postgresql_major-1C-devel-static
 Development static library for %libecpg_name-%postgresql_major-1C-devel
@@ -354,6 +362,7 @@ Conflicts: %{prog_name}16-server-devel
 Conflicts: %{prog_name}17-server-devel
 Conflicts: %{prog_name}17-1C-server-devel
 Conflicts: %{prog_name}18-server-devel
+Conflicts: %{prog_name}19-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -398,6 +407,7 @@ Conflicts: %{prog_name}16-server
 Conflicts: %{prog_name}17-server
 Conflicts: %{prog_name}17-1C-server
 Conflicts: %{prog_name}18-server
+Conflicts: %{prog_name}19-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -751,6 +761,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}18-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}19-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -1158,7 +1173,7 @@ fi
 %_libdir/libpq*.so
 %if_without devel
 # No pack libpq.so.%%libpq_major.* if major version 1C and vanilla same
-#%_libdir/libpq.so.%libpq_major.*
+%_libdir/libpq.so.%libpq_major.*
 %endif
 %_libdir/pkgconfig/libpq.pc
 %_man1dir/pg_config.*
@@ -1178,6 +1193,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 23 2026 Alexei Takaseev <taf@altlinux.org> 18.7-alt2
+- Add triggerpostun and conflict for PG 19
+
 * Mon Nov 16 2026 Alexei Takaseev <taf@altlinux.org> 18.7-alt1
 - 18.7 (Fixes CVE-2026-6460,   CVE-2026-6467,   CVE-2026-14661,  CVE-2026-16237,
               CVE-2026-16240,  CVE-2026-18447,  CVE-2026-116303, CVE-2026-116303,
