@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    dish-linux
-Version: 2.7.1
+Version: 2.8.1
 Release: alt1
 
 Summary: Native Linux client for the Satellite wireless-gamepad server
@@ -77,6 +77,9 @@ fi
 %_man1dir/dish.1*
 
 %changelog
+* Tue Nov 24 2026 Sergey Palcheh <minergenon@altlinux.org> 2.8.1-alt1
+- new version 2.8.1
+
 * Fri Nov 20 2026 Sergey Palcheh <minergenon@altlinux.org> 2.7.1-alt1
 - new version 2.7.1
 
