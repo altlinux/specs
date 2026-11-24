@@ -6,7 +6,7 @@
 
 Name: sockudo
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 Summary: A self-hosted realtime platform
 License: MIT
@@ -81,7 +81,7 @@ for i in $(seq 1 100); do
 done
 [ "$(redis-cli -s "$redis_dir/redis.sock" ping)" = PONG ]
 
-%rust_test
+%rust_test -- --test-threads=1
 
 %pre
 %_sbindir/groupadd -r -f %_pseudouser_group 2>/dev/null ||:
@@ -107,6 +107,9 @@ done
 %dir %attr(0750,%_pseudouser_user,%_pseudouser_group) %_pseudouser_home
 
 %changelog
+* Tue Nov 24 2026 Mikhail Nogin <joycap@altlinux.org> 5.2.0-alt2
+- Fix FTBFS due to a test race.
+
 * Tue Nov 10 2026 Mikhail Nogin <joycap@altlinux.org> 5.2.0-alt1
 - Update to v5.2.0.
 
