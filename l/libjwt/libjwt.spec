@@ -6,7 +6,7 @@
 %def_with check
 
 Name: libjwt
-Version: 3.6.3
+Version: 3.8.0
 Release: alt1
 
 Summary: JSON Web Token (JWT) C library
@@ -102,6 +102,9 @@ ctest -N --test-dir %_target_platform
 %_man1dir/*.1.*
 
 %changelog
+* Tue Nov 24 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.8.0-alt1
+- Updated to 3.8.0.
+
 * Tue Nov 17 2026 Timofei Fedotov <sovtouch@altlinux.org> 3.6.3-alt1
 - Updated to 3.6.3.
 

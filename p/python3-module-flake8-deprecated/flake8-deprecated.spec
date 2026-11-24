@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.3.0
+Version: 2.4.0
 Release: alt1
 
 Summary: Flake8 plugin that warns about deprecated method calls
@@ -41,12 +41,15 @@ Requires: python3-module-flake8
 %pyproject_run_pytest run_tests.py
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE README.md
 %python3_sitelibdir/__pycache__/%mod_name.*
 %python3_sitelibdir_noarch/%mod_name.py
 %python3_sitelibdir_noarch/%{pyproject_distinfo %mod_name}/
 
 %changelog
+* Tue Nov 24 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.4.0-alt1
+- Updated to 2.4.0.
+
 * Tue Feb 03 2026 Timofei Fedotov <sovtouch@altlinux.org> 2.3.0-alt1
 - Updated to 2.3.0.
 
