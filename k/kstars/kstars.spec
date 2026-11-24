@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 3.8.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K6init no_altplace appdata
 
@@ -30,7 +30,7 @@ Patch1: alt-check-indiless.patch
 BuildRequires(pre): rpm-build-kf6
 BuildRequires: extra-cmake-modules qt6-declarative-devel qt6-multimedia-devel qt6-svg-devel qt6-websockets-devel
 BuildRequires: qt6-datavis3d-devel
-BuildRequires: /usr/bin/sqlite3
+BuildRequires: /usr/bin/sqlite3 python3(sqlite3)
 BuildRequires: libsecret-devel libqtkeychain-qt6-devel
 BuildRequires: eigen3 libGLU-devel zlib-devel libcurl-devel libcups-devel
 BuildRequires: libcfitsio-devel stellarsolver-devel wcslib-devel libraw0-devel libgsl-devel
@@ -91,6 +91,9 @@ sed -i '/\bUA\b/d' kstars/data/citydb.tsv
 
 
 %changelog
+* Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.5-alt2
+- fix build requires
+
 * Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.5-alt1
 - new version
 
