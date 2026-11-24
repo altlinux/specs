@@ -7,7 +7,7 @@
 
 Name: Uranium
 Version: 5.14.0
-Release: alt1
+Release: alt2
 
 Summary: A Python framework for building 3D printing desktop applications
 License: LGPL-3.0-or-later
@@ -69,7 +69,17 @@ sed -i 's|qsb |qsb-qt6 |g' scripts/compile-shaders
 %_datadir/uranium
 %_datadir/cmake/Modules/*
 
+%pretrans -p <lua>
+path = "%_datadir/uranium/resources/i18n"
+st = posix.stat(path)
+if st and st.type == "link" then
+  os.remove(path)
+end
+
 %changelog
+* Tue Nov 24 2026 Valery Zabrovsky <brow@altlinux.org> 5.14.0-alt2
+- Add pretrans script for Uranium locale dir (ALT #61587).
+
 * Wed Nov 18 2026 Valery Zabrovsky <brow@altlinux.org> 5.14.0-alt1
 - New version 5.14.0.
 - Switch to build from Gear tags.
