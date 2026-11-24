@@ -1,19 +1,20 @@
 %define repo qt5platform-plugins
 
 %def_without clang
+%def_with wayland
 
 Name: deepin-qt5platform-plugins
 Version: 6.7.54
-Release: alt1
+Release: alt2
 
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/qt5platform-plugins
+URL: https://github.com/linuxdeepin/qt5platform-plugins
 VCS: https://github.com/linuxdeepin/qt5platform-plugins
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/qt5platform-plugins/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %repo-%version-%release.patch
 Patch1: deepin-qt5platform-plugins-5.6.28-alt-plugin-path.patch
@@ -32,10 +33,11 @@ BuildRequires: gcc-c++
 BuildRequires(pre): rpm-macros-dqt5
 # dqt5-base-devel-static for libQt5EdidSupport.a
 BuildRequires: dqt5-base-devel-static dqt5-x11extras-devel libdqt5-quickshapes libdqt5-widgets
-BuildRequires: extra-cmake-modules kf5-kwayland-devel libkf5waylandclient libkf5waylandserver dqt5-wayland-devel libdqt5-waylandclient libwayland-cursor-devel deepin-wayland-protocols-devel deepin-wayland-protocols
-
-Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
+%if_with wayland
+BuildRequires: extra-cmake-modules kf5-kwayland-devel libkf5waylandclient dqt5-wayland-devel libdqt5-waylandclient libwayland-cursor-devel deepin-wayland-protocols-devel deepin-wayland-protocols
 Requires: libdqt5-waylandclient = %_dqt5_version
+%endif
+Requires: libdqt5-core = %_dqt5_version libdqt5-gui = %_dqt5_version libdqt5-xcbqpa = %_dqt5_version
 
 # DTK6 BuildRequires.
 BuildRequires(pre): rpm-macros-dqt6
@@ -57,6 +59,9 @@ Requires: libdqt6-core = %_dqt6_version libdqt6-gui = %_dqt6_version libdqt6-ope
 %patch0 -p1
 %patch1 -p1
 rm -r xcb/libqt5xcbqpa-dev xcb/libqt6xcbqpa-dev wayland/qtwayland-dev
+%if_without wayland
+sed -i '/wayland/d' CMakeLists.txt
+%endif
 
 %build
 %if_with clang
@@ -100,8 +105,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %doc CHANGELOG.md README.md
 %doc LICENSE
 %_dqt5_plugindir/platforms/libdxcb.so
+%if_with wayland
 %_dqt5_plugindir/platforms/libdwayland.so
 %_dqt5_plugindir/wayland-shell-integration/libkwayland-shell.so
+%endif
 
 %files -n deepin-qt6platform-plugins
 %doc CHANGELOG.md README.md
@@ -109,6 +116,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_dqt6_plugindir/platforms/libdxcb.so
 
 %changelog
+* Tue Nov 24 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.54-alt2
+- Fixed build on kf5-kwayland 5.116.0-alt2.
+
 * Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 6.7.54-alt1
 - New version 6.7.54.
 
