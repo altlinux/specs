@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.11.4
-Release: alt3
+Version: 4.11.5
+Release: alt1
 
 Summary: Open source computer monitoring and classroom management
 Summary(ru.UTF-8): Программа с открытым кодом для контроля компьютеров и организации учебного процесса
@@ -17,22 +17,25 @@ Source2: %name-%version-3rdparty-qthttpserver.tar
 Source3: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
 Source4: %name-%version-3rdparty-x11vnc.tar
 
-Source100: veyon-config-dm-login.sh
 Patch1: alt-veyon-libdir.patch
-Patch2: alt-fix-dm-login.patch
-Patch3: alt-desktop-russian-translation.patch
-Patch4: alt-policy-russian-translation.patch
+Patch2: alt-desktop-russian-translation.patch
+Patch3: alt-policy-russian-translation.patch
+Patch4: 0001-veyon-fix-shutdown-reboot-4.11.5.patch
+Patch5: 0002-veyon-desktop-workflows-qml-4.11.5.patch
+Patch6: 0003-veyon-demo-context-menu-recipients-4.11.5.patch
 
 Requires: polkit qca-qt6-ossl qt6-translations
 Obsoletes: italc3
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-macros-ubt
 BuildRequires: rpm-build-kf6
 BuildRequires: gcc-c++ make cmake
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-5compat-devel
 BuildRequires: qt6-httpserver-devel
+BuildRequires: qt6-declarative-devel
 BuildRequires: libjpeg-devel
 BuildRequires: zlib-devel
 BuildRequires: liblzo2-devel
@@ -115,13 +118,14 @@ sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox:
 	-DWITH_LTO=OFF \
 %endif
 	-DSYSTEMD_SERVICE_INSTALL_DIR:PATH=%_unitdir \
+%if %__ubt_branch_id == "S4"
 	-DCMAKE_CXX_FLAGS="-Wno-error=sfinae-incomplete"\
+%endif
 	%nil
 %cmake_build
 
 %install
 %cmakeinstall_std
-%__install -D -m 0755 %SOURCE100 %buildroot%_datadir/veyon/
 
 %post
 if [ $DISPLAY != "" ]; then
@@ -142,8 +146,25 @@ fi
 %_desktopdir/veyon-*.desktop
 %_desktopdir/io.veyon.veyon-server.desktop
 %_datadir/dbus-1/services/io.veyon.veyon-server.service
+%_unitdir/veyon-auth-helper.service
+%_datadir/dbus-1/system-services/io.veyon.AuthHelper.service
+%_datadir/dbus-1/system.d/io.veyon.AuthHelper.conf
+%_datadir/dbus-1/system.d/io.veyon.veyon-service.conf
+%_unitdir/veyon-login-helper.service
+%_datadir/dbus-1/system-services/io.veyon.LoginHelper.service
+%_datadir/dbus-1/system.d/io.veyon.LoginHelper.conf
+%_datadir/lightdm/lightdm.conf.d/90-veyon-login.conf
 
 %changelog
+* Mon Nov 23 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.5-alt1
+- New version.
+- New UI by rauty.
+- Use new plasma calls for remote shutdoen and reboot (Closes: 61260).
+- Add new service and greeter wrapper for remote login and remote greeter
+  session control (Closes: 39892).
+- Use the filtered classroom computer list as the recipient set when sharing a
+  selected user screen (Closes: 61354).
+
 * Tue Nov 11 2026 Ilya Muhamadeev <nicourced@altlinux.org> 4.11.4-alt3
 - Fix FTBFS, turn off SFINAE incomplete error (when function is auto and is
   found to be incomplete but then is being used as a complete function).
