@@ -1,6 +1,6 @@
 Name: mozangle
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Mozilla's fork of Google ANGLE shader translator
 
@@ -48,7 +48,9 @@ cargo build --release 2>&1
 
 %install
 # Install static libraries from cargo build output
-OUTDIR=$(find target/release/build/mozangle-*/out -maxdepth 0 -type d | head -1)
+OUTFILE=$(find . -type f -name libangle_common.a -print -quit)
+OUTDIR=$(dirname "$OUTFILE")
+test -n "$OUTDIR"
 install -d %buildroot%_libdir
 install -m 0644 $OUTDIR/libangle_common.a %buildroot%_libdir/
 install -m 0644 $OUTDIR/libpreprocessor.a %buildroot%_libdir/
@@ -72,6 +74,9 @@ install -m 0644 src/shaders/glslang-c.cpp %buildroot%_includedir/mozangle/shader
 %_includedir/mozangle/
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt2
+- locate generated static libraries from the Cargo build output.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
 - new version 0.7.1
 
