@@ -1,18 +1,18 @@
 %def_with cmake
 
 Name: angelscript
-Version: 2.38.0
-Release: alt2
+Version: 2.39.0
+Release: alt1
 
 Summary: Flexible cross-platform scripting library
 
 License: Zlib
 Group: System/Libraries
-Url: https://www.angelcode.com/angelscript/
-Vcs: https://github.com/anjo76/angelscript
+URL: https://www.angelcode.com/angelscript/
+VCS: https://github.com/anjo76/angelscript
 
 Source: %name-%version.tar.gz
-# Source-url: %url/sdk/files/%{name}_%version.zip
+# Source-url: https://github.com/anjo76/angelscript/sdk/files/%{name}_%version.zip
 
 Patch0: %name-%version-%release.patch
 Patch1: angelscript-2.37.0-alt-cmake-riscv64.patch
@@ -102,6 +102,9 @@ cd sdk/%name/projects/meson/
 %endif
 
 %changelog
+* Tue Nov 24 2026 Leontiy Volodin <lvol@altlinux.org> 2.39.0-alt1
+- New version 2.39.0.
+
 * Thu Dec 25 2025 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.38.0-alt2
 - e2k build fix
 
