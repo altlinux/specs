@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.7.7
-Release: alt2
+Release: alt3
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0-or-later
@@ -55,7 +55,10 @@ Patch26: 0026-remove-swipe-pages.patch
 # Build with C++20 for Poppler v24.04 and newer
 # https://github.com/OpenBoard-org/OpenBoard/issues/958
 Patch28: 0028-add-Oblique-Seyes-Ruled-Background.patch
+# https://github.com/OpenBoard-org/OpenBoard/pull/1219
 Patch50: 0050-libavcodec63-fix.patch
+# https://github.com/OpenBoard-org/OpenBoard/pull/1474
+Patch51: 0051-poppler-26.04-fix.patch
 Patch100: build-with-c++20.patch
 # disable update check and startup hints
 Patch101: 0100-alt-settings.patch
@@ -218,6 +221,9 @@ rm -r %buildroot%_libdir/%name/library/search
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Nov 24 2026 Valery Zabrovsky <brow@altlinux.org> 1.7.7-alt3
+- Fix FTBFS with Poppler 26.04+.
+
 * Fri Sep 04 2026 Valery Zabrovsky <brow@altlinux.org> 1.7.7-alt2
 - Fix FTBFS with libavcodec63.
 
