@@ -12,7 +12,7 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
@@ -114,6 +114,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Tue Nov 24 2026 Anton Farygin <rider@altlinux.org> 1.5.1-alt1
+- 1.5.0 -> 1.5.1
+
 * Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 1.5.0-alt1
 - 1.4.1 -> 1.5.0
 
