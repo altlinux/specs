@@ -9,8 +9,10 @@
 %define altbranch sisyphus
 %endif
 
+%global altbranch %(printf '%%s' '%altbranch' | cut -d_ -f1)
+
 Name: gpui
-Version: 0.2.59
+Version: 0.2.60
 Release: alt1
 
 Summary: Group policy editor
@@ -22,17 +24,32 @@ BuildRequires: cmake
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake-modules
 BuildRequires: gcc-c++
+%if_with check
+BuildRequires: ctest >= 3.17
+BuildRequires: libgtest-devel
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+BuildRequires: qt6-translations
+%else
+BuildRequires: qt5-translations
+%endif
+%endif
 %if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
 BuildRequires: qt6-base-common
 BuildRequires: qt6-base-devel
 BuildRequires: qt6-declarative-devel
 BuildRequires: qt6-tools-devel
 BuildRequires: qt6-5compat-devel
+%ifarch x86_64 aarch64 loongarch64 mips64el
+BuildRequires: qt6-webengine-devel
+%endif
 %else
 BuildRequires: qt5-base-common
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
+%ifarch %ix86 x86_64 %arm aarch64 mips mipsel mips64el
+BuildRequires: qt5-webengine-devel
+%endif
 %endif
 BuildRequires: libsmbclient-devel libsmbclient
 
@@ -48,7 +65,6 @@ BuildRequires: libpcre2-devel
 BuildRequires: libpcre-devel
 %endif
 BuildRequires: libkrb5-devel
-BuildRequires: libgtest-devel
 
 BuildRequires: doxygen
 BuildRequires: libxerces-c-devel
@@ -61,7 +77,13 @@ BuildRequires: libqt-mvvm-devel
 
 BuildRequires: xorg-xvfb xvfb-run
 
+Requires: docs-alt-domain
 Requires: admx-basealt
+%if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
+Requires: qt6-translations
+%else
+Requires: qt5-translations
+%endif
 
 Source0: %name-%version.tar
 
@@ -73,9 +95,9 @@ Group policy editor
 
 %build
 %if "%altbranch" == "sisyphus" || "%altbranch" == "p11"
-%cmake
+%cmake -DGPUI_BUILD_TESTS:BOOL=%{with check}
 %else
-%cmake -DQT_VERSION_MAJOR=5
+%cmake -DQT_VERSION_MAJOR=5 -DGPUI_BUILD_TESTS:BOOL=%{with check}
 %endif
 %cmake_build
 
@@ -99,6 +121,12 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:%_libdir/gpui/plugins/
 
 LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
+
+%check
+%if_with check
+cd %_cmake__builddir
+QT_QPA_PLATFORM=offscreen ctest --output-on-failure --no-tests=error
+%endif
 
 %files
 %doc README.md
@@ -138,6 +166,25 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Nov 18 2026 Korney Gedert <kiper@altlinux.org> 0.2.60-alt1
+- 0.2.60-alt1
+- Features:
+  + Add PDC connection and controller selection.
+  + Add Apply to preference dialogs.
+  + Add input validation and field hints.
+  + Add a local help window.
+- Fixes:
+  + Restore GPC updates after disconnects (Closes: #53815).
+  + Confirm SYSVOL saves when GPC updates fail.
+  + Fix Qt and KDE dialog translations.
+  + Update the GPO version when saving script policies.
+  + Fix Wayland icons (Closes: #57675, #59123).
+  + Keep INI values editable (Closes: #59421).
+  + Fix preference editing and item removal in Clang builds.
+- Earlier fixes (thanks to Vladimir Rubanov, august@):
+  + Port to Qt6 (Closes: #58694).
+  + Suppress missing GPT.INI errors (Closes: #52199).
+
 * Tue Sep 22 2026 Vladimir Rubanov <august@altlinux.org> 0.2.59-alt1
 - 0.2.59-alt1
 - Fixes:
