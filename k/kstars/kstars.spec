@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: %rname
-Version: 3.8.2
-Release: alt2
+Version: 3.8.5
+Release: alt1
 Epoch: 1
 %K6init no_altplace appdata
 
@@ -56,7 +56,7 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %patch1 -p1
 mv docs-ru po/ru/docs
 sed -i 's|type="bool"|type="b"|' kstars/*.xml
-echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine'; COMMIT;" | sqlite3 kstars/data/citydb.sqlite
+sed -i '/\bUA\b/d' kstars/data/citydb.tsv
 
 %build
 %add_optflags -I%_K6inc
@@ -77,8 +77,7 @@ echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine';
 #%_K6data/kstars/
 %_datadir/kstars/
 %_K6icon/*/*/apps/kstars.*
-#%_K6snd/KDE-KStars-*.*
-%_datadir/sounds/KDE-KStars-*.*
+%_datadir/sounds/*KStars*
 %_K6xdgapp/org.kde.kstars.desktop
 %_K6notif/kstars.notifyrc
 # kauth
@@ -87,10 +86,14 @@ echo "BEGIN TRANSACTION; UPDATE city SET Country = '' WHERE Country = 'Ukraine';
 #%_K6dbus_sys_srv/*kstars*.service
 #%_datadir/polkit-1/actions/*kstars*.policy
 %_K6cfg/kstars.kcfg
+%_K6dbus_srv/*kstars*.service
 %_datadir/metainfo/*kstars*
 
 
 %changelog
+* Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.5-alt1
+- new version
+
 * Thu Apr 30 2026 Sergey V Turchin <zerg@altlinux.org> 1:3.8.2-alt2
 - build with libraw0-devel
 
