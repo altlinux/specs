@@ -2,7 +2,7 @@
 
 Name: qgroundcontrol
 Version: 5.1.5
-Release: alt1
+Release: alt2
 
 Summary: Ground Control Station (GCS) designed for UAVs
 License: Apache-2.0
@@ -140,6 +140,9 @@ export PATH="%{_qt6_bindir}:$PATH"
 %_datadir/metainfo/org.mavlink.qgroundcontrol.appdata.xml
 
 %changelog
+* Mon Nov 23 2026 Ilya Mukhamadeev <nicourced@altlinux.org> 5.1.5-alt2
+- Do not restrict the maximum supported Qt version.
+
 * Sun Oct 11 2026 Ilya Mukhamadeev <nicourced@altlinux.org> 5.1.5-alt1
 - New version.
 
