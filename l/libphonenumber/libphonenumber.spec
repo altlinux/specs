@@ -1,12 +1,13 @@
 %define sover 9
 %def_enable boost
 %def_enable check
+%def_enable java
 
 %define stdxx 17
 
 Name: libphonenumber
 Version: 9.0.44
-Release: alt1
+Release: alt1.1
 
 Summary: Library to handle international phone numbers
 License: Apache-2.0 and BSD-3-Clause and MIT
@@ -19,9 +20,6 @@ Source: %url/archive/v%version/%name-%version.tar.gz
 # link libgeocoding against libphonenumber
 Patch1: %name-8.13.4-alt-link.patch
 Patch2: %name-9.0.16-alt-fix-nostatic-build.patch
-# https://github.com/google/libphonenumber/pull/3903
-# upstreamed in 9.0.44
-Patch10: %name-9.0.35-up-boost-1.89.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -32,6 +30,15 @@ BuildRequires: libprotobuf-devel
 BuildRequires: libabseil-cpp-devel >= 20211102.0-alt3
 BuildRequires: /proc /dev/pts /usr/bin/java
 #BuildRequires: /usr/bin/mvn junit mockito
+%if_enabled java
+BuildRequires(pre): rpm-macros-java
+BuildRequires: java-21-openjdk-devel
+BuildRequires: maven-local
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-javadoc-plugin)
+BuildRequires: mvn(org.mockito:mockito-core)
+%endif
 %{?_enable_boost:BuildRequires: boost-devel}
 %{?_enable_check:BuildRequires: ctest libgtest-devel}
 
@@ -49,15 +56,68 @@ Requires: %name = %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%if_enabled java
+%package java
+Summary: Java library for international phone numbers
+Group: Development/Java
+BuildArch: noarch
+
+%description java
+Google's Java library for parsing, formatting and validating phone numbers.
+
+%package java-prefixmapper
+Summary: Phone number prefix mappings for libphonenumber
+Group: Development/Java
+BuildArch: noarch
+
+%description java-prefixmapper
+Shared prefix lookups for carrier mapping and offline geocoding.
+
+%package java-carrier
+Summary: Phone number carrier mapping for libphonenumber
+Group: Development/Java
+BuildArch: noarch
+
+%description java-carrier
+Looks up the original carrier associated with a phone number prefix.
+
+%package java-geocoder
+Summary: Offline phone number geocoder for libphonenumber
+Group: Development/Java
+BuildArch: noarch
+
+%description java-geocoder
+Looks up a geographic description for a phone number.
+
+%package java-javadoc
+Summary: API documentation for the libphonenumber Java libraries
+Group: Development/Documentation
+BuildArch: noarch
+
+%description java-javadoc
+API documentation for the libphonenumber Java libraries.
+%endif
+
 %prep
 %setup -n %name-%version/cpp
 %patch1 -b .link
 %patch2 -b .static
-#%%{?_enable_boost:%patch10 -p2 -b .boost-1.89}
 
 %ifarch %e2k
 # the problematic warning actually sits in protobuf (-Winvalid-offsetof)
 sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
+%endif
+
+%if_enabled java
+pushd ../java
+%pom_disable_module demo
+%pom_remove_plugin org.sonatype.central:central-publishing-maven-plugin
+%pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+# The Animal Sniffer check requires an unavailable Java 5 signature.
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin \
+    carrier geocoder internal/prefixmapper libphonenumber
+popd
 %endif
 
 %build
@@ -72,8 +132,26 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %nil
 %cmake_build
 
+%if_enabled java
+pushd ../java
+%mvn_package :libphonenumber-parent java
+%mvn_package :libphonenumber java
+%mvn_package :libphonenumber:jar:no-metadata java
+%mvn_package :prefixmapper java-prefixmapper
+%mvn_package :carrier java-carrier
+%mvn_package :geocoder java-geocoder
+%mvn_build -s
+popd
+%endif
+
 %install
 %cmake_install
+
+%if_enabled java
+pushd ../java
+%mvn_install
+popd
+%endif
 
 %check
 %cmake_build -t tests
@@ -89,7 +167,23 @@ sed -i 's/-Werror/-Wno-error/g' {,../tools/cpp/}CMakeLists.txt
 %_libdir/%name.so
 %_libdir/cmake/%name/
 
+%if_enabled java
+%files java -f ../java/.mfiles-java
+%doc ../LICENSE
+
+%files java-prefixmapper -f ../java/.mfiles-java-prefixmapper
+
+%files java-carrier -f ../java/.mfiles-java-carrier
+
+%files java-geocoder -f ../java/.mfiles-java-geocoder
+
+%files java-javadoc -f ../java/.mfiles-javadoc
+%endif
+
 %changelog
+* Tue Nov 24 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.44-alt1.1
+- new -java* subpackages by xeno@ (ALT #61649)
+
 * Wed Nov 18 2026 Yuri N. Sedunov <aris@altlinux.org> 9.0.44-alt1
 - 9.0.44
 
