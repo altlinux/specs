@@ -1,15 +1,13 @@
 Name: usbids
-Version: 20240206
+Version: 20261124
 Release: alt1
-
-Packager: Victor Forsyuk <force@altlinux.org>
 
 Summary: Repository of USB vendor IDs
 License: GPLv2+ or BSD 3-clause
 Group: System/Libraries
+URL: http://www.linux-usb.org
 
-Url: http://www.linux-usb.org
-Source: %url/usb.ids
+Source: http://www.linux-usb.org/usb.ids
 
 BuildArch: noarch
 
@@ -19,8 +17,6 @@ This package contains a public list of all known IDs used in USB devices.
 %prep
 %setup -c -T
 
-%build
-
 %install
 install -pD -m644 %SOURCE0 %buildroot%_datadir/misc/usb.ids
 
@@ -28,6 +24,9 @@ install -pD -m644 %SOURCE0 %buildroot%_datadir/misc/usb.ids
 %_datadir/misc/usb.ids
 
 %changelog
+* Tue Nov 24 2026 Andrey Cherepanov <cas@altlinux.org> 20261124-alt1
+- New snapshot.
+
 * Tue Feb 06 2024 Cronbuild Service <cronbuild@altlinux.org> 20240206-alt1
 - repocop cronbuild 20240206. At your service.
 
