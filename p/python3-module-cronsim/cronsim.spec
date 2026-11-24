@@ -1,5 +1,5 @@
 Name: python3-module-cronsim
-Version: 2.8
+Version: 2.9
 Release: alt1
 
 Summary: A cron expression parser and evaluator
@@ -42,6 +42,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/cronsim-%version.dist-info
 
 %changelog
+* Tue Nov 24 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.9-alt1
+- 2.9 released
+
 * Thu Nov 05 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8-alt1
 - 2.8 released
 
