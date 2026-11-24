@@ -6,7 +6,7 @@
 
 Name: plasma-bigscreen
 Version: 6.7.6
-Release: alt1
+Release: alt2
 
 Summary: Plasma shell for TVs
 License: GPL-2.0-or-later
@@ -36,6 +36,7 @@ Requires: kdeconnect
 Requires: kde-volume-control
 
 Source: %name-%version.tar
+Patch1: alt-ftbfs.patch
 
 BuildRequires(pre): rpm-build-kf6 rpm-macros-qt6-webengine
 BuildRequires: cmake extra-cmake-modules
@@ -61,6 +62,7 @@ to any installed apps and skills. Controllable via voice or TV remote.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %K6build
@@ -93,6 +95,9 @@ fi
 %_udev_rulesdir/40-uinput.rules
 
 %changelog
+* Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt2
+- fix to build
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 6.7.6-alt1
 - new version
 
