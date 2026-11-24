@@ -1,36 +1,41 @@
+Name: jakarta-mail1
+Version: 1.6.7
+Release: alt3
+
+Summary: Jakarta Mail API
+License: EPL-2.0 or GPLv2 with exceptions
 Group: Development/Java
+URL: https://jakartaee.github.io/mail-api
+VCS: https://github.com/jakartaee/mail-api
+
+Source0: %name-%version.tar
+
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Name:           jakarta-mail1
-Version:        1.6.7
-Release:        alt2
-Summary:        Jakarta Mail API
-License:        EPL-2.0 or GPLv2 with exceptions
-URL:            https://github.com/eclipse-ee4j/mail
-BuildArch:      noarch
+BuildRequires: maven-local
 
-Source0:        https://github.com/eclipse-ee4j/mail/archive/%{version}/mail-%{version}.tar.gz
+BuildRequires: mvn(com.sun.activation:jakarta.activation:1.2.2)
+BuildRequires: mvn(junit:junit)
+BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-dependency-plugin)
+BuildRequires: mvn(org.apache.maven.plugins:maven-source-plugin)
+BuildRequires: mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
-BuildRequires:  maven-local
-BuildRequires:  jakarta-activation1
-BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildArch: noarch
 
 # javadoc package is currently not built
-Obsoletes:      javamail-javadoc  < 1.5.2-16
-Source44: import.info
+Obsoletes: javamail-javadoc  < 1.5.2-16
 
 %description
 The Jakarta Mail API provides a platform-independent and
 protocol-independent framework to build mail and messaging applications.
 
 %prep
-%setup -q -n mail-%{version}
+%setup -n %name-%version
+
+# set version 1.2.2 for jakarta-activation
+%pom_xpath_replace "pom:project/pom:properties/
+pom:activation.version" "<activation.version>1.2.2</activation.version>"
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -47,7 +52,9 @@ protocol-independent framework to build mail and messaging applications.
 %pom_xpath_remove "pom:project/pom:profiles"
 
 # Java version 7 no longer supported - use version 8
-%pom_xpath_replace "//pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:executions/pom:execution[pom:id='base-compile-7']/pom:configuration/pom:release" "<release>8</release>"
+%pom_xpath_replace "//pom:plugin[pom:artifactId='maven-compiler-plugin']
+/pom:executions/pom:execution[pom:id='base-compile-7']/pom:configuration
+/pom:release" "<release>8</release>"
 
 # inject OSGi bundle versions manually instead of using osgiversion-maven-plugin
 find -name pom.xml -exec sed -i "s/\${mail\.osgiversion}/%{version}/g" {} +
@@ -69,7 +76,7 @@ sed -i "/-Werror/d" mail/pom.xml
 
 # add symlinks for compatibilty with old classpaths
 %mvn_file com.sun.mail:jakarta.mail \
-    %{name}/jakarta.mail \
+    %name/jakarta.mail \
     javamail/mail \
     javamail/javax.mail \
     javax.mail/javax.mail
@@ -77,8 +84,10 @@ sed -i "/-Werror/d" mail/pom.xml
 %build
 # skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
 #
-# XXX 2022-01-05 disable tests for now due to issue with DNS resolution caused by glibc change.
-# Tests fail with: java.net.UnknownHostException: myhostname: Temporary failure in name resolution
+# XXX 2022-01-05 disable tests for now due to issue with DNS resolution
+# caused by glibc change.
+# Tests fail with: java.net.UnknownHostException: myhostname: Temporary
+# failure in name resolution
 # Simple reproducer: echo 'java.net.InetAddress.getLocalHost();' | jshell -s
 # Until glibc-2.34.9000-27.fc36 jakarta-mail tests pass.
 # Starting with glibc-2.34.9000-28.fc36 jakarta-mail tests fail.
@@ -97,6 +106,13 @@ sed -i "/-Werror/d" mail/pom.xml
 %doc README.md
 
 %changelog
+* Mon Nov 23 2026 Anton Meleshnikov <alton@altlinux.org> 1.6.7-alt3
+- Fix FTBFS with jakarta-activation 1.2.2.
+- Switched to use .gear/tags.
+- Cleanup spec.
+- Added VCS tag.
+- Removed import.info.
+
 * Thu Jan 29 2026 Anton Meleshnikov <alton@altlinux.org> 1.6.7-alt2
 - renamed package
 
