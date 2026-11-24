@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components-base
-Version: 0.10.15
+Version: 0.10.16
 Release: alt1
 
 Summary: Base set of ALT Distributions components
@@ -15,7 +15,7 @@ Source0: %name-%version.tar
 
 BuildRequires: cmark
 BuildRequires: autoconf-common
-BuildRequires: alterator-entry >= 0.4.16
+BuildRequires: alterator-entry >= 0.4.17
 BuildRequires: python3-module-html5lib
 BuildRequires(pre): rpm-macros-alterator
 
@@ -183,6 +183,9 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
 %_alterator_datadir/editions/edition_education
 
 %changelog
+* Fri Nov 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.16-alt1
+- Add the Nextcloud container service component (thx Evgenii Sozonov).
+
 * Tue Nov 17 2026 Andrey Limachko <liannnix@altlinux.org> 0.10.15-alt1
 - Update categories:
   + add message brokers and search analytics categories
@@ -221,8 +224,6 @@ install -v -p -m 755 -D scripts/alt-components-base-editions.sh %buildroot%_libe
   + add redis, valkey, kafka, rabbitmq to edition_server (thx Andrey Limachko).
 
 * Tue Sep 29 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.10.11-alt1
-- Drop alterator-ulogd from education-server-apps (Closes: 59622).
-
 * Wed Sep 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.10.10-alt1
 - Add ALT Domain IPA edition (thx Danila Skachedubov).
 - Update components:

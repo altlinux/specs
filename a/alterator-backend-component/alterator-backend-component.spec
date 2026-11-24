@@ -2,7 +2,7 @@
 %define shortname component
 
 Name: alterator-backend-%{shortname}
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Backends generations for components backends
@@ -69,6 +69,11 @@ if [ $1 = 0 ]; then
 fi
 
 %changelog
+* Tue Jul 07 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.7-alt1
+- Support components without packages section.
+- Add dynamic default tag="latest" when image tag is not specified
+  in component descriptor.
+
 * Thu May 07 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.3.6-alt1
 - Add locale awareness to the Description and DescriptionRaw methods
   of the following interfaces:

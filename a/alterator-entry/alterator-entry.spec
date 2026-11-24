@@ -2,7 +2,7 @@
 %define mod_name alterator_entry
 
 Name: alterator-entry
-Version: 0.4.16
+Version: 0.4.17
 Release: alt1
 
 Summary: Common files for Alterator Entry specification
@@ -75,6 +75,9 @@ find examples -type f | xargs ./scripts/alterator-entry validate
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Fri Sep 25 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.17-alt1
+- Add support for images in .component.
+
 * Wed Sep 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.4.16-alt1
 - Add handled_interface for component application providers
   (thx Evgenii Sozonov).

@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alt-components
-Version: 0.6.16
-Release: alt3
+Version: 0.6.17
+Release: alt1
 
 Summary: Alterator application for managing system components
 License: GPLv2+
@@ -26,14 +26,15 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: libexpected-devel
 BuildRequires: alterator-entry >= 0.4.6
 
+Requires: alterator-backend-images
 Requires: alterator-backend-packages >= 0.2.14-alt1
-Requires: alterator-backend-component >= 0.3.5-alt1
+Requires: alterator-backend-component >= 0.3.7-alt1
 Requires: alterator-module-executor >= 0.1.29
 Requires: alterator-backend-systeminfo >= 0.4.3-alt1
 Requires: alterator-backend-edition >= 0.4.1
 Requires: alterator-backend-browsing >= 0.1.1-alt2
 Requires: libqbase
-Requires: alt-components-base >= 0.10.10
+Requires: alt-components-base >= 0.10.16
 
 Provides: alterator-application-components = %version-%release
 Obsoletes: alterator-application-components < 0.4.0
@@ -65,6 +66,10 @@ find ./alterator/*.{object,application,backend} -type f -exec alterator-entry va
 %_iconsdir/hicolor/*/*/*.svg
 
 %changelog
+* Thu Nov 12 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.17-alt1
+- Add support for installing and removing container images.
+- Update browsing UI.
+
 * Wed Sep 30 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.6.16-alt3
 - Add missing dependency required by ResolveLaunchers.
 
