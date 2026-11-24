@@ -1,8 +1,8 @@
 %def_without check
-# test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+# test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.10s
 
 Name:    mdfried
-Version: 0.22.6
+Version: 0.22.8
 Release: alt1
 
 Summary: A markdown viewer for the terminal that renders images and Big Headers
@@ -48,6 +48,9 @@ EOF
 %_bindir/%name
 
 %changelog
+* Mon Nov 23 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.22.8-alt1
+- New version.
+
 * Tue Oct 06 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.22.6-alt1
 - New version.
 
