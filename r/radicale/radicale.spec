@@ -3,7 +3,7 @@
 %define pypi_name radicale
 
 Name: radicale
-Version: 3.9.1
+Version: 3.9.2
 Release: alt1
 
 Summary: CalDAV and CardDAV server
@@ -22,6 +22,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-module-wheel
 
 %if_with check
+BuildRequires: openssl
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-waitress
 BuildRequires: python3-module-bcrypt
@@ -106,6 +107,10 @@ mkdir -p %buildroot%_localstatedir/%name/collections %buildroot%_cachedir/%name
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.2-alt1
+- new version 3.9.2
+- add openssl to test build requirements.
+
 * Sun Nov 15 2026 Vitaly Lipatov <lav@altlinux.ru> 3.9.1-alt1
 - new version 3.9.1
 
