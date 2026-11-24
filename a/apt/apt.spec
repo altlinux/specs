@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt105
+Release: alt106
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -496,6 +496,9 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Mon Nov 23 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt106
+- tests: Fixed to successfully run with unforeseen system-wide sources.list.d.
+
 * Thu Nov 19 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt105
 - Ensured that the http method creates a fresh file. Made it copy partially
   downloaded content (on a resume). (thx Debian) The old behavior may lead
