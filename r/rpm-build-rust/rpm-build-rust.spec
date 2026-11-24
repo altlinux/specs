@@ -1,5 +1,5 @@
 Name:      rpm-build-rust
-Version:   0.2.0
+Version:   0.2.1
 Release:   alt1
 Summary:   RPM build enviroment to build rust packages
 Group:     Development/Other
@@ -35,6 +35,9 @@ cp %SOURCE0 %buildroot%_rpmmacrosdir/rust
 %_rpmmacrosdir/rust
 
 %changelog
+* Tue Nov 24 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.1-alt1
+- Fix tar generation for packages that refer to exsisting vendor/
+
 * Tue Oct 27 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.0-alt1
 - Switch the rust-cargo requirement to rust
 - Add a vendoring option to %%rust_prep (Closes: 48459)
