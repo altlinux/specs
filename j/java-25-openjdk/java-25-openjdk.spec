@@ -295,8 +295,8 @@
 %global featurever 25
 %global interimver 0
 %global updatever 5
-%global patchver 3
-%global buildver 1
+%global patchver 1
+%global buildver 2
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
 # and this it is better to change it here, on single place
@@ -368,7 +368,7 @@ Release: alt1
 # JDK package >= 1.6.0 to 1, and packages referring to JDK virtual
 # provides >= 1.6.0 must specify the epoch, "java >= 1:1.6.0".
 
-Epoch: 0
+Epoch: 1
 Summary: %{origin_nice} %{featurever} Runtime Environment
 Group: Development/Java
 
@@ -1976,6 +1976,11 @@ rm -f %buildroot%_datadir/javadoc/java-zip
 %endif
 
 %changelog
+* Tue Nov 24 2026 Andrey Cherepanov <cas@altlinux.org> 1:25.0.5.1.2-alt1
+- New version (fixes: CVE-2026-114938, CVE-2026-114939, CVE-2026-114940,
+  CVE-2026-114941, CVE-2026-114942, CVE-2026-114943, CVE-2026-114944,
+  CVE-2026-114945, CVE-2026-114946, CVE-2026-114947).
+
 * Tue Nov 03 2026 Andrey Cherepanov <cas@altlinux.org> 0:25.0.5.3.1-alt1
 - New version (fixes: CVE-2026-91403).
 
