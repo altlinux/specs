@@ -5,7 +5,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Proxmox Async SDK
 License: MIT
@@ -40,6 +40,10 @@ and in-memory CRUD operations.
 
 %prep
 %setup -n %pypi_name-%version
+sed -i '/^import json$/a import sys' tests/test_generated_integrity.py
+sed -i '/^import importlib.util$/a import sys' tests/test_loading_validation.py
+sed -i '/^    module = importlib.util.module_from_spec(spec)$/a\    sys.modules[spec.name] = module' tests/test_generated_integrity.py tests/test_loading_validation.py
+sed -i 's/if name == "opentelemetry" or name.startswith("opentelemetry."):/if name.startswith(("opentelemetry.sdk", "opentelemetry.exporter", "opentelemetry.instrumentation")):/g' tests/test_otel.py
 
 %build
 %pyproject_build
@@ -71,6 +75,10 @@ and in-memory CRUD operations.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 0.0.15-alt1.1
+- Fix tests for the current Pydantic and FastAPI versions.
+- Add BuildRequires: python3-module-pytest-xdist (run tests in parallel).
+
 * Mon Sep 21 2026 Alexander Burmatov <thatman@altlinux.org> 0.0.15-alt1
 - New 0.0.15 version.
 
