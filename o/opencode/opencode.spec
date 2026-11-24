@@ -30,7 +30,7 @@
 
 Name: opencode
 Version: 2.4.1
-Release: alt1
+Release: alt2
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
 # %%__strip at the top), so the binary is deliberately without debuginfo: keep
@@ -114,9 +114,10 @@ range of model providers, reads and edits files in a project, runs commands,
 and keeps a session history.
 
 This package is the command line client; the desktop client is packaged
-separately as %name-desktop. It does not update itself, install npm packages
-into your home directory, or download syntax highlighting grammars from
-GitHub.
+separately as %name-desktop. It does not update itself or download syntax
+highlighting grammars from GitHub. Installing and refreshing plugins from
+the configuration works as upstream; downloading provider SDKs is refused
+unless OPENCODE_ALLOW_NPM_INSTALL=1 is set.
 
 %package desktop
 Summary: Desktop client for %name, the AI coding agent
@@ -365,6 +366,12 @@ fi
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Tue Nov 24 2026 Nazarov Denis <nenderus@altlinux.org> 2.4.1-alt2
+- Allow installing and updating plugins at run time: move the no-runtime-npm-install
+  refusal from the shared install path to the two provider SDK call sites,
+  which now fail with an error naming the escape hatch;
+  OPENCODE_ALLOW_NPM_INSTALL=1 still restores upstream behaviour everywhere
+
 * Mon Nov 23 2026 Nazarov Denis <nenderus@altlinux.org> 2.4.1-alt1
 - Update to 2.4.1
 - Drop the desktop updater gate: upstream now disables the updater itself
