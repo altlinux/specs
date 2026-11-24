@@ -3,7 +3,7 @@
 
 Name: libgeopm
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: Global Extensible Open Power Manager runtime library
 Group: System/Libraries
@@ -12,6 +12,7 @@ License: BSD-3-Clause
 URL: https://geopm.github.io
 VCS: https://github.com/geopm/geopm.git
 Source0: %name-%version.tar
+Patch0: fix-gmock-deprecated-invoke.patch
 ExclusiveArch: x86_64
 
 BuildRequires: gcc-c++
@@ -54,6 +55,7 @@ Command-line utilities for GEOPM power management framework.
 
 %prep
 %setup -q %name-%version
+%patch0 -p1
 pushd %name
 echo %version > VERSION
 popd
@@ -107,5 +109,8 @@ popd
 %_bindir/geopmctl
 
 %changelog
+* Mon Sep 21 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt2
+- Fix build with recent Google Mock.
+
 * Thu Jan 15 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt1
 - first build for ALT
