@@ -2,17 +2,14 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name appimage-thumbnailer
-%define ver_major 4.1
+%define ver_major 5.0
 
-# DwarFS tools: dwarfsextract, dwarfsck required
-%def_disable bundle_dwarfs
-%define dwarfs_ver = 0.14.1
-%def_disable bundle_squashfs
-%define squashfs_ver 4.6.1
 %def_enable check
 
+%def_disable bootstrap
+
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: AppImage Thumbnailer
@@ -27,22 +24,12 @@ Source: %_name-%version.tar
 %else
 Source: %url/archive/v%version/%_name-%version.tar.gz
 %endif
+Source1: %name-%version-cargo.tar
 
 ExclusiveArch: x86_64 aarch64
 
-%define pixbuf_ver 2.42
-%define rsvg_ver 2.54
-%define dwarfs_ver 0.15.5
-
-Requires: dwarfs-tools >= %dwarfs_ver
-# if kernel < 3.18
-Requires: fuse-dwarfs
-Requires: squashfs-tools >= %squashfs_ver
-
-BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson
-BuildRequires: pkgconfig(gdk-pixbuf-2.0) >= %pixbuf_ver
-BuildRequires: pkgconfig(librsvg-2.0) >= %rsvg_ver
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust
 
 %description
 An in-process thumbnailer that extracts AppImage icons and writes
@@ -50,21 +37,22 @@ ready-to-use PNG thumbnails for desktop environments implementing the
 freedesktop.org spec.
 
 %prep
-%setup
+%setup %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
-%meson \
-    %{subst_enable_meson_bool bundle_dwarfs bundle_dwarfs} \
-    %{subst_enable_meson_bool bundle_squashfs bundle_squashfs} \
-%nil
-%meson_build
+%rust_build
 
 %install
-%meson_install
+%rust_install
+%makeinstall_std PREFIX=%_prefix
 %find_lang --output=%name.lang %_name
 
 %check
-%__meson_test -v
+%rust_test
 
 %files -f %name.lang
 %_bindir/%_name
@@ -72,6 +60,9 @@ freedesktop.org spec.
 %doc README*
 
 %changelog
+* Tue Nov 24 2026 Yuri N. Sedunov <aris@altlinux.org> 5.0.0-alt1
+- 5.0.0 (ported to Rust with in-process SquashFS and DwarFS readers)
+
 * Wed Jul 22 2026 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
 - 4.1.1
 

@@ -10,7 +10,7 @@
 %def_disable bootstrap
 
 Name: %_name-demo
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: ASHPD Demo
@@ -83,6 +83,9 @@ cd client
 %doc ../README*
 
 %changelog
+* Tue Nov 24 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.3-alt1
+- 0.14.3
+
 * Sat Nov 21 2026 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
 - 0.14.2
 
