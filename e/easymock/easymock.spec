@@ -1,6 +1,6 @@
 Name:           easymock
 Version:        5.6.0
-Release:        alt1.1
+Release:        alt2
 
 Summary:        Easy mock objects
 License:        Apache-2.0
@@ -46,6 +46,9 @@ So EasyMock is a perfect fit for Test-Driven Development.
 %pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_dep -r :dexmaker core
 
+%pom_xpath_inject "pom:dependency[pom:groupId='org.ow2.asm' and pom:artifactId='asm']" \
+    '<exclusions><exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion></exclusions>' core
+
 rm core/src/main/java/org/easymock/internal/Android*.java
 rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 %pom_disable_module test-android
@@ -64,6 +67,10 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 %doc core/LICENSE.txt
 
 %changelog
+* Tue Nov 24 2026 Ajrat Makhmutov <rauty@altlinux.org> 5.6.0-alt2
+- Fix FTBFS on p11 by excluding ASM's transitive dependencies
+  so the JUnit Jupiter API stays on the compiler classpath.
+
 * Wed Mar 04 2026 Evgeniy Serov <scala@altlinux.org> 5.6.0-alt1.1
 - Cosmetic fixes.
 
