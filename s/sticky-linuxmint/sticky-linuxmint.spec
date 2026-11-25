@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sticky-linuxmint
-Version: 1.34
+Version: 1.35
 Release: alt1
 
 Summary: A sticky notes app for the linux desktop
@@ -58,6 +58,9 @@ sed -i 's|^Categories=.*|Categories=Utility;TextTools;|' data/sticky.desktop.in
 %_datadir/sticky/*
 
 %changelog
+* Wed Nov 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.35-alt1
+- New version 1.35.
+
 * Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.34-alt1
 - New version 1.34.
 

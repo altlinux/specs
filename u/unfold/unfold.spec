@@ -3,7 +3,7 @@
 %def_with check
 
 Name: unfold
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Archive Manager for Linux Desktops
@@ -60,6 +60,9 @@ variants, rar and more, including password protected ones.
 %_datadir/unfold/unfold.svg
 
 %changelog
+* Wed Nov 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.5-alt1
+- New version 1.0.5.
+
 * Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.4-alt1
 - New version 1.0.4.
 

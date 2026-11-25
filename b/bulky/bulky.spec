@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: bulky
-Version: 4.4
+Version: 4.5
 Release: alt1
 
 Summary: Bulk Renamer
@@ -55,6 +55,9 @@ cp -arv usr/* %buildroot/usr/
 %_datadir/bulky/*
 
 %changelog
+* Wed Nov 25 2026 Nikolay Strelkov <snk@altlinux.org> 4.5-alt1
+- New version 4.5.
+
 * Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 4.4-alt1
 - New version 4.4.
 

@@ -3,7 +3,7 @@
 %def_with check
 
 Name: clockenstein
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 
 Summary: Calendar application for Linux Desktops
@@ -147,6 +147,9 @@ export LC_ALL=C
 %_datadir/metainfo/org.x.clockenstein.Clocks.metainfo.xml
 
 %changelog
+* Wed Nov 25 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.5-alt1
+- New version 2.0.5.
+
 * Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 2.0.4-alt1
 - New version 2.0.4.
 

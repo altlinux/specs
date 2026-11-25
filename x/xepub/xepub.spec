@@ -3,7 +3,7 @@
 %def_with check
 
 Name: xepub
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: EPUB reader for the Linux desktop
@@ -63,6 +63,9 @@ Xepub is a secure, comfortable, paginated EPUB reader.
 %_datadir/xepub/window.ui
 
 %changelog
+* Wed Nov 25 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.6-alt1
+- New version 1.0.6.
+
 * Wed Nov 18 2026 Nikolay Strelkov <snk@altlinux.org> 1.0.5-alt1
 - New version 1.0.5.
 
