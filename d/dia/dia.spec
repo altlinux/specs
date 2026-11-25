@@ -5,7 +5,7 @@
 
 Name: dia
 Version: 0.98.0
-Release: alt1
+Release: alt2
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -20,6 +20,8 @@ Obsoletes: %name-gnome %name-python
 Source: %name-%version.tar
 
 Patch: %name-%version-%release.patch
+Patch1: dia-poppler-26.08.patch
+Patch2: dia-poppler-state-stack.patch
 
 %add_python3_path %_datadir/%name
 AutoProv: nopython3
@@ -105,6 +107,9 @@ ln -s en %buildroot%_datadir/%name/help/ru
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Nov 24 2026 Vitaly Lipatov <lav@altlinux.ru> 0.98.0-alt2
+- fix PDF import with Poppler 26.08.
+
 * Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 0.98.0-alt1
 - support libxml2 older than 2.13 (to build in p11),
   lower libxml2 requirement to 2.12
