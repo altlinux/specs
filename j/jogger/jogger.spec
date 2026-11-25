@@ -2,10 +2,15 @@
 
 %define _name jogger
 %define __name Jogger
-%define ver_major 2.2
+%define ver_major 2.3
 %define rdn_name xyz.slothlife.%__name
 
+%ifarch %ix86 aarch64
+%def_disable check
+%else
 %def_enable check
+%endif
+
 %def_disable bootstrap
 
 Name: %_name
@@ -59,7 +64,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 # required for "ring"
 %define optflags_lto %nil
 
-%meson
+%meson \
+    -Dbuildtype=release
+%nil
 %meson_build
 
 %install
@@ -80,6 +87,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Sat Nov 21 2026 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Fri Oct 02 2026 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
