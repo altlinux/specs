@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: webapp-manager
-Version: 1.4.8
+Version: 1.4.9
 Release: alt1
 
 Summary: Run websites as if they were apps
@@ -67,6 +67,9 @@ glib-compile-schemas /usr/share/glib-2.0/schemas
 %config %_sysconfdir/xdg/menus/applications-merged/webapps.menu
 
 %changelog
+* Thu Nov 26 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.9-alt1
+- 1.4.8 -> 1.4.9
+
 * Tue Nov 17 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.8-alt1
 - 1.4.7 -> 1.4.8
 
