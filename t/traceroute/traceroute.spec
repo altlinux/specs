@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name: traceroute
-Version: 2.1.3
+Version: 2.1.5
 Release: alt1
 Epoch: 1
 
@@ -33,19 +36,21 @@ along the path to the host.
 %make_build CFLAGS='%optflags -W' LDFLAGS=
 
 %install
-install -pD -m755 traceroute/traceroute %buildroot/bin/traceroute
+install -pD -m755 traceroute/traceroute %buildroot%_bindir/traceroute
 install -pD -m644 traceroute/traceroute.8 %buildroot%_man1dir/traceroute.1
 install -pD -m755 wrappers/tcptraceroute %buildroot%_bindir/tcptraceroute
 install -pD -m644 wrappers/tcptraceroute.8 %buildroot%_man1dir/tcptraceroute.1
-ln -s traceroute %buildroot/bin/traceroute6
+ln -s traceroute %buildroot/%_bindir/traceroute6
 ln -s traceroute.1 %buildroot%_man1dir/traceroute6.1
 
 %files
-/bin/*
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Sat Oct 31 2026 Arseny Maslennikov <arseny@altlinux.org> 1:2.1.5-alt1
+- 2.1.3 -> 2.1.5.
+
 * Wed May 21 2025 Andrey Cherepanov <cas@altlinux.org> 1:2.1.3-alt1
 - 2.1.0 -> 2.1.3.
 - Security fix:
