@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: firmware-linux
-Version: 20261019
+Version: 20261124
 Release: alt1
 Summary: Firmware files used by the Linux kernel
 License: GPL-2.0-or-later and MIT and Redistributable, no modification permitted
@@ -140,6 +140,9 @@ end
 /lib/firmware/mellanox
 
 %changelog
+* Wed Nov 25 2026 Ivan A. Melnikov <iv@altlinux.org> 20261124-alt1
+- Update to 20261124 (2026-11-24).
+
 * Tue Oct 20 2026 Ivan A. Melnikov <iv@altlinux.org> 20261019-alt1
 - Update to 20261019 (2026-10-19).
 
