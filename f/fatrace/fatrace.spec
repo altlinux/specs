@@ -1,7 +1,7 @@
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
 Name: fatrace
-Version: 0.19.1
+Version: 0.20.0
 Release: alt1
 
 Summary: Reports file access events from all running processes
@@ -13,7 +13,7 @@ Url: https://github.com/martinpitt/fatrace
 # Source-url: https://github.com/martinpitt/fatrace/archive/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 
 %description
 fatrace reports file access events from all running processes.
@@ -30,6 +30,9 @@ unnecessarily and thus prevent some power saving.
 %install
 %makeinstall_std PREFIX=%prefix
 
+%check
+%make check
+
 %files
 %doc COPYING README.md
 %_sbindir/fatrace
@@ -37,6 +40,10 @@ unnecessarily and thus prevent some power saving.
 %_mandir/man*/*
 
 %changelog
+* Wed Nov 25 2026 Vitaly Lipatov <lav@altlinux.ru> 0.20.0-alt1
+- new version 0.20.0
+- enabled event unit tests and cleaned up BuildRequires.
+
 * Tue Mar 10 2026 Vitaly Lipatov <lav@altlinux.ru> 0.19.1-alt1
 - new version 0.19.1 (with rpmrb script)
 - switch Source-url to GitHub
