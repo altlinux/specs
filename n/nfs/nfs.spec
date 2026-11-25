@@ -1,5 +1,5 @@
 Name: nfs
-Version: 3.1.1
+Version: 3.2.1
 Release: alt1
 Epoch: 1
 
@@ -203,6 +203,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %_sbindir/fsidd
 %_sbindir/nfsref
 %_sbindir/nfsstat
+%_sbindir/nfs-fh-verify
+%_sbindir/nfsd-iomode-advisor
 %_sbindir/rpc.idmapd
 %_sbindir/rpc.mountd
 %_sbindir/rpc.nfsd
@@ -216,6 +218,8 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/rpc.idmapd.*
 %_man8dir/nfsref.*
 %_man8dir/nfsstat.*
+%_man8dir/nfs-fh-verify.*
+%_man8dir/nfsd-iomode-advisor.*
 %_man8dir/nfsdcld.*
 %_man8dir/nfsdclddb.*
 %_man8dir/mountd.*
@@ -310,6 +314,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Wed Nov 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:3.2.1-alt1
+- 3.2.1 released
+
 * Mon Sep 21 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:3.1.1-alt1
 - 3.1.1 released
 
