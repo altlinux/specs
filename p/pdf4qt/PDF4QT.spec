@@ -3,7 +3,7 @@
 
 Name: pdf4qt
 Version: 1.7.1.0
-Release: alt1
+Release: alt2
 
 Summary: Open source PDF editor
 
@@ -33,6 +33,9 @@ BuildRequires: blend2d-devel
 BuildRequires: liblcms2-devel
 BuildRequires: tbb-devel
 BuildRequires: libClipper2-devel
+%ifarch %e2k
+BuildRequires: clang
+%endif
 
 %description
 %summary.
@@ -74,13 +77,20 @@ subst 's|"lib"|"lib64"|' Pdf4QtLibGui/pdfprogramcontroller.cpp
 subst 's|applicationDirectory.absolutePath()|"%_datadir/pdf4qt/translations/"|' Pdf4QtLibCore/sources/pdfapplicationtranslator.cpp
 
 %ifarch %e2k
-# error: more than one operator "<" matches these operands
-sed -i 's/left < right.second/right.second > left/' Pdf4QtLibCore/sources/pdfnametounicode.h
+# error: use of overloaded operator '[]' is ambiguous
+sed -i 's/content\[position\])/content[(qsizetype)position])/' Pdf4QtLibCore/sources/pdfpagecontentprocessor.cpp
+# must link with TBB, even if compiler is not GCC
+sed -i 's/LINUX_GCC/true/' {,Pdf4QtLib{Core,Widgets}/}CMakeLists.txt
 %endif
 
 %build
 %add_optflags -Wno-narrowing
-%cmake -DCMAKE_BUILD_TYPE=Release
+%cmake -DCMAKE_BUILD_TYPE=Release \
+%ifarch %e2k
+	-DCMAKE_C{_COMPILER=clang,XX_COMPILER=clang++} \
+	-DCMAKE_C{,XX}_FLAGS_RELEASE="-O2 -DNDEBUG" \
+%endif
+	%nil
 %cmake_build
 
 %install
@@ -111,6 +121,9 @@ sed -i 's/left < right.second/right.second > left/' Pdf4QtLibCore/sources/pdfnam
 %_libdir/libPdf4QtLibWidgets.so.%{soname}.*
 
 %changelog
+* Wed Nov 25 2026 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.1.0-alt2
+- e2k build fix
+
 * Wed Nov 18 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.1.0-alt1
 - 1.7.0.0 -> 1.7.1.0
 
