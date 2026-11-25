@@ -1,5 +1,5 @@
 Name: magic_enum
-Version: 0.9.8
+Version: 0.10.0
 Release: alt1
 
 Summary: Magic Enum C++
@@ -7,6 +7,7 @@ License: MIT
 Group: Development/C++
 
 Url: https://github.com/Neargye/%name
+Vcs: https://github.com/Neargye/%name
 Packager: Nazarov Denis <nenderus@altlinux.org> 
 
 # https://github.com/Neargye/%name/archive/v%version/%name-%version.tar.gz
@@ -50,6 +51,9 @@ anyenum type without any macro or boilerplate code.
 %_datadir/%name
 
 %changelog
+* Wed Nov 25 2026 Nazarov Denis <nenderus@altlinux.org> 0.10.0-alt1
+- New version 0.10.0.
+
 * Sun May 10 2026 Nazarov Denis <nenderus@altlinux.org> 0.9.8-alt1
 - New version 0.9.8.
 
