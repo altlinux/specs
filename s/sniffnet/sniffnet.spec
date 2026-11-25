@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sniffnet
-Version: 1.5.1
-Release: alt2
+Version: 1.6.0
+Release: alt1
 
 Summary: Application to comfortably monitor your network traffic
 License: Apache-2.0 or MIT
@@ -76,6 +76,9 @@ setcap '' %_bindir/%name
 %doc README.md LICENSE*
 
 %changelog
+* Wed Nov 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.6.0-alt1
+- Updated to 1.6.0.
+
 * Fri Sep 25 2026 Alexandr Shashkin <dutyrok@altlinux.org> 1.5.1-alt2
 - Open external links as the invoking user when running elevated via sudo
   (Closes: #47279).
