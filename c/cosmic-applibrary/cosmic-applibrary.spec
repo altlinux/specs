@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define binary_name cosmic-app-library
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name com.system76.CosmicAppLibrary
 
@@ -59,6 +59,7 @@ just rootdir=%buildroot install
 
 %check
 export APP_NAME=%binary_name APP_ID=%rdn_name
+export LOCKSTEP_XML_PATH="${PWD}/vendor/atspi-common/xml"
 %rust_test
 
 %files
@@ -69,6 +70,9 @@ export APP_NAME=%binary_name APP_ID=%rdn_name
 %doc README*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 

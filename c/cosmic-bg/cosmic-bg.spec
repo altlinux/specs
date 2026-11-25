@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name com.system76.CosmicBackground
 
@@ -54,6 +54,8 @@ just rootdir=%buildroot install
 %files
 %_bindir/%name
 %_datadir/cosmic/%rdn_name/
+%_datadir/cosmic/%rdn_name.Dark/
+%_datadir/cosmic/%rdn_name.Light/
 # removed in 1.0.12
 #%_desktopdir/%rdn_name.desktop
 #%_iconsdir/hicolor/*/*/*.svg
@@ -61,6 +63,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 

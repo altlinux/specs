@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name com.system76.CosmicTerm
 
@@ -72,6 +72,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 

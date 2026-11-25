@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name com.system76.CosmicInitialSetup
 
@@ -68,10 +68,13 @@ just rootdir=%buildroot install
 %_datadir/cosmic-layouts/top-panel-and-bottom-dock/com.system76.CosmicPanel/v1/
 %_datadir/cosmic-layouts/top-panel-and-bottom-dock/icon.png
 %_datadir/cosmic-layouts/top-panel-and-bottom-dock/layout.kdl
-%_datadir/cosmic-themes/*
+#%_datadir/cosmic-themes/*
 %_iconsdir/hicolor/scalable/apps/%rdn_name.svg
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 

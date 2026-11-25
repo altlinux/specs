@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name com.system76.CosmicViewer
 
@@ -29,8 +29,6 @@ ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-build-rust
 BuildRequires: just
-# for turbojpeg
-BuildRequires: cmake gcc-c++ nasm
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libturbojpeg)
 BuildRequires: pkgconfig(libheif)
@@ -64,6 +62,7 @@ just rootdir=%buildroot install
 %check
 export VERGEN_GIT_SHA=%version
 export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
+export TURBOJPEG_SOURCE=pkg-config
 %rust_test
 
 %files
@@ -74,6 +73,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Wed Oct 21 2026 Yuri N. Sedunov <aris@altlinux.org> 1.11.0-alt1
 - 1.11.0
 

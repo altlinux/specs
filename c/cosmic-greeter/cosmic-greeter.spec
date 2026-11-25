@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.11
+%define ver_major 1.12
 %define beta %nil
 %define rdn_name com.system76.CosmicGreeter
 
@@ -8,7 +8,7 @@
 
 Name: cosmic-greeter
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: COSMIC Greeter
 License: GPL-3.0
@@ -98,7 +98,6 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %attr(2711, root, chkpwd) %_bindir/%name
 %_bindir/%name-start
 %_bindir/%name-daemon
-#%attr(2711, root, chkpwd) %_bindir/%name-daemon
 %_altdir/greetd-%name
 %_unitdir/%name.service
 %_unitdir/%name-daemon.service
@@ -108,6 +107,9 @@ export VERGEN_GIT_COMMIT_DATE=%(date --iso-8601)
 %doc README*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Mon Oct 26 2026 Vladimir Didenko <cow@altlinux.org> 1.11.0-alt2
 - fixed screen unlocking with tcb:
   + use separate "cosmic-locker" PAM service for the screen locker
