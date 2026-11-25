@@ -2,7 +2,7 @@
 %define oname com.github.DiegoMMR.CosmicExtAppletNowPlaying
 
 Name: cosmic-ext-applet-now-playing
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: A small COSMIC panel applet that shows what is currently playing
@@ -47,9 +47,9 @@ replace-with = "vendored-sources"
 git = "https://github.com/pop-os/cosmic-panel"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/cosmic-protocols?rev=32283d7"]
+[source."git+https://github.com/pop-os/cosmic-protocols?rev=c0cff4d"]
 git = "https://github.com/pop-os/cosmic-protocols"
-rev = "32283d7"
+rev = "c0cff4d"
 replace-with = "vendored-sources"
 
 [source."git+https://github.com/pop-os/dbus-settings-bindings"]
@@ -79,14 +79,14 @@ git = "https://github.com/pop-os/window_clipboard.git"
 tag = "sctk-0.20"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/pop-os/winit.git?tag=cosmic-0.14"]
+[source."git+https://github.com/pop-os/winit.git?rev=9567503"]
 git = "https://github.com/pop-os/winit.git"
-tag = "cosmic-0.14"
+rev = "9567503"
 replace-with = "vendored-sources"
 
-[source."git+https://github.com/wash2/accesskit?tag=cosmic-0.14"]
+[source."git+https://github.com/wash2/accesskit?rev=6c20249"]
 git = "https://github.com/wash2/accesskit"
-tag = "cosmic-0.14"
+rev = "6c20249"
 replace-with = "vendored-sources"
 
 EOF
@@ -109,6 +109,9 @@ install -Dm 0644 res/%oname.desktop %buildroot%_desktopdir/%oname.desktop
 %_desktopdir/%oname.desktop
 
 %changelog
+* Wed Nov 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.2-alt1
+- 0.2.1 -> 0.2.2
+
 * Wed Sep 02 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.2.1-alt1
 - 0.2.0 -> 0.2.1
 
