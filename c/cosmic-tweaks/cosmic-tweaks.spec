@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%beta
 
 Summary: COSMIC Tweaks
@@ -33,21 +33,24 @@ BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(openssl)
 
-#ExcludeArch: %ix86 armh
+ExcludeArch: %ix86 armh
 
 %description
 A tweaking tool offering access to advanced settings and features for
 COSMIC desktop.
 
 %prep
-%setup -n %_name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %binary_name-%version%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
 tar -cf %_sourcedir/%_name-%version%beta-cargo.tar .cargo/ vendor/}
 
 %build
-%rust_build
+%rust_build \
+%ifarch %ix86 aarch64
+    --config 'profile.release.lto=false'
+%endif
 
 %install
 just rootdir=%buildroot install
@@ -63,6 +66,9 @@ just rootdir=%buildroot install
 %doc README*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
+- 0.2.6
+
 * Mon Sep 28 2026 Yuri N. Sedunov <aris@altlinux.org> 0.2.5-alt1
 - 0.2.5
 
