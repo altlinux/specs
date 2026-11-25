@@ -3,7 +3,7 @@
 %def_with check
 
 Name: nspawn
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 ExcludeArch: %ix86
 
@@ -110,5 +110,8 @@ fi
 %dir %attr(0711,root,root) %_sharedstatedir/nspawn
 
 %changelog
+* Wed Nov 25 2026 Egor Ignatov <egori@altlinux.org> 3.3.2-alt1
+- New version 3.3.2.
+
 * Mon Nov 23 2026 Egor Ignatov <egori@altlinux.org> 3.3.1-alt1
 - First build for ALT.
