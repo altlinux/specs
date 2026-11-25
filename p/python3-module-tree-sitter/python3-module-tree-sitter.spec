@@ -4,7 +4,7 @@
 %define mod_name tree_sitter
 
 Name:    python3-module-%pypi_name
-Version: 0.26.0
+Version: 0.26.1
 Release: alt1
 
 Summary: Python bindings to the Tree-sitter parsing library
@@ -13,10 +13,10 @@ License: MIT
 Group:   Development/Python3
 Url:     https://github.com/tree-sitter/py-tree-sitter
 
-# Source-url: https://files.pythonhosted.org/packages/source/t/%pypi_name/%pypi_name-%version.tar.gz
+# Source-url: https://files.pythonhosted.org/packages/source/t/%pypi_name/%mod_name-%version.tar.gz
 Source:  %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
@@ -49,6 +49,10 @@ C library (compiled as a CPython extension module).
 %python3_sitelibdir/%{pyproject_distinfo %mod_name}
 
 %changelog
+* Wed Nov 25 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26.1-alt1
+- new version 0.26.1
+- use regular BuildRequires for rpm-build-python3
+
 * Fri Jul 17 2026 Vitaly Lipatov <lav@altlinux.ru> 0.26.0-alt1
 - new version 0.26.0 (with rpmrb script)
 
