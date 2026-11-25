@@ -2,12 +2,12 @@
 
 Name: sane
 Version: 1.4.0
-Release: alt4
+Release: alt5
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
 
-License: GPL
+License: GPL-2.0-or-later
 Group: Graphics
 Url: http://www.sane-project.org/
 Vcs: https://gitlab.com/sane-project/backends
@@ -27,6 +27,7 @@ Patch4: sane-backends-1.0.18-epson-1270.patch
 Patch5: sane-backends-1.4.0-xerox-blacklist-workcentre-322x.patch
 Patch9: sane-backends-1.4.0-fix-ISO-C23.patch
 Patch10: sane-backends-1.4.0-fix-saned-max-hostname.patch
+Patch11: sane-backends-1.4.0-plustek-default-full-scan-area.patch
 
 # Support for Avision FB2280E
 Patch6: sane-backends-1.0.32-avision-FB2280E.patch
@@ -64,7 +65,7 @@ BuildRequires: rpm-build-python3 python3
 %package -n %name-server
 Summary: SANE as network server
 Group: System/Libraries
-License: LGPL
+License: GPL-2.0-or-later
 Requires: lib%name = %version-%release
 
 %package doc
@@ -83,7 +84,7 @@ Documentation for SANE
 %package -n lib%name
 Summary: SANE shared libraries
 Group: System/Libraries
-License: LGPL
+License: GPL-2.0-or-later
 Provides: %oname = %version-%release
 Provides: %oname-libs = %version-%release
 
@@ -100,7 +101,7 @@ want to access digital cameras via GPhoto2.
 %package -n lib%name-devel
 Summary: Development environment for SANE
 Group: Development/C
-License: LGPL
+License: GPL-2.0-or-later
 Requires: lib%name = %version-%release
 Provides: %name-devel = %version
 Obsoletes: %name-devel
@@ -109,7 +110,7 @@ Provides: %oname-devel = %version-%release
 %package -n lib%name-devel-static
 Summary: SANE static libraries
 Group: Development/C
-License: LGPL
+License: GPL-2.0-or-later
 Requires: lib%name-devel = %version-%release
 
 %description
@@ -185,6 +186,7 @@ This package contains SANE static libraries.
 #patch8 -p1
 %patch9 -p2
 %patch10 -p2
+%patch11 -p2
 
 # Mandriva patches
 %patch201 -p1 -b .plusteks12
@@ -210,6 +212,14 @@ sed -i "s|m4_esyscmd_s(\[.*git.*\])|%version|" configure.ac
 sed -i "s|AM_PATH_PYTHON(2.7)|AM_PATH_PYTHON(3.3)|" configure.ac
 
 %build
+# export only sane_* from libsane and the backend modules: the portable layer
+# (sanei_*, md5_*) is linked into each of them and must not interpose (ALT bug 36410)
+cat > sane-exports.map <<'EOF'
+{
+	global: sane_*;
+	local: *;
+};
+EOF
 %autoreconf
 %configure --enable-translations --with-gphoto2 \
 	--with-usb \
@@ -224,7 +234,7 @@ sed -i "s|AM_PATH_PYTHON(2.7)|AM_PATH_PYTHON(3.3)|" configure.ac
 	--enable-shared \
 	--disable-static
 
-%make_build
+%make_build AM_LDFLAGS="-Wl,--version-script=$PWD/sane-exports.map"
 
 %install
 %makeinstall_std
@@ -308,6 +318,11 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt5
+- plustek: default scan area is the whole scan bed (closes: #51512)
+- fixed ambiguous license tags: GPL-2.0-or-later (repocop)
+- export only sane_* from modules, hide sanei_*, md5_* (closes: #36410)
+
 * Mon Jul 20 2026 Nikita Shmatko <nash@altlinux.org> 1.4.0-alt4
 - Fixed saned access checks with maximum-length hostnames.
 
