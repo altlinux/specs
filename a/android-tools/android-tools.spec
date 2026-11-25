@@ -4,7 +4,7 @@
 
 Name: android-tools
 Version: 34.0.5
-Release: alt7
+Release: alt8
 
 Summary: Android Debug CLI tools
 License: APL
@@ -61,6 +61,8 @@ Patch202: alt-mkf2fs-path.patch
 Patch203: alt-libbase-cstdint.patch
 Patch204: alt-libziparchive-cstdint.patch
 Patch205: alt-fastboot-cstdint.patch
+Patch206: android-tools-34.0.5-upstream-protobuf-include-order.patch
+Patch207: android-tools-34.0.5-alt-abseil-logging-order.patch
 
 # LoongArch
 Patch3500: boringssl-loongarch64.patch
@@ -169,6 +171,8 @@ popd
 %patch203 -p1
 %patch204 -p1
 %patch205 -p1
+%patch206 -p1
+%patch207 -p1
 %patch3500 -p1
 %patch3501 -p1
 
@@ -374,6 +378,9 @@ done
 %aprefix
 
 %changelog
+* Sun Nov 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 34.0.5-alt8
+- NMU: Fix FTBFS with Protobuf 36 caused by Abseil logging macro collisions.
+
 * Sat Nov 14 2026 Pavel Nakonechnyi <zorg@altlinux.org> 34.0.5-alt7
 - Fix build failures
 

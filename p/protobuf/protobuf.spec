@@ -1,10 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define oname protobuf
-%define soversion 31
+%define soversion 36
 
 # fat LTO objects needed for static libupb.a
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-
-%define _unpackaged_files_terminate_build 1
 
 # Tests on e2k takes 3-4 days (!)
 %ifarch %e2k
@@ -27,8 +26,8 @@
 
 Name: %oname
 Epoch: 1
-Version: 31.1
-Release: alt1.1
+Version: 36.2
+Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 Group: System/Libraries
@@ -125,7 +124,7 @@ lacks descriptors, reflection, and some other features.
 %if_with java
 
 %package java
-Version: 4.31.1
+Version: 4.36.2
 Summary: Java Protocol Buffers runtime library
 Group: Development/Java
 BuildArch: noarch
@@ -198,7 +197,7 @@ Protocol Buffer BOM POM.
 
 %if_with ruby
 %package -n gem-google-protobuf
-Version: 4.31.1
+Version: 4.36.2
 Summary: Protocol Buffers
 Group: Development/Ruby
 
@@ -234,7 +233,7 @@ BuildArch: noarch
 
 Requires:      gem(bigdecimal) >= 0
 Requires:      gem(rake) >= 13
-Requires:      gem(google-protobuf) = 4.31.1
+Requires:      gem(google-protobuf) = 4.36.2
 Requires:      gem(ffi) >= 1
 Requires:      gem(ffi-compiler) >= 1
 Requires:      gem(rake-compiler) >= 1.1.0
@@ -256,7 +255,7 @@ Protocol Buffers are Google's data interchange format.
 %endif
 
 %package compiler
-Version: 31.1
+Version: 36.2
 Summary: Protocol Buffers Compiler
 Group: Development/Other
 Requires: lib%oname%soversion = %EVR
@@ -267,7 +266,7 @@ Compiler for protocol buffer definition files
 
 %prep
 %setup -n %oname-%version
-%patch -p1
+%autopatch -p1
 %ifarch %e2k
 sed -i '$a #ifdef __EDG__\n#undef PROTOBUF_CONSTINIT\n#define PROTOBUF_CONSTINIT\n#endif' \
 	src/google/protobuf/port_def.inc
@@ -398,8 +397,13 @@ $PROTOC --java_out=lite:java/lite/src/main/java \
   java/core/src/main/resources/google/protobuf/java_features.proto \
   $_protos
 
+$PROTOC --java_out=java/util/src/main/java \
+  --proto_path=src \
+  src/google/protobuf/json_options.proto \
+  src/google/protobuf/json_enumvalue_options.proto
+
 # Java tests need generated test proto sources (complex protoc+antrun setup);
-# skip for now — C++ tests cover the same functionality.
+# skip for now - C++ tests cover the same functionality.
 %mvn_build -s --skip-tests -- -f java/pom.xml -Dprotobuf.builddir="$(realpath %_cmake__builddir)"
 %endif
 
@@ -498,6 +502,9 @@ rm -fv SetupConfig
 %endif
 
 %changelog
+* Mon Nov 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 1:36.2-alt1
+- New version.
+
 * Wed May 13 2026 Pavel Skrylev <majioa@altlinux.org> 1:31.1-alt1.1
 - ! fixed package versions for java and ruby according version.json
 

@@ -3,7 +3,7 @@
 
 Name: libprotobuf-mutator
 Version: 1.5
-Release: alt1
+Release: alt2
 
 Summary: Library for structured fuzzing with protobuffers
 License: Apache-2.0
@@ -22,6 +22,7 @@ BuildRequires: gcc-c++
 BuildRequires: cmake-modules
 BuildRequires: libprotobuf-devel
 BuildRequires: liblzma-devel
+BuildRequires: zlib-devel
 BuildRequires: libgtest-devel
 BuildRequires: ctest
 
@@ -91,5 +92,8 @@ libprotobuf-mutator.
 %_pkgconfigdir/libprotobuf-mutator.pc
 
 %changelog
+* Tue Nov 03 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.5-alt2
+- Fix FTBFS: add explicit zlib build dependency.
+
 * Tue Dec 02 2025 Ivan Khanas <xeno@altlinux.org> 1.5-alt1
 - First build for ALT.

@@ -3,7 +3,7 @@
 
 Name: libgeopmd
 Version: 3.2.2
-Release: alt2
+Release: alt3
 
 Summary: C/C++ implementation of the GEOPM access service
 License: BSD-3-Clause
@@ -26,7 +26,7 @@ BuildRequires: libtool
 BuildRequires: liburing-devel
 BuildRequires: libprotobuf-devel
 BuildRequires: libsystemd-devel
-BuildRequires: zlib-ng-devel
+BuildRequires: zlib-devel
 BuildRequires: protobuf-compiler
 BuildRequires: grpc-plugins
 BuildRequires: rpm-build-vm
@@ -106,6 +106,9 @@ popd
 %_sbindir/geopmbatch
 
 %changelog
+* Thu Nov 05 2026 Ajrat Makhmutov <rauty@altlinux.org> 3.2.2-alt3
+- Fix FTBFS: require zlib instead of native zlib-ng development files.
+
 * Tue Sep 22 2026 Danila Skachedubov <skachedubov@altlinux.org> 3.2.2-alt2
 - Fix build with recent Google Mock.
 

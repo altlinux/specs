@@ -9,13 +9,14 @@
 
 Name: onnxruntime
 Version: 1.29.0
-Release: alt1.1
+Release: alt2
 
 Summary: Cross-platform, high performance inference and training machine-learning accelerator
 
 License: MIT
 Group: Sciences/Computer science
 URL: https://github.com/microsoft/onnxruntime
+VCS: https://github.com/microsoft/onnxruntime.git
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: rpm-build-cmake
@@ -322,6 +323,12 @@ rm -rf %buildroot%python3_sitelibdir/onnxruntime/transformers/__pycache__
 
 
 %changelog
+* Sun Nov 08 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.29.0-alt2
+- Fix FTBFS with protobuf 36: remove unused protobuf objects
+  and handle serialization results marked nodiscard.
+- Fix FTBFS with GCC 16: remove the unused zero-point
+  size calculation in the DNNL graph transformer.
+
 * Mon Oct 19 2026 Vitaly Lipatov <lav@altlinux.ru> 1.29.0-alt1.1
 - NMU: fix build with Microsoft GSL 5.x (find_package without the 4.0 version).
 - use rpm-build-cmake instead of cmake in BuildRequires

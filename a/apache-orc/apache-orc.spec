@@ -4,7 +4,7 @@
 Summary: Library for producing small, fast columnar storage for Hadoop workloads
 Name: apache-orc
 Version: 2.3.1
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Url: http://orc.apache.org/
 Group: System/Libraries
@@ -134,6 +134,9 @@ export ORC_FORMAT_URL=file://%SOURCE1
 %_libdir/cmake/orc
 
 %changelog
+* Tue Nov 03 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.3.1-alt2
+- Fix FTBFS with protobuf 36: handle nodiscard return values (ORC-2159).
+
 * Thu Jul 30 2026 Anton Farygin <rider@altlinux.org> 2.3.1-alt1
 - 2.3.0 -> 2.3.1
 

@@ -14,7 +14,7 @@
 
 Name: MySQL
 Version: 8.4.13
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -68,6 +68,8 @@ Patch12: mysql-8.4.11-alt-allow-32bit.patch
 Patch201: mysql-shell-8.4.8-alt-link-secret-store-login-path-with-ssl.patch
 Patch202: mysql-shell-8.4.8-alt-fix-string-view-concatenation.patch
 Patch203: mysql-shell-8.4.10-alt-fix-python-include-order.patch
+Patch204: mysql-shell-8.4.10-alt-fix-protobuf-nodiscard.patch
+Patch205: mysql-shell-8.4.10-alt-fix-convertutf-bounds.patch
 
 Patch2000: mysql-8.4.8-alt-e2k.patch
 
@@ -416,6 +418,8 @@ necessary to develop MySQL client applications.
 %patch201 -p1
 %patch202 -p1
 %patch203 -p1
+%patch204 -p1
+%patch205 -p1
 
 # Disable LTO - causes linker issues with unittest library and is extremely slow
 %define optflags_lto %nil
@@ -979,6 +983,10 @@ cd %_cmake__builddir && ctest --output-on-failure -R '.*-t' -LE NDB -j4
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Nov 12 2026 Ajrat Makhmutov <rauty@altlinux.org> 8.4.13-alt2
+- Fix FTBFS with protobuf 36 nodiscard annotations.
+- Fix MySQL Shell FTBFS with GCC 16 array-bounds diagnostics.
+
 * Wed Oct 21 2026 Nikolai Kostrigin <nickel@altlinux.org> 8.4.13-alt1
 - new version 8.4.11 -> 8.4.13
   + (fixes: CVE-2026-101607, CVE-2026-101608, CVE-2026-101609, CVE-2026-101610)

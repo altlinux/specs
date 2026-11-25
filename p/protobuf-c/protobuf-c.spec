@@ -1,16 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define soversion 1
 %define optflags_lto %nil
 
 Name: protobuf-c
 Version: 1.5.2
-Release: alt1
+Release: alt2
 Summary: Google's Protocol Buffers implementation in C
 
 Group: System/Libraries
 License: BSD-3-Clause
 Url: https://github.com/protobuf-c/protobuf-c
+VCS: https://github.com/protobuf-c/protobuf-c.git
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libprotobuf-devel >= 2.6.0 protobuf-compiler
@@ -51,6 +54,7 @@ This package contains development files required for packaging
 
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 %autoreconf
@@ -79,6 +83,9 @@ ln -s /usr/include/google google
 %doc TODO CHANGELOG.md README.md LICENSE
 
 %changelog
+* Tue Nov 03 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.5.2-alt2
+- Fix FTBFS with protobuf 36.2 (upstream PR #797).
+
 * Thu Apr 17 2025 Andrew A. Vasilyev <andy@altlinux.org> 1.5.2-alt1
 - 1.5.2
 

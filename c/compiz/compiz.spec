@@ -2,7 +2,7 @@
 
 Name: compiz
 Version: %ver_major.2
-Release: alt3.4
+Release: alt3.5
 
 Summary: OpenGL window and compositing manager
 License: GPLv2 and LGPLv2 and MIT
@@ -128,6 +128,9 @@ rm -f %buildroot%_bindir/compiz-decorator
 %_datadir/cmake/Modules/%name
 
 %changelog
+* Sat Nov 14 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.9.14.2-alt3.5
+- NMU: Fix FTBFS due to a race in parallel core schema generation.
+
 * Wed Jul 01 2026 Fr. Br. George <george@altlinux.org> 0.9.14.2-alt3.4
 - NMU: Fix gcc15 build
 

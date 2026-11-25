@@ -1,15 +1,15 @@
-%define clang_ver 17
-%define clang_version 17.0
+%define _unpackaged_files_terminate_build 1
 
 Name: sysdig
 Version: 0.39.0
-Release: alt3
+Release: alt4
 
 Summary: A system exploration and troubleshooting tool
 
 Group: File tools
 License: GPL-2.0
 Url: https://github.com/draios/sysdig
+VCS: https://github.com/draios/sysdig.git
 
 # Source-url: https://github.com/draios/sysdig/archive/%version.tar.gz
 Source: %name-%version.tar
@@ -21,7 +21,7 @@ ExcludeArch: %ix86 armh ppc64le
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
-BuildRequires: clang%clang_version
+BuildRequires: clang
 BuildRequires: libstdc++-devel
 BuildRequires: grpc-plugins
 BuildRequires: jsoncpp-devel
@@ -72,8 +72,8 @@ subst 's|URL ".*/|URL "file://%_sourcedir/|' `find . -name CMakeLists.txt`
 # It seems, Clang doesn't provide --as-needed by default:
 %add_optflags -Wl,--as-needed
 %cmake \
-       -DMODERN_CLANG_EXE="/usr/bin/clang-%clang_ver" \
-       -DCMAKE_CXX_COMPILER="clang++-%clang_ver" \
+       -DMODERN_CLANG_EXE="/usr/bin/clang" \
+       -DCMAKE_CXX_COMPILER="clang++" \
        -DUSE_BUNDLED_CARES:BOOL=off \
        -DUSE_BUNDLED_CURL:BOOL=off \
        -DUSE_BUNDLED_DEPS:BOOL=off \
@@ -134,6 +134,9 @@ rm -f %buildroot%_bindir/scap-driver-loader
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Sun Nov 15 2026 Ajrat Makhmutov <rauty@altlinux.org> 0.39.0-alt4
+- Fix FTBFS with libstdc++ 16 by using the default Clang.
+
 * Thu Feb 27 2025 Paul Wolneykien <manowar@altlinux.org> 0.39.0-alt3
 - NMU: Turn on --as-needed linking.
 
