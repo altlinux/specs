@@ -1,5 +1,5 @@
 Name: yamusic-rs
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: Unofficial Yandex Music desktop client written in Rust
@@ -14,7 +14,7 @@ Source2: skia-src.tar
 
 ExclusiveArch: aarch64 x86_64
 
-BuildRequires: rust-cargo /proc
+BuildRequires: rust-bindgen rust-cargo /proc
 BuildRequires: curl libstdc++-devel
 BuildRequires: clang clang-devel gcc-c++ gn ninja-build
 BuildRequires: pkgconfig(alsa)
@@ -47,22 +47,7 @@ an equalizer, MPRIS integration and lyrics, without Electron.
 %conf
 %ifdef bootstrap
 cargo vendor
-# bindgen 0.73.2 does not build against syn 3 (its prettyplease dependency
-# is syn-2-only), so pin it back to syn 2 and re-resolve the lockfile.
-sed -i 's/^version = ">=2, <4"$/version = ">=2, <3"/' vendor/bindgen/Cargo.toml
-python3 - <<'PY'
-import hashlib, json, pathlib
-p = pathlib.Path("vendor/bindgen/.cargo-checksum.json")
-d = json.loads(p.read_text())
-d["files"]["Cargo.toml"] = hashlib.sha256(
-    pathlib.Path("vendor/bindgen/Cargo.toml").read_bytes()
-).hexdigest()
-p.write_text(json.dumps(d))
-PY
-cargo update
-# Keep the resolved lockfile inside crates.tar so every build (bootstrap
-# or not) compiles against exactly the vendored dependency versions.
-tar cf %SOURCE1 .cargo vendor Cargo.lock
+tar cf %SOURCE1 .cargo vendor
 # find out required skia version
 skia_ver=$(sed -n '/^\[package.metadata\]/,/^\[/p' \
 	vendor/skia-bindings*/Cargo.toml \
@@ -130,6 +115,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Nov 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.8-alt1
+- 1.1.8 released
+
 * Wed Nov 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.7-alt1
 - 1.1.7 released
 
