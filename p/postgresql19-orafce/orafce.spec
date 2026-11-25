@@ -1,0 +1,103 @@
+%define pg_ver 19
+%define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
+
+Name:    postgresql%pg_ver-orafce
+Version: 4.17.2
+Release: alt1
+
+Summary: The "orafce" project implements in Postgres some of the functions from the Oracle database that are missing
+License: 0BSD
+Group:   Databases
+URL:     http://github.com/orafce/orafce
+
+Requires(pre): postgresql%pg_ver-server
+
+BuildRequires: libicu-devel
+BuildRequires: postgresql%pg_ver-server-devel
+BuildRequires: openssl-devel
+BuildRequires: libkrb5-devel
+BuildRequires: bison
+BuildRequires: flex
+
+Source: %name-%version.tar
+
+%description
+Functions and operators that emulate a subset of functions and packages from the Oracle RDBMS.
+
+This module contains some useful functions that can help with porting Oracle application to PostgreSQL or that can be generally useful.
+
+Built-in Oracle date functions have been tested against Oracle 10 for conformance. Date ranges from 1960 to 2070 work correctly. Dates before 1100-03-01 cannot be verified due to a bug in Oracle.
+
+All functions are fully compatibles with Oracle and respect all known format strings. Detailed descriptions can be found on the internet. Use keywords like : oracle round trunc date iyyy.
+
+%prep
+%setup
+
+%build
+%make_build USE_PGXS=1 PG_CONFIG=/usr/bin/pg_server_config
+
+%install
+%makeinstall_std
+
+%files
+%doc INSTALL.orafce README.asciidoc
+%_libdir/pgsql/*.so
+%if %{enable_llvm}
+%_libdir/pgsql/bitcode/*
+%endif
+%_datadir/pgsql/extension/*
+%_docdir/postgresql/extension/*
+
+
+%changelog
+* Wed Nov 25 2026 Alexei Takaseev <taf@altlinux.org> 4.17.2-alt1
+- 4.17.2
+
+* Mon Oct 05 2026 Alexei Takaseev <taf@altlinux.org> 4.16.13-alt1
+- 4.16.13
+
+* Tue Sep 29 2026 Alexei Takaseev <taf@altlinux.org> 4.16.12-alt1
+- 4.16.12
+
+* Fri Sep 25 2026 Alexei Takaseev <taf@altlinux.org> 4.16.11-alt1
+- 4.16.11
+
+* Tue Sep 15 2026 Alexei Takaseev <taf@altlinux.org> 4.16.9-alt1
+- 4.16.9
+
+* Wed Sep 02 2026 Alexei Takaseev <taf@altlinux.org> 4.16.8-alt1
+- 4.16.8
+
+* Sun Jun 07 2026 Alexei Takaseev <taf@altlinux.org> 4.16.7-alt1
+- 4.16.7
+
+* Fri Mar 13 2026 Alexei Takaseev <taf@altlinux.org> 4.16.4-alt2
+- Use LLVM if it used in PostgreSQL
+
+* Wed Mar 04 2026 Alexei Takaseev <taf@altlinux.org> 4.16.4-alt1
+- 4.16.4
+
+* Sat Nov 08 2025 Alexei Takaseev <taf@altlinux.org> 4.16.2-alt1
+- 4.16.2
+
+* Thu Oct 16 2025 Alexei Takaseev <taf@altlinux.org> 4.16.1-alt1
+- 4.16.1
+
+* Sun Sep 21 2025 Alexei Takaseev <taf@altlinux.org> 4.14.5-alt1
+- 4.14.5
+
+* Wed Jun 04 2025 Alexei Takaseev <taf@altlinux.org> 4.14.4-alt1
+- 4.14.4
+
+* Thu Mar 20 2025 Alexei Takaseev <taf@altlinux.org> 4.14.3-alt1
+- 4.14.3
+- Enable LLVM for loongarch64
+
+* Fri Feb 21 2025 Alexei Takaseev <taf@altlinux.org> 4.14.2-alt1
+- 4.14.2
+
+* Fri Jun 21 2024 Danilkin Danila <danild@altlinux.org> 4.10.3-alt1
+- Automatically updated to 4.10.3.
+
+* Sat Apr 13 2024 Danilkin Danila <danild@altlinux.org> 4.9.2-alt1
+- Initial build for Sisyphus
