@@ -2,7 +2,7 @@
 
 Name: gtk-theme-classiclooks
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: ClassicLooks is a Gtk2 & Gtk3 themes
 Group: Graphical desktop/XFce
@@ -10,8 +10,8 @@ Group: Graphical desktop/XFce
 License: GPLv2+
 URL: http://www.itgroup.ro/classiclooks
 Source: %name-%version.tar
-
-Patch0: fix-synaptic.patch
+Patch: %name-%version-%release.patch
+Patch1: fix-synaptic.patch
 
 BuildArch: noarch
 
@@ -70,7 +70,8 @@ Themes for Xfwm4 as part of the ClassicLooks theme.
 
 %prep
 %setup
-%patch0 -p1
+%patch -p1
+%patch1 -p1
 find -type f -executable -not -name "*.sh" -exec chmod -x '{}' \;
 
 %install
@@ -101,6 +102,9 @@ done
 %_datadir/themes/*/xfwm4/
 
 %changelog
+* Wed Nov 25 2026 Mikhail Efremov <sem@altlinux.org> 1:2.4.0-alt2
+- Fixed desktop icon selection in Xfce 4.20 (closes: #61663).
+
 * Wed Sep 03 2025 Mikhail Efremov <sem@altlinux.org> 1:2.4.0-alt1
 - Updated to 2.4.0.
 
