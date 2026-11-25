@@ -28,33 +28,27 @@
 %endif
 %def_without kvsfs
 %def_without rdma
-%def_without 9P
-%def_without 9P_rdma
 %def_without jemalloc
 %def_without lttng
 %def_without saunafs
 %def_without lizardfs
 %def_with utils
 %def_with gui_utils
-%def_without system_ntirpc
+%def_with system_ntirpc
 %def_with man_page
 %def_with rpcbind
 %def_with mspac_support
 %def_without monitoring_support
 %def_without legacy_python_install
 
-%define libntirpc_version 7.2
-
 Name: nfs-ganesha
-Version: 9.9
+Version: 15.9
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
 License: LGPL-3.0-or-later
 Url: https://github.com/nfs-ganesha/nfs-ganesha
 Source: %name-%version.tar
-Source1: libntirpc-0.tar
-Source2: prometheus-cpp-lite-0.tar
 Patch: %name-%version.patch
 
 Requires: dbus
@@ -62,7 +56,7 @@ Requires: nfs-utils
 %{?_with_rpcbind:Requires: rpcbind}
 
 BuildRequires(pre): rpm-macros-cmake rpm-macros-systemd
-BuildRequires: cmake gcc-c++ ninja-build
+BuildRequires: rpm-build-cmake gcc-c++ ninja-build
 BuildRequires: bison
 BuildRequires: flex
 BuildRequires: libunwind-devel
@@ -71,9 +65,10 @@ BuildRequires: libdbus-devel
 BuildRequires: libcap-devel
 BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
+BuildRequires: libssl-devel
 BuildRequires: libnsl2-devel
 BuildRequires: libattr-devel libacl-devel
-%{?_with_system_ntirpc:BuildRequires: libntirpc-devel >= 7.0}
+%{?_with_system_ntirpc:BuildRequires: libntirpc-devel >= 15.7}
 BuildRequires: libuserspace-rcu-devel
 BuildRequires: /usr/bin/sphinx-build-3
 %{?_with_mspac_support:BuildRequires: libwbclient-devel}
@@ -84,7 +79,6 @@ BuildRequires: /usr/bin/sphinx-build-3
 %{?_with_rgw:BuildRequires: librgw-devel >= 12.2.0}
 %{?_with_nfsidmap:BuildRequires: libnfsidmap-devel}
 %{?_with_rdma:BuildRequires: rdma-core-devel}
-%{?_with_9P_rdma:BuildRequires: libmooshika-devel}
 %{?_with_jemalloc:BuildRequires: libjemalloc-devel}
 %{?_with_gluster:BuildRequires: pkgconfig(glusterfs-api) >= 7.6.6}
 %{?_with_xfs:BuildRequires: libxfs-devel}
@@ -102,14 +96,6 @@ BuildRequires: python3-module-setuptools
 nfs-ganesha : NFS-GANESHA is a NFS Server running in user space.
 It comes with various back-end modules (called FSALs) provided as
 shared objects to support different file systems and name-spaces.
-
-%package mount-9P
-Summary: a 9p mount helper
-Group: System/Servers
-
-%description mount-9P
-This package contains the mount.9P script that clients can use
-to simplify mounting to NFS-GANESHA. This is a 9p mount helper.
 
 %package vfs
 Summary: The NFS-GANESHA's VFS FSAL
@@ -284,9 +270,10 @@ Conflicts: lizardfs-nfs-ganesha
 This package contains a FSAL shared object to be used with NFS-Ganesha
 to support LizardFS.
 
+%if_without system_ntirpc
 %package -n libntirpc
 Summary: New Transport Independent RPC Library
-Version: %libntirpc_version
+Version: 15.7
 Group: System/Libraries
 AutoReq: nocpp
 
@@ -296,18 +283,17 @@ transport-independent RPC (TI-RPC) library for NFS-Ganesha.
 
 %package -n libntirpc-devel
 Summary: Development headers for libntirpc
-Version: %libntirpc_version
+Version: 15.7
 Requires: libntirpc = %EVR
 Group: Development/C
 AutoReq: nocpp
 
 %description -n libntirpc-devel
 Development headers and auxiliary files for developing with libntirpc.
+%endif
 
 %prep
 %setup
-tar xf %SOURCE1 -C src
-tar xf %SOURCE2 -C src/libntirpc/src/monitoring
 %patch -p1
 
 %build
@@ -335,8 +321,6 @@ pushd src
     -DUSE_LTTNG=%{on_off_switch lttng} \
     -DUSE_ADMIN_TOOLS=%{on_off_switch utils} \
     -DUSE_GUI_ADMIN_TOOLS=%{on_off_switch gui_utils} \
-    -DUSE_9P=%{on_off_switch 9P} \
-    -DUSE_9P_RDMA=%{on_off_switch 9P_rdma} \
     -DUSE_FSAL_VFS=ON \
     -DENABLE_VFS_POSIX_ACL=ON \
     -DUSE_FSAL_PROXY_V4=ON \
@@ -372,9 +356,6 @@ pushd src
 install -m 644 config_samples/logrotate_ganesha	%buildroot%_logrotatedir/ganesha
 install -m 644 scripts/ganeshactl/org.ganesha.nfsd.conf	%buildroot%_sysconfdir/dbus-1/system.d
 install -m 755 scripts/nfs-ganesha-config.sh	%buildroot%_libexecdir/ganesha
-%if_with 9P
-install -m 755 tools/mount.9P	%buildroot%_sbindir/mount.9P
-%endif
 
 install -m 644 config_samples/vfs.conf %buildroot%_sysconfdir/ganesha/
 %if_with rgw
@@ -464,11 +445,12 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %_man8dir/ganesha-export-config.8*
 %_man8dir/ganesha-cache-config.8*
 %_man8dir/ganesha-log-config.8*
+%_man8dir/ganesha-fscrypt-config.8*
 
 %if_without system_ntirpc
 %files -n libntirpc
 %doc src/libntirpc/COPYING
-%_libdir/libntirpc.so.%libntirpc_version
+%_libdir/libntirpc.so.15.7
 
 %files -n libntirpc-devel
 %doc src/libntirpc/{AUTHORS,THANKS,README}
@@ -488,11 +470,6 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %if_with rados_urls
 %files rados-urls
 %_libdir/libganesha_rados_urls.so*
-%endif
-
-%if_with 9P
-%files mount-9P
-%_sbindir/mount.9P
 %endif
 
 %files vfs
@@ -593,6 +570,7 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %_bindir/ganesha_logrotate_mgr
 %_bindir/ganesha_conf
 %_man8dir/ganesha_conf.8*
+%_man8dir/ganesha-top.8*
 
 %if_with gui_utils
 %files utils-gui
@@ -603,18 +581,20 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %_bindir/manage_exports
 %_bindir/manage_logger
 %_bindir/ganeshactl
-%if_with 9P
-%_bindir/client_stats_9pOps
-%_bindir/export_stats_9pOps
-%else
-%exclude %_bindir/client_stats_9pOps
-%exclude %_bindir/export_stats_9pOps
-%endif
 %endif
 
 %endif
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 15.9-alt1
+- Update to V15.9.
+- Build with the system libntirpc 15.7 instead of the bundled one.
+- Build libntirpc subpackages with --without system_ntirpc.
+- Drop 9P support (removed upstream).
+- Added BuildRequires: libssl-devel (new upstream dependency).
+- Packaged new man pages ganesha-fscrypt-config and ganesha-top.
+- Replaced BuildRequires: cmake with rpm-build-cmake.
+
 * Sun Mar 29 2026 Vitaly Chikunov <vt@altlinux.org> 9.9-alt1
 - Update to V9.9 (2026-03-19).
 
