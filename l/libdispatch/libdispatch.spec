@@ -1,7 +1,7 @@
 %def_without check
 
 Name: libdispatch
-Version: 6.4.2
+Version: 6.4.3
 Release: alt1
 
 Summary: Apple's Grand Central Dispatch library
@@ -102,6 +102,9 @@ chrpath --delete %buildroot%_libdir/libdispatch.so
 %_includedir/os/
 
 %changelog
+* Wed Nov 25 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4.3-alt1
+- new version 6.4.3
+
 * Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 6.4.2-alt1
 - new version 6.4.2
 
