@@ -1,5 +1,5 @@
 Name: simdutf
-Version: 9.4.0
+Version: 9.5.0
 Release: alt1
 
 Summary: SIMD assisted Unicode validation and transcoding
@@ -14,7 +14,7 @@ BuildRequires(pre): rpm-build-cmake
 BuildRequires: gcc-c++
 BuildRequires: ctest
 
-%package -n libsimdutf38
+%package -n libsimdutf39
 Summary: SIMD assisted Unicode validation and transcoding
 Group: Development/C++
 
@@ -29,7 +29,7 @@ Part of Node.js, WebKit/Safari and Bun.
 
 %description %desc
 
-%description -n libsimdutf38 %desc
+%description -n libsimdutf39 %desc
 This package provides simdutf shared library.
 
 %description -n libsimdutf-devel %desc
@@ -51,7 +51,7 @@ This package contains simdutf development part.
 %check
 %ctest
 
-%files -n libsimdutf38
+%files -n libsimdutf39
 %doc AUTHORS CONTRIBUTORS LICENSE*
 %_libdir/libsimdutf.so.*
 
@@ -65,6 +65,9 @@ This package contains simdutf development part.
 %_libdir/libsimdutf.so
 
 %changelog
+* Wed Nov 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.5.0-alt1
+- 9.5.0 released
+
 * Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 9.4.0-alt1
 - 9.4.0 released
 
