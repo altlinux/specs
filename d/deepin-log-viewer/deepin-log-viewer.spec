@@ -4,7 +4,7 @@
 %def_without library
 
 Name: deepin-log-viewer
-Version: 6.5.43
+Version: 6.5.44
 Release: alt1
 
 Summary: System log viewer for Deepin
@@ -16,10 +16,10 @@ License: GPL-3.0-or-later
 # 3rdparty/libxlsxwriter/: GPL and MIT and BSD-2-Clause and BSD-3-Clause and Public-domain and Zlib and MPL-2.0
 # 3rdparty/DocxFactory/: GPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/deepin-log-viewer
-Vcs: https://github.com/linuxdeepin/deepin-log-viewer
+URL: https://github.com/linuxdeepin/deepin-log-viewer
+VCS: https://github.com/linuxdeepin/deepin-log-viewer
 
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/linuxdeepin/deepin-log-viewer/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: deepin-log-viewer-6.1.17-alt-fix-pkgconfig.patch
@@ -132,6 +132,9 @@ patchelf %buildroot%_libdir/liblogviewerplugin.so.%soverlvp --add-needed libxlsx
 %endif
 
 %changelog
+* Wed Nov 25 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.44-alt1
+- New version 6.5.44.
+
 * Wed Oct 28 2026 Leontiy Volodin <lvol@altlinux.org> 6.5.43-alt1
 - New version 6.5.43.
 
