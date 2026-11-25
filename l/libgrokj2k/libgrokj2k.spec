@@ -2,7 +2,7 @@
 
 Name: libgrokj2k
 Version: 20.4.25
-Release: alt1
+Release: alt2
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -19,6 +19,7 @@ Source: %name-%version.tar
 Source2: spdlog-2.0.0.tar
 Patch0: grok-use-system-highway.patch
 Patch1: grok-tests-mapped-offset-64bit.patch
+Patch2: grok-gcc16-missing-climits.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: perl-base perl-devel perl-Image-ExifTool
@@ -62,6 +63,7 @@ Compress and decompress tools for grokj2k:
 %setup -a2
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %ifarch %e2k
 sed -i 's|set(CMAKE_CXX_STANDARD 20)|string(APPEND CMAKE_CXX_FLAGS " -std=gnu++2a")|' CMakeLists.txt
 sed -i 's|CMAKE_CXX_COMPILER_VERSION|12.0|' CMakeLists.txt
@@ -122,6 +124,9 @@ ctest --output-on-failure -j%__nprocs -E "$exclude"
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.25-alt2
+- fix build with GCC 16 (include <climits> for UINT_MAX).
+
 * Tue Nov 03 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.25-alt1
 - new version 20.4.25.
 
