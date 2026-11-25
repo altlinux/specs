@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 620
-%define nv_release 70
-%define nv_minor 06
-%define pkg_rel alt323
+%define nv_release 73
+%define nv_minor 04
+%define pkg_rel alt325
 
 %define tbver %{nv_version}.%{nv_release}
 %if "%nv_minor" != "%nil"
@@ -304,7 +304,7 @@ fi
 %_datadir/make-initrd/features/nvidia/
 %ghost %_bindir/nvidia-bug-report.sh
 %ghost %_sysconfdir/X11/xorg.conf.d/09-nvidia.conf
-%_sysconfdir/ld.so.conf.d/nvidia.conf
+%config(noreplace) %_sysconfdir/ld.so.conf.d/nvidia.conf
 %xdrv_pre_d/nvidia
 %xdrv_d/nvidia
 #%xdrv_d_old/nvidia
@@ -362,6 +362,12 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Nov 24 2026 Sergey V Turchin <zerg@altlinux.org> 620.73.04-alt325
+- fix find nvidia libraries by steam pressure-vessel
+
+* Mon Nov 23 2026 Sergey V Turchin <zerg@altlinux.org> 620.73.04-alt324
+- new version
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt323
 - new version
 
