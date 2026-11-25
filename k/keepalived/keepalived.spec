@@ -16,7 +16,7 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.3.4
+Version: 2.4.3
 Release: alt1
 
 Summary: HA monitor built upon LVS, VRRP and services poller
@@ -97,6 +97,16 @@ for f in %buildroot%_datadir/snmp/mibs/*.txt; do
     mv "$f" "%buildroot%_datadir/mibs/%name/$bn"
 done
 
+%check
+%if_enabled vrrp
+%make_build -C test auth_hmac_test CFLAGS="%optflags"
+./test/auth_hmac_test
+%endif
+%if_enabled regex
+%make_build -C test regex_partial_test CFLAGS="%optflags"
+./test/regex_partial_test
+%endif
+
 %preun
 %preun_service keepalived
 
@@ -127,6 +137,10 @@ done
 %doc doc/samples
 
 %changelog
+* Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 2.4.3-alt1
+- 2.3.4 -> 2.4.3
+- enabled HMAC and regex regression tests during build
+
 * Wed Sep 17 2025 Anton Farygin <rider@altlinux.com> 2.3.4-alt1
 - 2.3.4
 - built with dbus support
