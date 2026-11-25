@@ -19,8 +19,8 @@
 %endif
 
 %define nv_version 620
-%define nv_release 70
-%define nv_minor   06
+%define nv_release 73
+%define nv_minor   04
 %define pkg_rel alt1
 %define nv_version_full %nv_version.%nv_release.%nv_minor
 %if "%nv_minor" == "%nil"
@@ -65,12 +65,14 @@ nvidia OpenCL library
 Group: System/Libraries
 Summary: nvidia library
 BuildArch: noarch
+Requires: nvidia_glx_common
 %description -n libnvidia-ptxjitcompiler
 nvidia library
 
 %package -n libnvidia-ml
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-ml
 nvidia library
 
@@ -79,6 +81,7 @@ Group: System/Libraries
 Summary: nvidia library
 Provides: libnvidia-cuda = %EVR
 Obsoletes: libnvidia-cuda < %EVR
+Requires: nvidia_glx_common
 %description -n libcuda
 nvidia CUDA library
 
@@ -87,6 +90,7 @@ Group: System/Libraries
 Summary: nvidia library
 Provides: libnvidia-cuda = %EVR
 Obsoletes: libnvidia-cuda < %EVR
+Requires: nvidia_glx_common
 %description -n libcudadebugger
 nvidia CUDA debugger library
 
@@ -95,6 +99,7 @@ Group: System/Libraries
 Summary: nvidia library
 Requires: ocl-icd
 Requires: libnvidia-nvvm
+Requires: nvidia_glx_common
 %description -n libnvidia-opencl
 nvidia OpenCL library
 
@@ -103,6 +108,7 @@ Group: System/Libraries
 Summary: nvidia library
 Provides: libnvidia-nvcuvid = %version-%release
 #BuildArch: noarch
+Requires: nvidia_glx_common
 %description -n libnvcuvid
 nvidia library
 
@@ -110,48 +116,56 @@ nvidia library
 Group: System/Libraries
 Summary: nvidia library
 Provides: libnvidia-nvcuvid = %version-%release
+Requires: nvidia_glx_common
 %description -n libnvoptix
 nvidia library
 
 %package -n libnvidia-encode
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-encode
 nvidia library
 
 %package -n libnvidia-nvvm
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-nvvm
 nvidia library
 
 %package -n libnvidia-nvvm70
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-nvvm70
 nvidia library
 
 %package -n libnvidia-ngx
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-ngx
 nvidia library
 
 %package -n libnvidia-fbc
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-fbc
 nvidia library
 
 %package -n libnvidia-api
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-api
 nvidia library
 
 %package -n libnvidia-opticalflow
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-opticalflow
 nvidia library
 
@@ -159,12 +173,14 @@ nvidia library
 Group: System/Libraries
 Summary: nvidia library
 #BuildArch: noarch
+Requires: nvidia_glx_common
 %description -n libnvidia-sandboxutils
 nvidia library
 
 %package -n libnvidia-vksc-core
 Group: System/Libraries
 Summary: nvidia library
+Requires: nvidia_glx_common
 %description -n libnvidia-vksc-core
 nvidia library
 
@@ -295,6 +311,9 @@ install -m 0644 %SOURCE300 %buildroot/%_unitdir/
 %endif
 
 %changelog
+* Wed Nov 25 2026 Sergey V Turchin <zerg@altlinux.org> 620.73.04-alt1
+- new version
+
 * Thu Nov 05 2026 Sergey V Turchin <zerg@altlinux.org> 620.70.06-alt1
 - new version
 

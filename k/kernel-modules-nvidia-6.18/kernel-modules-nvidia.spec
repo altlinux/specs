@@ -8,7 +8,7 @@
 %define uvmmodule_name		nvidia-uvm
 %define peermemmodule_name	nvidia-peermem
 %define drmmodule_name		nvidia-drm
-%define package_version	620.70.06
+%define package_version	620.73.04
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.157
@@ -26,7 +26,7 @@
 
 %define legacy8 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy8 580.178.04
+%define legacy8 580.196.07
 %endif
 %define legacy8_src %(echo %legacy8 | tr -d .)
 
@@ -325,6 +325,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Nov 25 2026 Sergey V Turchin <zerg at altlinux dot org> 620.73.04-alt1
+- new versions (620.73.04, 580.196.07)
 
 * Fri Nov 06 2026 Sergey V Turchin <zerg at altlinux dot org> 620.70.06-alt1
 - new version (620.70.06)
