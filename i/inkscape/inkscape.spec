@@ -12,7 +12,7 @@
 
 Name: inkscape
 Version: %major.4
-Release: alt2
+Release: alt3
 
 Summary: A Vector Drawing Application
 
@@ -24,6 +24,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://media.inkscape.org/dl/resources/file/inkscape-%version.tar.xz
 Source: %name-%version.tar
+Patch: patches/inkscape-ru.po.patch
+Patch1: patches/inkscape-startup-banner-background.patch
+Patch2: patches/inkscape-poppler-26.08.patch
 
 Source1: inkview.desktop
 Source2: gen-tutorial-filelist.sh
@@ -40,7 +43,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: libstdc++8-devel-static
 %endif
 
-BuildRequires: cmake gcc-c++ intltool
+BuildRequires: rpm-build-cmake gcc-c++ intltool
 BuildRequires: boost-devel-headers boost-filesystem-devel boost-asio-devel
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
 
@@ -267,6 +270,12 @@ true
 %files checkinstall
 
 %changelog
+* Fri Oct 30 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt3
+- update and review Russian translation
+- added BuildRequires: rpm-build-cmake
+- removed BuildRequires: cmake
+- fix startup banner artifacts with large text (closes: #44817)
+
 * Fri Jul 24 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt2
 - tag localized tutorials with %lang() via generated %files list
 
