@@ -2,7 +2,7 @@
 
 Name: alterator-framework
 Version: 0.1.4
-Release: alt1
+Release: alt2
 
 Summary: Qt 6-based host application for Alterator QML modules
 License: %gpl3only
@@ -24,7 +24,7 @@ Requires: qt6-translations
 Requires: qt6-svg
 Requires: alterator-application-framework
 Requires: alterator-interface-framework
-Requires: alterator-module-backend3 >= 0.2.0-alt1
+Requires: alterator-module-backend3 >= 0.3.0-alt1
 
 %description
 Qt 6-based host application for Alterator modules.
@@ -61,6 +61,10 @@ install -d %buildroot%_datadir/alterator-framework/modules
 
 
 %changelog
+* Wed Nov 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.4-alt2
+- Bump the alterator-module-backend3 version to reduce the risk
+  of vulnerabilities in backends.
+
 * Tue Oct 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.1.4-alt1
 - Add timeout property to BackendOperation (thx Oleg Chagaev).
 - Bump API version to 1.5 (thx Oleg Chagaev).

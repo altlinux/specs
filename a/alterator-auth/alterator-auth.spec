@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.56
+Version: 0.57
 Release: alt1
 
 Summary: Alterator module for system wide auth settings
@@ -191,6 +191,9 @@ install -m 644 alterator-framework/ts/auth_ru.qm %buildroot%_datadir/alterator-f
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Nov 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.57-alt1
+- backend: restrict public method inputs (thx Oleg Chagaev)
+
 * Tue Oct 20 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.56-alt1
 - backend: require auth for local_bases method (thx Oleg Chagaev)
 

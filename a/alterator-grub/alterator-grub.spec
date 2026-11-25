@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.30.3
+Version: 0.30.4
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -68,6 +68,9 @@ touch %buildroot%_sysconfdir/efi_removable.flag
 %ghost %_sysconfdir/efi_removable.flag
 
 %changelog
+* Wed Nov 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.30.4-alt1
+- restrict public method inputs (thx Oleg Chagaev)
+
 * Tue Sep 22 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.30.3-alt1
 - add alterator-framework frontend and alterator-manager
   backend integration (thx Oleg Chagaev)

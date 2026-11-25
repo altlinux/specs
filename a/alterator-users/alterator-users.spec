@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.36
+Version: 10.37
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -63,6 +63,9 @@ install -m 0755 alterator_users_helper %buildroot%_bindir
 %_datadir/alterator-framework/modules/users/ts/users_ru.qm
 
 %changelog
+* Wed Nov 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 10.37-alt1
+- backend: restrict public method inputs (thx Oleg Chagaev)
+
 * Mon Nov 09 2026 Dmitrii Fomchenkov <sirius@altlinux.org> 10.36-alt1
 - fix incorrect behavior when removing user avatar
 

@@ -1,5 +1,5 @@
 Name:    alterator-groups
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Alterator module for system groups administration
@@ -61,6 +61,9 @@ install -m 644 alterator-framework/ts/groups_ru.qm %buildroot%_datadir/alterator
 %_datadir/alterator-framework/modules/groups/ts/groups_ru.qm
 
 %changelog
+* Wed Nov 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.8-alt1
+- Restrict public method input (thx Oleg Chagaev).
+
 * Mon Mar 23 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.7-alt1
 - Add alterator-framework UI support (thx Oleg Chagaev).
 

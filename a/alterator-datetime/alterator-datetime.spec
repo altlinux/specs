@@ -1,7 +1,7 @@
 # -*- mode: RPM-SPEC; tab-width: 8; fill-column: 70; -*- 
 
 Name: alterator-datetime
-Version: 4.9.5
+Version: 4.9.6
 Release: alt1
 
 Summary: alterator module for date/time setup
@@ -78,6 +78,9 @@ lrelease-qt6 alterator-framework/ts/datetime_ru.ts
 %_bindir/alterator-datetime-functions
 
 %changelog
+* Wed Nov 18 2026 Maria Alexeeva <alxvmr@altlinux.org> 4.9.6-alt1
+- backend: restrict public method inputs (thx Oleg Chagaev)
+
 * Tue Sep 08 2026 Ivan Khanas <xeno@altlinux.org> 4.9.5-alt1
 - datetime-functions: use Europe/Simferopol for Europe/Zaporozhye
 
