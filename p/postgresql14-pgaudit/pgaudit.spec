@@ -2,7 +2,7 @@
 %define enable_llvm %(if pg_server_config --configure | grep -q LLVM_CONFIG ; then echo 1; else echo 0; fi)
 
 Name:    postgresql%pg_ver-pgaudit
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 Epoch:   1
 
@@ -53,6 +53,9 @@ echo "ALTER EXTENSION pgaudit UPDATE;                                           
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed Nov 25 2026 Alexei Takaseev <taf@altlinux.org> 1:1.6.4-alt1
+- 1.6.4
+
 * Fri Mar 13 2026 Alexei Takaseev <taf@altlinux.org> 1:1.6.3-alt1
 - 1.6.3
 - Use LLVM if it used in PostgreSQL
