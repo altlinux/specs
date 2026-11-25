@@ -1,5 +1,5 @@
 Name:     pop-launcher
-Version:  1.2.7
+Version:  1.12.0
 Release:  alt1
 
 Summary:  Modular IPC-based desktop launcher service
@@ -9,11 +9,12 @@ Url:      https://github.com/pop-os/launcher
 
 ExcludeArch: ppc64le
 
-# Source-url: https://github.com/pop-os/launcher/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/pop-os/launcher/archive/refs/tags/epoch-%version.tar.gz
 Source: %name-%version.tar
 
 # auto predownloaded cargo modules during update version with rpmgs from etersoft-build-utils
 Source1: %name-development-%version.tar
+Source2: config.toml
 
 %filter_from_requires /gnome-terminal/d
 %filter_from_requires /gnome-session/d
@@ -34,22 +35,7 @@ BuildRequires: pkgconfig(xkbcommon)
 %prep
 %setup -a1
 
-mkdir -p .cargo
-cat <<EOF >> .cargo/config.toml
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/pop-os//cosmic-protocols"]
-git = "https://github.com/pop-os//cosmic-protocols"
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/pop-os/dbus-settings-bindings"]
-git = "https://github.com/pop-os/dbus-settings-bindings"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-EOF
+install -vD %SOURCE2 .cargo/config.toml
 
 %build
 %rust_build -p pop-launcher-bin \
@@ -68,6 +54,9 @@ just rootdir=%buildroot bin-path=%_bindir/%name install-plugins
 %_libexecdir/%name/
 
 %changelog
+* Wed Nov 25 2026 Kirill Unitsaev <fiersik@altlinux.org> 1.12.0-alt1
+- new version (1.12.0) (closes: #61661)
+
 * Wed Oct 29 2025 Kirill Unitsaev <fiersik@altlinux.org> 1.2.7-alt1
 - new version 1.2.7 (with rpmrb script) (ALT bug 51925)
 
