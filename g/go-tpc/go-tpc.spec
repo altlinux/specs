@@ -1,6 +1,6 @@
 Name:    go-tpc
 Version: 1.0.12
-Release: alt2
+Release: alt3
 
 Summary: A toolbox to benchmark workloads in TPC
 License: Apache-2.0
@@ -37,6 +37,9 @@ install -p -m 755 -D bin/go-tpc %buildroot%_bindir/go-tpc
 %_bindir/*
 
 %changelog
+* Wed Nov 25 2026 Alexei Takaseev <taf@altlinux.org> 1.0.12-alt3
+- fix: harden diagnostic endpoints and support environment passwords
+
 * Thu Oct 15 2026 Alexey Shabalin <shaba@altlinux.org> 1.0.12-alt2
 - Fixed build with golang-1.27.
 
