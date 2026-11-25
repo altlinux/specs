@@ -3,7 +3,7 @@
 %def_with check
 
 Name: ant-renamer-qt
-Version: 3.2.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Rename many files at once
@@ -61,5 +61,8 @@ sed -i "s|docs/screenshots/English/||" README.md
 %_datadir/metainfo/fr.morfredus.AntRenamerQt.metainfo.xml
 
 %changelog
+* Wed Nov 25 2026 Nikolay Strelkov <snk@altlinux.org> 3.3.1-alt1
+- New version 3.3.1.
+
 * Mon Nov 23 2026 Nikolay Strelkov <snk@altlinux.org> 3.2.0-alt1
 - Initial build for Sisyphus
