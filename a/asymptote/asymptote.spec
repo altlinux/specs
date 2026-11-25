@@ -1,5 +1,5 @@
 Name: asymptote
-Version: 3.15
+Version: 3.16
 Release: alt1
 
 Summary: Descriptive vector graphics language
@@ -13,9 +13,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/vectorgraphics/asymptote/archive/%version.tar.gz
 Source: %name-%version.tar
 
-Patch: asymptote-1.91-alt-DSO.patch
-Patch1: asymptote-1.91-alt-glibc-2.16.patch
-Patch2: asymptote-2.28-alt-gsl1.16.patch
 # drop static glslang companion libs (merged into libglslang since glslang 15)
 Patch3: asymptote-3.15-alt-glslang-libs.patch
 # VkBuffer is a 64-bit integer handle on 32-bit platforms
@@ -23,7 +20,7 @@ Patch4: asymptote-3.15-alt-vkbuffer-32bit.patch
 
 BuildRequires: flex gcc-c++ libfftw3-devel libgsl-devel libreadline-devel libtirpc-devel zlib-devel
 BuildRequires: libglm-devel
-BuildRequires: cmake
+BuildRequires: rpm-build-cmake
 BuildRequires: libfreeglut-devel
 # Vulkan renderer (3.10+), glfw is required for both Vulkan and OpenGL
 BuildRequires: libglfw3-devel vulkan-headers libvulkan-devel glslang-devel libspirv-tools-devel
@@ -82,7 +79,8 @@ sed -i "s|@printindex cp||g" doc/%name.texi
 	--with-context=%_texmfmain/tex/context/third \
 	--enable-gsl
 # Use system libgc instead of bundled one
-sed -i 's|^GCLIB =.*|GCLIB = -lgc|;s|^GCPPLIB =.*|GCPPLIB = -lgccpp|' Makefile
+sed -i 's|^GCLIB =.*|GCLIB = /usr/%_lib/libgc.so|;s|^GCPPLIB =.*|GCPPLIB = -lgccpp|' Makefile
+sed -i '/^$(GCLIB): $(GCSTAMP)/,/^sty:/ { /^sty:/!d; }' Makefile
 sed -i 's|-I$(GC)/include|-I/usr/include/gc|' Makefile
 # Remove -I/usr/include/gsl from CPPFLAGS: it shadows standard <algorithm> header
 # when Microsoft GSL (from libglm-devel) is installed alongside GNU GSL
@@ -125,6 +123,11 @@ done
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Nov 25 2026 Vitaly Lipatov <lav@altlinux.ru> 3.16-alt1
+- new version 3.16
+- remove unused legacy patches.
+- use rpm-build-cmake for cmake macros.
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 3.15-alt1
 - new version 3.15
 - build with Vulkan renderer (add glfw, vulkan, glslang, spirv-tools to BR)
