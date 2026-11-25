@@ -12,7 +12,7 @@
 %define _udevdir /lib/udev
 
 Name: mlnx-tools
-Version: 2701.0.2
+Version: 2701.0.5
 Release: alt1
 
 Summary: Mellanox userland tools and scripts
@@ -51,11 +51,9 @@ sed -e 's|/usr/share/mlnx-tools/python|%python3_sitelibdir/%name|g' \
     -i python/mlnx_qos
 sed -e 's|/usr/bin/env python3|%__python3|;' \
     -i $(find ./python -type f -print) \
-    -i tsbin/mlnx-sf \
-    -i tsbin/doca-hugepages
-sed -e 's|openvswitch-switch|openvswitch|g;' \
-    -e 's|/usr/lib/systemd/system|%_unitdir|;' \
-    -i tsbin/mlnx_bf_configure
+    -i $(find ./tsbin -type f -print)
+sed -e 's|/usr/sbin/mlnx-bf-hugepages|/sbin/mlnx-bf-hugepages|;' \
+    -i systemd/mlnx-bf-hugepages-ready.service
 
 %install
 %makeinstall_std
@@ -64,19 +62,25 @@ chmod +x %buildroot%python3_sitelibdir/%name/dcbnetlink.py
 %files
 %doc doc/* COPYING LICENSE README.md debian/changelog
 /sbin/sysctl_perf_tuning
-/sbin/mlnx_bf_configure
-/sbin/mlnx-sf
+/sbin/mlnx*
 /sbin/doca-hugepages
 /lib/udev/mlnx_bf_udev
 %_sbindir/*
 %_bindir/*
+%_unitdir/mlnx*.service
+%dir %_unitdir/openvswitch.service.d/
+%_unitdir/openvswitch.service.d/hugepages.conf
 %_man8dir/ib2ib_setup.8*
-%_man8dir/mlnxofedctl.8*
+%_man8dir/mlnx*.8*
+%_man8dir/doca-hugepages.8*
 
 %files -n python3-module-mlnx
 %python3_sitelibdir/%name/
 
 %changelog
+* Wed Nov 25 2026 Leontiy Volodin <lvol@altlinux.org> 2701.0.5-alt1
+- New version 2701.0.5.
+
 * Thu Nov 19 2026 Leontiy Volodin <lvol@altlinux.org> 2701.0.2-alt1
 - New version 2701.0.2 (2607.0.12).
 
