@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: forgejo-runner
-Version: 13.2.0
-Release: alt2
+Version: 13.2.2
+Release: alt1
 
 %global import_path code.forgejo.org/forgejo/runner/v%(echo %{version} | cut -d. -f1)
 
@@ -138,6 +138,9 @@ fi
 %_userunitdir/%name-cache.service
 
 %changelog
+* Wed Nov 25 2026 Maxim Slipenko <maks1ms@altlinux.org> 13.2.2-alt1
+- New version 13.2.2.
+
 * Thu Oct 15 2026 Egor Ignatov <egori@altlinux.org> 13.2.0-alt2
 - Fix docker action steps failing on podman with --add-host/--dns* in options.
 
