@@ -9,7 +9,7 @@
 
 Name: gradle
 Version: 9.7.1
-Release: alt2
+Release: alt3
 
 Summary: A highly scalable build automation tool
 License: Apache-2.0
@@ -34,6 +34,7 @@ Patch3: 0004-Stop-capturing-the-release-notes-date-formatters-alt-patch.patch
 # 2.42.0 is the last release still running on Java 17.
 # The annotations artifact ships inside the distribution, so it stays at 2.50.0.
 Patch4: 0005-Gradle-downgrade-error-prone-alt-patch.patch
+Patch5: 0006-Publish-the-matching-kotlin-dsl-plugin.patch
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
@@ -45,6 +46,9 @@ BuildRequires: java-17-openjdk-devel
 %{?_with_java21plus:BuildRequires: java-21-openjdk-devel}
 %{?_with_java21plus:BuildRequires: java-25-openjdk-devel}
 BuildRequires: git
+BuildRequires: maven-local
+BuildRequires: mvn(org.jetbrains.kotlin:kotlin-stdlib)
+BuildRequires: mvn(org.jetbrains.kotlin:kotlin-gradle-plugin)
 %add_findreq_skiplist %_datadir/gradle/lib/plugins/org.eclipse.jgit.ssh.apache.agent-*.jar
 Requires: jna-contrib
 
@@ -55,6 +59,15 @@ various languages. Gradles modular, performance-oriented architecture
 seamlessly integrates with development environments, making it a go-to solution
 for building, testing, and deploying applications on Java, Kotlin, Scala,
 Android, Groovy, C++, and Swift.
+
+%package kotlin-dsl-plugin
+Summary: Gradle Kotlin DSL plugin for offline builds
+Group: Development/Java
+Requires: %name = %EVR
+
+%description kotlin-dsl-plugin
+The Gradle Kotlin DSL plugin and Maven markers for compiling Kotlin build
+logic in buildSrc and included builds.
 
 %prep
 %setup -a1 -a2
@@ -89,6 +102,8 @@ COMMITHASH=$(./commit.sh)
 # Skip task :docs:javadocAll that requires .git directory.
 %{?_with_bootstrap:./gradlew installAll} \
 %{!?_with_bootstrap:gradle installAll} \
+  :kotlin-dsl-plugins:publishToMavenLocal \
+  -Dmaven.repo.local="$PWD/kotlin-dsl-maven" \
   -x :docs:javadocAll \
   %{!?_with_java21plus:-x :docs:compileJava} \
   %{?_with_java21plus:\
@@ -124,11 +139,36 @@ install -d %buildroot%_bindir
 ln -s %_datadir/gradle/bin/gradle \
   -t %buildroot%_bindir/
 
+plugin_repo=$PWD/kotlin-dsl-maven/org/gradle/kotlin
+set -- "$plugin_repo"/gradle-kotlin-dsl-plugins/*/*.pom
+test "$#" -eq 1
+jar=$(dirname "$1")/$(basename "$1" .pom).jar
+# Record the Kotlin artifacts that will be used by the installed plugin.
+kotlin_version=$(rpm -q --qf '%%{VERSION}' kotlin-gradle-plugin)
+dependency='/pom:project/pom:dependencies/pom:dependency'
+%pom_xpath_set \
+    "$dependency"'[pom:groupId="org.jetbrains.kotlin"]/pom:version' \
+    "$kotlin_version" "$1"
+%mvn_artifact "$1" "$jar"
+
+find "$plugin_repo" -path '*.gradle.plugin/*' -name '*.pom' |
+    sort > .kotlin-dsl-markers
+test "$(wc -l < .kotlin-dsl-markers)" -eq 5
+while IFS= read -r marker; do
+    %mvn_artifact "$marker"
+done < .kotlin-dsl-markers
+%mvn_install
+
 %files
 %_bindir/gradle
 %_datadir/gradle/
 
+%files kotlin-dsl-plugin -f .mfiles
+
 %changelog
+* Wed Nov 25 2026 Ivan Khanas <xeno@altlinux.org> 9.7.1-alt3
+- Package the Kotlin DSL plugin for offline builds.
+
 * Tue Aug 25 2026 Ivan Khanas <xeno@altlinux.org> 9.7.1-alt2
 - Start to package descriptors.
 
