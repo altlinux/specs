@@ -4,10 +4,11 @@
 %def_without separate_trikruntime
 %def_without sanitize
 %def_without debug
+%def_with tests
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2026.2
+Version: 2026.3
 Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
@@ -16,15 +17,21 @@ Group: Education
 Url: https://github.com/trikset/trik-studio
 
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-Patch1: gamepad.patch
-Patch5: quazip.patch
-Patch6: Box2D.patch
-Patch7: use-system-quazip.patch
-Patch8: fix-programdata-datadir-default.patch
+Source1: %name-submodules-%version.tar
+
+Patch0: %name-2026.3-alt-platform.patch
+Patch1: %name-2026.3-alt-box2d-i586-sse.patch
+Patch2: %name-2026.3-alt-gamepad-close-translations.patch
+Patch3: %name-2026.3-alt-system-quazip.patch
+Patch4: %name-2026.3-alt-default-datadir.patch
+Patch5: %name-2026.3-alt-test-environment.patch
+Patch6: %name-2026.3-alt-system-libraries.patch
+Patch7: %name-2026.3-alt-gcc16-nxt-draw.patch
+Patch8: %name-2026.3-alt-qt-translations.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel chrpath
-BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel quazip-qt5-devel qt5-serialport-devel p7zip-standalone
+BuildRequires: zlib-devel python3-dev libhidapi-devel quazip-qt5-devel qt5-serialport-devel p7zip-standalone
+BuildRequires: libqscintilla2-qt5-devel pythonqt-devel
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
@@ -34,10 +41,10 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
-Requires: libqscintilla2-qt5-devel pythonqt-devel
 Requires: libhidapi lego-mindstorms-udev-rules
 Requires: %name-data = %version-%release
 Requires: lmsasm
+Requires: qt5-translations
 Conflicts: lib%name
 
 %description
@@ -86,9 +93,11 @@ BuildArch: noarch
 Trik runtime development files for %name
 
 %prep
-%setup
-%patch -p1
-%patch6 -p1
+%setup -a1
+%patch0 -p1
+cp -a %name-submodules-%version/. .
+rm -r %name-submodules-%version
+%patch1 -p1
 %ifarch %e2k
 # workaround of SIGILL in ecf_opt64 from LCC 1.25.23
 sed -i "s/QOverload<QObject\*>::of/(void(*)(QObject*))/" qrkernel/settingsListener.h
@@ -98,12 +107,6 @@ sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikSt
 PY_PATH=$(python3 -c 'import sys,os;print(os.pathsep.join(sys.path))')
 sed -e "3 a export TRIK_PYTHONPATH=\"$PY_PATH\"" -i installer/platform/trikStudio.sh
 
-tar -xf ./.gear/Box2D.tar.bz2
-tar -xf ./.gear/trikRuntime.tar.bz2
-tar -xf ./.gear/gamepad.tar.bz2
-tar -xf ./.gear/qt-solutions.tar.bz2
-tar -xf ./.gear/qslog.tar.bz2
-tar -xf ./.gear/checkapp.tar.bz2
 rm -rf qscintilla quazip
 
 # Hot fix for python3.13
@@ -111,10 +114,13 @@ find . -name PythonQt.cpp | xargs sed -i '/PyEval_ThreadsInitialized/,+2d'
 find . -name pythonEngineWorker.cpp | xargs sed -i '/Py_SetPath/d'
 
 pushd thirdparty/gamepad
-%patch1
+%patch2
 popd
 
+%patch3 -p1
+%patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 
@@ -129,6 +135,11 @@ sed -e '/use_gold_linker/d' -i \
 export PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d. -f1-2)
 %qmake_qt5 -r \
     CONFIG+=use_system_quazip \
+    CONFIG+=use_system_qscintilla2 \
+    CONFIG+=use_system_pythonqt \
+%if_with tests
+    CONFIG+=tests \
+%endif
 %if_with debug
     CONFIG+=debug CONFIG-=release \
 %else
@@ -201,6 +212,25 @@ popd
 find %buildroot%_libdir/%name -name 'libtrikScriptRunner.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
 find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.*.so.*' -type f -exec chrpath -r %_libdir/%name {} \;
 
+%if_with tests
+# The upstream installer copies all shared libraries and plugin directories.
+# Keep test helpers in the build tree for %%check, not in the runtime package.
+for helper in googletest test-utils tcp-robot-simulator testUtils trikRuntime-googletest; do
+    rm -f %buildroot%_libdir/%name/lib${helper}*.so*
+done
+rm -rf %buildroot%_libdir/%name/plugins/unittests
+%endif
+
+%check
+%if_with tests
+export PYTHON_VERSION=$(python3 --version | cut -d' ' -f2 | cut -d. -f1-2)
+export QT_QPA_PLATFORM=minimal
+export LD_LIBRARY_PATH="$PWD/bin${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export TRIK_PYTHONPATH="$(python3 -c 'import os, sys; print(os.pathsep.join(sys.path))')"
+export PYTHONIOENCODING=utf-8
+make check
+%endif
+
 %files
 %_bindir/*
 %_libdir/%name
@@ -230,6 +260,17 @@ find %buildroot%_libdir/%name -name 'libtrikPythonQt_QtAll-Qt515-Python3.*.so.*'
 %endif
 
 %changelog
+* Tue Nov 24 2026 Valentin Sokolov <sova@altlinux.org> 2026.3-alt1
+- Update to 2026.3
+- Fix building with system QuaZip for Qt5.
+- Export unpacked submodule sources as a separate source archive.
+- Import the test GoogleTest submodule and enable upstream unit tests.
+- Build with system QScintilla and PythonQt libraries.
+- Fix a GCC 16 warning in the NXT generator.
+- Use ALT patch naming conventions.
+- Load system Qt translations (closes: #42018).
+- Close startup language and configuration saving bugs (closes: #40016, #38076).
+
 * Wed Jul 22 2026 Valentin Sokolov <sova@altlinux.org> 2026.2-alt1
 - Update to 2026.2
 
