@@ -1,11 +1,12 @@
 Name: openocd
 Version: 0.12.0
-Release: alt11
+Release: alt12
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
 Group: Development/Tools
-Url: http://sourceforge.net/projects/openocd
+URL: http://sourceforge.net/projects/openocd
+VCS: https://github.com/openocd-org/openocd
 
 Requires: libjaylink >= 0.4.0
 
@@ -58,6 +59,9 @@ rm -rf %buildroot%_datadir/openocd/contrib
 %_man1dir/*
 
 %changelog
+* Thu Nov 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt12
+- v0.12.0-1832-gdc0165277
+
 * Fri Jul 17 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 0.12.0-alt11
 - v0.12.0-1593-gcb52502e8
 
