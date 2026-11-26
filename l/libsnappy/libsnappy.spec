@@ -12,8 +12,8 @@ compressed files are anywhere from 20 - 100 percent bigger.
 %global soversion 1
 
 Name: libsnappy
-Version: 1.2.2
-Release: alt2.1
+Version: 1.3.1
+Release: alt1
 
 Summary: Google fast compression/decompression library
 Group: System/Libraries
@@ -26,6 +26,7 @@ Source1: %oname.pc
 Patch: fix-libsnappy-FEDORA-snappy-thirdparty-cmake.patch
 # Fedora: do not forcibly disable RTTI (rocksdb >= 10 subclasses snappy::Sink)
 Patch1: snappy-do-not-disable-rtti.patch
+Patch2: snappy-literal-length-u32-overflow.patch
 
 BuildRequires(Pre): rpm-macros-cmake
 
@@ -93,6 +94,10 @@ install -Dpm 0644 %oname.pc %buildroot%_pkgconfigdir/%oname.pc
 %_libdir/cmake/Snappy/
 
 %changelog
+* Wed Oct 28 2026 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- New version 1.3.1.
+- Fix 32-bit literal length overflow.
+
 * Sun Oct 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt2.1
 - NMU: build with RTTI (Fedora patch), needed by rocksdb 11 (subclasses snappy::Sink)
 - Replaced BuildRequires: cmake with rpm-build-cmake and BuildRequires(pre): rpm-macros-cmake
