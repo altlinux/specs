@@ -2,7 +2,7 @@
 
 Name: dkf6-%rname
 Version: 6.28.0
-Release: alt0.dde.1
+Release: alt0.dde.2
 %DK6init altplace
 
 Group: System/Libraries
@@ -13,14 +13,9 @@ License: LGPL-2.0-or-later
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-dkf6
-BuildRequires: deepin-extra-cmake-modules dqt6-tools-devel dqt6-declarative-devel
-BuildRequires: dkf6-kauth-devel dkf6-kcodecs-devel dkf6-kcompletion-devel
-BuildRequires: dkf6-kconfig-devel dkf6-kconfigwidgets-devel dkf6-kcoreaddons-devel dkf6-kdbusaddons-devel
-BuildRequires: dkf6-kglobalaccel-devel dkf6-kguiaddons-devel dkf6-ki18n-devel
-BuildRequires: dkf6-kiconthemes-devel dkf6-kitemviews-devel dkf6-kservice-devel
-BuildRequires: dkf6-ktextwidgets-devel dkf6-kwidgetsaddons-devel dkf6-kwindowsystem-devel
-BuildRequires: dkf6-kcolorscheme-devel
-BuildRequires: vulkan-headers libcups-devel libdqt6-printsupport
+# Automatically added by buildreq on Thu Nov 26 2026
+# optimized out: cmake cmake-modules dkf6-kcodecs-devel dkf6-kconfig-devel dkf6-kguiaddons-devel dkf6-kitemviews-devel dkf6-kwidgetsaddons-devel dqt6-base-devel dqt6-svg-devel dqt6-tools gcc-c++ git-core glibc-kernheaders-generic glibc-kernheaders-x86 libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-qml libdqt6-svg libdqt6-waylandclient libdqt6-widgets libdqt6-xml libgcc16-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel ninja-build python3 python3-base sh5
+BuildRequires: deepin-extra-cmake-modules dkf6-kcolorscheme-devel dkf6-kconfigwidgets-devel dkf6-kcoreaddons-devel dkf6-kglobalaccel-devel dkf6-ki18n-devel dkf6-kiconthemes-devel dqt6-declarative-devel dqt6-tools-devel libcups-devel libdqt6-printsupport libdqt6-wlshellintegration vulkan-headers
 
 # find libraries
 %add_findprov_lib_path %_DK6lib
@@ -42,7 +37,7 @@ BuildArch: noarch
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: dkf6-attica-devel dkf6-kconfig-devel dkf6-kconfigwidgets-devel dkf6-kglobalaccel-devel
+# Requires: dkf6-attica-devel dkf6-kconfig-devel dkf6-kconfigwidgets-devel dkf6-kglobalaccel-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -83,6 +78,10 @@ KF6 library
 
 
 %changelog
+* Thu Nov 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.2
+- prevent bytes written limit by hasher-privd
+- cleanup buildrequires
+
 * Fri Oct 02 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.1
 - fork for independent deepin build
 

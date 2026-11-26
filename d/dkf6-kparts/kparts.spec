@@ -2,7 +2,7 @@
 
 Name: dkf6-%rname
 Version: 6.28.0
-Release: alt0.dde.1
+Release: alt0.dde.2
 %DK6init altplace
 
 Group: System/Libraries
@@ -12,20 +12,10 @@ License: LGPL-2.0-or-later
 
 Source: %name-%version.tar
 
-# prevent hasher-privd limits
 BuildRequires(pre): rpm-build-dkf6
-# BuildRequires: dkf6-kauth-devel dkf6-kbookmarks-devel dkf6-kcodecs-devel dkf6-kcompletion-devel dkf6-kconfig-devel
-# BuildRequires: dkf6-kconfigwidgets-devel dkf6-kcoreaddons-devel dkf6-kdbusaddons-devel dkf6-kglobalaccel-devel
-# BuildRequires: dkf6-kguiaddons-devel dkf6-ki18n-devel dkf6-kiconthemes-devel dkf6-kio-devel dkf6-kitemviews-devel
-# BuildRequires: dkf6-kjobwidgets-devel dkf6-knotifications-devel dkf6-kservice-devel dkf6-ktextwidgets-devel
-# BuildRequires: dkf6-sonnet-devel
-BuildRequires: deepin-extra-cmake-modules dqt6-declarative-devel dqt6-tools-devel vulkan-headers
-BuildRequires: dkf6-kbookmarks-devel dkf6-kcompletion-devel dkf6-kconfig-devel
-BuildRequires: dkf6-kcoreaddons-devel
-BuildRequires: dkf6-ki18n-devel dkf6-kio-devel dkf6-kitemviews-devel
-BuildRequires: dkf6-kjobwidgets-devel dkf6-kservice-devel
-BuildRequires: dkf6-kwidgetsaddons-devel dkf6-kwindowsystem-devel dkf6-kxmlgui-devel dkf6-solid-devel
-BuildRequires: dkf6-kcolorscheme-devel
+# Automatically added by buildreq on Thu Nov 26 2026
+# optimized out: cmake cmake-modules dkf6-kcodecs-devel dkf6-kconfig-devel dkf6-kcoreaddons-devel dkf6-kguiaddons-devel dkf6-kwidgetsaddons-devel dqt6-base-devel dqt6-tools gcc-c++ git-core glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libdouble-conversion3 libdqt6-core libdqt6-dbus libdqt6-gui libdqt6-network libdqt6-qml libdqt6-waylandclient libdqt6-widgets libdqt6-xml libgcc16-devel libglvnd-devel libgpg-error libp11-kit libsasl2-3 libstdc++-devel libxcb-devel libxkbcommon-devel ninja-build python3 python3-base sh5 xorg-proto-devel
+BuildRequires: deepin-extra-cmake-modules dkf6-kbookmarks-devel dkf6-kcolorscheme-devel dkf6-kcompletion-devel dkf6-kconfigwidgets-devel dkf6-ki18n-devel dkf6-kio-devel dkf6-kitemviews-devel dkf6-kjobwidgets-devel dkf6-kservice-devel dkf6-kwindowsystem-devel dkf6-kxmlgui-devel dkf6-solid-devel dqt6-declarative-devel dqt6-tools-devel libdqt6-wlshellintegration vulkan-headers
 
 # find libraries
 %add_findprov_lib_path %_DK6lib
@@ -86,6 +76,10 @@ KF6 library
 
 
 %changelog
+* Thu Nov 26 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.2
+- fix build on shrinked dkf6-kxmlgui-devel 6.28.0-alt0.dde.2
+- cleanup buildrequires
+
 * Wed Oct 07 2026 Leontiy Volodin <lvol@altlinux.org> 6.28.0-alt0.dde.1
 - fork for independent deepin buildings
 
