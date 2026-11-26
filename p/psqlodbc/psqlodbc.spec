@@ -1,5 +1,5 @@
 Name: psqlodbc
-Version: 18.00.0006
+Version: 18.00.0007
 Release: alt1
 
 Summary: The official PostgreSQL ODBC Driver
@@ -39,6 +39,13 @@ The official PostgreSQL ODBC Driver
 %doc docs/*
 
 %changelog
+* Thu Nov 26 2026 Alexei Takaseev <taf@altlinux.org> 18.00.0007-alt1
+- 18.00.0007 (Fixes: CVE-2026-136499, CVE-2026-136500, CVE-2026-136501, CVE-2026-136502,
+                     CVE-2026-136503, CVE-2026-136504, CVE-2026-136505, CVE-2026-136506,
+                     CVE-2026-136507, CVE-2026-136508, CVE-2026-136509, CVE-2026-136510,
+                     CVE-2026-136511, CVE-2026-136512, CVE-2026-136513, CVE-2026-136514,
+                     CVE-2026-136515)
+
 * Tue Nov 03 2026 Alexei Takaseev <taf@altlinux.org> 18.00.0006-alt1
 - 18.00.0006 (Fixes: CVE-2026-120057, CVE-2026-120058, CVE-2026-120059, CVE-2026-120060,
                      CVE-2026-120061, CVE-2026-120062, CVE-2026-120063, CVE-2026-120064,
