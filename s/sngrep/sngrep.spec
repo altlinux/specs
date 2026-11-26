@@ -1,6 +1,6 @@
 Name: sngrep
-Version: 1.9.0
-Release: alt2
+Version: 1.10.0
+Release: alt1
 
 Summary: sngrep is a tool for displaying SIP calls message flows from terminal
 
@@ -42,9 +42,13 @@ as PCAP viewer.
 %_sysconfdir/sngreprc
 %_bindir/sngrep
 %_man8dir/sngrep.8*
+%_man5dir/sngreprc.5*
 %doc LICENSE.OpenSSL
 
 %changelog
+* Thu Nov 26 2026 Ilya Demyanov <turbid@altlinux.org> 1.10.0-alt1
+- new upstream version
+
 * Wed Nov 11 2026 Ilya Demyanov <turbid@altlinux.org> 1.9.0-alt2
 - fix License tag (GPL-3.0-or-later with OpenSSL-exception)
 
