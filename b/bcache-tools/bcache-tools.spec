@@ -1,6 +1,6 @@
 Name: bcache-tools
 Version: 1.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Tools for Linux kernel block layer cache
@@ -45,6 +45,7 @@ Display useful bcache statistics
 %_udevdir/bcache-register
 %_udevdir/probe-bcache
 %_udevrulesdir/*.rules
+%_libexecdir/dracut/modules.d/90bcache
 
 %_sbindir/bcache
 %_sbindir/bcache-super-show
@@ -59,6 +60,9 @@ Display useful bcache statistics
 %_man8dir/bcache-status.8.*
 
 %changelog
+* Thu Nov 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.1-alt4
+- dracut helper packaged
+
 * Tue Jun 25 2024 Sergey Bolshakov <sbolshakov@altlinux.org> 1:1.1-alt3
 - rebuilt for merged-usr
 
