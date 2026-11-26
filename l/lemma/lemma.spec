@@ -1,6 +1,6 @@
 %define _name Lemma
 %define pypi_name lemma
-%define ver_major 13
+%define ver_major 83
 %define rdn_name org.cvfosammmm.%_name
 
 %def_enable check
@@ -17,6 +17,7 @@ Url: https://www.cvfosammmm.org/lemma/
 BuildArch: noarch
 
 Vcs: https://github.com/cvfosammmm/Lemma.git
+
 Source: %name-%version.tar
 
 %add_python3_path %_datadir/%_name
@@ -30,9 +31,6 @@ BuildRequires: meson /usr/bin/glib-compile-resources
 
 %description
 Take notes with beautiful typography.
-
-Warning: Lemma is currently in alpha stage, data loss is likely at this
-point. Please be careful and make regular backups.
 
 %prep
 %setup
@@ -54,7 +52,7 @@ point. Please be careful and make regular backups.
 %dir %python3_sitelibdir_noarch/lib
 %python3_sitelibdir_noarch/lib/fontconfig/
 %python3_sitelibdir_noarch/lib/freetype2/
-%python3_sitelibdir_noarch/lib/harfpy/
+#%python3_sitelibdir_noarch/lib/harfpy/
 %_datadir/%_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/icons/hicolor/*/apps/*
@@ -63,6 +61,9 @@ point. Please be careful and make regular backups.
 %doc README.*
 
 %changelog
+* Wed Nov 25 2026 Yuri N. Sedunov <aris@altlinux.org> 83-alt1
+- 83
+
 * Sun Jun 09 2024 Yuri N. Sedunov <aris@altlinux.org> 13-alt1
 - first build for Sisyphus
 
