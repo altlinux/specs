@@ -1,5 +1,5 @@
 Name: fmit
-Version: 1.4.6
+Version: 1.4.7
 Release: alt1
 
 Summary: Free Music Instrument Tuner
@@ -64,7 +64,7 @@ install -D -m644 distrib/fmit.fr.1 %buildroot%_mandir/fr/man1/fmit.1
 %_bindir/%name
 %_datadir/%name/
 # FIXME: add macro for appdata
-%_datadir/appdata/fmit.appdata.xml
+%_datadir/metadata/fmit.appdata.xml
 %_iconsdir/hicolor/*/apps/fmit.*
 %_iconsdir/hicolor/symbolic/apps/fmit-symbolic.svg
 %_desktopdir/%name.desktop
@@ -72,6 +72,9 @@ install -D -m644 distrib/fmit.fr.1 %buildroot%_mandir/fr/man1/fmit.1
 %_mandir/fr/man1/fmit.1*
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.7-alt1
+- new version 1.4.7
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt1
 - new version 1.4.6
 - Port to Qt6 (upstream switched to Qt6).
