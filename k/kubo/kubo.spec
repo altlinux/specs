@@ -1,5 +1,5 @@
 Name: kubo
-Version: 0.43.1
+Version: 0.43.2
 Release: alt1
 
 Summary: IPFS implementation in Go
@@ -14,8 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 
 Source1: %name-development-%version.tar
-
-Patch1: kubo-vendored-sources-loongarch64-support.patch
 
 BuildRequires(pre): rpm-macros-golang
 # systemd macro
@@ -87,6 +85,9 @@ EOF
 %doc docs/*
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 0.43.2-alt1
+- new version 0.43.2
+
 * Tue Oct 06 2026 Vitaly Lipatov <lav@altlinux.ru> 0.43.1-alt1
 - new version 0.43.1
 
