@@ -1,6 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define oname protobuf
 %define soversion 36
+%define bazel_module_dir %_datadir/bazel/rules/protobuf
 
 # fat LTO objects needed for static libupb.a
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -27,12 +28,14 @@
 Name: %oname
 Epoch: 1
 Version: 36.2
-Release: alt1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/protocolbuffers/protobuf
 Vcs: https://github.com/protocolbuffers/protobuf.git
+
+%global protoc_version %version
 
 # https://github.com/protocolbuffers/protobuf.git
 Source: %oname-%version.tar
@@ -129,7 +132,7 @@ Summary: Java Protocol Buffers runtime library
 Group: Development/Java
 BuildArch: noarch
 BuildRequires(pre): rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: java-21-openjdk-devel
 BuildRequires: maven-local
 BuildRequires: mvn(com.google.code.gson:gson)
 BuildRequires: mvn(com.google.guava:guava)
@@ -144,8 +147,8 @@ BuildRequires: mvn(org.mockito:mockito-core)
 BuildRequires: mvn(com.google.truth:truth)
 BuildRequires: mvn(junit:junit)
 %endif
-Conflicts: %name-compiler > %version
-Conflicts: %name-compiler < %version
+Conflicts: %name-compiler > %epoch:%protoc_version
+Conflicts: %name-compiler < %epoch:%protoc_version
 # remove when xmvn will be patched to not insert this dep automatically
 %filter_from_requires /^java-headless/d
 
@@ -255,7 +258,7 @@ Protocol Buffers are Google's data interchange format.
 %endif
 
 %package compiler
-Version: 36.2
+Version: %protoc_version
 Summary: Protocol Buffers Compiler
 Group: Development/Other
 Requires: lib%oname%soversion = %EVR
@@ -263,10 +266,24 @@ Requires: lib%oname%soversion = %EVR
 %description compiler
 Compiler for protocol buffer definition files
 
+%package bazel
+Summary: Protobuf source module for Bazel
+Group: Development/Other
+BuildArch: noarch
+AutoReqProv: no
+
+%description bazel
+Upstream Protobuf sources and Starlark build rules for Bazel.
 
 %prep
 %setup -n %oname-%version
 %autopatch -p1
+
+# Stage the Bazel sources before architecture-specific preparation.
+rm -rf %_builddir/%name-bazel
+cp -a . %_builddir/%name-bazel
+rm -f %_builddir/%name-bazel/Neverlink_jruby_jars.patch \
+      %_builddir/%name-bazel/src/solaris/libstdc++.la
 %ifarch %e2k
 sed -i '$a #ifdef __EDG__\n#undef PROTOBUF_CONSTINIT\n#define PROTOBUF_CONSTINIT\n#endif' \
 	src/google/protobuf/port_def.inc
@@ -423,6 +440,9 @@ rm -fv SetupConfig
 %mvn_install
 %endif
 
+install -d %buildroot%_datadir/bazel/rules
+mv %_builddir/%name-bazel %buildroot%bazel_module_dir
+
 %check
 %ctest
 
@@ -433,6 +453,11 @@ rm -fv SetupConfig
 %_bindir/protoc-gen-upb-*
 %_bindir/protoc-gen-upbdefs
 %_bindir/protoc-gen-upbdefs-*
+
+%files bazel
+%dir %_datadir/bazel
+%dir %_datadir/bazel/rules
+%bazel_module_dir/
 
 %files -n lib%oname%soversion
 %doc CONTRIBUTORS.txt README.md
@@ -502,6 +527,11 @@ rm -fv SetupConfig
 %endif
 
 %changelog
+* Thu Nov 26 2026 Ivan Khanas <xeno@altlinux.org> 1:36.2-alt2
+- Fix protobuf-java conflicts with protoc.
+- Package the Bazel source module.
+- Build the Java runtime with JDK 21.
+
 * Mon Nov 02 2026 Ajrat Makhmutov <rauty@altlinux.org> 1:36.2-alt1
 - New version.
 
