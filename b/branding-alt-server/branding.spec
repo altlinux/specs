@@ -35,7 +35,7 @@
 
 Name: branding-%flavour
 Version: 11.2
-Release: alt5
+Release: alt6
 Epoch: 1
 Url: https://basealt.ru
 
@@ -399,6 +399,9 @@ sed -i "s/Theme=.*/Theme=%plymouth_theme/" /etc/plymouth/plymouthd.conf ||:
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Nov 26 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt6
+- Change slides for slideshow in installer
+
 * Mon Oct 05 2026 Dmitry Terekhin <jqt4@altlinux.org> 1:11.2-alt5
 - Add ALT in BUILD_ID field of os-release
 
