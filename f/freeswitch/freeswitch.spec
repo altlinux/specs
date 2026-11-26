@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.11.3
-Release: alt2
+Release: alt3
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -19,6 +19,8 @@ Source6: %name.service
 Source3: %name.sysconfig
 Source4: modules.conf
 Source5: fs_cli.conf
+Source7: portal-users.xml
+Source8: README.portal-users
 
 BuildRequires: gcc-c++ libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
@@ -125,6 +127,8 @@ Summary: VLC support for the FreeSWITCH open source telephony platform
 Group: System/Servers
 # libvlc_new() fails without the VLC core plugins, which only vlc-mini ships
 Requires: vlc-mini
+# MP4 recording needs the FFmpeg encoders and video converter.
+Requires: vlc-plugin-ffmpeg
 
 %package imagick
 Summary: ImageMagick support for the FreeSWITCH open source telephony platform
@@ -138,6 +142,7 @@ Group: System/Servers
 Summary: Web-based UI for FreeSWITCH
 Group: System/Servers
 Requires: %name-daemon = %version-%release
+Requires: %name-lua = %version-%release
 
 # {{{ descriptions
 
@@ -260,6 +265,9 @@ install -pm0644 -D %SOURCE2 %buildroot%_tmpfilesdir/freeswitch.conf
 install -pm0644 -D %SOURCE6 %buildroot%_unitdir/freeswitch.service
 install -pm0644 -D %SOURCE3 %buildroot%_sysconfdir/sysconfig/freeswitch
 install -pm0640 -D %SOURCE5 %buildroot%_sysconfdir/fs_cli.conf
+install -pm0644 -D %SOURCE7 %buildroot%_sysconfdir/%name/portal-users.xml
+install -pm0644 -D scripts/lua/portal/create_user.lua %buildroot%_datadir/%name/scripts/portal/create_user.lua
+install -pm0644 -D %SOURCE8 README.portal-users
 
 install -pm0644 src/include/switch_version.h %buildroot/%_includedir/freeswitch/switch_version.h
 
@@ -269,6 +277,7 @@ mkdir -p \
     %buildroot%_sysconfdir/freeswitch/tls \
     %buildroot%_var/cache/freeswitch \
     %buildroot%_var/lib/freeswitch/recordings \
+    %buildroot%_localstatedir/%name/portal/users \
     %buildroot%_logdir/freeswitch/{cdr-csv,xml_cdr}
 
 
@@ -560,9 +569,23 @@ fi
 
 
 %files webui
+%doc README.portal-users
 %_datadir/%name/htdocs/portal
+%_datadir/%name/scripts/portal
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/portal-users.xml
+%dir %attr(0750, root, _pbx) %_localstatedir/%name/portal
+%dir %attr(0770, root, _pbx) %_localstatedir/%name/portal/users
 
 %changelog
+* Wed Nov 25 2026 Anton Farygin <rider@altlinux.org> 1:1.11.3-alt3
+- restored opt-in user creation in the web portal without write access to /etc/freeswitch (Closes: 61645, 61646)
+- removed the non-working Add Gateway form from the web portal
+- mod_xml_rpc: fixed WebSocket disconnections while idle (Closes: 61660)
+- mod_av: fixed VP8 recording to MKV and WebM (Closes: 61666)
+- mod_vlc: fixed MP4 recording and added the vlc-plugin-ffmpeg dependency
+  (Closes: 61668)
+- mod_av: fixed WebM recording with Opus by using 48 kHz (Closes: 61670)
+
 * Tue Nov 17 2026 Anton Farygin <rider@altlinux.org> 1:1.11.3-alt2
 - hardened the systemd unit
 - added writable TLS and cache directories
