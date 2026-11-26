@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name planify
-%define ver_major 4.20
+%define ver_major 4.21
 %define rdn_name io.github.alainm23.%_name
 %define chrono_ver 1.0.0
 
@@ -52,7 +52,7 @@ BuildRequires: evolution-data-server-vala
 BuildRequires: pkgconfig(libical-glib)
 BuildRequires: pkgconfig(icu-uc)
 BuildRequires: pkgconfig(libportal-gtk4)
-BuildRequires: pkgconfig(gxml-0.20)
+#BuildRequires: pkgconfig(gxml-0.20)
 BuildRequires: pkgconfig(libsecret-1)
 %{?_enable_goa:BuildRequires: pkgconfig(goa-1.0)}
 %{?_enable_check:BuildRequires: /usr/bin/appstreamcli desktop-file-utils}
@@ -118,6 +118,9 @@ This package contains files necessary to develop Planify plugins.
 %_vapidir/%_name.*
 
 %changelog
+* Fri Nov 27 2026 Yuri N. Sedunov <aris@altlinux.org> 4.21.0-alt1
+- 4.21.0
+
 * Sat Sep 12 2026 Yuri N. Sedunov <aris@altlinux.org> 4.20.0-alt1
 - 4.20.0
 
