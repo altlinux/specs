@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBIx-SearchBuilder
 Name: perl-%dist
-Version: 1.85
+Version: 1.86
 Release: alt1
 
 Summary: Encapsulate SQL queries and rows in simple perl objects
@@ -25,7 +25,7 @@ This module provides an object-oriented mechanism for retrieving and
 updating data in a DBI-accesible database.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -38,6 +38,9 @@ updating data in a DBI-accesible database.
 %perl_vendor_privlib/DBIx
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.86-alt1
+- new version 1.86
+
 * Sat Jul 18 2026 Vitaly Lipatov <lav@altlinux.ru> 1.85-alt1
 - new version 1.85
 
