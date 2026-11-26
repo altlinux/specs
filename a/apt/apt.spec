@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt106
+Release: alt107
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -377,7 +377,8 @@ Immediately test %name when installing this package.
 The set of testcases is complete (all the methods that are tested by default
 and some additional peculiarities are tested).
 
-%files checkinstall
+%def_disable normally_checkinstall
+%{?_enable_normally_checkinstall:%files checkinstall}
 
 %pre checkinstall -p %_sbindir/sh-safely
 %{runtests_stem}normally
@@ -396,6 +397,13 @@ Immediately test %name when installing this package.
 The tests are run many times and under simulated heavy load (namely,
 in parallel) in order to possibly detect races
 (to make sure no tests are randomly succeeding).
+
+These runs cover all possible tests (and maybe more--because one test may be
+run twice and under heavy load). Due to parallelism, they are often even faster
+than a normal sequential run of all tests. So, we use just them.
+
+To inspect the parallel output to find tests that failed, there is a helper:
+xxtra-heavy-output-save-jobs.sh (packaged in %{name}-tests package).
 
 %files xxtra-heavy-load-checkinstall
 
@@ -496,6 +504,10 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Thu Nov 26 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt107
+- To speed up build tasks: drop one checkinstall subpkg (where all the tests
+  are run sequentially). xxtra-heavy-load-checkinstall is enough.
+
 * Mon Nov 23 2026 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt106
 - tests: Fixed to successfully run with unforeseen system-wide sources.list.d.
 
