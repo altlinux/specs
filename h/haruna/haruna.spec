@@ -4,7 +4,7 @@
 %define libharuna libharuna%sover
 
 Name: %rname
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 %K6init
 
@@ -117,6 +117,9 @@ Requires: %name-common >= %EVR
 #%_K6lib/libharuna.so.*
 
 %changelog
+* Thu Nov 26 2026 Sergey V Turchin <zerg@altlinux.org> 1.9.1-alt1
+- new version
+
 * Tue Nov 03 2026 Sergey V Turchin <zerg@altlinux.org> 1.9.0-alt1
 - new version
 
