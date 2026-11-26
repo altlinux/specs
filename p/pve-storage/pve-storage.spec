@@ -3,7 +3,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 9.1.15
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -70,6 +70,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu Nov 26 2026 Sergey Konev <darisishe@altlinux.org> 9.1.15-alt2
+- Reverted kernel CephFS AES client and RBD AES256K workarounds.
+
 * Wed Nov 11 2026 Alexey Shabalin <shaba@altlinux.org> 9.1.15-alt1
 - 9.1.15.
 - Created filesystem-scoped AES clients for managed kernel CephFS.
