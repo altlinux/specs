@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: trufflehog
-Version: 3.96.0
+Version: 3.100.1
 Release: alt1
 Summary: CLI tool to find exposed secrets in source and archives
 
@@ -50,6 +50,9 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Thu Nov 26 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.100.1-alt1
+- New version 3.100.1.
+
 * Fri Jul 31 2026 Maxim Slipenko <maks1ms@altlinux.org> 3.96.0-alt1
 - New version 3.96.0.
 
