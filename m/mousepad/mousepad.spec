@@ -1,6 +1,6 @@
 Name: mousepad
 Version: 0.7.0
-Release: alt1
+Release: alt2
 
 Summary: Mousepad - A simple text editor for Xfce
 Summary (ru_RU.UTF-8): Простой текстовый редактор для Xfce
@@ -12,6 +12,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/apps/mousepad.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Source1: alt_ru.po
 
 BuildRequires(pre): rpm-build-xfce4 xfce4-dev-tools >= 4.18.0
 BuildRequires(pre): meson rpm-macros-meson >= 1.3.1-alt1
@@ -42,6 +43,9 @@ Mousepad - простой текстовый редактор для Xfce осн
 %prep
 %setup
 %patch -p1
+# Merge our own and upstream Russian translations
+msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
+mv -f merged_ru.po po/ru.po
 
 %build
 %xfce4reconf
@@ -72,6 +76,9 @@ Mousepad - простой текстовый редактор для Xfce осн
 %_desktopdir/*
 
 %changelog
+* Thu Nov 26 2026 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt2
+- Updated Russian translation.
+
 * Mon Mar 02 2026 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
 - Switched to meson build.
 - Updated to 0.7.0.
