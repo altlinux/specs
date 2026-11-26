@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
 %define dist SQL-Abstract
 Name: perl-%dist
-Version: 2.000001
-Release: alt1.1
+Version: 2.000003
+Release: alt1
 
 Summary: Generate SQL from Perl data structures
+
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/SQL-Abstract/
-Source0: http://www.cpan.org/authors/id/M/MS/MSTROUT/%{dist}-%{version}.tar.gz
+Source0: https://cpan.metacpan.org/authors/id/G/GE/GETTY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +28,7 @@ statement handles and use the DBI interface. So, I set out to
 create an abstract SQL generation module.
 
 %prep
-%setup -q -n %{dist}-%{version}
+%setup -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -41,6 +42,11 @@ create an abstract SQL generation module.
 %perl_vendor_privlib/SQL*
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2.000003-alt1
+- new version 2.000003.
+- fixes:
+  + CVE-2026-121265: fix arrayref SQL injection in generate().
+
 * Tue Oct 13 2026 Vitaly Lipatov <lav@altlinux.ru> 2.000001-alt1.1
 - NMU: skip requires of test-only SQL::Abstract::Test to avoid dependency on perl-devel (closes: #49930)
 
