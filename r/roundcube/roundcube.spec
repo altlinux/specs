@@ -4,7 +4,7 @@
 %define rel %nil
 
 Name: roundcube
-Version: 1.7.5
+Version: 1.7.7
 Release: alt1
 
 Summary: Browser-based multilingual IMAP client with an application-like user interface
@@ -16,7 +16,6 @@ Url: http://roundcube.net/
 # Source-url: https://github.com/roundcube/roundcubemail/releases/download/%version%rel/roundcubemail-%version%rel-complete.tar.gz
 Source: %name-%version.tar
 Source1: %name.apache.conf
-Patch0: roundcube-1.2.4-sso-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-apache2
@@ -141,6 +140,39 @@ service httpd2 condreload
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.7-alt1
+- new version 1.7.7
+- fixes:
+  + CVE-2026-126813, GHSA-vch9-h7xh-rp47: fix IMAP _uid injection.
+- fix open redirect via IMAP attachment error recovery.
+- trust only configured sources for Received header host and forwarded IP.
+- prevent cross-site ManageSieve destructive actions via GET.
+- fix Sieve injection via a rule operator.
+- fix Sieve injection via set/include modifiers.
+- honor the trusted host setting in resolve_url().
+- fix mail header injection via MDN subject.
+- fix HTTP request injection via the spellcheck ATD backend.
+- fix CSS proxy SSRF via nip.io/sslip.io filter bypass.
+- fix CSRF validation bypass for file-only POST requests.
+- fix disabled_actions bypass via underscore in action names.
+- fix CSRF validation bypass for mail purge/expunge commands.
+- prevent unsafe attachment content from reaching ImageMagick.
+- prevent CPU exhaustion via negative session-unserialize lengths.
+- fix SSRF filter bypass via 6to4 addresses.
+- validate IMAP host input more strictly.
+- fix HTTP request injection via the spellcheck ATD backend again.
+- fix CSS scoping bypass via HTML comments in inline styles.
+- fix remote-content blocking bypass via CSS comments in SVG FuncIRI.
+- fix CSS scoping bypass via direct CSS proxy access and multiple links.
+- fix CSS proxy response disclosure via leading whitespace or BOM.
+- fix washtml allowlist bypass via namespaced attributes on PHP < 8.4.
+- prevent attachment content from reaching ImageMagick on conversion.
+- fix Sieve script injection via a comparator name.
+- fix DoS via uncapped MAPI multi-value loops.
+- fix XML injection in the password plugin XIMSS driver.
+- prevent insecure IMAP/SMTP/ManageSieve fallback without TLS.
+- fix Sieve injection via body/address/envelope fields.
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.7.5-alt1
 - new version 1.7.5
 - security: fix IMAP command injection via CRLF in _uid parameter
@@ -450,4 +482,3 @@ service httpd2 condreload
 
 * Fri Aug 17 2007 Mikhail Pokidko <pma@altlinux.org> 0.1.rc1.1-alt1
 - Initial ALT build
-
