@@ -2,16 +2,16 @@
 
 %define __name Tasks
 %define _name tasks
-%define binary_name %_name
+%define binary_name cosmic-ext-%_name
 %define rdn_name dev.edfloreshz.%__name
-%define ver_major 0.3
+%define ver_major 0.4
 %define beta %nil
 
 %def_disable bootstrap
 %def_enable check
 
 Name: cosmic-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: COSMIC Tasks
@@ -32,14 +32,15 @@ BuildRequires(pre): rpm-build-rust
 BuildRequires: just
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(sqlite3)
+BuildRequires: pkgconfig(openssl)
 
-#ExcludeArch: %ix86 armh
+ExcludeArch: %ix86 armh
 
 %description
 A simple task management application for the COSMIC desktop.
 
 %prep
-%setup -n %_name-%version%beta %{?_disable_bootstrap:-a1}
+%setup -n %binary_name-%version%beta %{?_disable_bootstrap:-a1}
 %{?_enable_bootstrap:
 [ ! -d .cargo ] && mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
@@ -55,13 +56,16 @@ just rootdir=%buildroot install
 %rust_test
 
 %files
-%_bindir/%binary_name
+%_bindir/%_name
 %_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%rdn_name.metainfo.xml
 %doc README*
 
 %changelog
+* Thu Nov 26 2026 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Sat Jul 18 2026 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
