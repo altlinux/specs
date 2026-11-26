@@ -1,5 +1,5 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2025.12.2
+%define version_major 2026.09.2
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
@@ -76,6 +76,9 @@ end
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Thu Nov 26 2026 Anton Farygin <rider@altlinux.org> 2026.09.2-alt1
+- 2025.12.2 -> 2026.09.2
+
 * Tue Mar 03 2026 Anton Farygin <rider@altlinux.org> 2025.12.2-alt1
 - 2025.05.1 -> 2025.12.2
 
