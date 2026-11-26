@@ -3,7 +3,7 @@
 
 Name: mate-system-monitor
 Version: 1.28.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Process and resource monitor
 License: GPLv2+
@@ -56,6 +56,9 @@ sed -i "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g}" s
 %_man1dir/*.1*
 
 %changelog
+* Thu Nov 26 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.2-alt2
+- updated translate
+
 * Thu Nov 12 2026 Valery Inozemtsev <shrek@altlinux.ru> 1:1.28.2-alt1
 - 1.28.2
 
