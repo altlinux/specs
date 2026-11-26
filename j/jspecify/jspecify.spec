@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_with check
+%def_without check
 
 Name: jspecify
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Well-specified annotations to power static analysis checks and JVM language interop
@@ -44,7 +44,7 @@ boilerplate null checks.
 %setup
 %autopatch -p1
 
-sed -i 's/0\.0\.0-SNAPSHOT/1.0.0/g' gradle.properties
+sed -i 's/0\.0\.0-SNAPSHOT/1.0.1/g' gradle.properties
 sed -i 's/21/17/g' gradle/gradle-daemon-jvm.properties
 
 %build
@@ -63,5 +63,10 @@ sed -i 's/21/17/g' gradle/gradle-daemon-jvm.properties
 %files -f .mfiles
 
 %changelog
+* Wed Nov 25 2026 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1
+- ^ 1.0.0 -> 1.0.1
+- * Adapted the offline Gradle build to OpenJDK 17.
+- * Disabled checks because the offline build lacks the JDK 9 toolchain.
+
 * Fri Oct 24 2025 Ivan Khanas <xeno@altlinux.org> 1.0.0-alt1
 - First build for ALT.

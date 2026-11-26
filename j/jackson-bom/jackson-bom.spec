@@ -1,5 +1,5 @@
 Name:           jackson-bom
-Version:        2.22.1
+Version:        2.22.4
 Release:        alt1
 
 Summary:        Bill of materials POM for Jackson projects
@@ -37,6 +37,9 @@ A "bill of materials" POM for Jackson dependencies.
 %doc *.md LICENSE
 
 %changelog
+* Thu Nov 26 2026 Pavel Skrylev <majioa@altlinux.org> 2.22.4-alt1
+- ^ 2.22.1 -> 2.22.4
+
 * Fri Aug 07 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt1
 - Updated to 2.22.1.
 

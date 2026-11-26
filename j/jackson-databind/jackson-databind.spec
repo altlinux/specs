@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: jackson-databind
-Version: 2.22.1
-Release: alt2
+Version: 2.22.4
+Release: alt1
 
 Summary: General data-binding package for Jackson (2.x)
 License: Apache-2.0
@@ -64,6 +64,9 @@ rm src/test/java/com/fasterxml/jackson/databind/ser/jdk/JDKTypeSerializationTest
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Thu Nov 26 2026 Pavel Skrylev <majioa@altlinux.org> 2.22.4-alt1
+- ^ 2.22.1 -> 2.22.4
+
 * Sat Aug 29 2026 Evgeniy Serov <scala@altlinux.org> 2.22.1-alt2
 - Build with jpackage-default.
 - Enabled javadoc.
