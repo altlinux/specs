@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: onboard
-Version: 1.4.4.5
+Version: 1.4.4.6
 Release: alt1
 
 Summary: Simple on-screen Keyboard
@@ -122,6 +122,9 @@ rm %buildroot%python3_sitelibdir/settings_ui.py
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Sun Nov 22 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.6-alt1
+- New version.
+
 * Tue Aug 25 2026 Andrey Cherepanov <cas@altlinux.org> 1.4.4.5-alt1
 - New version.
 
