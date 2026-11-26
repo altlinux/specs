@@ -1,5 +1,5 @@
 Name: mysqltuner
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 
 Summary: High Performance MySQL Tuning Script
@@ -50,6 +50,9 @@ perl -c %name.pl
 %doc LICENSE *.md *.png
 
 %changelog
+* Thu Nov 26 2026 Anton Farygin <rider@altlinux.org> 2.9.4-alt1
+- 2.9.3 -> 2.9.4
+
 * Thu Oct 22 2026 Anton Farygin <rider@altlinux.org> 2.9.3-alt1
 - 2.9.2 -> 2.9.3
 
