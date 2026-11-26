@@ -1,7 +1,7 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 7.7
+Version: 7.9
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -117,6 +117,14 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Fri Nov 27 2026 Evgeny Sinelnikov <sin@altlinux.org> 7.9-alt1
+- Update to latest stable security release.
+- Security fixes from upstream:
+  + mount.cifs: validate username derived from the passwd database and
+    reject option delimiters in username and domain (fixes: CVE-2026-104715).
+  + cifs.upcall: securely drop root privileges before looking up user
+    information (fixes: CVE-2026-12505, included from 7.8).
+
 * Wed Jul 29 2026 Evgeny Sinelnikov <sin@altlinux.org> 7.7-alt1
 - Update to latest stable release.
 - Major fixes from upstream:
