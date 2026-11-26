@@ -2,7 +2,7 @@
 
 Name:    jobe
 Version: 2.2.2
-Release: alt1
+Release: alt2
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
 License: MIT
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Source1: %name.conf
 Source2: jobe-sudoers
 Patch1: jobe-alt-fixes.patch
+Patch2: jobe-alt-do-not-remove-temporary-files.patch
 
 BuildRequires(pre): rpm-build-php
 BuildRequires(pre): rpm-macros-apache2
@@ -56,7 +57,7 @@ Install this package, if you wish to run %name with MySQL database
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 cd runguard
@@ -112,6 +113,9 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Thu Nov 26 2026 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt2
+- Do not remove temporary files with sudo privileges using find.
+
 * Tue Apr 07 2026 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt1
 - New version.
 
