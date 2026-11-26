@@ -2,7 +2,7 @@
 %def_with check
 
 Name: cargo-llvm-cov
-Version: 0.8.7
+Version: 0.9.2
 Release: alt1
 
 Summary: Cargo subcommand to easily use LLVM source-based code coverage
@@ -16,7 +16,6 @@ ExcludeArch: i586
 
 Source: %name-%version.tar
 Source1: vendor.tar
-Source2: Cargo.lock
 
 # Sets paths to used llvm tools by environment variables.
 Patch1: cargo-llvm-cov-0.6.19-alt-paths_to_llvm_tools.patch
@@ -24,6 +23,7 @@ Patch1: cargo-llvm-cov-0.6.19-alt-paths_to_llvm_tools.patch
 BuildRequires(pre): rpm-build-rust
 BuildRequires: git
 BuildRequires: llvm
+BuildRequires: llvm23.1
 BuildRequires: llvm-common
 
 %description
@@ -40,33 +40,7 @@ and llvm-tools.
 %prep
 %setup -a 1
 %autopatch -p1
-
-# Install Cargo.lock
-install -Dm644 %SOURCE2 .
-
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
-
-[source."git+https://github.com/taiki-e/test-helper.git?rev=f38a7f5"]
-git = "https://github.com/taiki-e/test-helper.git"
-rev = "f38a7f5"
-replace-with = "vendored-sources"
-
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[profile.release]
-strip = false
-opt-level = 3
-debug = 2
-
-EOF
+%rust_prep
 # Required for some tests.
 git init -q
 git config user.name "rpmbuild"
@@ -82,6 +56,7 @@ export LLVM_PROFDATA_PATH=%_bindir/llvm-profdata
 %rust_install
 
 %check
+export ALTWRAP_LLVM_VERSION=23.1
 export LLVM_COV_PATH=%_bindir/llvm-cov
 export LLVM_PROFDATA_PATH=%_bindir/llvm-profdata
 # Failed tests requires specific way to provide dependencies.
@@ -91,10 +66,14 @@ export LLVM_PROFDATA_PATH=%_bindir/llvm-profdata
     --skip trybuild
 
 %files
-%doc LICENSE-*
+%doc LICENSE-MIT
 %_bindir/cargo-llvm-cov
 
 %changelog
+* Thu Nov 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.9.2-alt1
+- New version (0.9.2).
+- Package only MIT license.
+
 * Fri Jul 10 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.8.7-alt1
 - New version (0.8.7).
 
