@@ -2,11 +2,11 @@
 %def_with wayland
 
 Name: xpra
-Version: 6.5.6
+Version: 7.0
 Release: alt1
 
 Summary: X Persistent Remote Applications
-License: GPL-2.0-or-later AND LicenseRef-Callaway-BSD AND LGPL-3.0-or-later AND LicenseRef-Callaway-MIT
+License: GPL-2.0-or-later AND BSD AND LGPL-3.0-or-later AND MIT
 Group: Networking/Remote access
 
 Url: http://xpra.org/
@@ -77,7 +77,7 @@ AutoProv: yes, nopython3
 %add_python3_req_skip xpra.net.websockets.mask xpra.x11.bindings.res_bindings xpra.x11.gtk3.gdk_bindings
 
 # disabled during build
-%add_python3_req_skip xpra.net.mdns
+%add_python3_req_skip xpra.net.mdns xpra.codecs.pipewire.capture
 
 %add_python3_req_skip win32security pyopencl xpra.platform.win32.common xpra.platform.win32.auth
 
@@ -198,6 +198,7 @@ move_if_not_there %buildroot/lib/systemd/system/xpra-encoder.service %buildroot%
 move_if_not_there %buildroot/lib/systemd/system/xpra-encoder.socket %buildroot%_unitdir
 
 mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
+chmod 0700 %buildroot%_sysconfdir/%name/ssl/private
 
 # TODO
 rm -v %buildroot/usr/lib/sysusers.d/xpra.conf
@@ -245,7 +246,7 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_udevrulesdir/71-xpra-virtual-pointer.rules
 %_sysconfdir/dbus-1/system.d/xpra.conf
 %_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
-%attr(0700, root, root) %dir %_sysconfdir/%name/ssl/private
+%_datadir/bash-completion/completions/xpra
 
 %files weston
 %_prefix/libexec/%name/xpra_weston_xvfb
@@ -254,6 +255,9 @@ ln -fs %_sysconfdir/%name/ssl/private/xpra.pem %_sysconfdir/%name/ssl-cert.pem
 %_datadir/gnome-shell/extensions/%{gnome_shell_extension}
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 7.0-alt1
+- new version 7.0
+
 * Fri Nov 13 2026 Vitaly Lipatov <lav@altlinux.ru> 6.5.6-alt1
 - new version 6.5.6
 - fix start-desktop server hang on startup (GIO deadlock between
