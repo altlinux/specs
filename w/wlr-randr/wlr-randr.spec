@@ -1,5 +1,5 @@
 Name: wlr-randr
-Version: 0.2.0.2.g2a7601b
+Version: 0.4.1
 Release: alt1
 License: MIT
 Summary: Utility to manage outputs of a Wayland compositor
@@ -31,5 +31,8 @@ wlr-randr is a command line utility to manage outputs of a Wayland compositor.
 %_bindir/wlr-randr
 
 %changelog
+* Thu Nov 26 2026 Artyom Bystrov <arbars@altlinux.org> 0.4.1-alt1
+- Update to new version.
+
 * Thu May 05 2022 Alexey Gladkov <legion@altlinux.ru> 0.2.0.2.g2a7601b-alt1
 - Initial build.
