@@ -4,8 +4,8 @@
 %define libplasma_camera libplasma-camera%sover
 
 Name: %rname
-Version: 2.1.1
-Release: alt3
+Version: 26.08.3
+Release: alt1
 %K6init
 
 Group:  Video
@@ -47,6 +47,9 @@ Simple camera application for mobile devices.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Nov 09 2026 Sergey V Turchin <zerg@altlinux.org> 26.08.3-alt1
+- new version
+
 * Mon Oct 26 2026 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt3
 - update russian translation
 
