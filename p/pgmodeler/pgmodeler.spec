@@ -1,5 +1,5 @@
 Name: pgmodeler
-Version: 1.2.3
+Version: 2.0.0
 Release: alt1
 
 Summary: PostgreSQL Database Modeler
@@ -11,10 +11,8 @@ Url: http://pgmodeler.com.br/
 # Source-git: https://github.com/pgmodeler/pgmodeler.git
 Source: %name-%version.tar
 
-Patch1: pgmodeler-fix-build-with-libxml2.patch
-
-BuildRequires(pre): rpm-macros-qt5
-BuildRequires: gcc-c++ libpq-devel libxml2-devel libXext-devel postgresql-devel
+BuildRequires(pre): rpm-macros-qt5 rpm-macros-cmake
+BuildRequires: rpm-build-cmake gcc-c++ libpq-devel libxml2-devel libXext-devel postgresql-devel
 BuildRequires: qt6-base-devel qt6-svg-devel
 
 
@@ -25,20 +23,26 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 
 %prep
 %setup
-#patch1 -p1
 
 %build
-%qmake_qt6 pgmodeler.pro \
-    PREFIX=%prefix \
-    PRIVATELIBDIR=%_libdir/%name \
-    PLUGINSDIR=%_libdir/%name/plugins
-# bug with rpath there
-#    PRIVATEBINDIR=%_libdir/%name/bin \
+%cmake -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SKIP_INSTALL_RPATH=OFF \
+    -DPGM_PREFIX=%prefix \
+    -DPGM_BINDIR=%_bindir \
+    -DPGM_PRIVATEBINDIR=%_bindir \
+    -DPGM_PRIVATELIBDIR=%_libdir/%name \
+    -DPGM_PLUGINSDIR=%_libdir/%name/plugins \
+    -DPGM_SHAREDIR=%_datadir/%name \
+    -DPGM_CONFDIR=%_datadir/%name/conf \
+    -DPGM_DOCDIR=%_datadir/%name \
+    -DPGM_LANGDIR=%_datadir/%name/lang \
+    -DPGM_SAMPLESDIR=%_datadir/%name/samples \
+    -DPGM_SCHEMASDIR=%_datadir/%name/schemas
 
-%make_build
+%cmake_build
 
 %install
-%makeinstall_std INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %doc README.md CHANGELOG.md RELEASENOTES.md
@@ -50,6 +54,11 @@ of entity-relationship diagrams and the features that PostgreSQL implements as e
 %_libdir/%name/
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- new version 2.0.0
+- switched to CMake.
+- added BuildRequires: rpm-build-cmake and rpm-macros-cmake.
+
 * Wed Mar 11 2026 Vitaly Lipatov <lav@altlinux.ru> 1.2.3-alt1
 - new version 1.2.3
 
