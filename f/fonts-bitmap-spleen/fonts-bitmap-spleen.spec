@@ -2,7 +2,7 @@
 %define cfontsdir %_prefix/lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: Monospaced bitmap fonts
@@ -89,6 +89,9 @@ done
 %cfontsdir/spleen-*.psfu.gz
 
 %changelog
+* Fri Nov 27 2026 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1
+- Updated to 2.3.0.
+
 * Tue Mar 03 2026 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - Updated to 2.2.0.
 
