@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: basko-terminal
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Modified terminal emulator application for Xfce
@@ -75,5 +75,8 @@ Default apps definition for GNOME Control Center.
 %_datadir/gnome-control-center/default-apps/%name-default-apps.xml
 
 %changelog
+* Wed Nov 25 2026 Vsevolod Myalitsin <r4nc@altlinux.org> 0.9.1-alt1
+- Update 0.9.1.
+
 * Sun Nov 22 2026 Vsevolod Myalitsin <r4nc@altlinux.org> 0.9.0-alt1
 - Initial build for Sisyphus.
