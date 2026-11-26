@@ -4,7 +4,7 @@
 %def_without bcg729
 
 Name: mediastreamer2
-Version: 5.4.115
+Version: 5.4.130
 Release: alt1
 
 Summary: Mediastreamer2 is a powerful and lightweight streaming engine for voice/video telephony applications
@@ -168,6 +168,9 @@ export CMAKE_PREFIX_PATH=%_datadir/Bcg729/cmake:$CMAKE_PREFIX_PATH
 %_libdir/cmake/Mediastreamer2/*.cmake
 
 %changelog
+* Thu Nov 26 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.130-alt1
+- New version 5.4.130.
+
 * Thu May 14 2026 Leontiy Volodin <lvol@altlinux.org> 5.4.115-alt1
 - New version 5.4.115.
 
