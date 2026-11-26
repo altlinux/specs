@@ -1,5 +1,5 @@
 Name: cloudcli
-Version: 1.37.9
+Version: 1.37.10
 Release: alt1
 
 Summary: Web UI for coding agent command-line sessions
@@ -131,6 +131,10 @@ install -m 644 public/logo-512.png %buildroot%_datadir/icons/hicolor/512x512/app
 %_libdir/node_modules/%name/electron/
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.37.10-alt1
+- new version 1.37.10
+- add the IDE category to the desktop launcher.
+
 * Fri Nov 20 2026 Vitaly Lipatov <lav@altlinux.ru> 1.37.9-alt1
 - new version 1.37.9
 
