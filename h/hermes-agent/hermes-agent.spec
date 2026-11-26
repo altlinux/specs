@@ -3,7 +3,8 @@
 %define mname hermes_agent
 
 Name: hermes-agent
-Version: 2026.9.24
+Epoch: 1
+Version: 0.23.4
 Release: alt1
 
 Summary: Locally-run AI agent with tool use, web browsing, and automation
@@ -42,7 +43,7 @@ sed -i 's/^version = ".*"/version = "%version"/' pyproject.toml
 sed -i 's/ - / - /g; s/—/-/g' pyproject.toml
 
 # Remove npm/yarn/web dashboard parts (not built here)
-rm -rv web ui-tui scripts/whatsapp-bridge package-lock.json
+rm -rv web ui-tui scripts/whatsapp-bridge
 
 %build
 # upstream setup.py blocks wheel builds unless this flag is set
@@ -54,6 +55,12 @@ export HERMES_NIX_BUILD=1
 # move the application modules to a private directory
 mkdir -p %buildroot%_datadir
 mv %buildroot%python3_sitelibdir %buildroot%_datadir/%name
+# stamp the installed tree with the upstream release version
+stamp_path=$(PYTHONPATH=%buildroot%_datadir/%name python3 -c 'from pm.paths import install_stamp_path; from pathlib import Path; print(install_stamp_path(Path("%buildroot%_datadir/%name")))')
+python3 scripts/write_install_stamp.py \
+	--output "$stamp_path" \
+	--display-version %version --base-version %version \
+	--update-mechanism external
 # upstream wheel no longer ships these data dirs; runtime looks for them next to the packages
 cp -a locales optional-mcps %buildroot%_datadir/%name/
 
@@ -76,6 +83,12 @@ done
 %_datadir/%name/
 
 %changelog
+* Wed Nov 25 2026 Vitaly Lipatov <lav@altlinux.ru> 1:0.23.4-alt1
+- new version 0.23.4 (upstream moved to semantic versions: Epoch 1)
+- set the install stamp from the upstream v0.23.4 tag
+- avoid pinning an upstream commit in the install stamp
+- add the automatic ruamel.yaml dependency (closes: #61236)
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 2026.9.24-alt1
 - new version 2026.9.24
 - move application modules out of python3 site-packages to %%_datadir/%%name
