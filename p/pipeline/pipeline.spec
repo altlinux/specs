@@ -9,7 +9,7 @@
 %def_disable bootstrap
 
 Name: %_name
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: Follow your favorite video creators
@@ -84,6 +84,9 @@ tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 %doc README.*
 
 %changelog
+* Thu Nov 26 2026 Yuri N. Sedunov <aris@altlinux.org> 4.1.3-alt1
+- 4.1.3
+
 * Mon Oct 12 2026 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
 - 4.1.1
 
