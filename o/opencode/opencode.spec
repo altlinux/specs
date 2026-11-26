@@ -29,8 +29,8 @@
 %global _metainfodir %_datadir/metainfo
 
 Name: opencode
-Version: 2.4.1
-Release: alt2
+Version: 2.4.2
+Release: alt1
 
 # bun build --compile output carries no DWARF and breaks under eu-strip (see
 # %%__strip at the top), so the binary is deliberately without debuginfo: keep
@@ -366,6 +366,12 @@ fi
 %_metainfodir/ai.opencode.desktop.metainfo.xml
 
 %changelog
+* Thu Nov 26 2026 Nazarov Denis <nenderus@altlinux.org> 2.4.2-alt1
+- Update to 2.4.2
+- GPT-6.2 system prompt; a web fetch "always allow" now allows that site only;
+  automations keep running after a failed run; sending to an archived session
+  unarchives it; Esc with an empty composer takes back the last message
+
 * Tue Nov 24 2026 Nazarov Denis <nenderus@altlinux.org> 2.4.1-alt2
 - Allow installing and updating plugins at run time: move the no-runtime-npm-install
   refusal from the shared install path to the two provider SDK call sites,
