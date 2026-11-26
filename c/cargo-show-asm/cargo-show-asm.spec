@@ -1,7 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%define rust_opt_level 3
+%define rust_codegen_units 1
+
 Name: cargo-show-asm
-Version: 0.2.61
+Version: 0.2.65
 Release: alt1
 
 Summary: Cargo subcommand showing the assembly, LLVM-IR and MIR generated for Rust code
@@ -21,25 +24,11 @@ generated for Rust source code.
 
 %prep
 %setup -a 1
-mkdir -p .cargo
-cat >> .cargo/config.toml <<EOF
-[source.crates-io]
-replace-with = "vendored-sources"
+%rust_prep
 
-[source.vendored-sources]
-directory = "vendor"
-
-[term]
-verbose = true
-quiet = false
-
-[profile.release]
-strip = false
-opt-level = 3
-debug = 2
-lto = true
-codegen-units = 1
-EOF
+# With lto rustc produces LLVM bitcode magic which isn't recognised by
+# cargo-show-asm so only %%build and %%install is able to use lto.
+%define rust_lto "fat"
 
 %build
 %rust_build --all-features
@@ -48,13 +37,18 @@ EOF
 %rust_install cargo-asm
 
 %check
+%define rust_lto "off"
 %rust_test --all-features
 
 %files
-%doc LICENSE-*
+%doc LICENSE-MIT
 %_bindir/cargo-asm
 
 %changelog
+* Thu Nov 26 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.65-alt1
+- New version (0.2.65).
+- Package only MIT license.
+
 * Mon Jun 22 2026 Sergey Zhidkih <rx1513@altlinux.org> 0.2.61-alt1
 - New version (0.2.61).
 
