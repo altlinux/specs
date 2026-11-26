@@ -1,5 +1,5 @@
 Name: xdg-terminal-exec
-Version: 0.14.3
+Version: 0.14.4
 Release: alt1
 
 Summary: Proposal for XDG terminal execution utility
@@ -36,6 +36,9 @@ make install prefix=%buildroot%_prefix
 %_datadir/xdg-terminal-exec/
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14.4-alt1
+- new version 0.14.4
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 0.14.3-alt1
 - new version 0.14.3
 
