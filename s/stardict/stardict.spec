@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.7
-Release: alt2.1
+Release: alt3
 
 Summary: StarDict dictionary
 # The entire source code is GPLv3+ except
@@ -206,8 +206,6 @@ xvfb-run -a %make_build check
 
 %install
 %makeinstall_std scrollkeeper_localstate_dir=%buildroot%_var/lib/scrollkeeper
-install -d %buildroot%_iconsdir/hicolor/64x64/apps
-mv %buildroot%_pixmapsdir/stardict.png %buildroot%_iconsdir/hicolor/64x64/apps/
 find %buildroot%_libdir -name '*.la' -delete
 
 cd tools/src
@@ -229,7 +227,7 @@ hardlink -cv %buildroot%_datadir
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name
-%_iconsdir/hicolor/64x64/apps/stardict.png
+%_pixmapsdir/*
 %_desktopdir/%name.desktop
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
@@ -279,6 +277,9 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Thu Nov 26 2026 Mikhail Efremov <sem@altlinux.org> 3.0.7-alt3
+- Moved stardict icon back to /usr/share/pixmaps.
+
 * Wed Oct 21 2026 Vitaly Lipatov <lav@altlinux.ru> 3.0.7-alt2.1
 - NMU: fix dictd2dic index fields on 64-bit systems.
 - Move the application icon to the hicolor theme.
