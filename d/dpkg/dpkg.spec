@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.23.11
+Version: 1.23.12
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -118,6 +118,11 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.12-alt1
+- new version 1.23.12
+- fixes:
+  + CVE-2026-91094: prevent directory traversal via symlinks in control.tar.
+
 * Mon Oct 12 2026 Vitaly Lipatov <lav@altlinux.ru> 1.23.11-alt1
 - new version 1.23.11
 
