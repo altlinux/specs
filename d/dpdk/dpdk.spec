@@ -9,9 +9,10 @@
 %def_enable afxdp
 
 Name: dpdk
-Version: 23.11.6
+Version: 23.11.8
 Release: alt1
-Url: http://dpdk.org
+Url: https://www.dpdk.org/
+VCS: https://github.com/DPDK/dpdk
 License: BSD-3-Clause AND GPL-2.0-only AND LGPL-2.1-only
 Summary: Set of libraries and drivers for fast packet processing
 Group: System/Libraries
@@ -160,6 +161,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Thu Nov 26 2026 Anton Farygin <rider@altlinux.org> 23.11.8-alt1
+- 23.11.6 -> 23.11.8
+
 * Sat Feb 28 2026 Anton Farygin <rider@altlinux.org> 23.11.6-alt1
 - 23.11.5 -> 23.11.6
 
