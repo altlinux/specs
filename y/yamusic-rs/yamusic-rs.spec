@@ -1,5 +1,5 @@
 Name: yamusic-rs
-Version: 1.1.8
+Version: 1.1.9
 Release: alt1
 
 Summary: Unofficial Yandex Music desktop client written in Rust
@@ -17,6 +17,7 @@ ExclusiveArch: aarch64 x86_64
 BuildRequires: rust-bindgen rust-cargo /proc
 BuildRequires: curl libstdc++-devel
 BuildRequires: clang clang-devel gcc-c++ gn ninja-build
+BuildRequires: libvulkan-memory-allocator-devel
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(expat)
@@ -34,6 +35,7 @@ BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xcb)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(xkbcommon-x11)
+BuildRequires: pkgconfig(wuffs)
 BuildRequires: pkgconfig(zlib)
 
 %description
@@ -56,40 +58,10 @@ test -n "$skia_ver"
 # now, vendor skia
 curl -fsSL https://codeload.github.com/rust-skia/skia/tar.gz/$skia_ver |\
 	tar zx --strip-components=1 -C skia-src
-pushd skia-src
-python3 - <<'PY'
-import os, re, tarfile, urllib.request
-
-def deps_of(path):
-    deps = {}
-    for line in open(path, encoding='utf-8'):
-        line = line.split('#', 1)[0]
-        m = re.match(r'\s*"([^"]+)"\s*:\s*"([^"]+)@([0-9a-f]{40})"', line)
-        if m:
-            deps[m.group(1)] = (m.group(2), m.group(3))
-    return deps
-
-def vendor(dest, url, rev):
-    print(f'vendoring skia dep: {dest}', flush=True)
-    os.makedirs(dest, exist_ok=True)
-    with urllib.request.urlopen(f'{url}/+archive/{rev}.tar.gz') as r:
-        tarfile.open(fileobj=r, mode='r:gz').extractall(dest)
-
-required = (
-    'buildtools',
-    'third_party/externals/spirv-cross',
-    'third_party/externals/vulkanmemoryallocator',
-    'third_party/externals/wuffs',
-)
-deps = deps_of('DEPS')
-for dest in required:
-    if dest not in deps:
-        print(f'skia dep not pinned in DEPS, skipped: {dest}', flush=True)
-        continue
-    url, rev = deps[dest]
-    vendor(dest, url, rev)
-PY
-popd #skia-src
+# switch to system wuffs
+sed -ri -e '/public_include_dirs\s*=/ s,"[^"]+","/usr/include/wuffs",' \
+        -e '/sources\s*=/ s,"[^"]+","/usr/include/wuffs/wuffs-v0.3.c",' \
+    skia-src/third_party/wuffs/BUILD.gn
 tar cf %SOURCE2 skia-src
 %endif
 
@@ -115,6 +87,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Nov 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.9-alt1
+- 1.1.9 released
+
 * Wed Nov 25 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.8-alt1
 - 1.1.8 released
 
