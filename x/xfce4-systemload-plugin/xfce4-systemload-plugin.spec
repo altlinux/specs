@@ -2,7 +2,7 @@
 
 Name: xfce4-systemload-plugin
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: System load plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Отображение использования ресурсов системы на панели Xfce
@@ -57,6 +57,10 @@ system uptime in the Xfce4 panel
 %_iconsdir/hicolor/*/apps/*.*
 
 %changelog
+* Thu Nov 26 2026 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt2
+- Updated Russian translation.
+- Added 'ms' and 's' strings to translation.
+
 * Wed May 21 2025 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
 - Updated description.
 - Enabled libgtop support.
