@@ -3,7 +3,7 @@
 %def_disable embed
 
 Name: python3-module-%oname
-Version: 26.8.0
+Version: 26.9.0
 Release: alt1
 
 Summary: Coroutine-based network library
@@ -17,6 +17,8 @@ Url: http://pypi.python.org/pypi/gevent
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch0: debian-fix-subprocess-timeout.patch
+Patch1: debian-forward-fileobject-keywords.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.4
@@ -81,6 +83,8 @@ This package contains documentation and examples for gevent.
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %if_disabled embed
 rm -rf deps
@@ -145,6 +149,10 @@ cp -fR src/greentest %buildroot%python3_sitelibdir/
 #doc examples
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 26.9.0-alt1
+- new version 26.9.0
+- fix subprocess text streams and timeouts.
+
 * Sun Oct 11 2026 Vitaly Lipatov <lav@altlinux.ru> 26.8.0-alt1
 - new version 26.8.0
 
