@@ -1,5 +1,5 @@
 Name:    yara-x
-Version: 1.23.0
+Version: 1.24.0
 Release: alt1
 
 Summary: A rewrite of YARA in Rust
@@ -58,6 +58,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %_datadir/fish/vendor_completions.d/yr.fish
 
 %changelog
+* Mon Nov 23 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.24.0-alt1
+- new version 1.24.0
+
 * Wed Nov 11 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.23.0-alt1
 - new version 1.23.0
 
