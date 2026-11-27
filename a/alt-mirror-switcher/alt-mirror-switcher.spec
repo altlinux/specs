@@ -2,8 +2,8 @@
 %define oname space.shad.alt-mirror-switcher
 
 Name: alt-mirror-switcher
-Version: 1.6.0
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: Simple local mirror switcher for ALT
 
@@ -15,8 +15,6 @@ Url: https://altlinux.space/shad/alt-mirror-switcher
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-Patch: d9beef5c17.patch
 
 %add_python3_path %_datadir/%name
 
@@ -49,13 +47,13 @@ Additional mirrors for %name.
 Summary: A terminal simple local mirror switcher for ALT
 Group: Other
 BuildArch: noarch
+Requires: perl-LWP-Protocol-https
 BuildRequires: perl-String-Util perl-Date-Calc perl-Config-Tiny perl(LWP/UserAgent.pm)
 %description cli
 A terminal simple local mirror switcher for ALT.
 
 %prep
 %setup
-%patch -p1
 rm -v mirrors/ams.sh
 
 %build
@@ -99,6 +97,14 @@ fi
 %_bindir/ams
 
 %changelog
+* Fri Nov 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.1-alt1
+- fixed: *.metainfo.xml
+- fixed: gui: timestamp button behavior
+- fixed: gui: block timestamp button when auto cheak mirrors
+- added: cli: https support for timestamp check
+- added: cli: https support for speedtest check
+- added: cli: determination of timestamp the all mirrors
+
 * Sat Nov 07 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.0-alt2
 - fixed: *.metainfo.xml
 
