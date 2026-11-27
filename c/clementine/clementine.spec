@@ -1,8 +1,8 @@
 %define gst_api_ver 1.0
 
 Name: clementine
-Version: 1.4.4.0
-Release: alt1.gab26ea65c
+Version: 1.4.7.6
+Release: alt1.g634dabd00
 Summary: A music player and library organiser
 
 Group: Sound
@@ -14,7 +14,6 @@ Source0: %name-%version.tar.gz
 Patch1: 01-fix-version.patch
 Patch2: 02-fix-revision-regexp.patch
 Patch3: 03-fix-applicationName-type.patch
-# Patch2: 02-fix-old-system-projectm.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-cmake
@@ -49,6 +48,7 @@ BuildRequires: pkgconfig(Qt6Test)
 BuildRequires: pkgconfig(Qt6Core5Compat)
 BuildRequires: pkgconfig(Qt6Linguist)
 
+BuildRequires: flex
 BuildRequires: libalsa-devel
 BuildRequires: libfftw3-devel
 BuildRequires: git
@@ -120,6 +120,15 @@ sed -i "s|== Separator|== QChar(Separator)|" \
     ext/libclementine-tagreader/fmpsparser.cpp
 %endif
 
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag -a '%version' -m '%version'
+fi
+
 %build
 %cmake -DUSE_SYSTEM_PROJECTM:BOOL=OFF \
        -DFORCE_GIT_REVISION:STRING=%version.%release \
@@ -151,6 +160,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.clementin
 
 
 %changelog
+* Thu Nov 26 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.7.6-alt1.g634dabd00
+- Update upstream source to 1.4.7-006-g634dabd00
+
 * Mon Nov 02 2026 Andrew A. Vasilyev <andy@altlinux.org> 1.4.4.0-alt1.gab26ea65c
 - Update upstream source to 1.4.4
 
