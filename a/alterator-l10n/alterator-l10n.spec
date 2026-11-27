@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.194
+Version: 2.9.195
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -125,6 +125,10 @@ make check
 %lang(mhr_RU) %_datadir/alterator/help/mhr_RU
 
 %changelog
+* Fri Nov 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 2.9.195-alt1
+- Drop the Kopidel gettext catalogs now shipped by alterator-kopidel.
+- Document Kopidel hostname templates in the module help.
+
 * Mon Oct 26 2026 Elena Mishina <lepata@altlinux.org> 2.9.194-alt1
 - alterator: update russian translation (closes #60954)
 - alterator-ahttpd: update help, russian translation (closes #60946, #60943)

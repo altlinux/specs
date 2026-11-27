@@ -10,7 +10,7 @@
 %define _common_libexecdir %prefix/libexec
 
 Name: alterator-kopidel
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: Creating a bootable image that copies the file system
@@ -24,6 +24,7 @@ Source: %name-%version.tar
 
 Requires: alterator
 Requires: alterator-setup
+Requires: alterator-hostname
 Requires: alterator-sh-functions
 Requires: alterator-l10n
 Requires: rsync
@@ -46,9 +47,11 @@ Requires: alterator-vm
 Requires: alterator-grub
 Requires: libevms
 Requires: installer-alterator-fs >= 1.0.0
-Requires: installer-common-base-stage2
+Requires: installer-common-scripts
 Requires: installer-common-functions
+Requires: installer-alterator-pkg-backend
 Requires: installer-scripts-remount-stage2
+Requires: systemd
 Requires: console-scripts
 Requires: kbd
 
@@ -59,8 +62,10 @@ BuildRequires: guile20-devel libguile20-devel
 BuildRequires: guile22-devel
 %endif
 BuildRequires: alterator-fbi
+BuildRequires: gettext-tools
 %if_with check
 BuildRequires: bats
+BuildRequires: openssh-common
 BuildRequires: /proc
 BuildRequires: /dev
 BuildRequires: shellcheck
@@ -70,6 +75,9 @@ BuildRequires: make-initrd-bootchain
 BuildRequires: make-initrd-plymouth
 
 %if_with vmcheck
+BuildRequires: installer-common-base-stage2
+BuildRequires: alterator-setup
+BuildRequires: alterator-hostname
 BuildRequires(pre): rpm-build-vm
 BuildRequires(pre): rpm-build-vm-createimage
 BuildRequires: /dev/kvm
@@ -102,9 +110,11 @@ BuildRequires: alterator-vm
 BuildRequires: alterator-grub
 BuildRequires: libevms
 BuildRequires: installer-alterator-fs >= 1.0.0
-BuildRequires: installer-common-base-stage2
+BuildRequires: installer-common-scripts
 BuildRequires: installer-common-functions
+BuildRequires: installer-alterator-pkg-backend
 BuildRequires: installer-scripts-remount-stage2
+BuildRequires: systemd
 BuildRequires: console-scripts
 BuildRequires: kbd
 %endif
@@ -127,18 +137,23 @@ it on other machines, then you have found what you were looking for!
 #
 
 %check
+%make check-po
 %make test
 %make shellcheck
 %if_with vmcheck
-tests/vm/vmcheck.sh
+tests/vm/vmcheck.sh "%_specdir/%name.spec" "%_sourcedir/%name-%version.tar"
 %endif
 
 %post
 %post_service alteratord
 
 %files
+%doc data/installer/LICENSE
 %_alterator_backend3dir/kopidel
 %_alterator_datadir/applications/kopidel.desktop
+%lang(kk) %_datadir/locale/kk/LC_MESSAGES/alterator-kopidel.mo
+%lang(ru) %_datadir/locale/ru/LC_MESSAGES/alterator-kopidel.mo
+%lang(mhr_RU) %_datadir/locale/mhr_RU/LC_MESSAGES/alterator-kopidel.mo
 %_datadir/alterator-kopidel/
 %_datadir/alterator/ui/kopidel/
 %_sbindir/kopidel
@@ -148,6 +163,23 @@ tests/vm/vmcheck.sh
 %_localstatedir/alterator-kopidel/
 
 %changelog
+* Fri Nov 27 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.7-alt1
+- Use a dedicated installer without graphics, VNC or language
+  selection for automatic image deployment (antohami@).
+- Use installer-common-scripts and installer-alterator-pkg-backend.
+- Create required APT directories when they are excluded
+  from the copied system.
+- Add a regression test for installer cleanup with Kopidel installed.
+- Support booting Kopidel IMG files through Ventoy.
+- Show image deployment progress on the installer console.
+- Allow key-based SSH access for remote diagnostics in instdebug mode.
+- Assign hostnames from a template during standard and OEM deployments.
+  + Default to alt-{mac} and allow overrides in the GUI and CLI.
+  + Explain invalid templates and reject those that can yield IPv4 addresses.
+  + Check the hostname backend before building an image.
+- Move Kopidel translation catalogs from alterator-l10n into the package.
+- Update the Kazakh and Russian translations.
+
 * Sun Oct 11 2026 Ajrat Makhmutov <rauty@altlinux.org> 1.1.6-alt1
 - Fix a build from the GUI erasing a chosen directory that is not
   named alterator-kopidel-workdir.
