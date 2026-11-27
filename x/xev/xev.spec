@@ -1,8 +1,8 @@
 Name: xev
-Version: 1.2.4
+Version: 1.2.7
 Release: alt1
 Summary: print contents of X events
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: https://cgit.freedesktop.org/xorg/app/xev/
 
@@ -36,6 +36,12 @@ ging and development tool, and should not be needed in normal usage.
 %_man1dir/*
 
 %changelog
+* Fri Nov 27 2026 Fr. Br. George <george@altlinux.org> 1.2.7-alt1
+- Autobuild version bump to 1.2.7
+
+* Thu Apr 18 2024 Fr. Br. George <george@altlinux.org> 1.2.6-alt1
+- Autobuild version bump to 1.2.6
+
 * Wed Aug 26 2020 Fr. Br. George <george@altlinux.ru> 1.2.4-alt1
 - Autobuild version bump to 1.2.4
 
