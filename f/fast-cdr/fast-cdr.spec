@@ -2,7 +2,7 @@
 %define srcname Fast-CDR
 
 Name:    fast-cdr
-Version: 2.4.0
+Version: 2.5.0
 Release: alt1
 
 Summary: Fast Common Data Representation (CDR) Serialization Library
@@ -54,6 +54,9 @@ rm -f %buildroot%_datadir/fastcdr/LICENSE
 %_libdir/cmake/fastcdr/
 
 %changelog
+* Fri Nov 27 2026 Sergey Palcheh <minergenon@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Fri Jul 31 2026 Sergey Palcheh <minergenon@altlinux.org> 2.4.0-alt1
 - new version 2.4.0
 
