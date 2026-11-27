@@ -14,19 +14,20 @@
 
 Name: electron
 Version: 42.10.1
-Release: alt1
+Release: alt2
 
 Summary: Build cross-platform desktop apps with JavaScript, HTML, and CSS
 License: MIT
 Group: Development/Other
 Url: https://electronjs.org/
-Vcs: https://github.com/electron/electron.git
+VCS: https://github.com/electron/electron.git
+ExclusiveArch: x86_64 aarch64
 
 Source0: %name-%version.tar.zst
 Source1: chromium.tar.zst
 Source2: chromium-third-party.tar.zst
 Source3: electron-node-modules.tar.zst
-Patch0: %name-%version-alt.patch
+Source4: %name-%version-alt.patch
 ### Start Patches
 Patch1: 0001-vendor-chromium-Narrow-GN-dep-graph-to-electron.patch
 Patch2: 0002-vendor-swiftshader-Use-bundled-llvm-16-and-fix-STL-i.patch
@@ -47,36 +48,47 @@ Patch16: 0016-vendor-chromium-Drop-bytemuck-core-simd-LaneCount-bo.patch
 Patch17: 0017-vendor-chromium-Gate-V8_USE-sanitizer-macros-on-GN.patch
 Patch18: 0018-vendor-chromium-Use-glibc-SYS_SECCOMP-enum-drop-coll.patch
 Patch19: 0019-vendor-chromium-Avoid-std-map-find-with-raw_ref-key-.patch
+Patch20: electron-42.10.1-alt-gn-strict-includes.patch
 ### End Patches
-
-ExclusiveArch: x86_64 aarch64
 
 # Loaded via dlopen, invisible to autoreq.
 Requires: libvulkan1
 
-BuildRequires(pre): rpm-build-licenses rpm-build-ninja
+BuildRequires(pre): rpm-build-licenses
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: /proc
 
 # Toolchain
-BuildRequires: clang%llvm_version clang%llvm_version-devel
+BuildRequires: clang%llvm_version
+BuildRequires: clang%llvm_version-devel
 BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: clang%llvm_version-support
 BuildRequires: libclang%llvm_major
+# Chromium 148 requires at least this GN revision.
 BuildRequires: gn >= 0.2384.1740f5c2
 BuildRequires: esbuild
+# Chromium build scripts require Node.js 22.18.0 or newer.
 BuildRequires: nodejs >= 22.18.0
 BuildRequires: npm
 BuildRequires: rust
 BuildRequires: rust-bindgen
 BuildRequires: rustfmt
 # Replaces chromium-bundled libc++; same as ALT chromium spec.
-BuildRequires: libcxx-devel libcxx-static libcxxabi-devel libcxxabi-static
+BuildRequires: libcxx-devel
+BuildRequires: libcxx-static
+BuildRequires: libcxxabi-devel
+BuildRequires: libcxxabi-static
 
 # Code generators / build-time tools (chromium codegen, post-build cleanup)
-BuildRequires: bison flex gperf
+BuildRequires: bison
+BuildRequires: flex
+BuildRequires: gperf
 BuildRequires: glibc-kernheaders
-BuildRequires: chrpath elfutils patchutils xdg-utils
+BuildRequires: chrpath
+BuildRequires: elfutils
+BuildRequires: patchutils
+BuildRequires: xdg-utils
 
 # Python modules used by mojo / blink / devtools build scripts
 BuildRequires: python3(bs4)
@@ -95,7 +107,8 @@ BuildRequires: libsecret-devel
 # System libraries Chromium links against (not bundled in our config)
 BuildRequires: libgio-devel
 BuildRequires: libcups-devel
-BuildRequires: libnss-devel libnspr-devel
+BuildRequires: libnss-devel
+BuildRequires: libnspr-devel
 BuildRequires: libdbus-devel
 BuildRequires: libalsa-devel
 BuildRequires: libpulseaudio-devel
@@ -159,32 +172,13 @@ tar -xf %SOURCE1 -C src --strip-components=1
 mkdir -p src/third_party
 tar -xf %SOURCE2 -C src/third_party --strip-components=1
 
-%patch0 -p1 -d src/electron
+patch -p1 -d src/electron < %SOURCE4
 
-# Apply the chromium-side patches in .gear/patches/. Patch0 above is the
-# electron-alt cumulative patch; the block below is refreshed by
-# .gear/scripts/patches.sh from the .gear/patches/ contents.
-### Start Apply Patches
-%patch1 -p1 -d src
-%patch2 -p1 -d src
-%patch3 -p1 -d src
-%patch4 -p1 -d src
-%patch5 -p1 -d src
-%patch6 -p1 -d src
-%patch7 -p1 -d src
-%patch8 -p1 -d src
-%patch9 -p1 -d src
-%patch10 -p1 -d src
-%patch11 -p1 -d src
-%patch12 -p1 -d src
-%patch13 -p1 -d src
-%patch14 -p1 -d src
-%patch15 -p1 -d src
-%patch16 -p1 -d src
-%patch17 -p1 -d src
-%patch18 -p1 -d src
-%patch19 -p1 -d src
-### End Apply Patches
+# The cumulative Electron patch uses a different source root.
+# Apply all declared Chromium patches from the vendor root.
+pushd src
+%autopatch -p1
+popd
 
 tar -xf %SOURCE3 -C src/electron
 test -x src/electron/node_modules/.bin/tsc
@@ -235,7 +229,7 @@ export ALTWRAP_LLVM_VERSION="%llvm_version"
 
 # Consumed by the patched rpath_for_built_shared_libraries config:
 # $ORIGIN for build-time tools, absolute path once installed.
-export CHROMIUM_RPATH="%_libdir/%name"
+export CHROMIUM_RPATH="%_libdir/electron"
 
 # A non-empty rust_sysroot_absolute flips use_chromium_rust_toolchain=false
 # in build/config/rust.gni and skips the read_file() on the pruned
@@ -255,7 +249,7 @@ export CLANG_LIBDIR="$CLANG_RESOURCE_DIR/lib"
 
 # Chromium's standard toolchain templates ignore CFLAGS/CXXFLAGS/LDFLAGS,
 # so -stdlib=libc++ never reaches cc invocations and clang silently picks
-# up libstdc++ headers — TU-wide ABI mismatch ("no viable conversion from
+# up libstdc++ headers; TU-wide ABI mismatch ("no viable conversion from
 # 'const_iterator' ..." in net/cookies/cookie_util.cc). The unbundle:default
 # toolchain honors $CC/$CXX/$AR/$CFLAGS/$CXXFLAGS/$LDFLAGS. Same as ALT
 # chromium spec.
@@ -294,6 +288,10 @@ gn_arg+=( use_system_vulkan_headers=true )
 gn_arg+=( rust_sysroot_absolute=\"$RUST_SYSROOT\" )
 gn_arg+=( rustc_version=\"$RUSTC_VERSION\" )
 gn_arg+=( rust_bindgen_root=\"/usr\" )
+
+# System rustc and LLD use different LLVM versions, so Rust must emit
+# native objects instead of bitcode for cross-language ThinLTO.
+gn_arg+=( toolchain_supports_rust_thin_lto=false )
 
 # Debug / warnings
 gn_arg+=( treat_warnings_as_errors=false )
@@ -352,37 +350,37 @@ gn gen %electron_outdir --args="${gn_arg[*]}"
 %endif
 
 %install
-mkdir -p %buildroot%_libdir/%name
+mkdir -p %buildroot%_libdir/electron
 mkdir -p %buildroot%_bindir
 
-install -m 0755 src/%electron_outdir/electron %buildroot%_libdir/%name/electron
+install -m 0755 src/%electron_outdir/electron %buildroot%_libdir/electron/electron
 
 cp -a src/%electron_outdir/{resources,locales,angledata,hyphen-data} \
-    %buildroot%_libdir/%name/
-cp -a src/%electron_outdir/{*.pak,*.bin,*.dat} %buildroot%_libdir/%name/
+    %buildroot%_libdir/electron/
+cp -a src/%electron_outdir/{*.pak,*.bin,*.dat} %buildroot%_libdir/electron/
 
 # Skip libVkICD_mock_icd.so (tests-only) and libvulkan.so.1 (system).
 cp -a src/%electron_outdir/{libEGL,libGLESv2,libffmpeg,libvk_swiftshader}.so \
-    %buildroot%_libdir/%name/
+    %buildroot%_libdir/electron/
 install -m 0644 src/%electron_outdir/vk_swiftshader_icd.json \
-    %buildroot%_libdir/%name/
+    %buildroot%_libdir/electron/
 
 install -m 0755 src/%electron_outdir/chrome_crashpad_handler \
-    %buildroot%_libdir/%name/chrome_crashpad_handler
+    %buildroot%_libdir/electron/chrome_crashpad_handler
 
 # Fallback for systems with unprivileged userns disabled (hardening
 # profiles, future CVE mitigations); without it Electron aborts with
 # "No usable sandbox". Build emits chrome_sandbox (underscore); the
 # loader expects chrome-sandbox (hyphen). Mode 4711 matches ALT chromium.
 install -m 4711 src/%electron_outdir/chrome_sandbox \
-    %buildroot%_libdir/%name/chrome-sandbox
+    %buildroot%_libdir/electron/chrome-sandbox
 
-ln -s -r %buildroot%_libdir/%name/electron %buildroot%_bindir/electron
+ln -s -r %buildroot%_libdir/electron/electron %buildroot%_bindir/electron
 
 %check
 cd src
 EBIN="%electron_outdir/electron"
-# The production binary has an absolute RPATH (%_libdir/%name) baked in
+# The production binary has an absolute RPATH (%_libdir/electron) baked in
 # for the installed layout, so in the build tree it can't find its
 # sibling .so's (libffmpeg, libGLESv2, libvk_swiftshader, ...).
 export LD_LIBRARY_PATH="$PWD/%electron_outdir"
@@ -421,6 +419,10 @@ xvfb-run -a $EBIN --no-sandbox smoke-app
 %_libdir/electron/
 
 %changelog
+* Fri Nov 27 2026 Grant Makyan <karonus@altlinux.org> 42.10.1-alt2
+- Fix FTBFS with GN 0.2629 by preserving legacy include checking.
+- Fix FTBFS with Rust and LLD using different LLVM versions.
+
 * Fri Aug 28 2026 Grant Makyan <karonus@altlinux.org> 42.10.1-alt1
 - 42.4.0 -> 42.10.1.
 
