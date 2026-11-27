@@ -2,7 +2,7 @@
 %define app_id io.github.focustimerhq.FocusTimer
 
 Name: focustimer
-Version: 1.1.3
+Version: 1.1.5
 Release: alt1
 
 Summary: Work with regular breaks
@@ -65,5 +65,8 @@ BuildRequires: pkgconfig(pangocairo)
 %_datadir/knotifications6/%{app_id}.notifyrc
 
 %changelog
+* Fri Nov 27 2026 Anton Osipov <radiolamp@altlinux.org> 1.1.5-alt1
+- Update to 1.1.5.
+
 * Tue Jul 28 2026 Anton Osipov <radiolamp@altlinux.org> 1.1.3-alt1
 - Initial build.
