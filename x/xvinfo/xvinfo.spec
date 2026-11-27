@@ -1,8 +1,8 @@
 Name: xvinfo
-Version: 1.1.4
+Version: 1.1.6
 Release: alt1
 Summary: Print out X-Video extension adaptor information
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: https://cgit.freedesktop.org/xorg/app/xkbcomp/
 
@@ -32,6 +32,12 @@ with the display that are accesible through the X-Video extension
 %_man1dir/*
 
 %changelog
+* Fri Nov 27 2026 Fr. Br. George <george@altlinux.org> 1.1.6-alt1
+- Autobuild version bump to 1.1.6
+
+* Thu Apr 18 2024 Fr. Br. George <george@altlinux.org> 1.1.5-alt1
+- Autobuild version bump to 1.1.5
+
 * Wed Mar 20 2019 Fr. Br. George <george@altlinux.ru> 1.1.4-alt1
 - Autobuild version bump to 1.1.4
 
