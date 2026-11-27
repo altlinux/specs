@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: tiny-dfr
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: Tiny Apple T2 and Silicon Mac Touch Bar daemon
@@ -35,6 +35,7 @@ Apple T2 and Silicon Mac Touch Bar using DRM and libinput.
 %prep
 %setup -a1
 %rust_prep
+%cargo update --offline
 
 %build
 %rust_build
@@ -63,5 +64,9 @@ install -Dm644 etc/udev/rules.d/99-touchbar-seat.rules %buildroot%_udevrulesdir/
 %_udevrulesdir/99-touchbar-seat.rules
 
 %changelog
+* Fri Nov 27 2026 Anton Osipov <radiolamp@altlinux.org> 0.3.8-alt1
+- Update to 0.3.8.
+- Regenerate Cargo.lock from vendored sources to fix offline build.
+
 * Fri Sep 04 2026 Anton Osipov <radiolamp@altlinux.org> 0.3.7-alt1
 - Initial build.
