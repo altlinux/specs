@@ -1,7 +1,7 @@
 %global import_path github.com/nifi_exporter
 Name:    prometheus-nifi_exporter
 Version: 0.2.0
-Release: alt1
+Release: alt2
 
 Summary: Apache NiFi metrics exporter for Prometheus
 License: Apache-2.0
@@ -14,6 +14,7 @@ Source1: vendor.tar
 Source2: %name.sysconfig
 Source3: %name.service
 Source4: %name.socket
+Source5: sample-config.yml
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-golang
@@ -42,6 +43,7 @@ export IGNORE_SOURCES=1
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -Dm0644 %SOURCE3 %buildroot%_unitdir/%name.service
 install -Dm0644 %SOURCE4 %buildroot%_unitdir/%name.socket
+install -Dm0644 %SOURCE5 %buildroot%_sysconfdir/%name/config.yml
 mkdir -p %buildroot%_sharedstatedir/prometheus/nifi-exporter
 
 %post
@@ -56,7 +58,12 @@ mkdir -p %buildroot%_sharedstatedir/prometheus/nifi-exporter
 %_unitdir/%name.*
 %dir %attr(0775,root,prometheus) %_sharedstatedir/prometheus/nifi-exporter
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_sysconfdir/%name/config.yml
 
 %changelog
+* Thu Nov 26 2026 Kirill Izmestev <felixz@altlinux.org> 0.2.0-alt2
+- Add config.yml (ALT #59552).
+- Fix service (ALT #59553).
+
 * Wed Jun 10 2026 Kirill Izmestev <felixz@altlinux.org> 0.2.0-alt1
 - Initial build for Sisyphus.
