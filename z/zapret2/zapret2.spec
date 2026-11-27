@@ -5,7 +5,7 @@
 %define zapret_statedir %_localstatedir/%name
 
 Name: zapret2
-Version: 1.0.4
+Version: 1.0.7
 Release: alt1
 
 Summary: DPI bypass tool (zapret v2)
@@ -148,7 +148,7 @@ install -Dpm 0644 zapret2.tmpfiles %{buildroot}%{_tmpfilesdir}/zapret2.conf
 %_bindir/zapret2-mdig
 %dir %zapret_confdir
 %config(noreplace) %zapret_confdir/config
-%doc docs/changes.txt docs/changes_compat.txt docs/manual.md docs/manual.en.md docs/readme.md
+%doc docs/changes.txt docs/manual.md docs/manual.en.md docs/readme.md
 %zapret_datadir/
 %_unitdir/zapret2.service
 %_unitdir/nfqws2@.service
@@ -159,5 +159,8 @@ install -Dpm 0644 zapret2.tmpfiles %{buildroot}%{_tmpfilesdir}/zapret2.conf
 %dir %zapret_confdir/custom.d
 
 %changelog
+* Sun Nov 08 2026 Andrey Alekseev <parovoz@altlinux.org> 1.0.7-alt1
+- new version 1.0.7
+
 * Fri Aug 28 2026 Andrey Alekseev <parovoz@altlinux.org> 1.0.4-alt1
 - initial build for ALT Sisyphus
