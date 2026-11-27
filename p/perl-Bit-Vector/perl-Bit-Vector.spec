@@ -1,15 +1,16 @@
-%define dist Bit-Vector
-Name: perl-%dist
-Version: 7.4
-Release: alt1.3
+%define _unpackaged_files_terminate_build 1
+
+Name: perl-Bit-Vector
+Version: 7.5
+Release: alt1
 
 Summary: Efficient bit vector, set of integers and "big int" math library
-License: GPL-1.0-or-later OR Artistic-1.0-Perl
+License: (GPL-1.0-or-later OR Artistic-1.0-Perl) AND LGPL-2.0-or-later
 Group: Development/Perl
 
-URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/ST/STBEY/Bit-Vector-%{version}.tar.gz
-Patch: perl-Bit-Vector-gcc15.patch
+URL: https://metacpan.org/release/Bit-Vector
+#https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/Bit-Vector-%{version}.tar.gz
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Carp-Clan perl-devel
@@ -28,8 +29,7 @@ accessing the C library from Perl, and optionally features
 overloaded operators for maximum ease of use.
 
 %prep
-%setup -q -n %dist-%version
-%patch -p0
+%setup
 
 %build
 %perl_vendor_build
@@ -49,6 +49,10 @@ overloaded operators for maximum ease of use.
 	%perl_vendor_autolib/Bit/Vector
 
 %changelog
+* Fri Nov 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 7.5-alt1
+- 7.4 -> 7.5
+- changed license and URL
+
 * Mon Aug 10 2026 Aleksandr Shamaraev <shad@altlinux.org> 7.4-alt1.3
 - fixed FTBFS
 
