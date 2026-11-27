@@ -2,8 +2,8 @@
 %define nameB re.fossplant.songrec
 
 Name: songrec
-Version: 0.8.2
-Release: alt2
+Version: 0.8.3
+Release: alt1
 
 Summary: An open-source Shazam client for Linux.
 License: GPL-3.0-only
@@ -20,13 +20,22 @@ Requires: gnome-icon-theme-symbolic
 
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
-BuildRequires: libalsa-devel libssl-devel pkgconfig(dbus-1)
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) libcairo-devel
-BuildRequires: pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango)
-BuildRequires: pkgconfig(cairo-gobject) pkgconfig(atk) clang-devel
-BuildRequires: pkgconfig(gtk4) libpulseaudio-devel
+BuildRequires: libalsa-devel
+BuildRequires: libssl-devel
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: libcairo-devel
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
+BuildRequires: pkgconfig(pango)
+BuildRequires: pkgconfig(cairo-gobject)
+BuildRequires: pkgconfig(atk)
+BuildRequires: clang-devel
+BuildRequires: pkgconfig(gtk4)
+BuildRequires: libpulseaudio-devel
 BuildRequires: pkgconfig(libpipewire-0.3)
-BuildRequires: pkgconfig(graphene-gobject-1.0) pkgconfig(libadwaita-1)
+BuildRequires: pkgconfig(graphene-gobject-1.0)
+BuildRequires: pkgconfig(libadwaita-1)
 
 %description
 SongRec is an open-source Shazam client for Linux, written in Rust.
@@ -45,15 +54,15 @@ your input device.
 %rust_prep
 
 %build
-%rust_build 
+%rust_build
 
 %install
 %rust_install 
 
-install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%{nameB}-rainbow.svg %buildroot%_iconsdir/hicolor/128x128/apps/%{nameB}-rainbow.svg
-install -Dm 0644 packaging/rootfs/usr/share/icons/hicolor/scalable/apps/%nameB.svg %buildroot%_iconsdir/hicolor/128x128/apps/%nameB.svg
-install -Dm 0644 packaging/rootfs/usr/share/applications/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
-install -Dm 0644 packaging/rootfs/usr/share/metainfo/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
+install -Dm 0644 packaging/icons/hicolor/scalable/apps/%{nameB}-rainbow.svg %buildroot%_iconsdir/hicolor/128x128/apps/%{nameB}-rainbow.svg
+install -Dm 0644 packaging/icons/hicolor/scalable/apps/%nameB.svg %buildroot%_iconsdir/hicolor/128x128/apps/%nameB.svg
+install -Dm 0644 packaging/freedesktop/%nameB.desktop %buildroot%_datadir/applications/%nameB.desktop
+install -Dm 0644 packaging/freedesktop/%nameB.metainfo.xml %buildroot%_datadir/metainfo/%nameB.metainfo.xml
 
 mv -v translations/locale ./
 for locale in locale/*; do
@@ -71,6 +80,9 @@ done
 %_datadir/metainfo/%nameB.metainfo.xml
 
 %changelog
+* Fri Nov 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.3-alt1
+- 0.8.2 -> 0.8.3
+
 * Mon Nov 23 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.8.2-alt2
 - added missing dependencies (ALT #61602)
 
