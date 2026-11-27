@@ -12,7 +12,7 @@
 
 Name: fluent-bit
 Version: 5.2.1
-Release: alt1
+Release: alt2
 
 Summary: Fast data collector for Linux
 
@@ -36,7 +36,8 @@ BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Mon Nov 18 2024
 # optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libsasl2-3 libssl-devel pkg-config python3-base sh5
 BuildRequires: gcc-c++ cmake flex libbacktrace-devel libcares-devel libedit-devel libluajit-devel libnghttp2-devel libpq-devel librdkafka-devel libsystemd-devel libyaml-devel libsqlite3-devel libmsgpack-c-devel libzstd-devel
-BuildRequires: libssl-devel libsasl2-devel
+BuildRequires: libssl-devel libsasl2-devel libcurl-devel
+# BuildRequires: libidn2-devel libbrotli-devel libkrb5-devel libpsl-devel libgsasl-devel libssh2-devel
 # libudev-devel BR is needed for systemd input plugin
 BuildRequires: libudev-devel
 %if_with jemalloc
@@ -73,8 +74,7 @@ sed -i 's|c-ares|cares|' \
     cmake/cares.cmake
 
 %build
-# gcc14
-%add_optflags -Wno-error=incompatible-pointer-types
+%add_optflags -I%_includedir/librdkafka/
 %cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DPACKAGE_VERSION=%version \
@@ -99,6 +99,12 @@ sed -i 's|c-ares|cares|' \
     -DFLB_FILTER_LUA=On \
     -DFLB_HTTP_SERVER=On \
     -DFLB_CONFIG_YAML=On \
+    -DFLB_SASL_ENABLED=On \
+    -DFLB_SASL_OAUTHBEARER_ENABLED=On \
+    -DFLB_KAFKA_MSK_IAM_ENABLED=On \
+    -DFLB_HAVE_AWS_MSK_IAM=On \
+    -DWITH_SASL_OAUTHBEARER=On \
+    -DWITH_OAUTHBEARER_OIDC=On \
 %if_with jemalloc
     -DFLB_JEMALLOC=On \
 %endif
@@ -142,6 +148,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Fri Nov 27 2026 Leontiy Volodin <lvol@altlinux.org> 5.2.1-alt2
+- Enabled SASL/OAUTHBEARER support with any librdkafka.
+
 * Wed Nov 25 2026 Leontiy Volodin <lvol@altlinux.org> 5.2.1-alt1
 - New version 5.2.1.
 
