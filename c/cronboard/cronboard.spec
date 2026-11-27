@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cronboard
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: A terminal-based dashboard for managing cron jobs locally and on servers
@@ -36,6 +36,9 @@ BuildRequires: python3-module-hatchling
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.4.0-alt1
+- 1.3.0 -> 1.4.0
+
 * Wed Nov 25 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.3.0-alt1
 - 1.2.1 -> 1.3.0
 
