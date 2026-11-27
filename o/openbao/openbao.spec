@@ -1,8 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define import_path github.com/openbao/openbao
+# Upstream go module carries the /v2 suffix since 2.7.0.
+%define internal_version_path github.com/openbao/openbao/v2/internal/version
+%global commit 0439ef5812538733afb277b4445a54706edc1db7
 
 Name: openbao
-Version: 2.7.2
+Version: 2.7.3
 Release: alt1
 
 Summary: Secure secrets and encryption management system
@@ -39,9 +42,9 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export BUILD_TAGS="openbao ui"
 export TAGS="${BUILD_TAGS}"
-export LDFLAGS="-X github.com/%name/%name/version.fullVersion=%version
--X github.com/%name/%name/version.GitCommit=%version-%release
--X github.com/%name/%name/version.BuildDate=$(date -u +'%%Y-%%m-%%d')"
+export LDFLAGS="-X %internal_version_path.fullVersion=%version
+-X %internal_version_path.GitCommit=%commit
+-X %internal_version_path.CommitDate=$(date -u +'%%Y-%%m-%%d')"
 
 %golang_prepare
 cd .build/src/%import_path
@@ -89,6 +92,18 @@ install -p -D -m 644 .release/linux/package/etc/%name/%name.env \
 %config(noreplace) %attr(0640, root, %name) %_sysconfdir/%name/%name.env
 
 %changelog
+* Sat Nov 28 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.3-alt1
+- Updated to 2.7.3.
+- Fixed missing web UI in the built package.
+- Fixed version information in the built binary.
+- Fixes:
+  + GHSA-fgmw-h9wp-wc7g: make entity and group aliases of newly created
+    auth mounts case-sensitive by default (core/auth)
+  + GHSA-h8fh-pmch-cjww: enforce listener configuration
+    (forwarded client certificate headers, unauthed rekey/generate-root
+    endpoints, JSON request limits) on requests forwarded to the active
+    node (core/listeners)
+
 * Thu Nov 05 2026 Alexandr Shashkin <dutyrok@altlinux.org> 2.7.2-alt1
 - Updated to 2.7.2.
 - Fixes:
