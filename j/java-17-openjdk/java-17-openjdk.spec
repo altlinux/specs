@@ -279,7 +279,7 @@
 %global interimver 0
 %global updatever 21
 %global patchver 1
-%global buildver 3
+%global buildver 2
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -312,8 +312,8 @@
 
 # Strip up to 6 trailing zeros in newjavaver, as the JDK does, to get the correct version used in filenames
 # TODO hardcoded
-#global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
-%global filever %{featurever}.%{interimver}.%{updatever}
+%global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
+#global filever %{featurever}.%{interimver}.%{updatever}
 
 # The tag used to create the OpenJDK tarball
 %global vcstag jdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}
@@ -326,7 +326,7 @@
 %if %{is_ga}
 %global build_type GA
 %global ea_designator ""
-%global ea_designator_zip ".0.3"
+%global ea_designator_zip ""
 %global extraver %{nil}
 %global eaprefix %{nil}
 %else
@@ -373,7 +373,7 @@ Release: alt1
 # satisfied by the 1:1.5.0 packages. Thus we need to set the epoch in
 # JDK package >= 1.6.0 to 1, and packages referring to JDK virtual
 # provides >= 1.6.0 must specify the epoch, "java >= 1:1.6.0".
-Epoch:   0
+Epoch:   1
 Summary: %{origin_nice} %{featurever} Runtime Environment
 Group: Development/Java
 
@@ -2014,6 +2014,11 @@ fi
 %endif
 
 %changelog
+* Thu Nov 26 2026 Andrey Cherepanov <cas@altlinux.org> 1:17.0.21.1.2-alt1
+- New version (fixes: CVE-2026-114938, CVE-2026-114939, CVE-2026-114940,
+  CVE-2026-114942, CVE-2026-114943, CVE-2026-114944, CVE-2026-114945,
+  CVE-2026-114946).
+
 * Mon Nov 02 2026 Andrey Cherepanov <cas@altlinux.org> 0:17.0.21.1.3-alt1
 - New version (fixes: CVE-2026-91403).
 
