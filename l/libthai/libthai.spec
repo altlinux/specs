@@ -1,20 +1,24 @@
-Group: System/Libraries
-%add_optflags %optflags_shared
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-Summary:  Thai language support routines
+%define _unpackaged_files_terminate_build 1
+%define soname 0
+
+Summary: Thai language support routines
 Name: libthai
-Version: 0.1.29
-Release: alt1_6
+Version: 0.1.30
+
+Release: alt1
+Group: System/Libraries
 License: LGPL-2.1-or-later
-Source: http://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.xz
+
+Url: http://linux.thai.net
+Vcs: https://github.com/tlwg/libthai
+
+Source: %name-%version.tar.xz
+#http://linux.thai.net/pub/thailinux/software/libthai/libthai-%version.tar.xz
 Patch0: libthai-0.1.9-multilib.patch
-URL: http://linux.thai.net
 
 BuildRequires: gcc
 BuildRequires: pkgconfig(datrie-0.2)
 BuildRequires: doxygen
-Source44: import.info
 
 %description
 LibThai is a set of Thai language support routines aimed to ease
@@ -24,52 +28,71 @@ output methods as well as basic character and string supports.
 
 %package devel
 Group: Development/Other
-Summary:  Thai language support routines
-Requires: %{name} = %{version}-%{release}
+Summary: Thai language support routines
 Requires: pkgconfig
-
 %description devel
-The libthai-devel package includes the header files and developer docs 
+The libthai-devel package includes the header files and developer docs
 for the libthai package.
-
 Install libthai-devel if you want to develop programs which will use
 libthai.
 
-%prep
-%setup -q
-%patch0 -p1
+%package common
+Group: System/Configuration/Other
+BuildArch: noarch
+Obsoletes: libthai <= 0.1.29-alt1_6
+Summary: Data files for %name
+%description common
+This package contains data files for %name.
 
+%package -n %name%soname
+Group: System/Libraries
+Obsoletes: libthai <= 0.1.29-alt1_6
+Summary: %name library
+Requires: %name-common
+%description -n %name%soname
+%name library.
+
+%prep
+%setup
+%patch0 -p1
+sed -i 's/@VERSION@/%version/g' libthai.pc.in 
 
 %build
+%autoreconf
 %configure --disable-static
 make
 
 %install
-
 %makeinstall
 
 # move installed doc files back to build directory to package them
 # in the right place
 mkdir installed-docs
-mv $RPM_BUILD_ROOT%{_docdir}/libthai/* installed-docs
-rmdir $RPM_BUILD_ROOT%{_docdir}/libthai
+mv $RPM_BUILD_ROOT%_docdir/libthai/* installed-docs
+rmdir $RPM_BUILD_ROOT%_docdir/libthai
 
-rm $RPM_BUILD_ROOT%{_libdir}/*.la
+rm $RPM_BUILD_ROOT%_libdir/*.la
 
-
-
-%files
+%files common
 %doc README AUTHORS COPYING ChangeLog
-%{_libdir}/lib*.so.*
-%{_datadir}/libthai
+%_datadir/libthai
+
+%files -n %name%soname
+%_libdir/%name.so.%soname
+%_libdir/%name.so.%{soname}.*
 
 %files devel
 %doc installed-docs/*
-%{_includedir}/thai
-%{_libdir}/lib*.so
-%{_libdir}/pkgconfig/*
+%_includedir/thai
+%_libdir/%name.so
+%_libdir/pkgconfig/*
 
 %changelog
+* Fri Nov 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.1.30-alt1
+- 0.1.29 -> 0.1.30
+- added Vcs
+- builded in accordance with SharedLibsPolicy
+
 * Tue Aug 29 2023 Igor Vlasenko <viy@altlinux.org> 0.1.29-alt1_6
 - update to new release by fcimport
 

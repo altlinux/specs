@@ -3,7 +3,7 @@
 
 Name:    1c-preinstall
 Version: 8.5
-Release: alt1
+Release: alt2
 
 Summary: Set correct environment for 1C:Enterprise platform
 License: GPL-2.0
@@ -70,7 +70,7 @@ Requires: libSM
 Requires: libsoup
 Requires: libsqlite3
 Requires: libsystemd
-Requires: libthai
+Requires: libthai0
 Requires: libunistring2
 Requires: libuuid
 Requires: libwayland-client
@@ -124,6 +124,9 @@ install -Dpm 0755 %ftrigger %buildroot%_rpmlibdir/%ftrigger
 %_rpmlibdir/%ftrigger
 
 %changelog
+* Fri Nov 20 2026 Aleksandr Shamaraev <shad@altlinux.org> 8.5-alt2
+- NMU: libthai -> libthai0
+
 * Mon Jul 27 2026 Pavel Isopenko <pauli@altlinux.org> 8.5-alt1
 - new version 8.5
 - plus libwebkit2gtk
