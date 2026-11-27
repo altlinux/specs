@@ -13,7 +13,7 @@
 %define _unitdir %_prefix/lib/systemd/system
 
 Name: dnsdist
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 
 Summary: Highly DNS-, DoS- and abuse-aware loadbalancer
@@ -22,7 +22,8 @@ License: GPL-2.0-only
 Group: Networking/DNS
 Url: https://dnsdist.org
 VCS: https://github.com/PowerDNS/pdns
-# NOTE: see https://www.dnsdist.org/changelog.html for CVEs.
+# NOTE: see https://www.dnsdist.org/changelog.html
+# and https://www.dnsdist.org/security.html for CVEs.
 
 Source0: %name-%version.tar.xz
 Source1: dnsdist.1
@@ -168,6 +169,11 @@ exit 0
 %config(noreplace) %_sysconfdir/%name/dnsdist.conf
 
 %changelog
+* Fri Nov 27 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.4-alt1
+- New version 2.1.4 (Fixes: CVE-2026-85561, CVE-2026-85562,
+  CVE-2026-85563, CVE-2026-85564, CVE-2026-85565, CVE-2026-85566,
+  CVE-2026-123756, CVE-2026-85567, CVE-2026-123755).
+
 * Tue Oct 13 2026 Leontiy Volodin <lvol@altlinux.org> 2.1.3-alt1
 - New version 2.1.3.
 
