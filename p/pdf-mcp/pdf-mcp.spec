@@ -1,6 +1,6 @@
 Name: pdf-mcp
 Version: 3.8.0
-Release: alt1
+Release: alt2
 
 Summary: Agentic RAG over your PDFs
 License: MIT
@@ -8,7 +8,7 @@ Group: Development/Python
 URL: https://pypi.org/project/pdf-mcp
 VCS: https://github.com/jztan/pdf-mcp
 
-ExclusiveArch: aarch64 x86_64
+ExcludeArch: %ix86
 
 Source0: %name-%version.tar
 Source1: pyproject_deps.json
@@ -118,6 +118,9 @@ python3 -c "import importlib.util; s=importlib.util.spec_from_file_location('g',
 %python3_sitelibdir_noarch/pdf_mcp-%version.dist-info
 
 %changelog
+* Fri Nov 27 2026 Ivan A. Melnikov <iv@altlinux.org> 3.8.0-alt2
+- NMU: replace ExclusiveArch with ExcludeArch to build on loongarch64
+
 * Mon Nov 16 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 3.8.0-alt1
 - 3.8.0 released
 
