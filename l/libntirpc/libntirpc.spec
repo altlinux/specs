@@ -1,5 +1,5 @@
 Name: libntirpc
-Version: 15.7
+Version: 15.11
 Release: alt1
 
 Summary: New Transport Independent RPC Library
@@ -70,6 +70,9 @@ install -m644 -D src/monitoring/include/monitoring.h %buildroot%_includedir/ntir
 %_pkgconfigdir/libntirpc.pc
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 15.11-alt1
+- new version 15.11
+
 * Tue Oct 20 2026 Vitaly Lipatov <lav@altlinux.ru> 15.7-alt1
 - new version 15.7 (soname is now libntirpc.so.15.7, was 3)
 - build as a separate package again (nfs-ganesha uses the system libntirpc)

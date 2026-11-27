@@ -42,7 +42,7 @@
 %def_without legacy_python_install
 
 Name: nfs-ganesha
-Version: 15.9
+Version: 15.13
 Release: alt1
 Summary: NFS-Ganesha is a NFS Server running in user space
 Group: System/Servers
@@ -586,6 +586,9 @@ useradd -M -r -d %_runtimedir/ganesha -s /sbin/nologin -c "NFS-Ganesha Daemon" -
 %endif
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 15.13-alt1
+- New version 15.13.
+
 * Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 15.9-alt1
 - Update to V15.9.
 - Build with the system libntirpc 15.7 instead of the bundled one.
