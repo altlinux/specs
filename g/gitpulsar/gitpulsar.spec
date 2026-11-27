@@ -2,7 +2,7 @@
 %define app_id io.gitlab.ilshat_apps.gitpulsar
 
 Name: gitpulsar
-Version: 0.7.0
+Version: 1.5.0
 Release: alt1
 
 Summary: GNOME-native Git GUI written in Rust with GTK4/libadwaita
@@ -66,5 +66,8 @@ install -Dm644 data/icons/hicolor/scalable/actions/tag-outline-symbolic.svg \
 %_iconsdir/hicolor/scalable/actions/*.svg
 
 %changelog
+* Fri Nov 27 2026 Anton Osipov <radiolamp@altlinux.org> 1.5.0-alt1
+- Update to 1.5.0.
+
 * Sun Apr 19 2026 Anton Osipov <radiolamp@altlinux.org> 0.7.0-alt1
 - Initial build.
