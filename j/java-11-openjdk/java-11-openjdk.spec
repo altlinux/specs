@@ -285,8 +285,8 @@ BuildRequires: /proc rpm-build-java
 %global majorver    11
 %global minorver    0
 %global securityver 33
-%global patchver    0
-%global buildver    9
+%global patchver    1
+%global buildver    1
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
@@ -1759,6 +1759,10 @@ fi
 %endif
 
 %changelog
+* Thu Nov 26 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.33.1.1-alt1
+- New version (fixes: CVE-2026-114939, CVE-2026-114940, CVE-2026-114943,
+  CVE-2026-114944, CVE-2026-114946).
+
 * Mon Nov 02 2026 Andrey Cherepanov <cas@altlinux.org> 0:11.0.33.0.9-alt1
 - New version (fixes: CVE-2026-91415, CVE-2026-91398, CVE-2026-91382,
   CVE-2026-91411, CVE-2026-83395, CVE-2026-87294, CVE-2026-91395,
