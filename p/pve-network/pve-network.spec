@@ -1,8 +1,8 @@
-%def_without check
+%def_with check
 
 Name: pve-network
 Summary: PVE SDN package
-Version: 1.6.8
+Version: 1.6.15
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -15,17 +15,17 @@ ExclusiveArch: x86_64 aarch64 loongarch64
 
 Provides: libpve-network-perl = %EVR
 Requires: ifupdown2
-Requires: pve-common >= 9.2.4
-Requires: pve-access-control >= 9.2.0 libpve-rs-perl >= 0.15.4
+Requires: pve-common >= 9.2.13
+Requires: pve-access-control >= 9.2.0 libpve-rs-perl >= 0.16.5
 Requires: pve-cluster >= 9.0.1
 Requires: pve-firewall >= 5.1.0
 Requires: frr frr-pythontools
 Requires: dnsmasq wireguard-tools
 
 BuildRequires: pve-cluster
-BuildRequires: pve-firewall
 BuildRequires: pve-doc-generator
-BuildRequires: pve-common >= 9.2.4
+BuildRequires: pve-common >= 9.2.13
+BuildRequires: libpve-rs-perl >= 0.16.4
 BuildRequires: perl
 BuildRequires: perl(CPAN/Meta/YAML.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -52,6 +52,9 @@ BuildRequires: perl(PVE/SectionConfig.pm)
 BuildRequires: perl(PVE/Tools.pm)
 BuildRequires: perl(Test/MockModule.pm)
 BuildRequires: perl(Test/More.pm)
+%if_with check
+BuildRequires: perl(Test/Differences.pm)
+%endif
 
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MPVE::Network::SDN'; export TZ=UTC
 %set_perl_req_method relaxed
@@ -77,6 +80,11 @@ make -C src test
 %_unitdir/dnsmasq@.service.d/00-dnsmasq-after-networking.conf
 
 %changelog
+* Fri Nov 27 2026 Sergey Konev <darisishe@altlinux.org> 1.6.15-alt1
+- 1.6.15.
+- Required compatible common and Rust SDN libraries.
+- Run the SDN tests without a build dependency on the firewall daemon.
+
 * Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 1.6.8-alt1
 - 1.6.8
 

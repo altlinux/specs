@@ -10,7 +10,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt3
 License: AGPL-3.0+ and GPLv3 and MIT and OFL-1.1
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -62,6 +62,7 @@ BuildRequires: update-kernel
 
 %if_enabled check
 BuildRequires: perl(Test/More.pm) perl(Test/MockModule.pm)
+BuildRequires: perl(Text/Balanced.pm)
 %endif
 
 %description
@@ -198,6 +199,12 @@ fi
 %_jsdir/sencha-touch
 
 %changelog
+* Fri Nov 27 2026 Sergey Konev <darisishe@altlinux.org> 9.2.26-alt3
+- Accepted RPM repositories in the APT API response schema.
+- Accepted RPM package names in the changelog API.
+- Checked the RPM database when validating the package update cache.
+- Removed subscription diagnostics and used ALT tools to report installed kernels.
+
 * Thu Nov 26 2026 Sergey Konev <darisishe@altlinux.org> 9.2.26-alt2
 - Reverted kernel CephFS cipher policy and RBD NBD migration workarounds.
 - Recognized the Ceph AES256K backport in ALT kernel-image-6.18 >= 6.18.65-alt1.

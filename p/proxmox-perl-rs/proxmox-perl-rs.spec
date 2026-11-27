@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
-%def_without check
+%def_with check
 
 Name: proxmox-perl-rs
-Version: 0.4.2
+Version: 0.4.4
 Release: alt1
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
@@ -11,7 +11,6 @@ URL: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/proxmox-perl-rs.git
 Source: %name-%version.tar
 Patch: %name-%version.patch
-Patch1: 0001-ALT-set-correct-context-not-None.patch
 
 Source1: genpackage.pl
 
@@ -22,7 +21,11 @@ BuildRequires: rpm-build-rust clang-devel perl-devel
 BuildRequires: libssl-devel libacl-devel libuuid-devel libnettle-devel
 BuildRequires: cargo-vendor-checksum
 BuildRequires: gcc-c++ libapt-devel libsystemd-devel
-BuildRequires: proxmox-frr-templates
+BuildRequires: proxmox-frr-templates >= 0.1.3
+%if_with check
+BuildRequires: pve-common >= 9.2.15 perl(HTTP/Status.pm)
+BuildRequires: perl(Test/More.pm)
+%endif
 BuildRequires: /proc
 %set_perl_req_method relaxed
 
@@ -32,8 +35,9 @@ libpve-rs-perl and libpmg-rs-perl, loading whichever is available.
 
 %package -n libproxmox-rs-perl
 Summary: PVE/PMG common parts which have been ported to Rust
-Version: 0.4.2
+Version: 0.4.4
 Group: Development/Other
+Requires: perl(HTTP/Status.pm) perl(PVE/Exception.pm) perl(PVE/JSONSchema.pm)
 Provides: proxmox-perl-rs = %EVR
 Provides: proxmox-rs-perl = %EVR
 Conflicts: pve-manager < 9.2.26
@@ -44,21 +48,22 @@ Conflicts: libpve-notify-perl < 9.1.9
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.16.0
+Version: 0.16.8
 Group: Development/Other
+Requires: rpm
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
 Conflicts: pve-ha-manager <= 5.0.6
 Conflicts: pve-manager < 9.2.26
 Conflicts: libpve-notify-perl < 9.1.9
-# Conflicts: pve-network < 1.4.0
+Conflicts: pve-network < 1.6.12
 
 %description -n libpve-rs-perl
 %summary
 
 %package -n libpmg-rs-perl
 Summary: Components of Proxmox Mail Gateway which have been ported to Rust
-Version: 0.8.2
+Version: 0.8.5
 Group: Development/Other
 Provides: pmg-perl-rs = %EVR
 Provides: pmg-rs-perl = %EVR
@@ -69,7 +74,6 @@ Provides: pmg-rs-perl = %EVR
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 pushd pve-rs
 sed -i 's/PL_use_safe_putenv = on ? TRUE : FALSE;//' vendor/perlmod/src/glue.c
 cargo-vendor-checksum --vendor vendor -f perlmod/src/glue.c
@@ -78,7 +82,6 @@ sed -i 's/mut i8/mut u8/' vendor/proxmox-sys/src/fs/dir.rs
 # Checksum update for patched files
 cargo-vendor-checksum --vendor vendor -f proxmox-sys/src/fs/dir.rs
 %endif
-cargo-vendor-checksum --vendor vendor -f proxmox-notify/src/context/mod.rs
 popd
 
 %build
@@ -112,12 +115,13 @@ install -m0644 PVE/RS/ResourceScheduling/*.pm %buildroot%perl_vendor_privlib/PVE
 install -m0644 common/pkg/PVE/RS/*.pm %buildroot%perl_vendor_privlib/PVE/RS/
 install -m0644 Proxmox/RS/*.pm %buildroot%perl_vendor_privlib/Proxmox/RS/
 install -m0644 Proxmox/RS/APT/*.pm %buildroot%perl_vendor_privlib/Proxmox/RS/APT
+install -Dm0644 common/pkg/Proxmox/APT/HistoryAPI.pm %buildroot%perl_vendor_privlib/Proxmox/APT/HistoryAPI.pm
 install -m0644 common/pkg/Proxmox/Lib/Common.pm Proxmox/Lib/PVE.pm %buildroot%perl_vendor_privlib/Proxmox/Lib/
 install -m0644 common/pkg/Proxmox/Lib/SslProbe.pm Proxmox/Lib/PVE.pm %buildroot%perl_vendor_privlib/Proxmox/Lib/
 
 %check
 pushd pve-rs
-LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
+BUILD_MODE=release RUSTFLAGS="-L/usr/lib64/perl5/CORE -lperl" make check
 
 %files -n libpve-rs-perl
 %perl_vendor_autolib/libpve_rs.so
@@ -133,6 +137,8 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 %perl_vendor_privlib/PVE/RS/Firewall/*.pm
 
 %files -n libproxmox-rs-perl
+%dir %perl_vendor_privlib/Proxmox/APT
+%perl_vendor_privlib/Proxmox/APT/HistoryAPI.pm
 %dir %perl_vendor_privlib/Proxmox/RS
 %dir %perl_vendor_privlib/Proxmox/RS/APT
 %perl_vendor_privlib/Proxmox/RS/*
@@ -142,6 +148,13 @@ LD_LIBRARY_PATH='$LD_LIBRARY_PATH:../target/release' make check
 
 
 %changelog
+* Fri Nov 27 2026 Sergey Konev <darisishe@altlinux.org> 0.4.4-alt1
+- Update libproxmox-rs-perl to 0.4.4 and libpve-rs-perl to 0.16.8.
+- Update vendored Gitea dependencies, including proxmox-notify 3 and RPM cache fixes.
+- Use RPM changelog backends and accept native RPM package names in the APT APIs.
+- Enable the Perl binding tests against the release library.
+- Require the current FRR templates when compiling the Rust SDN renderer.
+
 * Tue Nov 10 2026 Sergey Konev <darisishe@altlinux.org> 0.4.2-alt1
 - Update libproxmox-rs-perl to 0.4.2 and libpve-rs-perl to 0.16.0.
 
