@@ -1,8 +1,9 @@
 %define oname grok
+%define abiversion 2
 
 Name: libgrokj2k
-Version: 20.4.25
-Release: alt2
+Version: 21.0.0
+Release: alt1
 
 Summary: World's Leading Open Source JPEG 2000 Codec
 License: AGPL-3.0
@@ -15,11 +16,11 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/GrokImageCompression/grok/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 # spdlog 2.0.0 used as git submodule src/include/spdlog
-# from https://github.com/gabime/spdlog/tree/ce0424bb375805955c0c5482a32ddb821708eb47
+# pinned to upstream commit ce0424bb375805955c0c5482a32ddb821708eb47
 Source2: spdlog-2.0.0.tar
 Patch0: grok-use-system-highway.patch
 Patch1: grok-tests-mapped-offset-64bit.patch
-Patch2: grok-gcc16-missing-climits.patch
+Patch2: grok-test-data-optional.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: perl-base perl-devel perl-Image-ExifTool
@@ -40,10 +41,18 @@ full encode/decode support for JPEG,PNG,BMP,TIFF,RAW,PNM and PAM image formats
 full encode/decode support for 1-16 bit precision images
 
 
+%package -n %name%abiversion
+Summary: Shared libraries for %name
+Group: System/Libraries
+Obsoletes: %name < %EVR
+
+%description -n %name%abiversion
+Shared libraries for %name.
+
 %package devel
 Summary: Header files for %name
 Group: Development/Other
-Requires: %name = %EVR
+Requires: %name%abiversion = %EVR
 
 %description devel
 Header files for %name.
@@ -51,7 +60,7 @@ Header files for %name.
 %package -n grokj2k-tools
 Summary: Tools for %name
 Group: File tools
-Requires: %name = %EVR
+Requires: %name%abiversion = %EVR
 
 %description -n grokj2k-tools
 Compress and decompress tools for grokj2k:
@@ -104,9 +113,11 @@ ctest --output-on-failure -j%__nprocs -E "$exclude"
 
 %files
 %doc README.md
-%_libdir/%name.so.1
+
+%files -n %name%abiversion
+%_libdir/%name.so.2
 %_libdir/%name.so.%version
-%_libdir/%{name}codec.so.1
+%_libdir/%{name}codec.so.2
 %_libdir/%{name}codec.so.%version
 
 %files -n grokj2k-tools
@@ -124,6 +135,9 @@ ctest --output-on-failure -j%__nprocs -E "$exclude"
 %_pkgconfigdir/libgrokj2kcodec.pc
 
 %changelog
+* Thu Nov 26 2026 Vitaly Lipatov <lav@altlinux.ru> 21.0.0-alt1
+- new version 21.0.0.
+
 * Wed Nov 11 2026 Vitaly Lipatov <lav@altlinux.ru> 20.4.25-alt2
 - fix build with GCC 16 (include <climits> for UINT_MAX).
 
