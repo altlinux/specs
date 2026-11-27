@@ -23,7 +23,7 @@
 %define prog_name            postgresql
 %define postgresql_major     18
 %define postgresql_minor     7
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -1193,6 +1193,9 @@ fi
 %endif
 
 %changelog
+* Fri Nov 27 2026 Alexei Takaseev <taf@altlinux.org> 18.7-alt3
+- Update Patch 1C 20261127 (ALT #61656)
+
 * Mon Nov 23 2026 Alexei Takaseev <taf@altlinux.org> 18.7-alt2
 - Add triggerpostun and conflict for PG 19
 
