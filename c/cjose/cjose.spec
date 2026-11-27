@@ -7,8 +7,8 @@
 %define develname lib%{name}-devel
 
 Name:		cjose
-Version:	0.6.2.3
-Release:	alt1_1
+Version:	0.6.2.8
+Release:	alt1
 Summary:	C library implementing the Javascript Object Signing and Encryption (JOSE)
 Group:		System/Libraries
 License:	MIT
@@ -49,11 +49,8 @@ This package contains development files for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-
 %build
-
-# Undo the effects of -Werror so deprecation warnings don't halt the build
-CFLAGS="$CFLAGS -Wno-error"
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -81,6 +78,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Fri Nov 27 2026 Sergey Gvozdetskiy <serjigva@altlinux.org> 0.6.2.8-alt1
+- new version (fixes: CVE-2026-53939)
+
 * Tue Apr 08 2025 Igor Vlasenko <viy@altlinux.org> 0.6.2.3-alt1_1
 - update by mgaimport
 
