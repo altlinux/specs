@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 9.2.8
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -72,6 +72,9 @@ cd ..
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Nov 27 2026 Sergey Konev <darisishe@altlinux.org> 9.2.8-alt2
+- Determine the PVE architecture without dpkg to restore the web interface on ALT.
+
 * Mon Nov 09 2026 Alexey Shabalin <shaba@altlinux.org> 9.2.8-alt1
 - 9.2.8
 
