@@ -1,4 +1,4 @@
-%define libcontrolppver 0.33
+%define libcontrolppver 0.36
 %define confdir %{_sysconfdir}/%{name}
 %define statedir %{_localstatedir}/%{name}
 %define ulim_statedir %{statedir}/ulimits
@@ -6,7 +6,7 @@
 %define testsdir %{statedir}/tests
 
 Name: control++
-Version: 0.24.2
+Version: 0.25.0
 Release: alt1
 
 Summary: System configuration tool
@@ -90,6 +90,9 @@ cp readme.txt %{buildroot}%{_defaultdocdir}/%{name}
 # Tests
 cp -r tests/* %{buildroot}%{testsdir}
 
+%post
+install -m 0644 /dev/null %{statedir}/.current_mode.conf
+
 %post -n %{name}-checkinstall
 %{testsdir}/run --targets all --mode checkinstall
 
@@ -104,6 +107,7 @@ cp -r tests/* %{buildroot}%{testsdir}
 %dir %{ulim_statedir}
 %dir %{perm_statedir}
 %{_defaultdocdir}/%{name}
+%ghost %attr(0644,root,root) %{statedir}/.current_mode.conf
 
 %files -n %{name}-wl
 %{confdir}/wl.sh
@@ -117,6 +121,21 @@ cp -r tests/* %{buildroot}%{testsdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Nov 27 2026 Alexey Appolonov <alexey@altlinux.org> 0.25.0-alt1
+- Fixes:
+  + OVE-20261127-0012 Shell special symbols were not filtered out of mode names
+  + OVE-20261127-0013 Missing validation of mode names obtained from the file system
+  + OVE-20261127-0014 Script path reached a shell and its exit status was misread
+  + OVE-20261127-0015 Race between checking a script and running it
+- Various minor bug fixes, including a few memory leaks;
+- The mode check during a micro reset now works properly;
+- Scripts without a shebang line are no longer run by the starter unit;
+- The ulimits unit is improved (in particular, the precedence of its ulimits
+  files is now guaranteed in all situations, while a specially crafted catalog
+  could previously break the hierarchy in which mode-specific files come first);
+- The mode status is now available before the first run by root
+  (Closes: #61317).
+
 * Thu Oct 15 2026 Alexey Appolonov <alexey@altlinux.org> 0.24.2-alt1
 - Improved security and usability of the whitelist generation script.
 

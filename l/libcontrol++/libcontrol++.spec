@@ -1,6 +1,6 @@
 Name: libcontrol++
-Version: 0.35.0
-Release: alt2
+Version: 0.36.0
+Release: alt1
 
 Summary: control++ common classes and functions library
 License: GPLv3
@@ -56,6 +56,26 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Fri Nov 27 2026 Alexey Appolonov <alexey@altlinux.org> 0.36.0-alt1
+- Fixes:
+  + OVE-20261127-0003 Out-of-range access in the "CountEsc" function
+  + OVE-20261127-0004 Out-of-bounds read in the "GetUserName" and "GetGroupName" functions
+  + OVE-20261127-0005 Infinite loop in the "CutComment" function with an escaped comment symbol
+  + OVE-20261127-0006 Hang when the output is redirected
+  + OVE-20261127-0007 Loss of a configuration file on a failed "WriteToFile" function call
+  + OVE-20261127-0008 Undefined behaviour in the conf DOM accessors when a negative index is passed
+  + OVE-20261127-0009 Unescaped values in the generated conf output
+  + OVE-20261127-0010 Undefined behaviour in the walk over section assignments
+  + OVE-20261127-0011 Read past the end of an unset mode string in the "TFilePerm::ChangePermMode" method
+- Various minor bug fixes, including a few memory leaks and a better handling of
+  configuration files;
+- A much safer TTick class;
+- A comma in a configuration file value is always treated as a delimiter unless
+  it is enclosed in quotes;
+- The home directory is always taken from the password database (getpwuid)
+  instead of the "HOME" shell variable;
+- The "FatalError" and "VRemEmpty" functions are deprecated.
+
 * Fri Apr 24 2026 Alexey Appolonov <alexey@altlinux.org> 0.35.0-alt2
 - A much better looking makefile.
 
@@ -226,7 +246,7 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 - Ability to limit the memory step when using PushBack function.
 
 * Sat Oct 13 2018 Alexey Appolonov <alexey@altlinux.org> 0.14.0-alt1
-- Writting error messages by the ref instead of outputting;
+- Writing error messages by the ref instead of outputting;
 - More secure way of TFilePerm data access and modification;
 - New classes TFileACL and TGroupOfFilesACL;
 - Ability to check permission/ACL completeness;
