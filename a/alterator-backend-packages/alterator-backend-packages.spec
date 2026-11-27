@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: alterator-backend-packages
-Version: 0.2.22
+Version: 0.2.23
 Release: alt1
 
 Summary: Alterator backends for managing system packages
@@ -67,6 +67,9 @@ through apt and rpm.
 %doc CHANGELOG.md docs/*
 
 %changelog
+* Fri Nov 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.23-alt1
+- Check CD-ROM at configured mount point (closes: #61694).
+
 * Fri Nov 27 2026 Maria Alexeeva <alxvmr@altlinux.org> 0.2.22-alt1
 - Prevent apt-get option injection in unauthenticated CheckApply and
   CheckReinstall methods.
