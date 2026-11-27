@@ -1,6 +1,6 @@
 Name: buildbot
 Version: 4.3.0
-Release: alt1
+Release: alt2
 Summary: Python-based continuous integration testing framework
 
 Group: Development/Python
@@ -42,8 +42,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 
 Requires: python3-module-service-identity buildbot-www python3(msgpack)
-# Version requires due to move location of modules in buildbot-sqlalchemy
-Requires: buildbot-sqlalchemy >= 1.4.44
 
 
 ###############################################################################
@@ -61,12 +59,6 @@ Requires: buildbot-sqlalchemy >= 1.4.44
 %filter_from_requires /python3(win32service)/d
 %filter_from_requires /python3(win32serviceutil)/d
 %filter_from_requires /python3(winerror)/d
-
-
-###############################################################################
-# Change sqlalchemy requires
-###############################################################################
-%filter_from_requires s/python3(sqlalchemy.*).*/buildbot-sqlalchemy/
 
 
 ###############################################################################
@@ -175,6 +167,7 @@ rm -v worker/buildbot_worker/scripts/windows_service.py
 rm -v master/docs/manual/mydashboard.html
 
 %build
+export BUILDBOT_VERSION=%version
 for name in master worker; do
     pushd "$name"
     %python3_build_debug
@@ -182,6 +175,7 @@ for name in master worker; do
 done
 
 %install
+export BUILDBOT_VERSION=%version
 pushd master
 %python3_install
 install -Dm 0644 docs/buildbot.1 %buildroot/%_man1dir/buildbot.1
@@ -191,13 +185,6 @@ pushd worker
 %python3_install
 install -Dm 0644 docs/buildbot-worker.1 %buildroot/%_man1dir/buildbot-worker.1
 popd
-
-bbmodulesdir=%_libexecdir/buildbot/modules
-sys_path="\\    sys.path.insert(0, '$bbmodulesdir')"
-python_path="    import os; os.environ['PYTHONPATH'] = '$bbmodulesdir'"
-for b in %buildroot%_bindir/buildbot %buildroot%_bindir/buildbot-worker; do
-    sed -i "/if __name__ == '__main__':/a$sys_path\n$python_path" "$b"
-done
 
 python3 -mzipfile -e %SOURCE1 %buildroot/%python3_sitelibdir
 python3 -mzipfile -e %SOURCE2 %buildroot/%python3_sitelibdir
@@ -296,6 +283,10 @@ buildbot-worker start worker
 %files checkinstall
 
 %changelog
+* Fri Nov 27 2026 Mikhail Gordeev <obirvalger@altlinux.org> 4.3.0-alt2
+- Remove use of buildbot-sqlalchemy (Closes: 61689)
+- Fix version show
+
 * Wed May 21 2025 Mikhail Gordeev <obirvalger@altlinux.org> 4.3.0-alt1
 - new version 4.3.0
 
