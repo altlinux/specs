@@ -1,5 +1,5 @@
 Name: yamusic-rs
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: Unofficial Yandex Music desktop client written in Rust
@@ -87,6 +87,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Nov 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.10-alt1
+- 1.1.10 released
+
 * Thu Nov 26 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 1.1.9-alt1
 - 1.1.9 released
 
