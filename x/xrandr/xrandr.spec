@@ -1,5 +1,5 @@
 Name: xrandr
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 Summary: primitive command line interface to RandR extension
 License: X11
@@ -21,8 +21,8 @@ entation of the screen, and can be one of "normal inverted left right 0
 1 2 3".
 
 %package -n xkeystone
-Summary:        Nickel script for XRandr keystone manipulation
-Requires:       cairo-5c
+Summary: Nickel script for XRandr keystone manipulation
+Requires: cairo-5c
 Group: System/X11
 
 %description -n xkeystone
@@ -49,6 +49,9 @@ Group: System/X11
 %_bindir/xkeystone
 
 %changelog
+* Fri Nov 27 2026 Fr. Br. George <george@altlinux.org> 1.5.4-alt1
+- Autobuild version bump to 1.5.4
+
 * Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1.5.3-alt1
 - Autobuild version bump to 1.5.3
 - Separate nickel script into xkeystone package
