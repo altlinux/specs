@@ -1,5 +1,5 @@
 Name: xauth
-Version: 1.1.4
+Version: 1.1.5
 Release: alt1
 Epoch: 1
 Summary: X authority file utility
@@ -45,6 +45,9 @@ does that.
 %_man1dir/*
 
 %changelog
+* Fri Nov 27 2026 Fr. Br. George <george@altlinux.org> 1:1.1.5-alt1
+- Autobuild version bump to 1.1.5
+
 * Sat Dec 13 2025 Fr. Br. George <george@altlinux.org> 1:1.1.4-alt1
 - Autobuild version bump to 1.1.4
 
