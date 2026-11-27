@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.504.b01
+%define version 1.8.0.514.b01
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo jdk8u
-%global shenandoah_revision jdk8u504-b01
+%global shenandoah_revision jdk8u514-b01
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -2145,6 +2145,20 @@ fi
 %endif
 
 %changelog
+* Fri Nov 27 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.514.b01-alt1
+- New version (fixes: CVE-2026-83374, CVE-2026-83376, CVE-2026-83380,
+  CVE-2026-83381, CVE-2026-83387, CVE-2026-83395, CVE-2026-83400,
+  CVE-2026-87290, CVE-2026-87292, CVE-2026-87293, CVE-2026-87294,
+  CVE-2026-87367, CVE-2026-91334, CVE-2026-91335, CVE-2026-91373,
+  CVE-2026-91374, CVE-2026-91380, CVE-2026-91381, CVE-2026-91382,
+  CVE-2026-91395, CVE-2026-91396, CVE-2026-91397, CVE-2026-91398,
+  CVE-2026-91400, CVE-2026-91403, CVE-2026-91410, CVE-2026-91411,
+  CVE-2026-91415, CVE-2026-91417, CVE-2026-91418, CVE-2026-91451,
+  CVE-2026-91452, CVE-2026-91453, CVE-2026-91461, CVE-2026-91462,
+  CVE-2026-91463, CVE-2026-91464, CVE-2026-101516, CVE-2026-114820,
+  CVE-2026-114939, CVE-2026-114940, CVE-2026-114943, CVE-2026-114944,
+  CVE-2026-114946).
+
 * Sun Aug 23 2026 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.504.b01-alt1
 - New version (fixes: CVE-2026-61308, CVE-2026-70907, CVE-2026-60589).
 
