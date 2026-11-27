@@ -2,9 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+%define _make_bin bmake
 
 Name: lowdown
-Version: 1.2.0
+Version: 3.2.1
 Release: alt1
 Summary: A simple markdown translator
 License: ISC
@@ -14,7 +15,9 @@ Vcs: https://github.com/kristapsdz/lowdown
 
 Source: %name-%version.tar
 
-BuildRequires: libmd-devel
+Patch1: lowdown-3.2.1-alt-table-width-rounding.patch
+
+BuildRequires: bmake libmd-devel mk-files
 
 %description
 lowdown is a Markdown translator producing HTML5, roff documents in the
@@ -40,9 +43,10 @@ Group: Development/C
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-# Default MAKEFLAGS will cause garbage written to Makefile.configure.
+# Default MAKEFLAGS contain GNU make options
 unset MAKEFLAGS
 %add_optflags %(getconf LFS_CFLAGS)
 CFLAGS="%optflags" \
@@ -55,9 +59,13 @@ CFLAGS="%optflags" \
 %make_build
 
 %install
+# Default MAKEFLAGS contain GNU make options
+unset MAKEFLAGS
 %makeinstall_std install_lib_common install_shared
 
 %check
+# Default MAKEFLAGS contain GNU make options
+unset MAKEFLAGS
 %make_build regress
 
 %files
@@ -78,6 +86,9 @@ CFLAGS="%optflags" \
 %_libdir/liblowdown.so.*
 
 %changelog
+* Tue Nov 24 2026 Mikhail Gordeev <obirvalger@altlinux.org> 3.2.1-alt1
+- Update to 3.2.1
+
 * Wed Oct 30 2024 Vitaly Chikunov <vt@altlinux.org> 1.2.0-alt1
 - Update to VERSION_1_2_0 (2024-10-24).
 
