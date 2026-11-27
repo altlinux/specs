@@ -3,7 +3,7 @@
 
 Name: perl-%module_name
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: Application programming toolkit and object system for Perl
 License: GPL-1.0-or-later OR Artistic-1.0-clause
@@ -26,7 +26,7 @@ logging, exception handling, filesystem abstraction, codecs, data types
 and other application programming facilities.
 
 %prep
-%setup -q
+%setup
 
 %build
 %perl_vendor_build
@@ -40,5 +40,8 @@ and other application programming facilities.
 %perl_vendor_privlib/Badger/
 
 %changelog
+* Fri Nov 27 2026 Vitaly Lipatov <lav@altlinux.ru> 0.16-alt2
+- fix exporter test under strict subs and drop obsolete setup option.
+
 * Sun Jul 19 2026 Vitaly Lipatov <lav@altlinux.ru> 0.16-alt1
 - initial build for ALT Sisyphus
