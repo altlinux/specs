@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: argc
-Version: 1.24.0
+Version: 1.25.0
 Release: alt1
 Summary: A Bash CLI framework, also a Bash command runner
 License: Apache-2.0 or MIT
@@ -47,7 +47,7 @@ for i in bash fish zsh; do
 	target/release/%name --argc-completions $i > completions.$i
 done
 # Examples no need to be accidentally executable these are texts.
-chmod a-x examples/*.sh
+chmod a-x examples/*
 
 %install
 install -Dp target/release/%name -t %buildroot%_bindir
@@ -60,13 +60,16 @@ install -Dpm0644 completions.zsh  %buildroot%_datadir/zsh/site-functions/_%name
 LANG=C.UTF-8 cargo test --release
 
 %files
-%doc LICENSE-APACHE LICENSE-MIT README.md docs/*.md examples
+%doc LICENSE-APACHE LICENSE-MIT README.md docs examples
 %_bindir/argc
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/%name.fish
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Mon Nov 23 2026 Mikhail Gordeev <obirvalger@altlinux.org> 1.25.0-alt1
+- Update to 1.25.0
+
 * Fri May 22 2026 Vitaly Chikunov <vt@altlinux.org> 1.24.0-alt1
 - Update to v1.24.0 (2026-05-20).
 
