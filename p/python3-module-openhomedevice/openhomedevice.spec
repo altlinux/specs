@@ -1,5 +1,5 @@
 Name: python3-module-openhomedevice
-Version: 2.7
+Version: 2.8
 Release: alt1
 
 Summary: Library to provide an API to an existing openhome device
@@ -44,6 +44,9 @@ BuildRequires(pre): rpm-build-pyproject
 %python3_sitelibdir/openhomedevice-%version.dist-info
 
 %changelog
+* Fri Nov 27 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.8-alt1
+- 2.8 released
+
 * Tue Sep 15 2026 Sergey Bolshakov <sbolshakov@altlinux.org> 2.7-alt1
 - 2.7 released
 
