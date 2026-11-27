@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%pypi_name
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Build tools for JupyterLab (and remixes)
@@ -50,6 +50,9 @@ BuildRequires: python3-module-jsonschema
 %python3_sitelibdir/jupyter_builder-%version.dist-info
 
 %changelog
+* Fri Nov 27 2026 Anton Vyatkin <toni@altlinux.org> 1.3.1-alt1
+- New version 1.3.1.
+
 * Sat Nov 14 2026 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
 - New version 1.3.0.
 
