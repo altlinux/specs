@@ -2,7 +2,7 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: beakerlib
-Version: 1.33.3
+Version: 1.33.4
 Release: alt1
 Summary: BeakerLib is a shell-level integration testing library
 License: GPL-2.0
@@ -54,5 +54,8 @@ mkdir -p %buildroot%_prefix
 %_bindir/%name-*
 
 %changelog
+* Fri Nov 27 2026 Pavel Shilov <zerospirit@altlinux.org> 1.33.4-alt1
+- updated from 1.33.3 to 1.33.4
+
 * Tue Aug 11 2026 Pavel Shilov <zerospirit@altlinux.org> 1.33.3-alt1
 - Initial build for Sisyphus.
