@@ -1,5 +1,5 @@
 Name: export-cybertalk
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 License: AGPL-3.0-or-later
@@ -36,6 +36,9 @@ install -Dm755 src/%name %buildroot%_bindir/%name
 %doc LICENSE *.md
 
 %changelog
+* Fri Nov 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.1-alt1
+- split the export into --toTG and --toMD
+
 * Wed Nov 11 2026 Aleksandr Shamaraev <shad@altlinux.org> 0.9.0-alt1
 - added a mechanism to skip an update if a timeout or other error occurs with the SOCKS proxy.
 - added auto-check and auto-update of packages summary from the project repository
