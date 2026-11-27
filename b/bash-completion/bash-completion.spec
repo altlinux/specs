@@ -3,7 +3,7 @@
 Name: bash-completion
 Epoch: 1
 Version: 2.18.0
-Release: alt1
+Release: alt2
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL-2.0-only
@@ -60,6 +60,9 @@ make check
 %_datadir/cmake/bash-completion
 
 %changelog
+* Fri Nov 27 2026 Vsevolod Myalitsin <r4nc@altlinux.org> 1:2.18.0-alt2
+- apt-mark completion: drop unsupported options for ALT Linux
+
 * Mon Jul 06 2026 Anton Farygin <rider@altlinux.org> 1:2.18.0-alt1
 - 2.17.0 -> 2.18.0
 
