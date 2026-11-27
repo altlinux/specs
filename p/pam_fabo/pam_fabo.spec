@@ -2,8 +2,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: pam_fabo
-Version: 0.1.5
-Release: alt2
+Version: 0.2.0
+Release: alt1
 
 Summary: PAM false bottom module
 License: GPL-2.0-or-later
@@ -48,6 +48,12 @@ FAlse BOttom is a pam module for mapping passwords to actions.
 %doc examples/
 
 %changelog
+* Thu Nov 26 2026 Egor Shestakov <ved@altlinux.org> 0.2.0-alt1
+- Fix SUID program permission check.
+- Add pam_sm_setcred() plug that always returning PAM_SUCCESS.
+- Rework PAM FABO returning codes.
+- Use only absolute path describing by the 'command' field.
+
 * Mon Nov 16 2026 Egor Shestakov <ved@altlinux.org> 0.1.5-alt2
 - Update documentation.
 
