@@ -7,7 +7,7 @@
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.4.0
-Release: alt5
+Release: alt6
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 VCS: https://github.com/percona/percona-xtrabackup.git
@@ -99,6 +99,9 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Fri Nov 27 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt6
+- 8.4.0-8
+
 * Wed Nov 11 2026 Alexei Takaseev <taf@altlinux.org> 8.4.0-alt5
 - thanks to rauty@:
     build: Fix FTBFS with system zlib
