@@ -3,7 +3,7 @@
 %define nameU vinyl-player
 
 Name: vinyl
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 Summary: Elegant music player
@@ -64,6 +64,9 @@ install -Dm 644 data/hicolor/scalable/apps/%oname.svg \
 %_iconsdir/hicolor/128x128/apps/%oname.svg
 
 %changelog
+* Fri Nov 27 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.7.0-alt1
+- 1.6.1 -> 1.7.0
+
 * Wed Aug 19 2026 Aleksandr Shamaraev <shad@altlinux.org> 1.6.1-alt1
 - 1.6.0 -> 1.6.1
 
