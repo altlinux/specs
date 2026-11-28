@@ -1,25 +1,28 @@
 %define  modulename cysignals
 
 Name:    python3-module-%modulename
-Version: 1.11.4
+Version: 1.13.1
 Release: alt1
 
 Summary: cysignals: interrupt and signal handling for Cython
-License: LGPL-3.0
+
+License: LGPL-3.0-or-later
 Group:   Development/Python3
 URL:     https://github.com/sagemath/cysignals
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-wheel
-BuildRequires: python3-module-Cython
+BuildRequires(pre): rpm-macros-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-mesonpy
+BuildRequires: meson ninja-build
+BuildRequires: gcc-c++
+BuildRequires: python3-module-Cython >= 3.1
 
 Source: %modulename-%version.tar
 
-Patch: remove-distutils-for-python-3.12.patch
-Patch1: remove-legacy-implicit-noexcept.patch
+# The debugger helper runs inside GDB, not the regular Python interpreter.
+%add_python3_req_skip gdb Cython.Debugger Cython.Debugger.libcython
 
 %description
 The cysignals package provides mechanisms to handle interrupts (and other
@@ -27,8 +30,6 @@ signals and errors) in Cython code.
 
 %prep
 %setup -n %modulename-%version
-%patch -p1
-%patch1 -p1
 
 %build
 %pyproject_build
@@ -39,11 +40,18 @@ signals and errors) in Cython code.
 %files
 %doc README.rst
 %_bindir/cysignals-CSI
-%_datadir/cysignals/cysignals-CSI-helper.py
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Fri Nov 27 2026 Vitaly Lipatov <lav@altlinux.ru> 1.13.1-alt1
+- NMU: new version 1.13.1.
+- Switch to the Meson build backend and drop obsolete compatibility patches.
+- Added BuildRequires: meson, ninja-build, gcc-c++, python3-module-mesonpy.
+- Added BuildRequires(pre): rpm-macros-python3.
+- Removed BuildRequires: python3-module-setuptools, python3-module-wheel.
+- Exclude GDB-only imports from regular Python dependency generation.
+
 * Tue Dec 19 2023 Anton Vyatkin <toni@altlinux.org> 1.11.4-alt1
 - New version 1.11.4.
 
